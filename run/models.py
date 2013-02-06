@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
+import xlwt
+import tempfile
 
 class RunReport(models.Model):
   user = models.ForeignKey(User)
@@ -30,6 +32,35 @@ class RunReport(models.Model):
 
   def get_date_end(self):
     return self.get_date(0)
+
+  def build_xls(self):
+    '''
+    Build excel file using sessions
+    '''
+    font = xlwt.Font()
+    font.name = 'Times New Roman'
+    font.colour_index = 2
+    font.bold = True
+
+    style_title = xlwt.XFStyle()
+    style_title.font = font
+
+    style_date = xlwt.XFStyle()
+    style_date.num_format_str = 'DD-MM-YYYY'
+
+    wb = xlwt.Workbook()
+    ws = wb.add_sheet('%s - %s' % (self.get_date_start(), self.get_date_end()))
+
+    i = 0
+    for sess in self.sessions.all().order_by('date'):
+      ws.write(i, 0, sess.date, style_date)
+      ws.write(i, 1, sess.comment)
+      i += 1
+
+    # Output to tmp file
+    _, path = tempfile.mkstemp(suffix='.xls')
+    wb.save(path)
+    return path
 
 class RunSession(models.Model):
   report = models.ForeignKey('RunReport', related_name='sessions')
