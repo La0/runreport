@@ -20,6 +20,9 @@ DATABASES = {
     }
 }
 
+import os
+HOME = os.path.realpath('.')
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
@@ -45,7 +48,7 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = ''
+MEDIA_ROOT = HOME + '/medias'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -103,9 +106,7 @@ ROOT_URLCONF = 'coach.urls'
 WSGI_APPLICATION = 'coach.wsgi.application'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
+  HOME + '/templates',
 )
 
 INSTALLED_APPS = (
@@ -148,3 +149,9 @@ LOGGING = {
         },
     }
 }
+
+# Import local settings, if any
+try:
+  from local_settings import *
+except ImportError, e:
+  pass
