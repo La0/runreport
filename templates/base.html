@@ -1,9 +1,41 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Coach, i ran !</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-<body>
+    <!-- Le styles -->
+    <link href="/medias/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/medias/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="/medias/css/style.css" rel="stylesheet">
 
-{% block content %}{% endblock %}
+    <!-- Fav and touch icons -->
+  </head>
+  <body>
+    <div class="container-narrow">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li class="active"><a href="/">Cette semaine</a></li>
+          <li><a href="{% url user-profile %}">Mon profil</a></li>
+          <li><a href="{% url logout %}">Logout</a></li>
+        </ul>
+        <h3 class="muted">Coach, I ran !</h3>
+      </div>
 
-</body>
+      <hr/>
 
+      <div class="row-fluid">
+        {% block content %}{% endblock %}
+      </div>
+
+      <hr/>
+
+      <div class="footer">
+        <p>Construit par <a href="http://bastien.abadie.me">Bastien Abadie</a>, avec <a href="http://djangoproject.com">Django</a>, <a href="http://vim.org">vim</a>, <a href="http://getbootstrap.com">Bootstrap</a> & <a href="http://debian.org">Debian</a> &bull; Code source sur <a href="http://github.com/La0/coach">Github</a></p>
+      </div>
+    </div> <!-- /container -->
+  </body>
 </html>
