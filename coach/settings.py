@@ -118,6 +118,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'run',
+    'users',
     'south',
 )
 
@@ -149,6 +150,10 @@ LOGGING = {
         },
     }
 }
+
+# Redirect urls
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 # Import local settings, if any
 try:
