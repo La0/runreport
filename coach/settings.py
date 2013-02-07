@@ -151,9 +151,15 @@ LOGGING = {
     }
 }
 
+# User Profile
+AUTH_PROFILE_MODULE = 'users.UserProfile'
+
 # Redirect urls
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+# Group of trainers users
+TRAINERS_GROUP = 1
 
 # Import local settings, if any
 try:
