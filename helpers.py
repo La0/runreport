@@ -15,7 +15,7 @@ def render(html_template=False, json_template=False):
     def wrapper(request, *args, **kwargs):
       try:
         context = view_func(request, *args, **kwargs)
-        if not context:
+        if context is None:
           raise Exception('No context generated')
 
         # Skip render on redirect
