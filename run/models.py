@@ -62,6 +62,16 @@ class RunReport(models.Model):
     wb.save(path)
     return path
 
+  def publish(self):
+    '''
+    Publish this report
+    '''
+    if self.published:
+      raise Exception('This report is already published')
+
+    self.published = True
+    self.save()
+
 class RunSession(models.Model):
   report = models.ForeignKey('RunReport', related_name='sessions')
   date = models.DateField()

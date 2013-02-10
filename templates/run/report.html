@@ -1,5 +1,6 @@
 {% import '_macros.html' as macros %}
 
+{% if form %}
 <form method="post" action="" class="form-horizontal">
   {% csrf_token %}
   {{ form.management_form|safe }}
@@ -18,7 +19,27 @@
     {% endfor %}
 
     <div class="form-actions">
-      <button type="submit" class="btn btn-primary">Sauver ces commentaires</button>
+      <button type="submit" name="action" value="save" class="btn btn-primary">Sauver ces commentaires</button>
+      <button type="submit" name="action" value="publish" class="btn btn-success">Envoyer à {{trainer}}</button>
     </div>
   </fieldset>
 </form>
+{% else %}
+
+<p class="alert alert-success">
+  Ce rapport a bien été envoyé à {{ trainer }}
+</p>
+
+<table class="table table-bordered">
+  <tr>
+    <th>Jour</th>
+    <th>Commentaire</th>
+  </tr>
+  {% for session in sessions %}
+  <tr>
+    <td>{{session.date|date('l d/m')}}</td>
+    <td>{{session.comment|default('')}}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}

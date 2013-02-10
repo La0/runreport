@@ -18,17 +18,29 @@ def index(request):
     report.init_sessions()
 
   # Build formset
+  form = None
   sessions = report.sessions.all().order_by('date')
-  if request.method == 'POST':
-    form = RunSessionFormSet(request.POST)
-    if form.is_valid():
-      form.save()
-  else:
-    form = RunSessionFormSet(queryset=sessions)
+  if not report.published:
+    if request.method == 'POST':
+      # Save comments
+      form = RunSessionFormSet(request.POST)
+      if form.is_valid():
+        form.save()
+
+      # Publish ?
+      if request.POST['action'] == 'publish':
+        report.publish()
+    else:
+      form = RunSessionFormSet(queryset=sessions)
+
+  # Get profile
+  profile = request.user.get_profile()
 
   return {
     'report' : report,
+    'sessions': sessions,
     'form' : form,
+    'trainer' : profile.trainer,
   }
 
 @login_required
