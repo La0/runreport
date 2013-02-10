@@ -5,21 +5,26 @@
 <form method="post" action="" class="form-horizontal">
   {% csrf_token %}
   <fieldset>
-    <legend>Login</legend>
-    {% if form.errors %}
-    {{form.errors}}
-    {% endif %}
-
+    <legend>Se connecter</legend>
+    {% with form.non_field_errors() as err %}
+      {{ err|safe }}
+    {% endwith %}
     <div class="control-group">
-      <label class="control-label" for="id_username">Login</label>
+      <label class="control-label" for="id_username">Votre email</label>
       <div class="controls">
         {{form.username|safe}}
+        {% if form.username.errors %}
+        <span class="help-inline">{{form.username.errors|safe}}</span>
+        {% endif %}
       </div>
     </div>
     <div class="control-group">
-      <label class="control-label" for="id_password">Password</label>
+      <label class="control-label" for="id_password">Mot de passe</label>
       <div class="controls">
         {{form.password|safe}}
+        {% if form.password.errors %}
+        <span class="help-inline">{{form.password.errors|safe}}</span>
+        {% endif %}
       </div>
     </div>
     <div class="form-actions">
