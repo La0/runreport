@@ -1,6 +1,6 @@
 {% import '_macros.html' as macros %}
 
-{% if form %}
+{% if form and not report.published %}
 <form method="post" action="" class="form-horizontal">
   {% csrf_token %}
   {{ form.management_form|safe }}

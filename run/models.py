@@ -1,8 +1,11 @@
+# coding=utf-8
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
 import xlwt
 import tempfile
+from django.core.mail import EmailMessage
+from django.contrib.sites.models import get_current_site
 
 class RunReport(models.Model):
   user = models.ForeignKey(User)
@@ -68,6 +71,22 @@ class RunReport(models.Model):
     '''
     if self.published:
       raise Exception('This report is already published')
+
+
+    # Build corpus
+    site = get_current_site(None)
+    subject = u'Séance de %s : du %s au %s' % (self.user, self.get_date_start(), self.get_date_end())
+    message = u'Envoyé via %s' % site
+    profile = self.user.get_profile()
+    xls = self.build_xls()
+    xls_name = '%s_semaine_%d.xls' % (self.user.username, self.week)
+
+    # Build & send message
+    mail = EmailMessage(subject, message)
+    mail.to = [profile.trainer.email]
+    mail.cc = [self.user.email]
+    mail.attach(xls, xls_name, 'application/vnd.ms-excel')
+    mail.send()
 
     self.published = True
     self.save()
