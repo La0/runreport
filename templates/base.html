@@ -18,9 +18,9 @@
     <div class="container-narrow">
       <div class="masthead">
         <ul class="nav nav-pills pull-right">
-          <li class="active"><a href="/">Cette semaine</a></li>
-          <li><a href="{% url user-profile %}">Mon profil</a></li>
-          <li><a href="{% url logout %}">Logout</a></li>
+          {% for p in menu %}
+          <li {% if p.active %}class="active"{% endif %}><a href="{{p.url}}">{{p.caption}}</a></li>
+          {% endfor %}
         </ul>
         <h3 class="muted">Coach, I ran !</h3>
       </div>
