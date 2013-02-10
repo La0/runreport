@@ -36,14 +36,15 @@ class UserForm(forms.Form):
         raise ValidationError('Entrez deux fois le meme mot de passe.')
 
     # Add unique username
-    i = 2
-    base_name = name = nameize('%(firstname)s %(lastname)s' % self.cleaned_data)
-    while True:
-      try:
-        User.objects.get(username=name)
-        name = '%s_%d' % (base_name, i)
-        i += 1
-      except:
-        break
-    self.cleaned_data['username'] = name
+    if 'firstname' in self.cleaned_data and 'lastname' in self.cleaned_data:
+      i = 2
+      base_name = name = nameize('%(firstname)s %(lastname)s' % self.cleaned_data)
+      while True:
+        try:
+          User.objects.get(username=name)
+          name = '%s_%d' % (base_name, i)
+          i += 1
+        except:
+          break
+      self.cleaned_data['username'] = name
     return self.cleaned_data
