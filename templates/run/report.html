@@ -1,17 +1,24 @@
-<h1>Du {{report.get_date_start()|date('l d E Y')}} au {{report.get_date_end()|date('l d E Y')}}</h1>
+{% import '_macros.html' as macros %}
 
-<form action="" method="POST">
+<form method="post" action="" class="form-horizontal">
   {% csrf_token %}
   {{ form.management_form|safe }}
 
-  {% for session in form %}
-  <div>
-    {{session.errors|safe}}
-    {{session.instance.date|date('l d/m')}}
-    {{session.id|safe}}
-    {{session.comment|safe}}
-  </div>
-  {% endfor %}
+  <fieldset>
+    <legend>Du {{report.get_date_start()|date('l d E Y')}} au {{report.get_date_end()|date('l d E Y')}}</legend>
 
-  <input type="submit" value="Sauver" />
+    {% for session in form %}
+      {% with session.non_field_errors() as err %}
+        {{ err|safe }}
+      {% endwith %}
+      {{ session.id|safe }}
+      {% with session.instance.date|date('l d/m')|title as day %}
+        {{ macros.input(session.comment, day) }}
+      {% endwith %}
+    {% endfor %}
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Sauver ces commentaires</button>
+    </div>
+  </fieldset>
 </form>
