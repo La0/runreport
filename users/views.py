@@ -60,8 +60,9 @@ def create(request):
 
       # Create user & profile
       user = User.objects.create_user(form.cleaned_data['username'], form.cleaned_data['email'], form.cleaned_data['password'])
-      user.firstname = form.cleaned_data['firstname']
-      user.lastname = form.cleaned_data['lastname']
+      user.first_name = form.cleaned_data['firstname']
+      user.last_name = form.cleaned_data['lastname']
+      user.save()
       profile = user.get_profile()
       profile.trainer = form.cleaned_data['trainer']
       profile.save()
