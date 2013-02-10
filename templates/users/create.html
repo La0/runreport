@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Créer un compte</h1>
+
+<form method="POST" action="">
+  {% csrf_token %}
+  {{ form.as_p()|safe}}
+  <input type="submit" value="Créer mon compte" />
+</form>
+
+{% endblock %}

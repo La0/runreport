@@ -122,6 +122,9 @@ INSTALLED_APPS = (
     'south',
 )
 
+# For auto login on user create
+AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend', )
+
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.
