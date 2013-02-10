@@ -1,0 +1,17 @@
+<h1>Du {{report.get_date_start()|date('l d E Y')}} au {{report.get_date_end()|date('l d E Y')}}</h1>
+
+<form action="" method="POST">
+  {% csrf_token %}
+  {{ form.management_form|safe }}
+
+  {% for session in form %}
+  <div>
+    {{session.errors|safe}}
+    {{session.instance.date|date('l d/m')}}
+    {{session.id|safe}}
+    {{session.comment|safe}}
+  </div>
+  {% endfor %}
+
+  <input type="submit" value="Sauver" />
+</form>

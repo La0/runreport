@@ -5,9 +5,10 @@ from datetime import date
 from forms import RunSessionFormSet
 from django.http import Http404, HttpResponse
 
-@login_required
 @render('run/index.html')
 def index(request):
+  if not request.user.is_authenticated():
+    return {}
 
   # Init current report
   today = date.today()
