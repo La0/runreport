@@ -123,7 +123,10 @@ INSTALLED_APPS = (
 )
 
 # For auto login on user create
-AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend', )
+AUTHENTICATION_BACKENDS = (
+  'users.backends.EmailAuthBackend',
+  'django.contrib.auth.backends.ModelBackend',
+)
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
