@@ -5,7 +5,7 @@ from django.contrib.auth.models import User, Group
 from coach.settings import LOGIN_REDIRECT_URL, LOGOUT_REDIRECT_URL, TRAINERS_GROUP
 from django.contrib.auth import login as auth_login, logout as auth_logout, authenticate
 from django.contrib.auth.decorators import login_required
-from forms import ProfileForm, UserForm
+from forms import ProfileForm, UserForm, SignUpForm
 
 @render('users/login.html')
 def login(request):
@@ -38,21 +38,25 @@ def profile(request):
 
   # Load trainers in form
   if request.method == 'POST':
-    form = ProfileForm(request.POST, instance=profile)
-    if form.is_valid():
-      form.save()
+    form_profile = ProfileForm(request.POST, instance=profile)
+    form_user = UserForm(request.POST, instance=request.user)
+    if form_profile.is_valid() and form_user.is_valid():
+      form_profile.save()
+      form_user.save()
   else:
-    form = ProfileForm(instance=profile)
+    form_profile = ProfileForm(instance=profile)
+    form_user = UserForm(instance=request.user)
 
   return {
     'profile' : profile,
-    'form' : form,
+    'form_profile' : form_profile,
+    'form_user' : form_user,
   }
 
 @render('users/create.html')
 def create(request):
   if request.method == 'POST':
-    form = UserForm(request.POST)
+    form = SignUpForm(request.POST)
     if form.is_valid():
 
       # Create user & profile
@@ -70,7 +74,7 @@ def create(request):
         auth_login(request, valid_user)
       return HttpResponseRedirect(LOGIN_REDIRECT_URL)
   else:
-    form = UserForm()
+    form = SignUpForm()
   return {
     'form': form,
   }

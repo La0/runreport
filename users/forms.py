@@ -21,7 +21,12 @@ class ProfileForm(forms.ModelForm):
     model = UserProfile
     exclude = ('user', )
 
-class UserForm(forms.Form):
+class UserForm(forms.ModelForm):
+  class Meta:
+    model = User
+    fields = ('first_name', 'last_name', 'email',)
+
+class SignUpForm(forms.Form):
   firstname = forms.CharField()
   lastname = forms.CharField()
   password = forms.CharField(min_length=4, widget=forms.PasswordInput())
