@@ -47,7 +47,7 @@ def start_fcgi(pidfile='coach.pid'):
   '''
   Start the fast cgi process
   '''
-  run('./manage.py runfcgi workdir=~/coach protocol=scgi pidfile=~/coach.pid host=localhost port=8200 outlog=~/cgi-coach-out.log errlog=~/cgi-coach-err.log')
+  run('./manage.py runfcgi workdir=~/coach protocol=scgi pidfile=~/coach.pid host=localhost port=8300 outlog=~/cgi-coach-out.log errlog=~/cgi-coach-err.log')
 
 def restart_lighttpd():
   '''
