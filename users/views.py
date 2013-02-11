@@ -37,15 +37,12 @@ def profile(request):
   profile = request.user.get_profile()
 
   # Load trainers in form
-  trainers = Group.objects.get(pk=TRAINERS_GROUP).user_set.all()
   if request.method == 'POST':
     form = ProfileForm(request.POST, instance=profile)
-    form.fields['trainer'].queryset = trainers
     if form.is_valid():
       form.save()
   else:
     form = ProfileForm(instance=profile)
-    form.fields['trainer'].queryset = trainers
 
   return {
     'profile' : profile,

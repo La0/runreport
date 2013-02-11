@@ -5,7 +5,18 @@ from django.core.exceptions import ValidationError
 from coach.settings import TRAINERS_GROUP
 from helpers import nameize
 
+class UserModelChoiceField(forms.ModelChoiceField):
+  def label_from_instance(self, obj):
+    try:
+      return obj.first_name and obj.first_name or obj.username
+    except:
+      return 'plop'
+
 class ProfileForm(forms.ModelForm):
+  def __init__(self, *args, **kwargs):
+    super(ProfileForm, self).__init__(*args, **kwargs)
+    self.fields['trainer'] = UserModelChoiceField(queryset=User.objects.filter(groups=TRAINERS_GROUP))
+
   class Meta:
     model = UserProfile
     exclude = ('user', )
@@ -16,7 +27,7 @@ class UserForm(forms.Form):
   password = forms.CharField(min_length=4, widget=forms.PasswordInput())
   password_check = forms.CharField(min_length=4, widget=forms.PasswordInput())
   email = forms.EmailField()
-  trainer = forms.ModelChoiceField(queryset=User.objects.filter(groups=TRAINERS_GROUP))
+  trainer = UserModelChoiceField(queryset=User.objects.filter(groups=TRAINERS_GROUP))
 
   def clean_email(self):
     '''
