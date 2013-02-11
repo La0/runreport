@@ -3,31 +3,17 @@
 {% set page_title = 'Your profile' %}
 
 {% block content %}
-<h1>Your profile</h1>
+<h1>Votre profil</h1>
 
 <form class="form-horizontal" method="POST" action="">
   {% csrf_token %}
 
   <fieldset>
-    <div class="control-group">
-      <label class="control-label">Username</label>
-      <div class="controls">
-        <input type="text" value="{{user.username}}" disabled="disabled"/>
-      </div>
-    </div>
-
     {% for input in form.visible_fields() %}
-    <div class="control-group {% if input.errors %}error{% elif input.value() %}success{% endif %}">
-      <label class="control-label" for="{{input.name}}">{{input.label}}:</label>
-      <div class="controls">
-        {{input|safe}}
-        {{input.errors|safe}}
-      </div>
-    </div>
+      {{ macros.input(input, input.label) }}
     {% endfor %}
-
     <div class="form-actions">
-      <button type="submit" class="btn btn-primary">Update profile</button>
+      <button type="submit" class="btn btn-primary">Mettre à jour</button>
     </div>
   </fieldset>
 </form>
