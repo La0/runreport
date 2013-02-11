@@ -20,14 +20,14 @@
 
     <div class="form-actions">
       <button type="submit" name="action" value="save" class="btn btn-primary">Sauver ces commentaires</button>
-      <button type="submit" name="action" value="publish" class="btn btn-success">Envoyer à {{trainer}}</button>
+      <button type="submit" name="action" value="publish" class="btn btn-success">Envoyer à {{trainer.first_name|default(trainer.username)}}</button>
     </div>
   </fieldset>
 </form>
 {% else %}
 
 <p class="alert alert-success">
-  Ce rapport a bien été envoyé à {{ trainer }}
+ Ce rapport a bien été envoyé à {{trainer.first_name|default(trainer.username)}}
 </p>
 
 <table class="table table-bordered">
