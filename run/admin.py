@@ -1,10 +1,13 @@
 from django.contrib import admin
 from models import *
 
+class RunSessionAdmin(admin.TabularInline):
+  model = RunSession
+  max_num = 7
+
 class RunReportAdmin(admin.ModelAdmin):
-  pass
+  list_display = ('user', 'week',)
+  list_filter = ('user', )
+  inlines = [RunSessionAdmin, ]
 admin.site.register(RunReport, RunReportAdmin)
 
-class RunSessionAdmin(admin.ModelAdmin):
-  pass
-admin.site.register(RunSession, RunSessionAdmin)
