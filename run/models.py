@@ -82,7 +82,8 @@ class RunReport(models.Model):
     xls_name = '%s_semaine_%d.xls' % (self.user.username, self.week)
 
     # Build & send message
-    mail = EmailMessage(subject, message)
+    headers = {'Reply-To' : self.user.email,}
+    mail = EmailMessage(subject, message, headers=headers)
     mail.to = [profile.trainer.email]
     mail.cc = [self.user.email]
     mail.attach(xls_name, xls.read(), 'application/vnd.ms-excel')
