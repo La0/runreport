@@ -6,7 +6,7 @@ class RunSessionAdmin(admin.TabularInline):
   max_num = 7
 
 class RunReportAdmin(admin.ModelAdmin):
-  list_display = ('user', 'week',)
+  list_display = ('user', 'week', 'updated')
   list_filter = ('user', )
   inlines = [RunSessionAdmin, ]
 admin.site.register(RunReport, RunReportAdmin)

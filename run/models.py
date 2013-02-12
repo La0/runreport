@@ -12,6 +12,8 @@ class RunReport(models.Model):
   year = models.IntegerField(default=2013)
   week = models.IntegerField(default=0)
   published = models.BooleanField(default=False)
+  created = models.DateTimeField(auto_now_add=True)
+  updated = models.DateTimeField(auto_now=True)
 
   class Meta:
     unique_together = (('user', 'year', 'week'),)
