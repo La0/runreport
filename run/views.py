@@ -26,6 +26,8 @@ def index(request):
       form = RunSessionFormSet(request.POST)
       if form.is_valid():
         form.save()
+        report.updated = datetime.now()
+        report.save()
 
       # Publish ?
       if request.POST['action'] == 'publish':
