@@ -6,7 +6,7 @@
   {{ form.management_form|safe }}
 
   {% for session in form %}
-     {% if session.instance.date == today %}
+     {% if session.instance.date == now.date() %}
     <fieldset class="today">
       <legend>Aujourd'hui - {{ session.instance.date|date('l d E')|title }}</legend>
     {% else %}
@@ -27,6 +27,16 @@
       <button type="submit" name="action" value="publish" class="btn btn-success">Envoyer à {{trainer.first_name|default(trainer.username)}}</button>
     </div>
 </form>
+
+
+{% with report.get_send_date() - now as send_date %}
+  {% if send_date.total_seconds() > 0 %}
+  <p class="alert alert-info">
+    Tous les commentaires remplis seront envoyés automatiquement à {{trainer.first_name|default(trainer.username)}} dans {{ report.get_send_date()|timeuntil }}.
+  </p>
+  {% endif %}
+{% endwith %}
+
 {% else %}
 
 <p class="alert alert-success">

@@ -1,11 +1,12 @@
 # coding=utf-8
 from django.db import models
 from django.contrib.auth.models import User
-from datetime import datetime
+from datetime import datetime, time
 import xlwt
 import tempfile
 from django.core.mail import EmailMessage
 from django.contrib.sites.models import get_current_site
+from coach.settings import REPORT_SEND_DAY, REPORT_SEND_TIME
 
 class RunReport(models.Model):
   user = models.ForeignKey(User)
@@ -37,6 +38,14 @@ class RunReport(models.Model):
 
   def get_date_end(self):
     return self.get_date(0)
+
+  def get_send_date(self):
+    '''
+    Build the next date to send reports
+    '''
+    day = self.get_date(REPORT_SEND_DAY)
+    t = time(REPORT_SEND_TIME[0], REPORT_SEND_TIME[1])
+    return datetime.combine(day, t)
 
   def build_xls(self):
     '''

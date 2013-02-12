@@ -1,7 +1,7 @@
 from helpers import render
 from django.contrib.auth.decorators import login_required
 from models import RunReport, RunSession
-from datetime import date
+from datetime import date, datetime
 from forms import RunSessionFormSet
 from django.http import Http404, HttpResponse
 
@@ -41,7 +41,7 @@ def index(request):
     'sessions': sessions,
     'form' : form,
     'trainer' : profile.trainer,
-    'today' : date.today(),
+    'now' : datetime.now(),
   }
 
 @login_required

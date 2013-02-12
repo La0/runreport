@@ -173,6 +173,10 @@ LOGOUT_REDIRECT_URL = '/'
 # Group of trainers users
 TRAINERS_GROUP = 1
 
+# Date & Hour of Auto send
+REPORT_SEND_DAY = 0
+REPORT_SEND_TIME = (20,00)
+
 # Import local settings, if any
 try:
   from local_settings import *
