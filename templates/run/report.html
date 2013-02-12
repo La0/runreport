@@ -1,28 +1,31 @@
 {% import '_macros.html' as macros %}
 
 {% if form and not report.published %}
-<form method="post" action="" class="form-horizontal">
+<form method="post" action="" class="form-horizontal report">
   {% csrf_token %}
   {{ form.management_form|safe }}
 
-  <fieldset>
-    <legend>Du {{report.get_date_start()|date('l d E Y')}} au {{report.get_date_end()|date('l d E Y')}}</legend>
-
-    {% for session in form %}
+  {% for session in form %}
+     {% if session.instance.date == today %}
+    <fieldset class="today">
+      <legend>Aujourd'hui - {{ session.instance.date|date('l d E')|title }}</legend>
+    {% else %}
+    <fieldset>
+      <legend>{{ session.instance.date|date('l d E')|title }}</legend>
+    {% endif %}
       {% with session.non_field_errors() as err %}
         {{ err|safe }}
       {% endwith %}
       {{ session.id|safe }}
-      {% with session.instance.date|date('l d/m')|title as day %}
-        {{ macros.input(session.comment, day) }}
-      {% endwith %}
-    {% endfor %}
+      {{ macros.input(session.name, 'Séance') }}
+      {{ macros.input(session.comment, 'Commentaire') }}
+    </fieldset>
+  {% endfor %}
 
     <div class="form-actions">
       <button type="submit" name="action" value="save" class="btn btn-primary">Sauver ces commentaires</button>
       <button type="submit" name="action" value="publish" class="btn btn-success">Envoyer à {{trainer.first_name|default(trainer.username)}}</button>
     </div>
-  </fieldset>
 </form>
 {% else %}
 

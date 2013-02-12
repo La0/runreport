@@ -27,3 +27,22 @@ body {
   margin: 10px 0;
   width: 150px;
 }
+
+form.report fieldset{
+  margin-bottom: 10px;
+}
+
+form.report fieldset.today {
+  background: rgb(245, 245, 245);
+  border-bottom: 1px solid rgb(0, 136, 204);
+}
+
+form.report input {
+  width: 90%;
+}
+
+form.report textarea {
+  width: 90%;
+  line-height: 15px;
+  height: 60px;
+}

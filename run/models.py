@@ -97,6 +97,7 @@ class RunReport(models.Model):
 class RunSession(models.Model):
   report = models.ForeignKey('RunReport', related_name='sessions')
   date = models.DateField()
+  name = models.CharField(max_length=255, null=True, blank=True)
   comment = models.TextField(null=True, blank=True)
 
   class Meta:

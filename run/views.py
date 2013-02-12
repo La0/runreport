@@ -41,6 +41,7 @@ def index(request):
     'sessions': sessions,
     'form' : form,
     'trainer' : profile.trainer,
+    'today' : date.today(),
   }
 
 @login_required
