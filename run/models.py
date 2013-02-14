@@ -6,7 +6,7 @@ import xlwt
 import tempfile
 from django.core.mail import EmailMessage
 from django.contrib.sites.models import get_current_site
-from coach.settings import REPORT_SEND_DAY, REPORT_SEND_TIME
+from coach.settings import REPORT_SEND_DAY, REPORT_SEND_TIME, LANGUAGE_CODE
 
 class RunReport(models.Model):
   user = models.ForeignKey(User)
@@ -51,25 +51,30 @@ class RunReport(models.Model):
     '''
     Build excel file using sessions
     '''
+    from django.utils import formats
+
     font = xlwt.Font()
-    font.name = 'Times New Roman'
-    font.colour_index = 2
     font.bold = True
 
-    style_title = xlwt.XFStyle()
-    style_title.font = font
+    align = xlwt.Alignment()
+    align.wrap = 1 # Display line feeds
+    style_align = xlwt.XFStyle()
+    style_align.alignment = align
 
     style_date = xlwt.XFStyle()
     style_date.num_format_str = 'DD-MM-YYYY'
+    style_date.font = font
 
     wb = xlwt.Workbook()
     ws = wb.add_sheet('%s - %s' % (self.get_date_start(), self.get_date_end()))
 
     i = 0
     for sess in self.sessions.all().order_by('date'):
-      ws.write(i, 0, sess.date, style_date)
-      ws.write(i, 1, sess.comment)
+      ws.write(i, 0, formats.date_format(sess.date, 'DATE_FORMAT'), style_date)
+      if sess.name is not None and sess.comment is not None:
+        ws.write(i, 1, '%s :\n%s' % (sess.name, sess.comment), style_align)
       i += 1
+    ws.col(0).width = 4000 # Static width for dates
 
     # Output to tmp file
     _, path = tempfile.mkstemp(suffix='.xls')
