@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>{{month|date('E Y')}}</h2>
+
+<table class="table table-bordered">
+  <tr>
+    <th>Lundi</th>
+    <th>Mardi</th>
+    <th>Mercredi</th>
+    <th>Jeudi</th>
+    <th>Vendredi</th>
+    <th>Samedi</th>
+    <th>Dimanche</th>
+  </tr>
+{% for week in weeks %}
+  <tr>
+  {% for day in week %}
+  <td>
+    <span class="date">{{day|date('d E')}}</span>
+    {% with sessions[day] as session %}
+    {% if session and (session.comment or session.name) %}
+    <p>
+      {{session.name}}: {{session.comment}}
+    </p>
+    {% endif %}
+    {% endwith %}
+  </td>
+  {% endfor %}
+  </tr>
+{% endfor %}
+</table>
+
+{% endblock %}

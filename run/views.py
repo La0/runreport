@@ -4,6 +4,7 @@ from models import RunReport, RunSession
 from datetime import date, datetime
 from forms import RunSessionFormSet
 from django.http import Http404, HttpResponse
+import calendar
 
 @render('run/index.html')
 def index(request):
@@ -48,7 +49,6 @@ def index(request):
 
 @login_required
 def excel(request, year, week):
-  print year, week
   try:
     report = RunReport.objects.get(user=request.user, year=int(year), week=int(week))
   except:
@@ -59,3 +59,25 @@ def excel(request, year, week):
   response = HttpResponse(open(excel), content_type='application/vnd.ms-excel')
   response['Content-Disposition'] = 'attachment; filename="%s_semaine_%s.xls"' % (request.user.username, report.week)
   return response
+
+@login_required
+@render('run/month.html')
+def month(request, year, month):
+  # Load all days & weeks for this month
+  try:
+    cal = calendar.Calendar(calendar.MONDAY)
+    days = [d for d in cal.itermonthdates(int(year), int(month))]
+    weeks = cal.monthdatescalendar(int(year), int(month))
+  except Exception, e:
+    raise Http404(str(e))
+
+  # Load all sessions for this month
+  sessions = RunSession.objects.filter(report__user=request.user, date__in=days)
+  sessions = dict((r.date, r) for r in sessions)
+
+  return {
+    'month' : days[0],
+    'days': days,
+    'weeks' : weeks,
+    'sessions' : sessions,
+  }
