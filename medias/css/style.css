@@ -46,3 +46,21 @@ form.report textarea {
   line-height: 15px;
   height: 60px;
 }
+
+table.calendar td {
+  height: 100px;
+  width: 14%;
+  padding: 0;
+}
+
+table.calendar td.other-month {
+  background: #EFEFEF;
+}
+
+table.calendar td p.date {
+  font-size: 10px;
+  height: 14px;
+  line-height: 14px;
+  padding-left: 5px;
+  border-bottom: 1px solid #EEE;
+}

@@ -2,9 +2,9 @@
 
 {% block content %}
 
-<h2>{{month|date('E Y')}}</h2>
+<h2>{{months.1|date('E Y')}}</h2>
 
-<table class="table table-bordered">
+<table class="table table-bordered table-condensed calendar">
   <tr>
     <th>Lundi</th>
     <th>Mardi</th>
@@ -17,19 +17,30 @@
 {% for week in weeks %}
   <tr>
   {% for day in week %}
-  <td>
-    <span class="date">{{day|date('d E')}}</span>
-    {% with sessions[day] as session %}
+  {% with sessions[day] as session %}
+  <td class="{% if session and (session.comment or session.name) %}session{% else %}nothing{% endif %} {% if day.month != months.1.month %}other-month{% endif %}">
+    <p class="date">{{day|date('d E')}}</p>
     {% if session and (session.comment or session.name) %}
     <p>
-      {{session.name}}: {{session.comment}}
+      {{session.name|default('Session sans nom')}}
     </p>
     {% endif %}
-    {% endwith %}
   </td>
+  {% endwith %}
   {% endfor %}
   </tr>
 {% endfor %}
 </table>
+
+<ul class="pager">
+  <li class="previous">
+    <a href="{% url report-month months.0.year, months.0.month %}">&laquo; {{months.0|date('E Y')}}</a>
+  </li>
+  {% if months.2 %}
+  <li class="next">
+    <a href="{% url report-month months.2.year, months.2.month %}">{{months.2|date('E Y')}} &raquo;</a>
+  </li>
+  {% endif %}
+</ul>
 
 {% endblock %}

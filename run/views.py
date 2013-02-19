@@ -1,7 +1,7 @@
 from helpers import render
 from django.contrib.auth.decorators import login_required
 from models import RunReport, RunSession
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from forms import RunSessionFormSet
 from django.http import Http404, HttpResponse
 import calendar
@@ -62,12 +62,16 @@ def excel(request, year, week):
 
 @login_required
 @render('run/month.html')
-def month(request, year, month):
+def month(request, year, month=False):
+  # Setup current month
+  today_month = datetime.now().replace(day=1) 
+  current_month = month and datetime.strptime('%s %s 1' % (year, month), '%Y %m %d') or today_month
+
   # Load all days & weeks for this month
   try:
     cal = calendar.Calendar(calendar.MONDAY)
-    days = [d for d in cal.itermonthdates(int(year), int(month))]
-    weeks = cal.monthdatescalendar(int(year), int(month))
+    days = [d for d in cal.itermonthdates(current_month.year, current_month.month)]
+    weeks = cal.monthdatescalendar(current_month.year, current_month.month)
   except Exception, e:
     raise Http404(str(e))
 
@@ -75,8 +79,12 @@ def month(request, year, month):
   sessions = RunSession.objects.filter(report__user=request.user, date__in=days)
   sessions = dict((r.date, r) for r in sessions)
 
+  # Months first days
+  previous_month = current_month - timedelta(days=20)
+  next_month = current_month.date() < today_month.date() and current_month + timedelta(days=40) or None
+
   return {
-    'month' : days[0],
+    'months' : (previous_month, current_month, next_month),
     'days': days,
     'weeks' : weeks,
     'sessions' : sessions,
