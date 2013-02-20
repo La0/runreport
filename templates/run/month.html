@@ -4,6 +4,14 @@
 
 <h2>{{months.1|date('E Y')}}</h2>
 
+<script type="text/javascript">
+$(function(){
+  $('td div.clickme').popover({
+    placement : 'top',
+  });
+});
+</script>
+
 <table class="table table-bordered table-condensed calendar">
   <tr>
     <th>Lundi</th>
@@ -18,7 +26,13 @@
   <tr>
   {% for day in week %}
   {% with sessions[day] as session %}
-  <td class="{% if session and (session.comment or session.name) %}session{% else %}nothing{% endif %} {% if day.month != months.1.month %}other-month{% endif %}">
+    {% if session and (session.comment or session.name) %}
+    <td class="session">
+    <div class="clickme" title="{{day|date('l d E Y')}}" data-content="{{session.name|default('Session')}}: {{ session.comment }}">
+    {% else %}
+    <td class="nothing">
+    {% endif %}
+
     <p class="date">
       {% if day.day == 1 or (loop.first and day.month != months.1.month) %}
       {{day|date('d E')}}
@@ -30,6 +44,7 @@
     <p>
       {{session.name|default('Session sans nom')}}
     </p>
+    </div>
     {% endif %}
   </td>
   {% endwith %}

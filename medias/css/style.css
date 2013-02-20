@@ -53,6 +53,10 @@ table.calendar td {
   padding: 0;
 }
 
+table.calendar td div.clickme{
+  height: 100px;
+}
+
 table.calendar td.other-month {
   background: #F1F1F1;
 }
