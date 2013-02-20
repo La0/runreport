@@ -54,13 +54,21 @@ table.calendar td {
 }
 
 table.calendar td.other-month {
-  background: #EFEFEF;
+  background: #F1F1F1;
+}
+
+table.calendar td.session {
+  background: #ccd5f9;
+}
+
+table.calendar td p {
+  padding: 0 3px;
 }
 
 table.calendar td p.date {
   font-size: 10px;
   height: 14px;
   line-height: 14px;
-  padding-left: 5px;
-  border-bottom: 1px solid #EEE;
+  border-bottom: 1px solid #dcdde0;
+  margin: 0;
 }

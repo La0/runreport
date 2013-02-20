@@ -19,7 +19,13 @@
   {% for day in week %}
   {% with sessions[day] as session %}
   <td class="{% if session and (session.comment or session.name) %}session{% else %}nothing{% endif %} {% if day.month != months.1.month %}other-month{% endif %}">
-    <p class="date">{{day|date('d E')}}</p>
+    <p class="date">
+      {% if day.day == 1 or (loop.first and day.month != months.1.month) %}
+      {{day|date('d E')}}
+      {% else %}
+      {{day|date('d')}}
+      {% endif %}
+    </p>
     {% if session and (session.comment or session.name) %}
     <p>
       {{session.name|default('Session sans nom')}}
