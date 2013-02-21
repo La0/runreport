@@ -7,14 +7,28 @@ from django.http import Http404, HttpResponse
 import calendar
 
 @render('run/index.html')
-def index(request):
+def report(request, year=False, week=False):
   if not request.user.is_authenticated():
     return {}
 
-  # Init current report
   today = date.today()
-  week = int(today.strftime('%W'))
-  report, created = RunReport.objects.get_or_create(user=request.user, year=today.year, week=week)
+  if not year or not week:
+    # Use current week by default
+    week = int(today.strftime('%W'))
+    year = today.year
+
+  else:
+    # Check week is valid
+    year = int(year)
+    week = int(week)
+    dt = datetime.strptime('%d %d 1' % (year, week), '%Y %W %w')
+    if dt.year < 2013: # TODO: use settings
+      raise Http404('Too old.')
+    if dt.date() > today:
+      raise Http404('In the future.')
+
+  # Init report
+  report, created = RunReport.objects.get_or_create(user=request.user, year=year, week=week)
   if created:
     report.init_sessions()
 
