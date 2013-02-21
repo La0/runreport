@@ -62,10 +62,10 @@ def excel(request, year, week):
 
 @login_required
 @render('run/month.html')
-def month(request, year, month=False):
+def month(request, year=False, month=False):
   # Setup current month
   today_month = datetime.now().replace(day=1) 
-  current_month = month and datetime.strptime('%s %s 1' % (year, month), '%Y %m %d') or today_month
+  current_month = (month and year) and datetime.strptime('%s %s 1' % (year, month), '%Y %m %d') or today_month
 
   # Load all days & weeks for this month
   try:

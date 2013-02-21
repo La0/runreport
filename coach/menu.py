@@ -5,13 +5,15 @@ def add_pages(request):
   '''
   List menu pages, with active status
   '''
-  def _p(url_name, caption):
-    url = reverse(url_name) 
-    return {'url' : url, 'caption' : caption, 'active' : (request.path == url)}
+  def _p(url_name, caption, lazy=False):
+    url = reverse(url_name)
+    active = lazy and request.path.startswith(url) or (request.path == url)
+    return {'url' : url, 'caption' : caption, 'active' : active}
 
   menu = []
   if request.user.is_authenticated():
     menu.append(_p('report-current', 'Cette semaine'))
+    menu.append(_p('report-current-month', 'Calendrier', True))
     menu.append(_p('user-profile', 'Mon profil'))
     menu.append(_p('logout', u'Se déconnecter'))
   else:
