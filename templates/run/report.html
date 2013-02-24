@@ -28,9 +28,15 @@
     </div>
 </form>
 
+  {% if report.is_current() %}
   <p class="alert alert-info">
     Tous les commentaires remplis seront envoyés automatiquement à {{trainer.first_name|default(trainer.username)}} dans {{ report.get_send_date()|timeuntil }}.
   </p>
+  {% else %}
+  <p class="alert alert-warning">
+    L'envoi automatique des commentaires n'est actif que pour la <strong>semaine en cours</strong>.
+  </p>
+  {% endif %}
 
 {% else %}
 

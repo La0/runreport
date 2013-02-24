@@ -1,7 +1,7 @@
 # coding=utf-8
 from django.db import models
 from django.contrib.auth.models import User
-from datetime import datetime, time
+from datetime import datetime, date, time
 import xlwt
 import tempfile
 from django.core.mail import EmailMessage
@@ -27,8 +27,8 @@ class RunReport(models.Model):
     Build sessions for the current week
     '''
     for day in range(0,7):
-      date = self.get_date(day)
-      RunSession.objects.get_or_create(report=self, date=date)
+      dt= self.get_date(day)
+      RunSession.objects.get_or_create(report=self, date=dt)
 
   def get_date(self, day):
     return datetime.strptime('%d %d %d' % (self.year, self.week, day), '%Y %W %w').date()
@@ -46,6 +46,12 @@ class RunReport(models.Model):
     day = self.get_date(REPORT_SEND_DAY)
     t = time(REPORT_SEND_TIME[0], REPORT_SEND_TIME[1])
     return datetime.combine(day, t)
+
+  def is_current(self):
+    today = date.today()
+    today_week = int(today.strftime('%W'))
+    dt = datetime.strptime('%d %d 1' % (today.year, today_week), '%Y %W %w').date()
+    return self.get_date_start() == dt
 
   def build_xls(self):
     '''
