@@ -28,7 +28,6 @@
     </div>
 </form>
 
-
   <p class="alert alert-info">
     Tous les commentaires remplis seront envoyés automatiquement à {{trainer.first_name|default(trainer.username)}} dans {{ report.get_send_date()|timeuntil }}.
   </p>
@@ -52,3 +51,25 @@
   {% endfor %}
 </table>
 {% endif %}
+
+<div class="pagination pagination-centered">
+  <ul>
+  {% if week_previous %}
+    <li><a href="{% url report-week week_previous.year, week_previous.week %}">&laquo;</a></li>
+  {% else %}
+    <li class="active"><span>&laquo;</span</li>
+  {% endif %}
+  {% for w in weeks %}
+    {% if w.current %}
+    <li class="active"><span>{{w.start|date('d M')}}</span></li>
+    {% else %}
+    <li><a href="{% url report-week w.year, w.week %}">{{w.start|date('d M')}}</a></li>
+    {% endif %}
+  {% endfor %}
+  {% if week_next %}
+    <li><a href="{% url report-week week_next.year, week_next.week %}">&raquo;</a></li>
+  {% else %}
+    <li class="active"><span>&laquo;</span</li>
+  {% endif %}
+  </ul>
+</div>

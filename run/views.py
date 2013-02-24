@@ -4,6 +4,7 @@ from models import RunReport, RunSession
 from datetime import date, datetime, timedelta
 from forms import RunSessionFormSet
 from django.http import Http404, HttpResponse
+from coach.settings import REPORT_START_DATE
 import calendar
 
 @render('run/index.html')
@@ -11,20 +12,29 @@ def report(request, year=False, week=False):
   if not request.user.is_authenticated():
     return {}
 
+  # Load min date
+  min_year, min_week = REPORT_START_DATE
+  dt = datetime.strptime('%d %d 1' % (min_year, min_week), '%Y %W %w')
+  min_date = dt.date()
+
   today = date.today()
+  today_week = int(today.strftime('%W'))
+  report_date = None
   if not year or not week:
     # Use current week by default
-    week = int(today.strftime('%W'))
+    week = today_week
     year = today.year
+    report_date = today
 
   else:
     # Check week is valid
     year = int(year)
     week = int(week)
     dt = datetime.strptime('%d %d 1' % (year, week), '%Y %W %w')
-    if dt.year < 2013: # TODO: use settings
+    report_date = dt.date()
+    if report_date < min_date:
       raise Http404('Too old.')
-    if dt.date() > today:
+    if report_date > today:
       raise Http404('In the future.')
 
   # Init report
@@ -53,12 +63,36 @@ def report(request, year=False, week=False):
   # Get profile
   profile = request.user.get_profile()
 
+  # Build weeks for pagination
+  weeks = []
+  dt = min_date
+  i, current_pos = 0, 0
+  while dt < today:
+    current = (dt == report_date)
+    if current:
+      current_pos = i
+    weeks.append({
+      'start' : dt,
+      'end'   : dt + timedelta(days=6),
+      'current' : current,
+      'week'  : dt.strftime('%W'),
+      'year'  : dt.year,
+    })
+    dt += timedelta(days=7)
+    i += 1
+
+  week_previous = current_pos - 1 > 0 and weeks[current_pos - 1] or None
+  week_next = current_pos + 1 < len(weeks) and weeks[current_pos + 1] or None
+
   return {
     'report' : report,
     'sessions': sessions,
     'form' : form,
     'trainer' : profile.trainer,
     'now' : datetime.now(),
+    'weeks': weeks,
+    'week_previous' : week_previous,
+    'week_next' : week_next,
   }
 
 @login_required
