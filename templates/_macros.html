@@ -1,10 +1,12 @@
-{% macro input(field, label) -%}
+{% macro input(field, label, help=False) -%}
 <div class="control-group {% if field.errors %}error{% elif field.value() %}success{% endif %}">
   <label class="control-label" for="id_{{field.name}}">{{label}}</label>
   <div class="controls">
     {{field|safe}}
     {% if field.errors %}
     <span class="help-inline">{{field.errors|safe}}</span>
+    {% elif help %}
+    <span class="help-inline">{{help}}</span>
     {% endif %}
   </div>
 </div>

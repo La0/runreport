@@ -10,14 +10,21 @@
     {% for input in form_user.visible_fields() %}
       {{ macros.input(input, input.label) }}
     {% endfor %}
+    {{ macros.input(form_profile.birthday, 'Date de naissance', 'JJ/MM/AAAA') }}
   </fieldset>
 
   <fieldset>
+    <legend>Informations sportives</legend>
     {{ macros.input(form_profile.trainer, 'Coach') }}
-    <div class="form-actions">
-      <button type="submit" class="btn btn-primary">Mettre à jour</button>
-    </div>
+    {{ macros.input(form_profile.vma, 'Vma', 'Ex: 15.2 km/h') }}
+    {{ macros.input(form_profile.weight, 'Poids', 'En kg') }}
+    {{ macros.input(form_profile.height, 'Taille', 'En cm') }}
+    {{ macros.input(form_profile.frequency, 'Fréquence Cardiaque maximale') }}
   </fieldset>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary">Mettre à jour</button>
+  </div>
 </form>
 
 {% endblock %}
