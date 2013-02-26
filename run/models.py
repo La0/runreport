@@ -101,7 +101,7 @@ class RunReport(models.Model):
     message = u'Envoyé via %s' % site
     profile = self.user.get_profile()
     xls = open(self.build_xls(), 'r')
-    xls_name = '%s_semaine_%d.xls' % (self.user.username, self.week)
+    xls_name = '%s_semaine_%d.xls' % (self.user.username, self.week+1)
 
     # Build & send message
     headers = {'Reply-To' : self.user.email,}
