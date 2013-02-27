@@ -2,7 +2,7 @@ from helpers import render
 from django.contrib.auth.decorators import login_required
 from models import RunReport, RunSession
 from datetime import date, datetime, timedelta
-from forms import RunSessionFormSet
+from forms import RunSessionFormSet, RunReportForm
 from django.http import Http404, HttpResponse
 from coach.settings import REPORT_START_DATE
 import calendar
@@ -43,7 +43,7 @@ def report(request, year=False, week=False):
     report.init_sessions()
 
   # Build formset
-  form = None
+  form, form_report = None, None
   sessions = report.sessions.all().order_by('date')
   if not report.published:
     if request.method == 'POST':
@@ -51,14 +51,18 @@ def report(request, year=False, week=False):
       form = RunSessionFormSet(request.POST)
       if form.is_valid():
         form.save()
-        report.updated = datetime.now()
-        report.save()
+
+      # Sace report
+      form_report = RunReportForm(request.POST, instance=report)
+      if form_report.is_valid():
+        form_report.save()
 
       # Publish ?
       if request.POST['action'] == 'publish':
         report.publish()
     else:
       form = RunSessionFormSet(queryset=sessions)
+      form_report = RunReportForm(instance=report)
 
   # Get profile
   profile = request.user.get_profile()
@@ -88,6 +92,7 @@ def report(request, year=False, week=False):
     'report' : report,
     'sessions': sessions,
     'form' : form,
+    'form_report' : form_report,
     'trainer' : profile.trainer,
     'now' : datetime.now(),
     'weeks': weeks,

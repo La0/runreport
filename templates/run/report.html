@@ -22,6 +22,14 @@
     </fieldset>
   {% endfor %}
 
+  <fieldset>
+    <legend>Bilan de la semaine</legend>
+    <p class="muted">
+    Vous pouvez indiquer votre ressenti sur cette semaine (facultatif).
+    </p>
+    {{ macros.input(form_report.comment, 'Commentaire') }}
+  </fieldset>
+
     <div class="form-actions">
       <button type="submit" name="action" value="save" class="btn btn-primary">Sauver ces commentaires</button>
       <button type="submit" name="action" value="publish" class="btn btn-success">Envoyer à {{trainer.first_name|default(trainer.username)}}</button>

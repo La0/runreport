@@ -15,6 +15,7 @@ class RunReport(models.Model):
   published = models.BooleanField(default=False)
   created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
+  comment = models.TextField(null=True, blank=True)
 
   class Meta:
     unique_together = (('user', 'year', 'week'),)
@@ -74,11 +75,19 @@ class RunReport(models.Model):
     wb = xlwt.Workbook()
     ws = wb.add_sheet('%s - %s' % (self.get_date_start(), self.get_date_end()))
 
+    # Add content to xls
     i = 0
     for sess in self.sessions.all().order_by('date'):
       ws.write(i, 0, formats.date_format(sess.date, 'DATE_FORMAT'), style_date)
-      if sess.name is not None and sess.comment is not None:
-        ws.write(i, 1, '%s :\n%s' % (sess.name, sess.comment), style_align)
+      content = []
+      if sess.name:
+        content.append('%s :' % (sess.name,))
+      if sess.comment:
+        content.append(sess.comment)
+      if i == 6 and self.comment:
+        content.append('Bilan de la semaine :')
+        content.append(self.comment)
+      ws.write(i, 1, '\n'.join(content), style_align)
       i += 1
     ws.col(0).width = 4000 # Static width for dates
 
