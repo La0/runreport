@@ -29,7 +29,7 @@ def add_pages(request):
 
     # User menu
     submenu = {
-      'caption' : request.user.first_name,
+      'caption' : request.user.first_name or request.user.username,
       'menu' : []
     }
     submenu['menu'].append(_p('user-profile', 'Mon profil'))
