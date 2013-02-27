@@ -2,9 +2,31 @@
 
 {% block content %}
 
+{% if profile.vma %}
+
+<h2>Temps de passage</h2>
+<table class="table table-bordered table-hover">
+  <tr>
+    <th>% VMA</tH>
+    {% for d in vma.get_distances() %}
+    <th>{{d}}</td>
+    {% endfor %}
+  </tr>
+  {% for pace in vma.get_paces() %}
+  <tr>
+    <td>{{pace.percent}}</td>
+    {% for d in vma.get_distances() %}
+    <td style="width: 100px;">
+      {{vma.get_time(pace, d)|date("i' s\"")}}
+    </td>
+    {% endfor %}
+  </tr>
+  {% endfor %}
+</table>
+
 <h2>Allures</h2>
 
-<table class="table table-bordered">
+<table class="table table-bordered table-hover">
   <tr>
     <th>Allures</th>
     <th>% VMA</tH>
@@ -12,19 +34,22 @@
     <th>Temps au km</th>
     <th>Temps au 100m</tH>
   </tr>
-  {% with vma.get_speeds() as speeds %}
   {% for pace in vma.get_paces() %}
-    {% with speeds[pace] as speed %}
-    <tr>
-      <td>{{pace.name}}</td>
-      <td>{{pace.percent}}</td>
-      <td>{{speed.speed}}</td>
-      <td>{{speed.1000|date("i' s\"")}}</td>
-      <td>{{speed.100|date("i' s\"")}}</td>
-    </tr>
-    {% endwith %}
+  <tr>
+    <td>{{pace.name}}</td>
+    <td>{{pace.percent}}</td>
+    <td>{{vma.get_speed(pace)}}</td>
+    <td>{{vma.get_time(pace, 1000)|date("i' s\"")}}</td>
+    <td>{{vma.get_time(pace, 100)|date("i' s\"")}}</td>
+  </tr>
   {% endfor %}
-  {% endwith %}
 </table>
+
+{% else %}
+<div class="alert alert-danger">
+  <h4>Pas de Vma !</h4>
+  Il faut renseigner ta VMA sur la <a href="{% url user-profile %}">page de profil</a> pour pouvoir afficher les tableaux.
+</div>
+{% endif %}
 
 {% endblock %}
