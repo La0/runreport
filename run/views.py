@@ -142,3 +142,17 @@ def month(request, year=False, month=False):
     'weeks' : weeks,
     'sessions' : sessions,
   }
+
+@login_required
+@render('run/vma.html')
+def vma(request):
+  from vma import VmaCalc
+
+  profile = request.user.get_profile()
+
+  vma = VmaCalc(profile.vma)
+
+  return {
+    'profile' : profile,
+    'vma' : vma
+  }

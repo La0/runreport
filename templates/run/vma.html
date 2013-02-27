@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Allures</h2>
+
+<table class="table table-bordered">
+  <tr>
+    <th>Allures</th>
+    <th>% VMA</tH>
+    <th>Vitesse</th>
+    <th>Temps au km</th>
+    <th>Temps au 100m</tH>
+  </tr>
+  {% with vma.get_speeds() as speeds %}
+  {% for pace in vma.get_paces() %}
+    {% with speeds[pace] as speed %}
+    <tr>
+      <td>{{pace.name}}</td>
+      <td>{{pace.percent}}</td>
+      <td>{{speed.speed}}</td>
+      <td>{{speed.1000|date("i' s\"")}}</td>
+      <td>{{speed.100|date("i' s\"")}}</td>
+    </tr>
+    {% endwith %}
+  {% endfor %}
+  {% endwith %}
+</table>
+
+{% endblock %}

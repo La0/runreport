@@ -8,4 +8,7 @@ urlpatterns = patterns('',
   # Calendar
   url(r'^calendar/?$', 'run.views.month', name="report-current-month"),
   url(r'^calendar/(?P<year>\d{4})/(?P<month>\d{1,2})/?$', 'run.views.month', name="report-month"),
+
+  # Vma
+  url(r'^vma/?', 'run.views.vma', name="vma"),
 )
