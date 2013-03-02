@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from datetime import datetime, date, time
 import xlwt
 import tempfile
-from django.core.mail import EmailMessage
+from django.core.mail import EmailMultiAlternatives
 from django.contrib.sites.models import get_current_site
 from coach.settings import REPORT_SEND_DAY, REPORT_SEND_TIME, LANGUAGE_CODE
 
@@ -103,7 +103,6 @@ class RunReport(models.Model):
     if self.published:
       raise Exception('This report is already published')
 
-
     # Build corpus
     site = get_current_site(None)
     subject = u'Séance de %s : du %s au %s' % (self.user, self.get_date_start(), self.get_date_end())
@@ -112,11 +111,22 @@ class RunReport(models.Model):
     xls = open(self.build_xls(), 'r')
     xls_name = '%s_semaine_%d.xls' % (self.user.username, self.week+1)
 
+    # Render html version
+    from coffin.shortcuts import render_to_string
+    context = {
+      'week_human' : self.week + 1,
+      'report': self,
+      'site': site,
+      'sessions' : self.sessions.all().order_by('date'),
+    }
+    mail_html = render_to_string('run/mail.html', context)
+
     # Build & send message
     headers = {'Reply-To' : self.user.email,}
-    mail = EmailMessage(subject, message, headers=headers)
+    mail = EmailMultiAlternatives(subject, message, headers=headers)
     mail.to = [profile.trainer.email]
     mail.cc = [self.user.email]
+    mail.attach_alternative(mail_html, 'text/html')
     mail.attach(xls_name, xls.read(), 'application/vnd.ms-excel')
     mail.send()
 
