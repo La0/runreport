@@ -5,6 +5,12 @@
 {% if profile.vma %}
 
 <h2>Temps de passage</h2>
+
+<p class="alert alert-success">
+Votre vma actuelle est de {{profile.vma}} km/h
+</p>
+
+<div class="table-fixed">
 <table class="table table-bordered table-hover">
   <tr>
     <th>% VMA</tH>
@@ -16,13 +22,20 @@
   <tr>
     <td>{{pace.percent}}</td>
     {% for d in vma.get_distances() %}
-    <td style="width: 100px;">
-      {{vma.get_time(pace, d)|date("i' s\"")}}
+    <td>
+      {% with vma.get_time(pace, d) as t %}
+      {% if t.hour > 0 %}
+      {{t|date("H\h i' s\"")}}
+      {% else %}
+      {{t|date("i' s\"")}}
+      {% endif %}
+      {% endwith %}
     </td>
     {% endfor %}
   </tr>
   {% endfor %}
 </table>
+</div>
 
 <h2>Allures</h2>
 

@@ -76,3 +76,18 @@ table.calendar td p.date {
   border-bottom: 1px solid #dcdde0;
   margin: 0;
 }
+
+/* Table vma */
+div.table-fixed{
+  width: auto;
+  overflow: auto;
+}
+
+div.table-fixed table {
+  table-layout: fixed;
+}
+
+div.table-fixed table td , div.table-fixed table th {
+  width: 80px;
+  text-align: center;
+}

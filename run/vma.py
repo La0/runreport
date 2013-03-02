@@ -41,4 +41,4 @@ class VmaCalc:
     Get the time object needed to run a distance at a pace
     '''
     t = time.localtime((distance * 3600) / (self.get_speed(pace) * 1000))
-    return datetime.time(t.tm_hour, t.tm_min, t.tm_sec)
+    return datetime.time(t.tm_hour-1, t.tm_min, t.tm_sec)
