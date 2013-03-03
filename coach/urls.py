@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, include, url
+from coffin.conf.urls.defaults import *
 from coach.settings import MEDIA_ROOT
 from django.contrib import admin
 admin.autodiscover()
