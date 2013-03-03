@@ -79,11 +79,18 @@
       {% if session.name %}
       <strong>{{session.name}}</strong><br />
       {% endif %}
-      {{session.comment|default('')}}
+      {{session.comment|default('')|linebreaksbr}}
     </td>
   </tr>
   {% endfor %}
 </table>
+{% endif %}
+
+{% if report.comment %}
+<h4>Bilan de la semaine</h4>
+<p>
+  {{report.comment|linebreaksbr}}
+</p>
 {% endif %}
 
 <div class="pagination pagination-centered">
