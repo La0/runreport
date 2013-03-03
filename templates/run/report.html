@@ -1,5 +1,12 @@
 {% import '_macros.html' as macros %}
 
+{% if report_previous %}
+<div class="alert alert-danger">
+  <h4>Semaine précédente non envoyée !</h4>
+  Vos commentaires de la <a href="{% url report-week week_previous.year, week_previous.week %}">semaine précèdente</a> n'ont pas été envoyés.
+</div>
+{% endif %}
+
 {% if form and not report.published %}
 <form method="post" action="" class="form-horizontal report">
   {% csrf_token %}
@@ -36,16 +43,24 @@
     </div>
 </form>
 
-  {% if report.is_current() %}
-  <p class="alert alert-info">
-    Tous les commentaires remplis seront envoyés automatiquement à {{trainer.first_name|default(trainer.username)}} dans {{ report.get_send_date()|timeuntil }}.
-  </p>
-  {% else %}
-  <p class="alert alert-warning">
-    L'envoi automatique des commentaires n'est actif que pour la <strong>semaine en cours</strong>.
-  </p>
-  {% endif %}
+  {% if profile.auto_send %}
 
+    {% if report.is_current() %}
+    <p class="alert alert-info">
+      Tous les commentaires remplis seront envoyés automatiquement à {{trainer.first_name|default(trainer.username)}} dans {{ report.get_send_date()|timeuntil }}.
+    </p>
+    {% else %}
+    <p class="alert alert-warning">
+      L'envoi automatique des commentaires n'est actif que pour la <strong>semaine en cours</strong>.
+    </p>
+    {% endif %}
+
+  {% else %}
+    <div class="alert alert-warning">
+      <h4>Envoi automatique désactivé !</h4>
+      Pour activer l'envoi automatique, veuillez sélectionnez l'option dans <a href="{% url user-profile %}">votre profil</a>
+    </div>
+  {% endif %}
 {% else %}
 
 <p class="alert alert-success">

@@ -88,8 +88,18 @@ def report(request, year=False, week=False):
   week_previous = current_pos - 1 > 0 and weeks[current_pos - 1] or None
   week_next = current_pos + 1 < len(weeks) and weeks[current_pos + 1] or None
 
+  # Get previous report if not published
+  report_previous = None
+  if report.is_current() and week_previous:
+    try:
+      report_previous = RunReport.objects.get(user=request.user, week=week_previous['week'], published=False)
+    except:
+      pass
+
   return {
     'report' : report,
+    'report_previous' : report_previous,
+    'profile' : profile,
     'sessions': sessions,
     'form' : form,
     'form_report' : form_report,
