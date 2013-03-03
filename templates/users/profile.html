@@ -14,6 +14,11 @@
   </fieldset>
 
   <fieldset>
+    <legend>Mails</legend>
+    {{ macros.input(form_profile.auto_send, 'Envoi automatique des commentaires en fin de semaine') }}
+  </fieldset>
+
+  <fieldset>
     <legend>Informations sportives</legend>
     {{ macros.input(form_profile.trainer, 'Coach') }}
     {{ macros.input(form_profile.vma, 'Vma', 'Ex: 15.2 km/h') }}

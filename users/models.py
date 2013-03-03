@@ -16,6 +16,9 @@ class UserProfile(models.Model):
   height = models.IntegerField(null=True, blank=True)
   weight = models.IntegerField(null=True, blank=True)
 
+  # Mail
+  auto_send = models.BooleanField(default=False)
+
   # Reminders
   reminder_monday   = models.TimeField(null=True, blank=True)
   reminder_tuesday  = models.TimeField(null=True, blank=True)

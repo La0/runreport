@@ -10,6 +10,7 @@ class Command(BaseCommand):
     '''
     year, week = self.get_current_week()
     reports = RunReport.objects.filter(year=year, week=week, published=False).order_by('user__username')
+    reports = reports.filter(user__userprofile__auto_send=True) # Auto send must be enabled per user
     for r in reports:
 
       # Skip empty report
