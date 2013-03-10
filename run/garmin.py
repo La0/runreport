@@ -1,20 +1,43 @@
 import requests
+import gnupg
+from coach.settings import GPG_HOME, GPG_KEY, GPG_PASSPHRASE
 
 class GarminConnector:
+  _user = None
+  _login = None
+  _password = None
 
   _url_login = 'https://connect.garmin.com/signin'
   _url_activity = 'http://connect.garmin.com/proxy/activity-search-service-1.0/json/activities'
 
-  def __init__(self, login, password):
-    self._login = login
-    self._password = password
+  def __init__(self, user=None, login=None, password=None):
+    if user:
+      # Load from user
+      self._user = user
+      profile = self._user.get_profile()
+      if profile is None:
+        raise Exception("No profile for user %s" % self._user)
+      self._login = profile.garmin_login
+      self.load_password(profile.garmin_password)
+
+    elif login and password:
+      # Load from login/pass
+      self._login = login
+      self.load_password(password)
+    else:
+      raise Exception("Missing login infos")
+
+  def load_password(self, password):
+    '''
+    Try to decrypt password
+    '''
+    gpg = gnupg.GPG(gnupghome=GPG_HOME)
+    self._password = str(gpg.decrypt(password, passphrase=GPG_PASSPHRASE))
 
   def login(self):
     '''
     Authentify session
     '''
-    print 'Login with %s' % self._login
-
     # First request is empty to init session
     self._session = requests.Session()
     r = self._session.get(self._url_login)
@@ -49,10 +72,15 @@ class GarminConnector:
   def search(self):
     params = {
       'start' : 0,
-      'limit' : 5,
+      'limit' : 10,
     }
     resp = self._session.get(self._url_activity, params=params)
     data = resp.json()
-    from pprint import pprint
-    pprint(data)
 
+    from pprint import pprint
+
+    for activity in data['results']['activities']:
+      activity = activity['activity']
+      #pprint(activity)
+
+      print "#%s %s : %s %s au kilo sur %s km" % (activity['activityId'], activity['activityName']['value'], activity['sumMovingDuration']['display'], activity['weightedMeanMovingSpeed']['display'], activity['sumDistance']['value'])

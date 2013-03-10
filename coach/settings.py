@@ -181,6 +181,7 @@ REPORT_START_DATE = (2013, 0) # Week 0 of 2013
 # Gnu GPG settings
 GPG_HOME=''
 GPG_KEY=''
+GPG_PASSPHRASE=''
 
 # Import local settings, if any
 try:

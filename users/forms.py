@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from coach.settings import TRAINERS_GROUP, GPG_HOME, GPG_KEY
 from helpers import nameize
+import gnupg
+from run.garmin import GarminConnector
 
 class UserModelChoiceField(forms.ModelChoiceField):
   def label_from_instance(self, obj):
@@ -77,10 +79,18 @@ class GarminForm(forms.ModelForm):
   def clean_garmin_password(self):
 
     # Encrypt password
-    import gnupg
     gpg = gnupg.GPG(gnupghome=GPG_HOME)
-    password = gpg.encrypt(self.cleaned_data['garmin_password'], GPG_KEY)
+    password = str(gpg.encrypt(self.cleaned_data['garmin_password'], GPG_KEY))
     if not password:
       raise ValidationError("Failed to encrypt password")
 
     return password
+
+  def clean(self):
+    # Check login/password are valid
+    try:
+      gc = GarminConnector(login=self.cleaned_data['garmin_login'], password=self.cleaned_data['garmin_password'])
+      gc.login()
+    except Exception, e:
+      raise ValidationError(str(e))
+    return self.cleaned_data
