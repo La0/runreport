@@ -5,7 +5,7 @@ from django.contrib.auth.models import User, Group
 from coach.settings import LOGIN_REDIRECT_URL, LOGOUT_REDIRECT_URL, TRAINERS_GROUP
 from django.contrib.auth import login as auth_login, logout as auth_logout, authenticate
 from django.contrib.auth.decorators import login_required
-from forms import ProfileForm, UserForm, SignUpForm
+from forms import ProfileForm, UserForm, SignUpForm, GarminForm
 
 @render('users/login.html')
 def login(request):
@@ -79,6 +79,22 @@ def create(request):
     'form': form,
   }
 
+
+@login_required
+@render('users/garmin.html')
+def garmin(request):
+  profile = request.user.get_profile()
+
+  if request.method == 'POST':
+    form = GarminForm(request.POST, instance=profile)
+    if form.is_valid():
+      form.save()
+  else:
+    form = GarminForm(instance=profile)
+
+  return {
+    'form' : form,
+  }
 
 def logout(request):
   auth_logout(request)

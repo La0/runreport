@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Connection Garmin</h1>
+
+<form class="form form-horizontal" action="" method="POST">
+  {% csrf_token %}
+
+  <fieldset>
+    {{ macros.input(form.garmin_login, 'Login Garmin') }}
+    {{ macros.input(form.garmin_password, 'Mot de passe Garmin') }}
+  </fieldset>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary">Sauver ces informations</button>
+  </div>
+</form>
+
+{% endblock %}

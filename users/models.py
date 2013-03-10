@@ -19,6 +19,10 @@ class UserProfile(models.Model):
   # Mail
   auto_send = models.BooleanField(default=False)
 
+  # Garmin
+  garmin_login = models.CharField(max_length=255, null=True, blank=True)
+  garmin_password = models.TextField(null=True, blank=True)
+
   # Reminders
   reminder_monday   = models.TimeField(null=True, blank=True)
   reminder_tuesday  = models.TimeField(null=True, blank=True)

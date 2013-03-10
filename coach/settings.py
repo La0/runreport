@@ -178,6 +178,10 @@ REPORT_SEND_DAY = 0
 REPORT_SEND_TIME = (20,00)
 REPORT_START_DATE = (2013, 0) # Week 0 of 2013
 
+# Gnu GPG settings
+GPG_HOME=''
+GPG_KEY=''
+
 # Import local settings, if any
 try:
   from local_settings import *

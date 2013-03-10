@@ -2,7 +2,7 @@ from django import forms
 from models import UserProfile
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-from coach.settings import TRAINERS_GROUP
+from coach.settings import TRAINERS_GROUP, GPG_HOME, GPG_KEY
 from helpers import nameize
 
 class UserModelChoiceField(forms.ModelChoiceField):
@@ -64,3 +64,23 @@ class SignUpForm(forms.Form):
           break
       self.cleaned_data['username'] = name
     return self.cleaned_data
+
+class GarminForm(forms.ModelForm):
+
+  class Meta:
+    model = UserProfile
+    fields = ('garmin_login', 'garmin_password')
+    widgets = {
+      'garmin_password' : forms.PasswordInput()
+    }
+
+  def clean_garmin_password(self):
+
+    # Encrypt password
+    import gnupg
+    gpg = gnupg.GPG(gnupghome=GPG_HOME)
+    password = gpg.encrypt(self.cleaned_data['garmin_password'], GPG_KEY)
+    if not password:
+      raise ValidationError("Failed to encrypt password")
+
+    return password
