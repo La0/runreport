@@ -138,6 +138,20 @@ class RunSession(models.Model):
   date = models.DateField()
   name = models.CharField(max_length=255, null=True, blank=True)
   comment = models.TextField(null=True, blank=True)
+  garmin_activity = models.ForeignKey('GarminActivity', null=True, blank=True)
 
   class Meta:
     unique_together = (('report', 'date'),)
+
+class GarminActivity(models.Model):
+  garmin_id = models.IntegerField(unique=True)
+  user = models.ForeignKey(User)
+  name = models.CharField(max_length=255)
+  time = models.TimeField()
+  distance = models.FloatField() # Kilometers
+  speed = models.TimeField() # Time per kilometer
+  raw_json = models.TextField()
+  date = models.DateTimeField() # Date of the activity
+  created = models.DateTimeField(auto_now_add=True) # Object creation
+  updated = models.DateTimeField(auto_now=True)
+

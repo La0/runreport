@@ -11,3 +11,7 @@ class RunReportAdmin(admin.ModelAdmin):
   inlines = [RunSessionAdmin, ]
 admin.site.register(RunReport, RunReportAdmin)
 
+class GarminActivityAdmin(admin.ModelAdmin):
+  list_display = ('user', 'date', 'name', 'distance', 'time', 'speed')
+  list_filter = ('user', )
+admin.site.register(GarminActivity, GarminActivityAdmin)

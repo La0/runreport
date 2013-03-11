@@ -1,6 +1,9 @@
 import requests
 import gnupg
-from coach.settings import GPG_HOME, GPG_KEY, GPG_PASSPHRASE
+from datetime import datetime
+from coach.settings import GPG_HOME, GPG_PASSPHRASE
+from run.models import GarminActivity, RunSession
+import json
 
 class GarminConnector:
   _user = None
@@ -9,6 +12,8 @@ class GarminConnector:
 
   _url_login = 'https://connect.garmin.com/signin'
   _url_activity = 'http://connect.garmin.com/proxy/activity-search-service-1.0/json/activities'
+
+  _max_activities = 10 # per request
 
   def __init__(self, user=None, login=None, password=None):
     if user:
@@ -69,18 +74,62 @@ class GarminConnector:
     if 'org.jboss.seam.security.authtoken' not in self._session.cookies:
       raise Exception("Auth failed with login %s" % self._login)
 
-  def search(self):
+  def search(self, nb_pass=0):
+    if self._user is None:
+      raise Exception("Can not search without a user")
     params = {
-      'start' : 0,
-      'limit' : 10,
+      'start' : nb_pass * self._max_activities,
+      'limit' : self._max_activities,
     }
     resp = self._session.get(self._url_activity, params=params)
     data = resp.json()
 
-    from pprint import pprint
-
+    activities = []
     for activity in data['results']['activities']:
       activity = activity['activity']
-      #pprint(activity)
+      activities.append(self.load_activity(activity))
 
-      print "#%s %s : %s %s au kilo sur %s km" % (activity['activityId'], activity['activityName']['value'], activity['sumMovingDuration']['display'], activity['weightedMeanMovingSpeed']['display'], activity['sumDistance']['value'])
+    return activities
+
+  def load_activity(self, activity):
+    # Load existing activity
+    #  or build a new one
+    created = False
+    try:
+      act = GarminActivity.objects.get(garmin_id=activity['activityId'], user=self._user)
+    except:
+      act = GarminActivity(garmin_id=activity['activityId'], user=self._user)
+      created = True
+  
+    # Init newly created activity
+    if created:
+
+      # Date
+      t = int(activity['beginTimestamp']['millis']) / 1000
+      act.date = datetime.utcfromtimestamp(t)
+
+      # Time
+      t = float(activity['sumMovingDuration']['value'])# - 3600 # Add one hour otherwise :/ Timezone ?
+      act.time = datetime.utcfromtimestamp(t).time()
+
+      # Distance
+      act.distance =  float(activity['sumDistance']['value'])
+
+      # Speed
+      act.speed = datetime.strptime(activity['weightedMeanMovingSpeed']['display'], '%M:%S').time()
+
+    # Always update name & raw json
+    act.name = activity['activityName']['value']
+    act.raw_json = json.dumps(activity)
+
+    act.save()
+
+    # Try to map a run session
+    try:
+      sess = RunSession.objects.get(date=act.date.date(), report__user=self._user, garmin_activity=None)
+      sess.garmin_activity = act
+      sess.save()
+    except:
+      pass
+
+    return act
