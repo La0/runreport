@@ -3,6 +3,7 @@ from run.garmin import GarminConnector
 from django.contrib.auth.models import User
 from coach.settings import REPORT_START_DATE
 from datetime import datetime
+from django.utils.timezone import utc
 
 class Command(BaseCommand):
   _min_date = None
@@ -10,7 +11,7 @@ class Command(BaseCommand):
   def handle(self, *args, **options):
     # Load min date
     min_year, min_week = REPORT_START_DATE
-    self._min_date = datetime.strptime('%d %d 1' % (min_year, min_week), '%Y %W %w')
+    self._min_date = datetime.strptime('%d %d 1' % (min_year, min_week), '%Y %W %w').replace(tzinfo=utc)
 
     # Browse users
     users = User.objects.exclude(userprofile__garmin_login=None)

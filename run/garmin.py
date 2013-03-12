@@ -4,6 +4,7 @@ from datetime import datetime
 from coach.settings import GPG_HOME, GPG_PASSPHRASE
 from run.models import GarminActivity, RunSession
 import json
+from django.utils.timezone import utc
 
 class GarminConnector:
   _user = None
@@ -86,8 +87,13 @@ class GarminConnector:
 
     activities = []
     for activity in data['results']['activities']:
-      activity = activity['activity']
-      activities.append(self.load_activity(activity))
+      try:
+        activity = activity['activity']
+        activities.append(self.load_activity(activity))
+      except KeyError, e:
+        pass # Invalid activity
+      except Exception, e:
+        raise e
 
     return activities
 
@@ -106,7 +112,7 @@ class GarminConnector:
 
       # Date
       t = int(activity['beginTimestamp']['millis']) / 1000
-      act.date = datetime.utcfromtimestamp(t)
+      act.date = datetime.utcfromtimestamp(t).replace(tzinfo=utc)
 
       # Time
       t = float(activity['sumMovingDuration']['value'])# - 3600 # Add one hour otherwise :/ Timezone ?
