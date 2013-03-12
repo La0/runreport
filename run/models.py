@@ -155,3 +155,8 @@ class GarminActivity(models.Model):
   created = models.DateTimeField(auto_now_add=True) # Object creation
   updated = models.DateTimeField(auto_now=True)
 
+  def __unicode__(self):
+    return "%s: %s" % (self.garmin_id, self.name)
+
+  def get_url(self):
+    return 'http://connect.garmin.com/activity/%s' % (self.garmin_id)

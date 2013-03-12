@@ -26,6 +26,18 @@
       {{ session.id|safe }}
       {{ macros.input(session.name, 'Séance') }}
       {{ macros.input(session.comment, 'Commentaire') }}
+      {% with session.instance.garmin_activity as activity %}
+      {% if activity %}
+      <div class="garmin pull-right">
+        <i class="icon-map-marker"></i>
+        <a href="{{ activity.get_url() }}" target="_blank">{{ activity.name }}</a>
+        <span class="muted">&bull;</span>
+        {{ activity.distance|floatformat(2) }} km en {{ activity.time }}
+        <span class="muted">&bull;</span>
+        <span class="label label-info">{{ activity.speed|date('i:s') }} min/km</span>
+      </div>
+      {% endif %}
+      {% endwith %}
     </fieldset>
   {% endfor %}
 
@@ -80,6 +92,19 @@
       <strong>{{session.name}}</strong><br />
       {% endif %}
       {{session.comment|default('')|linebreaksbr}}
+      {% with session.garmin_activity as activity %}
+      {% if activity %}
+      <div class="clear">&nbsp;</div>
+      <div class="garmin pull-right">
+        <i class="icon-map-marker"></i>
+        <a href="{{ activity.get_url() }}" target="_blank">{{ activity.name }}</a>
+        <span class="muted">&bull;</span>
+        {{ activity.distance|floatformat(2) }} km en {{ activity.time }}
+        <span class="muted">&bull;</span>
+        <span class="label label-info">{{ activity.speed|date('i:s') }} min/km</span>
+      </div>
+      {% endif %}
+      {% endwith %}
     </td>
   </tr>
   {% endfor %}
