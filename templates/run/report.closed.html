@@ -1,0 +1,34 @@
+<p class="alert alert-success">
+ Ce rapport a bien été envoyé à {{trainer.first_name|default(trainer.username)}}
+</p>
+
+<table class="table table-bordered">
+  <tr>
+    <th style="text-align: right">Jour</th>
+    <th>Commentaire</th>
+  </tr>
+  {% for session in sessions %}
+  <tr>
+    <td style="width: 20%; text-align: right;">{{session.date|date('l d M')}}</td>
+    <td>
+      {% if session.name %}
+      <strong>{{session.name}}</strong><br />
+      {% endif %}
+      {{session.comment|default('')|linebreaksbr}}
+      {% with session.garmin_activity as activity %}
+      {% if activity %}
+      <div class="clear">&nbsp;</div>
+      <div class="garmin pull-right">
+        <i class="icon-map-marker"></i>
+        <a href="{{ activity.get_url() }}" target="_blank">{{ activity.name }}</a>
+        <span class="muted">&bull;</span>
+        {{ activity.distance|floatformat(2) }} km en {{ activity.time }}
+        <span class="muted">&bull;</span>
+        <span class="label label-info">{{ activity.speed|date('i:s') }} min/km</span>
+      </div>
+      {% endif %}
+      {% endwith %}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
