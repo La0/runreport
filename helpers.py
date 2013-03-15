@@ -4,6 +4,7 @@ from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from django.utils import simplejson
 from functools import wraps
+from datetime import datetime
 
 def render(html_template=False, json_template=False):
   """
@@ -95,3 +96,18 @@ def nameize(s, max = 40):
   s = '_'.join(words[0:nb])
 
   return s
+
+def date_to_day(date, day=1):
+  '''
+  From any date, get a date in the same week
+  Default to monday
+  '''
+  week = int(date.strftime('%W'))
+  return datetime.strptime('%d %d %d' % (date.year, week, day), '%Y %W %w').date()
+
+def week_to_date(year, week, day=1):
+  '''
+  From any year+week to a given day in its week
+  Default to monday
+  '''
+  return datetime.strptime('%d %d %d' % (year, week, day), '%Y %W %w').date()
