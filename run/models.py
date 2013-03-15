@@ -7,6 +7,7 @@ import tempfile
 from django.core.mail import EmailMultiAlternatives
 from django.contrib.sites.models import get_current_site
 from coach.settings import REPORT_SEND_DAY, REPORT_SEND_TIME, LANGUAGE_CODE
+from helpers import date_to_day, week_to_date
 
 class RunReport(models.Model):
   user = models.ForeignKey(User)
@@ -32,7 +33,7 @@ class RunReport(models.Model):
       RunSession.objects.get_or_create(report=self, date=dt)
 
   def get_date(self, day):
-    return datetime.strptime('%d %d %d' % (self.year, self.week, day), '%Y %W %w').date()
+    return week_to_date(self.year, self.week, day)
 
   def get_date_start(self):
     return self.get_date(1)
@@ -50,9 +51,7 @@ class RunReport(models.Model):
 
   def is_current(self):
     today = date.today()
-    today_week = int(today.strftime('%W'))
-    dt = datetime.strptime('%d %d 1' % (today.year, today_week), '%Y %W %w').date()
-    return self.get_date_start() == dt
+    return self.get_date_start() == date_to_day(today)
 
   def build_xls(self):
     '''
