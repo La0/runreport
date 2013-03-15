@@ -28,10 +28,14 @@
     <li class="active"><span>&laquo;</span</li>
   {% endif %}
   {% for w in weeks %}
-    {% if w.current %}
-    <li class="active"><span>{{w.start|date('d M')}}</span></li>
+    {% if w.display == 'week' %}
+      {% if w.current %}
+      <li class="active"><span>{{w.start|date('d M')}}</span></li>
+      {% else %}
+      <li><a href="{% url report-week w.year, w.week %}">{{w.start|date('d M')}}</a></li>
+      {% endif %}
     {% else %}
-    <li><a href="{% url report-week w.year, w.week %}">{{w.start|date('d M')}}</a></li>
+      <li class="active"><span>...</span></li>
     {% endif %}
   {% endfor %}
   {% if week_next %}

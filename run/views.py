@@ -1,4 +1,4 @@
-from helpers import render
+from helpers import render, week_to_date, date_to_day
 from django.contrib.auth.decorators import login_required
 from models import RunReport, RunSession
 from datetime import date, datetime, timedelta
@@ -12,26 +12,26 @@ def report(request, year=False, week=False):
   if not request.user.is_authenticated():
     return {}
 
-  # Load min date
+  # Load min & max date
+  today = date.today()
   min_year, min_week = REPORT_START_DATE
   dt = datetime.strptime('%d %d 1' % (min_year, min_week), '%Y %W %w')
   min_date = dt.date()
+  max_date = date_to_day(today)
 
-  today = date.today()
   today_week = int(today.strftime('%W'))
   report_date = None
   if not year or not week:
     # Use current week by default
     week = today_week
     year = today.year
-    report_date = today
+    report_date = date_to_day(today)
 
   else:
     # Check week is valid
     year = int(year)
     week = int(week)
-    dt = datetime.strptime('%d %d 1' % (year, week), '%Y %W %w')
-    report_date = dt.date()
+    report_date = week_to_date(year, week)
     if report_date < min_date:
       raise Http404('Too old.')
     if report_date > today:
@@ -68,21 +68,43 @@ def report(request, year=False, week=False):
   profile = request.user.get_profile()
 
   # Build weeks for pagination
+  # TODO/ All this pagination code should be in a separate class
   weeks = []
-  dt = min_date
-  i, current_pos = 0, 0
-  while dt < today:
-    current = (dt == report_date)
-    if current:
+  def _build_week(week_date, report_date):
+    return {
+      'display'  : 'week',
+      'start' : week_date,
+      'end'   : week_date + timedelta(days=6),
+      'current' : (week_date == report_date),
+      'week'  : week_date.strftime('%W'),
+      'year'  : week_date.year,
+    }
+
+  # Add first week
+  weeks.append(_build_week(min_date, report_date))
+
+  # Add viewed week and X on each side
+  weeks_around_nb = 2
+  weeks_around = range(-weeks_around_nb, weeks_around_nb+1)
+  for i in weeks_around:
+    dt = report_date + timedelta(days=i*7)
+    if dt <= min_date or dt >= max_date:
+      continue
+    if i == min(weeks_around):
+      weeks.append({'display' : 'spacer'})
+    weeks.append(_build_week(dt, report_date))
+    if i == max(weeks_around):
+      weeks.append({'display' : 'spacer'})
+
+  # Add current week (last)
+  weeks.append(_build_week(max_date, report_date))
+
+  # Search current
+  current_pos = 0
+  i = 0
+  for w in weeks:
+    if w['display'] == 'week' and w['start'] == report_date:
       current_pos = i
-    weeks.append({
-      'start' : dt,
-      'end'   : dt + timedelta(days=6),
-      'current' : current,
-      'week'  : dt.strftime('%W'),
-      'year'  : dt.year,
-    })
-    dt += timedelta(days=7)
     i += 1
 
   week_previous = current_pos - 1 > 0 and weeks[current_pos - 1] or None
