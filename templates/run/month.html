@@ -4,13 +4,24 @@
 
 <h2>{{months.1|date('E Y')}}</h2>
 
-<script type="text/javascript">
-$(function(){
-  $('td div.clickme').popover({
-    placement : 'top',
-  });
-});
-</script>
+{% for session in sessions_active %}
+<div id="session_{{session.date|date('dmY')}}" class="modal hide fade" tabindex="-1" role="dialog" >
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3>{{session.date|date('l d E Y')|title()}}</h3>
+  </div>
+  <div class="modal-body">
+    <h4>{{session.name|default('Session')}}</h4>
+    <p>
+      {{ session.comment }}
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal">Fermer</button>
+    <a href="{{ session.report.get_absolute_url() }}" class="btn btn-primary">Voir cette semaine</a>
+  </div>
+</div>
+{% endfor %}
 
 <table class="table table-bordered table-condensed calendar">
   <tr>
@@ -27,8 +38,7 @@ $(function(){
   {% for day in week %}
   {% with sessions[day] as session %}
     {% if session and (session.comment or session.name) %}
-    <td class="session">
-    <div class="clickme" title="{{day|date('l d E Y')}}" data-content="{{session.name|default('Session')}}: {{ session.comment }}">
+    <td class="session" data-target="#session_{{session.date|date('dmY')}}" data-toggle="modal">
     {% else %}
     <td class="nothing">
     {% endif %}
@@ -44,7 +54,6 @@ $(function(){
     <p>
       {{session.name|default('Session sans nom')}}
     </p>
-    </div>
     {% endif %}
   </td>
   {% endwith %}

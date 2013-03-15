@@ -53,6 +53,10 @@ class RunReport(models.Model):
     today = date.today()
     return self.get_date_start() == date_to_day(today)
 
+  @models.permalink
+  def get_absolute_url(self):
+    return ('report-week', [self.year, self.week])
+
   def build_xls(self):
     '''
     Build excel file using sessions

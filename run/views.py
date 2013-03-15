@@ -162,6 +162,7 @@ def month(request, year=False, month=False):
 
   # Load all sessions for this month
   sessions = RunSession.objects.filter(report__user=request.user, date__in=days)
+  sessions_active = sessions.exclude(comment=None,name=None)
   sessions = dict((r.date, r) for r in sessions)
 
   # Months first days
@@ -173,6 +174,7 @@ def month(request, year=False, month=False):
     'days': days,
     'weeks' : weeks,
     'sessions' : sessions,
+    'sessions_active' : sessions_active,
   }
 
 @login_required
