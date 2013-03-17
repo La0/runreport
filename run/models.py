@@ -154,6 +154,8 @@ class GarminActivity(models.Model):
   distance = models.FloatField() # Kilometers
   speed = models.TimeField() # Time per kilometer
   raw_json = models.TextField()
+  laps_json = models.TextField(null=True)
+  details_json = models.TextField(null=True)
   date = models.DateTimeField() # Date of the activity
   created = models.DateTimeField(auto_now_add=True) # Object creation
   updated = models.DateTimeField(auto_now=True)

@@ -13,6 +13,8 @@ class GarminConnector:
 
   _url_login = 'https://connect.garmin.com/signin'
   _url_activity = 'http://connect.garmin.com/proxy/activity-search-service-1.0/json/activities'
+  _url_laps = 'http://connect.garmin.com/proxy/activity-service-1.3/json/activity/%s'
+  _url_details = 'http://connect.garmin.com/proxy/activity-service-1.3/json/activityDetails/%s'
 
   _max_activities = 10 # per request
 
@@ -46,7 +48,7 @@ class GarminConnector:
     '''
     # First request is empty to init session
     self._session = requests.Session()
-    r = self._session.get(self._url_login)
+    self._session.get(self._url_login)
 
     # Setup form data
     data = {
@@ -101,10 +103,11 @@ class GarminConnector:
     # Load existing activity
     #  or build a new one
     created = False
+    activity_id = activity['activityId']
     try:
-      act = GarminActivity.objects.get(garmin_id=activity['activityId'], user=self._user)
+      act = GarminActivity.objects.get(garmin_id=activity_id , user=self._user)
     except:
-      act = GarminActivity(garmin_id=activity['activityId'], user=self._user)
+      act = GarminActivity(garmin_id=activity_id, user=self._user)
       created = True
   
     # Init newly created activity
@@ -128,6 +131,10 @@ class GarminConnector:
     act.name = activity['activityName']['value']
     act.raw_json = json.dumps(activity)
 
+    # Load supplementary infos
+    self.load_json(act, 'laps')
+    self.load_json(act, 'details')
+
     act.save()
 
     # Try to map a run session
@@ -139,3 +146,22 @@ class GarminConnector:
       pass
 
     return act
+
+  def load_json(self, activity, data_type):
+    '''
+    Load external json page, store it raw in model
+    '''
+    urls = {
+      'laps'    : self._url_laps % activity.garmin_id,
+      'details' : self._url_details % activity.garmin_id,
+    }
+    if data_type not in urls:
+      raise Exception("Invalid data type %s" % data_type)
+
+    data_key = '%s_json' % data_type
+    if getattr(activity, data_key) is not None:
+      return False
+
+    resp = self._session.get(urls[data_type])
+    setattr(activity, data_key, resp.json())
+    return True
