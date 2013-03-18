@@ -183,6 +183,9 @@ GPG_HOME=''
 GPG_KEY=''
 GPG_PASSPHRASE=''
 
+# Garmin user data (json)
+GARMIN_DIR=os.path.join(HOME, 'garmin_data')
+
 # Import local settings, if any
 try:
   from local_settings import *

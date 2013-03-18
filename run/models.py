@@ -3,10 +3,13 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime, date, time
 import xlwt
+import os
+import json
+import hashlib
 import tempfile
 from django.core.mail import EmailMultiAlternatives
 from django.contrib.sites.models import get_current_site
-from coach.settings import REPORT_SEND_DAY, REPORT_SEND_TIME, LANGUAGE_CODE
+from coach.settings import REPORT_SEND_DAY, REPORT_SEND_TIME, GARMIN_DIR
 from helpers import date_to_day, week_to_date
 
 class RunReport(models.Model):
@@ -153,9 +156,9 @@ class GarminActivity(models.Model):
   time = models.TimeField()
   distance = models.FloatField() # Kilometers
   speed = models.TimeField() # Time per kilometer
-  raw_json = models.TextField()
-  laps_json = models.TextField(null=True)
-  details_json = models.TextField(null=True)
+  md5_raw = models.CharField(max_length=32)
+  md5_laps = models.CharField(max_length=32, null=True)
+  md5_details = models.CharField(max_length=32, null=True)
   date = models.DateTimeField() # Date of the activity
   created = models.DateTimeField(auto_now_add=True) # Object creation
   updated = models.DateTimeField(auto_now=True)
@@ -165,3 +168,40 @@ class GarminActivity(models.Model):
 
   def get_url(self):
     return 'http://connect.garmin.com/activity/%s' % (self.garmin_id)
+
+  def get_data_path(self, name):
+    return os.path.join(GARMIN_DIR, self.user.username, '%s_%s.json' % (self.garmin_id, name))
+
+  def set_data(self, name, data):
+    # Check dir
+    path = self.get_data_path(name)
+    path_dir = os.path.dirname(path)
+    if not os.path.isdir(path_dir):
+      os.makedirs(path_dir)
+
+    # Set md5
+    data_json = json.dumps(data)
+    h = hashlib.md5(data_json).hexdigest()
+    setattr(self, 'md5_%s' % name, h)
+
+    # Dump in file
+    fd = open(path, 'w+')
+    fd.write(json.dumps(data))
+    fd.close()
+
+  def get_data(self, name):
+    path = self.get_data_path(name)
+    if not os.path.exists(path):
+      return None
+
+    # Check md5 before giving data
+    h_db = getattr(self, 'md5_%s' % name)
+    if h_db is None:
+      return None
+    fd = open(self.get_data_path(name), 'r')
+    data = fd.read()
+    h_file = hashlib.md5(data).hexdigest()
+    fd.close()
+    if h_file != h_db:
+      raise Exception("Invalid data file %s" % path)
+    return json.loads(data)

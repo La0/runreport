@@ -129,7 +129,7 @@ class GarminConnector:
 
     # Always update name & raw json
     act.name = activity['activityName']['value']
-    act.raw_json = json.dumps(activity)
+    act.set_data('raw', activity)
 
     # Load supplementary infos
     self.load_json(act, 'laps')
@@ -158,10 +158,9 @@ class GarminConnector:
     if data_type not in urls:
       raise Exception("Invalid data type %s" % data_type)
 
-    data_key = '%s_json' % data_type
-    if getattr(activity, data_key) is not None:
+    if getattr(activity, 'md5_%s' % data_type) is not None:
       return False
 
     resp = self._session.get(urls[data_type])
-    setattr(activity, data_key, resp.json())
+    activity.set_data(data_type, resp.json())
     return True
