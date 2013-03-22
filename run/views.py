@@ -6,6 +6,7 @@ from forms import RunSessionFormSet, RunReportForm
 from django.http import Http404, HttpResponse
 from coach.settings import REPORT_START_DATE
 import calendar
+import json
 
 @render('run/index.html')
 def report(request, year=False, week=False):
@@ -189,4 +190,14 @@ def vma(request):
   return {
     'profile' : profile,
     'vma' : vma
+  }
+
+@render('run/glossary.html')
+def glossary(request):
+  with open('glossaire_vma.json', 'r') as f:
+    glossary = json.loads(f.read())
+    f.close()
+  return {
+    'glossary' : glossary,
+    'sorted' : sorted(glossary),
   }

@@ -34,6 +34,7 @@ def add_pages(request):
     }
     submenu['menu'].append(_p('vma', 'Mes allures'))
     submenu['menu'].append(_p('user-profile', 'Mon profil'))
+    submenu['menu'].append(_p('vma-glossary', 'Glossaire'))
     submenu['menu'].append(_p('logout', u'Se déconnecter'))
     menu.append(submenu)
   else:
