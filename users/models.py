@@ -13,8 +13,10 @@ class UserProfile(models.Model):
   birthday = models.DateField(null=True, blank=True)
   vma = models.FloatField(null=True, blank=True)
   frequency = models.IntegerField(null=True, blank=True)
+  frequency_rest = models.IntegerField(null=True, blank=True)
   height = models.IntegerField(null=True, blank=True)
   weight = models.IntegerField(null=True, blank=True)
+  comment = models.TextField(null=True, blank=True)
 
   # Mail
   auto_send = models.BooleanField(default=False)
