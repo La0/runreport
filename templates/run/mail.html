@@ -158,6 +158,17 @@
           <strong>{{session.name}}</strong><br />
           {% endif %}
           {{session.comment|default('')|linebreaksbr}}
+          {% with session.garmin_activity as activity %}
+          {% if activity %}
+          <div class="garmin pull-right">
+            Garmin : <a href="{{ activity.get_url() }}" target="_blank">{{ activity.name }}</a>
+            <span>&bull;</span>
+            {{ activity.distance|floatformat(2) }} km en {{ activity.time }}
+            <span>&bull;</span>
+            <span>{{ activity.speed|date('i:s') }} min/km</span>
+          </div>
+          {% endif %}
+          {% endwith %}
         </td>
       </tr>
       {% endfor %}
