@@ -178,26 +178,3 @@ def month(request, year=False, month=False):
     'sessions_active' : sessions_active,
   }
 
-@login_required
-@render('run/vma.html')
-def vma(request):
-  from vma import VmaCalc
-
-  profile = request.user.get_profile()
-
-  vma = VmaCalc(profile.vma)
-
-  return {
-    'profile' : profile,
-    'vma' : vma
-  }
-
-@render('run/glossary.html')
-def glossary(request):
-  with open('glossaire_vma.json', 'r') as f:
-    glossary = json.loads(f.read())
-    f.close()
-  return {
-    'glossary' : glossary,
-    'sorted' : sorted(glossary),
-  }

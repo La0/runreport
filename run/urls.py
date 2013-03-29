@@ -1,4 +1,6 @@
 from django.conf.urls import patterns, include, url
+from django.contrib.auth.decorators import login_required
+from run.views import *
 
 urlpatterns = patterns('',
   url(r'^/?$', 'run.views.report', name="report-current"),
@@ -10,6 +12,6 @@ urlpatterns = patterns('',
   url(r'^calendar/(?P<year>\d{4})/(?P<month>\d{1,2})/?$', 'run.views.month', name="report-month"),
 
   # Vma
-  url(r'^vma/glossaire/?', 'run.views.glossary', name="vma-glossary"),
-  url(r'^vma/?', 'run.views.vma', name="vma"),
+  url(r'^vma/glossaire/?', VmaGlossary.as_view(), name="vma-glossary"),
+  url(r'^vma/?', login_required(VmaPaces.as_view()), name="vma"),
 )
