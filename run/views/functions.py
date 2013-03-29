@@ -1,8 +1,8 @@
 from helpers import render, week_to_date, date_to_day
 from django.contrib.auth.decorators import login_required
-from models import RunReport, RunSession
+from run.models import RunReport, RunSession
 from datetime import date, datetime, timedelta
-from forms import RunSessionFormSet, RunReportForm
+from run.forms import RunSessionFormSet, RunReportForm
 from django.http import Http404, HttpResponse
 from coach.settings import REPORT_START_DATE
 import calendar
