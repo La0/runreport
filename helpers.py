@@ -111,3 +111,10 @@ def week_to_date(year, week, day=1):
   Default to monday
   '''
   return datetime.strptime('%d %d %d' % (year, week, day), '%Y %W %w').date()
+
+class CoffinMixin(object):
+  '''
+  Very basic Mixin to render through Coffin + Jinja2
+  '''
+  def render_to_response(self, context, **response_kwargs):
+    return render_to_response(self.get_template_names(), context)
