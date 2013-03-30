@@ -1,9 +1,8 @@
-from helpers import CoffinMixin
 from django.views.generic import TemplateView
 import json
 from run.vma import VmaCalc
 
-class VmaPaces(CoffinMixin, TemplateView):
+class VmaPaces(TemplateView):
   template_name = 'run/vma.html'
 
   def load_vma(self):
@@ -20,7 +19,7 @@ class VmaPaces(CoffinMixin, TemplateView):
     context.update(self.load_vma())
     return context
 
-class VmaGlossary(CoffinMixin, TemplateView):
+class VmaGlossary(TemplateView):
   template_name = 'run/glossary.html'
 
   def load_glossary(self):
