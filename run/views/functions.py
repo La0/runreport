@@ -130,17 +130,3 @@ def report(request, year=False, week=False):
     'week_previous' : week_previous,
     'week_next' : week_next,
   }
-
-@login_required
-def excel(request, year, week):
-  try:
-    report = RunReport.objects.get(user=request.user, year=int(year), week=int(week))
-  except:
-    raise Http404('Report not found')
-
-  excel = report.build_xls()
-
-  response = HttpResponse(open(excel), content_type='application/vnd.ms-excel')
-  response['Content-Disposition'] = 'attachment; filename="%s_semaine_%s.xls"' % (request.user.username, report.week)
-  return response
-
