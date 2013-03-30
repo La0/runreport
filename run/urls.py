@@ -8,8 +8,8 @@ urlpatterns = patterns('',
   url(r'^(?P<year>\d{4})/(?P<week>\d{2})/excel$', 'run.views.excel', name="report-excel"),
 
   # Calendar
-  url(r'^calendar/?$', 'run.views.month', name="report-current-month"),
-  url(r'^calendar/(?P<year>\d{4})/(?P<month>\d{1,2})/?$', 'run.views.month', name="report-month"),
+  url(r'^calendar/?$', login_required(RunCalendar.as_view()), name="report-current-month"),
+  url(r'^calendar/(?P<year>\d{4})/(?P<month>\d{1,2})/?$', login_required(RunCalendar.as_view()), name="report-month"),
 
   # Vma
   url(r'^vma/glossaire/?', VmaGlossary.as_view(), name="vma-glossary"),

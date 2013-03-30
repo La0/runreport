@@ -5,8 +5,6 @@ from datetime import date, datetime, timedelta
 from run.forms import RunSessionFormSet, RunReportForm
 from django.http import Http404, HttpResponse
 from coach.settings import REPORT_START_DATE
-import calendar
-import json
 
 @render('run/index.html')
 def report(request, year=False, week=False):
@@ -145,36 +143,4 @@ def excel(request, year, week):
   response = HttpResponse(open(excel), content_type='application/vnd.ms-excel')
   response['Content-Disposition'] = 'attachment; filename="%s_semaine_%s.xls"' % (request.user.username, report.week)
   return response
-
-@login_required
-@render('run/month.html')
-def month(request, year=False, month=False):
-  # Setup current month
-  today_month = datetime.now().replace(day=1) 
-  current_month = (month and year) and datetime.strptime('%s %s 1' % (year, month), '%Y %m %d') or today_month
-
-  # Load all days & weeks for this month
-  try:
-    cal = calendar.Calendar(calendar.MONDAY)
-    days = [d for d in cal.itermonthdates(current_month.year, current_month.month)]
-    weeks = cal.monthdatescalendar(current_month.year, current_month.month)
-  except Exception, e:
-    raise Http404(str(e))
-
-  # Load all sessions for this month
-  sessions = RunSession.objects.filter(report__user=request.user, date__in=days)
-  sessions_active = sessions.exclude(comment=None,name=None)
-  sessions = dict((r.date, r) for r in sessions)
-
-  # Months first days
-  previous_month = current_month - timedelta(days=20)
-  next_month = current_month.date() < today_month.date() and current_month + timedelta(days=40) or None
-
-  return {
-    'months' : (previous_month, current_month, next_month),
-    'days': days,
-    'weeks' : weeks,
-    'sessions' : sessions,
-    'sessions_active' : sessions_active,
-  }
 
