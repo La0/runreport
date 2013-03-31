@@ -128,6 +128,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'run',
     'users',
+    'club',
     'south',
 )
 
