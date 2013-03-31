@@ -6,6 +6,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
   url(r'^/?', include('run.urls')),
   url(r'^user/', include('users.urls')),
+  url(r'^club/(?P<slug>[\w\_\-]+)/', include('club.urls')),
 
   url(r'^admin/', include(admin.site.urls)),
 

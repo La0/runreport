@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>{{club.name}} : {{members.count()}} membres</h2>
+
+
+<table class="table">
+  <tr>
+    <th>Nom</th>
+    <th>Vma</th>
+  </tr>
+  {% for member in members %}
+  <tr>
+    {% with member.get_profile() as profile %}
+    <td>
+      <a href="{% url club-member club.slug, member.username %}">{{ member.first_name|default(member.username) }} {{ member.last_name }}</a>
+    </td>
+    <td>{{ profile.vma|default('-') }}</td>
+    {% endwith %}
+  </tr>
+  {% endfor %}
+</table>
+
+{% endblock %}

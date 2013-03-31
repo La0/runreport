@@ -11,3 +11,11 @@
   </div>
 </div>
 {%- endmacro %}
+
+{% macro tr(fields, item='td') -%}
+<tr>
+  {% for f in fields %}
+  <{{item}}>{{f|default('-')}}</{{item}}>
+  {% endfor %}
+</tr>
+{%- endmacro %}
