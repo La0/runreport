@@ -86,6 +86,8 @@ SECRET_KEY = 'nq!g^hyy-_l!*apn3302^5(jwt$t-&amp;!fo4my*^u3j!zj7=if%r'
 # Load template trough jinja
 TEMPLATE_LOADERS = (
   'coach.jinja.Loader',
+  'django.template.loaders.filesystem.Loader',
+  'django.template.loaders.app_directories.Loader',
 )
 
 JINJA2_TEMPLATE_LOADERS = (

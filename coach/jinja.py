@@ -8,6 +8,8 @@ class Loader(BaseLoader):
     is_usable = True
 
     def load_template(self, template_name, template_dirs=None):
+        if template_name.startswith('admin/'):
+          raise TemplateDoesNotExist(template_name)
         try:
             template = get_template(template_name)
         except jinja2.TemplateNotFound, e:
