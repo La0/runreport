@@ -55,33 +55,6 @@ def profile(request):
     'form_user' : form_user,
   }
 
-@render('users/create.html')
-def create(request):
-  if request.method == 'POST':
-    form = SignUpForm(request.POST)
-    if form.is_valid():
-
-      # Create user & profile
-      user = User.objects.create_user(form.cleaned_data['username'], form.cleaned_data['email'], form.cleaned_data['password'])
-      user.first_name = form.cleaned_data['firstname']
-      user.last_name = form.cleaned_data['lastname']
-      user.save()
-      profile = user.get_profile()
-      profile.trainer = form.cleaned_data['trainer']
-      profile.save()
-
-      # Auto login
-      valid_user = authenticate(username=user.username, password=form.cleaned_data['password'])
-      if valid_user is not None:
-        auth_login(request, valid_user)
-      return HttpResponseRedirect(LOGIN_REDIRECT_URL)
-  else:
-    form = SignUpForm()
-  return {
-    'form': form,
-  }
-
-
 @login_required
 @render('users/garmin.html')
 def garmin(request):
