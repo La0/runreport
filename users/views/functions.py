@@ -6,7 +6,7 @@ from django.contrib.auth.models import User, Group
 from coach.settings import LOGIN_REDIRECT_URL, LOGOUT_REDIRECT_URL, TRAINERS_GROUP
 from django.contrib.auth import login as auth_login, logout as auth_logout, authenticate
 from django.contrib.auth.decorators import login_required
-from forms import ProfileForm, UserForm, SignUpForm, GarminForm
+from users.forms import ProfileForm, UserForm, SignUpForm, GarminForm
 from run.models import GarminActivity
 
 @render('users/login.html')
