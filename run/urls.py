@@ -1,10 +1,10 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import patterns, url
 from django.contrib.auth.decorators import login_required
 from run.views import *
 
 urlpatterns = patterns('',
-  url(r'^/?$', 'run.views.report', name="report-current"),
-  url(r'^week/(?P<year>\d{4})/(?P<week>\d{1,2})/?$', 'run.views.report', name="report-week"),
+  url(r'^/?$', WeeklyReport.as_view(), name="report-current"),
+  url(r'^week/(?P<year>\d{4})/(?P<week>\d{1,2})/?$', WeeklyReport.as_view(), name="report-week"),
 
   # Calendar
   url(r'^calendar/?$', login_required(RunCalendar.as_view()), name="report-current-month"),
