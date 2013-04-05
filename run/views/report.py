@@ -6,21 +6,13 @@ from run.forms import RunSessionFormSet, RunReportForm
 from coach.settings import REPORT_START_DATE
 from django.http import Http404
 from django.core.exceptions import PermissionDenied
-from mixins import WeekPaginator
+from mixins import WeekPaginator, CurrentWeekMixin
 
-class WeeklyReport(WeekArchiveView, WeekPaginator):
+class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
   template_name = 'run/index.html'
   week_format = '%W'
   date_field = 'date'
   report = None
-
-  def get_year(self):
-    year = datetime.now().year
-    return int(self.kwargs.get('year', year))
-
-  def get_week(self):
-    week = datetime.now().strftime(self.week_format)
-    return int(self.kwargs.get('week', week))
 
   def check_limits(self):
     # Load min & max date

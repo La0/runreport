@@ -1,6 +1,24 @@
-from datetime import timedelta
+from datetime import datetime, timedelta
+
+class CurrentWeekMixin(object):
+  '''
+  Gives the current year & week or
+  uses the one from kwargs (url)
+  '''
+  def get_year(self):
+    year = datetime.now().year
+    return int(self.kwargs.get('year', year))
+
+  def get_week(self):
+    week = datetime.now().strftime(self.week_format)
+    return int(self.kwargs.get('week', week))
+
+
 
 class WeekPaginator(object):
+  '''
+  Paginates using weeks urls around a date
+  '''
   weeks = []
   weeks_around_nb = 2
 
@@ -16,6 +34,7 @@ class WeekPaginator(object):
     }
 
   def paginate(self, page_date, min_date, max_date):
+    self.weeks = []
     # Add first week
     self.weeks.append(self.build_week(min_date, page_date))
 
