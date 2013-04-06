@@ -1,12 +1,15 @@
 # coding=utf-8
 from django.core.urlresolvers import reverse
+from club.models import ClubMembership
 
 def add_pages(request):
   '''
   List menu pages, with active status
   '''
-  def _p(url_name, caption, lazy=False):
-    url = reverse(url_name)
+  def _p(url_tuple, caption, lazy=False):
+    url_name = isinstance(url_tuple, tuple) and url_tuple[0] or url_tuple
+    url_args = isinstance(url_tuple, tuple) and url_tuple[1:] or ()
+    url = reverse(url_name, args=url_args)
     active = lazy and request.path.startswith(url) or (request.path == url)
     return {'url' : url, 'caption' : caption, 'active' : active}
 
@@ -23,6 +26,12 @@ def add_pages(request):
       'caption' : 'Le club',
       'menu' : []
     }
+
+    # Add clubs links for trainers
+    members = ClubMembership.objects.filter(user=request.user, role='trainer')
+    for m in members:
+      submenu['menu'].append(_p(('club-current', m.club.slug), u'Athlètes du %s' % (m.club.name, )))
+
     submenu['menu'].append(_ext('http://csternes.athle.org', 'Site officiel'))
     submenu['menu'].append(_ext('http://facebook.com/groups/USA17', 'Groupe Facebook'))
     menu.append(submenu)
