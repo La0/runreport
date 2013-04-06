@@ -19,7 +19,7 @@ class ClubMixin(object):
     # Check we have a trainer or an admin
     if not request.user.is_staff:
       try:
-        request.user.clubmembership_set.get(club=self.club, role="role")
+        request.user.clubmembership_set.get(club=self.club, role="trainer")
       except:
         raise PermissionDenied
 
