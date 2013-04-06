@@ -8,6 +8,7 @@ from helpers import week_to_date
 class ClubMembers(CurrentWeekMixin, ClubMixin, WeekPaginator, WeekArchiveView):
   template_name = 'club/members.html'
   context_object_name = 'reports'
+  weeks_around_nb = 3
 
   def get_dated_items(self):
 
