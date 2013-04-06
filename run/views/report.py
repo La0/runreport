@@ -1,10 +1,8 @@
 from django.views.generic import WeekArchiveView
-from helpers import week_to_date, date_to_day
+from helpers import week_to_date
 from run.models import RunReport
-from datetime import date, datetime
+from datetime import datetime
 from run.forms import RunSessionFormSet, RunReportForm
-from coach.settings import REPORT_START_DATE
-from django.http import Http404
 from django.core.exceptions import PermissionDenied
 from mixins import WeekPaginator, CurrentWeekMixin
 
@@ -13,18 +11,6 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
   week_format = '%W'
   date_field = 'date'
   report = None
-
-  def check_limits(self):
-    # Load min & max date
-    min_year, min_week = REPORT_START_DATE
-    self.min_date = week_to_date(min_year, min_week)
-    self.max_date = date_to_day(self.today)
-
-    # Check we are not in past or future
-    if self.date < self.min_date:
-      raise Http404('Too old.')
-    if self.date > self.today:
-      raise Http404('In the future.')
 
   def get_report(self):
     if self.report is not None:
@@ -36,13 +22,11 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
       self.report.init_sessions()
     return self.report
 
-
   def get_dated_items(self):
     # Init dates
     year = self.get_year()
     week = self.get_week()
     self.date = week_to_date(year, week)
-    self.today = date.today()
     self.check_limits()
 
     # Init report & sessions
@@ -81,6 +65,7 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
       'trainer' : profile.trainer,
       'profile' : profile,
       'sessions': self.sessions,
+      'pagename' : 'report-week',
     })
 
     # Pagination

@@ -1,4 +1,7 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
+from coach.settings import REPORT_START_DATE
+from django.http import Http404
+from helpers import week_to_date, date_to_day
 
 class CurrentWeekMixin(object):
   '''
@@ -13,6 +16,18 @@ class CurrentWeekMixin(object):
     week = datetime.now().strftime(self.week_format)
     return int(self.kwargs.get('week', week))
 
+  def check_limits(self):
+    # Load min & max date
+    self.today = date.today()
+    min_year, min_week = REPORT_START_DATE
+    self.min_date = week_to_date(min_year, min_week)
+    self.max_date = date_to_day(self.today)
+
+    # Check we are not in past or future
+    if self.date < self.min_date:
+      raise Http404('Too old.')
+    if self.date > self.today:
+      raise Http404('In the future.')
 
 
 class WeekPaginator(object):
@@ -29,7 +44,7 @@ class WeekPaginator(object):
       'start' : week_date,
       'end'   : week_date + timedelta(days=6),
       'current' : (week_date == page_date),
-      'week'  : week_date.strftime('%W'),
+      'week'  : int(week_date.strftime('%W')),
       'year'  : week_date.year,
     }
 

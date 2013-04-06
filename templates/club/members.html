@@ -4,7 +4,6 @@
 {% block content %}
 <h2>{{club.name}} : {{members.count()}} membres</h2>
 
-
 <table class="table">
   <tr>
     <th>Nom</th>
@@ -38,5 +37,7 @@
   </tr>
   {% endfor %}
 </table>
+
+{% include '_weeks.html' %}
 
 {% endblock %}
