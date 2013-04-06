@@ -9,6 +9,9 @@
   <tr>
     <th>Nom</th>
     <th>Vma</th>
+    {% for dt in dates %}
+    <th>{{dt|date('l d')}}</th>
+    {% endfor %}
   </tr>
   {% for member in members %}
   <tr>
@@ -17,6 +20,20 @@
       <a href="{% url club-member club.slug, member.username %}">{{ member.first_name|default(member.username) }} {{ member.last_name }}</a>
     </td>
     <td>{{ profile.vma|default('-') }}</td>
+    {% endwith %}
+
+    {% with reports.get(member.id, None) as report %}
+      {% if report %}
+      {% for dt in dates %}
+        {% with report.get_dated_sessions() as sessions %}
+        <td>
+          {{sessions[dt].name|default('-')}}
+        </td>
+        {% endwith %}
+      {% endfor %}
+      {% else %}
+      <td colspan="7">-</td>
+      {% endif %}
     {% endwith %}
   </tr>
   {% endfor %}

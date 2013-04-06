@@ -27,13 +27,25 @@ class RunReport(models.Model):
   def __unicode__(self):
     return u'%s : %d week=%d' % (self.user, self.year, self.week)
 
+  def get_days(self):
+    # Days from monday to sunday
+    return [self.get_date(day) for day in (1,2,3,4,5,6,0)]
+
   def init_sessions(self):
     '''
     Build sessions for the current week
     '''
-    for day in range(0,7):
-      dt= self.get_date(day)
-      RunSession.objects.get_or_create(report=self, date=dt)
+    for day in self.get_days():
+      RunSession.objects.get_or_create(report=self, date=day)
+
+  def get_dated_sessions(self):
+    sessions = {}
+    for d in self.get_days():
+      try:
+        sessions[d] = self.sessions.get(date=d)
+      except:
+        sessions[d] = None
+    return sessions
 
   def get_date(self, day):
     return week_to_date(self.year, self.week, day)
