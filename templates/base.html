@@ -15,7 +15,7 @@
     <script type="text/javascript" src="/medias/js/bootstrap.min.js" ></script>
   </head>
   <body>
-    <div class="container-narrow">
+    <div class="{% if page_size == 'fullscreen' %}container{% else %}container-narrow{% endif %}">
       <div class="masthead">
         <ul class="nav nav-pills pull-right">
           {% for p in menu %}
