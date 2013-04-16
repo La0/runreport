@@ -37,8 +37,9 @@ class UserProfile(models.Model):
 def create_user_profile(sender, instance, created, **kwargs):
   '''
   Create a profile on user save()
+  Behave well when using fab syncdb
   '''
-  if created:
+  if (kwargs.get('created', True) and not kwargs.get('raw', False)) and created:
     UserProfile.objects.create(user=instance)
 
 post_save.connect(create_user_profile, sender=User)

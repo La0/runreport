@@ -1,6 +1,8 @@
 from fabric.api import *
-from coach.settings import FABRIC_HOSTS, FABRIC_ENV
-
+from coach.settings import FABRIC_HOSTS, FABRIC_ENV, DATABASES
+import os
+import shutil
+from time import time
 env.hosts = FABRIC_HOSTS
 
 def prod():
@@ -13,6 +15,31 @@ def prod():
       migrate_db()
       start_fcgi()
   restart_lighttpd()
+
+def syncdb():
+  # Backup actual sqlite db
+  db = DATABASES['default']
+  if db['ENGINE'].endswith('sqlite3'):
+    db_src = db['NAME']
+    if os.path.exists(db_src):
+      db_backup = '%s.%s' % (db_src, time())
+      print 'Backuped local db in %s' % db_backup
+      shutil.copyfile(db_src, db_backup)
+      os.remove(db_src)
+
+  # Import dump from server
+  prod_dump = '/tmp/coach.json'
+  local_dump = 'prod.json'
+  apps = ('auth.User', 'auth.Group', 'run', 'users', )
+  with cd('~/coach'):
+    with virtualenv(FABRIC_ENV):
+      run('./manage.py dumpdata --indent=4 -e sessions %s > %s' % (' '.join(apps), prod_dump))
+      get(prod_dump, local_dump)
+
+  # Re create db & load dump
+  local('./manage.py syncdb --noinput --migrate')
+  local('./manage.py loaddata %s' % local_dump)
+  os.remove(local_dump)
 
 def virtualenv(name='django'):
   '''
