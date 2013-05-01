@@ -7,6 +7,7 @@ urlpatterns = patterns('',
   url(r'^week/(?P<year>\d{4})/(?P<week>\d{1,2})/?$', ClubMembers.as_view(), name="club-week"),
 
   # Member
+  url(r'^(?P<username>[\w\_]+)/week/(?P<year>[\d]{4})/(?P<week>[\d]{1,2})/?', ClubMemberWeek.as_view(), name="club-member-week"),
   url(r'^(?P<username>[\w\_]+)/?', ClubMember.as_view(), name="club-member"),
 )
 

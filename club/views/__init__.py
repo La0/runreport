@@ -1,1 +1,1 @@
-from members import ClubMembers, ClubMember
+from members import ClubMembers, ClubMember, ClubMemberWeek

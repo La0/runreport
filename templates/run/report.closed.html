@@ -1,6 +1,8 @@
+{% if trainer %}
 <p class="alert alert-success">
  Ce rapport a bien été envoyé à {{trainer.first_name|default(trainer.username)}}
 </p>
+{% endif %}
 
 <table class="table table-bordered">
   <tr>
