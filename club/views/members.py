@@ -1,43 +1,32 @@
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 from django.http import Http404
 from django.views.generic.dates import WeekArchiveView
+from django.contrib.auth.models import User
 from mixins import ClubMixin
 from run.views.mixins import CurrentWeekMixin, WeekPaginator
 from run.models import RunReport
 from helpers import week_to_date
 
-class ClubMembers(CurrentWeekMixin, ClubMixin, WeekPaginator, WeekArchiveView):
+class ClubMembers(ClubMixin, ListView):
   template_name = 'club/members.html'
-  context_object_name = 'reports'
-  weeks_around_nb = 3
+  model = User
 
-  def get_dated_items(self):
+  def load_members(self):
+    # Load members, sorted by name
+    members = self.club.members.all().order_by('username')
 
-    # Load members, reports and week dates
-    year = self.get_year()
-    week = self.get_week()
-    dates = [week_to_date(year, week, d) for d in (1,2,3,4,5,6,0)]
-    self.date = dates[0]
-    self.check_limits() # Load & check date limits
-    self.members = self.club.members.all().order_by('first_name')
-    reports = RunReport.objects.filter(user__in=self.members, year=year, week=week)
+    # Add last RunReport date, as week & year
+    from django.db.models import Max
+    members = members.annotate(max_report_date=Max('runreport__sessions__date'))
 
-    # Index reports by user
-    reports_users = {}
-    for r in reports:
-      reports_users[r.user.id] = r
-
-    context = {
-      'dates' : dates,
-      'members' : self.members,
-      'pagename' : 'club-week',
-      'pageargs' : [self.club.slug,],
+    return {
+      'members' : members,
     }
 
-    # Pagination
-    context.update(self.paginate(self.date, self.min_date, self.max_date))
-
-    return (dates, reports_users, context)
+  def get_context_data(self, **kwargs):
+    context = super(ClubMembers, self).get_context_data(**kwargs)
+    context.update(self.load_members())
+    return context
 
 class ClubMember(ClubMixin, DetailView):
   template_name = 'club/member.html'

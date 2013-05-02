@@ -5,32 +5,26 @@
 
 <table class="table">
   <tr>
+    <th>Athlète</th>
     <th>Vma</th>
-    {% for dt in dates %}
-    <th>{{dt|date('l d')}}</th>
-    {% endfor %}
+    <th>Dernière séance</th>
+    <th>Actions</th>
   </tr>
   {% for member in members %}
   <tr>
     {% with member.get_profile() as profile %}
     <td>
-      <a href="{% url club-member club.slug, member.username %}">{{ member.first_name|default(member.username) }} {{ member.last_name }}</a>
+      {{ member.first_name|default(member.username) }} {{ member.last_name }}
     </td>
     <td>{{ profile.vma|default('-') }}</td>
-    {% endwith %}
-
-    {% with reports.get(member.id, None) as report %}
-      {% if report %}
-      {% for dt in dates %}
-        {% with report.get_dated_sessions() as sessions %}
-        <td>
-          {{sessions[dt].name|default('-')}}
-        </td>
-        {% endwith %}
-      {% endfor %}
-      {% else %}
-      <td colspan="7">-</td>
+    <td>
+      {% if member.max_report_date %}
+      <a href="{% url club-member-week club.slug, member.username, member.max_report_date|date('Y'), member.max_report_date|date('W')|add(-1) %}">{{ member.max_report_date|date('l d E') }}</a>
       {% endif %}
+    </td>
+    <td>
+      <a class="btn btn-info" href="{% url club-member club.slug, member.username %}">Fiche</a>
+    </td>
     {% endwith %}
   </tinfo >
   {% endfor %}
