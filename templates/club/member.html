@@ -17,6 +17,30 @@
 </table>
 {% endwith %}
 
-<a class="btn btn-info pull-right" href="{% url club-current club.slug %}">Retour au club</a>
+<a class="btn btn-success pull-right" href="{% url club-current club.slug %}">Retour au club</a>
+
+<h2>Semaines</h2>
+{% if reports %}
+<table class="table">
+  <tr>
+    <th>Semaine</th>
+    <th>Séances</th>
+    <th>Actions</th>
+  </tr>
+  {% for r in reports %}
+  <tr>
+    <td>Semaine {{r.week|add(1)}} de {{r.year}}</td>
+    <td>{{r.nb_sessions}}</td>
+    <td>
+      <a class="btn btn-info" href="{% url club-member-week club.slug, member.username, r.year, r.week %}">Voir</a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p class="alert alert-warning">
+  Pas de séances renseignées.
+</p>
+{% endif %}
 
 {% endblock %}

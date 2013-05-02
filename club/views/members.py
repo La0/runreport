@@ -43,6 +43,22 @@ class ClubMember(ClubMixin, DetailView):
   template_name = 'club/member.html'
   context_object_name = 'member'
   
+  def get_context_data(self, **kwargs):
+    context = super(ClubMember, self).get_context_data(**kwargs)
+    context.update(self.load_reports(context['member']))
+    return context
+
+  def load_reports(self, member):
+    reports = RunReport.objects.filter(user=member).order_by('-year', '-week')
+
+    # Super inefficient.
+    # TODO: We should'nt have any empty RunReport to begin with...
+    for r in reports:
+      r.nb_sessions = r.sessions.exclude(name__isnull=True, comment__isnull=True).count()
+    return {
+      'reports' : reports,
+    }
+
   def get_object(self):
     return self.club.members.get(username=self.kwargs['username'])
 
