@@ -31,13 +31,6 @@ class RunReport(models.Model):
     # Days from monday to sunday
     return [self.get_date(day) for day in (1,2,3,4,5,6,0)]
 
-  def init_sessions(self):
-    '''
-    Build sessions for the current week
-    '''
-    for day in self.get_days():
-      RunSession.objects.get_or_create(report=self, date=day)
-
   def get_dated_sessions(self):
     sessions = {}
     for d in self.get_days():

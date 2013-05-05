@@ -1,8 +1,9 @@
 from django.views.generic import WeekArchiveView
+from django.forms.models import modelformset_factory
 from helpers import week_to_date
-from run.models import RunReport
+from run.models import RunReport, RunSession
 from datetime import datetime
-from run.forms import RunSessionFormSet, RunReportForm
+from run.forms import RunReportForm
 from django.core.exceptions import PermissionDenied
 from mixins import WeekPaginator, CurrentWeekMixin
 
@@ -17,9 +18,19 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
       return self.report
 
     # Init report
-    self.report, created = RunReport.objects.get_or_create(user=self.request.user, year=self.get_year(), week=self.get_week())
-    if created:
-      self.report.init_sessions()
+    self.report, _ = RunReport.objects.get_or_create(user=self.request.user, year=self.get_year(), week=self.get_week())
+
+    # Init sessions
+    self.sessions = self.report.sessions.all().order_by('date')
+
+    # Missing days
+    self.missing_days = []
+    for day in self.report.get_days():
+      try:
+        self.sessions.get(date=day)
+      except Exception:
+        self.missing_days.append(day)
+
     return self.report
 
   def get_dated_items(self):
@@ -32,7 +43,6 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
     # Init report & sessions
     self.report = self.get_report()
     profile = self.request.user.get_profile()
-    self.sessions = self.report.sessions.all().order_by('date')
 
     context = {
       'trainer' : profile.trainer,
@@ -45,6 +55,9 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
   def get_context_data(self, **kwargs):
     context = super(WeeklyReport, self).get_context_data(**kwargs)
 
+    # Init formset
+    RunSessionFormSet = modelformset_factory(RunSession, fields=('comment', 'name'), extra=len(self.missing_days), max_num=7)
+
     # Init forms
     form, form_report = None, None
     if not self.report.published:
@@ -54,6 +67,16 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
       else:
         form = RunSessionFormSet(queryset=self.sessions)
         form_report = RunReportForm(instance=self.report)
+
+      # Apply date & report to empty instances
+      days = self.missing_days
+      for f in form.forms:
+        if f.instance.pk is None:
+          f.instance.report = self.report
+          f.instance.date = days.pop()
+
+      # Finally sort forms by their date
+      form.forms = sorted(form.forms, key=lambda f: f.instance.date)
 
     # Full context
     profile = self.request.user.get_profile()
@@ -99,7 +122,7 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
       if context['form'].is_valid():
         context['form'].save()
 
-      # Sace report
+      # Save report
       if context['form_report'].is_valid():
         context['form_report'].save()
 
