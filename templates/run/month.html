@@ -63,9 +63,11 @@
 </table>
 
 <ul class="pager">
+  {% if months.0 %}
   <li class="previous">
     <a href="{% url report-month months.0.year, months.0.month %}">&laquo; {{months.0|date('E Y')}}</a>
   </li>
+  {% endif %}
   {% if months.2 %}
   <li class="next">
     <a href="{% url report-month months.2.year, months.2.month %}">{{months.2|date('E Y')}} &raquo;</a>
