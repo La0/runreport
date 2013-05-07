@@ -88,9 +88,14 @@ class RunReport(models.Model):
 
     # Add content to xls
     i = 0
-    for sess in self.sessions.all().order_by('date'):
-      ws.write(i, 0, formats.date_format(sess.date, 'DATE_FORMAT'), style_date)
+    sessions = self.get_dated_sessions()
+    for day in self.get_days():
+      ws.write(i, 0, formats.date_format(day, 'DATE_FORMAT'), style_date)
       content = []
+      sess = sessions[day]
+      if not sess:
+        i += 1
+        continue
       if sess.name:
         content.append('%s :' % (sess.name,))
       if sess.comment:
@@ -132,7 +137,7 @@ class RunReport(models.Model):
       'week_human' : self.week + 1,
       'report': self,
       'site': site,
-      'sessions' : self.sessions.all().order_by('date'),
+      'sessions' : self.get_dated_sessions(),
     }
     mail_html = render_to_string('run/mail.html', context)
 

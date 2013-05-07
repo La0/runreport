@@ -150,10 +150,12 @@
       <tr style="height: 60px; line-height: 60px;">
         <td colspan="2">Semaine {{ week_human }} du {{ report.get_date_start()|date("l d E") }} au {{ report.get_date_end()|date("l d E") }}</td>
       </tr>
-      {% for session in sessions %}
+      {% for day in report.get_days() %}
       <tr class="session">
-        <td width="150">{{session.date|date('l d E')}}</td>
+        <td width="150">{{day|date('l d E')}}</td>
+        {% with sessions[day] as session %}
         <td width="400">
+          {% if session %}
           {% if session.name %}
           <strong>{{session.name}}</strong><br />
           {% endif %}
@@ -169,7 +171,9 @@
           </div>
           {% endif %}
           {% endwith %}
+          {% endif %}
         </td>
+        {% endwith %}
       </tr>
       {% endfor %}
 
