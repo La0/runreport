@@ -2,6 +2,7 @@ from django.views.generic import DetailView, ListView
 from django.http import Http404
 from django.views.generic.dates import WeekArchiveView
 from django.contrib.auth.models import User
+from django.db.models import Count
 from mixins import ClubMixin
 from run.views.mixins import CurrentWeekMixin, WeekPaginator
 from run.models import RunReport
@@ -40,10 +41,9 @@ class ClubMember(ClubMixin, DetailView):
   def load_reports(self, member):
     reports = RunReport.objects.filter(user=member).order_by('-year', '-week')
 
-    # Super inefficient.
-    # TODO: We should'nt have any empty RunReport to begin with...
-    for r in reports:
-      r.nb_sessions = r.sessions.exclude(name__isnull=True, comment__isnull=True).count()
+    # Add nb of sessions on reports
+    reports = reports.annotate(nb_sessions=Count('sessions'))
+
     return {
       'reports' : reports,
     }
