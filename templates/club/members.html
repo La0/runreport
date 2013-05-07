@@ -7,6 +7,7 @@
   <tr>
     <th>{{ macros.sort_title('Athlète', 'name', 'club-current-sort', (club.slug, ), sort) }}</th>
     <th>Vma</th>
+    <th>Séances</th>
     <th>{{ macros.sort_title('Dernière séance', 'date', 'club-current-sort', (club.slug, ), sort) }}</th>
     <th>Actions</th>
   </tr>
@@ -17,6 +18,7 @@
       {{ member.first_name|default(member.username) }} {{ member.last_name }}
     </td>
     <td>{{ profile.vma|default('-') }}</td>
+    <td>{{ member.nb_sessions }}</td>
     <td>
       {% if member.max_report_date %}
       <a href="{% url club-member-week club.slug, member.username, member.max_report_date|date('Y'), member.max_report_date|date('W')|add(-1) %}">{{ member.max_report_date|date('l d E') }}</a>

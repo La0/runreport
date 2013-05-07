@@ -18,6 +18,7 @@ class ClubMembers(ClubMixin, ListView):
 
     # Add last RunReport date, as week & year
     members = members.annotate(max_report_date=Max('runreport__sessions__date'))
+    members = members.annotate(nb_sessions=Count('runreport__sessions'))
 
     # Sort members
     default_sort = 'username'
