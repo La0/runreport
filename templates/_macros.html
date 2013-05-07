@@ -19,3 +19,22 @@
   {% endfor %}
 </tr>
 {%- endmacro %}
+
+{% macro sort_title(title, sort_name, urlname, urlargs, sort_active) %}
+  {{ title }}
+  {{ sort(sort_name, 'up', urlname, urlargs, sort_active) }}
+  {{ sort(sort_name + '-r', 'down', urlname, urlargs, sort_active) }}
+{%- endmacro %}
+
+{% macro sort(sort_name, direction, urlname, urlargs, sort_active) %}
+
+  {% set active = sort_name == sort_active %}
+  <span class="badge {% if active %}badge-inverse{% else %}badge-info{% endif %}">
+    {% if active %}
+    <i class="icon-chevron-{{direction}} icon-white"></i>
+    {% else %}
+    <a href="{{ urlname|url(*urlargs + (sort_name, )) }}"><i class="icon-chevron-{{direction}} icon-white"></i></a>
+    {% endif %}
+  </span>
+
+{%- endmacro %}

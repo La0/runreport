@@ -2,7 +2,7 @@ from django.views.generic import DetailView, ListView
 from django.http import Http404
 from django.views.generic.dates import WeekArchiveView
 from django.contrib.auth.models import User
-from django.db.models import Count
+from django.db.models import Count, Max
 from mixins import ClubMixin
 from run.views.mixins import CurrentWeekMixin, WeekPaginator
 from run.models import RunReport
@@ -17,10 +17,21 @@ class ClubMembers(ClubMixin, ListView):
     members = self.club.members.all().order_by('username')
 
     # Add last RunReport date, as week & year
-    from django.db.models import Max
     members = members.annotate(max_report_date=Max('runreport__sessions__date'))
 
+    # Sort members
+    default_sort = 'username'
+    sorts = {
+      'name' : default_sort,
+      'name-r' : '-username',
+      'date' : '-max_report_date',
+      'date-r' : 'max_report_date',
+    }
+    sort = 'sort' in self.kwargs and sorts.get(self.kwargs['sort'], default_sort) or default_sort
+    members = members.order_by(sort)
+
     return {
+      'sort' : self.kwargs.get('sort', default_sort),
       'members' : members,
     }
 

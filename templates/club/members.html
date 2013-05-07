@@ -5,9 +5,9 @@
 
 <table class="table">
   <tr>
-    <th>Athlète</th>
+    <th>{{ macros.sort_title('Athlète', 'name', 'club-current-sort', (club.slug, ), sort) }}</th>
     <th>Vma</th>
-    <th>Dernière séance</th>
+    <th>{{ macros.sort_title('Dernière séance', 'date', 'club-current-sort', (club.slug, ), sort) }}</th>
     <th>Actions</th>
   </tr>
   {% for member in members %}
