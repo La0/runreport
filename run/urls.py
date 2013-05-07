@@ -9,6 +9,7 @@ urlpatterns = patterns('',
   # Calendar
   url(r'^calendar/?$', login_required(RunCalendar.as_view()), name="report-current-month"),
   url(r'^calendar/(?P<year>\d{4})/(?P<month>\d{1,2})/?$', login_required(RunCalendar.as_view()), name="report-month"),
+  url(r'^calendar/(?P<year>\d{4})/(?P<month>\d{1,2})/(?P<day>\d{1,2})/?$', login_required(RunCalendarDay.as_view()), name="report-day"),
 
   # Vma
   url(r'^vma/glossaire/?', VmaGlossary.as_view(), name="vma-glossary"),

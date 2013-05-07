@@ -1,0 +1,10 @@
+<h3>{{session.date|date('l d E Y')|title()}}</h3>
+<h4>{{session.name|default('Session')}}</h4>
+<p>
+  {{ session.comment }}
+</p>
+
+<div class="modal-footer">
+  <button class="btn" data-dismiss="modal">Fermer</button>
+  <a href="{{ session.report.get_absolute_url() }}" class="btn btn-primary">Voir cette semaine</a>
+</div>

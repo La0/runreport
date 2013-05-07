@@ -1,7 +1,7 @@
-from django.views.generic import MonthArchiveView
+from django.views.generic import MonthArchiveView, DateDetailView
 from django.http import Http404
 from run.models import RunSession
-from datetime import datetime
+from datetime import datetime, date
 import calendar
 
 class RunCalendar(MonthArchiveView):
@@ -38,9 +38,17 @@ class RunCalendar(MonthArchiveView):
     sessions_per_days = dict((r.date, r) for r in sessions)
 
     context = {
-      'sessions_active' : sessions.exclude(comment=None,name=None),
       'months' : (self.get_previous_month(date), date, self.get_next_month(date)),
       'days' : self.days,
       'weeks' : self.weeks,
     }
     return (self.days, sessions_per_days, context)
+
+class RunCalendarDay(DateDetailView):
+  template_name = 'run/day.html'
+  month_format = '%M'
+  context_object_name = 'session'
+
+  def get_object(self):
+    self.date = date(int(self.get_year()), int(self.get_month()), int(self.get_day()))
+    return RunSession.objects.get(report__user=self.request.user, date=self.date)
