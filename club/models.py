@@ -5,6 +5,10 @@ class Club(models.Model):
   name = models.CharField(max_length=250)
   slug = models.SlugField(unique=True)
   members = models.ManyToManyField(User, through='ClubMembership')
+  main_trainer = models.ForeignKey(User, null=True, blank=True, related_name="club_main_trainer")
+
+  def __unicode__(self):
+    return self.name
 
 class ClubMembership(models.Model):
   CLUB_ROLES = (

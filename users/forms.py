@@ -6,13 +6,14 @@ from coach.settings import TRAINERS_GROUP, GPG_HOME, GPG_KEY
 from helpers import nameize
 import gnupg
 from run.garmin import GarminConnector
+from club.models import Club
 
 class UserModelChoiceField(forms.ModelChoiceField):
   def label_from_instance(self, obj):
     try:
       return obj.first_name and obj.first_name or obj.username
     except:
-      return 'plop'
+      return '-'
 
 class ProfileForm(forms.ModelForm):
   def __init__(self, *args, **kwargs):
@@ -34,7 +35,7 @@ class SignUpForm(forms.Form):
   password = forms.CharField(min_length=4, widget=forms.PasswordInput())
   password_check = forms.CharField(min_length=4, widget=forms.PasswordInput())
   email = forms.EmailField()
-  trainer = UserModelChoiceField(queryset=User.objects.filter(groups=TRAINERS_GROUP))
+  club = forms.ModelChoiceField(queryset=Club.objects.all())
 
   def clean_email(self):
     '''
