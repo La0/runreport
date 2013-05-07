@@ -20,7 +20,7 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
     self.report, _ = RunReport.objects.get_or_create(user=self.request.user, year=self.get_year(), week=self.get_week())
 
     # Init sessions
-    self.sessions = self.report.sessions.all().order_by('date')
+    self.sessions = self.report.get_dated_sessions()
 
     return self.report
 
@@ -61,10 +61,7 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
     '''
     forms = {}
     for day in self.report.get_days():
-      try:
-        instance = self.sessions.get(date=day)
-      except:
-        instance = None
+      instance = self.sessions[day]
       if self.request.method == 'POST':
         f = RunSessionForm(self.request.POST, instance=instance, prefix=day)
       else:
