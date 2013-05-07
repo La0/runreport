@@ -2,8 +2,7 @@ import requests
 import gnupg
 from datetime import datetime
 from coach.settings import GPG_HOME, GPG_PASSPHRASE
-from run.models import GarminActivity, RunSession
-import json
+from run.models import GarminActivity, RunSession, RunReport
 from django.utils.timezone import utc
 
 class GarminConnector:
@@ -139,9 +138,13 @@ class GarminConnector:
 
     # Try to map a run session
     try:
-      sess = RunSession.objects.get(date=act.date.date(), report__user=self._user, garmin_activity=None)
-      sess.garmin_activity = act
-      sess.save()
+      date = act.date.date()
+      week = int(date.strftime('%W'))
+      report = RunReport.objects.get(user=self._user, year=date.year, week=week)
+      sess,_ = RunSession.objects.get_or_create(date=date, report=report)
+      if sess.garmin_activity is None:
+        sess.garmin_activity = act
+        sess.save()
     except:
       pass
 
