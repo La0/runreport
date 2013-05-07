@@ -1,21 +1,22 @@
 <form method="post" action="" class="form-horizontal report">
   {% csrf_token %}
-  {{ form.management_form|safe }}
 
-  {% for session in form %}
-     {% if session.instance.date == now.date() %}
+  {% for day in report.get_days() %}
+    {% if day == now.date() %}
     <fieldset class="today">
-      <legend>Aujourd'hui - {{ session.instance.date|date('l d E')|title }}</legend>
+      <legend>Aujourd'hui - {{ day|date('l d E')|title }}</legend>
     {% else %}
     <fieldset>
-      <legend>{{ session.instance.date|date('l d E')|title }}</legend>
+      <legend>{{ day|date('l d E')|title }}</legend>
     {% endif %}
+
+    {% with forms[day] as session %}
       {% with session.non_field_errors() as err %}
         {{ err|safe }}
       {% endwith %}
-      {{ session.id|safe }}
       {{ macros.input(session.name, 'Séance') }}
       {{ macros.input(session.comment, 'Commentaire') }}
+
       {% with session.instance.garmin_activity as activity %}
       {% if activity %}
       <div class="garmin pull-right">
@@ -28,6 +29,7 @@
       </div>
       {% endif %}
       {% endwith %}
+    {% endwith %}
     </fieldset>
   {% endfor %}
 

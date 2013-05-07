@@ -7,7 +7,7 @@
 </div>
 {% endif %}
 
-{% if form and not report.published %}
+{% if forms and not report.published %}
   {% include 'run/report.open.html' %}
 {% else %}
   {% include 'run/report.closed.html' %}

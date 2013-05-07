@@ -1,9 +1,8 @@
 from django.views.generic import WeekArchiveView
-from django.forms.models import modelformset_factory
 from helpers import week_to_date
-from run.models import RunReport, RunSession
+from run.models import RunReport
 from datetime import datetime
-from run.forms import RunReportForm
+from run.forms import RunReportForm, RunSessionForm
 from django.core.exceptions import PermissionDenied
 from mixins import WeekPaginator, CurrentWeekMixin
 
@@ -22,14 +21,6 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
 
     # Init sessions
     self.sessions = self.report.sessions.all().order_by('date')
-
-    # Missing days
-    self.missing_days = []
-    for day in self.report.get_days():
-      try:
-        self.sessions.get(date=day)
-      except Exception:
-        self.missing_days.append(day)
 
     return self.report
 
@@ -52,37 +43,44 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
     }
     return ([], self.sessions, context)
 
-  def get_context_data(self, **kwargs):
-    context = super(WeeklyReport, self).get_context_data(**kwargs)
+  def get_form_report(self):
 
-    # Init formset
-    RunSessionFormSet = modelformset_factory(RunSession, fields=('comment', 'name'), extra=len(self.missing_days), max_num=7)
-
-    # Init forms
-    form, form_report = None, None
+    form = None, None
     if not self.report.published:
       if self.request.method == 'POST':
-        form = RunSessionFormSet(self.request.POST)
-        form_report = RunReportForm(self.request.POST, instance=self.report)
+        form = RunReportForm(self.request.POST, instance=self.report)
       else:
-        form = RunSessionFormSet(queryset=self.sessions)
-        form_report = RunReportForm(instance=self.report)
+        form = RunReportForm(instance=self.report)
 
-      # Apply date & report to empty instances
-      days = self.missing_days
-      for f in form.forms:
-        if f.instance.pk is None:
-          f.instance.report = self.report
-          f.instance.date = days.pop()
+    return form
 
-      # Finally sort forms by their date
-      form.forms = sorted(form.forms, key=lambda f: f.instance.date)
+  def get_dated_forms(self):
+    '''
+    Build a form per day and per RunSession instance
+    Much more easier than dealing with a dynamic model formset
+    '''
+    forms = {}
+    for day in self.report.get_days():
+      try:
+        instance = self.sessions.get(date=day)
+      except:
+        instance = None
+      if self.request.method == 'POST':
+        f = RunSessionForm(self.request.POST, instance=instance, prefix=day)
+      else:
+        f = RunSessionForm(instance=instance, prefix=day)
+      forms[day] = f
+
+    return forms
+
+  def get_context_data(self, **kwargs):
+    context = super(WeeklyReport, self).get_context_data(**kwargs)
 
     # Full context
     profile = self.request.user.get_profile()
     context.update({
-      'form' : form,
-      'form_report' : form_report,
+      'forms' : self.get_dated_forms(),
+      'form_report' : self.get_form_report(),
       'report' : self.report,
       'now' : datetime.now(),
       'trainer' : profile.trainer,
@@ -117,10 +115,15 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
       raise PermissionDenied
     self.date_list, self.object_list, extra_context = self.get_dated_items()
     context = self.get_context_data(**{'object_list': self.object_list})
-    self.report = self.get_report()
     if not self.report.published:
-      if context['form'].is_valid():
-        context['form'].save()
+
+      # Save form per form, to only create necessary objects
+      for day, form in context['forms'].items():
+        if form.is_valid():
+          session = form.save(commit=False)
+          session.report = self.report
+          session.date = day
+          session.save()
 
       # Save report
       if context['form_report'].is_valid():
