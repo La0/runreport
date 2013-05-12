@@ -3,7 +3,7 @@
 {% block content %}
 <script type="text/javascript">
 $(function(){
-  $('table.calendar td.session').click(function(){
+  $('table.calendar td.day').click(function(){
     var url = this.getAttribute('href');
     $.ajax({
       url : url,
@@ -31,11 +31,7 @@ $(function(){
   <tr>
   {% for day in week %}
   {% with sessions[day] as session %}
-    {% if session and (session.comment or session.name) %}
-    <td class="session" href="{% url report-day session.date.year, session.date.month, session.date.day %}">
-    {% else %}
-    <td class="nothing">
-    {% endif %}
+    <td class="day {% if session %}session{% else %}empty{% endif %}" href="{% url report-day day.year, day.month, day.day %}">
 
     <p class="date">
       {% if day.day == 1 or (loop.first and day.month != months.1.month) %}
@@ -44,7 +40,7 @@ $(function(){
       {{day|date('d')}}
       {% endif %}
     </p>
-    {% if session and (session.comment or session.name) %}
+    {% if session %}
     <p>
       {{session.name|default('Session sans nom')}}
     </p>

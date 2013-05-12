@@ -1,6 +1,8 @@
 from django.views.generic import MonthArchiveView, DateDetailView
+from django.views.generic.edit import ModelFormMixin, ProcessFormView
 from django.http import Http404
-from run.models import RunSession
+from run.models import RunSession, RunReport
+from run.forms import RunSessionForm
 from datetime import datetime, date
 import calendar
 
@@ -44,11 +46,39 @@ class RunCalendar(MonthArchiveView):
     }
     return (self.days, sessions_per_days, context)
 
-class RunCalendarDay(DateDetailView):
+class RunCalendarDay(ModelFormMixin, ProcessFormView, DateDetailView):
   template_name = 'run/day.html'
   month_format = '%M'
   context_object_name = 'session'
+  form_class = RunSessionForm
+
+  def get_form(self, form_class):
+    # Load object before form init
+    if not hasattr(self, 'object'):
+      self.get_object()
+    return super(RunCalendarDay, self).get_form(form_class)
+
+  def form_valid(self, form):
+    # Save fully stuffed report
+    session = form.save(commit=False)
+    session.date = self.day
+    session.report = self.report
+    session.save()
+    return self.render_to_response(self.get_context_data(**{'form' : form}))
+
+  def get_context_data(self, **kwargs):
+    context = super(RunCalendarDay, self).get_context_data(**kwargs)
+    context['day'] = self.day
+    context['report'] = self.report
+    return context
 
   def get_object(self):
-    self.date = date(int(self.get_year()), int(self.get_month()), int(self.get_day()))
-    return RunSession.objects.get(report__user=self.request.user, date=self.date)
+    # Load day, report and eventual session
+    self.day = date(int(self.get_year()), int(self.get_month()), int(self.get_day()))
+    week = int(self.day.strftime('%W'))
+    self.report, _ = RunReport.objects.get_or_create(user=self.request.user, year=self.day.year, week=week)
+    try:
+      self.object = RunSession.objects.get(report=self.report, date=self.day)
+    except:
+      self.object = None
+    return self.object
