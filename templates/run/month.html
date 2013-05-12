@@ -9,7 +9,22 @@ $(function(){
       url : url,
       method : 'GET',
       success : function(data){
-        m = $(data).modal();
+        var modal = $(data);
+        modal.find('form').on('submit', function(){
+          $.ajax({
+            url : this.getAttribute('action'),
+            method : 'POST',
+            data : {
+              name : modal.find('#id_name').val(),
+              comment: modal.find('#id_comment').val(),
+            },
+            success : function(data){
+              modal.modal('hide');
+            },
+          });
+          return false;
+        });
+        modal.modal();
       }
     });
   });
