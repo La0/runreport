@@ -92,6 +92,11 @@ table.calendar td p.date {
   margin: 0;
 }
 
+div.modal.day div.modal-body input, div.modal.day div.modal-body textarea {
+  width: 95%;
+  max-height: 100px;
+}
+
 /* Table vma */
 div.table-fixed{
   width: auto;

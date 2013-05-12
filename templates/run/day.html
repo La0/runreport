@@ -1,19 +1,19 @@
-<div class="modal hide fade" tabindex="-1" role="dialog" >
+<div class="modal hide fade day" tabindex="-1" role="dialog" >
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3>{{day|date('l d E Y')|title()}}</h3>
   </div>
+  <form method="POST" action="{% url report-day day.year, day.month, day.day %}">
   <div class="modal-body">
-    <form method="POST" action="{% url report-day day.year, day.month, day.day %}">
       {% csrf_token %}
       {% import '_macros.html' as macros %}
       {{ macros.input(form.name, 'Séance') }}
       {{ macros.input(form.comment, 'Commentaire') }}
-      <input type="submit" value="Ok" />
-    </form>
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal">Fermer</button>
-    <a href="{{ report.get_absolute_url() }}" class="btn btn-primary">Voir cette semaine</a>
+    <a href="{{ report.get_absolute_url() }}" class="btn btn-success">Voir cette semaine</a>
+    <input class="btn btn-primary" type="submit" value="Sauvegarder" style="margin-left: 20px;" />
   </div>
+  </form>
 </div>
