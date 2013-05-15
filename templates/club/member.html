@@ -11,8 +11,8 @@
   {{ macros.tr(('Vma', profile.vma)) }}
   {{ macros.tr(('Poids', profile.weight)) }}
   {{ macros.tr(('Taille', profile.height)) }}
-  {{ macros.tr(('Fréquence au repos', profile.frequency_rest)) }}
-  {{ macros.tr(('Fréquence maximale', profile.frequency)) }}
+  {{ macros.tr(('FC repos', profile.frequency_rest)) }}
+  {{ macros.tr(('FC max', profile.frequency)) }}
   {{ macros.tr(('Entraineur', profile.trainer.first_name + ' ' + profile.trainer.last_name|default(profile.trainer.username))) }}
   {{ macros.tr(('Licence FFA', profile.license)) }}
   {{ macros.tr(('Nb Séances hebdomadaires', profile.nb_sessions)) }}

@@ -34,6 +34,7 @@ def add_pages(request):
 
     submenu['menu'].append(_ext('http://csternes.athle.org', 'Site officiel'))
     submenu['menu'].append(_ext('http://facebook.com/groups/USA17', 'Groupe Facebook'))
+    submenu['menu'].append(_ext('http://csternes.athle.org/asp.net/espaces.html/html.aspx?id=21425', u'Résultats'))
     menu.append(submenu)
 
     # User menu
