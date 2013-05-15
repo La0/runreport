@@ -23,6 +23,9 @@ class ProfileForm(forms.ModelForm):
   class Meta:
     model = UserProfile
     exclude = ('user', )
+    widgets = {
+      'nb_sessions' : forms.Select(choices=[(i,i) for i in range(0,21)]),
+    }
 
 class UserForm(forms.ModelForm):
   class Meta:

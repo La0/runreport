@@ -14,6 +14,8 @@
   {{ macros.tr(('Fréquence au repos', profile.frequency_rest)) }}
   {{ macros.tr(('Fréquence maximale', profile.frequency)) }}
   {{ macros.tr(('Entraineur', profile.trainer.first_name + ' ' + profile.trainer.last_name|default(profile.trainer.username))) }}
+  {{ macros.tr(('Licence FFA', profile.license)) }}
+  {{ macros.tr(('Nb Séances hebdomadaires', profile.nb_sessions)) }}
   {{ macros.tr(('Renseignements', profile.comment)) }}
 </table>
 {% endwith %}

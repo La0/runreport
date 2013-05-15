@@ -1,3 +1,4 @@
+# coding=utf-8
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
@@ -17,6 +18,8 @@ class UserProfile(models.Model):
   height = models.IntegerField(null=True, blank=True)
   weight = models.IntegerField(null=True, blank=True)
   comment = models.TextField(null=True, blank=True)
+  nb_sessions = models.IntegerField(null=True, blank=True)
+  license = models.CharField(max_length=12, null=True, blank=True)
 
   # Mail
   auto_send = models.BooleanField(default=False)
