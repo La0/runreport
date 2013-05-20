@@ -2,3 +2,4 @@
 *.db*
 coach/local_settings.py
 garmin_data
+env
