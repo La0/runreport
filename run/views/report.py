@@ -115,16 +115,22 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
     if not self.report.published:
 
       # Save form per form, to only create necessary objects
+      calc_report = False
       for day, form in context['forms'].items():
         if form.is_valid():
+          calc_report = True
           session = form.save(commit=False)
           session.report = self.report
           session.date = day
           session.save()
 
       # Save report
-      if context['form_report'].is_valid():
-        context['form_report'].save()
+      form_report = context['form_report']
+      if calc_report:
+        self.report.calc_distance_time()
+      if form_report.is_valid() or calc_report:
+        form_report.save()
+
 
       # Publish ?
       if request.POST['action'] == 'publish':

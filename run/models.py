@@ -1,7 +1,7 @@
 # coding=utf-8
 from django.db import models
 from django.contrib.auth.models import User
-from datetime import datetime, date, time
+from datetime import datetime, date, time, timedelta
 import xlwt
 import os
 import json
@@ -20,6 +20,8 @@ class RunReport(models.Model):
   created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
   comment = models.TextField(null=True, blank=True)
+  distance = models.FloatField(null=True, blank=True, editable=False)
+  time = models.TimeField(null=True, blank=True, editable=False)
 
   class Meta:
     unique_together = (('user', 'year', 'week'),)
@@ -153,12 +155,26 @@ class RunReport(models.Model):
     self.published = True
     self.save()
 
+  def calc_distance_time(self):
+    # Distance, through SQL Sum
+    from django.db.models import Sum
+    out = self.sessions.aggregate(total_distance=Sum('distance'))
+    self.distance = out['total_distance']
+
+    # Time, not possible with django through sum...
+    self.time = timedelta()
+    for s in self.sessions.all():
+      self.time += timedelta(hours=s.time.hour, minutes=s.time.minute, seconds=s.time.second)
+    return (self.distance, self.time)
+
 class RunSession(models.Model):
   report = models.ForeignKey('RunReport', related_name='sessions')
   date = models.DateField()
   name = models.CharField(max_length=255, null=True, blank=True)
   comment = models.TextField(null=True, blank=True)
   garmin_activity = models.ForeignKey('GarminActivity', null=True, blank=True)
+  distance = models.FloatField(null=True, blank=True)
+  time = models.TimeField(null=True, blank=True)
 
   class Meta:
     unique_together = (('report', 'date'),)

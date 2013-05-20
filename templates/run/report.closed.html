@@ -36,3 +36,12 @@
   </tr>
   {% endfor %}
 </table>
+<h4>Bilan de la semaine</h4>
+{% if report.comment %}
+<p>
+  <strong>Commentaire:</strong> {{ report.comment }}
+</p>
+{% endif %}
+<p>
+  <span class="label label-info">Temps total</span> {{ report.time|default("-") }} <span class="muted">&bull;</span> <span class="label label-info">Distance totale</span> {{ report.distance|default(0) }} km.
+</p>

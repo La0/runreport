@@ -9,7 +9,7 @@ class RunReportForm(forms.ModelForm):
 class RunSessionForm(forms.ModelForm):
   class Meta:
     model = RunSession
-    fields = ('name', 'comment')
+    fields = ('name', 'comment', 'distance', 'time')
 
   def is_valid(self):
     is_valid = super(RunSessionForm, self).is_valid()

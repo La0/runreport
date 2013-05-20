@@ -16,6 +16,8 @@
       {% endwith %}
       {{ macros.input(session.name, 'Séance') }}
       {{ macros.input(session.comment, 'Commentaire') }}
+      {{ macros.input(session.distance, 'Distance') }}
+      {{ macros.input(session.time, 'Temps') }}
 
       {% with session.instance.garmin_activity as activity %}
       {% if activity %}
@@ -39,6 +41,9 @@
     Vous pouvez indiquer votre ressenti sur cette semaine (facultatif).
     </p>
     {{ macros.input(form_report.comment, 'Commentaire') }}
+    <p>
+    <span class="label label-info">Temps total</span> {{ report.time }} <span class="muted">&bull;</span> <span class="label label-info">Distance totale</span> {{ report.distance }} km.
+    </p>
   </fieldset>
 
   <div class="form-actions">
