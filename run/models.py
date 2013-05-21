@@ -163,7 +163,7 @@ class RunReport(models.Model):
 
     # Time, not possible with django through sum...
     self.time = timedelta()
-    for s in self.sessions.all():
+    for s in self.sessions.filter(time__isnull=False):
       self.time += timedelta(hours=s.time.hour, minutes=s.time.minute, seconds=s.time.second)
     return (self.distance, self.time)
 

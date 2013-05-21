@@ -3,11 +3,11 @@
 {% block content %}
 <h2>{{club.name}} : {{members.count()}} membres</h2>
 
-<div style="margin-bottom: 5px">
-  <a class="btn btn-success" href="{% url 'club-current-name' club.slug, 'athletes', sort %}">Mes Athlètes</a>
-  <a class="btn" href="{% url 'club-current-name' club.slug, 'all', sort %}">Tout le club</a>
-  <a class="btn btn-inverse" href="{% url 'club-current-name' club.slug, 'archives', sort %}">Archives</a>
-</div>
+<ul class="breadcrumb">
+  <li><a href="{% url 'club-current-name' club.slug, 'athletes', sort %}">Mes Athlètes</a> <span class="divider">&bull;</span></li>
+  <li><a href="{% url 'club-current-name' club.slug, 'all', sort %}">Tout le club</a> <span class="divider">&bull;</span></li>
+  <li><a href="{% url 'club-current-name' club.slug, 'archives', sort %}">Archives</a></li>
+</ul>
 
 {% if members %}
 <table class="table">

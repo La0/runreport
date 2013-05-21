@@ -16,8 +16,26 @@
       {% endwith %}
       {{ macros.input(session.name, 'Séance') }}
       {{ macros.input(session.comment, 'Commentaire') }}
-      {{ macros.input(session.distance, 'Distance') }}
-      {{ macros.input(session.time, 'Temps') }}
+
+      <div class="control-group ">
+        <div class="controls">
+          <div class="input-prepend">
+            <span class="add-on">Distance</span>
+            {{ session.distance|safe }}
+          </div>
+          <div class="input-prepend">
+            <span class="add-on">Temps</span>
+            {{ session.time|safe }}
+          </div>
+        </div>
+      </div>
+
+      {% if session.distance.errors %}
+      <div class="alert alert-danger">{{session.distance.errors|safe}}</div>
+      {% endif %}
+      {% if session.time.errors %}
+      <div class="alert alert-danger">{{session.time.errors|safe}}</div>
+      {% endif %}
 
       {% with session.instance.garmin_activity as activity %}
       {% if activity %}
