@@ -9,6 +9,7 @@
   <a class="btn btn-inverse" href="{% url 'club-current-name' club.slug, 'archives', sort %}">Archives</a>
 </div>
 
+{% if members %}
 <table class="table">
   <tr>
     <th>{{ macros.sort_title('Athlète', 'name', 'club-current-name', (club.slug, type, ), sort) }}</th>
@@ -39,5 +40,11 @@
   </tinfo >
   {% endfor %}
 </table>
+{% else %}
+<div class="alert alert-error">
+  <h4>Pas de membres</h4>
+  Aucun membre du club {{club.name}} trouvé pour cette liste.
+</div>
+{% endif %}
 
 {% endblock %}
