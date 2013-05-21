@@ -4,6 +4,7 @@ from club.views import *
 urlpatterns = patterns('',
   # Members
   url(r'^/?$', ClubMembers.as_view(), name="club-current"),
+  url(r'^(?P<type>[\w]+)-by-(?P<sort>[\w-]+)/?$', ClubMembers.as_view(), name="club-current-name"),
   url(r'^by-(?P<sort>[\w-]+)/?$', ClubMembers.as_view(), name="club-current-sort"),
 
   # Member

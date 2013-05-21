@@ -3,12 +3,19 @@
 {% block content %}
 <h2>{{club.name}} : {{members.count()}} membres</h2>
 
+<div style="margin-bottom: 5px">
+  <a class="btn btn-success" href="{% url 'club-current-name' club.slug, 'athletes', sort %}">Mes Athlètes</a>
+  <a class="btn" href="{% url 'club-current-name' club.slug, 'all', sort %}">Tout le club</a>
+  <a class="btn btn-inverse" href="{% url 'club-current-name' club.slug, 'archives', sort %}">Archives</a>
+</div>
+
 <table class="table">
   <tr>
-    <th>{{ macros.sort_title('Athlète', 'name', 'club-current-sort', (club.slug, ), sort) }}</th>
+    <th>{{ macros.sort_title('Athlète', 'name', 'club-current-name', (club.slug, type, ), sort) }}</th>
+    <th>Rôle</th>
     <th>Vma</th>
     <th>Séances</th>
-    <th>{{ macros.sort_title('Dernière séance', 'date', 'club-current-sort', (club.slug, ), sort) }}</th>
+    <th>{{ macros.sort_title('Dernière séance', 'date', 'club-current-name', (club.slug, type, ), sort) }}</th>
     <th>Actions</th>
   </tr>
   {% for member in members %}
@@ -17,6 +24,7 @@
     <td>
       {{ member.first_name|default(member.username) }} {{ member.last_name }}
     </td>
+    <td>{{member.membership.role|title()}}</td>
     <td>{{ profile.vma|default('-') }}</td>
     <td>{{ member.nb_sessions }}</td>
     <td>

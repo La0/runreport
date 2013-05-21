@@ -16,8 +16,24 @@ class ClubMembers(ClubMixin, ListView):
   model = User
 
   def load_members(self):
+    # Filter members
+    default_type = 'athletes'
+    filters = {
+      'all' : None,
+      'athletes' : {
+        'memberships__role' : 'athlete',
+        'userprofile__trainer__pk' : self.request.user.pk,
+      },
+      'archives' : {
+        'memberships__role' : 'archive',
+      }
+    }
+
     # Load members, sorted by name
-    members = self.club.members.all().order_by('username')
+    f = filters.get(self.kwargs.get('type', default_type), None)
+    members = self.club.members.prefetch_related('memberships')
+    if f: # Don't use ternary !
+      members = members.filter(**f)
 
     # Add last RunReport date, as week & year
     members = members.annotate(max_report_date=Max('runreport__sessions__date'))
@@ -34,7 +50,12 @@ class ClubMembers(ClubMixin, ListView):
     sort = 'sort' in self.kwargs and sorts.get(self.kwargs['sort'], default_sort) or default_sort
     members = members.order_by(sort)
 
+    # Apply club membership
+    for m in members:
+      m.membership = m.memberships.get(club=self.club)
+
     return {
+      'type' : self.kwargs.get('type', default_type),
       'sort' : self.kwargs.get('sort', default_sort),
       'members' : members,
     }

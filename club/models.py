@@ -16,7 +16,7 @@ class ClubMembership(models.Model):
     ('trainer', 'Trainer'),
     ('archive', 'Archive'),
   )
-  user = models.ForeignKey(User)
+  user = models.ForeignKey(User, related_name="memberships")
   club = models.ForeignKey(Club)
   role = models.CharField(max_length=10, choices=CLUB_ROLES)
   created = models.DateTimeField(auto_now_add=True)
