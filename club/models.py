@@ -14,6 +14,7 @@ class ClubMembership(models.Model):
   CLUB_ROLES = (
     ('athlete', 'Athlete'),
     ('trainer', 'Trainer'),
+    ('archive', 'Archive'),
   )
   user = models.ForeignKey(User)
   club = models.ForeignKey(Club)

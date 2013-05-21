@@ -1,4 +1,5 @@
 from django.views.generic import DetailView, ListView
+from django.views.generic.edit import ModelFormMixin, ProcessFormView
 from django.http import Http404
 from django.views.generic.dates import WeekArchiveView
 from django.contrib.auth.models import User
@@ -6,7 +7,9 @@ from django.db.models import Count, Max
 from mixins import ClubMixin
 from run.views.mixins import CurrentWeekMixin, WeekPaginator
 from run.models import RunReport
+from club.models import ClubMembership
 from helpers import week_to_date
+from club.forms import ClubMembershipForm
 
 class ClubMembers(ClubMixin, ListView):
   template_name = 'club/members.html'
@@ -41,12 +44,15 @@ class ClubMembers(ClubMixin, ListView):
     context.update(self.load_members())
     return context
 
-class ClubMember(ClubMixin, DetailView):
+class ClubMember(ClubMixin, ModelFormMixin, ProcessFormView, DetailView):
   template_name = 'club/member.html'
-  context_object_name = 'member'
+  context_object_name = 'membership'
+  model = ClubMembership
+  form_class = ClubMembershipForm
   
   def get_context_data(self, **kwargs):
     context = super(ClubMember, self).get_context_data(**kwargs)
+    context['member'] = context['membership'].user
     context.update(self.load_reports(context['member']))
     return context
 
@@ -60,8 +66,19 @@ class ClubMember(ClubMixin, DetailView):
       'reports' : reports,
     }
 
+  def get_form(self, form_class):
+    # Load object before form init
+    if not hasattr(self, 'object'):
+      self.get_object()
+    return super(ClubMember, self).get_form(form_class)
+
+  def form_valid(self, form):
+    form.save()
+    return self.render_to_response(self.get_context_data(**{'form' : form}))
+
   def get_object(self):
-    return self.club.members.get(username=self.kwargs['username'])
+    self.object = ClubMembership.objects.get(user__username=self.kwargs['username'], club=self.club)
+    return self.object
 
 class ClubMemberWeek(CurrentWeekMixin, ClubMixin, WeekPaginator, WeekArchiveView):
   template_name = 'club/member.week.html'

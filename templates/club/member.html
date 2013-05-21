@@ -4,6 +4,9 @@
 
 <h2>{{ club.name }} : {{ member.first_name|default(member.username) }} {{member.last_name }}</h2>
 
+<form action="" method="POST">
+  {% csrf_token %}
+  {{ form.errors }}
 {% with member.get_profile() as profile %}
 <table class="table">
   {{ macros.tr(('Mail', member.email)) }}
@@ -17,10 +20,15 @@
   {{ macros.tr(('Licence FFA', profile.license)) }}
   {{ macros.tr(('Nb Séances hebdomadaires', profile.nb_sessions)) }}
   {{ macros.tr(('Renseignements', profile.comment)) }}
+  {{ macros.tr(('Rôle', form.role|safe)) }}
 </table>
 {% endwith %}
 
-<a class="btn btn-success pull-right" href="{% url club-current club.slug %}">Retour au club</a>
+  <div class="actions pull-right">
+    <a class="btn btn-success" href="{% url club-current club.slug %}">Retour au club</a>
+    <input type="submit" class="btn btn-primary" value="Enregistrer" />
+  </div>
+</form>
 
 <h2>Semaines</h2>
 {% if reports %}
