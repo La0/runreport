@@ -63,6 +63,10 @@ class RunReport(models.Model):
     today = date.today()
     return self.get_date_start() == date_to_day(today)
 
+  def is_publiable(self):
+    today = date.today()
+    return not self.published and today >= self.get_date(0)
+
   @models.permalink
   def get_absolute_url(self):
     return ('report-week', [self.year, self.week])

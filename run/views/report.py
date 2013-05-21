@@ -133,6 +133,6 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
 
 
       # Publish ?
-      if request.POST['action'] == 'publish':
+      if request.POST['action'] == 'publish' and self.report.is_publiable():
         self.report.publish()
     return self.render_to_response(context)
