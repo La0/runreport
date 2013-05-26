@@ -24,3 +24,9 @@ class ClubMembership(models.Model):
 
   class Meta:
     unique_together = (('user', 'club'),)
+
+class ClubLink(models.Model):
+  club = models.ForeignKey(Club, related_name="links")
+  name = models.CharField(max_length=250)
+  url = models.URLField(max_length=250)
+  position = models.IntegerField()

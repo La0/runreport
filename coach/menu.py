@@ -21,21 +21,26 @@ def add_pages(request):
     menu.append(_p('report-current', 'Cette semaine'))
     menu.append(_p('report-current-month', 'Calendrier', True))
 
-    # Club menu
-    submenu = {
-      'caption' : 'Le club',
-      'menu' : []
-    }
-
-    # Add clubs links for trainers
-    members = ClubMembership.objects.filter(user=request.user, role='trainer')
+    # Build Club menu
+    members = ClubMembership.objects.filter(user=request.user)
     for m in members:
-      submenu['menu'].append(_p(('club-current', m.club.slug), u'Athlètes du %s' % (m.club.name, )))
+      submenu = {
+        'caption' : m.club.name,
+        'menu' : []
+      }
 
-    submenu['menu'].append(_ext('http://csternes.athle.org', 'Site officiel'))
-    submenu['menu'].append(_ext('http://facebook.com/groups/USA17', 'Groupe Facebook'))
-    submenu['menu'].append(_ext('http://csternes.athle.org/asp.net/espaces.html/html.aspx?id=21425', u'Résultats'))
-    menu.append(submenu)
+      # Add club admin links for trainers
+      if m.role == 'trainer' or request.user.is_superuser:
+        submenu['menu'].append(_p(('club-current-name', m.club.slug, 'athletes', 'name'), u'Mes Athlètes'))
+        submenu['menu'].append(_p(('club-current-name', m.club.slug, 'all', 'name'), u'Tout le club'))
+        submenu['menu'].append(_p(('club-current-name', m.club.slug, 'archives', 'name'), u'Archives'))
+        submenu['menu'].append('__SEPARATOR__')
+
+      # Add public club links for everyone
+      for link in m.club.links.all().order_by('position'):
+        submenu['menu'].append(_ext(link.url, link.name))
+
+      menu.append(submenu)
 
     # User menu
     submenu = {
