@@ -1,3 +1,7 @@
+<script type="text/javascript">
+$('span.add-on').tooltip();
+</script>
+
 <form method="post" action="" class="form-horizontal report">
   {% csrf_token %}
 
@@ -19,13 +23,13 @@
 
       <div class="control-group ">
         <div class="controls">
-          <div class="input-prepend">
-            <span class="add-on">Distance</span>
-            {{ session.distance|safe }}
-          </div>
-          <div class="input-prepend">
+          <div class="input-prepend" style="width: 45%">
             <span class="add-on">Temps</span>
             {{ session.time|safe }}
+          </div>
+          <div class="input-prepend" style="width: 45%">
+            <span class="add-on" rel="tooltip" title="Distance en course à pied uniquement.">Distance cap</span>
+            {{ session.distance|safe }}
           </div>
         </div>
       </div>
