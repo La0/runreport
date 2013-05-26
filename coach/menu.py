@@ -56,6 +56,14 @@ def add_pages(request):
     menu.append(_p('user-create', u'Créer un compte'))
     menu.append(_p('login', 'Se connecter'))
 
+  # Search for active main menu
+  # based on sub items
+  for m in menu:
+    if 'menu' not in m: continue
+    if len([l['active'] for l in m['menu'] if isinstance(l, dict) and l['active']]):
+      m['active'] = True
+      break
+
   return {
     'menu' : menu,
   }

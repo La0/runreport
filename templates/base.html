@@ -21,7 +21,7 @@
         <ul class="nav nav-pills pull-right">
           {% for p in menu %}
           {% if 'menu' in p %}
-          <li class="dropdown">
+          <li class="dropdown {% if p.active %}active{% endif %}">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{p.caption}} <b class="caret"></b></a>
             <ul class="dropdown-menu">
             {% for sub_p in p.menu%}
