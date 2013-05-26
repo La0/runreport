@@ -18,6 +18,14 @@
       <strong>{{session.name}}</strong><br />
       {% endif %}
       {{session.comment|default('')|linebreaksbr}}
+      <div>
+        {% if session.time %}
+        <span class="label">Temps</span> {{session.time}}
+        {% endif %}
+        {% if session.distance %}
+        <span class="label">Distance</span> {{session.distance}}
+        {% endif %}
+      </div>
       {% with session.garmin_activity as activity %}
       {% if activity %}
       <div class="clear">&nbsp;</div>
