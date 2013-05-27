@@ -97,6 +97,7 @@ JINJA2_TEMPLATE_LOADERS = (
 
 TEMPLATE_CONTEXT_PROCESSORS = (
   'coach.menu.add_pages',
+  'coach.settings.load_constants',
   'django.contrib.auth.context_processors.auth',
   'django.core.context_processors.request',
 )
@@ -192,8 +193,18 @@ GPG_PASSPHRASE=''
 # Garmin user data (json)
 GARMIN_DIR=os.path.join(HOME, 'garmin_data')
 
+# Clicky stats
+CLICKY_ID = False
+
+
 # Import local settings, if any
 try:
   from local_settings import *
 except ImportError, e:
   pass
+
+# Load some settings constants in the templates
+def load_constants(request):
+  from django.conf import settings
+  keys = ['CLICKY_ID',]
+  return dict([(k, getattr(settings, k, None)) for k in keys])
