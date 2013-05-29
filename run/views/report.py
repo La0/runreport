@@ -80,7 +80,7 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
       'form_report' : self.get_form_report(),
       'report' : self.report,
       'now' : datetime.now(),
-      'trainer' : profile.trainer,
+      'memberships' : self.request.user.memberships.all(),
       'profile' : profile,
       'sessions': self.sessions,
       'pagename' : 'report-week',
@@ -133,6 +133,8 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
 
 
       # Publish ?
-      if request.POST['action'] == 'publish' and self.report.is_publiable():
-        self.report.publish()
+      if 'publish' in request.POST and self.report.is_publiable():
+        member = self.request.user.memberships.get(club__pk=int(request.POST['publish']))
+        uri = self.request.build_absolute_uri('/')[:-1] # remove trailing /
+        self.report.publish(member, uri)
     return self.render_to_response(context)

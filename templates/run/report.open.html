@@ -70,7 +70,15 @@ $('span.add-on').tooltip();
 
   <div class="form-actions">
     <button type="submit" name="action" value="save" class="btn btn-primary">Sauver ces commentaires</button>
-    <button {% if not report.is_publiable() %}disabled="disabled"{% endif %} type="submit" name="action" value="publish" class="btn btn-success">Envoyer à {{trainer.first_name|default(trainer.username)}}</button>
+
+    {% for m in memberships %}
+    <button {% if not report.is_publiable() %}disabled="disabled"{% endif %} type="submit" name="publish" value="{{m.club.pk}}" class="btn btn-success">
+      Envoyer à 
+      {% for t in m.trainers.all() %}
+      {{ t.first_name|default(t.username) }}{% if not loop.last %}, {% endif %}
+      {% endfor %}
+    </button>
+    {% endfor %}
   </div>
 </form>
 
@@ -78,7 +86,7 @@ $('span.add-on').tooltip();
 
   {% if report.is_current() %}
   <p class="alert alert-info">
-    Tous les commentaires remplis seront envoyés automatiquement à {{trainer.first_name|default(trainer.username)}} dans {{ report.get_send_date()|timeuntil }}.
+    Tous les commentaires remplis seront envoyés automatiquement dans {{ report.get_send_date()|timeuntil }}.
   </p>
   {% else %}
   <p class="alert alert-warning">

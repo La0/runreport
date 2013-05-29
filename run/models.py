@@ -122,7 +122,7 @@ class RunReport(models.Model):
     wb.save(path)
     return path
 
-  def publish(self):
+  def publish(self, membership, base_uri=None):
     '''
     Publish this report
     '''
@@ -133,7 +133,6 @@ class RunReport(models.Model):
     site = get_current_site(None)
     subject = u'Séance de %s : du %s au %s' % (self.user, self.get_date_start(), self.get_date_end())
     message = u'Envoyé via %s' % site
-    profile = self.user.get_profile()
     xls = open(self.build_xls(), 'r')
     xls_name = '%s_semaine_%d.xls' % (self.user.username, self.week+1)
 
@@ -143,14 +142,16 @@ class RunReport(models.Model):
       'week_human' : self.week + 1,
       'report': self,
       'site': site,
+      'club': membership.club,
       'sessions' : self.get_dated_sessions(),
+      'base_uri' : base_uri,
     }
     mail_html = render_to_string('run/mail.html', context)
 
     # Build & send message
     headers = {'Reply-To' : self.user.email,}
     mail = EmailMultiAlternatives(subject, message, headers=headers)
-    mail.to = [profile.trainer.email]
+    mail.to = [m.email for m in membership.trainers.all()]
     mail.cc = [self.user.email]
     mail.attach_alternative(mail_html, 'text/html')
     mail.attach(xls_name, xls.read(), 'application/vnd.ms-excel')
