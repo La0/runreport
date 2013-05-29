@@ -21,7 +21,19 @@
 
   <fieldset>
     <legend>Informations sportives</legend>
-    {{ macros.input(form_profile.trainer, 'Coach') }}
+    {% for m in memberships %}
+      {% with forms['form_trainers_%d' % m.club.id] as form %}
+      <div class="control-group">
+        <label class="control-label" for="id_">Coach du {{m.club.name}}</label>
+        <div class="controls field-multiple">
+          {{form.trainers|safe}}
+        </div>
+      </div>
+          {% if form.errors %}
+          <span class="help-inline">{{form.errors|safe}}</span>
+          {% endif %}
+      {% endwith %}
+    {% endfor %}
     {{ macros.input(form_profile.nb_sessions, 'Nb Séances hebdomadaires') }}
     {{ macros.input(form_profile.vma, 'Vma', 'Ex: 15.2 km/h') }}
     {{ macros.input(form_profile.weight, 'Poids', 'En kg') }}

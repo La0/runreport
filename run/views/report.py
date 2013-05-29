@@ -36,7 +36,6 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
     profile = self.request.user.get_profile()
 
     context = {
-      'trainer' : profile.trainer,
       'report' : self.report,
       'now' : datetime.now(),
       'profile' : profile,

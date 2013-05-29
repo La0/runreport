@@ -55,6 +55,11 @@ form.report div.garmin {
   margin-right: 40px;
 }
 
+form div.controls.field-multiple ul {
+  list-style-type: none;
+  margin: 0;
+}
+
 table div.garmin {
   border-top: 1px solid #EEE;
   margin-top: 5px;
