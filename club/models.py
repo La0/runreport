@@ -18,6 +18,7 @@ class ClubMembership(models.Model):
   )
   user = models.ForeignKey(User, related_name="memberships")
   club = models.ForeignKey(Club)
+  trainers = models.ManyToManyField(User, related_name="trainees")
   role = models.CharField(max_length=10, choices=CLUB_ROLES)
   created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
