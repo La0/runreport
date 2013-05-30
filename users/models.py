@@ -8,7 +8,7 @@ class UserProfile(models.Model):
   user = models.OneToOneField(User)
 
   # Trainer
-  trainer = models.ForeignKey(User, null=True, related_name='trainee')
+  #trainer = models.ForeignKey(User, null=True, related_name='trainee')
 
   # Personal infos for trainer
   birthday = models.DateField(null=True, blank=True)

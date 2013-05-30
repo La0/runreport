@@ -19,15 +19,9 @@ class CreateUser(FormView):
 
     # Add user to a club
     club = form.cleaned_data['club']
-    print club
     cm = ClubMembership(user=user, club=club, role='athlete')
     cm.save()
-    print cm.pk
-
-    # Init profile
-    profile = user.get_profile()
-    profile.trainer = club.main_trainer
-    profile.save()
+    cm.trainers.add(club.main_trainer)
 
     # Auto login
     valid_user = authenticate(username=user.username, password=form.cleaned_data['password'])
