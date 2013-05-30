@@ -22,7 +22,7 @@ class ClubMembers(ClubMixin, ListView):
       'all' : None,
       'athletes' : {
         'memberships__role' : 'athlete',
-        'userprofile__trainer__pk' : self.request.user.pk,
+        'memberships__trainers' : self.request.user,
       },
       'archives' : {
         'memberships__role' : 'archive',
