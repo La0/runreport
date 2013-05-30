@@ -21,19 +21,21 @@
 
   <fieldset>
     <legend>Informations sportives</legend>
-    {% for m in memberships %}
-      {% with forms['form_trainers_%d' % m.club.id] as form %}
-      <div class="control-group">
-        <label class="control-label" for="id_">Coach du {{m.club.name}}</label>
-        <div class="controls field-multiple">
-          {{form.trainers|safe}}
-        </div>
+
+    {{ form_trainers.management_form|safe }}
+    {% for form in form_trainers%}
+    <div class="control-group {% if form.errors %}error{% elif form.trainers.value() %}success{% endif %}">
+      <label class="control-label" for="id__">Coach du {{ form.instance.club.name }}</label>
+      <div class="controls field-multiple">
+        {{ form.id|safe }}
+        {{ form.trainers|safe }}
       </div>
-          {% if form.errors %}
-          <span class="help-inline">{{form.errors|safe}}</span>
-          {% endif %}
-      {% endwith %}
+    </div>
+    {% if form.trainers.errors %}
+    <div class="alert alert-danger">{{form.trainers.errors|safe}}</div>
+    {% endif %}
     {% endfor %}
+
     {{ macros.input(form_profile.nb_sessions, 'Nb Séances hebdomadaires') }}
     {{ macros.input(form_profile.vma, 'Vma', 'Ex: 15.2 km/h') }}
     {{ macros.input(form_profile.weight, 'Poids', 'En kg') }}

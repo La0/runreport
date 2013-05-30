@@ -1,5 +1,4 @@
 from models import RunReport, RunSession
-from models import RunReport, RunSession
 from django import forms
 
 class RunReportForm(forms.ModelForm):

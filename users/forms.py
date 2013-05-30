@@ -2,27 +2,16 @@ from django import forms
 from models import UserProfile
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-from coach.settings import TRAINERS_GROUP, GPG_HOME, GPG_KEY
+from coach.settings import GPG_HOME, GPG_KEY
 from helpers import nameize
 import gnupg
 from run.garmin import GarminConnector
 from club.models import Club
 
-class UserModelChoiceField(forms.ModelChoiceField):
-  def label_from_instance(self, obj):
-    try:
-      return obj.first_name and obj.first_name or obj.username
-    except:
-      return '-'
-
 class ProfileForm(forms.ModelForm):
-  def __init__(self, *args, **kwargs):
-    super(ProfileForm, self).__init__(*args, **kwargs)
-    self.fields['trainer'] = UserModelChoiceField(queryset=User.objects.filter(groups=TRAINERS_GROUP))
-
   class Meta:
     model = UserProfile
-    exclude = ('user', )
+    exclude = ('user', 'trainer', )
     widgets = {
       'nb_sessions' : forms.Select(choices=[(i,i) for i in range(0,21)]),
     }
