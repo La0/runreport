@@ -7,9 +7,6 @@ class UserProfile(models.Model):
   # Link to user
   user = models.OneToOneField(User)
 
-  # Trainer
-  #trainer = models.ForeignKey(User, null=True, related_name='trainee')
-
   # Personal infos for trainer
   birthday = models.DateField(null=True, blank=True)
   vma = models.FloatField(null=True, blank=True)

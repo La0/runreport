@@ -177,9 +177,6 @@ AUTH_PROFILE_MODULE = 'users.UserProfile'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
-# Group of trainers users
-TRAINERS_GROUP = 1
-
 # Date & Hour of Auto send
 REPORT_SEND_DAY = 0
 REPORT_SEND_TIME = (20,00)
