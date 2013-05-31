@@ -21,7 +21,7 @@ class RunReport(models.Model):
   updated = models.DateTimeField(auto_now=True)
   comment = models.TextField(null=True, blank=True)
   distance = models.FloatField(null=True, blank=True, editable=False)
-  time = models.TimeField(null=True, blank=True, editable=False)
+  time = models.FloatField(null=True, blank=True, editable=False)
 
   class Meta:
     unique_together = (('user', 'year', 'week'),)
@@ -166,10 +166,11 @@ class RunReport(models.Model):
     out = self.sessions.aggregate(total_distance=Sum('distance'))
     self.distance = out['total_distance']
 
-    # Time, not possible with django through sum...
-    self.time = timedelta()
+    # Time
+    time = timedelta()
     for s in self.sessions.filter(time__isnull=False):
-      self.time += timedelta(hours=s.time.hour, minutes=s.time.minute, seconds=s.time.second)
+      time += timedelta(hours=s.time.hour, minutes=s.time.minute, seconds=s.time.second)
+    self.time = time.days * 86400 + time.seconds
     return (self.distance, self.time)
 
 class RunSession(models.Model):

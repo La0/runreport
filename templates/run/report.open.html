@@ -44,7 +44,7 @@ $('span.add-on').tooltip();
     </p>
     {{ macros.input(form_report.comment, 'Commentaire') }}
     <p>
-    <span class="label label-info">Temps total</span> {{ report.time }} <span class="muted">&bull;</span> <span class="label label-info">Distance totale</span> {{ report.distance }} km.
+    <span class="label label-info">Temps total</span> {{ report.time|days_time('jour', '%Hh%M') }} <span class="muted">&bull;</span> <span class="label label-info">Distance totale</span> {{ report.distance }} km.
     </p>
   </fieldset>
 

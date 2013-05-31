@@ -51,5 +51,5 @@
 </p>
 {% endif %}
 <p>
-  <span class="label label-info">Temps total</span> {{ report.time|default("-") }} <span class="muted">&bull;</span> <span class="label label-info">Distance totale</span> {{ report.distance|default(0) }} km.
+  <span class="label label-info">Temps total</span> {{ report.time|days_time('jour', '%Hh%M') }} <span class="muted">&bull;</span> <span class="label label-info">Distance totale</span> {{ report.distance|default(0) }} km.
 </p>
