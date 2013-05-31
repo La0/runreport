@@ -12,6 +12,27 @@
 </div>
 {%- endmacro %}
 
+{% macro session_time_distance(form) -%}
+<div class="control-group ">
+  <div class="controls">
+    <div class="input-prepend time">
+      <span class="add-on">Temps</span>
+      {{ form.time|safe }}
+    </div>
+    <div class="input-prepend distance">
+      <span class="add-on" rel="tooltip" title="Distance en course à pied uniquement.">Distance cap</span>
+      {{ form.distance|safe }}
+    </div>
+  </div>
+</div>
+{% if form.distance.errors %}
+<div class="alert alert-danger">{{form.distance.errors|safe}}</div>
+{% endif %}
+{% if form.time.errors %}
+<div class="alert alert-danger">{{form.time.errors|safe}}</div>
+{% endif %}
+{%- endmacro %}
+
 {% macro tr(fields, item='td') -%}
 <tr>
   {% for f in fields %}

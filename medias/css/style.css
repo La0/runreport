@@ -45,6 +45,15 @@ form.report input {
   width: 90%;
 }
 
+form.report div.input-prepend, form.day div.input-prepend {
+  width: 30% !important;
+  float: left;
+}
+
+form.report div.input-prepend input, form.day div.input-prepend input {
+  width: 50% !important;
+}
+
 form.report textarea {
   width: 90%;
   line-height: 15px;

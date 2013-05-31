@@ -3,12 +3,13 @@
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3>{{day|date('l d E Y')|title()}}</h3>
   </div>
-  <form method="POST" action="{% url report-day day.year, day.month, day.day %}">
+  <form method="POST" action="{% url report-day day.year, day.month, day.day %}" class="day">
   <div class="modal-body">
       {% csrf_token %}
       {% import '_macros.html' as macros %}
       {{ macros.input(form.name, 'Séance') }}
       {{ macros.input(form.comment, 'Commentaire') }}
+      {{ macros.session_time_distance(form) }}
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal">Fermer</button>

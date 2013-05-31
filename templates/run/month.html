@@ -17,6 +17,8 @@ $(function(){
             data : {
               name : modal.find('#id_name').val(),
               comment: modal.find('#id_comment').val(),
+              time: modal.find('#id_time').val(),
+              distance: modal.find('#id_distance').val(),
             },
             success : function(data){
               modal.modal('hide');

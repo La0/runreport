@@ -11,8 +11,8 @@ class RunSessionForm(forms.ModelForm):
     model = RunSession
     fields = ('name', 'comment', 'distance', 'time')
     widgets = {
-      'distance' : forms.TextInput(attrs={'class' : 'span5', 'placeholder': 'km'}),
-      'time' : forms.TimeInput(attrs={'class' : 'span5', 'placeholder' : 'hh:mm'}),
+      'distance' : forms.TextInput(attrs={'placeholder': 'km'}),
+      'time' : forms.TimeInput(attrs={'placeholder' : 'hh:mm'}),
     }
 
   def is_valid(self):
