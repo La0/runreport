@@ -13,11 +13,4 @@
   {% include 'run/report.closed.html' %}
 {% endif %}
 
-{% if report.comment %}
-<h4>Bilan de la semaine</h4>
-<p>
-  {{report.comment|linebreaksbr}}
-</p>
-{% endif %}
-
 {% include '_weeks.html' %}
