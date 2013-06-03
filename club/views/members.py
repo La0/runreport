@@ -10,6 +10,7 @@ from run.models import RunReport
 from club.models import ClubMembership
 from helpers import week_to_date
 from club.forms import ClubMembershipForm
+from datetime import date
 
 class ClubMembers(ClubMixin, ListView):
   template_name = 'club/members.html'
@@ -63,6 +64,7 @@ class ClubMembers(ClubMixin, ListView):
   def get_context_data(self, **kwargs):
     context = super(ClubMembers, self).get_context_data(**kwargs)
     context.update(self.load_members())
+    context['today'] = date.today()
     return context
 
 class ClubMember(ClubMixin, ModelFormMixin, ProcessFormView, DetailView):
@@ -75,18 +77,7 @@ class ClubMember(ClubMixin, ModelFormMixin, ProcessFormView, DetailView):
     context = super(ClubMember, self).get_context_data(**kwargs)
     context['membership'] = self.membership
     context['member'] = self.member
-    context.update(self.load_reports(context['member']))
     return context
-
-  def load_reports(self, member):
-    reports = RunReport.objects.filter(user=member).order_by('-year', '-week')
-
-    # Add nb of sessions on reports
-    reports = reports.annotate(nb_sessions=Count('sessions'))
-
-    return {
-      'reports' : reports,
-    }
 
   def get_form(self, form_class):
     # Load object before form init
