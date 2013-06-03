@@ -1,4 +1,4 @@
-from club.models import Club
+from club.models import Club, ClubMembership
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import PermissionDenied
 
@@ -22,6 +22,11 @@ class ClubMixin(object):
         request.user.memberships.get(club=self.club, role="trainer")
       except:
         raise PermissionDenied
+
+    # Load members
+    if 'username' in kwargs:
+      self.membership = ClubMembership.objects.get(user__username=kwargs['username'], club=self.club)
+      self.member = self.membership.user
 
     return super(ClubMixin, self).dispatch(request, *args, **kwargs)
 

@@ -48,7 +48,7 @@ $(function(){
   <tr>
   {% for day in week %}
   {% with sessions[day] as session %}
-    <td class="day {% if session %}session{% else %}empty{% endif %}" href="{% url report-day day.year, day.month, day.day %}">
+    <td class="day {% if session %}session{% else %}empty{% endif %}" href="{{pageday|url(*pageargs + [day.year, day.month, day.day])}}">
 
     <p class="date">
       {% if day.day == 1 or (loop.first and day.month != months.1.month) %}
@@ -72,12 +72,12 @@ $(function(){
 <ul class="pager">
   {% if months.0 %}
   <li class="previous">
-    <a href="{% url report-month months.0.year, months.0.month %}">&laquo; {{months.0|date('E Y')}}</a>
+    <a href="{{pagemonth|url(*pageargs + [months.0.year, months.0.month ])}}">&laquo; {{months.0|date('E Y')}}</a>
   </li>
   {% endif %}
   {% if months.2 %}
   <li class="next">
-    <a href="{% url report-month months.2.year, months.2.month %}">{{months.2|date('E Y')}} &raquo;</a>
+    <a href="{{pagemonth|url(*pageargs + [months.2.year, months.2.month ])}}">{{months.2|date('E Y')}} &raquo;</a>
   </li>
   {% endif %}
 </ul>

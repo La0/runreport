@@ -73,7 +73,8 @@ class ClubMember(ClubMixin, ModelFormMixin, ProcessFormView, DetailView):
   
   def get_context_data(self, **kwargs):
     context = super(ClubMember, self).get_context_data(**kwargs)
-    context['member'] = context['membership'].user
+    context['membership'] = self.membership
+    context['member'] = self.member
     context.update(self.load_reports(context['member']))
     return context
 
@@ -98,7 +99,7 @@ class ClubMember(ClubMixin, ModelFormMixin, ProcessFormView, DetailView):
     return self.render_to_response(self.get_context_data(**{'form' : form}))
 
   def get_object(self):
-    self.object = ClubMembership.objects.get(user__username=self.kwargs['username'], club=self.club)
+    self.object = self.membership # needed for inherited classes
     return self.object
 
 class ClubMemberWeek(CurrentWeekMixin, ClubMixin, WeekPaginator, WeekArchiveView):
@@ -106,12 +107,6 @@ class ClubMemberWeek(CurrentWeekMixin, ClubMixin, WeekPaginator, WeekArchiveView
   context_object_name = 'sessions'
 
   def get_dated_items(self):
-
-    # Load user
-    try:
-      self.member = self.club.members.get(username=self.kwargs['username'])
-    except:
-      raise Http404("User %s not found" % self.kwargs['username'])
 
     # Load report & sessions
     year = self.get_year()
