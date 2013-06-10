@@ -91,10 +91,9 @@ class GarminConnector:
       try:
         activity = activity['activity']
         activities.append(self.load_activity(activity))
-      except KeyError, e:
-        pass # Invalid activity
       except Exception, e:
         raise e
+        pass # Invalid activity
 
     return activities
 
@@ -140,12 +139,23 @@ class GarminConnector:
     try:
       date = act.date.date()
       week = int(date.strftime('%W'))
-      report = RunReport.objects.get(user=self._user, year=date.year, week=week)
+      report,_ = RunReport.objects.get_or_create(user=self._user, year=date.year, week=week)
       sess,_ = RunSession.objects.get_or_create(date=date, report=report)
+      modified = False
       if sess.garmin_activity is None:
         sess.garmin_activity = act
+        modified = True
+
+      fields = ('name', 'time', 'distance')
+      for f in fields:
+        if not getattr(sess, f):
+          setattr(sess, f, getattr(act, f))
+          modified = True
+      if modified:
         sess.save()
-    except:
+    except Exception, e:
+      print str(e)
+      raise e
       pass
 
     return act
