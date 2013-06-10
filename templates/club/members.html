@@ -16,6 +16,7 @@
   <tr>
     <th>{{ macros.sort_title('Athlète', 'name', 'club-current-name', (club.slug, type, ), sort) }}</th>
     <th>Rôle</th>
+    <th>Catégorie</th>
     <th>Vma</th>
     <th>Séances</th>
     <th>{{ macros.sort_title('Dernière séance', 'date', 'club-current-name', (club.slug, type, ), sort) }}</th>
@@ -28,6 +29,7 @@
       {{ member.first_name|default(member.username) }} {{ member.last_name }}
     </td>
     <td>{{member.membership.role|title()}}</td>
+    <td>{{ profile.category.name|default('-') }}</td>
     <td>{{ profile.vma|default('-') }}</td>
     <td>{{ member.nb_sessions }}</td>
     <td>

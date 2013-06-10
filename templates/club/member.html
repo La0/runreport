@@ -11,6 +11,7 @@
 <table class="table">
   {{ macros.tr(('Mail', member.email)) }}
   {{ macros.tr(('Date de naissance', profile.birthday|date('d/m/Y'))) }}
+  {{ macros.tr(('Catégorie', profile.category.name|default('-'))) }}
   {{ macros.tr(('Vma', profile.vma)) }}
   {{ macros.tr(('Poids', profile.weight)) }}
   {{ macros.tr(('Taille', profile.height)) }}
