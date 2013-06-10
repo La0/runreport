@@ -9,6 +9,7 @@ class UserProfile(models.Model):
 
   # Personal infos for trainer
   birthday = models.DateField(null=True, blank=True)
+  category = models.ForeignKey('UserCategory', null=True, blank=True)
   vma = models.FloatField(null=True, blank=True)
   frequency = models.IntegerField(null=True, blank=True)
   frequency_rest = models.IntegerField(null=True, blank=True)
@@ -34,6 +35,16 @@ class UserProfile(models.Model):
   reminder_saturday = models.TimeField(null=True, blank=True)
   reminder_sunday   = models.TimeField(null=True, blank=True)
 
+  def search_category(self):
+    if not self.birthday:
+      return None
+    try:
+      self.category = UserCategory.objects.get(min_year__gte=self.birthday.year, max_year__lte=self.birthday.year)
+    except:
+      self.category = None
+      pass
+    return self.category
+
 def create_user_profile(sender, instance, created, **kwargs):
   '''
   Create a profile on user save()
@@ -43,3 +54,12 @@ def create_user_profile(sender, instance, created, **kwargs):
     UserProfile.objects.create(user=instance)
 
 post_save.connect(create_user_profile, sender=User)
+
+class UserCategory(models.Model):
+  code = models.CharField(max_length=10)
+  name = models.CharField(max_length=120)
+  min_year = models.IntegerField()
+  max_year = models.IntegerField()
+
+  def __unicode__(self):
+    return u'%s %s ' % (self.code, self.name)

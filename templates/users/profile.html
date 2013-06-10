@@ -11,6 +11,14 @@
       {{ macros.input(input, input.label) }}
     {% endfor %}
     {{ macros.input(form_profile.birthday, 'Date de naissance', 'JJ/MM/AAAA') }}
+    {% if profile.category %}
+    <div class="control-group">
+      <label class="control-label">Catégorie</label>
+      <div class="controls">
+        <span class="label label-info">{{profile.category.name}}</span>
+      </div>
+    </div>
+    {% endif %}
     {{ macros.input(form_profile.license, 'License FFA') }}
   </fieldset>
 

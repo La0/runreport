@@ -29,8 +29,13 @@ class Profile(MultipleFormsView):
 
   def forms_valid(self, forms):
     forms['form_user'].save()
-    forms['form_profile'].save()
     forms['form_trainers'].save()
+
+    # Search user category
+    profile = forms['form_profile'].save(commit=False)
+    profile.search_category()
+    profile.save()
+
     return self.render_to_response(self.get_context_data(forms=forms))
 
   def get_context_data(self, **kwargs):

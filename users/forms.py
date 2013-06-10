@@ -11,7 +11,7 @@ from club.models import Club
 class ProfileForm(forms.ModelForm):
   class Meta:
     model = UserProfile
-    exclude = ('user', 'trainer', )
+    exclude = ('user', 'trainer', 'garmin_login', 'garmin_password', 'category')
     widgets = {
       'nb_sessions' : forms.Select(choices=[(i,i) for i in range(0,21)]),
     }
