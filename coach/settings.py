@@ -132,6 +132,7 @@ INSTALLED_APPS = (
     'run',
     'users',
     'club',
+    'page',
     'south',
 )
 

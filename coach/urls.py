@@ -7,6 +7,7 @@ urlpatterns = patterns('',
   url(r'^/?', include('run.urls')),
   url(r'^user/', include('users.urls')),
   url(r'^club/(?P<slug>[\w\_\-]+)/', include('club.urls')),
+  url(r'^(?P<type>help|news)/', include('page.urls')),
 
   url(r'^admin/', include(admin.site.urls)),
 
