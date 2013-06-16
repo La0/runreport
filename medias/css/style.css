@@ -125,3 +125,8 @@ div.table-fixed table td , div.table-fixed table th {
   width: 80px;
   text-align: center;
 }
+
+/* Page */
+form.page div.controls input, form.page div.controls textarea{
+  width: 95%;
+}

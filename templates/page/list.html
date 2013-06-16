@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-page
+
+{% for page in pages %}
+<a href="{% url page page.type, page.slug %}">{{ page.name }}</a>
+{% endfor %}
+
 {% endblock %}
