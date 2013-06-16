@@ -6,30 +6,29 @@ def add_pages(request):
   '''
   List menu pages, with active status
   '''
-  def _p(url_tuple, caption, lazy=False):
+  def _p(url_tuple, caption, icon=False, lazy=False):
     url_name = isinstance(url_tuple, tuple) and url_tuple[0] or url_tuple
     url_args = isinstance(url_tuple, tuple) and url_tuple[1:] or ()
     url = reverse(url_name, args=url_args)
     active = lazy and request.path.startswith(url) or (request.path == url)
-    return {'url' : url, 'caption' : caption, 'active' : active}
+    return {'url' : url, 'caption' : caption, 'active' : active, 'icon': icon}
 
   def _ext(url, caption):
     return {'url' : url, 'caption' : caption, 'active' : False, 'external' : True}
 
   menu = []
   if request.user.is_authenticated():
-    menu.append(_p(('page-list', 'news'), 'News'))
-    menu.append(_p('report-current', 'Cette semaine'))
-    menu.append(_p('report-current-month', 'Calendrier', True))
-
-    menu.append(_p(('page-list', 'help'), 'Aide'))
+    menu.append(_p(('page-list', 'news'), 'News', 'icon-envelope'))
+    menu.append(_p('report-current', 'Cette semaine', 'icon-list'))
+    menu.append(_p('report-current-month', 'Calendrier', icon='icon-th-large', lazy=True))
 
     # Build Club menu
     members = ClubMembership.objects.filter(user=request.user)
     for m in members:
       submenu = {
         'caption' : m.club.name,
-        'menu' : []
+        'menu' : [],
+        'icon' : 'icon-star',
       }
 
       # Add club admin links for trainers
@@ -45,10 +44,14 @@ def add_pages(request):
 
       menu.append(submenu)
 
+    # Help
+    menu.append(_p(('page-list', 'help'), 'Aide', 'icon-question-sign'))
+
     # User menu
     submenu = {
       'caption' : request.user.first_name or request.user.username,
-      'menu' : []
+      'menu' : [],
+      'icon' : 'icon-user',
     }
     submenu['menu'].append(_p('vma', 'Mes allures'))
     submenu['menu'].append(_p('user-profile', 'Mon profil'))

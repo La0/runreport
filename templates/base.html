@@ -25,7 +25,7 @@
           {% for p in menu %}
           {% if 'menu' in p %}
           <li class="dropdown {% if p.active %}active{% endif %}">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{p.caption}} <b class="caret"></b></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% if p.icon %}<i class="{{ p.icon }}"></i> {% endif %}{{p.caption}} <b class="caret"></b></a>
             <ul class="dropdown-menu">
             {% for sub_p in p.menu%}
               {% if sub_p == '__SEPARATOR__' %}
@@ -37,7 +37,7 @@
             </ul>
           </li>
           {% else %}
-          <li {% if p.active %}class="active"{% endif %}><a href="{{p.url}}">{{p.caption}}</a></li>
+          <li {% if p.active %}class="active"{% endif %}><a href="{{p.url}}">{% if p.icon %}<i class="{{ p.icon }}"></i> {% endif %}{{p.caption}}</a></li>
           {% endif %}
           {% endfor %}
         </ul>
