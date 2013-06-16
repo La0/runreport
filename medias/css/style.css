@@ -173,3 +173,24 @@ div.table-fixed table td , div.table-fixed table th {
 form.page div.controls input, form.page div.controls textarea{
   width: 95%;
 }
+
+div.pages a {
+  display: block;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 8px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  border: 1px solid #EEE;
+}
+
+div.pages strong {
+  font-size: 20px;
+  font-weight: normal;
+}
+div.pages a:hover {
+  text-decoration: none;
+  background: #EEE;
+  border: 1px solid #DDD;
+}
+
