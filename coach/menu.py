@@ -18,8 +18,11 @@ def add_pages(request):
 
   menu = []
   if request.user.is_authenticated():
+    menu.append(_p(('page-list', 'news'), 'News'))
     menu.append(_p('report-current', 'Cette semaine'))
     menu.append(_p('report-current-month', 'Calendrier', True))
+
+    menu.append(_p(('page-list', 'help'), 'Aide'))
 
     # Build Club menu
     members = ClubMembership.objects.filter(user=request.user)
