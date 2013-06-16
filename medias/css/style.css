@@ -16,12 +16,11 @@ html, body {
 }
 
 /* Header */
-div.masthead {
-  padding-top: 10px;
+div.header {
+  width: 100%;
 }
-
-div.masthead h3 {
-  margin-top: 0;
+div.header .navbar-inner {
+  border-radius: 0;
 }
 
 /* Sticky footer */
