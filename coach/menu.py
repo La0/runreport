@@ -18,7 +18,7 @@ def add_pages(request):
 
   menu = []
   if request.user.is_authenticated():
-    menu.append(_p(('page-list', 'news'), 'News', 'icon-envelope'))
+    menu.append(_p(('page-list', 'news'), 'News', 'icon-envelope', lazy=True))
     menu.append(_p('report-current', 'Cette semaine', 'icon-list'))
     menu.append(_p('report-current-month', 'Calendrier', icon='icon-th-large', lazy=True))
 
@@ -45,7 +45,7 @@ def add_pages(request):
       menu.append(submenu)
 
     # Help
-    menu.append(_p(('page-list', 'help'), 'Aide', 'icon-question-sign'))
+    menu.append(_p(('page-list', 'help'), 'Aide', 'icon-question-sign', lazy=True))
 
     # User menu
     submenu = {
@@ -61,8 +61,9 @@ def add_pages(request):
     submenu['menu'].append(_p('logout', u'Se déconnecter'))
     menu.append(submenu)
   else:
-    menu.append(_p('user-create', u'Créer un compte'))
-    menu.append(_p('login', 'Se connecter'))
+    menu.append(_p('user-create', u'Créer un compte', 'icon-plus-sign'))
+    menu.append(_p(('page-list', 'help'), 'Aide', 'icon-question-sign', lazy=True))
+    menu.append(_p('login', 'Se connecter', 'icon-user'))
 
   # Search for active main menu
   # based on sub items
