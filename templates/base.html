@@ -16,6 +16,7 @@
     <script type="text/javascript" src="/medias/js/bootstrap.min.js" ></script>
   </head>
   <body>
+  <div id="wrap">
     <div class="{% if page_size == 'fullscreen' %}container{% else %}container-narrow{% endif %}">
       <div class="masthead">
         <ul class="nav nav-pills pull-right">
@@ -47,12 +48,16 @@
         {% import '_macros.html' as macros %}
         {% block content %}{% endblock %}
       </div>
+    </div>
+    <div id="push"></div>
+  </div>
 
-      <hr/>
-
-      <div class="footer">
-        <p>Construit par <a href="http://bastien.abadie.me">Bastien Abadie</a>, avec <a href="http://djangoproject.com">Django</a>, <a href="http://vim.org">vim</a>, <a href="http://getbootstrap.com">Bootstrap</a> & <a href="http://debian.org">Debian</a> &bull; Code source sur <a href="http://github.com/La0/coach">Github</a> &bull; {% include '_clicky.html' %}</p>
+    <div id="footer">
+      <div class="container">
+        Construit par <a href="http://bastien.abadie.me">Bastien Abadie</a>, avec <a href="http://djangoproject.com">Django</a>, <a href="http://vim.org">vim</a>, <a href="http://getbootstrap.com">Bootstrap</a> & <a href="http://debian.org">Debian</a> &bull; Code source sur <a href="http://github.com/La0/coach">Github</a> &bull; {% include '_clicky.html' %}
+        <a href="{% url page-list 'news' %}"><i class="icon-inbox"></i> News</a>
+        <a href="{% url page-list 'help' %}"><i class="icon-question-sign"></i> Aide</a>
       </div>
-    </div> <!-- /container -->
+    </div>
   </body>
 </html>
