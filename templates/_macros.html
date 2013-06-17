@@ -40,7 +40,7 @@
     <div class="btn-group" data-toggle="buttons-radio">
     {% with form.instance.type as v %}
       <button type="button" class="type btn {% if v == 'training' %}active{% endif %} btn-info" name="type" value="training">Entrainement</button>
-      <button type="button" class="type btn {% if v == 'race' %}active{% endif %} btn-primary" name="type" value="race">Course</button>
+      <button type="button" class="type btn {% if v == 'race' %}active{% endif %} btn-success" name="type" value="race">Course</button>
       <button type="button" class="type btn {% if v == 'rest' %}active{% endif %} " name="type" value="rest">Repos</button>
     {% endwith %}
     {{ form.type|safe }}
