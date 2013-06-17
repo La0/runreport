@@ -9,10 +9,11 @@ class RunReportForm(forms.ModelForm):
 class RunSessionForm(forms.ModelForm):
   class Meta:
     model = RunSession
-    fields = ('name', 'comment', 'distance', 'time')
+    fields = ('name', 'comment', 'distance', 'time', 'type')
     widgets = {
       'distance' : forms.TextInput(attrs={'placeholder': 'km'}),
       'time' : forms.TimeInput(attrs={'placeholder' : 'hh:mm'}),
+      'type' : forms.HiddenInput(),
     }
 
   def is_valid(self):

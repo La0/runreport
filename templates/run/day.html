@@ -8,6 +8,7 @@
 {% block body %}
   {% csrf_token %}
   {{ macros.input(form.name, 'Séance') }}
+  {{ macros.session_type(form) }}
   {{ macros.input(form.comment, 'Commentaire') }}
   {{ macros.session_time_distance(form) }}
   {% if session %}

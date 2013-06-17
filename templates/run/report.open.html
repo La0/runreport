@@ -1,5 +1,10 @@
 <script type="text/javascript">
 $('span.add-on').tooltip();
+$(function(){
+  $('button.type').click(function(){
+    $(this).siblings('input').val(this.value);
+  });
+});
 </script>
 
 <form method="post" action="" class="form-horizontal report">
@@ -20,6 +25,7 @@ $('span.add-on').tooltip();
       {% endwith %}
       {{ macros.input(session.name, 'Séance') }}
       {{ macros.input(session.comment, 'Commentaire') }}
+      {{ macros.session_type(session) }}
       {{ macros.session_time_distance(session) }}
       {% with session.instance.garmin_activity as activity %}
         {% include '_garmin.html' %}

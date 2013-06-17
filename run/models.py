@@ -170,6 +170,12 @@ class RunReport(models.Model):
     self.time = time.days * 86400 + time.seconds
     return (self.distance, self.time)
 
+SESSION_TYPES = (
+  ('training', 'Entrainement'),
+  ('race', 'Course'),
+  ('rest', 'Repos'),
+)
+
 class RunSession(models.Model):
   report = models.ForeignKey('RunReport', related_name='sessions')
   date = models.DateField()
@@ -178,6 +184,7 @@ class RunSession(models.Model):
   garmin_activity = models.ForeignKey('GarminActivity', null=True, blank=True)
   distance = models.FloatField(null=True, blank=True)
   time = models.TimeField(null=True, blank=True)
+  type = models.CharField(max_length=12, default='training', choices=SESSION_TYPES)
 
   class Meta:
     unique_together = (('report', 'date'),)
