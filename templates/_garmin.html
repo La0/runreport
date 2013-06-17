@@ -1,0 +1,12 @@
+{% if activity %}
+<div class="clearfix">&nbsp;</div>
+<hr />
+<div class="garmin">
+  <i class="icon-map-marker"></i>
+  <a href="{{ activity.get_url() }}" target="_blank">{{ activity.name }}</a>
+  <span class="muted">&bull;</span>
+  {{ activity.distance|floatformat(2) }} km en {{ activity.time }}
+  <span class="muted">&bull;</span>
+  {{ activity.speed|date('i:s') }} min/km
+</div>
+{% endif %}

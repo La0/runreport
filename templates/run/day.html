@@ -10,6 +10,9 @@
       {{ macros.input(form.name, 'Séance') }}
       {{ macros.input(form.comment, 'Commentaire') }}
       {{ macros.session_time_distance(form) }}
+      {% with session.garmin_activity as activity %}
+        {% include '_garmin.html' %}
+      {% endwith %}
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal">Fermer</button>

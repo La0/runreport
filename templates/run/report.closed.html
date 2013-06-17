@@ -27,17 +27,7 @@
         {% endif %}
       </div>
       {% with session.garmin_activity as activity %}
-      {% if activity %}
-      <div class="clear">&nbsp;</div>
-      <div class="garmin pull-right">
-        <i class="icon-map-marker"></i>
-        <a href="{{ activity.get_url() }}" target="_blank">{{ activity.name }}</a>
-        <span class="muted">&bull;</span>
-        {{ activity.distance|floatformat(2) }} km en {{ activity.time }}
-        <span class="muted">&bull;</span>
-        <span class="label label-info">{{ activity.speed|date('i:s') }} min/km</span>
-      </div>
-      {% endif %}
+        {% include '_garmin.html' %}
       {% endwith %}
     </td>
     {% endwith %}

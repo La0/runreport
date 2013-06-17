@@ -5,7 +5,7 @@ html, body {
   padding: 0 !important;
 }
 
-.clear {
+.clear, .clearfix {
   height: 0;
 }
 
@@ -84,6 +84,10 @@ form.report fieldset.today {
   border-bottom: 1px solid rgb(0, 136, 204);
 }
 
+form.report hr {
+  margin: 2px 0 6px 0;
+}
+
 form.report input {
   width: 90%;
 }
@@ -104,7 +108,7 @@ form.report textarea {
 }
 
 form.report div.garmin {
-  margin-right: 40px;
+  margin-left: 25%;
 }
 
 form div.controls.field-multiple ul {
@@ -112,10 +116,12 @@ form div.controls.field-multiple ul {
   margin: 0;
 }
 
+table hr {
+  margin: 5px 0;
+}
+
 table div.garmin {
-  border-top: 1px solid #EEE;
-  margin-top: 5px;
-  padding-top: 5px;
+  float: right;
 }
 
 table.calendar td {

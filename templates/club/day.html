@@ -13,6 +13,9 @@
     {% if session.distance %}
     <span class="label">Distance</span> {{session.distance}} km
     {% endif %}
+    {% with session.garmin_activity as activity %}
+      {% include '_garmin.html' %}
+    {% endwith %}
     {% else %}
     <p class="alert alert-danger">Pas de séance</p>
     {% endif %}
