@@ -16,6 +16,14 @@ class RunSessionForm(forms.ModelForm):
       'type' : forms.HiddenInput(),
     }
 
+  def clean(self):
+    # Only for race
+    # Check time & distance are set
+    if self.cleaned_data['type'] == 'race' and (self.cleaned_data['time'] is None or self.cleaned_data['distance'] is None):
+      raise forms.ValidationError("Pour une course, renseignez la distance et le temps.")
+
+    return self.cleaned_data
+
   def is_valid(self):
     is_valid = super(RunSessionForm, self).is_valid()
     if not is_valid:

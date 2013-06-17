@@ -21,7 +21,12 @@ $(function(){
 
     {% with forms[day] as session %}
       {% with session.non_field_errors() as err %}
+      {% if err %}
+      <div class="alert alert-danger">
+        <h4>Erreur pour cette séance</h4>
         {{ err|safe }}
+      </div>
+      {% endif %}
       {% endwith %}
       {{ macros.input(session.name, 'Séance') }}
       {{ macros.input(session.comment, 'Commentaire') }}
