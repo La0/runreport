@@ -7,6 +7,9 @@
   <a href="{% url page page.type, page.slug %}">
     <strong>{{ page.name }}</strong>
     <p class="pull-right">
+      {% if edit and not page.published %}
+      <span class="label label-important">Privée</span>
+      {% endif %}
       <span class="label label-inverse">{{ page.user.first_name }} {{ page.user.last_name|default(page.user) }}</span>
       <span class="label label-info">{{ page.updated|date('d E Y')}}</span>
     </p>
