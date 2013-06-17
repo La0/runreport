@@ -143,6 +143,14 @@ table.calendar td.session {
   background: #ccd5f9;
 }
 
+table.calendar td.session.race {
+  background: #5BB75B;
+}
+
+table.calendar td.session.rest{
+  background: none;
+}
+
 table.calendar td p {
   padding: 0 3px;
 }

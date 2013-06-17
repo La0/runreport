@@ -18,6 +18,15 @@
       <strong>{{session.name|default('Session sans nom')}}</strong><br />
       {{session.comment|default('Pas de commentaire')|linebreaksbr}}
       <div>
+        {% if session.type %}
+          {% if session.type == 'training' %}
+          <span class="label label-info">Entrainement</span>
+          {% elif session.type == 'race' %}
+          <span class="label label-success">Course</span>
+          {% else %}
+          <span class="label">Repos</span>
+          {% endif %}
+        {% endif %}
         {% if session.time %}
         <span class="label">Temps</span> {{session.time}}
         {% endif %}
