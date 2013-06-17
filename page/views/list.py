@@ -8,7 +8,7 @@ class PageList(PageMixin, ListView):
   context_object_name = 'pages'
 
   def get_queryset(self):
-    pages = Page.objects.filter(type=self.type)
+    pages = Page.objects.filter(type=self.type).order_by('-updated')
     if not self.edit:
       pages = pages.exclude(published=False)
     return pages
