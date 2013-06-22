@@ -5,8 +5,8 @@
   </div>
   <div class="modal-body">
     {% if session %}
-    <h4>{{ session.name }}</h4>
-    <p>{{ session.comment }}</p>
+    <h4>{{ session.name|default('Session sans nom') }}</h4>
+    <p>{{ session.comment|default('Pas de commentaire')|linebreaksbr }}</p>
     {% if session.distance %}
     <span class="label">Temps</span> {{session.time}}
     {% endif %}

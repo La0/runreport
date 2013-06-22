@@ -14,10 +14,9 @@
     {% with sessions[day] as session %}
     <td style="width: 20%; text-align: right;">{{day|date('l d M')}}</td>
     <td>
-      {% if session.name %}
-      <strong>{{session.name}}</strong><br />
-      {% endif %}
-      {{session.comment|default('')|linebreaksbr}}
+      {% if session %}
+      <strong>{{session.name|default('Session sans nom')}}</strong><br />
+      {{session.comment|default('Pas de commentaire')|linebreaksbr}}
       <div>
         {% if session.time %}
         <span class="label">Temps</span> {{session.time}}
@@ -29,6 +28,7 @@
       {% with session.garmin_activity as activity %}
         {% include '_garmin.html' %}
       {% endwith %}
+      {% endif %}
     </td>
     {% endwith %}
   </tr>
