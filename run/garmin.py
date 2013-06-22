@@ -146,10 +146,15 @@ class GarminConnector:
         sess.garmin_activity = act
         modified = True
 
-      fields = ('name', 'time', 'distance')
-      for f in fields:
-        if not getattr(sess, f):
-          setattr(sess, f, getattr(act, f))
+      fields = {
+        'name' : act.name != 'Sans titre' and act.name or None,
+        'time' : act.time,
+        'distance': act.distance,
+        'comment' : activity['activityDescription']['value'] or None,
+      }
+      for f,v in fields.items():
+        if v and not getattr(sess, f):
+          setattr(sess, f, v)
           modified = True
       if modified:
         sess.save()
