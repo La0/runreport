@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if plans %}
+<table class="table">
+  <tr>
+    <th>Nom</th>
+    <th>Semaines</th>
+    <th>Modification</th>
+    <th>Actions</th>
+  </tr>
+  {% for p in plans %}
+  <tr>
+    <td>{{ p.name }}</td>
+    <td>{{ p.nb_weeks }}</td>
+    <td>{{ p.updated|date('d/m/Y H:i') }}
+    <td>
+      <a href="{{ p.get_absolute_url() }}" class="btn btn-info">Editer</a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p class="alert alert-danger">
+  Pas de plans d'entrainements existants.
+</p>
+{% endif %}
+
+{% endblock %}

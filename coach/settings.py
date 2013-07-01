@@ -136,6 +136,7 @@ INSTALLED_APPS = (
     'users',
     'club',
     'page',
+    'plan',
     'south',
 )
 
