@@ -4,4 +4,58 @@
 
 <h1>{{ plan.name }}</h1>
 
+{% if weeks %}
+
+<table class="table table-bordered table-condensed calendar">
+  <tr>
+    <th>Lundi</th>
+    <th>Mardi</th>
+    <th>Mercredi</th>
+    <th>Jeudi</th>
+    <th>Vendredi</th>
+    <th>Samedi</th>
+    <th>Dimanche</th>
+  </tr>
+  {% for week in weeks %}
+  <tr>
+    {% for day, date, session in week.get_days() %}
+    <td>
+      {% if date %}{{ date|date('d E') }}{% endif %}
+      {% if session %}
+        {{ session.name }}
+      {% endif %}
+    </td>
+    {% endfor %}
+  </tr>
+  {% endfor %}
+</table>
+
+
+{% else %}
+<p class="alert alert-danger">
+  Pas de semaines pour ce plan.
+</p>
+{% endif %}
+
+<script type="text/javascript">
+// Generic action test
+$(function(){
+  $('a.action').click(function(){
+    href = $(this).attr('href');
+    action = $(this).attr('data-action');
+    $.ajax({
+      url : href,
+      method : 'POST',
+      data : { action : action },
+      success : function(data){
+        $('html').html(data); // this is crazy
+      },
+    });
+    return false;
+  });
+});
+</script>
+
+<a href="{{ plan.get_absolute_url() }}" class="btn btn-primary action"  data-action="add-week" >Ajouter une semaine</a>
+
 {% endblock %}

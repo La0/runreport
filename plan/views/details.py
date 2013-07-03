@@ -19,6 +19,24 @@ class PlanCreate(PlanMixin, FormView):
     for w in range(0, int(form.cleaned_data['week'])):
       PlanWeek.objects.create(plan=plan, order=w)
 
+    return plan.get_absolute_url()
+
 class PlanDetails(PlanMixin, DetailView):
   model = Plan
   template_name = 'plan/details.html'
+
+  def get_context_data(self, *args, **kwargs):
+    context = super(PlanDetails, self).get_context_data(*args, **kwargs)
+    context['weeks'] = self.object.weeks.all().order_by('order')
+    return context
+
+  def post(self, request, *args, **kwargs):
+    self.object = self.get_object()
+    context = self.get_context_data(*args, **kwargs)
+    print context
+
+    # New week
+    if request.POST['action'] == 'add-week': 
+      PlanWeek.objects.create(plan=self.object, order=self.object.weeks.count())
+    return self.render_to_response(context)
+
