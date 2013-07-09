@@ -7,6 +7,9 @@ ADMINS = (
   ('Bastien Abadie', 'bastien.abadie@gmail.com'),
 )
 
+# Used to hide admin page in urls, in Prod only
+ADMIN_BASE_URL = False
+
 MANAGERS = ADMINS
 
 DATABASES = {
