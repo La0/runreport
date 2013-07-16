@@ -30,7 +30,7 @@ def syncdb():
   # Import dump from server
   prod_dump = '/tmp/coach.json'
   local_dump = 'prod.json'
-  apps = ('auth.User', 'auth.Group', 'run', 'users', 'club')
+  apps = ('auth.User', 'auth.Group', 'run', 'users', 'club', 'page')
   with cd('~/coach'):
     with virtualenv(FABRIC_ENV):
       run('./manage.py dumpdata --indent=4 -e sessions %s > %s' % (' '.join(apps), prod_dump))
