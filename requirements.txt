@@ -1,0 +1,14 @@
+Coffin==0.3.8
+Django==1.4
+Fabric==1.6.1
+Jinja2==2.7
+Markdown==2.3.1
+MarkupSafe==0.18
+South==0.8.1
+paramiko==1.10.1
+psutil==1.0.1
+pycrypto==2.6
+python-gnupg==0.3.4
+requests==1.2.3
+wsgiref==0.1.2
+xlwt==0.7.5
