@@ -1,4 +1,4 @@
-from coffin.conf.urls.defaults import *
+from coffin.conf.urls import *
 from coach.settings import MEDIA_ROOT, DEBUG, ADMIN_BASE_URL
 from django.contrib import admin
 from django.views.generic.base import RedirectView
