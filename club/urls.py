@@ -1,7 +1,7 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import patterns, url, include
 from club.views import *
 
-urlpatterns = patterns('',
+club_patterns = patterns('', 
   # Members
   url(r'^/?$', ClubMembers.as_view(), name="club-current"),
   url(r'^(?P<type>[\w]+)-by-(?P<sort>[\w-]+)/?$', ClubMembers.as_view(), name="club-current-name"),
@@ -14,3 +14,10 @@ urlpatterns = patterns('',
   url(r'^(?P<username>[\w\_]+)/?', ClubMember.as_view(), name="club-member"),
 )
 
+urlpatterns = patterns('',
+  # Create
+  url(r'^create/?$', ClubCreate.as_view(), name="club-create"),
+
+  # With an existing club
+  url(r'^(?P<slug>[\w\_\-]+)/', include(club_patterns)),
+)

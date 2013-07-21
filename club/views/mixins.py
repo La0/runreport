@@ -35,4 +35,17 @@ class ClubMixin(object):
     context['club'] = self.club
     return context
 
+class ClubCreateMixin(object):
+  """
+  Check that the user is:
+    * logged in
+    * does not already manage a club
+  """
+  def dispatch(self, request, *args, **kwargs):
+    if not request.user.is_authenticated():
+      raise PermissionDenied
 
+    if Club.objects.filter(manager=request.user).count() > 0:
+      raise PermissionDenied
+
+    return super(ClubCreateMixin, self).dispatch(request, *args, **kwargs)

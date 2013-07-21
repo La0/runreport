@@ -1,7 +1,8 @@
-from models import ClubMembership
+from models import ClubMembership, Club
 from django import forms
 from django.contrib.auth.models import User
 from django.forms.models import modelformset_factory
+from django.core.exceptions import ValidationError
 
 class ClubMembershipForm(forms.ModelForm):
   class Meta:
@@ -14,6 +15,19 @@ class UserModelChoiceField(forms.ModelMultipleChoiceField):
       return obj.first_name and obj.first_name or obj.username
     except:
       return '-'
+
+class ClubCreateForm(forms.ModelForm):
+  class Meta:
+    model = Club
+    fields = ('name', 'slug', 'address', 'zipcode', 'city',)
+
+  def clean_slug(self):
+    # Check the slug is not already taken
+    slug = self.cleaned_data['slug']
+    existing = Club.objects.filter(slug=slug).count()
+    if existing > 0:
+      raise ValidationError("Slug already used.")
+    return slug
 
 class TrainersForm(forms.ModelForm):
   def __init__(self, *args,**kwargs):

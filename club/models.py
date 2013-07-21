@@ -3,9 +3,15 @@ from django.contrib.auth.models import User
 
 class Club(models.Model):
   name = models.CharField(max_length=250)
-  slug = models.SlugField(unique=True)
+  slug = models.SlugField(unique=True, max_length=20)
   members = models.ManyToManyField(User, through='ClubMembership')
   main_trainer = models.ForeignKey(User, null=True, blank=True, related_name="club_main_trainer")
+  manager = models.ForeignKey(User, related_name="club_manager")
+
+  # Extra infos
+  address = models.CharField(max_length=250)
+  zipcode = models.CharField(max_length=10)
+  city = models.CharField(max_length=250)
 
   def __unicode__(self):
     return self.name
