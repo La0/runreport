@@ -32,10 +32,15 @@ def add_pages(request):
       }
 
       # Add club admin links for trainers
-      if m.role == 'trainer' or request.user.is_superuser:
+      if m.role in ('trainer', 'staff') or request.user.is_superuser:
         submenu['menu'].append(_p(('club-current-name', m.club.slug, 'athletes', 'name'), u'Mes Athlètes'))
         submenu['menu'].append(_p(('club-current-name', m.club.slug, 'all', 'name'), u'Tout le club'))
         submenu['menu'].append(_p(('club-current-name', m.club.slug, 'archives', 'name'), u'Archives'))
+
+        # Manage links
+        if m.club.manager == request.user:
+          submenu['menu'].append(_p(('club-manage', m.club.slug), u'Administrer'))
+
         submenu['menu'].append('__SEPARATOR__')
 
       # Add public club links for everyone

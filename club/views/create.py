@@ -1,6 +1,6 @@
 from django.views.generic.edit import CreateView
 from django.http import HttpResponseRedirect
-from club.models import Club
+from club.models import Club, ClubMembership
 from club.forms import ClubCreateForm
 from django.core.urlresolvers import reverse
 from mixins import ClubCreateMixin
@@ -11,7 +11,12 @@ class ClubCreate(ClubCreateMixin, CreateView):
   form_class = ClubCreateForm
 
   def form_valid(self, form):
+    # Create club
     club = form.save(commit=False)
     club.manager = self.request.user
     club.save()
-    return HttpResponseRedirect(reverse('club-manage', args=[club]))
+
+    # Setup user as staff member
+    ClubMembership.objects.create(club=club, user=self.request.user, role="staff")
+
+    return HttpResponseRedirect(reverse('club-manage', kwargs={'slug' : club.slug}))
