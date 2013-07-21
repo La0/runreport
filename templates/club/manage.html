@@ -5,6 +5,17 @@
 <h1>Administrer {{club.name}}</h1>
 
 <h3>Edition</h3>
+<form action="" method="POST" class="form form-horizontal">
+  {% csrf_token %}
+  {{ macros.input(form.name, 'Nom du club') }}
+  {{ macros.input(form.slug, 'Slug', 'Représente le nom du club dans les urls') }}
+  {{ macros.input(form.address, 'Adresse') }}
+  {{ macros.input(form.zipcode, 'Code Postal') }}
+  {{ macros.input(form.city, 'Ville') }}
+  <div class="form-actions">
+    <input type="submit" value="Editer" class="btn btn-primary" />
+  </div>
+</form>
 
 <h3>Invitations</h3>
 

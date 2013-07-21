@@ -24,7 +24,10 @@ class ClubCreateForm(forms.ModelForm):
   def clean_slug(self):
     # Check the slug is not already taken
     slug = self.cleaned_data['slug']
-    existing = Club.objects.filter(slug=slug).count()
+    existing = Club.objects.filter(slug=slug)
+    if self.instance:
+      existing = existing.exclude(pk=self.instance.pk)
+    existing = existing.count()
     if existing > 0:
       raise ValidationError("Slug already used.")
     return slug
