@@ -8,6 +8,11 @@ class Club(models.Model):
   main_trainer = models.ForeignKey(User, null=True, blank=True, related_name="club_main_trainer")
   manager = models.ForeignKey(User, related_name="club_manager")
 
+  # Users limits
+  max_staff = models.IntegerField(default=1)
+  max_trainer = models.IntegerField(default=2)
+  max_athlete = models.IntegerField(default=20)
+
   # Extra infos
   address = models.CharField(max_length=250)
   zipcode = models.CharField(max_length=10)
@@ -38,3 +43,40 @@ class ClubLink(models.Model):
   name = models.CharField(max_length=250)
   url = models.URLField(max_length=250)
   position = models.IntegerField()
+
+class ClubInvite(models.Model):
+  INVITE_TYPES = (
+    ('create', 'Create a club (Beta)'),
+    ('trainer', 'Add a trainer'),
+    ('athlete', 'Add an athlete'),
+  )
+  sender = models.ForeignKey(User)
+  recipient = models.EmailField(null=True, blank=True)
+  club = models.ForeignKey(Club, null=True, blank=True, related_name="invites")
+  type = models.CharField(max_length=15, choices=INVITE_TYPES)
+  slug = models.CharField(max_length=30, unique=True, blank=True) # not a slug: no char restriction
+  private = models.BooleanField(default=True)
+  created = models.DateTimeField(auto_now_add=True)
+  updated = models.DateTimeField(auto_now=True)
+  sent = models.DateTimeField(null=True, blank=True)
+  used = models.DateTimeField(null=True, blank=True)
+
+  def save(self, *args, **kwargs):
+    if not self.slug:
+      self.build_slug()
+    super(ClubInvite, self).save(*args, **kwargs)
+
+  def build_slug(self):
+    '''
+    Build the slug using an hashed part
+     only when private
+    '''
+    self.slug = "%s:%s" % (self.club.slug, self.type)
+    if not self.private:
+      return self.slug
+    from hashlib import md5
+    from base64 import b64encode
+    h = md5("Coach:%d:%d:%s" % (self.club.pk, self.sender.pk, self.type)).digest()
+    h = b64encode(h)
+    self.slug += ":%s" % (h[0:8],)
+    return self.slug
