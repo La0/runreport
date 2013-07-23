@@ -80,3 +80,26 @@ class ClubInvite(models.Model):
     h = b64encode(h)
     self.slug += ":%s" % (h[0:8],)
     return self.slug
+
+  def apply(self, user):
+    '''
+    Apply the invite to this user
+    '''
+    if self.type not in ('trainer', 'athlete'):
+      raise Exception("Invalid type to apply: %s" % self.type)
+
+    if self.private:
+      # Directly apply private 
+      cm, _ = ClubMembership.objects.get_or_create(club=self.club, user=user)
+      cm.role = self.type
+      cm.save()
+    else:
+      # TODO: only support athlete here
+      # TODO: check stats before applying
+      # TODO: when there is no room, set as propect
+      pass
+
+    # Set used
+    from datetime import datetime
+    self.used = datetime.now()
+    self.save()

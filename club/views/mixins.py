@@ -1,6 +1,7 @@
-from club.models import Club, ClubMembership
+from club.models import Club, ClubMembership, ClubInvite
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import PermissionDenied
+from django.http import Http404
 
 class ClubMixin(object):
   """
@@ -62,3 +63,18 @@ class ClubCreateMixin(object):
       raise PermissionDenied
 
     return super(ClubCreateMixin, self).dispatch(request, *args, **kwargs)
+
+class ClubInviteMixin(object):
+  def dispatch(self, request, *args, **kwargs):
+    # Load invite from session
+    try:
+      invite_slug = request.session['invite']
+      self.invite = ClubInvite.objects.get(slug=invite_slug)
+    except:
+      raise Http404('Invalid invite.')
+
+    # Check private invite is not already used
+    if self.invite.private and self.invite.used:
+      raise Http404("Invite used.")
+
+    return super(ClubInviteMixin, self).dispatch(request, *args, **kwargs)
