@@ -81,6 +81,10 @@ class ClubInvite(models.Model):
     self.slug += ":%s" % (h[0:8],)
     return self.slug
 
+  @models.permalink
+  def get_absolute_url(self):
+    return ('club-invite', (self.slug, ))
+
   def apply(self, user):
     '''
     Apply the invite to this user

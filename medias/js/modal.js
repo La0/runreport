@@ -5,8 +5,15 @@ $(function(){
   
 });
 
-function load_modal(){
+function load_modal(evt){
+  // Get url
   var url = this.getAttribute('href');
+  if(!url){
+    console.error("No url for modal");
+    return false;
+  }
+  evt.preventDefault();
+
   $.ajax({
     url : url,
     method : 'GET',
@@ -38,5 +45,6 @@ function load_modal(){
       modal.modal();
     }
   });
+  return false;
 }
 

@@ -1,7 +1,9 @@
 from club.models import ClubInvite
 from django.views.generic import DetailView, TemplateView
+from django.views.generic.edit import CreateView
 from django.http import Http404
-from mixins import ClubInviteMixin
+from mixins import ClubInviteMixin, ClubManagerMixin
+from club.forms import ClubInviteForm
 
 class ClubInviteCheck(DetailView):
   template_name = 'club/invite.html'
@@ -34,3 +36,14 @@ class ClubInviteApply(ClubInviteMixin, TemplateView):
     context['invite'] = self.invite
     return context
 
+class ClubInviteAdd(ClubManagerMixin, CreateView):
+  template_name = 'club/invite_add.html'
+  model = ClubInvite
+  form_class = ClubInviteForm
+
+  def form_valid(self, form, *args, **kwargs):
+    invite = form.save(commit=False)
+    invite.club = self.club
+    invite.sender = self.request.user
+    invite.save()
+    return self.render_to_response(self.get_context_data({'invite': invite}))

@@ -1,0 +1,19 @@
+<div class="modal hide fade day" tabindex="-1" role="dialog" >
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3>Ajouter une invitation</h3>
+  </div>
+  <form method="POST" action="{% url club-invite-add club.slug %}">
+  <div class="modal-body">
+    {% csrf_token %}
+    {% import '_macros.html' as macros %}
+    {{ macros.input(form.type, 'Type d\'invitation') }}
+    {{ macros.input(form.private, 'Invitation privée') }}
+    {{ macros.input(form.recipient, 'Mail destinataire') }}
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal">Fermer</button>
+    <input class="btn btn-primary" type="submit" value="Inviter" style="margin-left: 20px;" />
+  </div>
+  </form>
+</div>
