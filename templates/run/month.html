@@ -1,37 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<script type="text/javascript">
-$(function(){
-  $('table.calendar td.day').click(function(){
-    var url = this.getAttribute('href');
-    $.ajax({
-      url : url,
-      method : 'GET',
-      success : function(data){
-        var modal = $(data);
-        modal.find('form').on('submit', function(){
-          $.ajax({
-            url : this.getAttribute('action'),
-            method : 'POST',
-            data : {
-              name : modal.find('#id_name').val(),
-              comment: modal.find('#id_comment').val(),
-              time: modal.find('#id_time').val(),
-              distance: modal.find('#id_distance').val(),
-            },
-            success : function(data){
-              modal.modal('hide');
-            },
-          });
-          return false;
-        });
-        modal.modal();
-      }
-    });
-  });
-});
-</script>
 
 <h2>{{months.1|date('E Y')}}</h2>
 <table class="table table-bordered table-condensed calendar">
@@ -48,7 +17,7 @@ $(function(){
   <tr>
   {% for day in week %}
   {% with sessions[day] as session %}
-    <td class="day {% if session %}session{% else %}empty{% endif %}" href="{{pageday|url(*pageargs + [day.year, day.month, day.day])}}">
+    <td class="day modal-action {% if session %}session{% else %}empty{% endif %}" href="{{pageday|url(*pageargs + [day.year, day.month, day.day])}}">
 
     <p class="date">
       {% if day.day == 1 or (loop.first and day.month != months.1.month) %}
