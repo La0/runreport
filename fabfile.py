@@ -12,6 +12,7 @@ def prod():
   with cd('~/coach'):
     pull()
     with virtualenv(FABRIC_ENV):
+      update_requirements()
       migrate_db()
       start_fcgi()
   restart_lighttpd()
@@ -46,6 +47,12 @@ def virtualenv(name='django'):
   Source a virtualenv on prefix
   '''
   return prefix('source ~/%s/bin/activate' % name)
+
+def update_requirements():
+  '''
+  Update through pip
+  '''
+  run('pip install -r requirements.txt')
 
 def pull():
   '''

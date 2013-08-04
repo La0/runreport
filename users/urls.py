@@ -1,4 +1,4 @@
-from coffin.conf.urls.defaults import *
+from coffin.conf.urls import *
 from django.contrib.auth.decorators import login_required
 from views import *
 

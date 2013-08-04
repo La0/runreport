@@ -194,8 +194,9 @@ GPG_PASSPHRASE=''
 # Garmin user data (json)
 GARMIN_DIR=os.path.join(HOME, 'garmin_data')
 
-# Clicky stats
-CLICKY_ID = False
+# PIWIK stats
+PIWIK_HOST = False
+PIWIK_ID = False
 
 
 # Import local settings, if any
@@ -207,5 +208,5 @@ except ImportError, e:
 # Load some settings constants in the templates
 def load_constants(request):
   from django.conf import settings
-  keys = ['CLICKY_ID',]
+  keys = ['PIWIK_HOST', 'PIWIK_ID', ]
   return dict([(k, getattr(settings, k, None)) for k in keys])
