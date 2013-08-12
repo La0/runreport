@@ -4,7 +4,6 @@ from club.views import *
 club_patterns = patterns('', 
   # Manager
   url(r'^manage/?$', ClubManage.as_view(), name="club-manage"),
-  url(r'^invite/add/?$', ClubInviteAdd.as_view(), name="club-invite-add"),
 
   # Members
   url(r'^/?$', ClubMembers.as_view(), name="club-current"),

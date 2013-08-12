@@ -37,5 +37,4 @@ class ClubManage(ClubManagerMixin, UpdateView):
     context = super(ClubManage, self).get_context_data(*args, **kwargs)
     context['stats'] = self.load_stats()
     context['links'] = self.club.links.all().order_by('name')
-    context['invites'] = self.club.invites.all().order_by('created')
     return context

@@ -34,50 +34,6 @@
   {% endfor %}
 </table>
 
-<h3>Invitations</h3>
-<div class="alert alert-info">
-  <h4>Aide</h4>
-  Utilisez des invitations pour que des personnes rejoignent votre club.
-</div>
-{% if invites %}
-<table class="table">
-  <tr>
-    <th>Type</th>
-    <th>Privée</th>
-    <th>Mail</th>
-    <th>Lien</th>
-    <th>Actions</th>
-  </tr>
-  {% for invite in invites %}
-  <tr>
-    <td>{{invite.type}}</td>
-    <td><i class="{% if invite.private %}icon-ok{% else %}icon-remove{% endif %}" >&nbsp;</i></td>
-    <td> 
-      {% if invite.private %}
-      {{ invite.recipient }}
-      {% else %}
-      -
-      {% endif %}
-    </td>
-    <td>
-      {% with invite.get_absolute_url() as url %}
-      <a href="{{url}}" class="">{{url}}</a>
-      {% endwith %}
-    </td>
-    <td>
-      <a href="" class="btn btn-danger">Supprimer</a>
-    </td>
-  </tr>
-  {% endfor %}
-</table>
-{% else %}
-<p class="alert alert-warning">
-  Aucune invitation envoyée pour votre club.
-</p>
-{% endif %}
-<a href="{% url club-invite-add club.slug %}" class="modal-action btn btn-info pull-right">Inviter des personnes</a>
-<div class="clearfix">&nbsp;</div>
-
 <h3>Liens publics</h3>
 <div class="alert alert-info">
   <h4>Aide</h4>
