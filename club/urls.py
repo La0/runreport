@@ -14,6 +14,7 @@ club_patterns = patterns('',
   url(r'^(?P<username>[\w\_]+)/week/(?P<year>[\d]{4})/(?P<week>[\d]{1,2})/?', ClubMemberWeek.as_view(), name="club-member-week"),
   url(r'^(?P<username>[\w\_]+)/month/(?P<year>[\d]{4})/(?P<month>[\d]{1,2})/?', ClubMemberMonth.as_view(), name="club-member-month"),
   url(r'^(?P<username>[\w\_]+)/day/(?P<year>[\d]{4})/(?P<month>[\d]{1,2})/(?P<day>[\d]{1,2})/?', ClubMemberDay.as_view(), name="club-member-day"),
+  url(r'^(?P<username>[\w\_]+)/role/?', ClubMemberRole.as_view(), name="club-member-role"),
   url(r'^(?P<username>[\w\_]+)/?', ClubMember.as_view(), name="club-member"),
 )
 

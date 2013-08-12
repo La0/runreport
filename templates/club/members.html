@@ -28,7 +28,19 @@
     <td>
       {{ member.first_name|default(member.username) }} {{ member.last_name }}
     </td>
-    <td>{{member.membership.role|title()}}</td>
+    <td>
+    {% with member.membership.role as role %}
+      {% if role == 'athlete' %}
+      <a href="{% url club-member-role club.slug, member.username %}" class="modal-action btn btn-small" >Athlète</a>
+      {% elif role == 'trainer' %}
+      <a href="{% url club-member-role club.slug, member.username %}" class="modal-action btn btn-small btn-info" >Entraîneur</a>
+      {% elif role == 'staff' %}
+      <a href="{% url club-member-role club.slug, member.username %}" class="modal-action btn btn-small btn-primary" >Staff</a>
+      {% elif role == 'archive' %}
+      <a href="{% url club-member-role club.slug, member.username %}" class="modal-action btn btn-small btn-danger" >Archivé</a>
+      {% endif %}
+    {% endwith %}
+    </td>
     <td>{{ profile.category.name|default('-') }}</td>
     <td>{{ profile.vma|default('-') }}</td>
     <td>{{ member.nb_sessions }}</td>

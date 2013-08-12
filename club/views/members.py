@@ -67,14 +67,29 @@ class ClubMembers(ClubMixin, ListView):
     context['today'] = date.today()
     return context
 
-class ClubMember(ClubMixin, ModelFormMixin, ProcessFormView, DetailView):
+class ClubMember(ClubMixin, DetailView):
   template_name = 'club/member.html'
+  context_object_name = 'membership'
+  model = ClubMembership
+  
+  def get_context_data(self, **kwargs):
+    context = super(ClubMember, self).get_context_data(**kwargs)
+    context['membership'] = self.membership
+    context['member'] = self.member
+    return context
+
+  def get_object(self):
+    self.object = self.membership # needed for inherited classes
+    return self.object
+
+class ClubMemberRole(ClubMixin, ModelFormMixin, ProcessFormView, DetailView):
+  template_name = 'club/role.html'
   context_object_name = 'membership'
   model = ClubMembership
   form_class = ClubMembershipForm
   
   def get_context_data(self, **kwargs):
-    context = super(ClubMember, self).get_context_data(**kwargs)
+    context = super(ClubMemberRole, self).get_context_data(**kwargs)
     context['membership'] = self.membership
     context['member'] = self.member
     return context
@@ -83,7 +98,7 @@ class ClubMember(ClubMixin, ModelFormMixin, ProcessFormView, DetailView):
     # Load object before form init
     if not hasattr(self, 'object'):
       self.get_object()
-    return super(ClubMember, self).get_form(form_class)
+    return super(ClubMemberRole, self).get_form(form_class)
 
   def form_valid(self, form):
     form.save()
