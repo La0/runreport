@@ -21,6 +21,24 @@ class Club(models.Model):
   def __unicode__(self):
     return self.name
 
+  def load_stats(self):
+    '''
+    Count available and used accounts
+    '''
+    stats = []
+    types = ('staff', 'trainer', 'athlete')
+    for t in types:
+      max = getattr(self, 'max_%s' % t)
+      used = self.clubmembership_set.filter(role=t).count()
+      stats.append({
+        'type' : t,
+        'max' : max,
+        'used' : used,
+        'diff' : max - used,
+        'percent' : round(100 * (max - used) / max)
+      })
+    return stats
+
 class ClubMembership(models.Model):
   CLUB_ROLES = (
     ('athlete', 'Athlete'),

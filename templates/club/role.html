@@ -1,17 +1,38 @@
 <div class="modal hide fade day" tabindex="-1" role="dialog" >
+
+  <script type="text/javascript">
+  $('div.role span.btn-success').click(function(elt){
+    id = $(this).parent().attr('id');
+  });
+  </script>
+
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3>Ajouter une invitation</h3>
+    <h3>Changer le role de {{member.first_name}} {{member.last_name}}</h3>
   </div>
   <form method="POST" action="{% url club-member-role club.slug, member.username %}">
   <div class="modal-body">
     {% csrf_token %}
-    {% import '_macros.html' as macros %}
-    {{ macros.input(form.role, 'Role') }}
-  </div>
-  <div class="modal-footer">
-    <button class="btn" data-dismiss="modal">Fermer</button>
-    <input class="btn btn-primary" type="submit" value="Changer le role" style="margin-left: 20px;" />
+
+    {% for stat in stats %}
+    <div class="role" id="{{stat.type}}">
+      <h4>{{stat.type|title()}}</h4>
+      <button type="submit" name="role" value="{{stat.type}}" class="btn pull-right {% if stat.diff <= 0 %}disabled{% else %}btn-success{% endif %}">Devenir {{stat.type|title()}}</button>
+
+      Places disponibles :
+      {% if stat.percent >= 50 %}
+      <span class="badge badge-success">{{stat.diff}} / {{stat.max}}</span>
+      {% elif stat.percent >= 25 %}
+      <span class="badge badge-warning">{{stat.diff}} / {{stat.max}}</span>
+      {% else %}
+      <span class="badge badge-important">{{stat.diff}} / {{stat.max}}</span>
+      {% endif %}
+    </div>
+    {% endfor %}
+
+    <hr />
+    <h4>Zone dangereuse</h4>
+    <button type="submit" name="role" value="archive" class="btn btn-danger pull-right">Archiver ce compte</button>
   </div>
   </form>
 </div>

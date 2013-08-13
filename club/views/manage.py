@@ -15,26 +15,8 @@ class ClubManage(ClubManagerMixin, UpdateView):
     self.club = club
     return HttpResponseRedirect(reverse('club-manage', kwargs={'slug' : self.club.slug}))
 
-  def load_stats(self):
-    '''
-    Count available and used accounts
-    '''
-    stats = []
-    types = ('staff', 'trainer', 'athlete')
-    for t in types:
-      max = getattr(self.club, 'max_%s' % t)
-      used = self.club.clubmembership_set.filter(role=t).count()
-      stats.append({
-        'type' : t,
-        'max' : max,
-        'used' : used,
-        'diff' : max - used,
-        'percent' : round(100 * (max - used) / max)
-      })
-    return stats
-
   def get_context_data(self, *args, **kwargs):
     context = super(ClubManage, self).get_context_data(*args, **kwargs)
-    context['stats'] = self.load_stats()
+    context['stats'] = self.club.load_stats()
     context['links'] = self.club.links.all().order_by('name')
     return context

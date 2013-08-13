@@ -92,6 +92,7 @@ class ClubMemberRole(ClubMixin, ModelFormMixin, ProcessFormView, DetailView):
     context = super(ClubMemberRole, self).get_context_data(**kwargs)
     context['membership'] = self.membership
     context['member'] = self.member
+    context['stats'] = self.club.load_stats()
     return context
 
   def get_form(self, form_class):
