@@ -1,23 +1,21 @@
 <div class="modal hide fade day" tabindex="-1" role="dialog" >
-
-  <script type="text/javascript">
-  $('div.role span.btn-success').click(function(elt){
-    id = $(this).parent().attr('id');
-  });
-  </script>
-
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3>Changer le role de {{member.first_name}} {{member.last_name}}</h3>
   </div>
   <form method="POST" action="{% url club-member-role club.slug, member.username %}">
-  <div class="modal-body">
+  <div class="modal-body roles">
+    <p class="alert alert-info">
+     {{member.first_name}} {{member.last_name}} est actuellement <strong>{{membership.role|title()}}</strong> dans le club {{club.name}} 
+    </p>
     {% csrf_token %}
+    <input class="role_value" type="hidden" name="role" />
 
     {% for stat in stats %}
-    <div class="role" id="{{stat.type}}">
+    {% if stat.type != membership.role %}
+    <div class="role">
       <h4>{{stat.type|title()}}</h4>
-      <button type="submit" name="role" value="{{stat.type}}" class="btn pull-right {% if stat.diff <= 0 %}disabled{% else %}btn-success{% endif %}">Devenir {{stat.type|title()}}</button>
+      <button type="submit" name="role_local" value="{{stat.type}}" class="btn pull-right {% if stat.diff <= 0 %}disabled{% else %}btn-success{% endif %}">Devenir {{stat.type|title()}}</button>
 
       Places disponibles :
       {% if stat.percent >= 50 %}
@@ -28,11 +26,12 @@
       <span class="badge badge-important">{{stat.diff}} / {{stat.max}}</span>
       {% endif %}
     </div>
+    {% endif %}
     {% endfor %}
 
     <hr />
     <h4>Zone dangereuse</h4>
-    <button type="submit" name="role" value="archive" class="btn btn-danger pull-right">Archiver ce compte</button>
+    <button type="submit" name="role_local" value="archive" class="btn btn-danger pull-right">Archiver ce compte</button>
   </div>
   </form>
 </div>

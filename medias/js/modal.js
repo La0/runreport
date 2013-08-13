@@ -2,7 +2,11 @@
 $(function(){
   // Modals show
   $('.modal-action').click(load_modal);
-  
+
+  // Roles custom
+  $(document).on('click', 'div.roles button', function(){
+    $(this).parents('div.roles').find('input.role_value').val($(this).val());
+  });
 });
 
 function load_modal(evt){

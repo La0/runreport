@@ -92,20 +92,37 @@ class ClubMemberRole(ClubMixin, ModelFormMixin, ProcessFormView, DetailView):
     context = super(ClubMemberRole, self).get_context_data(**kwargs)
     context['membership'] = self.membership
     context['member'] = self.member
-    context['stats'] = self.club.load_stats()
+    context['stats'] = self.stats
     return context
 
   def get_form(self, form_class):
+    self.role_original = self.membership.role
     # Load object before form init
     if not hasattr(self, 'object'):
       self.get_object()
     return super(ClubMemberRole, self).get_form(form_class)
 
   def form_valid(self, form):
-    form.save()
+    try:
+      membership = form.save(commit=False)
+      if self.role_original == membership.role:
+        raise Exception("Same role. No update.")
+
+      # Check club has a place available
+      if membership.role != 'archive':
+        stat = [s for s in self.stats if membership.role == s['type']][0]
+        if stat['diff'] <= 0:
+          raise Exception('No place available')
+      membership.save()
+    except Exception, e:
+      raise Exception("Failed to save")
     return self.render_to_response(self.get_context_data(**{'form' : form}))
 
+  def form_invalid(self, form):
+    raise Exception("Invalid form")
+
   def get_object(self):
+    self.stats = self.club.load_stats()
     self.object = self.membership # needed for inherited classes
     return self.object
 
