@@ -31,7 +31,7 @@
 
     <hr />
     <h4>Zone dangereuse</h4>
-    <button type="submit" name="role_local" value="archive" class="btn btn-danger pull-right">Archiver ce compte</button>
+    <button type="submit" name="role_local" value="archive" class="btn btn-danger pull-right {% if membership.role == "archive" %}disabled{% endif %}">Archiver ce compte</button>
   </div>
   </form>
 </div>

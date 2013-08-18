@@ -1,0 +1,3 @@
+[submodule "libs/bootstrap-modal"]
+	path = libs/bootstrap-modal
+	url = https://github.com/jschr/bootstrap-modal

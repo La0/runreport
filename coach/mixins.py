@@ -1,6 +1,8 @@
 # Gist : https://gist.github.com/michelts/1029336
 from django.views.generic.base import TemplateResponseMixin
 from django.views.generic.edit import ModelFormMixin, ProcessFormView
+import json
+from django.http import HttpResponse
 
 
 class MultipleFormsMixin(ModelFormMixin):
@@ -65,3 +67,23 @@ class MultipleFormsView(TemplateResponseMixin, BaseMultipleFormsView):
     """
     A view for displaing several forms, and rendering a template response.
     """
+
+JSON_STATUS_OK = 'ok'
+JSON_STATUS_ERROR = 'error'
+
+class JsonResponseMixin(object):
+  """
+  A mixin that renders response to some json
+  """
+  json_status = JSON_STATUS_OK # Response inner status
+
+  def render_to_response(self, context):  
+    '''
+    Render normally html, using parents code
+    '''
+    parent = super(JsonResponseMixin, self).render_to_response(context)
+    data = {
+      'status' : self.json_status,
+      'html' : parent.rendered_content,
+    }
+    return HttpResponse(json.dumps(data), content_type='application/json')

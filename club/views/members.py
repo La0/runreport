@@ -11,6 +11,7 @@ from club.models import ClubMembership
 from helpers import week_to_date
 from club.forms import ClubMembershipForm
 from datetime import date
+from coach.mixins import JsonResponseMixin, JSON_STATUS_ERROR
 
 class ClubMembers(ClubMixin, ListView):
   template_name = 'club/members.html'
@@ -82,7 +83,7 @@ class ClubMember(ClubMixin, DetailView):
     self.object = self.membership # needed for inherited classes
     return self.object
 
-class ClubMemberRole(ClubMixin, ModelFormMixin, ProcessFormView, DetailView):
+class ClubMemberRole(JsonResponseMixin, ClubMixin, ModelFormMixin, ProcessFormView, DetailView):
   template_name = 'club/role.html'
   context_object_name = 'membership'
   model = ClubMembership
@@ -119,7 +120,8 @@ class ClubMemberRole(ClubMixin, ModelFormMixin, ProcessFormView, DetailView):
     return self.render_to_response(self.get_context_data(**{'form' : form}))
 
   def form_invalid(self, form):
-    raise Exception("Invalid form")
+    self.json_status = JSON_STATUS_ERROR
+    return self.render_to_response(self.get_context_data(**{'form' : form}))
 
   def get_object(self):
     self.stats = self.club.load_stats()
