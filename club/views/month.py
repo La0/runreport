@@ -1,11 +1,11 @@
 from django.http import Http404
 from mixins import ClubMixin
 from run.models import RunReport
-
 from django.views.generic import MonthArchiveView, DateDetailView
 from run.models import RunSession
 from datetime import datetime, date
 import calendar
+from coach.mixins import JsonResponseMixin
 
 class ClubMemberMonth(ClubMixin, MonthArchiveView):
   template_name = 'run/month.html'
@@ -50,7 +50,7 @@ class ClubMemberMonth(ClubMixin, MonthArchiveView):
     }
     return (self.days, sessions_per_days, context)
 
-class ClubMemberDay(ClubMixin, DateDetailView):
+class ClubMemberDay(JsonResponseMixin, ClubMixin, DateDetailView):
   template_name = 'club/day.html'
   month_format = '%M'
   context_object_name = 'session'

@@ -5,6 +5,7 @@ from run.models import RunSession, RunReport
 from run.forms import RunSessionForm
 from datetime import datetime, date
 import calendar
+from coach.mixins import JsonResponseMixin, JSON_STATUS_ERROR
 
 class RunCalendar(MonthArchiveView):
   template_name = 'run/month.html'
@@ -49,7 +50,7 @@ class RunCalendar(MonthArchiveView):
     }
     return (self.days, sessions_per_days, context)
 
-class RunCalendarDay(ModelFormMixin, ProcessFormView, DateDetailView):
+class RunCalendarDay(JsonResponseMixin, ModelFormMixin, ProcessFormView, DateDetailView):
   template_name = 'run/day.html'
   month_format = '%M'
   context_object_name = 'session'
@@ -67,6 +68,10 @@ class RunCalendarDay(ModelFormMixin, ProcessFormView, DateDetailView):
     session.date = self.day
     session.report = self.report
     session.save()
+    return self.render_to_response(self.get_context_data(**{'form' : form}))
+
+  def form_invalid(self, form):
+    self.json_status = JSON_STATUS_ERROR
     return self.render_to_response(self.get_context_data(**{'form' : form}))
 
   def get_context_data(self, **kwargs):
