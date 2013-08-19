@@ -2,7 +2,7 @@ from coffin.conf.urls import *
 from coach.settings import MEDIA_ROOT, DEBUG, ADMIN_BASE_URL
 from django.contrib import admin
 from django.views.generic.base import RedirectView
-from club.views import ClubInviteCheck, ClubInviteApply
+from club.views import ClubInviteCheck
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -12,7 +12,6 @@ urlpatterns = patterns('',
   url(r'^(?P<type>help|news)/', include('page.urls')),
 
   # Invite
-  url(r'^invite/apply/?$', ClubInviteApply.as_view(), name="club-invite-apply"),
   url(r'^invite/(?P<slug>.*)', ClubInviteCheck.as_view(), name="club-invite"),
 )
 

@@ -54,7 +54,11 @@ class ClubCreateMixin(object):
   Check that the user is:
     * logged in
     * does not already manage a club
+    * has a loaded invite in session
+    * belongs to right user
   """
+  invite = None
+
   def dispatch(self, request, *args, **kwargs):
     if not request.user.is_authenticated():
       raise PermissionDenied
@@ -62,19 +66,12 @@ class ClubCreateMixin(object):
     if Club.objects.filter(manager=request.user).count() > 0:
       raise PermissionDenied
 
-    return super(ClubCreateMixin, self).dispatch(request, *args, **kwargs)
-
-class ClubInviteMixin(object):
-  def dispatch(self, request, *args, **kwargs):
-    # Load invite from session
     try:
       invite_slug = request.session['invite']
       self.invite = ClubInvite.objects.get(slug=invite_slug)
+      if self.invite.recipient != request.user:
+        raise Exception('Invalid user')
     except:
-      raise Http404('Invalid invite.')
+      raise Http404('Invalid or missing Beta invitation.')
 
-    # Check private invite is not already used
-    if self.invite.private and self.invite.used:
-      raise Http404("Invite used.")
-
-    return super(ClubInviteMixin, self).dispatch(request, *args, **kwargs)
+    return super(ClubCreateMixin, self).dispatch(request, *args, **kwargs)

@@ -32,17 +32,6 @@ class ClubCreateForm(forms.ModelForm):
       raise ValidationError("Slug already used.")
     return slug
 
-class ClubInviteForm(forms.ModelForm):
-  class Meta:
-    model = ClubInvite
-    fields = ('recipient', 'type', 'private')
-
-  def clean_type(self):
-    type = self.cleaned_data['type']
-    if type not in ('trainer', 'athlete'):
-      raise ValidationError('Invalid invitation type')
-    return type
-
 class TrainersForm(forms.ModelForm):
   def __init__(self, *args,**kwargs):
     super (TrainersForm, self ).__init__(*args,**kwargs) # populates the post

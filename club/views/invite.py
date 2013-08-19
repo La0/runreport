@@ -1,49 +1,18 @@
 from club.models import ClubInvite
-from django.views.generic import DetailView, TemplateView
-from django.views.generic.edit import CreateView
+from django.views.generic import DetailView, RedirectView
 from django.http import Http404
-from mixins import ClubInviteMixin, ClubManagerMixin
-from club.forms import ClubInviteForm
+from django.core.urlresolvers import reverse
 
-class ClubInviteCheck(DetailView):
-  template_name = 'club/invite.html'
+class ClubInviteCheck(RedirectView, DetailView):
   model = ClubInvite
-  context_object_name = 'invite'
 
-  def get_context_data(self, *args, **kwargs):
-    # Check private invite is not already used
-    if self.object.private and self.object.used:
+  def get_redirect_url(self, *args, **kwargs):
+    self.invite = self.get_object()
+    # Check invite is not already used
+    if self.invite.used:
       raise Http404("Invite used.")
 
     # Save invite in session
-    self.request.session['invite'] = self.object.slug
+    self.request.session['invite'] = self.invite.slug
 
-    context = super(ClubInviteCheck, self).get_context_data(*args, **kwargs)
-    return context
-
-class ClubInviteApply(ClubInviteMixin, TemplateView):
-  template_name = 'club/invite_apply.html'
-
-  def get_context_data(self, *args, **kwargs):
-    # Only apply athlete & trainer
-    if not self.invite.type in ('trainer', 'athlete'):
-      raise Http404('Unsupported invite type')
-
-    # Apply !
-    self.invite.apply(self.request.user)
-
-    context = super(ClubInviteApply, self).get_context_data(*args, **kwargs)
-    context['invite'] = self.invite
-    return context
-
-class ClubInviteAdd(ClubManagerMixin, CreateView):
-  template_name = 'club/invite_add.html'
-  model = ClubInvite
-  form_class = ClubInviteForm
-
-  def form_valid(self, form, *args, **kwargs):
-    invite = form.save(commit=False)
-    invite.club = self.club
-    invite.sender = self.request.user
-    invite.save()
-    return self.render_to_response(self.get_context_data({'invite': invite}))
+    return reverse('club-create')

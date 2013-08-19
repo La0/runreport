@@ -65,15 +65,12 @@ class ClubLink(models.Model):
 class ClubInvite(models.Model):
   INVITE_TYPES = (
     ('create', 'Create a club (Beta)'),
-    ('trainer', 'Add a trainer'),
-    ('athlete', 'Add an athlete'),
   )
-  sender = models.ForeignKey(User)
-  recipient = models.EmailField(null=True, blank=True)
+  sender = models.ForeignKey(User, related_name="inviter")
+  recipient = models.ForeignKey(User, related_name="invitee", null=True)
   club = models.ForeignKey(Club, null=True, blank=True, related_name="invites")
   type = models.CharField(max_length=15, choices=INVITE_TYPES)
   slug = models.CharField(max_length=30, unique=True, blank=True) # not a slug: no char restriction
-  private = models.BooleanField(default=True)
   created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
   sent = models.DateTimeField(null=True, blank=True)
@@ -84,43 +81,23 @@ class ClubInvite(models.Model):
       self.build_slug()
     super(ClubInvite, self).save(*args, **kwargs)
 
-  def build_slug(self):
+  def build_slug(self, length=10):
     '''
-    Build the slug using an hashed part
-     only when private
+    Build the slug using random chars & digits
     '''
-    self.slug = "%s:%s" % (self.club.slug, self.type)
-    if not self.private:
-      return self.slug
-    from hashlib import md5
-    from base64 import b64encode
-    h = md5("Coach:%d:%d:%s" % (self.club.pk, self.sender.pk, self.type)).digest()
-    h = b64encode(h)
-    self.slug += ":%s" % (h[0:8],)
-    return self.slug
+    import string
+    import random
+    chars = string.letters + string.digits
+    self.slug = ''.join(random.Random().sample(chars, length))
 
   @models.permalink
   def get_absolute_url(self):
     return ('club-invite', (self.slug, ))
 
-  def apply(self, user):
+  def use(self):
     '''
-    Apply the invite to this user
+    Mark the invite as used
     '''
-    if self.type not in ('trainer', 'athlete'):
-      raise Exception("Invalid type to apply: %s" % self.type)
-
-    if self.private:
-      # Directly apply private 
-      cm, _ = ClubMembership.objects.get_or_create(club=self.club, user=user)
-      cm.role = self.type
-      cm.save()
-    else:
-      # TODO: only support athlete here
-      # TODO: check stats before applying
-      # TODO: when there is no room, set as propect
-      pass
-
     # Set used
     from datetime import datetime
     self.used = datetime.now()

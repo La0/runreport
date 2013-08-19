@@ -19,4 +19,8 @@ class ClubCreate(ClubCreateMixin, CreateView):
     # Setup user as staff member
     ClubMembership.objects.create(club=club, user=self.request.user, role="staff")
 
+    # Use invite
+    self.invite.use()
+    del self.request.session['invite']
+
     return HttpResponseRedirect(reverse('club-manage', kwargs={'slug' : club.slug}))
