@@ -1,25 +1,25 @@
-<div class="modal hide fade day" tabindex="-1" role="dialog" >
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3>{{day|date('l d E Y')|title()}}</h3>
-  </div>
-  <form method="POST" action="{% url report-day day.year, day.month, day.day %}" class="day">
-  <div class="modal-body">
-      {% csrf_token %}
-      {% import '_macros.html' as macros %}
-      {{ macros.input(form.name, 'Séance') }}
-      {{ macros.input(form.comment, 'Commentaire') }}
-      {{ macros.session_time_distance(form) }}
-      {% if session %}
-      {% with session.garmin_activity as activity %}
-        {% include '_garmin.html' %}
-      {% endwith %}
-      {% endif %}
-  </div>
-  <div class="modal-footer">
-    <button class="btn" data-dismiss="modal">Fermer</button>
-    <a href="{{ report.get_absolute_url() }}" class="btn btn-success">Voir cette semaine</a>
-    <input class="btn btn-primary" type="submit" value="Sauvegarder" style="margin-left: 20px;" />
-  </div>
-  </form>
-</div>
+{% extends 'modal.html' %}
+
+{% set modal_title = day|date('l d E Y')|title() %}
+
+{% set form_url = "report-day"|url(day.year, day.month, day.day) %}
+{% set form_class = "day" %}
+
+{% block body %}
+  {% csrf_token %}
+  {% import '_macros.html' as macros %}
+  {{ macros.input(form.name, 'Séance') }}
+  {{ macros.input(form.comment, 'Commentaire') }}
+  {{ macros.session_time_distance(form) }}
+  {% if session %}
+  {% with session.garmin_activity as activity %}
+    {% include '_garmin.html' %}
+  {% endwith %}
+  {% endif %}
+{% endblock %}
+
+{% block footer %}
+  <button class="btn" data-dismiss="modal">Fermer</button>
+  <a href="{{ report.get_absolute_url() }}" class="btn btn-success">Voir cette semaine</a>
+  <input class="btn btn-primary" type="submit" value="Sauvegarder" style="margin-left: 20px;" />
+{% endblock %}

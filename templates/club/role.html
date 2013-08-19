@@ -1,37 +1,36 @@
-<div class="modal hide fade day" tabindex="-1" role="dialog" >
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3>Changer le role de {{member.first_name}} {{member.last_name}}</h3>
-  </div>
+{% extends 'modal.html' %}
+{% set modal_title = "Changer le role de "+member.first_name+" "+member.last_name %}
+
+{% block body %}
+<div class="roles">
   <form method="POST" action="{% url club-member-role club.slug, member.username %}">
-  <div class="modal-body roles">
-    <p class="alert alert-info">
-     {{member.first_name}} {{member.last_name}} est actuellement <strong>{{membership.role|title()}}</strong> dans le club {{club.name}} 
-    </p>
-    {% csrf_token %}
-    <input class="role_value" type="hidden" name="role" />
+  <p class="alert alert-info">
+   {{member.first_name}} {{member.last_name}} est actuellement <strong>{{membership.role|title()}}</strong> dans le club {{club.name}} 
+  </p>
+  {% csrf_token %}
+  <input class="role_value" type="hidden" name="role" />
 
-    {% for stat in stats %}
-    {% if stat.type != membership.role %}
-    <div class="role">
-      <h4>{{stat.type|title()}}</h4>
-      <button type="submit" name="role_local" value="{{stat.type}}" class="btn pull-right {% if stat.diff <= 0 %}disabled{% else %}btn-success{% endif %}">Devenir {{stat.type|title()}}</button>
+  {% for stat in stats %}
+  {% if stat.type != membership.role %}
+  <div class="role">
+    <h4>{{stat.type|title()}}</h4>
+    <button type="submit" name="role_local" value="{{stat.type}}" class="btn pull-right {% if stat.diff <= 0 %}disabled{% else %}btn-success{% endif %}">Devenir {{stat.type|title()}}</button>
 
-      Places disponibles :
-      {% if stat.percent >= 50 %}
-      <span class="badge badge-success">{{stat.diff}} / {{stat.max}}</span>
-      {% elif stat.percent >= 25 %}
-      <span class="badge badge-warning">{{stat.diff}} / {{stat.max}}</span>
-      {% else %}
-      <span class="badge badge-important">{{stat.diff}} / {{stat.max}}</span>
-      {% endif %}
-    </div>
+    Places disponibles :
+    {% if stat.percent >= 50 %}
+    <span class="badge badge-success">{{stat.diff}} / {{stat.max}}</span>
+    {% elif stat.percent >= 25 %}
+    <span class="badge badge-warning">{{stat.diff}} / {{stat.max}}</span>
+    {% else %}
+    <span class="badge badge-important">{{stat.diff}} / {{stat.max}}</span>
     {% endif %}
-    {% endfor %}
-
-    <hr />
-    <h4>Zone dangereuse</h4>
-    <button type="submit" name="role_local" value="archive" class="btn btn-danger pull-right {% if membership.role == "archive" %}disabled{% endif %}">Archiver ce compte</button>
   </div>
+  {% endif %}
+  {% endfor %}
+
+  <hr />
+  <h4>Zone dangereuse</h4>
+  <button type="submit" name="role_local" value="archive" class="btn btn-danger pull-right {% if membership.role == "archive" %}disabled{% endif %}">Archiver ce compte</button>
   </form>
 </div>
+{% endblock %}
