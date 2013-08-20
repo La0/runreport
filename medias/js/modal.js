@@ -39,16 +39,31 @@ function load_box(url, method, data){
     data : data ? data : null,
     dataType : 'json',
     success : function(data){
+
+      // Load a page
+      if(data.status == 'load' && data.url){
+        window.location = data.url;
+        return;
+      }
+
+      // Close modal
+      if($.inArray('close', data.options) != -1 && modal != null){
+        modal.hide();
+        $('.modal-backdrop').remove();
+        $('.modal-scrollable').remove();
+      }
+
+      // Reload parent
+      if($.inArray('body_reload', data.options) != -1){
+        window.location = window.location;
+        return;
+      }
+
       // Build a new modal
       modal = $(data.html).modal({
         show : true,
         replace : true,
       });
-
-      // Status
-      // TODO: some action here
-      status = data.status;
-      console.log("Modal Status = "+status);
 
       // Trigger forms
       modal.find('form').on('submit', submit_form);
@@ -65,7 +80,8 @@ function load_modal(evt){
     return false;
   }
   evt.preventDefault();
-  load_box(url, 'GET');
+  method = $(this).hasClass('modal-post') ? 'POST' : 'GET';
+  load_box(url, method);
   return false;
 }
 

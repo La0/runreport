@@ -2,7 +2,7 @@
 from django.views.generic.base import TemplateResponseMixin
 from django.views.generic.edit import ModelFormMixin, ProcessFormView
 import json
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 
 
 class MultipleFormsMixin(ModelFormMixin):
@@ -69,21 +69,59 @@ class MultipleFormsView(TemplateResponseMixin, BaseMultipleFormsView):
     """
 
 JSON_STATUS_OK = 'ok'
+JSON_STATUS_LOAD = 'load' # Load an url
 JSON_STATUS_ERROR = 'error'
+
+JSON_OPTION_BODY_RELOAD = 'body_reload' # Reload the body (source)
+JSON_OPTION_NO_HTML = 'nohtml' # No output
+JSON_OPTION_CLOSE = 'close' # Close modal
 
 class JsonResponseMixin(object):
   """
   A mixin that renders response to some json
   """
   json_status = JSON_STATUS_OK # Response inner status
+  json_options = []
 
   def render_to_response(self, context):  
-    '''
-    Render normally html, using parents code
-    '''
-    parent = super(JsonResponseMixin, self).render_to_response(context)
+    # Render normally html, using parents code
+    html = None
+    if JSON_OPTION_NO_HTML not in self.json_options:
+      parent = super(JsonResponseMixin, self).render_to_response(context)
+      html = parent.rendered_content
+    return self.build_response(html=html)
+
+  def build_response(self, html=None, message=None, url=None):
+    # Base output
     data = {
       'status' : self.json_status,
-      'html' : parent.rendered_content,
+      'options' : self.json_options,
     }
+
+    # Add optional datas
+    if url is not None:
+      data['url'] = url
+    if html is not None:
+      data['html'] = html
+    if message is not None:
+      data['message'] = message
     return HttpResponse(json.dumps(data), content_type='application/json')
+
+  def dispatch(self, *args, **kwargs):
+    # Catch all reponses
+    try:
+      resp = super(JsonResponseMixin, self).dispatch(*args, **kwargs)
+    except Exception, e:
+      print "Json Dispatch failed: %s" % str(e)
+
+      # Base error response
+      self.json_status = JSON_STATUS_ERROR
+      return self.build_response(message=str(e))
+
+    # Catch redirection
+    if isinstance(resp, HttpResponseRedirect):
+      self.json_status = JSON_STATUS_LOAD
+      self.json_options = []
+      return self.build_response(url=resp['Location'])
+
+    return resp
