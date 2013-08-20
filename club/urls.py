@@ -5,6 +5,7 @@ club_patterns = patterns('',
   # Manager
   url(r'^manage/?$', ClubManage.as_view(), name="club-manage"),
   url(r'^link/add/?$', ClubLinkAdd.as_view(), name="club-link-add"),
+  url(r'^link/delete/(?P<id>\d+)?$', ClubLinkDelete.as_view(), name="club-link-delete"),
 
   # Members
   url(r'^/?$', ClubMembers.as_view(), name="club-current"),

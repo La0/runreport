@@ -52,7 +52,7 @@
     <td>{{link.name}}</td>
     <td><a href="{{link.url}}" target="_blank">{{link.url}}</a></td>
     <td>
-      <a href="" class="btn btn-danger">Supprimer</a>
+      <a href="{% url club-link-delete club.slug, link.id%}" class="modal-action modal-post btn btn-danger">Supprimer</a>
     </td>
   </tr>
   {% endfor %}
