@@ -38,7 +38,7 @@ def add_pages(request):
         submenu['menu'].append(_p(('club-current-name', m.club.slug, 'archives', 'name'), u'Archives'))
 
         # Manage links
-        if m.club.manager == request.user:
+        if m.club.manager == request.user or request.user.is_superuser:
           submenu['menu'].append(_p(('club-manage', m.club.slug), u'Administrer'))
 
         submenu['menu'].append('__SEPARATOR__')

@@ -42,10 +42,11 @@ class ClubManagerMixin(ClubMixin):
   """
   Previous mixin, but user must be:
     * the manager of the club
+    * or is a super user
   """
   def dispatch(self, request, *args, **kwargs):
     self.check(request, *args, **kwargs)
-    if self.club.manager != request.user:
+    if not request.user.is_staff and self.club.manager != request.user:
       raise PermissionDenied
     return super(ClubManagerMixin, self).dispatch(request, *args, **kwargs)
 
