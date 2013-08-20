@@ -1,0 +1,15 @@
+{% extends 'modal.html' %}
+
+{% set modal_title = 'Ajouter un lien' %}
+{% set form_url = 'club-link-add'|url(club.slug) %}
+
+{% block body %}
+  {% csrf_token %}
+  {{ macros.input(form.name, 'Nom du lien') }}
+  {{ macros.input(form.url, 'Adresse du lien') }}
+{% endblock %}
+
+{% block footer %}
+  <button class="btn" data-dismiss="modal">Fermer</button>
+  <input type="submit" class="btn btn-primary" value="Ajouter" />
+{% endblock %}

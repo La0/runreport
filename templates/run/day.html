@@ -7,7 +7,6 @@
 
 {% block body %}
   {% csrf_token %}
-  {% import '_macros.html' as macros %}
   {{ macros.input(form.name, 'Séance') }}
   {{ macros.input(form.comment, 'Commentaire') }}
   {{ macros.session_time_distance(form) }}

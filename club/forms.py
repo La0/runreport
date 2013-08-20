@@ -1,4 +1,4 @@
-from models import ClubMembership, Club, ClubInvite
+from models import ClubMembership, Club, ClubInvite, ClubLink
 from django import forms
 from django.contrib.auth.models import User
 from django.forms.models import modelformset_factory
@@ -43,6 +43,11 @@ class TrainersForm(forms.ModelForm):
   class Meta:
     model = ClubMembership
     fields = ('trainers', )
+
+class ClubLinkForm(forms.ModelForm):
+  class Meta:
+    model = ClubLink
+    fields = ('name', 'url')
 
 # Init the formset using above form
 TrainersFormSet = modelformset_factory(ClubMembership, fields=('trainers',), form=TrainersForm, extra=0)

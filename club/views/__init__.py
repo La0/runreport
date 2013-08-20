@@ -1,5 +1,5 @@
 from members import ClubMembers, ClubMember, ClubMemberWeek, ClubMemberRole
 from month import ClubMemberMonth, ClubMemberDay
 from create import ClubCreate
-from manage import ClubManage
+from manage import ClubManage, ClubLinkAdd
 from invite import ClubInviteCheck

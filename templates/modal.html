@@ -4,6 +4,7 @@
     <h3>{{modal_title|default('Coach I ran')}}</h3>
   </div>
   {% if form_url %}
+  {% import '_macros.html' as macros %}
   <form method="POST" action="{{form_url}}" class="{{form_class}}">
   {% endif %}
   <div class="modal-body">
