@@ -13,6 +13,7 @@ def prod():
     pull()
     with virtualenv(FABRIC_ENV):
       update_requirements()
+      submodules()
       migrate_db()
       start_fcgi()
   restart_lighttpd()
@@ -88,3 +89,7 @@ def restart_lighttpd():
   Restart lighttpd
   '''
   pass
+
+def submodules():
+  run('git submodule init')
+  run('git submodule update')
