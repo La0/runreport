@@ -7,7 +7,7 @@ from django.core.exceptions import PermissionDenied
 from mixins import WeekPaginator, CurrentWeekMixin
 
 class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
-  template_name = 'run/index.html'
+  template_name = 'run/report.html'
   week_format = '%W'
   date_field = 'date'
   report = None
@@ -103,6 +103,7 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
     # Render minimal response
     if not request.user.is_authenticated():
       self.object_list = []
+      self.template_name = "landing/index.html" # Use landing page
       return self.render_to_response({})
     return super(WeeklyReport, self).get(request, *args, **kwargs)
 

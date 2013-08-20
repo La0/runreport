@@ -1,8 +1,9 @@
 from coffin.conf.urls import *
 from coach.settings import MEDIA_ROOT, DEBUG, ADMIN_BASE_URL
 from django.contrib import admin
-from django.views.generic.base import RedirectView
+from django.views.generic.base import RedirectView, TemplateView
 from club.views import ClubInviteCheck
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -13,6 +14,9 @@ urlpatterns = patterns('',
 
   # Invite
   url(r'^invite/(?P<slug>.*)', ClubInviteCheck.as_view(), name="club-invite"),
+
+  # Landing pages
+  url(r'^features/?', TemplateView.as_view(template_name='landing/features.html'), name="landing-features"),
 )
 
 # Direct admin and static medias

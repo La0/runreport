@@ -1,3 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
 {% import '_macros.html' as macros %}
 
 {% if report_previous %}
@@ -14,3 +18,5 @@
 {% endif %}
 
 {% include '_weeks.html' %}
+
+{% endblock %}
