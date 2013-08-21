@@ -3,3 +3,4 @@ from month import ClubMemberMonth, ClubMemberDay
 from create import ClubCreate
 from manage import ClubManage, ClubLinkAdd, ClubLinkDelete
 from invite import ClubInviteCheck
+from join import ClubList, ClubJoin

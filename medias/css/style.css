@@ -200,3 +200,7 @@ div.pages a:hover {
   border: 1px solid #DDD;
 }
 
+/* Club join */
+div.club-description h3 {
+  border-bottom: 1px solid #CCC;
+}

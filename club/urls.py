@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, url, include
+from django.contrib.auth.decorators import login_required
 from club.views import *
 
 club_patterns = patterns('', 
@@ -6,6 +7,9 @@ club_patterns = patterns('',
   url(r'^manage/?$', ClubManage.as_view(), name="club-manage"),
   url(r'^link/add/?$', ClubLinkAdd.as_view(), name="club-link-add"),
   url(r'^link/delete/(?P<id>\d+)?$', ClubLinkDelete.as_view(), name="club-link-delete"),
+
+  # Join
+  url(r'join/?$', login_required(ClubJoin.as_view()), name="club-join"),
 
   # Members
   url(r'^/?$', ClubMembers.as_view(), name="club-current"),
@@ -26,4 +30,7 @@ urlpatterns = patterns('',
 
   # With an existing club
   url(r'^(?P<slug>[\w\_\-]+)/', include(club_patterns)),
+
+  # List to Join
+  url(r'join/?$', login_required(ClubList.as_view()), name="club-list"),
 )

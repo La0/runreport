@@ -39,6 +39,9 @@ class Club(models.Model):
       })
     return stats
 
+  def has_user(self, user):
+    return self.clubmembership_set.filter(user=user).count() == 1
+
 class ClubMembership(models.Model):
   CLUB_ROLES = (
     ('athlete', 'Athlete'),
