@@ -3,7 +3,7 @@ from django.views.generic.edit import FormView
 from users.forms import SignUpForm
 from django.contrib.auth import login as auth_login, authenticate
 from django.http import HttpResponseRedirect
-from coach.settings import LOGIN_REDIRECT_URL
+from django.core.urlresolvers import reverse
 
 class CreateUser(FormView):
   template_name = 'users/create.html'
@@ -20,4 +20,4 @@ class CreateUser(FormView):
     valid_user = authenticate(username=user.username, password=form.cleaned_data['password'])
     if valid_user is not None:
       auth_login(self.request, valid_user)
-    return HttpResponseRedirect(LOGIN_REDIRECT_URL)
+    return HttpResponseRedirect(reverse('club-list'))

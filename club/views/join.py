@@ -19,7 +19,7 @@ class ClubJoin(JsonResponseMixin, View, ):
       raise Exception("Already in club")
 
     # Create new membership
-    member = ClubMembership.objects.create(club=club, user=request.user, role='athlete')
+    member = ClubMembership.objects.create(club=club, user=request.user, role='prospect')
 
     # Send notification to manager
     # TODO

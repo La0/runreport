@@ -23,7 +23,7 @@ def add_pages(request):
     menu.append(_p('report-current-month', 'Calendrier', icon='icon-th-large', lazy=True))
 
     # Build Club menu
-    members = ClubMembership.objects.filter(user=request.user)
+    members = ClubMembership.objects.filter(user=request.user).exclude(role__in=('archive', 'prospect'))
     for m in members:
       submenu = {
         'caption' : m.club.name,
@@ -49,6 +49,11 @@ def add_pages(request):
         submenu['menu'].append(_ext(link.url, link.name))
 
       menu.append(submenu)
+
+    # Add button to join a club
+    # when no memberships exist
+    if not members:
+      menu.append(_p('club-list', 'Rejoindre un club', 'icon-plus-sign'))
 
     # Help
     menu.append(_p(('page-list', 'help'), 'Aide', 'icon-question-sign', lazy=True))
