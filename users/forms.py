@@ -6,7 +6,6 @@ from coach.settings import GPG_HOME, GPG_KEY
 from helpers import nameize
 import gnupg
 from run.garmin import GarminConnector
-from club.models import Club
 
 class ProfileForm(forms.ModelForm):
   class Meta:
@@ -27,7 +26,6 @@ class SignUpForm(forms.Form):
   password = forms.CharField(min_length=4, widget=forms.PasswordInput())
   password_check = forms.CharField(min_length=4, widget=forms.PasswordInput())
   email = forms.EmailField()
-  club = forms.ModelChoiceField(queryset=Club.objects.all())
 
   def clean_email(self):
     '''

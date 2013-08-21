@@ -4,7 +4,6 @@ from users.forms import SignUpForm
 from django.contrib.auth import login as auth_login, authenticate
 from django.http import HttpResponseRedirect
 from coach.settings import LOGIN_REDIRECT_URL
-from club.models import ClubMembership
 
 class CreateUser(FormView):
   template_name = 'users/create.html'
@@ -16,12 +15,6 @@ class CreateUser(FormView):
     user.first_name = form.cleaned_data['firstname']
     user.last_name = form.cleaned_data['lastname']
     user.save()
-
-    # Add user to a club
-    club = form.cleaned_data['club']
-    cm = ClubMembership(user=user, club=club, role='athlete')
-    cm.save()
-    cm.trainers.add(club.main_trainer)
 
     # Auto login
     valid_user = authenticate(username=user.username, password=form.cleaned_data['password'])
