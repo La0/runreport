@@ -4,7 +4,7 @@ from django.http import Http404
 from django.views.generic.dates import WeekArchiveView
 from django.contrib.auth.models import User
 from django.db.models import Count, Max
-from mixins import ClubMixin
+from mixins import ClubMixin, ClubManagerMixin
 from run.views.mixins import CurrentWeekMixin, WeekPaginator
 from run.models import RunReport
 from club.models import ClubMembership
@@ -26,13 +26,29 @@ class ClubMembers(ClubMixin, ListView):
         'memberships__role' : 'athlete',
         'memberships__trainers' : self.request.user,
       },
+      'staff' : {
+        'memberships__role' : 'staff',
+      },
+      'prospects' : {
+        'memberships__role' : 'prospect',
+      },
       'archives' : {
         'memberships__role' : 'archive',
       }
     }
 
+    # Remove filters for non manager
+    if self.request.user != self.club.manager and not self.request.user.is_staff:
+      del filters['all']
+      del filters['staff']
+      del filters['prospects']
+      del filters['archives']
+
     # Load members, sorted by name
-    f = filters.get(self.kwargs.get('type', default_type), None)
+    asked_type = self.kwargs.get('type', default_type)
+    if asked_type not in filters:
+      raise Http404('Invalid type')
+    f = filters[asked_type]
     members = self.club.members.prefetch_related('memberships')
     if f: # Don't use ternary !
       members = members.filter(**f)
@@ -83,7 +99,7 @@ class ClubMember(ClubMixin, DetailView):
     self.object = self.membership # needed for inherited classes
     return self.object
 
-class ClubMemberRole(JsonResponseMixin, ClubMixin, ModelFormMixin, ProcessFormView, DetailView):
+class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, ProcessFormView, DetailView):
   template_name = 'club/role.html'
   context_object_name = 'membership'
   model = ClubMembership

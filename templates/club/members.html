@@ -5,17 +5,23 @@
 {% block content %}
 <h2>{{club.name}} : {{members.count()}} membres</h2>
 
+{% if request.user == club.manager or request.user.is_staff %}
 <ul class="breadcrumb">
   <li><a href="{% url 'club-current-name' club.slug, 'athletes', sort %}">Mes Athlètes</a> <span class="divider">&bull;</span></li>
   <li><a href="{% url 'club-current-name' club.slug, 'all', sort %}">Tout le club</a> <span class="divider">&bull;</span></li>
+  <li><a href="{% url 'club-current-name' club.slug, 'prospects', sort %}">Nouveaux</a> <span class="divider">&bull;</span></li>
+  <li><a href="{% url 'club-current-name' club.slug, 'staff', sort %}">Staff</a> <span class="divider">&bull;</span></li>
   <li><a href="{% url 'club-current-name' club.slug, 'archives', sort %}">Archives</a></li>
 </ul>
+{% endif %}
 
 {% if members %}
 <table class="table">
   <tr>
     <th>{{ macros.sort_title('Athlète', 'name', 'club-current-name', (club.slug, type, ), sort) }}</th>
+    {% if request.user == club.manager or request.user.is_staff %}
     <th>Rôle</th>
+    {% endif %}
     <th>Catégorie</th>
     <th>Vma</th>
     <th>Séances</th>
@@ -28,6 +34,7 @@
     <td>
       {{ member.first_name|default(member.username) }} {{ member.last_name }}
     </td>
+    {% if request.user == club.manager or request.user.is_staff %}
     <td>
     {% with member.membership.role as role %}
       {% if role == 'athlete' %}
@@ -38,9 +45,12 @@
       <a href="{% url club-member-role club.slug, member.username %}" class="modal-action btn btn-small btn-primary" >Staff</a>
       {% elif role == 'archive' %}
       <a href="{% url club-member-role club.slug, member.username %}" class="modal-action btn btn-small btn-danger" >Archivé</a>
+      {% elif role == 'prospect' %}
+      <a href="{% url club-member-role club.slug, member.username %}" class="modal-action btn btn-small btn-success" >Nouveau</a>
       {% endif %}
     {% endwith %}
     </td>
+    {% endif %}
     <td>{{ profile.category.name|default('-') }}</td>
     <td>{{ profile.vma|default('-') }}</td>
     <td>{{ member.nb_sessions }}</td>
@@ -51,7 +61,9 @@
     </td>
     <td>
       <a class="btn" href="{% url club-member club.slug, member.username %}">Fiche</a>
+      {% if member.membership.role not in ('archive', 'prospect') %}
       <a class="btn btn-primary" href="{% url club-member-month club.slug, member.username, today|date('Y'), today|date('m') %}">Carnet</a>
+      {% endif %}
     </td>
     {% endwith %}
   </tinfo >

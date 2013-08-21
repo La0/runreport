@@ -48,6 +48,7 @@ class ClubMembership(models.Model):
     ('trainer', 'Trainer'),
     ('staff', 'Staff'), # For presidents...
     ('archive', 'Archive'),
+    ('prospect', 'Prospect'), # For newcomers
   )
   user = models.ForeignKey(User, related_name="memberships")
   club = models.ForeignKey(Club)
