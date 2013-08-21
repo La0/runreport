@@ -21,7 +21,15 @@
   </p>
   <p class="pull-right">
     {% if club.has_user(request.user) %}
-    <span class="btn disabled btn-info">Déja Rejoint</span>
+      {% with club.clubmembership_set.get(user=request.user) as member %}
+      {% if member.role == 'archive' %}
+      <span class="btn disabled btn-danger">Refusé</span>
+      {% elif member.role == 'prospect' %}
+      <span class="btn disabled btn-info">Attente de validation</span>
+      {% else %}
+      <span class="btn disabled btn-success">Membre</span>
+      {% endif %}
+      {% endwith %}
     {% else %}
     <a href="{% url club-join club.slug %}" class="btn btn-success modal-action">Rejoindre</a>
     {% endif %}
