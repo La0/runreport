@@ -1,0 +1,24 @@
+{% extends 'mail/base.html' %}
+
+{% block mail %}
+<div>
+Bonjour {{ user.first_name }},
+</div>
+<div>
+{% if role == 'archive' %}
+Désolé, mais vous ne faites plus partie du club {{ club.name }}.
+<br />
+Si vous aviez fait une candidature, elle a été refusée.
+{% else %}
+Votre rôle au sein du club {{ club.name }} a évolué, vous êtes maintenant 
+{% if role == 'trainer' %}
+Entrâineur.
+{% elif role == 'staff' %}
+Membre du staff.
+{% elif role == 'athlete' %}
+Athlète.
+{% endif %}
+
+{% endif %}
+</div>
+{% endblock %}

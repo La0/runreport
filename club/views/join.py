@@ -22,7 +22,7 @@ class ClubJoin(JsonResponseMixin, View, ):
     member = ClubMembership.objects.create(club=club, user=request.user, role='prospect')
 
     # Send notification to manager
-    # TODO
+    member.mail_club()
 
     self.json_options.append(JSON_OPTION_BODY_RELOAD)
     return self.render_to_response({})

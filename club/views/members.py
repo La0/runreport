@@ -131,8 +131,10 @@ class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, Proces
         if stat['diff'] <= 0:
           raise Exception('No place available')
       membership.save()
+      membership.mail_user()
     except Exception, e:
       raise Exception("Failed to save")
+
     return self.render_to_response(self.get_context_data(**{'form' : form}))
 
   def form_invalid(self, form):

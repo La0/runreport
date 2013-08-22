@@ -1,0 +1,23 @@
+{% extends 'mail/base.html' %}
+
+{% block mail %}
+<div>
+Bonjour {{ manager.first_name }},
+</div>
+<div>
+Un nouveau membre "{{ user.first_name }} {{ user.last_name }}" vient de s'inscrire à votre club {{ club.name }} !
+
+<br />
+<br />
+
+Vous pouvez valider sa candidature dans <a href="{{ site.domain }}{% url 'club-current-name' club.slug, 'prospects', 'name' %}">la liste des Nouveaux</a>, en cliquant sur le bouton de rôle "Nouveau", et en lui donnant le rôle d'Athlète.
+
+<br />
+<br />
+Si vous n'acceptez pas ce membre, vous pouvez archiver cette candidature sur la même page.
+
+<br />
+<br />
+Dans les deux cas, un mail sera envoyé automatiquement à cette personne.
+</div>
+{% endblock %}

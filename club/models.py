@@ -1,5 +1,7 @@
+#!coding=utf-8
 from django.db import models
 from django.contrib.auth.models import User
+from coach.mail import MailBuilder
 
 class Club(models.Model):
   name = models.CharField(max_length=250)
@@ -59,6 +61,34 @@ class ClubMembership(models.Model):
 
   class Meta:
     unique_together = (('user', 'club'),)
+
+  def mail_club(self):
+    # Send mail to club manager
+    # about a new prospect
+    context = {
+      'manager' : self.club.manager,
+      'club' : self.club,
+      'user' : self.user,
+    }
+    mb = MailBuilder('mail/club_prospect.html')
+    mb.to = [self.club.manager.email]
+    mb.subject = 'Nouvelle inscription au club %s' % (self.club.name, )
+    mail = mb.build(context)
+    mail.send()
+
+  def mail_user(self):
+    # Send mail to user
+    # about a role evolution
+    context = {
+      'club' : self.club,
+      'user' : self.user,
+      'role' : self.role,
+    }
+    mb = MailBuilder('mail/user_role.html')
+    mb.to = [self.user.email]
+    mb.subject = 'Role dans le club %s' % (self.club.name, )
+    mail = mb.build(context)
+    mail.send()
 
 class ClubLink(models.Model):
   club = models.ForeignKey(Club, related_name="links")
