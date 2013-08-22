@@ -131,7 +131,7 @@ class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, Proces
         if stat['diff'] <= 0:
           raise Exception('No place available')
       membership.save()
-      membership.mail_user()
+      membership.mail_user(self.role_original)
     except Exception, e:
       raise Exception("Failed to save")
 

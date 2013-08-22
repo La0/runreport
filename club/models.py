@@ -76,13 +76,14 @@ class ClubMembership(models.Model):
     mail = mb.build(context)
     mail.send()
 
-  def mail_user(self):
+  def mail_user(self, old_role):
     # Send mail to user
     # about a role evolution
     context = {
       'club' : self.club,
       'user' : self.user,
-      'role' : self.role,
+      'old_role' : old_role,
+      'new_role' : self.role,
     }
     mb = MailBuilder('mail/user_role.html')
     mb.to = [self.user.email]

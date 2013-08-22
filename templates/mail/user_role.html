@@ -5,20 +5,27 @@
 Bonjour {{ user.first_name }},
 </div>
 <div>
-{% if role == 'archive' %}
-Désolé, mais vous ne faites plus partie du club {{ club.name }}.
-<br />
-Si vous aviez fait une candidature, elle a été refusée.
+{% if old_role == 'prospect' %}
+  {% if new_role == 'archive' %}
+  Désolé, mais votre candidature au club {{ club.name }} a été refusée.
+  {% else %}
+  Félicitations, votre candidature au club {{ club.name }} vient d'être acceptée.
+  {% endif %}
 {% else %}
-Votre rôle au sein du club {{ club.name }} a évolué, vous êtes maintenant 
-{% if role == 'trainer' %}
-Entrâineur.
-{% elif role == 'staff' %}
-Membre du staff.
-{% elif role == 'athlete' %}
-Athlète.
+  {% if new_role == 'archive' %}
+  Désolé, mais vous ne faites plus partie du club {{ club.name }}.
+  {% elif new_role == 'trainer' %}
+  Votre rôle au sein du club {{ club.name }} a évolué, vous êtes maintenant un Entrâineur.
+  {% elif new_role == 'staff' %}
+  Votre rôle au sein du club {{ club.name }} a évolué, vous êtes maintenant un Membre du staff.
+  {% elif new_role == 'athlete' %}
+  Votre rôle au sein du club {{ club.name }} a évolué, vous êtes maintenant un Athlète.
+  {% endif %}
 {% endif %}
-
-{% endif %}
+</div>
+<div>
+Bonne course !
+<br />
+L'équipe Coach I ran.
 </div>
 {% endblock %}
