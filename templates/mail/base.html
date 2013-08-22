@@ -146,76 +146,7 @@
 <table cellpadding="0" cellspacing="0" border="0" id="backgroundTable">
 	<tr>
 		<td valign="top"> 
-		<table cellpadding="0" cellspacing="0" border="0" align="center">
-      <tr>
-        <td colspan="2"><h1>Séance de <a href="{{ base_uri }}
-{% url club-member club.slug, report.user.username %}">{{ report.user.first_name }} {{ report.user.last_name }}</a></h1></td>
-      </tr>
-      <tr style="height: 60px; line-height: 60px;">
-        <td colspan="2">Semaine {{ week_human }} du <a href="{{ base_uri }}
-{% url club-member-week club.slug, report.user.username, report.year, report.week %}">{{ report.get_date_start()|date("l d E") }} au {{ report.get_date_end()|date("l d E") }}</a></td>
-      </tr>
-      {% for day in report.get_days() %}
-      <tr class="session">
-        <td width="150">{{day|date('l d E')}}</td>
-        {% with sessions[day] as session %}
-        <td width="400">
-          {% if session %}
-          {% if session.name %}
-          <strong>{{session.name}}</strong><br />
-          {% endif %}
-          {{session.comment|default('')|linebreaksbr}}
-          {% if session.time or session.distance %}
-          <div>
-            {% if session.time %}
-            <span class="label">Temps</span> {{session.time}}
-            {% endif %}
-            {% if session.distance %}
-            <span class="label">Distance</span> {{session.distance}} km
-            {% endif %}
-          </div>
-          {% endif %}
-          {% with session.garmin_activity as activity %}
-          {% if activity %}
-          <div class="garmin pull-right">
-            Garmin : <a href="{{ activity.get_url() }}" target="_blank">{{ activity.name }}</a>
-            <span>&bull;</span>
-            {{ activity.distance|floatformat(2) }} km en {{ activity.time }}
-            <span>&bull;</span>
-            <span>{{ activity.speed|date('i:s') }} min/km</span>
-          </div>
-          {% endif %}
-          {% endwith %}
-          {% endif %}
-        </td>
-        {% endwith %}
-      </tr>
-      {% endfor %}
-
-      <tr>
-        <td>Temps Total</td>
-        <td>{{report.time|days_time('jour', '%Hh%M')}}</td>
-      </tr>
-      <tr>
-        <td>Distance Totale</td>
-        <td>{{report.distance|default('0')}} km</td>
-      </tr>
-      {% if report.comment %}
-      <tr>
-        <td colspan="2">
-          <h3 style="margin-top: 20px">Bilan de la semaine</h3>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="2">
-        {{ report.comment }}
-        </td>
-      </tr>
-      {% endif %}
-		</table>
-		<!-- End example table -->
-
-		<!-- Yahoo Link color fix updated: Simply bring your link styling inline. -->
+    {% block mail %}{% endblock %}
     <p style="text-align: center">
 		Envoyé par <a href="http://{{site.domain}}" target ="_blank" style="color: #215B66; text-decoration: none;">Coach I ran</a>
     </p>

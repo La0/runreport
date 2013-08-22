@@ -7,9 +7,8 @@ import os
 import json
 import hashlib
 import tempfile
-from django.core.mail import EmailMultiAlternatives
-from django.contrib.sites.models import get_current_site
 from coach.settings import REPORT_SEND_DAY, REPORT_SEND_TIME, GARMIN_DIR
+from coach.mail import MailBuilder
 from helpers import date_to_day, week_to_date
 
 class RunReport(models.Model):
@@ -129,31 +128,29 @@ class RunReport(models.Model):
     if self.published:
       raise Exception('This report is already published')
 
-    # Build corpus
-    site = get_current_site(None)
-    subject = u'Séance de %s : du %s au %s' % (self.user, self.get_date_start(), self.get_date_end())
-    message = u'Envoyé via %s' % site
+    # Build xls
     xls = open(self.build_xls(), 'r')
     xls_name = '%s_semaine_%d.xls' % (self.user.username, self.week+1)
 
-    # Render html version
-    from coffin.shortcuts import render_to_string
+    # Context for html
     context = {
       'week_human' : self.week + 1,
       'report': self,
-      'site': site,
       'club': membership.club,
       'sessions' : self.get_dated_sessions(),
       'base_uri' : base_uri,
     }
-    mail_html = render_to_string('run/mail.html', context)
 
-    # Build & send message
+    # Build mail
     headers = {'Reply-To' : self.user.email,}
-    mail = EmailMultiAlternatives(subject, message, headers=headers)
-    mail.to = [m.email for m in membership.trainers.all()]
-    mail.cc = [self.user.email]
-    mail.attach_alternative(mail_html, 'text/html')
+
+    mb = MailBuilder('mail/report.html')
+    mb.subject = u'Séance de %s : du %s au %s' % (self.user, self.get_date_start(), self.get_date_end())
+    mb.to = [m.email for m in membership.trainers.all()]
+    mb.cc = [self.user.email]
+    mail = mb.build(context, headers)
+
+    # Attach Xls & send
     mail.attach(xls_name, xls.read(), 'application/vnd.ms-excel')
     mail.send()
 
