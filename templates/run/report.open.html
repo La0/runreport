@@ -28,9 +28,8 @@ $(function(){
       </div>
       {% endif %}
       {% endwith %}
-      {{ macros.input(session.name, 'Séance') }}
+      {{ macros.session_types_name(session, session_types) }}
       {{ macros.input(session.comment, 'Commentaire') }}
-      {{ macros.session_type(session) }}
       {{ macros.session_time_distance(session) }}
       {% with session.instance.garmin_activity as activity %}
         {% include '_garmin.html' %}

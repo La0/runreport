@@ -33,20 +33,45 @@
 {% endif %}
 {%- endmacro %}
 
-{% macro session_type(form) -%}
-<div class="control-group">
-  <label class="control-label">Type</label>
+{% macro session_types_name(form, types) -%}
+
+{% with form.instance.type as type %}
+{% with form.name as field %}
+<div class="types-name control-group {% if field.errors %}error{% elif field.value() %}success{% endif %}">
+  {% if field.errors %}
+  <span class="help-inline">{{field.errors|safe}}</span>
+  {% endif %}
+  <label class="control-label" for="id_{{field.name}}">Séance</label>
   <div class="controls">
-    <div class="btn-group" data-toggle="buttons-radio">
-    {% with form.instance.type as v %}
-      <button type="button" class="type btn {% if v == 'training' %}active{% endif %} btn-info" name="type" value="training">Entrainement</button>
-      <button type="button" class="type btn {% if v == 'race' %}active{% endif %} btn-success" name="type" value="race">Course</button>
-      <button type="button" class="type btn {% if v == 'rest' %}active{% endif %} " name="type" value="rest">Repos</button>
-    {% endwith %}
-    {{ form.type|safe }}
+    <div class="input-prepend">
+      <div class="btn-group">
+        <button class="btn dropdown-toggle {% if type == 'race' %}btn-success{% elif type == 'rest'%}btn-info{% endif %}" data-toggle="dropdown">
+          <span class="name">
+          {% if type == 'training' %}
+          Entraînement
+          {% elif type == 'race' %}
+          Course
+          {% else %}
+          Repos
+          {% endif %}
+          </span>
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu types">
+          {% for k, name in types %}
+          <li {% if k == type %}class="active"{% endif %}>
+            <a href="#" value="{{k}}">{{name}}</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {{ form.type|safe }}
+      {{ form.name|safe }}
     </div>
   </div>
 </div>
+{% endwith %}
+{% endwith %}
 {%- endmacro %}
 
 {% macro tr(fields, item='td') -%}

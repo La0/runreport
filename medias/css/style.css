@@ -111,6 +111,32 @@ form.report div.garmin {
   margin-left: 25%;
 }
 
+form.report div.types-name div.input-prepend input {
+  width: 350px !important;
+}
+
+form.report div.types-name button {
+  width: 120px;
+  text-align: right;
+}
+
+form.day div.types-name {
+  height: 30px;
+}
+
+form.day div.types-name label {
+  display: none;
+}
+
+form.day div.types-name button {
+  width: 120px;
+  text-align: right;
+}
+
+form.day div.types-name div.input-prepend input {
+  width: 380px !important;
+}
+
 form div.controls.field-multiple ul {
   list-style-type: none;
   margin: 0;

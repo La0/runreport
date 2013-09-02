@@ -8,6 +8,25 @@ $(function(){
     if($(this).hasClass('disabled')) return false;
     $(this).parents('div.roles').find('input.role_value').val($(this).val());
   });
+
+  // Session types
+  // * update input value
+  // * update selector
+  $(document).on('click', 'ul.types li a', function(){
+    type = $(this).attr('value');
+    $(this).parent().addClass('active').siblings('li.active').removeClass('active');
+    selector = $(this).parents('div.types-name');
+    selector.find('input[type=hidden]').val(type);
+    btn = selector.find('button');
+    btn.removeClass('btn-success').removeClass('btn-info');
+    if(type == 'race')
+      btn.addClass('btn-success');
+    else if(type == 'rest')
+      btn.addClass('btn-info');
+    btn.find('span.name').html($(this).text());
+    selector.find('.btn-group').removeClass('open');
+    return false;
+  });
 });
 
 function submit_form(evt){

@@ -1,7 +1,7 @@
 from django.views.generic import MonthArchiveView, DateDetailView
 from django.views.generic.edit import ModelFormMixin, ProcessFormView
 from django.http import Http404
-from run.models import RunSession, RunReport
+from run.models import RunSession, RunReport, SESSION_TYPES
 from run.forms import RunSessionForm
 from datetime import datetime, date
 import calendar
@@ -78,6 +78,7 @@ class RunCalendarDay(JsonResponseMixin, ModelFormMixin, ProcessFormView, DateDet
     context = super(RunCalendarDay, self).get_context_data(**kwargs)
     context['day'] = self.day
     context['report'] = self.report
+    context['session_types'] = SESSION_TYPES
     return context
 
   def get_object(self):

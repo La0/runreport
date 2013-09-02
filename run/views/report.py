@@ -1,6 +1,6 @@
 from django.views.generic import WeekArchiveView
 from helpers import week_to_date
-from run.models import RunReport
+from run.models import RunReport, SESSION_TYPES
 from datetime import datetime
 from run.forms import RunReportForm, RunSessionForm
 from django.core.exceptions import PermissionDenied
@@ -83,6 +83,7 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
       'profile' : profile,
       'sessions': self.sessions,
       'pagename' : 'report-week',
+      'session_types':SESSION_TYPES, 
     })
 
     # Pagination
