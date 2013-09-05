@@ -28,6 +28,11 @@ div.header .brand img {
   margin-right: 10px;
 }
 
+div.header .nav li a {
+  height: 30px;
+  line-height: 28px;
+}
+
 /* Sticky footer */
 #wrap {
   min-height: 100%;
