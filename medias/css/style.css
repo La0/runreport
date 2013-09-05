@@ -23,6 +23,11 @@ div.header .navbar-inner {
   border-radius: 0;
 }
 
+div.header .brand img {
+  height: 30px;
+  margin-right: 10px;
+}
+
 /* Sticky footer */
 #wrap {
   min-height: 100%;
@@ -59,15 +64,35 @@ div.header .navbar-inner {
   }
 }
 
+
+/* Wrap themes */
+#wrap.runners {
+  background: url(/medias/img/runners.jpg) no-repeat top center white;
+}
+
 /* Main marketing message and sign up button */
+#landing {
+}
+
 .jumbotron {
-  margin: 60px 0;
-  text-align: center;
+  height: 400px;
+  padding-top: 100px;
+  margin-bottom: 10px;
 }
+
 .jumbotron h1 {
-  font-size: 20px;
-  line-height: 1;
+  font-size: 40px;
+  color: #DDD;
 }
+
+.jumbotron p {
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 15px 8px;
+  font-size: 18px;
+  line-height: 25px;
+}
+
 .jumbotron .btn {
   font-size: 16px;
   padding: 10px;

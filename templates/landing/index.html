@@ -1,16 +1,35 @@
 {% extends "base.html" %}
 
+{% set page_size = 'fullscreen' %}
+{% set wrap_class = 'runners' %}
+
 {% block content %}
-
-<div class="jumbotron">
-  <h1>Pour envoyer facilement et de manière automatique vos récits d'entrainements aux entraineurs de votre club d'athlétisme</h1>
-
-  <div class="links">
-    <a class="btn btn-primary" href="{% url login %}">Se connecter</a>
-    <br />
-    <a class="btn" href="{% url user-create %}">Créer un compte</a>
+<div id="landing">
+  <div class="jumbotron">
+    <h1>Bienvenue !</h1>
+    <p>Run Report est un site qui vous permet de gérer vos entrainements de <strong>course à pied</strong>, mais surtout de les partager en direct avec votre <strong>entraîneur</strong> !</p>
+    <div class="links">
+      <a class="btn btn-primary" href="{% url login %}">Se connecter</a>
+      <a class="btn" href="{% url user-create %}">Créer un compte</a>
+    </div>
   </div>
 
+  <div class="row">
+    <div class="span4">
+      <h2>Pour les athlètes</h2>
+      <p>Vous pouvez gratuitement constituer votre carnet d'entrainements, planifier vos séances, voir concrètement votre évolution sportive et communiquer avec votre entraîneur.</p>
+    </div>
+    <div class="span4">
+      <h2>Pour les clubs</h2>
+      <p>Ce site vous fournit un moyen simple et complet pour gérer vos athlètes, répartis sur plusieurs entraineurs.<br />Chaque entraineur peut consulter les séances de ses athlètes, créer des plans d'entrainements, et communiquer efficacement avec eux.</p>
+   </div>
+    <div class="span4">
+      <h2>Synchronisation Garmin<small>&copy;</small></h2>
+      <p>Si vous disposez d'une montre <a href="http://www.garmin.com" target="_blank">Garmin</a>, vos données peuvent être automatiquement récupérées (distance, temps, ...) et intégrées à vos statistiques de séances.</p>
+    </div>
+  </div>
 </div>
+
+
 
 {% endblock %}

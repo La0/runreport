@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Coach, i ran !</title>
+    <title>RunReport</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -20,11 +20,13 @@
     <script type="text/javascript" src="/medias/js/bootstrap-modal.js" ></script>
   </head>
   <body>
-  <div id="wrap">
+    <div id="wrap" class="{{wrap_class|default('default')}}">
     <div class="container header">
       <div class="navbar">
         <div class="navbar-inner">
-        <a class="brand" href="/">Coach, I ran !</a>
+          <a class="brand" href="/">
+            <img src="/medias/img/logo.png" alt="Logo" />Run Report
+          </a>
         <ul class="nav pull-right">
           {% for p in menu %}
           {% if 'menu' in p %}
