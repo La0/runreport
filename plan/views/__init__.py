@@ -1,2 +1,2 @@
 from list import PlanList
-from details import PlanCreate, PlanDetails
+from details import PlanCreate, PlanDetails, PlanWeekDetails

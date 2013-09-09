@@ -1,4 +1,6 @@
 from django.core.exceptions import PermissionDenied
+from plan.models import Plan
+from django.http import Http404
 
 class PlanMixin(object):
   """
@@ -20,9 +22,21 @@ class PlanMixin(object):
       raise PermissionDenied
     self.clubs = [m.club for m in members.all()]
 
+    # Load optional plan (using plan_id kwargs)
+    self.plan = None
+    if 'plan_id' in kwargs:
+      try:
+        self.plan = Plan.objects.get(pk=kwargs['plan_id'], creator=request.user)
+      except Exception, e:
+        print str(e)
+        raise Http404('Plan not found')
+
     return super(PlanMixin, self).dispatch(request, *args, **kwargs)
 
   def get_context_data(self, **kwargs):
     context = super(PlanMixin, self).get_context_data(**kwargs)
     context['clubs'] = self.clubs
     return context
+
+  def get_object(self):
+    return self.plan

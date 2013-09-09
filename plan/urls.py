@@ -1,8 +1,20 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import patterns, url, include
 from plan.views import *
+
+
+plan_urls = patterns('plan', 
+  # Week actions
+  url(r'week/add/?', PlanWeekDetails.as_view(), {'action':'add'}, name="plan-week-add"),
+  url(r'week/(?P<week>\d+)/delete/?', PlanWeekDetails.as_view(), {'action':'delete'}, name="plan-week-delete"),
+
+  # Details
+  url(r'/?$', PlanDetails.as_view(), name="plan"), 
+)
 
 urlpatterns = patterns('',
   url(r'^/?$', PlanList.as_view(), name="plans"),
   url(r'new/?', PlanCreate.as_view(), name="plan-new"), 
-  url(r'(?P<pk>\d+)/?', PlanDetails.as_view(), name="plan"), 
+
+  # Plan details
+  url(r'(?P<plan_id>\d+)/?', include(plan_urls)),
 )

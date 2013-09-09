@@ -15,6 +15,7 @@
     <th>Vendredi</th>
     <th>Samedi</th>
     <th>Dimanche</th>
+    <th>Actions</th>
   </tr>
   {% for week in weeks %}
   <tr>
@@ -26,6 +27,9 @@
       {% endif %}
     </td>
     {% endfor %}
+    <td>
+      <a href="{% url plan-week-delete plan.id, week.order %}" class="btn btn-danger modal-action modal-post">Supprimer</a>
+    </td>
   </tr>
   {% endfor %}
 </table>
@@ -37,25 +41,6 @@
 </p>
 {% endif %}
 
-<script type="text/javascript">
-// Generic action test
-$(function(){
-  $('a.action').click(function(){
-    href = $(this).attr('href');
-    action = $(this).attr('data-action');
-    $.ajax({
-      url : href,
-      method : 'POST',
-      data : { action : action },
-      success : function(data){
-        $('html').html(data); // this is crazy
-      },
-    });
-    return false;
-  });
-});
-</script>
-
-<a href="{{ plan.get_absolute_url() }}" class="btn btn-primary action"  data-action="add-week" >Ajouter une semaine</a>
+<a href="{% url plan-week-add plan.id %}" class="btn btn-primary modal-action modal-post">Ajouter une semaine</a>
 
 {% endblock %}

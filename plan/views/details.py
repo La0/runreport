@@ -1,8 +1,9 @@
-from django.views.generic import DetailView
-from django.views.generic.edit import FormView
+from django.views.generic import DetailView, View
+from django.views.generic.edit import FormView, BaseUpdateView 
 from mixins import PlanMixin
 from plan.forms import PlanCreationForm
 from plan.models import Plan, PlanWeek
+from coach.mixins import JsonResponseMixin, JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML
 
 class PlanCreate(PlanMixin, FormView):
   template_name = 'plan/create.html'
@@ -27,16 +28,24 @@ class PlanDetails(PlanMixin, DetailView):
 
   def get_context_data(self, *args, **kwargs):
     context = super(PlanDetails, self).get_context_data(*args, **kwargs)
-    context['weeks'] = self.object.weeks.all().order_by('order')
+    context['weeks'] = self.plan.weeks.all().order_by('order')
     return context
 
+class PlanWeekDetails(PlanMixin, JsonResponseMixin, BaseUpdateView):
+  json_options = [JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML]
+
   def post(self, request, *args, **kwargs):
-    self.object = self.get_object()
-    context = self.get_context_data(*args, **kwargs)
-    print context
+    action = self.kwargs['action']
+    print "Action %s" % action
+    if action == 'add': 
+      # New week
+      PlanWeek.objects.create(plan=self.plan, order=self.plan.weeks.count())
 
-    # New week
-    if request.POST['action'] == 'add-week': 
-      PlanWeek.objects.create(plan=self.object, order=self.object.weeks.count())
-    return self.render_to_response(context)
+    elif action == 'delete':
+      # Delete week
+      self.plan.weeks.get(order=self.kwargs['week']).delete()
 
+    else:
+      raise Exception("Invalid action")
+
+    return self.render_to_response({})

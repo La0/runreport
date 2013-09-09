@@ -3,6 +3,7 @@ from django.views.generic.base import TemplateResponseMixin
 from django.views.generic.edit import ModelFormMixin, ProcessFormView
 import json
 from django.http import HttpResponse, HttpResponseRedirect
+from django.conf import settings
 
 
 class MultipleFormsMixin(ModelFormMixin):
@@ -113,6 +114,8 @@ class JsonResponseMixin(object):
       resp = super(JsonResponseMixin, self).dispatch(*args, **kwargs)
     except Exception, e:
       print "Json Dispatch failed: %s" % str(e)
+      if settings.DEBUG:
+        raise e
 
       # Base error response
       self.json_status = JSON_STATUS_ERROR
