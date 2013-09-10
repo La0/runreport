@@ -20,6 +20,25 @@ class UserForm(forms.ModelForm):
     model = User
     fields = ('first_name', 'last_name', 'email',)
 
+class UserPasswordForm(forms.Form):
+  password_old = forms.CharField(widget=forms.PasswordInput())
+  password_new = forms.CharField(widget=forms.PasswordInput())
+  password_check = forms.CharField(widget=forms.PasswordInput())
+
+  def __init__(self, user, *args, **kwargs):
+    super(UserPasswordForm, self).__init__(*args, **kwargs)
+    self.user = user
+
+  def clean_password_old(self):
+    if not self.user.check_password(self.cleaned_data['password_old']):
+      raise ValidationError('Mot de passe actuel invalide.')
+    return self.cleaned_data['password_old']
+
+  def clean_password_check(self):
+    if self.cleaned_data.get('password_new', 'a') != self.cleaned_data.get('password_check', 'b'):
+      raise ValidationError('Verification invalide.')
+    return self.cleaned_data
+
 class SignUpForm(forms.Form):
   firstname = forms.CharField()
   lastname = forms.CharField()

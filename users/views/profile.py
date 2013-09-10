@@ -1,7 +1,7 @@
-from users.forms import ProfileForm, UserForm
+from users.forms import ProfileForm, UserForm, UserPasswordForm
 from club.forms import TrainersFormSet
 from coach.mixins import MultipleFormsView
-from django.views.generic.edit import ModelFormMixin
+from django.views.generic.edit import ModelFormMixin, FormView
 
 class Profile(MultipleFormsView):
   template_name = 'users/profile.html'
@@ -44,3 +44,18 @@ class Profile(MultipleFormsView):
       context[k] = v
     context['profile'] = self.request.user.get_profile()
     return context
+
+class UpdatePassword(FormView):
+  template_name = 'users/password.html'
+
+  def get_form(self, *args, **kwargs):
+    if self.request.method == 'POST':
+      return UserPasswordForm(self.request.user, data=self.request.POST)
+    return UserPasswordForm(self.request.user)
+
+  def form_valid(self, form):
+    # Update password
+    self.request.user.set_password(form.cleaned_data['password_new'])
+    self.request.user.save()
+
+    return self.render_to_response({'form' : None})
