@@ -4,7 +4,7 @@ $(function(){
   $('.modal-action').click(load_modal);
 
   // Roles custom
-  $(document).on('click', 'div.roles button', function(){
+  $(document).on('click', 'div.roles button.role', function(){
     if($(this).hasClass('disabled')) return false;
     $(this).parents('div.roles').find('input.role_value').val($(this).val());
   });
@@ -33,13 +33,7 @@ function submit_form(evt){
   evt.preventDefault();
 
   // Use datas from form
-  data = {}
-  $(this).find(':input').each(function(){
-    v = $(this).val();
-    n = this.getAttribute('name');
-    if(n && v)
-      data[n] = v;
-  });
+  data = $(this).serialize();
 
   // Send data
   load_box(this.getAttribute('action'), 'POST', data);
