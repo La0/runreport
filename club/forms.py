@@ -5,9 +5,16 @@ from django.forms.models import modelformset_factory
 from django.core.exceptions import ValidationError
 
 class ClubMembershipForm(forms.ModelForm):
+  def __init__(self, *args, **kwargs):
+    super(ClubMembershipForm, self).__init__(*args, **kwargs)
+
+    # Load only trainers from instance club
+    trainers = User.objects.filter(memberships__club=self.instance.club, memberships__role='trainer')
+    self.fields['trainers'] = UserModelChoiceField(queryset=trainers, widget=forms.CheckboxSelectMultiple(), required=False)
+
   class Meta:
     model = ClubMembership
-    fields = ('role', )
+    fields = ('role', 'trainers', )
 
 class UserModelChoiceField(forms.ModelMultipleChoiceField):
   def label_from_instance(self, obj):

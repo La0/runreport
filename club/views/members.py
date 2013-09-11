@@ -122,17 +122,21 @@ class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, Proces
   def form_valid(self, form):
     try:
       membership = form.save(commit=False)
-      if self.role_original == membership.role:
-        raise Exception("Same role. No update.")
+      membership.trainers = form.cleaned_data['trainers'] # Weird :/
 
       # Check club has a place available
       if membership.role != 'archive':
         stat = [s for s in self.stats if membership.role == s['type']][0]
         if stat['diff'] <= 0:
           raise Exception('No place available')
+
       membership.save()
-      membership.mail_user(self.role_original)
+
+      # Only send mail for new roles
+      if self.role_original != membership.role:
+        membership.mail_user(self.role_original)
     except Exception, e:
+      print str(e)
       raise Exception("Failed to save")
 
     return self.render_to_response(self.get_context_data(**{'form' : form}))

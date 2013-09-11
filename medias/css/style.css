@@ -268,3 +268,19 @@ div.pages a:hover {
 div.club-description h3 {
   border-bottom: 1px solid #CCC;
 }
+
+div.trainers ul {
+  list-style-type: none;
+  text-align: left;
+}
+
+div.trainers ul li {
+  height: 20px;
+  line-height: 20px;
+  margin: 2px 0;
+}
+
+div.trainers ul input {
+  width: 15px !important;
+  vertical-align: top;
+}
