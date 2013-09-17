@@ -12,6 +12,8 @@ class ClubMemberMonth(ClubMixin, MonthArchiveView):
   date_field = 'date'
   model = RunSession
   context_object_name = 'sessions'
+  allow_future = True
+  allow_empty = True
 
   def get_year(self):
     year = datetime.now().year
