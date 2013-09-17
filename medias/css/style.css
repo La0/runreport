@@ -33,6 +33,10 @@ div.header .nav li a {
   line-height: 28px;
 }
 
+div.header .nav li b.caret {
+  margin-top: 13px !important;
+}
+
 /* Sticky footer */
 #wrap {
   min-height: 100%;
