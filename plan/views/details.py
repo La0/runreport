@@ -37,10 +37,17 @@ class PlanWeekDetails(PlanMixin, JsonResponseMixin, BaseUpdateView):
 
   def post(self, request, *args, **kwargs):
     action = self.kwargs['action']
-    print "Action %s" % action
     if action == 'add': 
+      # Cleanup week order
+      cpt = 0
+      for w in self.plan.weeks.all().order_by('order'):
+        if w.order != cpt:
+          w.order = cpt
+          w.save()
+        cpt += 1
+
       # New week
-      PlanWeek.objects.create(plan=self.plan, order=self.plan.weeks.count())
+      PlanWeek.objects.create(plan=self.plan, order=cpt)
 
     elif action == 'delete':
       # Delete week
