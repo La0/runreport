@@ -51,6 +51,7 @@ class ClubMembers(ClubMixin, ListView):
     f = filters[asked_type]
     members = self.club.members.prefetch_related('memberships')
     if f: # Don't use ternary !
+      f['memberships__club'] = self.club # to avoid listing other club memberships
       members = members.filter(**f)
 
     # Add last RunReport date, as week & year
