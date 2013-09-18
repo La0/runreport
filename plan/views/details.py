@@ -1,5 +1,6 @@
 from django.views.generic import DetailView, View
 from django.views.generic.edit import FormView, BaseUpdateView 
+from django.http import HttpResponseRedirect
 from mixins import PlanMixin
 from plan.forms import PlanCreationForm
 from plan.models import Plan, PlanWeek
@@ -20,7 +21,7 @@ class PlanCreate(PlanMixin, FormView):
     for w in range(0, int(form.cleaned_data['week'])):
       PlanWeek.objects.create(plan=plan, order=w)
 
-    return plan.get_absolute_url()
+    return HttpResponseRedirect(plan.get_absolute_url())
 
 class PlanDetails(PlanMixin, DetailView):
   model = Plan

@@ -1,0 +1,15 @@
+{% extends "modal.html" %}
+
+{% set modal_title="Jour %d de la Semaine %d" % (session.day+1, session.week.order+1) %} 
+
+{% set form_url = url('plan-day', session.week.plan.id, session.week.order, session.day) %}
+{% set form_class = "day" %}
+
+{% block body %}
+  {{ macros.input(form.name, 'Nom de la séance') }}
+  {{ macros.session_time_distance(form) }}
+{% endblock %}
+
+{% block footer %}
+  <input type="submit" value="Valider" class="btn btn-primary" />
+{% endblock %}

@@ -1,5 +1,5 @@
 from django.core.exceptions import PermissionDenied
-from plan.models import Plan
+from plan.models import *
 from django.http import Http404
 
 class PlanMixin(object):
@@ -30,6 +30,22 @@ class PlanMixin(object):
       except Exception, e:
         print str(e)
         raise Http404('Plan not found')
+
+    # Load optional week
+    self.plan_week = None
+    if self.plan is not None and 'week' in kwargs:
+      try:
+        self.plan_week = PlanWeek.objects.get(plan=self.plan, order=kwargs['week'])
+      except Exception, e:
+        pass
+
+    # Load optional session 
+    self.plan_session = None
+    if self.plan_week is not None and 'day' in kwargs:
+      try:
+        self.plan_session = PlanSession.objects.get(week=self.plan_week, day=kwargs['day'])
+      except Exception, e:
+        pass
 
     return super(PlanMixin, self).dispatch(request, *args, **kwargs)
 

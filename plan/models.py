@@ -50,4 +50,3 @@ class PlanSession(models.Model):
 
   class Meta:
     unique_together = (('week', 'day',), )
-
