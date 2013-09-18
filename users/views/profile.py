@@ -16,7 +16,7 @@ class Profile(MultipleFormsView):
 
     # Add manually formset for trainers
     kwargs = super(ModelFormMixin, self).get_form_kwargs()
-    forms['form_trainers'] = TrainersFormSet(queryset=self.request.user.memberships.all(), **kwargs)
+    forms['form_trainers'] = TrainersFormSet(queryset=self.request.user.memberships.filter(role__in=('athlete', )), **kwargs)
 
     return forms
 
