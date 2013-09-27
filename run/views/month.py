@@ -65,11 +65,7 @@ class RunCalendarDay(JsonResponseMixin, ModelFormMixin, ProcessFormView, DateDet
     return super(RunCalendarDay, self).get_form(form_class)
 
   def form_valid(self, form):
-    # Save fully stuffed report
-    session = form.save(commit=False)
-    session.date = self.day
-    session.report = self.report
-    session.save()
+    form.save()
     return self.render_to_response(self.get_context_data(**{'form' : form}))
 
   def form_invalid(self, form):
@@ -91,5 +87,5 @@ class RunCalendarDay(JsonResponseMixin, ModelFormMixin, ProcessFormView, DateDet
     try:
       self.object = RunSession.objects.get(report=self.report, date=self.day)
     except:
-      self.object = None
+      self.object = RunSession(report=self.report, date=self.day)
     return self.object

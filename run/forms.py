@@ -1,4 +1,6 @@
+#- coding: utf-8
 from models import RunReport, RunSession
+from datetime import date
 from django import forms
 
 class RunReportForm(forms.ModelForm):
@@ -18,9 +20,9 @@ class RunSessionForm(forms.ModelForm):
 
   def clean(self):
     # Only for race
-    # Check time & distance are set
-    if self.cleaned_data['type'] == 'race' and (self.cleaned_data['time'] is None or self.cleaned_data['distance'] is None):
-      raise forms.ValidationError("Pour une course, renseignez la distance et le temps.")
+    # Check time & distance are set, for future races
+    if self.cleaned_data['type'] == 'race' and self.instance.date <= date.today() and (self.cleaned_data['time'] is None or self.cleaned_data['distance'] is None):
+      raise forms.ValidationError(u"Pour une course passée, renseignez la distance et le temps.")
 
     return self.cleaned_data
 
