@@ -22,4 +22,5 @@ class PlanDay(JsonResponseMixin, PlanMixin, FormView):
   def form_valid(self, form):
     self.plan_session = form.save()
     self.json_options = [JSON_OPTION_BODY_RELOAD]
-    return self.render_to_response({'session':self.plan_session, 'form':form, })
+    context = super(PlanDay, self).get_context_data(**{'form':form})
+    return self.render_to_response(context)
