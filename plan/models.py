@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import timedelta
+from helpers import week_to_date
 
 class Plan(models.Model):
   name = models.CharField(max_length=250)
@@ -50,3 +51,11 @@ class PlanSession(models.Model):
 
   class Meta:
     unique_together = (('week', 'day',), )
+
+  def get_date(self):
+    '''
+    Build a date to be used in templates
+    '''
+    d = self.week.plan.start or week_to_date(2013, 1)
+    d += timedelta(days=self.week.order * 7 + self.day)
+    return d

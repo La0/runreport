@@ -21,7 +21,15 @@
   <tr>
     {% for day, date, session in week.get_days() %}
     <td class="modal-action" href="{% url plan-day plan.id, week.order, day %}">
-      {% if date %}{{ date|date('d E') }}{% endif %}
+      {% if date %}
+      <p class="date">
+        {% if loop.first %}
+        {{date|date('d E')}}
+        {% else %}
+        {{date|date('d')}}
+        {% endif %}
+      </p>
+      {% endif %}
       {% if session %}
         {{ session.name }}
       {% endif %}

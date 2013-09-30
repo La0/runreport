@@ -19,11 +19,6 @@ class PlanDay(JsonResponseMixin, PlanMixin, FormView):
       return form_class(self.request.POST, instance=self.plan_session)
     return form_class(instance=self.plan_session)
 
-  def get_context_data(self, *args, **kwargs):
-    context = super(PlanDay, self).get_context_data(*args, **kwargs)
-    context['session'] = self.plan_session
-    return context
-
   def form_valid(self, form):
     self.plan_session = form.save()
     self.json_options = [JSON_OPTION_BODY_RELOAD]

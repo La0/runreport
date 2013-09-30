@@ -52,6 +52,9 @@ class PlanMixin(object):
   def get_context_data(self, **kwargs):
     context = super(PlanMixin, self).get_context_data(**kwargs)
     context['clubs'] = self.clubs
+    context['plan'] = self.plan
+    context['week'] = self.plan_week
+    context['session'] = self.plan_session
     return context
 
   def get_object(self):
