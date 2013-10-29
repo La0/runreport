@@ -25,6 +25,7 @@ class ClubMixin(object):
         raise PermissionDenied
 
     # Load members
+    self.member = None
     if 'username' in kwargs:
       self.membership = ClubMembership.objects.get(user__username=kwargs['username'], club=self.club)
       self.member = self.membership.user
@@ -36,6 +37,7 @@ class ClubMixin(object):
   def get_context_data(self, **kwargs):
     context = super(ClubMixin, self).get_context_data(**kwargs)
     context['club'] = self.club
+    context['member'] = self.member
     return context
 
 class ClubManagerMixin(ClubMixin):

@@ -32,7 +32,7 @@
   <tr>
     {% with member.get_profile() as profile %}
     <td>
-      {{ member.first_name|default(member.username) }} {{ member.last_name }}
+      {{ member.first_name|lower|title }} {{ member.last_name|lower|title }}
     </td>
     {% if request.user == club.manager or request.user.is_staff %}
     <td>
