@@ -7,12 +7,17 @@
   <fieldset>
     <legend>Se connecter</legend>
     {% with form.non_field_errors() as err %}
+    {% if err %}
+      <div class="alert alert-danger">
       {{ err|safe }}
+      </div>
+    {% endif %}
     {% endwith %}
     {{ macros.input(form.username, 'Votre email') }}
+    <a href="{% url user-password-reset %}" class="btn btn-inverse btn-small pull-right" style="margin-left: 20px;">Mot de passe oublié ?</a>
     {{ macros.input(form.password, 'Votre mot de passe') }}
     <div class="form-actions">
-      <button type="submit" class="btn btn-primary">Login</button>
+      <button type="submit" class="btn btn-primary">Se connecter</button>
     </div>
   </fieldset>
 </form>

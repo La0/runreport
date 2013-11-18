@@ -147,9 +147,11 @@
 	<tr>
 		<td valign="top"> 
     {% block mail %}{% endblock %}
+    {% if site %}
     <p style="text-align: center">
-		Envoyé par <a href="http://{{site.domain}}" target ="_blank" style="color: #215B66; text-decoration: none;">Coach I ran</a>
+		Envoyé par <a href="http://{{site.domain}}" target ="_blank" style="color: #215B66; text-decoration: none;">RunReport</a>
     </p>
+    {% endif %}
 		</td>
 	</tr>
 </table>  
