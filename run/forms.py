@@ -21,7 +21,8 @@ class RunSessionForm(forms.ModelForm):
   def clean(self):
     # Only for race
     # Check time & distance are set, for future races
-    if self.cleaned_data['type'] == 'race' and self.instance.date <= date.today() and (self.cleaned_data['time'] is None or self.cleaned_data['distance'] is None):
+    session_date = self.instance.date or self.prefix # Get the date even if not in db
+    if self.cleaned_data['type'] == 'race' and session_date <= date.today() and (self.cleaned_data['time'] is None or self.cleaned_data['distance'] is None):
       raise forms.ValidationError(u"Pour une course passée, renseignez la distance et le temps.")
 
     return self.cleaned_data
