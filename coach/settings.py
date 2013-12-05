@@ -208,5 +208,5 @@ except ImportError, e:
 # Load some settings constants in the templates
 def load_constants(request):
   from django.conf import settings
-  keys = ['PIWIK_HOST', 'PIWIK_ID', ]
+  keys = ['DEBUG', 'PIWIK_HOST', 'PIWIK_ID', ]
   return dict([(k, getattr(settings, k, None)) for k in keys])

@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% set page_title = 'Calendrier %s' % (months.1|date('E Y'), ) %}
+
 {% block content %}
 
 <h2>{% if member %}{{ member.first_name|lower|title }} {{ member.last_name|lower|title }} : {% endif %}{{months.1|date('E Y')}}</h2>

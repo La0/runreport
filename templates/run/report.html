@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% set page_title = 'Semaine du %s' % (report.get_date_start()|date('d E Y'),) %}
+
 {% block content %}
 
 {% import '_macros.html' as macros %}
