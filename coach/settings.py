@@ -205,6 +205,10 @@ try:
 except ImportError, e:
   pass
 
+# Apps in prod
+if not DEBUG:
+  INSTALLED_APPS = INSTALLED_APPS + ('raven.contrib.django.raven_compat',)
+
 # Load some settings constants in the templates
 def load_constants(request):
   from django.conf import settings
