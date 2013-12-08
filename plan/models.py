@@ -72,3 +72,11 @@ class PlanSession(models.Model):
     d = week_to_date(2013, 1)
     d += timedelta(days=self.week.order * 7 + self.day)
     return d
+
+class PlanUsage(models.Model):
+  plan = models.ForeignKey(Plan)
+  user = models.ForeignKey(User)
+  created = models.DateTimeField(auto_now_add=True)
+  updated = models.DateTimeField(auto_now=True)
+  start = models.DateTimeField() # Date of start of usage
+  mail_sent = models.DateTimeField(null=True)

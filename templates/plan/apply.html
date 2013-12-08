@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% set page_title = 'Application du plan %s' % plan.name %}
+{% set page_size = 'fullscreen' %}
+
+{% block content %}
+
+<h1>Application du plan {{ plan.name }}</h1>
+
+{% if clubs|length() > 1 %}
+<ul class="nav nav-tabs">
+  {% for club in clubs %}
+  <li class="{% if loop.first %}active{% endif %}"><a href="#club_{{club.slug}}" data-toggle="tab">{{club.name}}</a></li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+<div class="tab-content">
+  {% for club in clubs %}
+  <div class="tab-pane{% if loop.first %} active{% endif %}" id="club_{{club.slug}}">
+    {% with athletes[club.id] as club_data %}
+    <table class="table">
+      <tr>
+        <th>Athlète</tH>
+        {% for week, year in weeks %}
+        <th>Semaine {{week|add(1)}} de {{year}}</th>
+        {% endfor %}
+      </tr>
+      {% for member in club_data['members'] %}
+      <tr>
+        <td>{{ member.user.first_name }} {{ member.user.last_name }}</td>
+        {% for week, year in weeks %}
+          {% with '%s_%d_%d' % (member.user.username, year, week) as name %}
+          {% with club_data['busy'][name] as busy_report %}
+            {% if busy_report %}
+            <td>Semaine {{busy_report.plan_week.order}}  de {{busy_report.plan_week.plan.name}}</td>
+            {% else %}
+            <td></td>
+            {% endif %}
+          {% endwith %}
+          {% endwith %}
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </table>
+    {% endwith %}
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

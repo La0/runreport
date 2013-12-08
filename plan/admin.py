@@ -5,7 +5,7 @@ class PlanWeekAdmin(admin.TabularInline):
   model = PlanWeek
 
 class PlanAdmin(admin.ModelAdmin):
-  #list_display = ('name',)
+  list_display = ('name', 'creator', 'created' )
   inlines = [PlanWeekAdmin, ]
 admin.site.register(Plan, PlanAdmin)
 

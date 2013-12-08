@@ -16,7 +16,8 @@
     <td>{{ p.nb_weeks }}</td>
     <td>{{ p.updated|date('d/m/Y H:i') }}
     <td>
-      <a href="{{ p.get_absolute_url() }}" class="btn btn-info">Editer</a>
+      <a href="{{ p.get_absolute_url() }}" class="btn btn-primary">Editer</a>
+      <a href="{% url plan-apply p.slug %}" class="btn">Appliquer</a>
     </td>
   </tr>
   {% endfor %}
