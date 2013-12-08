@@ -37,6 +37,12 @@ def date_to_day(date, day=1):
   week = int(date.strftime('%W'))
   return datetime.strptime('%d %d %d' % (date.year, week, day), '%Y %W %w').date()
 
+def date_to_week(date):
+  '''
+  From any date, export the week and year tuple
+  '''
+  return int(date.strftime('%W')), date.year
+
 def week_to_date(year, week, day=1):
   '''
   From any year+week to a given day in its week
