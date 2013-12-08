@@ -22,11 +22,11 @@ class PlanMixin(object):
       raise PermissionDenied
     self.clubs = [m.club for m in members.all()]
 
-    # Load optional plan (using plan_id kwargs)
+    # Load optional plan (using slug kwargs)
     self.plan = None
-    if 'plan_id' in kwargs:
+    if 'slug' in kwargs:
       try:
-        self.plan = Plan.objects.get(pk=kwargs['plan_id'], creator=request.user)
+        self.plan = Plan.objects.get(slug=kwargs['slug'], creator=request.user)
       except Exception, e:
         print str(e)
         raise Http404('Plan not found')

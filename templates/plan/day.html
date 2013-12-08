@@ -2,7 +2,7 @@
 
 {% set modal_title="%s de la Semaine n°%d" % (session.get_date()|date('l')|title(), week.order+1) %} 
 
-{% set form_url = url('plan-day', week.plan.id, week.order, session.day) %}
+{% set form_url = url('plan-day', week.plan.slug, week.order, session.day) %}
 {% set form_class = "day" %}
 
 {% block body %}

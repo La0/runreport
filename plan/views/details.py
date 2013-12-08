@@ -10,12 +10,15 @@ class PlanCreate(PlanMixin, FormView):
   template_name = 'plan/create.html'
   form_class = PlanCreationForm
 
+  def get_form(self, form_class):
+    if self.request.method == 'POST':
+      return form_class(data=self.request.POST, creator=self.request.user)
+    return form_class(creator=self.request.user)
+
   def form_valid(self, form):
 
     # Create plan
-    plan = Plan(creator=self.request.user, name=form.cleaned_data['name'])
-    plan.start = form.cleaned_data['start']
-    plan.save()
+    plan = Plan.objects.create(creator=self.request.user, name=form.cleaned_data['name'])
 
     # Create weeks
     for w in range(0, int(form.cleaned_data['week'])):

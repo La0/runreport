@@ -20,7 +20,7 @@
   {% for week in weeks %}
   <tr>
     {% for day, date, session in week.get_days() %}
-    <td class="modal-action {% if session %}session{% else %}empty{% endif %}" href="{% url plan-day plan.id, week.order, day %}">
+    <td class="modal-action {% if session %}session{% else %}empty{% endif %}" href="{% url plan-day plan.slug, week.order, day %}">
       {% if date %}
       <p class="date">
         {% if loop.first %}
@@ -36,7 +36,7 @@
     </td>
     {% endfor %}
     <td>
-      <a href="{% url plan-week-delete plan.id, week.order %}" class="btn btn-danger modal-action modal-post">Supprimer</a>
+      <a href="{% url plan-week-delete plan.slug, week.order %}" class="btn btn-danger modal-action modal-post">Supprimer</a>
     </td>
   </tr>
   {% endfor %}
@@ -49,6 +49,6 @@
 </p>
 {% endif %}
 
-<a href="{% url plan-week-add plan.id %}" class="btn btn-primary modal-action modal-post">Ajouter une semaine</a>
+<a href="{% url plan-week-add plan.slug%}" class="btn btn-primary modal-action modal-post">Ajouter une semaine</a>
 
 {% endblock %}

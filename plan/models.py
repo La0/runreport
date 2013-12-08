@@ -1,18 +1,31 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import timedelta
-from helpers import week_to_date
+from helpers import week_to_date, nameize
+from base64 import b64encode
+from hashlib import md5
+from datetime import datetime
 
 class Plan(models.Model):
   name = models.CharField(max_length=250)
+  slug = models.SlugField(max_length=20, db_index=True)
   creator = models.ForeignKey(User)
   created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
-  start = models.DateField(null=True, blank=True) # Optional start date
+
+  class Meta:
+    unique_together = (('creator', 'slug',), )
 
   @models.permalink
   def get_absolute_url(self):
-    return ('plan', (self.pk, ))
+    return ('plan', (self.slug, ))
+
+  def save(self, *args, **kwargs):
+    # Init slug, based on name
+    if not self.slug:
+      self.slug = nameize(self.name)
+
+    super(Plan, self).save(*args, **kwargs)
 
 class PlanWeek(models.Model):
   plan = models.ForeignKey(Plan, related_name='weeks')
@@ -27,7 +40,7 @@ class PlanWeek(models.Model):
      when available and session
     '''
     days = []
-    date = self.plan.start
+    date = None # To be used differently
     if date:
       date += timedelta(days=self.order * 7)
 
@@ -56,6 +69,6 @@ class PlanSession(models.Model):
     '''
     Build a date to be used in templates
     '''
-    d = self.week.plan.start or week_to_date(2013, 1)
+    d = week_to_date(2013, 1)
     d += timedelta(days=self.week.order * 7 + self.day)
     return d

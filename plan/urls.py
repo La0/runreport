@@ -19,5 +19,5 @@ urlpatterns = patterns('',
   url(r'new/?', PlanCreate.as_view(), name="plan-new"), 
 
   # Plan details
-  url(r'(?P<plan_id>\d+)/', include(plan_urls)),
+  url(r'(?P<slug>\w+)/', include(plan_urls)),
 )
