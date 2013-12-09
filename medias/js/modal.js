@@ -1,7 +1,7 @@
 
 $(function(){
   // Modals show
-  $('.modal-action').click(load_modal);
+  $(document).on('click', '.modal-action', load_modal);
 
   // Roles custom
   $(document).on('click', 'div.roles button.role', function(){

@@ -17,5 +17,8 @@
 {% endblock %}
 
 {% block footer %}
+  {% if session.pk %}
+  <a href="{% url plan-day-delete week.plan.slug, week.order, session.day %}" class="modal-action modal-post btn btn-danger">Supprimer</a>
+  {% endif %}
   <input type="submit" value="Valider" class="btn btn-primary" />
 {% endblock %}

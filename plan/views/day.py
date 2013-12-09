@@ -1,5 +1,5 @@
 from django.views.generic import DetailView
-from django.views.generic.edit import FormView
+from django.views.generic.edit import FormView, BaseDeleteView
 from mixins import PlanMixin
 from plan.forms import PlanSessionForm
 from plan.models import PlanSession
@@ -24,3 +24,11 @@ class PlanDay(JsonResponseMixin, PlanMixin, FormView):
     self.json_options = [JSON_OPTION_BODY_RELOAD]
     context = super(PlanDay, self).get_context_data(**{'form':form})
     return self.render_to_response(context)
+
+class PlanDayDelete(JsonResponseMixin, PlanMixin, BaseDeleteView):
+
+  def get_object(self):
+    return self.plan_session # ... or it will erase the plan !
+
+  def get_success_url(self):
+    return self.plan.get_absolute_url()
