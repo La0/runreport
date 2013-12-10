@@ -11,7 +11,6 @@ import tempfile
 from coach.settings import REPORT_SEND_DAY, REPORT_SEND_TIME, GARMIN_DIR
 from coach.mail import MailBuilder
 from helpers import date_to_day, week_to_date
-from plan.models import PlanWeek, PlanSession
 
 class RunReport(models.Model):
   user = models.ForeignKey(User)
@@ -24,7 +23,7 @@ class RunReport(models.Model):
   distance = models.FloatField(null=True, blank=True, editable=False)
   time = models.FloatField(null=True, blank=True, editable=False)
   task = models.CharField(max_length=36, null=True, blank=True)
-  plan_week = models.ForeignKey(PlanWeek, null=True)
+  plan_week = models.ForeignKey('plan.PlanWeek', null=True)
 
   class Meta:
     unique_together = (('user', 'year', 'week'),)
@@ -207,7 +206,7 @@ class RunSession(models.Model):
   distance = models.FloatField(null=True, blank=True)
   time = models.TimeField(null=True, blank=True)
   type = models.CharField(max_length=12, default='training', choices=SESSION_TYPES)
-  plan_session = models.ForeignKey(PlanSession, null=True)
+  plan_session = models.ForeignKey('plan.PlanSession', null=True)
 
   class Meta:
     unique_together = (('report', 'date'),)

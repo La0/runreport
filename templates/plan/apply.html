@@ -18,12 +18,37 @@
 <div class="tab-content">
   {% for club in clubs %}
   <div class="tab-pane{% if loop.first %} active{% endif %}" id="club_{{club.slug}}">
+
+    {% if form %}
+    <div class="hero-unit">
+      <form class="form-inline" action="" method="POST">
+        {% csrf_token %}
+        <label>
+          Appliquer à
+        </label>
+        <select>
+          <option>Tous mes athlètes</option>
+        </select>
+        {% with plan.weeks.count() as nb_weeks %}
+        pour <strong>{{ nb_weeks }} semaine{{ nb_weeks|pluralize() }}</strong> à partir du 
+        {% endwith %}
+        {{ form.week|safe }}
+        <input type="hidden" name="club" value="{{ club.id }}" />
+        <input type="submit" value="Appliquer" class="btn btn-primary" />
+      </form>
+    </div>
+    {% else %}
+    <div class="alert alert-success">
+      <h4>Plan appliqué</h4>
+    </div>
+    {% endif %}
+
     {% with athletes[club.id] as club_data %}
     <table class="table">
       <tr>
         <th>Athlète</tH>
         {% for week, year in weeks %}
-        <th>Semaine {{week|add(1)}} de {{year}}</th>
+        <th>Semaine {{week}} de {{year}}</th>
         {% endfor %}
       </tr>
       {% for member in club_data['members'] %}

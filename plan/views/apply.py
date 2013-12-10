@@ -1,12 +1,31 @@
-from django.views.generic.base import TemplateView
-from datetime import date, timedelta
+from django.views.generic.edit import FormView
+from datetime import date, timedelta, datetime
 from helpers import date_to_week, date_to_day
 from mixins import PlanMixin
+from plan.forms import PlanApplyWeekForm
 from run.models import RunReport
 
-class PlanApply(PlanMixin, TemplateView):
+class PlanApply(PlanMixin, FormView):
   weeks_nb = 6
   template_name = 'plan/apply.html'
+  form_class = PlanApplyWeekForm
+
+  def form_valid(self, form):
+    # Get start date
+    start_date = datetime.strptime(form.cleaned_data['week'], '%Y-%m-%d').date()
+
+    # Only whole club trainer's athletes are supported
+    # TODO: support single athlete or sub group of athletes
+    athletes = self.list_athletes()
+    club_id = form.cleaned_data['club']
+    if club_id not in athletes:
+      raise Exception("Invalid club")
+    self.plan.apply(start_date, [a.user for a in athletes[club_id]['members']])
+
+
+    # Build applied context
+    context = self.get_context_data()
+    return self.render_to_response(context)
 
   def get_context_data(self, *args, **kwargs):
     context = super(PlanApply, self).get_context_data(*args, **kwargs)
