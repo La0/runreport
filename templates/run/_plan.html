@@ -5,7 +5,7 @@
 </p>
 {% endwith %}
 
-{% if session and session.instance.name != plan_session.name %}
+{% if session.instance and session.instance.name != plan_session.name %}
 <p class="text-warning">
   <i class="icon-fire"> </i> Séance du plan : {{ plan_session.name }}
 </p>

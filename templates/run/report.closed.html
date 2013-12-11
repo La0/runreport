@@ -4,6 +4,12 @@
 </p>
 {% endif %}
 
+{% if report.plan_week %}
+<p class="alert alert-info">
+  <i class="icon-tags"> </i> Semaine {{ report.plan_week.order|add(1) }} de <a href="" target="_blank">{{ report.plan_week.plan.name }}</a>
+</p>
+{% endif %}
+
 <table class="table table-bordered">
   <tr>
     <th style="text-align: right">Jour</th>
@@ -34,6 +40,11 @@
         <span class="label">Distance</span> {{session.distance}} km
         {% endif %}
       </div>
+      {% if session.plan_session %}
+      <div>
+        <span class="label label-warning">Plan d'entraînement</span> {{ session.plan_session.week.plan.name }}
+      </div>
+      {% endif %}
       {% with session.garmin_activity as activity %}
         {% include '_garmin.html' %}
       {% endwith %}
