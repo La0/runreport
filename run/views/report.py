@@ -3,6 +3,7 @@ from helpers import week_to_date
 from run.models import RunReport, SESSION_TYPES
 from datetime import datetime
 from run.forms import RunReportForm, RunSessionForm
+from run.tasks import publish_report
 from django.core.exceptions import PermissionDenied
 from mixins import WeekPaginator, CurrentWeekMixin
 
@@ -137,5 +138,5 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
       if 'publish' in request.POST and self.report.is_publiable():
         member = self.request.user.memberships.get(club__pk=int(request.POST['publish']))
         uri = self.request.build_absolute_uri('/')[:-1] # remove trailing /
-        self.report.publish(member, uri)
+        publish_report(self.report, member, uri)
     return self.render_to_response(context)
