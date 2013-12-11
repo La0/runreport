@@ -6,71 +6,56 @@
 {% block content %}
 
 <h1>Application du plan {{ plan.name }}</h1>
+<p>
+  <span class="label label-info">Club</span> {{ club.name }}
+</p>
 
-{% if clubs|length() > 1 %}
-<ul class="nav nav-tabs">
-  {% for club in clubs %}
-  <li class="{% if loop.first %}active{% endif %}"><a href="#club_{{club.slug}}" data-toggle="tab">{{club.name}}</a></li>
-  {% endfor %}
-</ul>
+{% if form %}
+<div class="hero-unit">
+  <form class="form-inline" action="" method="POST">
+    {% csrf_token %}
+    <label>
+      Appliquer à
+    </label>
+    <select>
+      <option>Tous mes athlètes</option>
+    </select>
+    {% with plan.weeks.count() as nb_weeks %}
+    pour <strong>{{ nb_weeks }} semaine{{ nb_weeks|pluralize() }}</strong> à partir du 
+    {% endwith %}
+    {{ form.week|safe }}
+    <input type="submit" value="Appliquer" class="btn btn-primary" />
+  </form>
+</div>
+{% else %}
+<div class="alert alert-success">
+  <h4>Plan appliqué</h4>
+</div>
 {% endif %}
 
-<div class="tab-content">
-  {% for club in clubs %}
-  <div class="tab-pane{% if loop.first %} active{% endif %}" id="club_{{club.slug}}">
-
-    {% if form %}
-    <div class="hero-unit">
-      <form class="form-inline" action="" method="POST">
-        {% csrf_token %}
-        <label>
-          Appliquer à
-        </label>
-        <select>
-          <option>Tous mes athlètes</option>
-        </select>
-        {% with plan.weeks.count() as nb_weeks %}
-        pour <strong>{{ nb_weeks }} semaine{{ nb_weeks|pluralize() }}</strong> à partir du 
-        {% endwith %}
-        {{ form.week|safe }}
-        <input type="hidden" name="club" value="{{ club.id }}" />
-        <input type="submit" value="Appliquer" class="btn btn-primary" />
-      </form>
-    </div>
-    {% else %}
-    <div class="alert alert-success">
-      <h4>Plan appliqué</h4>
-    </div>
-    {% endif %}
-
-    {% with athletes[club.id] as club_data %}
-    <table class="table">
-      <tr>
-        <th>Athlète</tH>
-        {% for week, year in weeks %}
-        <th>Semaine {{week}} de {{year}}</th>
-        {% endfor %}
-      </tr>
-      {% for member in club_data['members'] %}
-      <tr>
-        <td>{{ member.user.first_name }} {{ member.user.last_name }}</td>
-        {% for week, year in weeks %}
-          {% with '%s_%d_%d' % (member.user.username, year, week) as name %}
-          {% with club_data['busy'][name] as busy_report %}
-            {% if busy_report %}
-            <td>Semaine {{busy_report.plan_week.order}}  de {{busy_report.plan_week.plan.name}}</td>
-            {% else %}
-            <td></td>
-            {% endif %}
-          {% endwith %}
-          {% endwith %}
-        {% endfor %}
-      </tr>
-      {% endfor %}
-    </table>
-    {% endwith %}
-  </div>
+<table class="table">
+  <tr>
+    <th>Athlète</tH>
+    {% for week, year in weeks %}
+    <th>Semaine {{week}} de {{year}}</th>
+    {% endfor %}
+  </tr>
+  {% for member in members %}
+  <tr>
+    <td>{{ member.user.first_name }} {{ member.user.last_name }}</td>
+    {% for week, year in weeks %}
+      {% with '%s_%d_%d' % (member.user.username, year, week) as name %}
+      {% with busy[name] as busy_report %}
+        {% if busy_report %}
+        <td>Semaine {{busy_report.plan_week.order|add(1)}}  de {{busy_report.plan_week.plan.name}}</td>
+        {% else %}
+        <td></td>
+        {% endif %}
+      {% endwith %}
+      {% endwith %}
+    {% endfor %}
+  </tr>
   {% endfor %}
-</div>
+</table>
 
 {% endblock %}

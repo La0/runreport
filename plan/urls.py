@@ -12,7 +12,7 @@ plan_urls = patterns('plan',
   url(r'day/(?P<week>\d+)/(?P<day>\d+)/delete/?$', PlanDayDelete.as_view(), name="plan-day-delete"), 
 
   # Apply
-  url(r'apply/?$', PlanApply.as_view(), name="plan-apply"),
+  url(r'apply/(?P<club>\w+)/?$', PlanApply.as_view(), name="plan-apply"),
 
   # Plan visitor
   url(r'by/(?P<creator>\w+)/?', PlanUserDetails.as_view(), name="plan-user"),

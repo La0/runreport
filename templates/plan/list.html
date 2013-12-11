@@ -17,7 +17,9 @@
     <td>{{ p.updated|date('d/m/Y H:i') }}
     <td>
       <a href="{{ p.get_absolute_url() }}" class="btn btn-primary">Editer</a>
-      <a href="{% url plan-apply p.slug %}" class="btn">Appliquer</a>
+      {% for club in clubs %}
+      <a href="{% url plan-apply p.slug, club.slug %}" class="btn">Appliquer {{ club.name }}</a>
+      {% endfor %}
     </td>
   </tr>
   {% endfor %}

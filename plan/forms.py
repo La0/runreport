@@ -34,7 +34,6 @@ class PlanSessionForm(forms.ModelForm):
 
 class PlanApplyWeekForm(forms.Form):
   week = forms.ChoiceField()
-  club = forms.IntegerField(widget=forms.HiddenInput()) # dirty way to avoid a formset
 
   def __init__(self, *args, **kwargs):
     super(PlanApplyWeekForm, self).__init__(*args, **kwargs)

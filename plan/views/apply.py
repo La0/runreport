@@ -17,11 +17,7 @@ class PlanApply(PlanMixin, FormView):
     # Only whole club trainer's athletes are supported
     # TODO: support single athlete or sub group of athletes
     athletes = self.list_athletes()
-    club_id = form.cleaned_data['club']
-    if club_id not in athletes:
-      raise Exception("Invalid club")
-    self.plan.apply(start_date, [a.user for a in athletes[club_id]['members']])
-
+    self.plan.apply(start_date, [a.user for a in athletes['members']])
 
     # Build applied context
     context = self.get_context_data()
@@ -29,7 +25,7 @@ class PlanApply(PlanMixin, FormView):
 
   def get_context_data(self, *args, **kwargs):
     context = super(PlanApply, self).get_context_data(*args, **kwargs)
-    context['athletes'] = self.list_athletes()
+    context.update(self.list_athletes())
     context['weeks'] = self.list_weeks()
     return context
 
@@ -53,27 +49,21 @@ class PlanApply(PlanMixin, FormView):
     date_start = date_to_day(date.today())
     date_end = date_start + timedelta(self.weeks_nb * 7 + 6)
 
-    out = {}
-    athletes = self.request.user.trainees
-    for club in self.clubs:
-      club_athletes = athletes.filter(club=club)
+    club_athletes = self.request.user.trainees.filter(club=self.club)
 
-      # Look for busied run reports
-      # in the time interval
-      users = [ca.user for ca in club_athletes]
-      reports_busy = RunReport.objects.filter(user__in=users, sessions__date__range=(date_start, date_end), plan_week__isnull=False).distinct()
+    # Look for busied run reports
+    # in the time interval
+    users = [ca.user for ca in club_athletes]
+    reports_busy = RunReport.objects.filter(user__in=users, sessions__date__range=(date_start, date_end), plan_week__isnull=False).distinct()
 
-      # Linearize by athlete & year/week
-      # to display a table of 6 weeks availiblity
-      busy_dict = {}
-      for r in reports_busy:
-        name = "%s_%d_%d" % (r.user.username, r.year, r.week)
-        busy_dict[name] = r
+    # Linearize by athlete & year/week
+    # to display a table of 6 weeks availiblity
+    busy_dict = {}
+    for r in reports_busy:
+      name = "%s_%d_%d" % (r.user.username, r.year, r.week)
+      busy_dict[name] = r
 
-      out[club.id] = {
-        'members' : club_athletes.order_by('user__first_name', 'user__last_name', ),
-        'busy' : busy_dict,
-      }
-      
-    return out
-
+    return {
+      'members' : club_athletes.order_by('user__first_name', 'user__last_name', ),
+      'busy' : busy_dict,
+    }

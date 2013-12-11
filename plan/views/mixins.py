@@ -23,13 +23,20 @@ class PlanMixin(object):
       raise PermissionDenied
     self.clubs = [m.club for m in members.all()]
 
+    # Check club if needed
+    self.club = None
+    if 'club' in kwargs:
+      clubs_filtered = [c for c in self.clubs if c.slug == kwargs['club']]
+      if not clubs_filtered:
+        raise Http404('Club not found')
+      self.club = clubs_filtered.pop()
+
     # Load optional plan (using slug kwargs)
     self.plan = None
     if 'slug' in kwargs:
       try:
         self.plan = Plan.objects.get(slug=kwargs['slug'], creator=request.user)
       except Exception, e:
-        print str(e)
         raise Http404('Plan not found')
 
     # Load optional week
@@ -53,6 +60,7 @@ class PlanMixin(object):
   def get_context_data(self, **kwargs):
     context = super(PlanMixin, self).get_context_data(**kwargs)
     context['clubs'] = self.clubs
+    context['club'] = self.club
     context['plan'] = self.plan
     context['week'] = self.plan_week
     context['session'] = self.plan_session
