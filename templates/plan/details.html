@@ -19,17 +19,8 @@
   </tr>
   {% for week in weeks %}
   <tr>
-    {% for day, date, session in week.get_days() %}
+    {% for day, session in week.get_days() %}
     <td class="modal-action {% if session %}session{% else %}empty{% endif %}" href="{% url plan-day plan.slug, week.order, day %}">
-      {% if date %}
-      <p class="date">
-        {% if loop.first %}
-        {{date|date('d E')}}
-        {% else %}
-        {{date|date('d')}}
-        {% endif %}
-      </p>
-      {% endif %}
       {% if session %}
         {{ session.name }}
       {% endif %}

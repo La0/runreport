@@ -21,6 +21,9 @@ class Plan(models.Model):
   def get_absolute_url(self):
     return ('plan', (self.slug, ))
 
+  def __unicode__(self):
+    return u'Plan: "%s" from %s' % (self.name, self.creator.username)
+
   def save(self, *args, **kwargs):
     # Init slug, based on name
     if not self.slug:
@@ -55,22 +58,16 @@ class PlanWeek(models.Model):
 
   def get_days(self):
     '''
-    List days in plan, using day id, date
-     when available and session
+    List days in plan, using day id and session
     '''
     days = []
-    date = None # To be used differently
-    if date:
-      date += timedelta(days=self.order * 7)
 
     for d in range(0,7):
       try:
         session = self.sessions.get(day=d)
       except:
         session = None
-      days.append((d, date, session))
-      if date:
-        date += timedelta(days=1)
+      days.append((d, session))
 
     return days
 

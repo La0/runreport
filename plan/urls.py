@@ -14,8 +14,11 @@ plan_urls = patterns('plan',
   # Apply
   url(r'apply/?$', PlanApply.as_view(), name="plan-apply"),
 
+  # Plan visitor
+  url(r'by/(?P<creator>\w+)/?', PlanUserDetails.as_view(), name="plan-user"),
+
   # Details
-  url(r'/?$', PlanDetails.as_view(), name="plan"), 
+  url(r'/edit/?$', PlanDetails.as_view(), name="plan"), 
 )
 
 urlpatterns = patterns('',

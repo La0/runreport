@@ -1,7 +1,7 @@
 from django.views.generic import DetailView, View
 from django.views.generic.edit import FormView, BaseUpdateView 
 from django.http import HttpResponseRedirect
-from mixins import PlanMixin
+from mixins import PlanMixin, PlanUserMixin
 from plan.forms import PlanCreationForm
 from plan.models import Plan, PlanWeek
 from coach.mixins import JsonResponseMixin, JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML
@@ -60,3 +60,6 @@ class PlanWeekDetails(PlanMixin, JsonResponseMixin, BaseUpdateView):
       raise Exception("Invalid action")
 
     return self.render_to_response({})
+
+class PlanUserDetails(PlanUserMixin, DetailView):
+  template_name = 'plan/user.html'

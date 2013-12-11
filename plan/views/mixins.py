@@ -1,6 +1,7 @@
 from django.core.exceptions import PermissionDenied
 from plan.models import *
 from django.http import Http404
+from django.shortcuts import get_object_or_404
 
 class PlanMixin(object):
   """
@@ -59,3 +60,30 @@ class PlanMixin(object):
 
   def get_object(self):
     return self.plan
+
+class PlanUserMixin(object):
+  '''
+  Check that the user can simply view the details of a plan
+  applied to his training
+  '''
+  def dispatch(self, request, *args, **kwargs):
+    if not request.user.is_authenticated():
+      raise PermissionDenied
+
+    # Get a plan for this creator / slug
+    self.plan = get_object_or_404(Plan, slug=kwargs['slug'], creator__username=kwargs['creator'])
+
+    # Check the user is authorized to view it
+    if not PlanUsage.objects.filter(plan=self.plan, user=request.user).count():
+      raise PermissionDenied
+
+    return super(PlanUserMixin, self).dispatch(request, *args, **kwargs)
+
+  def get_object(self):
+    return self.plan
+
+  def get_context_data(self, **kwargs):
+    context = super(PlanUserMixin, self).get_context_data(**kwargs)
+    context['plan'] = self.plan
+    return context
+
