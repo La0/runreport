@@ -42,4 +42,8 @@
 
 <a href="{% url plan-week-add plan.slug%}" class="btn btn-primary modal-action modal-post">Ajouter une semaine</a>
 
+{% for club in clubs %}
+<a href="{% url plan-apply plan.slug, club.slug %}" class="btn">Appliquer {{ club.name }}</a>
+{% endfor %}
+
 {% endblock %}
