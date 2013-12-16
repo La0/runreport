@@ -198,6 +198,9 @@ GARMIN_DIR=os.path.join(HOME, 'garmin_data')
 PIWIK_HOST = False
 PIWIK_ID = False
 
+# Celery broker
+BROKER_URL = 'redis://'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 
 # Import local settings, if any
 try:

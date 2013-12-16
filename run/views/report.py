@@ -3,6 +3,7 @@ from helpers import week_to_date
 from run.models import RunReport, SESSION_TYPES
 from datetime import datetime
 from run.forms import RunReportForm, RunSessionForm
+from run.tasks import publish_report
 from django.core.exceptions import PermissionDenied
 from mixins import WeekPaginator, CurrentWeekMixin
 
@@ -72,6 +73,9 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
   def get_context_data(self, **kwargs):
     context = super(WeeklyReport, self).get_context_data(**kwargs)
 
+    # Check the task on report
+    self.report.check_task()
+
     # Full context
     profile = self.request.user.get_profile()
     context.update({
@@ -133,9 +137,14 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
         form_report.save()
 
 
-      # Publish ?
+      # Publish through a celery task ?
       if 'publish' in request.POST and self.report.is_publiable():
         member = self.request.user.memberships.get(club__pk=int(request.POST['publish']))
         uri = self.request.build_absolute_uri('/')[:-1] # remove trailing /
-        self.report.publish(member, uri)
+        task = publish_report.delay(self.report, member, uri)
+
+        # Save task id in report
+        self.report.task = task.id
+        self.report.save()
+
     return self.render_to_response(context)

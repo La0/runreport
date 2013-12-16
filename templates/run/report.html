@@ -6,6 +6,14 @@
 
 {% import '_macros.html' as macros %}
 
+
+{% if report.task %}
+<div class="alert alert-info">
+  <h4>Rapport en cours d'envoi</h4>
+  Ce rapport est en train d'être envoyé à votre entraineur.
+</div>
+{% endif %}
+
 {% if report_previous %}
 <div class="alert alert-danger">
   <h4>Semaine précédente non envoyée !</h4>
@@ -13,7 +21,7 @@
 </div>
 {% endif %}
 
-{% if forms and not report.published %}
+{% if forms and not report.published and not report.task %}
   {% include 'run/report.open.html' %}
 {% else %}
   {% include 'run/report.closed.html' %}

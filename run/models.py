@@ -2,6 +2,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime, date, time, timedelta
+from celery.result import AsyncResult
 import xlwt
 import os
 import json
@@ -21,6 +22,7 @@ class RunReport(models.Model):
   comment = models.TextField(null=True, blank=True)
   distance = models.FloatField(null=True, blank=True, editable=False)
   time = models.FloatField(null=True, blank=True, editable=False)
+  task = models.CharField(max_length=36, null=True, blank=True)
 
   class Meta:
     unique_together = (('user', 'year', 'week'),)
@@ -169,6 +171,24 @@ class RunReport(models.Model):
       time += timedelta(hours=s.time.hour, minutes=s.time.minute, seconds=s.time.second)
     self.time = time.days * 86400 + time.seconds
     return (self.distance, self.time)
+
+  def check_task(self):
+    '''
+    Check the attached task is still running
+     if not, clean te reference
+    '''
+    if not self.task:
+      return False
+
+    # Check task
+    result = AsyncResult(self.task)
+    if result.state == 'SUCCESS':
+      self.task = None
+      self.save()
+      return False
+
+    print result.state
+    return True
 
 SESSION_TYPES = (
   ('training', 'Entrainement'),
