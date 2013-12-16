@@ -6,7 +6,7 @@
 
 {% if report.plan_week %}
 <p class="alert alert-info">
-  <i class="icon-tags"> </i> Semaine {{ report.plan_week.order|add(1) }} de <a href="" target="_blank">{{ report.plan_week.plan.name }}</a>
+  <i class="icon-tags"> </i> Semaine {{ report.plan_week.order|add(1) }} de <a href="{% url plan-user report.plan_week.plan.slug, report.plan_week.plan.creator.username %}" target="_blank">{{ report.plan_week.plan.name }}</a>
 </p>
 {% endif %}
 
