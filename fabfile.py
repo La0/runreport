@@ -8,7 +8,7 @@ env.hosts = FABRIC_HOSTS
 def prod():
   
   supervisor('stop', 'runreport')
-  supervisor('start', 'runreport_celery')
+  supervisor('stop', 'runreport_celery')
   
   with cd(FABRIC_BASE):
     pull()
@@ -18,7 +18,7 @@ def prod():
       migrate_db()
 
   # Start again
-  supervisor('stop', 'runreport')
+  supervisor('start', 'runreport')
   supervisor('start', 'runreport_celery')
 
 def syncdb():
