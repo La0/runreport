@@ -28,5 +28,4 @@ exec env/bin/gunicorn ${DJANGO_WSGI_MODULE}:application \
 --workers $NUM_WORKERS \
 --user=$USER --group=$GROUP \
 --log-level=debug \
---bind=unix:$SOCKFILE \
---daemon # TRASHME for supervisor
+--bind=unix:$SOCKFILE
