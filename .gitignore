@@ -3,3 +3,5 @@
 coach/local_settings.py
 garmin_data
 env
+logs
+gunicorn.socket
