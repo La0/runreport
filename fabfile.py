@@ -1,5 +1,5 @@
 from fabric.api import *
-from coach.settings import FABRIC_HOSTS, FABRIC_ENV, DATABASES
+from coach.settings import FABRIC_HOSTS, FABRIC_ENV, DATABASES, FABRIC_BASE
 import os
 import shutil
 from time import time
@@ -7,16 +7,15 @@ env.hosts = FABRIC_HOSTS
 
 def prod():
   
-  stop_fcgi()
+  stop_gunicorn()
   
-  with cd('~/coach'):
+  with cd(FABRIC_BASE):
     pull()
     with virtualenv(FABRIC_ENV):
       update_requirements()
       submodules()
       migrate_db()
-      start_fcgi()
-  restart_lighttpd()
+      start_gunicorn()
 
 def syncdb():
   # Backup actual sqlite db
@@ -30,10 +29,10 @@ def syncdb():
       os.remove(db_src)
 
   # Import dump from server
-  prod_dump = '/tmp/coach.json'
+  prod_dump = '/tmp/runreport.json'
   local_dump = 'prod.json'
   apps = ('auth.User', 'auth.Group', 'run', 'users', 'club', 'page')
-  with cd('~/coach'):
+  with cd(FABRIC_BASE):
     with virtualenv(FABRIC_ENV):
       run('./manage.py dumpdata --indent=4 -e sessions %s > %s' % (' '.join(apps), prod_dump))
       get(prod_dump, local_dump)
@@ -47,7 +46,7 @@ def virtualenv(name='django'):
   '''
   Source a virtualenv on prefix
   '''
-  return prefix('source ~/%s/bin/activate' % name)
+  return prefix('source %s/bin/activate' % name)
 
 def update_requirements():
   '''
@@ -67,28 +66,17 @@ def migrate_db():
   '''
   run('./manage.py migrate')
 
-def stop_fcgi(pidfile='coach.pid'):
+def stop_gunicorn():
   '''
-  Kill the fast cgi process
+  Stop gunicorn through supervisor
   '''
-  with settings(warn_only=True):
-    output = run('kill -9 `cat %s`' % pidfile)
-    if output.failed:
-      print 'No pid found, server not stopped.'
-      return
-    run('rm %s' % pidfile)
+  run('supervisorctl stop runreport')
 
-def start_fcgi(pidfile='coach.pid'):
+def start_gunicorn():
   '''
-  Start the fast cgi process
+  Start gunicorn through supervisor
   '''
-  run('./manage.py runfcgi workdir=~/coach protocol=scgi pidfile=~/coach.pid host=localhost port=8300 outlog=~/cgi-coach-out.log errlog=~/cgi-coach-err.log')
-
-def restart_lighttpd():
-  '''
-  Restart lighttpd
-  '''
-  pass
+  run('supervisorctl start runreport')
 
 def submodules():
   run('git submodule init')
