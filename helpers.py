@@ -1,3 +1,4 @@
+from celery.result import AsyncResult
 from datetime import datetime
 
 def nameize(s, max = 40):
@@ -49,3 +50,20 @@ def week_to_date(year, week, day=1):
   Default to monday
   '''
   return datetime.strptime('%d %d %d' % (year, week, day), '%Y %W %w').date()
+
+
+def check_task(model):
+  '''
+  Check the attached task is still running
+   if not, clean te reference
+  '''
+  if not model.task:
+    return False
+
+  # Check task
+  result = AsyncResult(model.task)
+  if result.state in ('SUCCESS', 'FAILURE'):
+    model.task = None
+    model.save()
+
+  return result.state

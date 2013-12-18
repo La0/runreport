@@ -1,3 +1,4 @@
+# coding=utf-8
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import timedelta
@@ -14,6 +15,7 @@ class Plan(models.Model):
   creator = models.ForeignKey(User)
   created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
+  task = models.CharField(max_length=36, null=True, blank=True)
 
   class Meta:
     unique_together = (('creator', 'slug',), )
@@ -46,7 +48,9 @@ class Plan(models.Model):
           break
 
       # Create PlanUsage
-      PlanUsage.objects.get_or_create(plan=self, user=user, start=start_date)
+      usage,_ = PlanUsage.objects.get_or_create(plan=self, user=user, start=start_date)
+      if usage.mail_sent:
+        continue # Don't send twice the mail about the same plan
 
       # Send mail to user
       mb = MailBuilder('mail/plan.html')
@@ -55,7 +59,14 @@ class Plan(models.Model):
         'user' : user,
         'start_date' : start_date,
       }
-      mb.build(context)
+      mb.subject = u'Plan d\'entraînement %s de %s %s' % (self.name, self.creator.first_name, self.creator.last_name)
+      mb.to = [user.email]
+      mail = mb.build(context)
+      mail.send()
+
+      # Update usage
+      usage.mail_sent = datetime.now()
+      usage.save()
 
     return failures
 

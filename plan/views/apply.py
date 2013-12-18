@@ -1,9 +1,10 @@
 from django.views.generic.edit import FormView
 from datetime import date, timedelta, datetime
-from helpers import date_to_week, date_to_day
+from helpers import date_to_week, date_to_day, check_task
 from mixins import PlanMixin
 from plan.forms import PlanApplyWeekForm
 from run.models import RunReport
+from plan.tasks import apply_plan
 
 class PlanApply(PlanMixin, FormView):
   weeks_nb = 6
@@ -17,13 +18,17 @@ class PlanApply(PlanMixin, FormView):
     # Only whole club trainer's athletes are supported
     # TODO: support single athlete or sub group of athletes
     athletes = self.list_athletes()
-    self.plan.apply(start_date, [a.user for a in athletes['members']])
+    task = apply_plan.delay(self.plan, start_date, [a.user for a in athletes['members']])
+    self.plan.task = task.id
+    self.plan.save()
 
     # Build applied context
     context = self.get_context_data()
     return self.render_to_response(context)
 
   def get_context_data(self, *args, **kwargs):
+    check_task(self.plan) # Check if a task is running
+
     context = super(PlanApply, self).get_context_data(*args, **kwargs)
     context.update(self.list_athletes())
     context['weeks'] = self.list_weeks()

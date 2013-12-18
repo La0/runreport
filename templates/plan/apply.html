@@ -10,6 +10,19 @@
   <span class="label label-info">Club</span> {{ club.name }}
 </p>
 
+{% if plan.task %}
+<div class="alert alert-warning">
+  <h4>En cours d'application</h4>
+  L'application du plan peut prendre quelques secondes...
+</div>
+<script type="text/javascript">
+// Refresh the page in 2.5s
+window.onload = setTimeout(function(){
+  window.location = window.location;
+}, 2500);
+</script>
+{% else %}
+
 {% if form %}
 <div class="hero-unit">
   <form class="form-inline" action="" method="POST">
@@ -57,5 +70,6 @@
   </tr>
   {% endfor %}
 </table>
+{% endif %}
 
 {% endblock %}
