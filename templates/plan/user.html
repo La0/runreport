@@ -23,9 +23,9 @@
         <th>Temps</th>
         <th>Distance</th>
       </tr>
-      {% for day,session in week.get_days() %}
+      {% for day,date,session in week.get_days() %}
       <tr>
-        <td>{{ day }}</td>
+        <td>{{ date|date('l')|title() }}</td>
         {% if session %}
         <td>{{ session.name }}</td>
         <td>{{ session.time|default('-')}}</td>

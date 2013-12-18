@@ -18,7 +18,7 @@ plan_urls = patterns('plan',
   url(r'by/(?P<creator>\w+)/?', PlanUserDetails.as_view(), name="plan-user"),
 
   # Details
-  url(r'/edit/?$', PlanDetails.as_view(), name="plan"), 
+  url(r'edit/?$', PlanDetails.as_view(), name="plan"),
 )
 
 urlpatterns = patterns('',

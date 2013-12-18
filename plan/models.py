@@ -1,11 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import timedelta
-from helpers import week_to_date, nameize, date_to_week
+from helpers import week_to_date, nameize, date_to_week, date_to_day
 from base64 import b64encode
 from hashlib import md5
-from datetime import datetime
+from datetime import datetime, date
 from run.models import RunReport, RunSession
+from coach.mail import MailBuilder
 
 class Plan(models.Model):
   name = models.CharField(max_length=250)
@@ -47,6 +48,15 @@ class Plan(models.Model):
       # Create PlanUsage
       PlanUsage.objects.get_or_create(plan=self, user=user, start=start_date)
 
+      # Send mail to user
+      mb = MailBuilder('mail/plan.html')
+      context = {
+        'plan' : self,
+        'user' : user,
+        'start_date' : start_date,
+      }
+      mb.build(context)
+
     return failures
 
 class PlanWeek(models.Model):
@@ -56,18 +66,25 @@ class PlanWeek(models.Model):
   class Meta:
     unique_together = (('plan', 'order',), )
 
-  def get_days(self):
+  def get_days(self, start_date=None):
     '''
     List days in plan, using day id and session
     '''
     days = []
 
+    if not start_date:
+      start_date = date_to_day(date.today())
     for d in range(0,7):
       try:
         session = self.sessions.get(day=d)
       except:
         session = None
-      days.append((d, session))
+
+      # Build real day date, using start_date specified
+      # or start from monday this week
+      dt = start_date + timedelta(days=self.order*7 + d)
+
+      days.append((d, dt, session))
 
     return days
 

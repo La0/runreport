@@ -19,7 +19,7 @@
   </tr>
   {% for week in weeks %}
   <tr>
-    {% for day, session in week.get_days() %}
+    {% for day, date, session in week.get_days() %}
     <td class="modal-action {% if session %}session{% else %}empty{% endif %}" href="{% url plan-day plan.slug, week.order, day %}">
       {% if session %}
         {{ session.name }}
