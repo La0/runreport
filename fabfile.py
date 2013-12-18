@@ -7,7 +7,8 @@ env.hosts = FABRIC_HOSTS
 
 def prod():
   
-  stop_gunicorn()
+  supervisor('stop', 'runreport')
+  supervisor('start', 'runreport_celery')
   
   with cd(FABRIC_BASE):
     pull()
@@ -15,7 +16,10 @@ def prod():
       update_requirements()
       submodules()
       migrate_db()
-      start_gunicorn()
+
+  # Start again
+  supervisor('stop', 'runreport')
+  supervisor('start', 'runreport_celery')
 
 def syncdb():
   # Backup actual sqlite db
@@ -66,17 +70,11 @@ def migrate_db():
   '''
   run('./manage.py migrate')
 
-def stop_gunicorn():
+def supervisor(cmd, process):
   '''
-  Stop gunicorn through supervisor
+  Control processes through supervisor
   '''
-  run('supervisorctl stop runreport')
-
-def start_gunicorn():
-  '''
-  Start gunicorn through supervisor
-  '''
-  run('supervisorctl start runreport')
+  run('supervisorctl %s %s' % (cmd, process))
 
 def submodules():
   run('git submodule init')
