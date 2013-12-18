@@ -33,6 +33,11 @@
       {{session.name|default('Session sans nom')}}
       {% if session.garmin_activity %}<i class="icon-map-marker"></i>{% endif %}
     </p>
+      {% if session.plan_session %}
+      <p>
+        <i class="icon-tags"> </i> {{ session.plan_session.week.plan.name|truncate(10) }}
+      </p>
+      {% endif %}
     {% endif %}
   </td>
   {% endwith %}

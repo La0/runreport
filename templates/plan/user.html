@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ plan.name }}</h1>
+<p>
+  <span class="label label-info">Créateur</span> {{ plan.creator.first_name }} {{ plan.creator.last_name }}
+</p>
+
+{% with plan.weeks.order_by('order') as weeks %}
+<ul class="nav nav-tabs">
+  {% for week in weeks %}
+  <li class="{% if loop.first %}active{% endif %}"><a href="#week_{{week.order}}" data-toggle="tab">Semaine {{ week.order|add(1) }}</a></li>
+  {% endfor %}
+</ul>
+
+<div class="tab-content">
+  {% for week in weeks %}
+  <div class="tab-pane{% if loop.first %} active{% endif %}" id="week_{{week.order}}">
+    <table class="table table-striped">
+      <tr>
+        <th>Jour</th>
+        <th>Session</th>
+        <th>Temps</th>
+        <th>Distance</th>
+      </tr>
+      {% for day,date,session in week.get_days() %}
+      <tr>
+        <td>{{ date|date('l')|title() }}</td>
+        {% if session %}
+        <td>{{ session.name }}</td>
+        <td>{{ session.time|default('-')}}</td>
+        <td>{{ session.distance|default('-') }}</td>
+        {% else %}
+        <td colspan="3" class="muted">Pas de séance</td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+  {% endfor %}
+</div>
+{% endwith %}
+
+{% endblock %}

@@ -1,7 +1,7 @@
 
 $(function(){
   // Modals show
-  $('.modal-action').click(load_modal);
+  $(document).on('click', '.modal-action', load_modal);
 
   // Roles custom
   $(document).on('click', 'div.roles button.role', function(){
@@ -94,7 +94,10 @@ function load_modal(evt){
   }
   evt.preventDefault();
   method = $(this).hasClass('modal-post') ? 'POST' : 'GET';
-  load_box(url, method);
+  data = null;
+  if(this.hasAttribute('data-action'))
+    data = { 'action' : this.getAttribute('data-action')};
+  load_box(url, method, data);
   return false;
 }
 

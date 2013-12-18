@@ -18,6 +18,11 @@
   {{ macros.input(form.comment, 'Commentaire') }}
   {{ macros.session_time_distance(form) }}
   {% if session %}
+    {% if session.plan_session %}
+    {% with session.plan_session as plan_session %}
+      {% include 'run/_plan.html' %}
+    {% endwith %}
+    {% endif %}
   {% with session.garmin_activity as activity %}
     {% include '_garmin.html' %}
   {% endwith %}

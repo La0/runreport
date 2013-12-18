@@ -1,0 +1,45 @@
+{% extends 'mail/base.html' %}
+
+{% block mail %}
+
+<p>
+Bonjour {{ user.first_name }},
+</p>
+
+<p>
+{% with plan.weeks.count() as nb_weeks %}
+Votre entraîneur {{ plan.creator.first_name }} vous a attribué un plan d'entraînement de {{ nb_weeks}} semaine{{ nb_weeks|pluralize()}} : <a href="http://{{ site.domain }}{% url plan-user plan.slug, plan.creator.username %}">{{ plan.name }}</a>
+{% endwith %}
+</p>
+<hr />
+
+{% for week in plan.weeks.order_by('order') %}
+<div class="week">
+  <h2>Semaine {{ week.order|add(1) }}</h2>
+
+  <table class="nice">
+    <tr>
+      <th>Jour</th>
+      <th>Séance</th>
+      <th>Temps</th>
+      <th>Distance</th>
+    </tr>
+    {% for day,date,session in week.get_days(start_date) %}
+    <tr>
+      <td style="text-align: right; color: #888;">{{ date|date('l d E') }}</td>
+      {% if session %}
+      <td>{{ session.name }}</td>
+      <td>{{ session.time|default('-')}}</td>
+      <td>{{ session.distance|default('-') }}</td>
+      {% else %}
+      <td colspan="3" style="color: #CCC;">Pas de séance</td>
+      {% endif %}
+    </tr>
+    {% endfor %}
+  </table>
+
+</div>
+{% endfor %}
+
+
+{% endblock %}

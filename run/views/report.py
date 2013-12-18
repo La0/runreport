@@ -1,5 +1,5 @@
 from django.views.generic import WeekArchiveView
-from helpers import week_to_date
+from helpers import week_to_date, check_task
 from run.models import RunReport, SESSION_TYPES
 from datetime import datetime
 from run.forms import RunReportForm, RunSessionForm
@@ -74,7 +74,7 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
     context = super(WeeklyReport, self).get_context_data(**kwargs)
 
     # Check the task on report
-    self.report.check_task()
+    check_task(self.report)
 
     # Full context
     profile = self.request.user.get_profile()
