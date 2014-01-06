@@ -288,3 +288,8 @@ div.trainers ul input {
   width: 15px !important;
   vertical-align: top;
 }
+
+/* Contact form */
+form.contact textarea, form.contact div.controls input {
+  width: 100%;
+}

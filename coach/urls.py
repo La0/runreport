@@ -18,6 +18,9 @@ urlpatterns = patterns('',
 
   # Landing pages
   url(r'^features/?', TemplateView.as_view(template_name='landing/features.html'), name="landing-features"),
+
+  # Contact Form
+  url(r'^contact/', include('contact_form.urls')),
 )
 
 # Direct admin and static medias

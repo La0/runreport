@@ -4,6 +4,13 @@
 
 {% block content %}
 
+{% if type == 'help' %}
+<div class="alert alert-info">
+  <h4>Un problème ? Un bug ?</h4>
+  N'hésitez pas à utiliser le <a href="/contact">formulaire de contact</a> en cas de problème sur RunReport.
+</div>
+{% endif %}
+
 <div class="pages">
   {% for page in pages %}
   <a href="{% url page page.type, page.slug %}">
