@@ -6,6 +6,7 @@ from run.forms import RunSessionForm
 from datetime import datetime, date
 import calendar
 from coach.mixins import JsonResponseMixin, JSON_STATUS_ERROR
+from helpers import date_to_week
 
 class RunCalendar(MonthArchiveView):
   template_name = 'run/month.html'
@@ -82,8 +83,8 @@ class RunCalendarDay(JsonResponseMixin, ModelFormMixin, ProcessFormView, DateDet
   def get_object(self):
     # Load day, report and eventual session
     self.day = date(int(self.get_year()), int(self.get_month()), int(self.get_day()))
-    week = int(self.day.strftime('%W'))
-    self.report, _ = RunReport.objects.get_or_create(user=self.request.user, year=self.day.year, week=week)
+    week, year = date_to_week(self.day)
+    self.report, _ = RunReport.objects.get_or_create(user=self.request.user, year=year, week=week)
     try:
       self.object = RunSession.objects.get(report=self.report, date=self.day)
     except:

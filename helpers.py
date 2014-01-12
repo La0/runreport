@@ -1,5 +1,5 @@
 from celery.result import AsyncResult
-from datetime import datetime
+from datetime import datetime, timedelta
 
 def nameize(s, max = 40):
   import re, unicodedata
@@ -30,18 +30,21 @@ def nameize(s, max = 40):
 
   return s
 
-def date_to_day(date, day=1):
+def date_to_day(date, day=0):
   '''
   From any date, get a date in the same week
   Default to monday
   '''
-  week = int(date.strftime('%W'))
-  return datetime.strptime('%d %d %d' % (date.year, week, day), '%Y %W %w').date()
+  offset = date.weekday() - day
+  date -= timedelta(days=offset)
+  return date
 
 def date_to_week(date):
   '''
-  From any date, export the week and year tuple
+  From any date, export the week and year tuple,
+  but always use the monday
   '''
+  date = date_to_day(date, day=0)
   return int(date.strftime('%W')), date.year
 
 def week_to_date(year, week, day=1):

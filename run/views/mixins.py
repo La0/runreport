@@ -1,32 +1,37 @@
 from datetime import datetime, timedelta, date
 from coach.settings import REPORT_START_DATE
 from django.http import Http404
-from helpers import week_to_date, date_to_day
+from helpers import week_to_date, date_to_day, date_to_week
 
 class CurrentWeekMixin(object):
   '''
   Gives the current year & week or
   uses the one from kwargs (url)
   '''
+  _today = None
+  _week = None
+  _year = None
+
+  def __init__(self):
+    self._today = date.today()
+    self._week, self._year = date_to_week(date.today())
+
   def get_year(self):
-    year = datetime.now().year
-    return int(self.kwargs.get('year', year))
+    return int(self.kwargs.get('year', self._year))
 
   def get_week(self):
-    week = datetime.now().strftime(self.week_format)
-    return int(self.kwargs.get('week', week))
+    return int(self.kwargs.get('week', self._week))
 
   def check_limits(self):
     # Load min & max date
-    self.today = date.today()
     min_year, min_week = REPORT_START_DATE
     self.min_date = week_to_date(min_year, min_week)
-    self.max_date = date_to_day(self.today)
+    self.max_date = date_to_day(self._today)
 
     # Check we are not in past or future
     if self.date < self.min_date:
       raise Http404('Too old.')
-    if self.date > self.today:
+    if self.date > self._today:
       raise Http404('In the future.')
 
 
