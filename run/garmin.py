@@ -138,8 +138,8 @@ class GarminConnector:
     # Try to map a run session
     try:
       date = act.date.date()
-      week = int(date.strftime('%W'))
-      report,_ = RunReport.objects.get_or_create(user=self._user, year=date.year, week=week)
+      week, year = date_to_week(date)
+      report,_ = RunReport.objects.get_or_create(user=self._user, year=year, week=week)
       sess,_ = RunSession.objects.get_or_create(date=date, report=report)
       modified = False
       if sess.garmin_activity is None:
