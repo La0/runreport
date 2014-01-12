@@ -4,6 +4,7 @@ from datetime import datetime
 from coach.settings import GPG_HOME, GPG_PASSPHRASE
 from run.models import GarminActivity, RunSession, RunReport
 from django.utils.timezone import utc
+from helpers import date_to_week
 
 class GarminConnector:
   _user = None
