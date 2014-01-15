@@ -251,6 +251,11 @@ div.table-fixed table td , div.table-fixed table th {
   text-align: center;
 }
 
+table tr.race-record {
+  background: #FFF563;
+  color: #142061;
+}
+
 /* Page */
 form.page div.controls input, form.page div.controls textarea{
   width: 95%;
