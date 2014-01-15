@@ -11,7 +11,7 @@ class RunReportForm(forms.ModelForm):
 class RunSessionForm(forms.ModelForm):
   class Meta:
     model = RunSession
-    fields = ('name', 'comment', 'distance', 'time', 'type')
+    fields = ('name', 'comment', 'distance', 'time', 'type', 'race_category')
     widgets = {
       'distance' : forms.TextInput(attrs={'placeholder': 'km'}),
       'time' : forms.TimeInput(attrs={'placeholder' : 'hh:mm'}),
@@ -20,10 +20,16 @@ class RunSessionForm(forms.ModelForm):
 
   def clean(self):
     # Only for race
-    # Check time & distance are set, for future races
-    session_date = self.instance.date or self.prefix # Get the date even if not in db
-    if self.cleaned_data['type'] == 'race' and session_date <= date.today() and (self.cleaned_data.get('time', None) is None or self.cleaned_data.get('distance', None) is None):
-      raise forms.ValidationError(u"Pour une course passée, renseignez la distance et le temps.")
+    if self.cleaned_data['type'] == 'race':
+
+      # Check time & distance are set, for future races
+      session_date = self.instance.date or self.prefix # Get the date even if not in db
+      if session_date <= date.today() and (self.cleaned_data.get('time', None) is None or self.cleaned_data.get('distance', None) is None):
+        raise forms.ValidationError(u"Pour une course passée, renseignez la distance et le temps.")
+
+      # Check race category
+      if not self.cleaned_data['race_category']:
+        raise forms.ValidationError(u"Sélectionnez un type de course.")
 
     return self.cleaned_data
 

@@ -19,10 +19,24 @@ $(function(){
     selector.find('input[type=hidden]').val(type);
     btn = selector.find('button');
     btn.removeClass('btn-success').removeClass('btn-info');
-    if(type == 'race')
+    rc = $(this).parents('fieldset').find('div.race-category');
+    console.log(rc);
+    if(type == 'race'){
+
+      // Show race category
+      rc.show();
+
+      // Button styling
       btn.addClass('btn-success');
-    else if(type == 'rest')
-      btn.addClass('btn-info');
+    }else{
+
+      // Hide race category
+      rc.hide();
+
+      // Button styling
+      if(type == 'rest')
+        btn.addClass('btn-info');
+    }
     btn.find('span.name').html($(this).text());
     selector.find('.btn-group').removeClass('open');
     return false;

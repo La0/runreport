@@ -34,6 +34,7 @@ $(function(){
       {{ macros.session_types_name(session, session_types) }}
       {{ macros.input(session.comment, 'Commentaire') }}
       {{ macros.session_time_distance(session) }}
+      {{ macros.race_category(session) }}
       {% with session.instance.garmin_activity as activity %}
         {% include '_garmin.html' %}
       {% endwith %}
@@ -57,7 +58,7 @@ $(function(){
 
     {% for m in memberships %}
     <button {% if not report.is_publiable() %}disabled="disabled"{% endif %} type="submit" name="publish" value="{{m.club.pk}}" class="btn btn-success">
-      Envoyer à 
+      Envoyer à
       {% for t in m.trainers.all() %}
       {{ t.first_name|default(t.username) }}{% if not loop.last %}, {% endif %}
       {% endfor %}

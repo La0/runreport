@@ -14,9 +14,11 @@
   </div>
   {% endif %}
   {% endwith %}
+  <fieldset>
   {{ macros.session_types_name(form, session_types) }}
   {{ macros.input(form.comment, 'Commentaire') }}
   {{ macros.session_time_distance(form) }}
+  {{ macros.race_category(form) }}
   {% if session %}
     {% if session.plan_session %}
     {% with session.plan_session as plan_session %}
@@ -27,6 +29,7 @@
     {% include '_garmin.html' %}
   {% endwith %}
   {% endif %}
+  </fieldset>
 {% endblock %}
 
 {% block footer %}

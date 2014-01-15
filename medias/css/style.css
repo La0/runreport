@@ -126,12 +126,12 @@ form.report input {
   width: 90%;
 }
 
-form.report div.input-prepend, form.day div.input-prepend {
+form div.time-distance div.input-prepend {
   width: 30% !important;
   float: left;
 }
 
-form.report div.input-prepend input, form.day div.input-prepend input {
+form div.time-distance div.input-prepend input {
   width: 50% !important;
 }
 
@@ -152,6 +152,14 @@ form.report div.types-name div.input-prepend input {
 form.report div.types-name button {
   width: 120px;
   text-align: right;
+}
+
+form div.race-category {
+  display: none;
+}
+
+form div.race-category.active {
+  display: block;
 }
 
 form.day div.types-name {

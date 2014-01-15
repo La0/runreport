@@ -253,7 +253,7 @@ class GarminActivity(models.Model):
 
 class RaceCategory(models.Model):
   name = models.CharField(max_length=250)
-  distance = models.FloatField(null=True)
+  distance = models.FloatField(null=True, blank=True)
 
   def __unicode__(self):
     return self.name

@@ -13,7 +13,7 @@
 {%- endmacro %}
 
 {% macro session_time_distance(form) -%}
-<div class="control-group " style="height: 25px">
+<div class="control-group time-distance" style="height: 25px">
   <div class="controls">
     <div class="input-prepend time">
       <span class="add-on">Temps</span>
@@ -72,6 +72,20 @@
 </div>
 {% endwith %}
 {% endwith %}
+{%- endmacro %}
+
+{% macro race_category(form) -%}
+<div class="control-group race-category {% if form.instance.type == 'race' %}active{% endif %}" style="height: 25px">
+  <div class="controls">
+    <div class="input-prepend time">
+      <span class="add-on">Type de course</span>
+      {{ form.race_category|safe }}
+    </div>
+  </div>
+</div>
+{% if form.race_category.errors %}
+<div class="alert alert-danger">{{form.distance.errors|safe}}</div>
+{% endif %}
 {%- endmacro %}
 
 {% macro tr(fields, item='td') -%}
