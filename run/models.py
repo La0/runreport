@@ -189,6 +189,7 @@ class RunSession(models.Model):
   time = models.TimeField(null=True, blank=True)
   type = models.CharField(max_length=12, default='training', choices=SESSION_TYPES)
   plan_session = models.ForeignKey('plan.PlanSession', null=True, blank=True)
+  race_category = models.ForeignKey('RaceCategory', null=True, blank=True)
 
   class Meta:
     unique_together = (('report', 'date'),)
@@ -249,3 +250,10 @@ class GarminActivity(models.Model):
     if h_file != h_db:
       raise Exception("Invalid data file %s" % path)
     return json.loads(data)
+
+class RaceCategory(models.Model):
+  name = models.CharField(max_length=250)
+  distance = models.FloatField(null=True)
+
+  def __unicode__(self):
+    return self.name

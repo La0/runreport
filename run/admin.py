@@ -5,6 +5,10 @@ class RunSessionAdmin(admin.TabularInline):
   model = RunSession
   max_num = 7
 
+class RaceCategoryAdmin(admin.ModelAdmin):
+  model = RaceCategory
+admin.site.register(RaceCategory, RaceCategoryAdmin)
+
 class RunReportAdmin(admin.ModelAdmin):
   list_display = ('user', 'week', 'updated')
   list_filter = ('user', )

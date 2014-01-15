@@ -10,6 +10,9 @@ urlpatterns = patterns('',
   url(r'^create/?$', CreateUser.as_view(), name='user-create'),
   url(r'^logout/?$', LogoutUser.as_view(), name='logout'),
 
+  # Races
+  url(r'^races/?$', login_required(RacesView.as_view()), name='user-races'),
+
   # Password Management
   url(r'^password/update/?$', login_required(UpdatePassword.as_view()), name='user-password-update'),
   url(r'^password/reset/?$', password_reset, name='user-password-reset', kwargs={

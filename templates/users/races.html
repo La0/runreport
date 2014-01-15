@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Mes records</h1>
+
+<ul>
+{% for race in races %}
+  <li>{{ race.name }} ({{ race.distance }}) in {{ race.time }} on {{ race.date }}
+{% endfor %}
+
+{% endblock %}
