@@ -1,9 +1,11 @@
+# -*- encoding: utf-8 -*-
 # Gist : https://gist.github.com/michelts/1029336
 from django.views.generic.base import TemplateResponseMixin
 from django.views.generic.edit import ModelFormMixin, ProcessFormView
 import json
 from django.http import HttpResponse, HttpResponseRedirect
 from django.conf import settings
+import csv
 
 
 class MultipleFormsMixin(ModelFormMixin):
@@ -84,7 +86,7 @@ class JsonResponseMixin(object):
   json_status = JSON_STATUS_OK # Response inner status
   json_options = []
 
-  def render_to_response(self, context):  
+  def render_to_response(self, context):
     # Render normally html, using parents code
     html = None
     if JSON_OPTION_NO_HTML not in self.json_options:
@@ -128,3 +130,26 @@ class JsonResponseMixin(object):
       return self.build_response(url=resp['Location'])
 
     return resp
+
+class CsvResponseMixin(object):
+  '''
+  This mixin render a response using csv writer
+   and add HTTP header to donwload this render.
+  '''
+  def render_to_response(self, context):
+    if 'csv_data' not in context:
+      return super(CsvResponseMixin, self).render_to_response(context)
+
+    # Prepare response
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="%s.csv"' % context.get('csv_filename', 'output')
+
+    response.write(u'\ufeff'.encode('utf8'))
+
+    # Add data in response
+    writer = csv.writer(response, delimiter=';', dialect='excel')
+    for line in context['csv_data']:
+      writer.writerow(line)
+
+    return response
+

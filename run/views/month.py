@@ -1,11 +1,12 @@
-from django.views.generic import MonthArchiveView, DateDetailView
+from django.views.generic import MonthArchiveView, DateDetailView, View
+from django.views.generic.dates import MonthMixin, YearMixin
 from django.views.generic.edit import ModelFormMixin, ProcessFormView
 from django.http import Http404
 from run.models import RunSession, RunReport, SESSION_TYPES
 from run.forms import RunSessionForm
 from datetime import datetime, date
 import calendar
-from coach.mixins import JsonResponseMixin, JSON_STATUS_ERROR
+from coach.mixins import JsonResponseMixin, JSON_STATUS_ERROR, CsvResponseMixin
 from helpers import date_to_week
 
 class RunCalendar(MonthArchiveView):
@@ -90,3 +91,49 @@ class RunCalendarDay(JsonResponseMixin, ModelFormMixin, ProcessFormView, DateDet
     except:
       self.object = RunSession(report=self.report, date=self.day)
     return self.object
+
+class ExportMonth(CsvResponseMixin, MonthMixin, YearMixin, View):
+  '''
+  Export a month sessions, in CSV format
+  '''
+  def get(self, *args, **kwargs):
+    # Get year and month
+    month = int(self.get_month())
+    year = int(self.get_year())
+
+    # Load calendar
+    try:
+      cal = calendar.Calendar(calendar.MONDAY)
+      days = [d for d in cal.itermonthdates(year, month)]
+    except:
+      raise Http404('Invalid export date.')
+
+    # Load sessions
+    data = []
+    sessions = RunSession.objects.filter(report__user=self.request.user, date__in=days)
+    for day in days:
+      if day.month != month:
+        continue # Skip before & after days
+
+      day_data = [ day.strftime('%A %d %B %Y'), ]
+      try:
+        session = sessions.get(date=day)
+
+        # Serialize a session as a list, for csv render
+        day_data += [
+          session.type,
+          session.name.encode('utf-8'),
+          session.comment.encode('utf-8'),
+          session.distance,
+          session.time,
+        ]
+      except:
+        pass
+      data.append(day_data)
+
+    # Build csv lines
+    context = {
+      'csv_filename' : '%s_%d_%d' % (self.request.user.username, year, month),
+      'csv_data' : data,
+    }
+    return self.render_to_response(context)

@@ -4,7 +4,13 @@
 
 {% block content %}
 
-<h2>{% if member %}{{ member.first_name|lower|title }} {{ member.last_name|lower|title }} : {% endif %}{{months.1|date('E Y')}}</h2>
+<h2>
+  {% if member %}{{ member.first_name|lower|title }} {{ member.last_name|lower|title }} : {% endif %}{{months.1|date('E Y')}}
+  {% if not member %}
+  <a class="btn btn-info pull-right" href="{% url export-month months.1.year, months.1.month %}"><i class="icon-white icon-chevron-down"></i> Export CSV</a>
+  {% endif %}
+</h2>
+
 <table class="table table-bordered table-condensed calendar">
   <tr>
     <th>Lundi</th>

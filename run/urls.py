@@ -11,6 +11,9 @@ urlpatterns = patterns('',
   url(r'^calendar/(?P<year>\d{4})/(?P<month>\d{1,2})/?$', login_required(RunCalendar.as_view()), name="report-month"),
   url(r'^calendar/(?P<year>\d{4})/(?P<month>\d{1,2})/(?P<day>\d{1,2})/?$', login_required(RunCalendarDay.as_view()), name="report-day"),
 
+  # Export a month
+  url(r'^export/(?P<year>\d{4})/(?P<month>\d{1,2})/?$', login_required(ExportMonth.as_view()), name="export-month"),
+
   # Vma
   url(r'^vma/glossaire/?', VmaGlossary.as_view(), name="vma-glossary"),
   url(r'^vma/?', login_required(VmaPaces.as_view()), name="vma"),
