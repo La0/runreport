@@ -87,7 +87,7 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
       'profile' : profile,
       'sessions': self.sessions,
       'pagename' : 'report-week',
-      'session_types':SESSION_TYPES, 
+      'session_types':SESSION_TYPES,
     })
 
     # Pagination
@@ -97,7 +97,7 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
     report_previous = None
     if self.report.is_current() and context['week_previous']:
       try:
-        report_previous = RunReport.objects.get(user=self.request.user, week=context['week_previous']['week'], published=False)
+        report_previous = RunReport.objects.get(user=self.request.user, year=context['week_previous']['year'], week=context['week_previous']['week'], published=False)
       except:
         pass
     context['report_previous'] = report_previous
