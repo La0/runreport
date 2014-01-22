@@ -46,6 +46,7 @@ class ClubMemberMonth(ClubMixin, MonthArchiveView):
       'months' : (self.get_previous_month(day), day, self.get_next_month(day)),
       'days' : self.days,
       'weeks' : self.weeks,
+      'pageyear' : 'club-member-year',
       'pagemonth' : 'club-member-month',
       'pageday' : 'club-member-day',
       'pageargs' : [self.club.slug, self.member.username],

@@ -49,6 +49,7 @@ class RunCalendar(MonthArchiveView):
       'days' : self.days,
       'weeks' : self.weeks,
       'pageargs' : [],
+      'pageyear' : 'report-year',
       'pagemonth' : 'report-month',
       'pageday' : 'report-day',
     }

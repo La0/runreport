@@ -330,6 +330,10 @@ div.year div.day {
   cursor: pointer;
 }
 
+div.year div.day span.name {
+  color: #333;
+}
+
 div.year div.day.training {
   background: #ccd5f9;
 }

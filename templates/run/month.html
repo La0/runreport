@@ -11,7 +11,7 @@
     {% if not member %}
     <a class="btn" href="{% url export-month months.1.year, months.1.month %}"><i class="icon-chevron-down"></i> Export CSV</a>
     {% endif %}
-    <a class="btn btn-info" href="{% url report-year months.1.year %}"><i class="icon-white icon-list-alt"></i> Calendrier annuel</a>
+    <a class="btn btn-info" href="{{pageyear|url(*pageargs + [months.1.year ])}}"><i class="icon-white icon-list-alt"></i> Calendrier annuel</a>
   </p>
 </h2>
 

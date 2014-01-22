@@ -28,7 +28,7 @@ class RunCalendarYear(YearArchiveView):
       d += timedelta(days=1)
 
     # Load sessions
-    sessions_raw = RunSession.objects.filter(report__user=self.request.user, date__gte=date_start, date__lte=date_end)
+    sessions_raw = RunSession.objects.filter(report__user=self.get_user(), date__gte=date_start, date__lte=date_end)
 
     # Map sessions in dict
     sessions = dict([(s.date, s) for s in sessions_raw])
@@ -37,6 +37,19 @@ class RunCalendarYear(YearArchiveView):
       'year' : year,
       'previous_year' : year-1 >= year_min and year-1 or None,
       'next_year' : year+1,
+      'member' : getattr(self, 'member', None),
     }
+    context.update(self.get_links())
 
     return (months, sessions, context)
+
+  def get_user(self):
+    return self.request.user
+
+  def get_links(self):
+    return {
+      'pageargs' : [],
+      'pageyear' : 'report-year',
+      'pagemonth' : 'report-month',
+      'pageday' : 'report-day',
+    }
