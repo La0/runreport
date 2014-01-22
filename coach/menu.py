@@ -34,6 +34,7 @@ def add_pages(request):
       # Add club admin links for trainers
       if m.role in ('trainer', 'staff') or request.user.is_superuser:
         submenu['menu'].append(_p(('club-current-name', m.club.slug, 'athletes', 'name'), u'Mes Athlètes'))
+        submenu['menu'].append(_p(('club-races', m.club.slug, ), u'Les courses', lazy=True))
         submenu['menu'].append(_p(('plans', ), u'Mes plans', lazy=True))
 
         # Manage links

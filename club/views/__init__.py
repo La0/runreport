@@ -5,3 +5,4 @@ from manage import ClubManage, ClubLinkAdd, ClubLinkDelete
 from invite import ClubInviteCheck
 from join import ClubList, ClubJoin
 from year import ClubMemberYear
+from races import ClubRaces
