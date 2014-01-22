@@ -12,18 +12,21 @@ class RacesView(TemplateView):
 
   def get_races(self):
     # List races
-    all_races = RunSession.objects.filter(report__user=self.request.user, type='race', date__lte=date.today())
+    all_races = RunSession.objects.filter(report__user=self.request.user, type='race')
+    future_races = all_races.filter(date__gt=date.today()).order_by('date')
+    past_races = all_races.filter(date__lte=date.today())
 
-    # Extract the categories
-    cat_ids= [r['race_category'] for r in all_races.values('race_category').distinct() if r['race_category']]
+    # Extract the categories from past_races
+    cat_ids= [r['race_category'] for r in past_races.values('race_category').distinct() if r['race_category']]
     categories = RaceCategory.objects.filter(pk__in=cat_ids).order_by('name')
 
     # Categorize races
     races = {}
     for c in categories:
-      races[c.id] = all_races.filter(race_category=c).order_by('time')
+      races[c.id] = past_races.filter(race_category=c).order_by('time')
 
     return {
+      'future_races' : future_races,
       'races' : races,
       'categories' : categories,
     }
