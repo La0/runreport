@@ -6,10 +6,13 @@ urlpatterns = patterns('',
   url(r'^/?$', WeeklyReport.as_view(), name="report-current"),
   url(r'^week/(?P<year>\d{4})/(?P<week>\d{1,2})/?$', WeeklyReport.as_view(), name="report-week"),
 
-  # Calendar
+  # Calendar month
   url(r'^calendar/?$', login_required(RunCalendar.as_view()), name="report-current-month"),
   url(r'^calendar/(?P<year>\d{4})/(?P<month>\d{1,2})/?$', login_required(RunCalendar.as_view()), name="report-month"),
   url(r'^calendar/(?P<year>\d{4})/(?P<month>\d{1,2})/(?P<day>\d{1,2})/?$', login_required(RunCalendarDay.as_view()), name="report-day"),
+
+  # Calendar year
+  url(r'^calendar/(?P<year>\d{4})/?$', login_required(RunCalendarYear.as_view()), name="report-year"),
 
   # Export a month
   url(r'^export/(?P<year>\d{4})/(?P<month>\d{1,2})/?$', login_required(ExportMonth.as_view()), name="export-month"),

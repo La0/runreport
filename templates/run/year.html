@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% set page_title = 'Année %s' % year %}
+{% set page_size = 'fullscreen' %}
+
+{% block content %}
+<h1>Année {{ year }}</h1>
+
+<div class="year">
+  {% for month, days in date_list.items() %}
+  <div class="month">
+    <div class="head">
+      <a href="{% url report-month days[0].year, days[0].month %}" >{{ days[0]|date('F')|title() }}</a>
+    </div>
+    {% for day in days %}
+    {% with object_list[day] as session %}
+    <div class="day modal-action {% if session %}{{ session.type }}{% endif %}" href="{% url report-day day.year, day.month, day.day %}">
+      <span class="date">{{ day.day }}</span>
+      {% if session %}
+      {{ session.name|default('...')|truncatechars(5)}}
+      {% endif %}
+    </div>
+    {% endwith %}
+    {% endfor %}
+  </div>
+  {% endfor %}
+</div>
+
+<ul class="pager">
+  {% if previous_year %}
+  <li class="previous">
+    <a href="{% url report-year previous_year %}">&laquo; Année {{ previous_year }}</a>
+  </li>
+  {% endif %}
+  {% if next_year %}
+  <li class="next">
+    <a href="{% url report-year next_year %}">Année {{ next_year }} &raquo;</a>
+  </li>
+  {% endif %}
+</ul>
+{% endblock %}

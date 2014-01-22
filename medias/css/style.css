@@ -306,3 +306,35 @@ div.trainers ul input {
 form.contact textarea, form.contact div.controls input {
   width: 100%;
 }
+
+/* Calendar year */
+div.year {
+}
+
+div.year div.month {
+  width: 8%;
+  float: left;
+}
+
+div.year div.month div.head {
+  font-weight: bold;
+  text-align: center;
+  border-top: 1px solid #EEE;
+  border-bottom: 1px solid #EEE;
+}
+
+div.year div.day {
+  padding: 2px;
+  height: 20px;
+  border-bottom: 1px solid #EEE;
+  cursor: pointer;
+}
+
+div.year div.day.training {
+  background: #ccd5f9;
+}
+
+div.year div.day.race {
+  background: #5BB75B;
+}
+
