@@ -2,7 +2,7 @@ from django.views.generic import DetailView, ListView
 from django.views.generic.edit import ModelFormMixin, ProcessFormView
 from django.http import Http404
 from django.views.generic.dates import WeekArchiveView
-from django.contrib.auth.models import User
+from users.models import Athlete
 from django.db.models import Count, Max
 from mixins import ClubMixin, ClubManagerMixin
 from run.views.mixins import CurrentWeekMixin, WeekPaginator
@@ -15,7 +15,7 @@ from coach.mixins import JsonResponseMixin, JSON_STATUS_ERROR
 
 class ClubMembers(ClubMixin, ListView):
   template_name = 'club/members.html'
-  model = User
+  model = Athlete
 
   def load_members(self):
     # Filter members
@@ -56,7 +56,7 @@ class ClubMembers(ClubMixin, ListView):
 
     # Add last RunReport date, as week & year
     members = members.annotate(max_report_date=Max('runreport__sessions__date'))
-    members = members.annotate(nb_sessions=Count('runreport__sessions'))
+    members = members.annotate(sessions_count=Count('runreport__sessions'))
 
     # Sort members
     default_sort = 'username'
@@ -89,7 +89,7 @@ class ClubMember(ClubMixin, DetailView):
   template_name = 'club/member.html'
   context_object_name = 'membership'
   model = ClubMembership
-  
+
   def get_context_data(self, **kwargs):
     context = super(ClubMember, self).get_context_data(**kwargs)
     context['membership'] = self.membership
@@ -105,7 +105,7 @@ class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, Proces
   context_object_name = 'membership'
   model = ClubMembership
   form_class = ClubMembershipForm
-  
+
   def get_context_data(self, **kwargs):
     context = super(ClubMemberRole, self).get_context_data(**kwargs)
     context['membership'] = self.membership

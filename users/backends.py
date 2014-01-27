@@ -1,4 +1,5 @@
-from django.contrib.auth.models import User, check_password
+from django.contrib.auth.models import check_password
+from users.models import Athlete
 
 class EmailAuthBackend(object):
   """
@@ -13,17 +14,17 @@ class EmailAuthBackend(object):
     Authenticate a user based on email address as the user name.
     """
     try:
-      user = User.objects.get(email=username)
+      user = Athlete.objects.get(email=username)
       if user.check_password(password):
         return user
-    except User.DoesNotExist:
+    except Athlete.DoesNotExist:
       return None
 
   def get_user(self, user_id):
     """
-    Get a User object from the user_id.
+    Get a Athlete object from the user_id.
      """
     try:
-      return User.objects.get(pk=user_id)
-    except User.DoesNotExist:
+      return Athlete.objects.get(pk=user_id)
+    except Athlete.DoesNotExist:
       return None

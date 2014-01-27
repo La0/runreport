@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from users.models import Athlete
 from django.views.generic.edit import FormView
 from users.forms import SignUpForm
 from django.contrib.auth import login as auth_login, authenticate
@@ -11,7 +11,7 @@ class CreateUser(FormView):
 
   def form_valid(self, form):
     # Create user
-    user = User.objects.create_user(form.cleaned_data['username'], form.cleaned_data['email'], form.cleaned_data['password'])
+    user = Athlete.objects.create_user(form.cleaned_data['username'], form.cleaned_data['email'], form.cleaned_data['password'])
     user.first_name = form.cleaned_data['firstname']
     user.last_name = form.cleaned_data['lastname']
     user.save()

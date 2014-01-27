@@ -1,6 +1,6 @@
 # coding=utf-8
 from django.db import models
-from django.contrib.auth.models import User
+from users.models import Athlete
 from datetime import datetime, date, time, timedelta
 import xlwt
 import os
@@ -12,7 +12,7 @@ from coach.mail import MailBuilder
 from helpers import date_to_day, week_to_date
 
 class RunReport(models.Model):
-  user = models.ForeignKey(User)
+  user = models.ForeignKey(Athlete)
   year = models.IntegerField(default=2013)
   week = models.IntegerField(default=0)
   published = models.BooleanField(default=False)
@@ -203,7 +203,7 @@ class RunSession(models.Model):
 
 class GarminActivity(models.Model):
   garmin_id = models.IntegerField(unique=True)
-  user = models.ForeignKey(User)
+  user = models.ForeignKey(Athlete)
   name = models.CharField(max_length=255)
   time = models.TimeField()
   distance = models.FloatField() # Kilometers

@@ -22,11 +22,8 @@ class GarminConnector:
     if user:
       # Load from user
       self._user = user
-      profile = self._user.get_profile()
-      if profile is None:
-        raise Exception("No profile for user %s" % self._user)
-      self._login = profile.garmin_login
-      self.load_password(profile.garmin_password)
+      self._login = self._user.garmin_login
+      self.load_password(self._user.garmin_password)
 
     elif login and password:
       # Load from login/pass
@@ -108,7 +105,7 @@ class GarminConnector:
     except:
       act = GarminActivity(garmin_id=activity_id, user=self._user)
       created = True
-  
+
     # Init newly created activity
     if created:
 

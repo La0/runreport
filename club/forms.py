@@ -1,6 +1,6 @@
 from models import ClubMembership, Club, ClubInvite, ClubLink
 from django import forms
-from django.contrib.auth.models import User
+from users.models import Athlete
 from django.forms.models import modelformset_factory
 from django.core.exceptions import ValidationError
 
@@ -9,7 +9,7 @@ class ClubMembershipForm(forms.ModelForm):
     super(ClubMembershipForm, self).__init__(*args, **kwargs)
 
     # Load only trainers from instance club
-    trainers = User.objects.filter(memberships__club=self.instance.club, memberships__role='trainer')
+    trainers = Athlete.objects.filter(memberships__club=self.instance.club, memberships__role='trainer')
     self.fields['trainers'] = UserModelChoiceField(queryset=trainers, widget=forms.CheckboxSelectMultiple(), required=False)
 
   class Meta:
@@ -44,7 +44,7 @@ class TrainersForm(forms.ModelForm):
     super (TrainersForm, self ).__init__(*args,**kwargs) # populates the post
 
     # Only load trainers for instance club
-    trainers = User.objects.filter(memberships__club=self.instance.club, memberships__role='trainer')
+    trainers = Athlete.objects.filter(memberships__club=self.instance.club, memberships__role='trainer')
     self.fields['trainers'] = UserModelChoiceField(queryset=trainers, widget=forms.CheckboxSelectMultiple())
 
   class Meta:

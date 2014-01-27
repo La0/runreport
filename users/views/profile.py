@@ -1,49 +1,40 @@
-from users.forms import ProfileForm, UserForm, UserPasswordForm
+from users.forms import UserForm, UserPasswordForm
 from club.forms import TrainersFormSet
-from coach.mixins import MultipleFormsView
-from django.views.generic.edit import ModelFormMixin, FormView
+from django.views.generic.edit import UpdateView, FormView
+from users.models import Athlete
 
-class Profile(MultipleFormsView):
+class Profile(UpdateView):
   template_name = 'users/profile.html'
-  form_mask = 'form_trainers_%d'
-  form_classes = {
-    'form_user' : UserForm,
-    'form_profile' : ProfileForm,
-  }
-  
-  def get_forms(self, form_classes):
-    forms = super(Profile, self).get_forms(form_classes)
+  form_class = UserForm
+  model = Athlete
 
-    # Add manually formset for trainers
-    kwargs = super(ModelFormMixin, self).get_form_kwargs()
-    forms['form_trainers'] = TrainersFormSet(queryset=self.request.user.memberships.filter(role__in=('athlete', )), **kwargs)
+  def get_object(self):
+    return self.request.user
 
-    return forms
+  def get_context_data(self, *args, **kwargs):
+    context = super(Profile, self).get_context_data(*args, **kwargs)
 
-  def get_instance(self, key):
-    instances = {
-      'form_user' : self.request.user,
-      'form_profile' : self.request.user.get_profile(),
-    }
-    return instances.get(key, None)
+    # Add form for trainers
+    data = self.request.method == 'POST' and self.request.POST or None
+    context['form_trainers'] = TrainersFormSet(data, queryset=self.request.user.memberships.filter(role__in=('athlete', )))
 
-  def forms_valid(self, forms):
-    forms['form_user'].save()
-    forms['form_trainers'].save()
-
-    # Search user category
-    profile = forms['form_profile'].save(commit=False)
-    profile.search_category()
-    profile.save()
-
-    return self.render_to_response(self.get_context_data(forms=forms))
-
-  def get_context_data(self, **kwargs):
-    context = super(Profile, self).get_context_data(**kwargs)
-    for k,v in context['forms'].items():
-      context[k] = v
-    context['profile'] = self.request.user.get_profile()
     return context
+
+  def form_valid(self, form):
+    context = self.get_context_data(form=form)
+
+    # Update user category
+    user = form.save(commit=False)
+    user.search_category()
+    user.save()
+
+    # Manually save trainers form
+    # This is really dirty.
+    form = context['form_trainers']
+    if form.is_valid():
+      form.save()
+
+    return self.render_to_response(context)
 
 class UpdatePassword(FormView):
   template_name = 'users/password.html'

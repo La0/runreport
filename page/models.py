@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from users.models import Athlete
 from helpers import nameize
 from markdown import markdown
 
@@ -14,7 +14,7 @@ class Page(models.Model):
   markdown = models.TextField(null=True, blank=True)
   html = models.TextField(null=True, blank=True)
   type = models.CharField(max_length=12, choices=PAGE_TYPES)
-  user = models.ForeignKey(User)
+  user = models.ForeignKey(Athlete)
   published = models.BooleanField()
   created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)

@@ -30,7 +30,6 @@
   </tr>
   {% for member in members %}
   <tr>
-    {% with member.get_profile() as profile %}
     <td>
       {{ member.first_name|lower|title }} {{ member.last_name|lower|title }}
     </td>
@@ -51,9 +50,9 @@
     {% endwith %}
     </td>
     {% endif %}
-    <td>{{ profile.category.name|default('-') }}</td>
-    <td>{{ profile.vma|default('-') }}</td>
-    <td>{{ member.nb_sessions }}</td>
+    <td>{{ member.category.name|default('-') }}</td>
+    <td>{{ member.vma|default('-') }}</td>
+    <td>{{ member.sessions_count }}</td>
     <td>
       {% if member.max_report_date %}
       <a href="{% url club-member-week club.slug, member.username, member.max_report_date|date('Y'), member.max_report_date|date('W')|add(-1) %}">{{ member.max_report_date|date('l d E') }}</a>
@@ -65,7 +64,6 @@
       <a class="btn btn-primary" href="{% url club-member-month club.slug, member.username, today|date('Y'), today|date('m') %}">Carnet</a>
       {% endif %}
     </td>
-    {% endwith %}
   </tinfo >
   {% endfor %}
 </table>

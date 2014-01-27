@@ -34,12 +34,10 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
 
     # Init report & sessions
     self.report = self.get_report()
-    profile = self.request.user.get_profile()
 
     context = {
       'report' : self.report,
       'now' : datetime.now(),
-      'profile' : profile,
     }
     return ([], self.sessions, context)
 
@@ -77,14 +75,12 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
     check_task(self.report)
 
     # Full context
-    profile = self.request.user.get_profile()
     context.update({
       'forms' : self.get_dated_forms(),
       'form_report' : self.get_form_report(),
       'report' : self.report,
       'now' : datetime.now(),
       'memberships' : self.request.user.memberships.all(),
-      'profile' : profile,
       'sessions': self.sessions,
       'pagename' : 'report-week',
       'session_types':SESSION_TYPES,

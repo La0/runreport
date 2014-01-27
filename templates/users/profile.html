@@ -6,22 +6,21 @@
 
 <form class="form-horizontal" method="POST" action="">
   {% csrf_token %}
-
   <fieldset>
     <legend>Informations personelles</legend>
-    {% for input in form_user.visible_fields() %}
-      {{ macros.input(input, input.label) }}
-    {% endfor %}
-    {{ macros.input(form_profile.birthday, 'Date de naissance', 'JJ/MM/AAAA') }}
-    {% if profile.category %}
+    {{ macros.input(form.first_name, 'Prénom') }}
+    {{ macros.input(form.last_name, 'Nom') }}
+    {{ macros.input(form.email, 'Adresse email') }}
+    {{ macros.input(form.birthday, 'Date de naissance') }}
+    {% if user.category %}
     <div class="control-group">
       <label class="control-label">Catégorie</label>
       <div class="controls">
-        <span class="label label-info">{{profile.category.name}}</span>
+        <span class="label label-info">{{user.category.name}}</span>
       </div>
     </div>
     {% endif %}
-    {{ macros.input(form_profile.license, 'License FFA') }}
+    {{ macros.input(form.license, 'License FFA') }}
     <div class="alert alert-info">
       <h4>Mot de passe</h4>
       Vous pouvez changer de mot de passe en <a href="{% url user-password-update %}">utilisant cette page</a>.
@@ -30,7 +29,7 @@
 
   <fieldset>
     <legend>Mails</legend>
-    {{ macros.input(form_profile.auto_send, 'Envoi automatique des commentaires en fin de semaine') }}
+    {{ macros.input(form.auto_send, 'Envoi automatique des commentaires en fin de semaine') }}
   </fieldset>
 
   <fieldset>
@@ -50,13 +49,13 @@
     {% endif %}
     {% endfor %}
 
-    {{ macros.input(form_profile.nb_sessions, 'Nb Séances hebdomadaires') }}
-    {{ macros.input(form_profile.vma, 'Vma', 'Ex: 15.2 km/h') }}
-    {{ macros.input(form_profile.weight, 'Poids', 'En kg') }}
-    {{ macros.input(form_profile.height, 'Taille', 'En cm') }}
-    {{ macros.input(form_profile.frequency_rest, 'Fréquence Cardiaque au repos') }}
-    {{ macros.input(form_profile.frequency, 'Fréquence Cardiaque maximale') }}
-    {{ macros.input(form_profile.comment, 'Renseignements divers') }}
+    {{ macros.input(form.nb_sessions, 'Nb Séances hebdomadaires') }}
+    {{ macros.input(form.vma, 'Vma', 'Ex: 15.2 km/h') }}
+    {{ macros.input(form.weight, 'Poids', 'En kg') }}
+    {{ macros.input(form.height, 'Taille', 'En cm') }}
+    {{ macros.input(form.frequency_rest, 'Fréquence Cardiaque au repos') }}
+    {{ macros.input(form.frequency, 'Fréquence Cardiaque maximale') }}
+    {{ macros.input(form.comment, 'Renseignements divers') }}
   </fieldset>
 
   <div class="form-actions">

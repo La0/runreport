@@ -1,12 +1,9 @@
 # coding=utf-8
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save
 
-class UserProfile(models.Model):
-  # Link to user
-  user = models.OneToOneField(User)
-
+class Athlete(AbstractUser):
   # Personal infos for trainer
   birthday = models.DateField(null=True, blank=True)
   category = models.ForeignKey('UserCategory', null=True, blank=True)
@@ -26,15 +23,6 @@ class UserProfile(models.Model):
   garmin_login = models.CharField(max_length=255, null=True, blank=True)
   garmin_password = models.TextField(null=True, blank=True)
 
-  # Reminders
-  reminder_monday   = models.TimeField(null=True, blank=True)
-  reminder_tuesday  = models.TimeField(null=True, blank=True)
-  reminder_wednesday = models.TimeField(null=True, blank=True)
-  reminder_thursday = models.TimeField(null=True, blank=True)
-  reminder_friday   = models.TimeField(null=True, blank=True)
-  reminder_saturday = models.TimeField(null=True, blank=True)
-  reminder_sunday   = models.TimeField(null=True, blank=True)
-
   def search_category(self):
     if not self.birthday:
       return None
@@ -44,16 +32,6 @@ class UserProfile(models.Model):
       self.category = None
       pass
     return self.category
-
-def create_user_profile(sender, instance, created, **kwargs):
-  '''
-  Create a profile on user save()
-  Behave well when using fab syncdb
-  '''
-  if (kwargs.get('created', True) and not kwargs.get('raw', False)) and created:
-    UserProfile.objects.create(user=instance)
-
-post_save.connect(create_user_profile, sender=User)
 
 class UserCategory(models.Model):
   code = models.CharField(max_length=10)
