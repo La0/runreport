@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 from run.garmin import GarminConnector
-from django.contrib.auth.models import User
+from users.models import Athlete
 from coach.settings import REPORT_START_DATE
 from datetime import datetime
 from django.utils.timezone import utc
@@ -14,8 +14,8 @@ class Command(BaseCommand):
     self._min_date = datetime.strptime('%d %d 1' % (min_year, min_week), '%Y %W %w').replace(tzinfo=utc)
 
     # Browse users
-    users = User.objects.filter(userprofile__garmin_login__isnull=False, userprofile__garmin_password__isnull=False)
-    users = users.exclude(userprofile__garmin_login='') # don't use empty logins
+    users = Athlete.objects.filter(garmin_login__isnull=False, garmin_password__isnull=False)
+    users = users.exclude(garmin_login='') # don't use empty logins
     for user in users:
       self.import_user(user)
 
