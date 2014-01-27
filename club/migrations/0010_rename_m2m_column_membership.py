@@ -12,7 +12,7 @@ class Migration(SchemaMigration):
         db.rename_column('club_clubmembership_trainers', 'user_id', 'athlete_id')
 
     def backwards(self, orm):
-        raise RunTimeError('No backward migration.')
+        raise RuntimeError('No backward migration.')
 
     models = {
         u'auth.group': {

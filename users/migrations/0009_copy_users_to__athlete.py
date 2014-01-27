@@ -16,7 +16,7 @@ class Migration(SchemaMigration):
         orm['contenttypes.contenttype'].objects.filter(app_label='auth', model='user').update(app_label='users', model='athlete')
 
     def backwards(self, orm):
-      raise RunTimeError('No Backward migration')
+      raise RuntimeError('No Backward migration')
 
     models = {
         u'auth.group': {

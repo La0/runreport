@@ -15,7 +15,7 @@ class Migration(DataMigration):
         u.save()
 
     def backwards(self, orm):
-        raise RunTimeError('No Backward migration')
+        raise RuntimeError('No Backward migration')
 
 
     models = {
