@@ -90,7 +90,6 @@ class GarminConnector:
         activity = activity['activity']
         activities.append(self.load_activity(activity))
       except Exception, e:
-        raise e
         pass # Invalid activity
 
     return activities
