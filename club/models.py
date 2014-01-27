@@ -1,14 +1,14 @@
 #!coding=utf-8
 from django.db import models
-from django.contrib.auth.models import User
+from users.models import Athlete
 from coach.mail import MailBuilder
 
 class Club(models.Model):
   name = models.CharField(max_length=250)
   slug = models.SlugField(unique=True, max_length=20)
-  members = models.ManyToManyField(User, through='ClubMembership')
-  main_trainer = models.ForeignKey(User, null=True, blank=True, related_name="club_main_trainer")
-  manager = models.ForeignKey(User, related_name="club_manager")
+  members = models.ManyToManyField(Athlete, through='ClubMembership')
+  main_trainer = models.ForeignKey(Athlete, null=True, blank=True, related_name="club_main_trainer")
+  manager = models.ForeignKey(Athlete, related_name="club_manager")
 
   # Users limits
   max_staff = models.IntegerField(default=1)
@@ -52,9 +52,9 @@ class ClubMembership(models.Model):
     ('archive', 'Archive'),
     ('prospect', 'Prospect'), # For newcomers
   )
-  user = models.ForeignKey(User, related_name="memberships")
+  user = models.ForeignKey(Athlete, related_name="memberships")
   club = models.ForeignKey(Club)
-  trainers = models.ManyToManyField(User, related_name="trainees")
+  trainers = models.ManyToManyField(Athlete, related_name="trainees")
   role = models.CharField(max_length=10, choices=CLUB_ROLES)
   created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
@@ -101,8 +101,8 @@ class ClubInvite(models.Model):
   INVITE_TYPES = (
     ('create', 'Create a club (Beta)'),
   )
-  sender = models.ForeignKey(User, related_name="inviter")
-  recipient = models.ForeignKey(User, related_name="invitee", null=True)
+  sender = models.ForeignKey(Athlete, related_name="inviter")
+  recipient = models.ForeignKey(Athlete, related_name="invitee", null=True)
   club = models.ForeignKey(Club, null=True, blank=True, related_name="invites")
   type = models.CharField(max_length=15, choices=INVITE_TYPES)
   slug = models.CharField(max_length=30, unique=True, blank=True) # not a slug: no char restriction

@@ -146,6 +146,8 @@ AUTHENTICATION_BACKENDS = (
   'django.contrib.auth.backends.ModelBackend',
 )
 
+AUTH_USER_MODEL='users.Athlete'
+
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.
@@ -174,9 +176,6 @@ LOGGING = {
         },
     }
 }
-
-# User Profile
-AUTH_PROFILE_MODULE = 'users.UserProfile'
 
 # Redirect urls
 LOGIN_REDIRECT_URL = '/'

@@ -1,6 +1,6 @@
 # coding=utf-8
 from django.db import models
-from django.contrib.auth.models import User
+from users.models import Athlete
 from datetime import timedelta
 from helpers import week_to_date, nameize, date_to_week, date_to_day
 from base64 import b64encode
@@ -12,7 +12,7 @@ from coach.mail import MailBuilder
 class Plan(models.Model):
   name = models.CharField(max_length=250)
   slug = models.SlugField(max_length=20, db_index=True)
-  creator = models.ForeignKey(User)
+  creator = models.ForeignKey(Athlete)
   created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
   task = models.CharField(max_length=36, null=True, blank=True)
@@ -153,7 +153,7 @@ class PlanSession(models.Model):
 
 class PlanUsage(models.Model):
   plan = models.ForeignKey(Plan)
-  user = models.ForeignKey(User)
+  user = models.ForeignKey(Athlete)
   created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
   start = models.DateTimeField() # Date of start of usage
