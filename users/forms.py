@@ -1,24 +1,18 @@
 from django import forms
-from models import UserProfile
-from django.contrib.auth.models import User
+from users.models import Athlete
 from django.core.exceptions import ValidationError
 from coach.settings import GPG_HOME, GPG_KEY
 from helpers import nameize
 import gnupg
 from run.garmin import GarminConnector
 
-class ProfileForm(forms.ModelForm):
+class UserForm(forms.ModelForm):
   class Meta:
-    model = UserProfile
-    exclude = ('user', 'trainer', 'garmin_login', 'garmin_password', 'category')
+    model = Athlete
+    fields = ('first_name', 'last_name', 'email', 'birthday', 'vma', 'frequency', 'frequency_rest', 'height', 'weight', 'comment', 'license', 'auto_send', 'nb_sessions', )
     widgets = {
       'nb_sessions' : forms.Select(choices=[(i,i) for i in range(0,21)]),
     }
-
-class UserForm(forms.ModelForm):
-  class Meta:
-    model = User
-    fields = ('first_name', 'last_name', 'email',)
 
 class UserPasswordForm(forms.Form):
   password_old = forms.CharField(widget=forms.PasswordInput())
@@ -80,7 +74,7 @@ class SignUpForm(forms.Form):
 class GarminForm(forms.ModelForm):
 
   class Meta:
-    model = UserProfile
+    model = Athlete
     fields = ('garmin_login', 'garmin_password')
     widgets = {
       'garmin_password' : forms.PasswordInput()

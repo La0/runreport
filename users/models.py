@@ -23,38 +23,6 @@ class Athlete(AbstractUser):
   garmin_login = models.CharField(max_length=255, null=True, blank=True)
   garmin_password = models.TextField(null=True, blank=True)
 
-class UserProfile(models.Model):
-  # Link to user
-  user = models.OneToOneField(Athlete)
-
-  # Personal infos for trainer
-  birthday = models.DateField(null=True, blank=True)
-  category = models.ForeignKey('UserCategory', null=True, blank=True)
-  vma = models.FloatField(null=True, blank=True)
-  frequency = models.IntegerField(null=True, blank=True)
-  frequency_rest = models.IntegerField(null=True, blank=True)
-  height = models.IntegerField(null=True, blank=True)
-  weight = models.IntegerField(null=True, blank=True)
-  comment = models.TextField(null=True, blank=True)
-  nb_sessions = models.IntegerField(null=True, blank=True)
-  license = models.CharField(max_length=12, null=True, blank=True)
-
-  # Mail
-  auto_send = models.BooleanField(default=False)
-
-  # Garmin
-  garmin_login = models.CharField(max_length=255, null=True, blank=True)
-  garmin_password = models.TextField(null=True, blank=True)
-
-  # Reminders
-  reminder_monday   = models.TimeField(null=True, blank=True)
-  reminder_tuesday  = models.TimeField(null=True, blank=True)
-  reminder_wednesday = models.TimeField(null=True, blank=True)
-  reminder_thursday = models.TimeField(null=True, blank=True)
-  reminder_friday   = models.TimeField(null=True, blank=True)
-  reminder_saturday = models.TimeField(null=True, blank=True)
-  reminder_sunday   = models.TimeField(null=True, blank=True)
-
   def search_category(self):
     if not self.birthday:
       return None
