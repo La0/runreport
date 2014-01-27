@@ -8,9 +8,8 @@ class Profile(MultipleFormsView):
   form_mask = 'form_trainers_%d'
   form_classes = {
     'form_user' : UserForm,
-    'form_profile' : ProfileForm,
   }
-  
+
   def get_forms(self, form_classes):
     forms = super(Profile, self).get_forms(form_classes)
 
@@ -23,13 +22,11 @@ class Profile(MultipleFormsView):
   def get_instance(self, key):
     instances = {
       'form_user' : self.request.user,
-      'form_profile' : self.request.user.get_profile(),
     }
     return instances.get(key, None)
 
   def forms_valid(self, forms):
     forms['form_user'].save()
-    forms['form_trainers'].save()
 
     # Search user category
     profile = forms['form_profile'].save(commit=False)
@@ -42,7 +39,6 @@ class Profile(MultipleFormsView):
     context = super(Profile, self).get_context_data(**kwargs)
     for k,v in context['forms'].items():
       context[k] = v
-    context['profile'] = self.request.user.get_profile()
     return context
 
 class UpdatePassword(FormView):

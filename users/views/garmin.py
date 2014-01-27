@@ -1,6 +1,6 @@
 from django.views.generic.edit import UpdateView
 from users.forms import GarminForm
-from users.models import UserProfile
+from users.models import Athlete
 from run.models import GarminActivity
 from django.db.models import Max
 from django.core.urlresolvers import reverse
@@ -8,10 +8,10 @@ from django.core.urlresolvers import reverse
 class GarminLogin(UpdateView):
   template_name = 'users/garmin.html'
   form_class = GarminForm
-  model = UserProfile
+  model = Athlete
 
   def get_object(self):
-    return self.request.user.get_profile()
+    return self.request.user
 
   def get_success_url(self):
     return reverse('user-garmin')

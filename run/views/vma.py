@@ -6,11 +6,9 @@ class VmaPaces(TemplateView):
   template_name = 'run/vma.html'
 
   def load_vma(self):
-    profile = self.request.user.get_profile()
-    vma = VmaCalc(profile.vma)
+    vma = VmaCalc(self.request.user.vma)
 
     return {
-      'profile' : profile,
       'vma' : vma
     }
 

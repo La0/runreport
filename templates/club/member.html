@@ -4,16 +4,15 @@
 
 <h2>{{ club.name }} : {{ member.first_name|default(member.username) }} {{member.last_name }}</h2>
 
-{% with member.get_profile() as profile %}
 <table class="table">
   {{ macros.tr(('Mail', member.email)) }}
-  {{ macros.tr(('Date de naissance', profile.birthday|date('d/m/Y'))) }}
-  {{ macros.tr(('Catégorie', profile.category.name|default('-'))) }}
-  {{ macros.tr(('Vma', profile.vma)) }}
-  {{ macros.tr(('Poids', profile.weight)) }}
-  {{ macros.tr(('Taille', profile.height)) }}
-  {{ macros.tr(('FC repos', profile.frequency_rest)) }}
-  {{ macros.tr(('FC max', profile.frequency)) }}
+  {{ macros.tr(('Date de naissance', member.birthday|date('d/m/Y'))) }}
+  {{ macros.tr(('Catégorie', member.category.name|default('-'))) }}
+  {{ macros.tr(('Vma', member.vma)) }}
+  {{ macros.tr(('Poids', member.weight)) }}
+  {{ macros.tr(('Taille', member.height)) }}
+  {{ macros.tr(('FC repos', member.frequency_rest)) }}
+  {{ macros.tr(('FC max', member.frequency)) }}
   <tr>
     <td>Entraineurs</td>
     <td>
@@ -24,11 +23,10 @@
       </ul>
     </td>
   </tr>
-  {{ macros.tr(('Licence FFA', profile.license)) }}
-  {{ macros.tr(('Nb Séances hebdomadaires', profile.nb_sessions)) }}
-  {{ macros.tr(('Renseignements', profile.comment)) }}
+  {{ macros.tr(('Licence FFA', member.license)) }}
+  {{ macros.tr(('Nb Séances hebdomadaires', member.nb_sessions)) }}
+  {{ macros.tr(('Renseignements', member.comment)) }}
 </table>
-{% endwith %}
 
 <div class="actions pull-right">
   <a class="btn btn-success" href="{% url club-current club.slug %}">Retour au club</a>
