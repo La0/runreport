@@ -5,6 +5,9 @@ from coach.settings import GPG_HOME, GPG_PASSPHRASE
 from run.models import GarminActivity, RunSession, RunReport
 from django.utils.timezone import utc
 from helpers import date_to_week
+import logging
+
+logger = logging.getLogger('coach.run.garmin')
 
 class GarminConnector:
   _user = None
@@ -90,7 +93,7 @@ class GarminConnector:
         activity = activity['activity']
         activities.append(self.load_activity(activity))
       except Exception, e:
-        pass # Invalid activity
+        logger.error('Activity import failed: %s' % (str(e),))
 
     return activities
 
@@ -101,9 +104,11 @@ class GarminConnector:
     activity_id = activity['activityId']
     try:
       act = GarminActivity.objects.get(garmin_id=activity_id , user=self._user)
+      logger.info("%s : Existing activity %s" % (self._user.username, activity_id))
     except:
       act = GarminActivity(garmin_id=activity_id, user=self._user)
       created = True
+      logger.info("%s : Created activity %s" % (self._user.username, activity_id))
 
     # Init newly created activity
     if created:
@@ -111,16 +116,20 @@ class GarminConnector:
       # Date
       t = int(activity['beginTimestamp']['millis']) / 1000
       act.date = datetime.utcfromtimestamp(t).replace(tzinfo=utc)
+      logger.debug('Date : %s' % act.date)
 
       # Time
       t = float(activity['sumMovingDuration']['value'])# - 3600 # Add one hour otherwise :/ Timezone ?
       act.time = datetime.utcfromtimestamp(t).time()
+      logger.debug('Time : %s' % act.time)
 
       # Distance
       act.distance =  float(activity['sumDistance']['value'])
+      logger.debug('distance : %s' % act.distance)
 
       # Speed
       act.speed = datetime.strptime(activity['weightedMeanMovingSpeed']['display'], '%M:%S').time()
+      logger.debug('Speed : %s' % act.speed)
 
     # Always update name & raw json
     act.name = activity['activityName']['value']
@@ -156,9 +165,7 @@ class GarminConnector:
       if modified:
         sess.save()
     except Exception, e:
-      print str(e)
-      raise e
-      pass
+      logger.error('%s : Failed to map %s to a RunSession. %s' % (self._user.username, activity_id, str(e) ))
 
     return act
 

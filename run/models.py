@@ -194,12 +194,12 @@ class RunSession(models.Model):
   class Meta:
     unique_together = (('report', 'date'),)
 
-  def save(self):
+  def save(self, *args, **kwargs):
     # No race category when we are not in race
     if self.type != 'race':
       self.race_category = None
 
-    super(RunSession, self).save()
+    super(RunSession, self).save(*args, **kwargs)
 
 class GarminActivity(models.Model):
   garmin_id = models.IntegerField(unique=True)
