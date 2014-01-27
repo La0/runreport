@@ -52,7 +52,7 @@
     {% endif %}
     <td>{{ member.category.name|default('-') }}</td>
     <td>{{ member.vma|default('-') }}</td>
-    <td>{{ member.nb_sessions }}</td>
+    <td>{{ member.sessions_count }}</td>
     <td>
       {% if member.max_report_date %}
       <a href="{% url club-member-week club.slug, member.username, member.max_report_date|date('Y'), member.max_report_date|date('W')|add(-1) %}">{{ member.max_report_date|date('l d E') }}</a>

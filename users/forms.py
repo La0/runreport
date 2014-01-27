@@ -44,7 +44,7 @@ class SignUpForm(forms.Form):
     '''
     Check email is unique
     '''
-    users = User.objects.filter(email=self.cleaned_data['email'])
+    users = Athlete.objects.filter(email=self.cleaned_data['email'])
     if len(users) > 0:
       raise ValidationError('Un compte existe deja avec cet email.')
     return self.cleaned_data['email']
@@ -63,7 +63,7 @@ class SignUpForm(forms.Form):
       base_name = name = nameize('%(firstname)s %(lastname)s' % self.cleaned_data)
       while True:
         try:
-          User.objects.get(username=name)
+          Athlete.objects.get(username=name)
           name = '%s_%d' % (base_name, i)
           i += 1
         except:
