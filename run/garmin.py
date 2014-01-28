@@ -135,8 +135,11 @@ class GarminConnector:
 
       # Speed
       if 'weightedMeanMovingSpeed' in activity:
-        print activity['weightedMeanMovingSpeed']
-        act.speed = datetime.strptime(activity['weightedMeanMovingSpeed']['display'], '%M:%S').time()
+        try:
+          act.speed = datetime.strptime(activity['weightedMeanMovingSpeed']['display'], '%M:%S').time()
+        except:
+          print activity['weightedMeanMovingSpeed']
+          act.speed = time(0,0,0)
       else:
         act.speed = time(0,0,0)
       logger.debug('Speed : %s' % act.speed)
