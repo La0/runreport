@@ -1,6 +1,6 @@
 import requests
 import gnupg
-from datetime import datetime
+from datetime import datetime, time
 from coach.settings import GPG_HOME, GPG_PASSPHRASE
 from run.models import GarminActivity, RunSession, RunReport
 from django.utils.timezone import utc
@@ -119,16 +119,26 @@ class GarminConnector:
       logger.debug('Date : %s' % act.date)
 
       # Time
-      t = float(activity['sumMovingDuration']['value'])# - 3600 # Add one hour otherwise :/ Timezone ?
-      act.time = datetime.utcfromtimestamp(t).time()
+      if 'sumMovingDuration' in activity:
+        t = float(activity['sumMovingDuration']['value'])
+        act.time = datetime.utcfromtimestamp(t).time()
+      elif 'sumDuration' in activity:
+        t = activity['sumDuration']['display']
+        act.time = datetime.strptime(t, '%H:%M:%S').time()
+      else:
+        raise Exception('No duration found.')
       logger.debug('Time : %s' % act.time)
 
       # Distance
       act.distance =  float(activity['sumDistance']['value'])
-      logger.debug('distance : %s' % act.distance)
+      logger.debug('Distance : %s' % act.distance)
 
       # Speed
-      act.speed = datetime.strptime(activity['weightedMeanMovingSpeed']['display'], '%M:%S').time()
+      if 'weightedMeanMovingSpeed' in activity:
+        print activity['weightedMeanMovingSpeed']
+        act.speed = datetime.strptime(activity['weightedMeanMovingSpeed']['display'], '%M:%S').time()
+      else:
+        act.speed = time(0,0,0)
       logger.debug('Speed : %s' % act.speed)
 
     # Always update name & raw json
