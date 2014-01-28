@@ -26,10 +26,10 @@
   </div>
 </div>
 {% if form.distance.errors %}
-<div class="alert alert-danger">{{form.distance.errors|safe}}</div>
+<div class="alert alert-danger">Distance: {{form.distance.errors|safe}}</div>
 {% endif %}
 {% if form.time.errors %}
-<div class="alert alert-danger">{{form.time.errors|safe}}</div>
+<div class="alert alert-danger">Temps: {{form.time.errors|safe}}</div>
 {% endif %}
 {%- endmacro %}
 

@@ -3,18 +3,28 @@ from models import RunReport, RunSession
 from datetime import date
 from django import forms
 
+TIME_FORMATS = [
+  '%H:%M:%S',
+  '%H:%M',
+  '%Hh%M',
+  '%Hh %M',
+  '%Hh %Mm %Ss',
+  '%Mmin %Ss',
+  '%Mmin',
+]
+
 class RunReportForm(forms.ModelForm):
   class Meta:
     model = RunReport
     fields = ('comment', )
 
 class RunSessionForm(forms.ModelForm):
+  time = forms.TimeField(input_formats=TIME_FORMATS, widget=forms.TextInput(attrs={'placeholder':'hh:mm'}), required=False)
+  distance = forms.FloatField(localize=True, widget=forms.TextInput(attrs={'placeholder': 'km'}), required=False)
   class Meta:
     model = RunSession
     fields = ('name', 'comment', 'distance', 'time', 'type', 'race_category')
     widgets = {
-      'distance' : forms.TextInput(attrs={'placeholder': 'km'}),
-      'time' : forms.TimeInput(attrs={'placeholder' : 'hh:mm'}),
       'type' : forms.HiddenInput(),
     }
 
