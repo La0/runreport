@@ -6,10 +6,10 @@ from time import time
 env.hosts = FABRIC_HOSTS
 
 def prod():
-  
+
   supervisor('stop', 'runreport')
   supervisor('stop', 'runreport_celery')
-  
+
   with cd(FABRIC_BASE):
     pull()
     with virtualenv(FABRIC_ENV):
@@ -35,7 +35,7 @@ def syncdb():
   # Import dump from server
   prod_dump = '/tmp/runreport.json'
   local_dump = 'prod.json'
-  apps = ('auth.User', 'auth.Group', 'run', 'users', 'club', 'page')
+  apps = ('run', 'users', 'club', 'page')
   with cd(FABRIC_BASE):
     with virtualenv(FABRIC_ENV):
       run('./manage.py dumpdata --indent=4 -e sessions %s > %s' % (' '.join(apps), prod_dump))
