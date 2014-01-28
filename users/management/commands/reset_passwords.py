@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from django.contrib.auth.models import User
+from users.models import Athlete
 from django.conf import settings
 
 class Command(BaseCommand):
@@ -10,7 +10,7 @@ class Command(BaseCommand):
     self.reset(len(args) == 1 and args[0] or 'plop')
 
   def reset(self, password):
-    for user in User.objects.all():
+    for user in Athlete.objects.all():
       print user
       user.set_password(password)
       user.save()
