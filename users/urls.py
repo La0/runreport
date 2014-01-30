@@ -15,18 +15,18 @@ urlpatterns = patterns('',
 
   # Password Management
   url(r'^password/update/?$', login_required(UpdatePassword.as_view()), name='user-password-update'),
-  url(r'^password/reset/?$', password_reset, name='user-password-reset', kwargs={
+  url(r'^password/reset/?$', password_reset, name='password_reset', kwargs={
     'template_name' : 'users/password_reset_form.html',
     'subject_template_name' : 'users/password_reset_subject.txt',
     'email_template_name' : 'users/password_reset_email.html',
   }),
-  url(r'^password/confirm/(?P<uidb36>[0-9A-Za-z]{1,13})-(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/?$', password_reset_confirm, name='user-password-reset-confirm', kwargs={
+  url(r'^password/confirm/(?P<uidb64>[0-9A-Za-z]{1,13})-(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/?$', password_reset_confirm, name='password_reset_confirm', kwargs={
     'template_name' : 'users/password_reset_confirm.html',
   }),
-  url(r'^password/complete/?$', password_reset_complete, name='user-password-reset-complete', kwargs={
+  url(r'^password/complete/?$', password_reset_complete, name='password_reset_complete', kwargs={
     'template_name' : 'users/password_reset_complete.html',
   }),
-  url(r'^password/done/?$', password_reset_done, name='user-password-reset-done', kwargs={
+  url(r'^password/done/?$', password_reset_done, name='password_reset_done', kwargs={
     'template_name' : 'users/password_reset_done.html',
   }),
 )

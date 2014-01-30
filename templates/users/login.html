@@ -16,7 +16,7 @@
     {% endif %}
     {% endwith %}
     {{ macros.input(form.username, 'Votre email') }}
-    <a href="{% url user-password-reset %}" class="btn btn-inverse btn-small pull-right" style="margin-left: 20px;" tabindex="3">Mot de passe oublié ?</a>
+    <a href="{% url password_reset %}" class="btn btn-inverse btn-small pull-right" style="margin-left: 20px;" tabindex="3">Mot de passe oublié ?</a>
     {{ macros.input(form.password, 'Votre mot de passe') }}
     <div class="form-actions">
       <button type="submit" class="btn btn-primary">Se connecter</button>
