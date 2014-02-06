@@ -110,8 +110,13 @@ class GarminConnector:
       created = True
       logger.info("%s : Created activity %s" % (self._user.username, activity_id))
 
+
     # Init newly created activity
     if created:
+
+      # Type of sport
+      act.sport = activity['activityType']['key']
+      logger.debug('Sport: %s' % act.sport)
 
       # Date
       t = int(activity['beginTimestamp']['millis']) / 1000
@@ -134,14 +139,26 @@ class GarminConnector:
       logger.debug('Distance : %s' % act.distance)
 
       # Speed
+      act.speed = time(0,0,0)
       if 'weightedMeanMovingSpeed' in activity:
-        try:
-          act.speed = datetime.strptime(activity['weightedMeanMovingSpeed']['display'], '%M:%S').time()
-        except:
-          print activity['weightedMeanMovingSpeed']
-          act.speed = time(0,0,0)
-      else:
-        act.speed = time(0,0,0)
+        speed = activity['weightedMeanMovingSpeed']
+
+        if speed['unitAbbr'] == 'km/h':
+          # Transform km/h in min/km
+          s = float(speed['value'])
+          mpk = 60.0 / s
+          hour = int(mpk / 60.0)
+          minutes = int(mpk % 60.0)
+          seconds = int((mpk - minutes) * 60.0)
+          act.speed = time(hour, minutes, seconds)
+        elif speed['unitAbbr'] == 'min/km':
+          try:
+            act.speed = datetime.strptime(speed['display'], '%M:%S').time()
+          except:
+            s = float(speed['value'])
+            minutes = int(s)
+            act.speed = time(0, minutes, int((s - minutes) * 60.0))
+
       logger.debug('Speed : %s' % act.speed)
 
     # Always update name & raw json

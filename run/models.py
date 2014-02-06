@@ -203,6 +203,7 @@ class RunSession(models.Model):
 
 class GarminActivity(models.Model):
   garmin_id = models.IntegerField(unique=True)
+  sport = models.CharField(max_length=20, default='running')
   user = models.ForeignKey(Athlete)
   name = models.CharField(max_length=255)
   time = models.TimeField()
