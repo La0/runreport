@@ -117,7 +117,10 @@ class JsonResponseMixin(object):
     except Exception, e:
       print "Json Dispatch failed: %s" % str(e)
       if settings.DEBUG:
-        raise e
+        # Raise with call stack
+        import sys
+        exc = sys.exc_info()
+        raise exc[0], exc[1], exc[2]
 
       # Base error response
       self.json_status = JSON_STATUS_ERROR
