@@ -2,6 +2,7 @@ from datetime import datetime, timedelta, date
 from coach.settings import REPORT_START_DATE
 from django.http import Http404
 from helpers import week_to_date, date_to_day, date_to_week
+from run.models import RunReport, RunSession, SESSION_TYPES
 
 class CurrentWeekMixin(object):
   '''
@@ -90,4 +91,29 @@ class WeekPaginator(object):
       'week_previous' : week_previous,
       'week_next' : week_next,
     }
+
+class CalendarDay(object):
+  '''
+  Load a RunSession from a date in url
+  '''
+  month_format = '%M'
+  context_object_name = 'session'
+
+  def get_object(self):
+    # Load day, report and eventual session
+    self.day = date(int(self.get_year()), int(self.get_month()), int(self.get_day()))
+    week, year = date_to_week(self.day)
+    self.report, _ = RunReport.objects.get_or_create(user=self.request.user, year=year, week=week)
+    try:
+      self.object = RunSession.objects.get(report=self.report, date=self.day)
+    except:
+      self.object = RunSession(report=self.report, date=self.day)
+    return self.object
+
+  def get_context_data(self, **kwargs):
+    context = super(CalendarDay, self).get_context_data(**kwargs)
+    context['day'] = self.day
+    context['report'] = self.report
+    context['session_types'] = SESSION_TYPES
+    return context
 

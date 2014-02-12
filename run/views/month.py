@@ -55,44 +55,6 @@ class RunCalendar(MonthArchiveView):
     }
     return (self.days, sessions_per_days, context)
 
-class RunCalendarDay(JsonResponseMixin, ModelFormMixin, ProcessFormView, DateDetailView):
-  template_name = 'run/day.html'
-  month_format = '%M'
-  context_object_name = 'session'
-  form_class = RunSessionForm
-
-  def get_form(self, form_class):
-    # Load object before form init
-    if not hasattr(self, 'object'):
-      self.get_object()
-    return super(RunCalendarDay, self).get_form(form_class)
-
-  def form_valid(self, form):
-    form.save()
-    return self.render_to_response(self.get_context_data(**{'form' : form}))
-
-  def form_invalid(self, form):
-    self.json_status = JSON_STATUS_ERROR
-    return self.render_to_response(self.get_context_data(**{'form' : form}))
-
-  def get_context_data(self, **kwargs):
-    context = super(RunCalendarDay, self).get_context_data(**kwargs)
-    context['day'] = self.day
-    context['report'] = self.report
-    context['session_types'] = SESSION_TYPES
-    return context
-
-  def get_object(self):
-    # Load day, report and eventual session
-    self.day = date(int(self.get_year()), int(self.get_month()), int(self.get_day()))
-    week, year = date_to_week(self.day)
-    self.report, _ = RunReport.objects.get_or_create(user=self.request.user, year=year, week=week)
-    try:
-      self.object = RunSession.objects.get(report=self.report, date=self.day)
-    except:
-      self.object = RunSession(report=self.report, date=self.day)
-    return self.object
-
 class ExportMonth(CsvResponseMixin, MonthMixin, YearMixin, View):
   '''
   Export a month sessions, in CSV format

@@ -342,3 +342,12 @@ div.year div.day.race {
   background: #5BB75B;
 }
 
+form a.delete {
+  color: #E00;
+  float: left;
+  margin-top: 5px;
+}
+
+form a.delete:hover {
+  text-decoration: none;
+}
