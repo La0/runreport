@@ -10,6 +10,8 @@ import tempfile
 from coach.settings import REPORT_SEND_DAY, REPORT_SEND_TIME, GARMIN_DIR
 from coach.mail import MailBuilder
 from helpers import date_to_day, week_to_date
+import logging
+from django.utils.timezone import utc
 
 class RunReport(models.Model):
   user = models.ForeignKey(Athlete)
@@ -258,6 +260,68 @@ class GarminActivity(models.Model):
     if h_file != h_db:
       raise Exception("Invalid data file %s" % path)
     return json.loads(data)
+
+  def update(self, data=None):
+    '''
+    Update data stored in db from a dict
+    If no data is given, load from local json
+    '''
+    logger = logging.getLogger('coach.run.garmin')
+
+    if data is None:
+      data = self.get_data('raw')
+    if data is None:
+      raise Exception('Empty data for GarminActivity %s' % self)
+
+    # Type of sport
+    self.sport = data['activityType']['key']
+    logger.debug('Sport: %s' % self.sport)
+
+    # Date
+    t = int(data['beginTimestamp']['millis']) / 1000
+    self.date = datetime.utcfromtimestamp(t).replace(tzinfo=utc)
+    logger.debug('Date : %s' % self.date)
+
+    # Time
+    if 'sumMovingDuration' in data:
+      t = float(data['sumMovingDuration']['value'])
+      self.time = datetime.utcfromtimestamp(t).time()
+    elif 'sumDuration' in data:
+      t = data['sumDuration']['display']
+      self.time = datetime.strptime(t, '%H:%M:%S').time()
+    else:
+      raise Exception('No duration found.')
+    logger.debug('Time : %s' % self.time)
+
+    # Distance
+    self.distance =  float(data['sumDistance']['value'])
+    logger.debug('Distance : %s' % self.distance)
+
+    # Speed
+    self.speed = time(0,0,0)
+    if 'weightedMeanMovingSpeed' in data:
+      speed = data['weightedMeanMovingSpeed']
+
+      if speed['unitAbbr'] == 'km/h':
+        # Transform km/h in min/km
+        s = float(speed['value'])
+        mpk = 60.0 / s
+        hour = int(mpk / 60.0)
+        minutes = int(mpk % 60.0)
+        seconds = int((mpk - minutes) * 60.0)
+        self.speed = time(hour, minutes, seconds)
+      elif speed['unitAbbr'] == 'min/km':
+        try:
+          self.speed = datetime.strptime(speed['display'], '%M:%S').time()
+        except:
+          s = float(speed['value'])
+          minutes = int(s)
+          self.speed = time(0, minutes, int((s - minutes) * 60.0))
+
+    logger.debug('Speed : %s' % self.speed)
+
+    # update name
+    self.name = data['activityName']['value']
 
 class RaceCategory(models.Model):
   name = models.CharField(max_length=250)

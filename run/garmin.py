@@ -3,7 +3,6 @@ import gnupg
 from datetime import datetime, time
 from coach.settings import GPG_HOME, GPG_PASSPHRASE
 from run.models import GarminActivity, RunSession, RunReport
-from django.utils.timezone import utc
 from helpers import date_to_week
 import logging
 
@@ -111,58 +110,10 @@ class GarminConnector:
       logger.info("%s : Created activity %s" % (self._user.username, activity_id))
 
 
-    # Init newly created activity
-    if created:
+    # Update raw data
+    act.update(activity)
 
-      # Type of sport
-      act.sport = activity['activityType']['key']
-      logger.debug('Sport: %s' % act.sport)
-
-      # Date
-      t = int(activity['beginTimestamp']['millis']) / 1000
-      act.date = datetime.utcfromtimestamp(t).replace(tzinfo=utc)
-      logger.debug('Date : %s' % act.date)
-
-      # Time
-      if 'sumMovingDuration' in activity:
-        t = float(activity['sumMovingDuration']['value'])
-        act.time = datetime.utcfromtimestamp(t).time()
-      elif 'sumDuration' in activity:
-        t = activity['sumDuration']['display']
-        act.time = datetime.strptime(t, '%H:%M:%S').time()
-      else:
-        raise Exception('No duration found.')
-      logger.debug('Time : %s' % act.time)
-
-      # Distance
-      act.distance =  float(activity['sumDistance']['value'])
-      logger.debug('Distance : %s' % act.distance)
-
-      # Speed
-      act.speed = time(0,0,0)
-      if 'weightedMeanMovingSpeed' in activity:
-        speed = activity['weightedMeanMovingSpeed']
-
-        if speed['unitAbbr'] == 'km/h':
-          # Transform km/h in min/km
-          s = float(speed['value'])
-          mpk = 60.0 / s
-          hour = int(mpk / 60.0)
-          minutes = int(mpk % 60.0)
-          seconds = int((mpk - minutes) * 60.0)
-          act.speed = time(hour, minutes, seconds)
-        elif speed['unitAbbr'] == 'min/km':
-          try:
-            act.speed = datetime.strptime(speed['display'], '%M:%S').time()
-          except:
-            s = float(speed['value'])
-            minutes = int(s)
-            act.speed = time(0, minutes, int((s - minutes) * 60.0))
-
-      logger.debug('Speed : %s' % act.speed)
-
-    # Always update name & raw json
-    act.name = activity['activityName']['value']
+    # Always update json file
     act.set_data('raw', activity)
 
     # Load supplementary infos

@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 from run.garmin import GarminConnector
+from run.models import GarminActivity
 from users.models import Athlete
 from coach.settings import REPORT_START_DATE
 from datetime import datetime
@@ -18,6 +19,11 @@ class Command(BaseCommand):
       type='string',
       default=False,
       help='Ran the import on the specified user.'),
+    make_option('--offline',
+      action='store_true',
+      dest='offline',
+      default=False,
+      help='Use only data from local json files'),
     )
 
   def handle(self, *args, **options):
@@ -30,14 +36,20 @@ class Command(BaseCommand):
     if options['username']:
       logger.info('Loading user : %s' % options['username'])
       user = Athlete.objects.get(username=options['username'])
-      self.import_user(user)
+      if options['offline']:
+        self.update_user_offline(user)
+      else:
+        self.import_user(user)
 
     # Browse all users
     else:
       users = Athlete.objects.filter(garmin_login__isnull=False, garmin_password__isnull=False)
       users = users.exclude(garmin_login='') # don't use empty logins
       for user in users:
-        self.import_user(user)
+        if options['offline']:
+          self.update_user_offline(user)
+        else:
+          self.import_user(user)
 
   def import_user(self, user):
     '''
@@ -69,3 +81,14 @@ class Command(BaseCommand):
       if min_date <= self._min_date:
         break
 
+  def update_user_offline(self, user):
+    '''
+    Update a user, only for existing activities
+    '''
+    activities = GarminActivity.objects.filter(user=user)
+    for act in activities:
+      try:
+        act.update()
+        act.save()
+      except Exception, e:
+        logger.error("Update failed: %s" % (str(e),))
