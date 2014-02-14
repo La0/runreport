@@ -87,6 +87,7 @@ class Command(BaseCommand):
     '''
     activities = GarminActivity.objects.filter(user=user)
     for act in activities:
+      logger.info("%s : Offline activity %s" % (user.username, act.garmin_id))
       try:
         act.update()
         act.save()

@@ -293,16 +293,20 @@ class GarminActivity(models.Model):
       raise Exception('No duration found.')
     logger.debug('Time : %s' % self.time)
 
-    # Distance
-    self.distance =  float(data['sumDistance']['value'])
-    logger.debug('Distance : %s' % self.distance)
+    # Distance in km
+    distance = data['sumDistance']
+    if distance['unitAbbr'] == 'm':
+      self.distance =  float(distance['value']) / 1000.0
+    else:
+      self.distance =  float(distance['value'])
+    logger.debug('Distance : %s km' % self.distance)
 
     # Speed
     self.speed = time(0,0,0)
     if 'weightedMeanMovingSpeed' in data:
       speed = data['weightedMeanMovingSpeed']
 
-      if speed['unitAbbr'] == 'km/h':
+      if speed['unitAbbr'] == 'km/h' or speed['uom'] == 'kph':
         # Transform km/h in min/km
         s = float(speed['value'])
         mpk = 60.0 / s
@@ -317,7 +321,6 @@ class GarminActivity(models.Model):
           s = float(speed['value'])
           minutes = int(s)
           self.speed = time(0, minutes, int((s - minutes) * 60.0))
-
     logger.debug('Speed : %s' % self.speed)
 
     # update name
