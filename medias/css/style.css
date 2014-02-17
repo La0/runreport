@@ -351,3 +351,8 @@ form a.delete {
 form a.delete:hover {
   text-decoration: none;
 }
+
+img.sport {
+  width: 22px;
+  vertical-align: middle;
+}

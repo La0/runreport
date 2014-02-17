@@ -42,6 +42,9 @@
     <p>
       {{session.name|default('Session sans nom')}}
       {% if session.garmin_activity %}<i class="icon-map-marker"></i>{% endif %}
+      {% if session.sport != 'running' %}
+      <img class="sport" src="/medias/img/icons/{{ session.sport }}.png" />
+      {% endif %}
     </p>
       {% if session.plan_session %}
       <p>

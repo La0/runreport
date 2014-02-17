@@ -12,6 +12,7 @@ from coach.mail import MailBuilder
 from helpers import date_to_day, week_to_date
 import logging
 from django.utils.timezone import utc
+from helpers import date_to_week
 
 class RunReport(models.Model):
   user = models.ForeignKey(Athlete)
@@ -181,6 +182,12 @@ SESSION_TYPES = (
   ('rest', 'Repos'),
 )
 
+SESSION_SPORTS = (
+  ('running', 'Course à pied'),
+  ('cycling', 'Vélo'),
+  ('swimming', 'Natation'),
+)
+
 class RunSession(models.Model):
   report = models.ForeignKey('RunReport', related_name='sessions')
   date = models.DateField()
@@ -190,6 +197,7 @@ class RunSession(models.Model):
   distance = models.FloatField(null=True, blank=True)
   time = models.TimeField(null=True, blank=True)
   type = models.CharField(max_length=12, default='training', choices=SESSION_TYPES)
+  sport = models.CharField(choices=SESSION_SPORTS, max_length=20, default='running')
   plan_session = models.ForeignKey('plan.PlanSession', null=True, blank=True)
   race_category = models.ForeignKey('RaceCategory', null=True, blank=True)
 
@@ -325,6 +333,45 @@ class GarminActivity(models.Model):
 
     # update name
     self.name = data['activityName']['value']
+
+  def sync_session(self, user, data=None):
+    '''
+    Link an Activity to a RunSession
+    '''
+    date = self.date.date()
+    week, year = date_to_week(date)
+    report,_ = RunReport.objects.get_or_create(user=user, year=year, week=week)
+    sess,_ = RunSession.objects.get_or_create(date=date, report=report)
+    modified = False
+    if sess.garmin_activity is None:
+      sess.garmin_activity = self
+      modified = True
+
+    fields = {
+      'name' : self.name != 'Sans titre' and self.name or None,
+      'time' : self.time,
+      'distance': self.distance,
+      'comment' : data and data['activityDescription']['value'] or None,
+      'sport' : self.get_session_sport(),
+    }
+    for f,v in fields.items():
+      if v and not getattr(sess, f):
+        setattr(sess, f, v)
+        modified = True
+    if modified:
+      sess.save()
+
+  def get_session_sport(self):
+    # Transform Garmin sport to RunSession
+    # simpler sports
+    # Source : http://connect.garmin.com/proxy/activity-service-1.2/json/activity_types
+    transforms = {
+      'swimming' : 'swimming',
+      'lap_swimming' : 'swimming',
+      'open_water_swimming' : 'swimming',
+      'cycling' : 'cycling',
+    }
+    return transforms.get(self.sport, 'running')
 
 class RaceCategory(models.Model):
   name = models.CharField(max_length=250)
