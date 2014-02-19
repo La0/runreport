@@ -3,8 +3,6 @@ import gnupg
 from datetime import datetime, time
 from coach.settings import GPG_HOME, GPG_PASSPHRASE
 from run.models import GarminActivity, RunSession, RunReport
-from django.utils.timezone import utc
-from helpers import date_to_week
 import logging
 
 logger = logging.getLogger('coach.run.garmin')
@@ -110,73 +108,23 @@ class GarminConnector:
       created = True
       logger.info("%s : Created activity %s" % (self._user.username, activity_id))
 
-    # Init newly created activity
-    if created:
 
-      # Date
-      t = int(activity['beginTimestamp']['millis']) / 1000
-      act.date = datetime.utcfromtimestamp(t).replace(tzinfo=utc)
-      logger.debug('Date : %s' % act.date)
+    # Update raw data
+    act.update(activity)
 
-      # Time
-      if 'sumMovingDuration' in activity:
-        t = float(activity['sumMovingDuration']['value'])
-        act.time = datetime.utcfromtimestamp(t).time()
-      elif 'sumDuration' in activity:
-        t = activity['sumDuration']['display']
-        act.time = datetime.strptime(t, '%H:%M:%S').time()
-      else:
-        raise Exception('No duration found.')
-      logger.debug('Time : %s' % act.time)
-
-      # Distance
-      act.distance =  float(activity['sumDistance']['value'])
-      logger.debug('Distance : %s' % act.distance)
-
-      # Speed
-      if 'weightedMeanMovingSpeed' in activity:
-        try:
-          act.speed = datetime.strptime(activity['weightedMeanMovingSpeed']['display'], '%M:%S').time()
-        except:
-          print activity['weightedMeanMovingSpeed']
-          act.speed = time(0,0,0)
-      else:
-        act.speed = time(0,0,0)
-      logger.debug('Speed : %s' % act.speed)
-
-    # Always update name & raw json
-    act.name = activity['activityName']['value']
+    # Always update json file
     act.set_data('raw', activity)
 
     # Load supplementary infos
-    self.load_json(act, 'laps')
-    self.load_json(act, 'details')
+    if created:
+      self.load_json(act, 'laps')
+      self.load_json(act, 'details')
 
     act.save()
 
     # Try to map a run session
     try:
-      date = act.date.date()
-      week, year = date_to_week(date)
-      report,_ = RunReport.objects.get_or_create(user=self._user, year=year, week=week)
-      sess,_ = RunSession.objects.get_or_create(date=date, report=report)
-      modified = False
-      if sess.garmin_activity is None:
-        sess.garmin_activity = act
-        modified = True
-
-      fields = {
-        'name' : act.name != 'Sans titre' and act.name or None,
-        'time' : act.time,
-        'distance': act.distance,
-        'comment' : activity['activityDescription']['value'] or None,
-      }
-      for f,v in fields.items():
-        if v and not getattr(sess, f):
-          setattr(sess, f, v)
-          modified = True
-      if modified:
-        sess.save()
+      act.sync_session(self._user, activity)
     except Exception, e:
       logger.error('%s : Failed to map %s to a RunSession. %s' % (self._user.username, activity_id, str(e) ))
 

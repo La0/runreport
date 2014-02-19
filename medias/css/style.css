@@ -154,6 +154,18 @@ form.report div.types-name button {
   text-align: right;
 }
 
+form div.controls.running input#id_name {
+  background: url(/medias/img/icons/running.png) no-repeat center right white;
+}
+
+form div.controls.cycling input#id_name {
+  background: url(/medias/img/icons/cycling.png) no-repeat center right white;
+}
+
+form div.controls.swimming input#id_name {
+  background: url(/medias/img/icons/swimming.png) no-repeat center right white;
+}
+
 form div.race-category {
   display: none;
 }
@@ -350,4 +362,9 @@ form a.delete {
 
 form a.delete:hover {
   text-decoration: none;
+}
+
+img.sport {
+  width: 22px;
+  vertical-align: middle;
 }

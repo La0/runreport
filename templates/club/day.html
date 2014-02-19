@@ -4,7 +4,7 @@
 
 {% block body %}
   {% if session %}
-  <h4>{{ session.name|default('Session sans nom') }}</h4>
+  <h4><img src="/medias/img/icons/{{session.sport}}.png" />{{ session.name|default('Session sans nom') }}</h4>
   <p>{{ session.comment|default('Pas de commentaire')|linebreaksbr }}</p>
   {% if session.type == 'training' %}
   <span class="label label-info">Entrainement</span>

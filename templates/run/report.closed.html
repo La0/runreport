@@ -21,6 +21,7 @@
     <td style="width: 20%; text-align: right;">{{day|date('l d M')}}</td>
     <td>
       {% if session %}
+      <img src="/medias/img/icons/{{session.sport}}.png" />
       <strong>{{session.name|default('Session sans nom')}}</strong><br />
       {{session.comment|default('Pas de commentaire')|linebreaksbr}}
       <div>
