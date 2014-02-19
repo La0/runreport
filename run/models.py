@@ -362,9 +362,11 @@ class GarminActivity(models.Model):
       sess.save()
 
   def get_session_sport(self):
-    # Transform Garmin sport to RunSession
-    # simpler sports
-    # Source : http://connect.garmin.com/proxy/activity-service-1.2/json/activity_types
+    '''
+    Transform Garmin sport to RunSession
+    simpler sports
+    Source : http://connect.garmin.com/proxy/activity-service-1.2/json/activity_types
+    '''
     transforms = {
       'swimming' : 'swimming',
       'lap_swimming' : 'swimming',
@@ -372,6 +374,10 @@ class GarminActivity(models.Model):
       'cycling' : 'cycling',
     }
     return transforms.get(self.sport, 'running')
+
+  def get_speed_kph(self):
+    # Transform speed form min/km to km/h
+    return 3600.0 / (self.speed.hour * 3600 + self.speed.minute * 60 + self.speed.second)
 
 class RaceCategory(models.Model):
   name = models.CharField(max_length=250)
