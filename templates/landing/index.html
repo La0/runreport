@@ -4,31 +4,56 @@
 {% set wrap_class = 'runners' %}
 
 {% block content %}
-<div id="landing">
-  <div class="jumbotron">
-    <h1>Bienvenue !</h1>
-    <p>Run Report est un site qui vous permet de gérer vos entrainements de <strong>course à pied</strong>, mais surtout de les partager en direct avec votre <strong>entraîneur</strong> !</p>
-    <div class="links">
-      <a class="btn btn-primary" href="{% url login %}">Se connecter</a>
-      <a class="btn" href="{% url user-create %}">Créer un compte</a>
-    </div>
-  </div>
+<style scoped>
+.jumbotron {
+	background: url("/medias/img/runners.jpg") no-repeat scroll center top #FFFFFF;
+}
 
-  <div class="row">
-    <div class="span4">
-      <h2>Pour les athlètes</h2>
-      <p>Vous pouvez gratuitement constituer votre carnet d'entrainements, planifier vos séances, voir concrètement votre évolution sportive et communiquer avec votre entraîneur.</p>
-    </div>
-    <div class="span4">
-      <h2>Pour les clubs</h2>
-      <p>Ce site vous fournit un moyen simple et complet pour gérer vos athlètes, répartis sur plusieurs entraineurs.<br />Chaque entraineur peut consulter les séances de ses athlètes, créer des plans d'entrainements, et communiquer efficacement avec eux.</p>
-   </div>
-    <div class="span4">
-      <h2>Synchronisation Garmin<small>&copy;</small></h2>
-      <p>Si vous disposez d'une montre <a href="http://www.garmin.com" target="_blank">Garmin</a>, vos données peuvent être automatiquement récupérées (distance, temps, ...) et intégrées à vos statistiques de séances.</p>
-    </div>
-  </div>
+.jumbotron .inner-jumbotron {
+	background: rgba(0, 0, 0, 0.5);
+	border-radius: 4px;
+	padding: 5px;
+	color: #fff;
+	margin-bottom: 20px;
+}
+
+.jumbotron h1 {
+	font-size: 3em;
+}
+</style>
+
+<div id="landing">
+	<div class="jumbotron">
+		<div class="container">
+			<div class="inner-jumbotron">
+				<h1>Bienvenue !</h1>
+				<p>Run Report est un site qui vous permet de gérer vos entrainements de <strong>course à pied</strong>, mais surtout de les partager en direct avec votre <strong>entraîneur</strong> !</p>
+			</div>
+			<div class="links">
+				<a class="btn btn-primary" href="{% url login %}">Se connecter</a>
+				<a class="btn btn-default" href="{% url user-create %}">Créer un compte</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4">
+				<h2>Pour les athlètes</h2>
+				<p>Vous pouvez gratuitement constituer votre carnet d'entrainements, planifier vos séances, voir concrètement votre évolution sportive et communiquer avec votre entraîneur.</p>
+			</div>
+			<div class="col-md-4">
+				<h2>Pour les clubs</h2>
+				<p>Ce site vous fournit un moyen simple et complet pour gérer vos athlètes, répartis sur plusieurs entraineurs.<br />Chaque entraineur peut consulter les séances de ses athlètes, créer des plans d'entrainements, et communiquer efficacement avec eux.</p>
+			</div>
+			<div class="col-md-4">
+				<h2>Synchronisation Garmin<small>&copy;</small></h2>
+				<p>Si vous disposez d'une montre <a href="http://www.garmin.com" target="_blank">Garmin</a>, vos données peuvent être automatiquement récupérées (distance, temps, ...) et intégrées à vos statistiques de séances.</p>
+			</div>
+		</div>
+	</div>
 </div>
+
 
 
 
