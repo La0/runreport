@@ -18,9 +18,9 @@ def add_pages(request):
 
   menu = []
   if request.user.is_authenticated():
-    menu.append(_p(('page-list', 'news'), 'News', 'icon-envelope', lazy=True))
-    menu.append(_p('report-current', 'Cette semaine', 'icon-list'))
-    menu.append(_p('report-current-month', 'Calendrier', icon='icon-th-large', lazy=True))
+    menu.append(_p(('page-list', 'news'), 'News', 'fa-envelope', lazy=True))
+    menu.append(_p('report-current', 'Cette semaine', 'fa-list'))
+    menu.append(_p('report-current-month', 'Calendrier', icon='fa-calendar', lazy=True))
 
     # Build Club menu
     members = ClubMembership.objects.filter(user=request.user).exclude(role__in=('archive', 'prospect'))
@@ -28,7 +28,7 @@ def add_pages(request):
       submenu = {
         'caption' : m.club.name,
         'menu' : [],
-        'icon' : 'icon-star',
+        'icon' : 'fa-star',
       }
 
       # Add club admin links for trainers
@@ -55,16 +55,16 @@ def add_pages(request):
     # Add button to join a club
     # when no memberships exist
     if not members:
-      menu.append(_p('club-list', 'Rejoindre un club', 'icon-plus-sign'))
+      menu.append(_p('club-list', 'Rejoindre un club', 'fa-plus'))
 
     # Help
-    menu.append(_p(('page-list', 'help'), 'Aide', 'icon-question-sign', lazy=True))
+    menu.append(_p(('page-list', 'help'), 'Aide', 'fa-question-circle', lazy=True))
 
     # User menu
     submenu = {
       'caption' : request.user.first_name or request.user.username,
       'menu' : [],
-      'icon' : 'icon-user',
+      'icon' : 'fa-user',
     }
     submenu['menu'].append(_p('vma', 'Mes allures'))
     submenu['menu'].append(_p('user-profile', 'Mon profil'))
@@ -75,9 +75,9 @@ def add_pages(request):
     submenu['menu'].append(_p('logout', u'Se déconnecter'))
     menu.append(submenu)
   else:
-    menu.append(_p('user-create', u'Créer un compte', 'icon-plus-sign'))
-    menu.append(_p(('page-list', 'help'), 'Aide', 'icon-question-sign', lazy=True))
-    menu.append(_p('login', 'Se connecter', 'icon-user'))
+    menu.append(_p('user-create', u'Créer un compte', 'fa-plus'))
+    menu.append(_p(('page-list', 'help'), 'Aide', 'fa-question-circle', lazy=True))
+    menu.append(_p('login', 'Se connecter', 'fa-user'))
 
   # Search for active main menu
   # based on sub items
