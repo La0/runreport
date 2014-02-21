@@ -18,8 +18,7 @@ def add_pages(request):
 
   menu = []
   if request.user.is_authenticated():
-    menu.append(_p(('page-list', 'news'), 'News', 'fa-envelope', lazy=True))
-    menu.append(_p('report-current', 'Cette semaine', 'fa-list'))
+    menu.append(_p('report-current', 'Semaine', 'fa-list'))
     menu.append(_p('report-current-month', 'Calendrier', icon='fa-calendar', lazy=True))
 
     # Build Club menu
@@ -57,8 +56,16 @@ def add_pages(request):
     if not members:
       menu.append(_p('club-list', 'Rejoindre un club', 'fa-plus'))
 
-    # Help
-    menu.append(_p(('page-list', 'help'), 'Aide', 'fa-question-circle', lazy=True))
+    
+    # User menu
+    submenu = {
+      'caption' : 'Aide',
+      'menu' : [],
+      'icon' : 'fa-question-circle',
+    }
+    submenu['menu'].append(_p(('page-list', 'help'), 'Aide', lazy=True))
+    submenu['menu'].append(_p(('page-list', 'news'), 'News', lazy=True))
+    menu.append(submenu)
 
     # User menu
     submenu = {
