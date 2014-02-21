@@ -1,8 +1,10 @@
 {% if not pageargs %}
   {% set pageargs = [] %}
 {% endif %}
-<div class="pagination pagination-centered">
-  <ul>
+
+<div class="container text-center">
+	
+<ul class="pagination">
   {% if week_previous %}
     <li><a href="{{pagename|url(*pageargs + [week_previous.year, week_previous.week,])}}">&laquo;</a></li>
   {% else %}
@@ -22,7 +24,8 @@
   {% if week_next %}
     <li><a href="{{pagename|url(*pageargs + [week_next.year, week_next.week, ])}}">&raquo;</a></li>
   {% else %}
-    <li class="active"><span>&laquo;</span</li>
+    <li class="active"><span>&raquo;</span</li>
   {% endif %}
-  </ul>
+</ul>
+
 </div>
