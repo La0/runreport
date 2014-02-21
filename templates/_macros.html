@@ -1,14 +1,18 @@
+
+
 {% macro input(field, label, help=False) -%}
-<div class="control-group {% if field.errors %}error{% elif field.value() %}success{% endif %}">
-  <label class="control-label" for="id_{{field.name}}">{{label}}</label>
-  <div class="controls">
-    {{field|safe}}
-    {% if field.errors %}
-    <span class="help-inline">{{field.errors|safe}}</span>
-    {% elif help %}
-    <span class="help-inline">{{help}}</span>
-    {% endif %}
-  </div>
+<!-- <div class="form-group {% if field.errors %}has-error{% elif field.value() %}has-success{% endif %}"> -->
+<div class="form-group {% if field.errors %}has-error{% endif %}">
+  	<label class="col-sm-4 control-label" for="id_{{field.name}}">{{label}}</label>
+    <div class="col-sm-8">
+      {{field|addcss("form-control")|safe}}
+      {% if field.errors %}
+      <div class="help-block">{{field.errors|safe}}</div>
+      {% elif help %}
+      <div class="help-block">{{help}}</div>
+      {% endif %}
+    </div>
+    
 </div>
 {%- endmacro %}
 
