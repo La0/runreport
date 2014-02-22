@@ -1,10 +1,10 @@
 
 
-{% macro input(field, label, help=False) -%}
+{% macro input(field, label, help=False, colLabel=2, colField=10) -%}
 <!-- <div class="form-group {% if field.errors %}has-error{% elif field.value() %}has-success{% endif %}"> -->
 <div class="form-group {% if field.errors %}has-error{% endif %}">
-  	<label class="col-sm-4 control-label" for="id_{{field.name}}">{{label}}</label>
-    <div class="col-sm-8">
+  	<label class="col-sm-{{colLabel}} control-label" for="id_{{field.html_name}}">{{label}}</label>
+    <div class="col-sm-{{colField}}">
       {{field|addcss("form-control")|safe}}
       {% if field.errors %}
       <div class="help-block">{{field.errors|safe}}</div>
@@ -17,79 +17,76 @@
 {%- endmacro %}
 
 {% macro session_time_distance(form) -%}
-<div class="control-group time-distance" style="height: 25px">
-  <div class="controls">
-    <div class="input-prepend time">
-      <span class="add-on">Temps</span>
-      {{ form.time|safe }}
-    </div>
-    <div class="input-prepend distance">
-      <span class="add-on" rel="tooltip" title="Distance en course à pied uniquement.">Distance cap</span>
-      {{ form.distance|safe }}
-    </div>
-  </div>
+<div class="form-group time-distance ">
+	<label class="col-sm-2 control-label {% if form.time.errors %}has-error{% endif %}" for="id_{{form.time.html_name}}">Temps</label>
+	<div class="col-sm-4 {% if form.time.errors %}has-error{% endif %}">
+		{{ form.time|addcss("form-control")|safe }}
+		{% if form.time.errors %}
+		<div class="help-block">{{form.time.errors|safe}}</div>
+		{% endif %}
+	</div>
+	<label class="col-sm-2 control-label" for="id_{{form.distance.html_name}}" rel="tooltip" title="Distance en course à pied uniquement.">Distance Cap</label>
+	<div class="col-sm-4 {% if form.distance.errors %}has-error{% endif %}">
+		{{ form.distance|addcss("form-control")|safe }}
+		{% if form.distance.errors %}
+	    <div class="help-block">{{form.distance.errors|safe}}</div>
+		{% endif %}
+	</div>
 </div>
-{% if form.distance.errors %}
-<div class="alert alert-danger">Distance: {{form.distance.errors|safe}}</div>
-{% endif %}
-{% if form.time.errors %}
-<div class="alert alert-danger">Temps: {{form.time.errors|safe}}</div>
-{% endif %}
 {%- endmacro %}
 
 {% macro session_types_name(form, types) -%}
 
 {% with form.instance.type as type %}
 {% with form.name as field %}
-<div class="types-name control-group {% if field.errors %}error{% elif field.value() %}success{% endif %}">
-  {% if field.errors %}
-  <span class="help-inline">{{field.errors|safe}}</span>
-  {% endif %}
-  <label class="control-label" for="id_{{field.name}}">Séance</label>
-  <div class="controls {{form.instance.sport|default('running')}}">
-    <div class="input-prepend">
-      <div class="btn-group">
-        <button class="btn dropdown-toggle {% if type == 'race' %}btn-success{% elif type == 'rest'%}btn-info{% endif %}" data-toggle="dropdown">
-          <span class="name">
-          {% if type == 'training' %}
-          Entraînement
-          {% elif type == 'race' %}
-          Course
-          {% else %}
-          Repos
-          {% endif %}
-          </span>
-          <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu types">
-          {% for k, name in types %}
-          <li {% if k == type %}class="active"{% endif %}>
-            <a href="#" value="{{k}}">{{name}}</a>
-          </li>
-          {% endfor %}
-        </ul>
-      </div>
-      {{ form.type|safe }}
-      {{ form.name|safe }}
-    </div>
-  </div>
+<div class="types-name form-group {% if field.errors %}error{% elif field.value() %}success{% endif %}">
+	{% if field.errors %}
+	<span class="help-inline">{{field.errors|safe}}</span>
+	{% endif %}
+	<label class="col-sm-2 control-label" for="id_{{field.name}}">Séance</label>
+	<div class="col-sm-10 {{form.instance.sport|default('running')}}">
+		<div class="input-group">
+			<div class="input-group-btn">
+				<button class="btn dropdown-toggle {% if type == 'race' %}btn-success{% elif type == 'rest'%}btn-info{% else %}btn-default{% endif %}" data-toggle="dropdown">
+					<span class="name">
+						{% if type == 'training' %}
+						Entraînement
+						{% elif type == 'race' %}
+						Course
+						{% else %}
+						Repos
+						{% endif %}
+					</span>
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu types">
+					{% for k, name in types %}
+					<li{% if type == k %} class="active"{% endif %}>
+						<a href="#" value="{{k}}">{{name}}</a>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+			{{ form.type|addcss("form-control")|safe }}
+			{{ form.name|addcss("form-control")|safe }}
+		</div>
+	</div>
 </div>
 {% endwith %}
 {% endwith %}
 {%- endmacro %}
 
+
 {% macro race_category(form) -%}
-<div class="control-group race-category {% if form.instance.type == 'race' %}active{% endif %}" style="height: 25px">
-  <div class="controls">
-    <div class="input-prepend time">
-      <span class="add-on">Type de course</span>
-      {{ form.race_category|safe }}
+<div class="form-group race-category {% if form.instance.type == 'race' %}active{% endif %}">
+	<label class="col-sm-2 control-label" for="id_{{form.race_category.html_name}}">Type de course</label>
+	<div class="col-sm-10 {{form.instance.sport|default('running')}}">
+      {{ form.race_category|addcss("form-control")|safe }}
     </div>
-  </div>
+	{% if form.race_category.errors %}
+    <div class="help-block">{{form.race_category.errors|safe}}</div>
+	{% endif %}
 </div>
-{% if form.race_category.errors %}
-<div class="alert alert-danger">{{form.distance.errors|safe}}</div>
-{% endif %}
 {%- endmacro %}
 
 {% macro tr(fields, item='td') -%}
