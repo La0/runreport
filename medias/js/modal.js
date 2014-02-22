@@ -13,14 +13,13 @@ $(function(){
   // * update input value
   // * update selector
   $(document).on('click', 'ul.types li a', function(){
-    type = $(this).attr('value');
+    var type = $(this).attr('value');
     $(this).parent().addClass('active').siblings('li.active').removeClass('active');
-    selector = $(this).parents('div.types-name');
+    var selector = $(this).parents('div.types-name');
     selector.find('input[type=hidden]').val(type);
-    btn = selector.find('button');
+    var btn = selector.find('button');
     btn.removeClass('btn-success').removeClass('btn-info');
-    rc = $(this).parents('fieldset').find('div.race-category');
-    console.log(rc);
+    var rc = $(this).parents('fieldset').find('div.race-category');
     if(type == 'race'){
 
       // Show race category
@@ -36,10 +35,12 @@ $(function(){
       // Button styling
       if(type == 'rest')
         btn.addClass('btn-info');
+	  else 
+        btn.addClass('btn-default');
+		
     }
     btn.find('span.name').html($(this).text());
     selector.find('.btn-group').removeClass('open');
-    return false;
   });
 });
 
@@ -47,7 +48,7 @@ function submit_form(evt){
   evt.preventDefault();
 
   // Use datas from form
-  data = $(this).serialize();
+  var data = $(this).serialize();
 
   // Send data
   load_box(this.getAttribute('action'), 'POST', data);
