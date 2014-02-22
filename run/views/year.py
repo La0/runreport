@@ -3,6 +3,7 @@ from django.views.generic.dates import YearArchiveView
 from run.models import RunSession
 from datetime import date, timedelta
 from django.http import Http404
+import collections
 
 class RunCalendarYear(YearArchiveView):
   template_name = 'run/year.html'
@@ -32,6 +33,7 @@ class RunCalendarYear(YearArchiveView):
 
     # Map sessions in dict
     sessions = dict([(s.date, s) for s in sessions_raw])
+    sessions = collections.OrderedDict(sorted(sessions.items()))
 
     context = {
       'year' : year,

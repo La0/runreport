@@ -6,6 +6,7 @@ from run.models import RunSession, RunReport, SESSION_TYPES
 from run.forms import RunSessionForm
 from datetime import datetime, date
 import calendar
+import collections
 from coach.mixins import JsonResponseMixin, JSON_STATUS_ERROR, CsvResponseMixin
 from helpers import date_to_week
 
@@ -43,6 +44,7 @@ class RunCalendar(MonthArchiveView):
     # Load all sessions for this month
     sessions = RunSession.objects.filter(report__user=self.request.user, date__in=self.days)
     sessions_per_days = dict((r.date, r) for r in sessions)
+    sessions_per_days = collections.OrderedDict(sorted(sessions_per_days.items()))
 
     context = {
       'months' : (self.get_previous_month(date), date, self.get_next_month(date)),
