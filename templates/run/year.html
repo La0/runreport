@@ -4,9 +4,10 @@
 {% set page_size = 'fullscreen' %}
 
 {% block content %}
+<div class="container">
 <h1>{% if member %}{{ member.first_name }} {{ member.last_name }} - {% endif %}Année {{ year }}</h1>
 
-<div class="year">
+<div class="year hidden-xs">
   {% for month, days in date_list.items() %}
   <div class="month">
     <div class="head">
@@ -26,6 +27,22 @@
   {% endfor %}
 </div>
 
+<div class="visible-xs">
+	{% for day in object_list %}
+	{% with object_list[day] as session %}
+	<div class="modal-action" href="{{pageday|url(*pageargs + [day.year, day.month, day.day])}}">
+		<strong>{{day|date('l d E Y')|title()}}</strong>
+		<p>{{session.name|default('Session sans nom')}}</p>
+        {% if session.plan_session %}
+        <p>
+          <i class="icon-tags"> </i> {{ session.plan_session.week.plan.name|truncate(10) }}
+        </p>
+        {% endif %}
+	</div>
+	{% endwith %}
+	{% endfor %}
+</div>
+
 <ul class="pager">
   {% if previous_year %}
   <li class="previous">
@@ -38,4 +55,5 @@
   </li>
   {% endif %}
 </ul>
+</div>
 {% endblock %}

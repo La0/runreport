@@ -4,18 +4,26 @@
 
 {% block content %}
 
+<style scoped>
+table.table {
+	table-layout: fixed;
+}
+</style>
+
+<div class="container">
+
 <h2>
   {% if member %}{{ member.first_name|lower|title }} {{ member.last_name|lower|title }} : {% endif %}{{months.1|date('E Y')}}
 
   <p class="pull-right">
     {% if not member %}
-    <a class="btn" href="{% url export-month months.1.year, months.1.month %}"><i class="icon-chevron-down"></i> Export CSV</a>
+    <a class="btn btn-default" href="{% url export-month months.1.year, months.1.month %}"><i class="icon-chevron-down"></i> Export CSV</a>
     {% endif %}
     <a class="btn btn-info" href="{{pageyear|url(*pageargs + [months.1.year ])}}"><i class="icon-white icon-list-alt"></i> Calendrier annuel</a>
   </p>
 </h2>
 
-<table class="table table-bordered table-condensed calendar">
+<table class="table table-bordered table-condensed calendar hidden-xs">
   <tr>
     <th>Lundi</th>
     <th>Mardi</th>
@@ -59,6 +67,23 @@
 {% endfor %}
 </table>
 
+<div class="visible-xs">
+	{% for day in sessions %}
+	{% with sessions[day] as session %}
+	<div class="modal-action" href="{{pageday|url(*pageargs + [day.year, day.month, day.day])}}">
+		<strong>{{day|date('l d E Y')|title()}}</strong>
+		<p>{{session.name|default('Session sans nom')}}</p>
+        {% if session.plan_session %}
+        <p>
+          <i class="icon-tags"> </i> {{ session.plan_session.week.plan.name|truncate(10) }}
+        </p>
+        {% endif %}
+	</div>
+	{% endwith %}
+	{% endfor %}
+</div>
+
+
 <ul class="pager">
   {% if months.0 %}
   <li class="previous">
@@ -71,5 +96,7 @@
   </li>
   {% endif %}
 </ul>
+
+</div>
 
 {% endblock %}
