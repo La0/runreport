@@ -7,6 +7,10 @@ $(function(){
 });
 </script>
 
+<div class="container">
+	
+	<h1>{{ page_title }}</h1>
+
 <form method="post" action="" class="form-horizontal report">
   {% csrf_token %}
 
@@ -53,7 +57,7 @@ $(function(){
     </p>
   </fieldset>
 
-  <div class="form-actions">
+  <p>
     <button type="submit" name="action" value="save" class="btn btn-primary">Sauver ces commentaires</button>
 
     {% for m in memberships %}
@@ -64,7 +68,7 @@ $(function(){
       {% endfor %}
     </button>
     {% endfor %}
-  </div>
+  </p>
 </form>
 
 {% if user.auto_send %}
@@ -86,3 +90,4 @@ $(function(){
   </div>
 {% endif %}
 
+</div>

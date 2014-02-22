@@ -12,10 +12,10 @@
 	  {% csrf_token %}
 	  <fieldset>
 	    <legend>Informations personnelles</legend>
-	    {{ macros.input(form.first_name, 'Prénom') }}
-	    {{ macros.input(form.last_name, 'Nom') }}
-	    {{ macros.input(form.email, 'Adresse email') }}
-	    {{ macros.input(form.birthday, 'Date de naissance') }}
+	    {{ macros.input(form.first_name, 'Prénom', false, 4, 8) }}
+	    {{ macros.input(form.last_name, 'Nom', false, 4, 8) }}
+	    {{ macros.input(form.email, 'Adresse email', false, 4, 8) }}
+	    {{ macros.input(form.birthday, 'Date de naissance', false, 4, 8) }}
 	    {% if user.category %}
 	    <div class="form-group">
 	      <label class="col-sm-4 control-label">Catégorie</label>
@@ -24,7 +24,7 @@
 	      </div>
 	    </div>
 	    {% endif %}
-	    {{ macros.input(form.license, 'License FFA') }}
+	    {{ macros.input(form.license, 'License FFA', false, 4, 8) }}
 	    <div class="alert alert-info">
 	      <h4>Mot de passe</h4>
 	      Vous pouvez changer de mot de passe en <a href="{% url user-password-update %}">utilisant cette page</a>.
@@ -68,13 +68,13 @@
 		
 		
 
-	    {{ macros.input(form.nb_sessions, 'Nb Séances hebdomadaires') }}
-	    {{ macros.input(form.vma, 'Vma', 'Ex: 15.2 km/h') }}
-	    {{ macros.input(form.weight, 'Poids', 'En kg') }}
-	    {{ macros.input(form.height, 'Taille', 'En cm') }}
-	    {{ macros.input(form.frequency_rest, 'Fréquence Cardiaque au repos') }}
-	    {{ macros.input(form.frequency, 'Fréquence Cardiaque maximale') }}
-	    {{ macros.input(form.comment, 'Renseignements divers') }}
+	    {{ macros.input(form.nb_sessions, 'Nb Séances hebdomadaires', false, 4, 8) }}
+	    {{ macros.input(form.vma, 'Vma', 'Ex: 15.2 km/h', 4, 8) }}
+	    {{ macros.input(form.weight, 'Poids', 'En kg', 4, 8) }}
+	    {{ macros.input(form.height, 'Taille', 'En cm', 4, 8) }}
+	    {{ macros.input(form.frequency_rest, 'Fréquence Cardiaque au repos', false, 4, 8) }}
+	    {{ macros.input(form.frequency, 'Fréquence Cardiaque maximale', false, 4, 8) }}
+	    {{ macros.input(form.comment, 'Renseignements divers', false, 4, 8) }}
 	  </fieldset>
 
 	   <button type="submit" class="btn btn-primary">Mettre à jour</button>

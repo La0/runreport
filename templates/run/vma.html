@@ -4,6 +4,8 @@
 
 {% block content %}
 
+<div class="container">
+
 {% if user.vma %}
 
 <h2>Temps de passage</h2>
@@ -71,5 +73,7 @@ Votre vma actuelle est de {{user.vma}} km/h
   Il faut renseigner ta VMA sur la <a href="{% url user-profile %}">page de profil</a> pour pouvoir afficher les tableaux.
 </div>
 {% endif %}
+
+</div>
 
 {% endblock %}
