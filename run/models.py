@@ -314,7 +314,7 @@ class GarminActivity(models.Model):
     if 'weightedMeanMovingSpeed' in data:
       speed = data['weightedMeanMovingSpeed']
 
-      if speed['unitAbbr'] == 'km/h' or speed['uom'] == 'kph':
+      if speed['unitAbbr'] == 'km/h' or (speed['uom'] == 'kph' and self.get_session_sport() != 'running'):
         # Transform km/h in min/km
         s = float(speed['value'])
         mpk = 60.0 / s
