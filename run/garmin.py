@@ -4,6 +4,7 @@ from datetime import datetime, time
 from coach.settings import GPG_HOME, GPG_PASSPHRASE
 from run.models import GarminActivity, RunSession, RunReport
 import logging
+import re
 
 logger = logging.getLogger('coach.run.garmin')
 
@@ -12,7 +13,13 @@ class GarminConnector:
   _login = None
   _password = None
 
-  _url_login = 'https://connect.garmin.com/signin'
+  # Login Urls
+  _url_hostname = 'http://connect.garmin.com/gauth/hostname'
+  _url_login = 'https://sso.garmin.com/sso/login'
+  _url_post_login = 'http://connect.garmin.com/post-auth/login'
+  _url_check_login = 'http://connect.garmin.com/user/username'
+
+  # Data Urls
   _url_activity = 'http://connect.garmin.com/proxy/activity-search-service-1.0/json/activities'
   _url_laps = 'http://connect.garmin.com/proxy/activity-service-1.3/json/activity/%s'
   _url_details = 'http://connect.garmin.com/proxy/activity-service-1.3/json/activityDetails/%s'
@@ -42,38 +49,57 @@ class GarminConnector:
 
   def login(self):
     '''
-    Authentify session
+    Authentify session, using new CAS ticket
+    See protocol on http://www.jasig.org/cas/protocol
     '''
-    # First request is empty to init session
     self._session = requests.Session()
-    self._session.get(self._url_login)
 
-    # Setup form data
+    # Get SSO server hostname
+    res = self._session.get(self._url_hostname)
+    sso_hostname = res.json().get('host', None)
+    if not sso_hostname:
+      raise Exception('No SSO server available')
+
+    # Load login page to get login ticket
+    params = {
+      'clientId' : 'GarminConnect',
+      'webhost' : sso_hostname,
+    }
+    res = self._session.get(self._url_login, params=params)
+    if res.status_code != 200:
+      raise Exception('No login form')
+
+    # Get the login ticket value
+    regex = '<input\s+type="hidden"\s+name="lt"\s+value="(?P<lt>\w+)"\s+/>'
+    res = re.search(regex, res.text)
+    if not res:
+      raise Exception('No login ticket')
+    login_ticket = res.group('lt')
+
+    # Login/Password with login ticket
+    # Send through POST
     data = {
-      'login' : 'login',
-      'login:loginUsernameField' : self._login,
-      'login:password' : self._password,
-      'login:rememberMe' : 'on',
-      'login:signInButton' : 'Se connecter',
-      'javax.faces.ViewState' : 'j_id1',
+      '_eventId' : 'submit', # Strange, but needed
+      'lt' : login_ticket,
+      'username' : self._login,
+      'password' : self._password,
     }
+    res = self._session.post(self._url_login, params=params, data=data)
+    if res.status_code != 200:
+      raise Exception('Authentification failed.')
 
-    # Mimic firefox headers
-    headers = {
-      'Content-Type' : 'application/x-www-form-urlencoded',
-      'User-Agent' : 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:14.0) Gecko/20100101 Firefox/14.0.1',
-      'Referer' : 'https://connect.garmin.com/signin',
-      'Accept' : 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-      'Accept-Language' : 'en-us,en;q=0.5',
-      'Accept-Encoding' : 'gzip, deflate',
-    }
+    # Second auth step
+    # Don't know why this one is necessary :/
+    res = self._session.get(self._url_post_login)
+    if res.status_code != 200:
+      raise Exception('Second auth step failed.')
 
-    # Send everything together through POST
-    self._session.post(self._url_login, data=data, headers=headers)
-
-    # Check we have auth cookie
-    if 'org.jboss.seam.security.authtoken' not in self._session.cookies:
-      raise Exception("Auth failed with login %s" % self._login)
+    # Check login
+    res = self._session.get(self._url_check_login)
+    user = res.json()
+    if not user.get('username', None):
+      raise Exception("Authentification failed.")
+    logger.info('Logged in as %s' % (user['username']))
 
   def search(self, nb_pass=0):
     if self._user is None:
