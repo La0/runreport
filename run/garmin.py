@@ -1,3 +1,4 @@
+# coding=utf-8
 import requests
 import gnupg
 from datetime import datetime, time
@@ -134,7 +135,6 @@ class GarminConnector:
       created = True
       logger.info("%s : Created activity %s" % (self._user.username, activity_id))
 
-
     # Update raw data
     act.update(activity)
 
@@ -171,5 +171,7 @@ class GarminConnector:
       return False
 
     resp = self._session.get(urls[data_type])
+    if resp.encoding is None:
+      resp.encoding = 'utf-8'
     activity.set_data(data_type, resp.json())
     return True
