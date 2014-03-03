@@ -20,7 +20,7 @@ urlpatterns = patterns('',
     'subject_template_name' : 'users/password_reset_subject.txt',
     'email_template_name' : 'users/password_reset_email.html',
   }),
-  url(r'^password/confirm/(?P<uidb64>[0-9A-Za-z]{1,13})-(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/?$', password_reset_confirm, name='password_reset_confirm', kwargs={
+  url(r'^password/reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$', password_reset_confirm, name='password_reset_confirm', kwargs={
     'template_name' : 'users/password_reset_confirm.html',
   }),
   url(r'^password/complete/?$', password_reset_complete, name='password_reset_complete', kwargs={
