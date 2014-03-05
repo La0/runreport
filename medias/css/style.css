@@ -274,11 +274,11 @@ div.year div.day span.name {
   color: #333;
 }
 
-div.year div.day.training {
+.training {
   background: #ccd5f9;
 }
 
-div.year div.day.race {
+.race {
   background: #5BB75B;
 }
 
