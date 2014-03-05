@@ -19,7 +19,7 @@ Votre vma actuelle est de {{user.vma}} km/h
   <tr>
     <th>% VMA</tH>
     {% for d in vma.get_distances() %}
-    <th>{{d}}</td>
+    <th>{{d}}m</td>
     {% endfor %}
   </tr>
   {% for pace in vma.get_paces() %}
@@ -29,9 +29,9 @@ Votre vma actuelle est de {{user.vma}} km/h
     <td>
       {% with vma.get_time(pace, d) as t %}
       {% if t.hour > 0 %}
-      {{t|date("H\h i' s\"")}}
+      {{t|date("H\hi's\"")}}
       {% else %}
-      {{t|date("i' s\"")}}
+      {{t|date("i's\"")}}
       {% endif %}
       {% endwith %}
     </td>
