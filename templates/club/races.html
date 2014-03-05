@@ -27,7 +27,7 @@
 			<td>{{ race.name|truncatechars(30) }}</td>
 			<td>{{ race.date|date('d E Y') }}</td>
 			<td>{{ race.date|timeuntil() }}</td>
-			<td><a class="modal-action btn btn-info" href="{% url club-member-day club.slug, race.report.user.username, race.date.year, race.date.month, race.date.day %}">Voir</a></td>
+			<td><a class="modal-action btn btn-info btn-sm" href="{% url club-member-day club.slug, race.report.user.username, race.date.year, race.date.month, race.date.day %}">Voir</a></td>
 		</tr>
 		{% endfor %}
 	</table>

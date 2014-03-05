@@ -21,7 +21,7 @@
 			<td>{{ race.distance|default(0)|floatformat() }} km</td>
 			<td>{{ race.time|default('-') }}</td>
 			<td>
-				<a class="modal-action btn btn-small {% if loop.first %}btn-warning{% endif %}" href="{% url report-day race.date.year, race.date.month, race.date.day %}">Voir</a>
+				<a class="modal-action btn-default btn-sm {% if loop.first %}btn-warning{% endif %}" href="{% url report-day race.date.year, race.date.month, race.date.day %}">Voir</a>
 			</td>
 		</tr>
 		{% endfor %}
