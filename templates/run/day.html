@@ -34,9 +34,9 @@
 
 {% block footer %}
 {% if session.pk %}
-<a href="{% url report-day-delete day.year, day.month, day.day %}" class="delete modal-action"><i class="icon-trash"></i> Supprimer</a>
+<a href="{% url report-day-delete day.year, day.month, day.day %}" class="pull-left btn btn-danger btn-sm modal-action"><i class="icon-trash"></i> Supprimer</a>
 {% endif %}
-<button class="btn" data-dismiss="modal">Fermer</button>
-<a href="{{ report.get_absolute_url() }}" class="btn btn-success">Voir cette semaine</a>
-<input class="btn btn-primary" type="submit" value="Sauvegarder" style="margin-left: 20px;" />
+<button class="btn btn-default btn-sm" data-dismiss="modal">Fermer</button>
+<a href="{{ report.get_absolute_url() }}" class="btn btn-success btn-sm">Voir cette semaine</a>
+<input class="btn btn-primary btn-sm" type="submit" value="Sauvegarder">
 {% endblock %}
