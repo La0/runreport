@@ -10,28 +10,28 @@
 	<h2>{{ page_title }}</h2>
 	
 	{% if type == 'help' %}
-		<div class="alert alert-info">
-			<h4>Un problème ? Un bug ?</h4>
-		 	N'hésitez pas à utiliser le <a href="/contact">formulaire de contact</a> en cas de problème sur RunReport.
-		</div>
+	<div class="alert alert-info">
+		<h4>Un problème ? Un bug ?</h4>
+		N'hésitez pas à utiliser le <a href="/contact">formulaire de contact</a> en cas de problème sur RunReport.
+	</div>
 	{% endif %}
 	
 	{% for page in pages %}
-		<div class="row">
-			<div class="col-md-12">
-		  		<a href="{% url page page.type, page.slug %}">
-		    		<strong>{{ page.name }}</strong>
-					<div class="pull-right">
-		      			{% if edit and not page.published %}
-		      		  		<span class="label label-important">Privée</span>
-		      			{% endif %}
-		      		  	<span class="label label-default">{{ page.user.first_name }} {{ page.user.last_name|default(page.user) }}</span>
-		      		  	<span class="label label-info">{{ page.updated|date('d E Y')}}</span>
-					</div>
-				</a>
-			</div>
+	<div class="row">
+		<div class="col-md-12">
+			<a href="{% url page page.type, page.slug %}">
+				<strong>{{ page.name }}</strong>
+				<div class="pull-right">
+					{% if edit and not page.published %}
+					<span class="label label-important">Privée</span>
+					{% endif %}
+					<span class="label label-default">{{ page.user.first_name }} {{ page.user.last_name|default(page.user) }}</span>
+					<span class="label label-info">{{ page.updated|date('d E Y')}}</span>
+				</div>
+			</a>
 		</div>
-	  {% endfor %}
+	</div>
+	{% endfor %}
 </div>
 
 

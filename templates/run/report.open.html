@@ -1,91 +1,91 @@
 <script type="text/javascript">
 $('span.add-on').tooltip();
 $(function(){
-  $('button.type').click(function(){
-    $(this).siblings('input').val(this.value);
-  });
+	$('button.type').click(function(){
+		$(this).siblings('input').val(this.value);
+	});
 });
 </script>
 
 <div class="container">
 	
-<form method="post" action="" class="form-horizontal report">
-  {% csrf_token %}
+	<form method="post" action="" class="form-horizontal report">
+		{% csrf_token %}
 
-  {% for day in report.get_days() %}
-    {% if day == now.date() %}
-    <fieldset class="today">
-      <legend>Aujourd'hui - {{ day|date('l d E')|title }}</legend>
-    {% else %}
-    <fieldset>
-      <legend>{{ day|date('l d E')|title }}</legend>
-    {% endif %}
+		{% for day in report.get_days() %}
+		{% if day == now.date() %}
+		<fieldset class="today">
+			<legend>Aujourd'hui - {{ day|date('l d E')|title }}</legend>
+		{% else %}
+		<fieldset>
+			<legend>{{ day|date('l d E')|title }}</legend>
+			{% endif %}
 
-    {% with forms[day] as session %}
-      {% with session.instance.plan_session as plan_session %}
-        {% include 'run/_plan.html' %}
-      {% endwith %}
-      {% with session.non_field_errors() as err %}
-      {% if err %}
-      <div class="alert alert-danger">
-        <h4>Erreur pour cette séance</h4>
-        {{ err|safe }}
-      </div>
-      {% endif %}
-      {% endwith %}
-      {{ macros.session_types_name(session, session_types) }}
-      {{ macros.input(session.comment, 'Commentaire') }}
-      {{ macros.session_time_distance(session) }}
-      {{ macros.race_category(session) }}
-      {% with session.instance.garmin_activity as activity %}
-        {% include '_garmin.html' %}
-      {% endwith %}
-    {% endwith %}
-    </fieldset>
-  {% endfor %}
+			{% with forms[day] as session %}
+			{% with session.instance.plan_session as plan_session %}
+			{% include 'run/_plan.html' %}
+			{% endwith %}
+			{% with session.non_field_errors() as err %}
+			{% if err %}
+			<div class="alert alert-danger">
+				<h4>Erreur pour cette séance</h4>
+				{{ err|safe }}
+			</div>
+			{% endif %}
+			{% endwith %}
+			{{ macros.session_types_name(session, session_types) }}
+			{{ macros.input(session.comment, 'Commentaire') }}
+			{{ macros.session_time_distance(session) }}
+			{{ macros.race_category(session) }}
+			{% with session.instance.garmin_activity as activity %}
+			{% include '_garmin.html' %}
+			{% endwith %}
+			{% endwith %}
+		</fieldset>
+		{% endfor %}
 
-  <fieldset>
-    <legend>Bilan de la semaine</legend>
-    <p class="muted">
-    Vous pouvez indiquer votre ressenti sur cette semaine (facultatif).
-    </p>
-    {{ macros.input(form_report.comment, 'Commentaire') }}
-    <p>
-    <span class="label label-info">Temps total</span> {{ report.time|days_time('jour', '%Hh%M') }} <span class="muted">&bull;</span> <span class="label label-info">Distance totale</span> {{ report.distance|default(0) }} km.
-    </p>
-  </fieldset>
+		<fieldset>
+			<legend>Bilan de la semaine</legend>
+			<p class="muted">
+				Vous pouvez indiquer votre ressenti sur cette semaine (facultatif).
+			</p>
+			{{ macros.input(form_report.comment, 'Commentaire') }}
+			<p>
+				<span class="label label-info">Temps total</span> {{ report.time|days_time('jour', '%Hh%M') }} <span class="muted">&bull;</span> <span class="label label-info">Distance totale</span> {{ report.distance|default(0) }} km.
+			</p>
+		</fieldset>
 
-  <p>
-    <button type="submit" name="action" value="save" class="btn btn-primary">Sauver ces commentaires</button>
+		<p>
+			<button type="submit" name="action" value="save" class="btn btn-primary">Sauver ces commentaires</button>
 
-    {% for m in memberships %}
-    <button {% if not report.is_publiable() %}disabled="disabled"{% endif %} type="submit" name="publish" value="{{m.club.pk}}" class="btn btn-success">
-      Envoyer à
-      {% for t in m.trainers.all() %}
-      {{ t.first_name|default(t.username) }}{% if not loop.last %}, {% endif %}
-      {% endfor %}
-    </button>
-    {% endfor %}
-  </p>
-</form>
+			{% for m in memberships %}
+			<button {% if not report.is_publiable() %}disabled="disabled"{% endif %} type="submit" name="publish" value="{{m.club.pk}}" class="btn btn-success">
+				Envoyer à
+				{% for t in m.trainers.all() %}
+				{{ t.first_name|default(t.username) }}{% if not loop.last %}, {% endif %}
+				{% endfor %}
+			</button>
+			{% endfor %}
+		</p>
+	</form>
 
-{% if user.auto_send %}
+	{% if user.auto_send %}
 
-  {% if report.is_current() %}
-  <p class="alert alert-info">
-    Tous les commentaires remplis seront envoyés automatiquement dans {{ report.get_send_date()|timeuntil }}.
-  </p>
-  {% else %}
-  <p class="alert alert-warning">
-    L'envoi automatique des commentaires n'est actif que pour la <strong>semaine en cours</strong>.
-  </p>
-  {% endif %}
+	{% if report.is_current() %}
+	<p class="alert alert-info">
+		Tous les commentaires remplis seront envoyés automatiquement dans {{ report.get_send_date()|timeuntil }}.
+	</p>
+	{% else %}
+	<p class="alert alert-warning">
+		L'envoi automatique des commentaires n'est actif que pour la <strong>semaine en cours</strong>.
+	</p>
+	{% endif %}
 
-{% else %}
-  <div class="alert alert-warning">
-    <h4>Envoi automatique désactivé !</h4>
-    Pour activer l'envoi automatique, veuillez sélectionnez l'option dans <a href="{% url user-profile %}">votre profil</a>
-  </div>
-{% endif %}
+	{% else %}
+	<div class="alert alert-warning">
+		<h4>Envoi automatique désactivé !</h4>
+		Pour activer l'envoi automatique, veuillez sélectionnez l'option dans <a href="{% url user-profile %}">votre profil</a>
+	</div>
+	{% endif %}
 
 </div>

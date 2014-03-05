@@ -1,66 +1,66 @@
 {% if trainer %}
 <p class="alert alert-success">
- Ce rapport a bien été envoyé à {{trainer.first_name|default(trainer.username)}}
+	Ce rapport a bien été envoyé à {{trainer.first_name|default(trainer.username)}}
 </p>
 {% endif %}
 
 {% if report.plan_week %}
 <p class="alert alert-info">
-  <i class="icon-tags"> </i> Semaine {{ report.plan_week.order|add(1) }} de <a href="{% url plan-user report.plan_week.plan.slug, report.plan_week.plan.creator.username %}" target="_blank">{{ report.plan_week.plan.name }}</a>
+	<i class="icon-tags"> </i> Semaine {{ report.plan_week.order|add(1) }} de <a href="{% url plan-user report.plan_week.plan.slug, report.plan_week.plan.creator.username %}" target="_blank">{{ report.plan_week.plan.name }}</a>
 </p>
 {% endif %}
 
 <table class="table table-bordered">
-  <tr>
-    <th style="text-align: right">Jour</th>
-    <th>Commentaire</th>
-  </tr>
-  {% for day in report.get_days() %}
-  <tr>
-    {% with sessions[day] as session %}
-    <td style="width: 20%; text-align: right;">{{day|date('l d M')}}</td>
-    <td>
-      {% if session %}
-      <img src="/medias/img/icons/{{session.sport}}.png" />
-      <strong>{{session.name|default('Session sans nom')}}</strong><br />
-      {{session.comment|default('Pas de commentaire')|linebreaksbr}}
-      <div>
-        {% if session.type %}
-          {% if session.type == 'training' %}
-          <span class="label label-info">Entrainement</span>
-          {% elif session.type == 'race' %}
-          <span class="label label-success">Course</span>
-          {% else %}
-          <span class="label">Repos</span>
-          {% endif %}
-        {% endif %}
-        {% if session.time %}
-        <span class="label">Temps</span> {{session.time}}
-        {% endif %}
-        {% if session.distance %}
-        <span class="label">Distance</span> {{session.distance}} km
-        {% endif %}
-      </div>
-      {% if session.plan_session %}
-      <div>
-        <span class="label label-warning">Plan d'entraînement</span> {{ session.plan_session.week.plan.name }}
-      </div>
-      {% endif %}
-      {% with session.garmin_activity as activity %}
-        {% include '_garmin.html' %}
-      {% endwith %}
-      {% endif %}
-    </td>
-    {% endwith %}
-  </tr>
-  {% endfor %}
+	<tr>
+		<th style="text-align: right">Jour</th>
+		<th>Commentaire</th>
+	</tr>
+	{% for day in report.get_days() %}
+	<tr>
+		{% with sessions[day] as session %}
+		<td style="width: 20%; text-align: right;">{{day|date('l d M')}}</td>
+		<td>
+			{% if session %}
+			<img src="/medias/img/icons/{{session.sport}}.png" />
+			<strong>{{session.name|default('Session sans nom')}}</strong><br />
+			{{session.comment|default('Pas de commentaire')|linebreaksbr}}
+			<div>
+				{% if session.type %}
+				{% if session.type == 'training' %}
+				<span class="label label-info">Entrainement</span>
+				{% elif session.type == 'race' %}
+				<span class="label label-success">Course</span>
+				{% else %}
+				<span class="label">Repos</span>
+				{% endif %}
+				{% endif %}
+				{% if session.time %}
+				<span class="label">Temps</span> {{session.time}}
+				{% endif %}
+				{% if session.distance %}
+				<span class="label">Distance</span> {{session.distance}} km
+				{% endif %}
+			</div>
+			{% if session.plan_session %}
+			<div>
+				<span class="label label-warning">Plan d'entraînement</span> {{ session.plan_session.week.plan.name }}
+			</div>
+			{% endif %}
+			{% with session.garmin_activity as activity %}
+			{% include '_garmin.html' %}
+			{% endwith %}
+			{% endif %}
+		</td>
+		{% endwith %}
+	</tr>
+	{% endfor %}
 </table>
 <h4>Bilan de la semaine</h4>
 {% if report.comment %}
 <p>
-  <strong>Commentaire:</strong> {{ report.comment }}
+	<strong>Commentaire:</strong> {{ report.comment }}
 </p>
 {% endif %}
 <p>
-  <span class="label label-info">Temps total</span> {{ report.time|days_time('jour', '%Hh%M') }} <span class="muted">&bull;</span> <span class="label label-info">Distance totale</span> {{ report.distance|default(0) }} km.
+	<span class="label label-info">Temps total</span> {{ report.time|days_time('jour', '%Hh%M') }} <span class="muted">&bull;</span> <span class="label label-info">Distance totale</span> {{ report.distance|default(0) }} km.
 </p>

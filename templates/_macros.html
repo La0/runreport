@@ -3,15 +3,15 @@
 {% macro input(field, label, help=False, colLabel=2, colField=10) -%}
 <!-- <div class="form-group {% if field.errors %}has-error{% elif field.value() %}has-success{% endif %}"> -->
 <div class="form-group {% if field.errors %}has-error{% endif %}">
-  	<label class="col-sm-{{colLabel}} control-label" for="id_{{field.html_name}}">{{label}}</label>
-    <div class="col-sm-{{colField}}">
-      {{field|addcss("form-control")|safe}}
-      {% if field.errors %}
-      <div class="help-block">{{field.errors|safe}}</div>
-      {% elif help %}
-      <div class="help-block">{{help}}</div>
-      {% endif %}
-    </div>
+	<label class="col-sm-{{colLabel}} control-label" for="id_{{field.html_name}}">{{label}}</label>
+	<div class="col-sm-{{colField}}">
+		{{field|addcss("form-control")|safe}}
+		{% if field.errors %}
+		<div class="help-block">{{field.errors|safe}}</div>
+		{% elif help %}
+		<div class="help-block">{{help}}</div>
+		{% endif %}
+	</div>
     
 </div>
 {%- endmacro %}
@@ -29,7 +29,7 @@
 	<div class="col-sm-4 {% if form.distance.errors %}has-error{% endif %}">
 		{{ form.distance|addcss("form-control")|safe }}
 		{% if form.distance.errors %}
-	    <div class="help-block">{{form.distance.errors|safe}}</div>
+		<div class="help-block">{{form.distance.errors|safe}}</div>
 		{% endif %}
 	</div>
 </div>
@@ -62,15 +62,15 @@
 				<ul class="dropdown-menu types">
 					{% for k, name in types %}
 					<li{% if type == k %} class="active"{% endif %}>
-						<a href="#" value="{{k}}">{{name}}</a>
-					</li>
-					{% endfor %}
-				</ul>
-			</div>
-			{{ form.type|addcss("form-control")|safe }}
-			{{ form.name|addcss("form-control")|safe }}
+					<a href="#" value="{{k}}">{{name}}</a>
+				</li>
+				{% endfor %}
+			</ul>
 		</div>
+		{{ form.type|addcss("form-control")|safe }}
+		{{ form.name|addcss("form-control")|safe }}
 	</div>
+</div>
 </div>
 {% endwith %}
 {% endwith %}
@@ -79,39 +79,39 @@
 
 {% macro race_category(form) -%}
 <div class="form-group race-category {% if form.instance.type == 'race' %}active{% endif %}">
-	<label class="col-sm-2 control-label" for="id_{{form.race_category.html_name}}">Type de course</label>
-	<div class="col-sm-10 {{form.instance.sport|default('running')}}">
-      {{ form.race_category|addcss("form-control")|safe }}
-    </div>
-	{% if form.race_category.errors %}
-    <div class="help-block">{{form.race_category.errors|safe}}</div>
-	{% endif %}
+<label class="col-sm-2 control-label" for="id_{{form.race_category.html_name}}">Type de course</label>
+<div class="col-sm-10 {{form.instance.sport|default('running')}}">
+	{{ form.race_category|addcss("form-control")|safe }}
+</div>
+{% if form.race_category.errors %}
+<div class="help-block">{{form.race_category.errors|safe}}</div>
+{% endif %}
 </div>
 {%- endmacro %}
 
 {% macro tr(fields, item='td') -%}
 <tr>
-  {% for f in fields %}
-  <{{item}}>{{f|default('-')}}</{{item}}>
-  {% endfor %}
+{% for f in fields %}
+<{{item}}>{{f|default('-')}}</{{item}}>
+{% endfor %}
 </tr>
 {%- endmacro %}
 
 {% macro sort_title(title, sort_name, urlname, urlargs, sort_active) %}
-  {{ title }}
-  {{ sort(sort_name, 'up', urlname, urlargs, sort_active) }}
-  {{ sort(sort_name + '-r', 'down', urlname, urlargs, sort_active) }}
+{{ title }}
+{{ sort(sort_name, 'up', urlname, urlargs, sort_active) }}
+{{ sort(sort_name + '-r', 'down', urlname, urlargs, sort_active) }}
 {%- endmacro %}
 
 {% macro sort(sort_name, direction, urlname, urlargs, sort_active) %}
 
-  {% set active = sort_name == sort_active %}
-  <span class="badge {% if active %}badge-inverse{% else %}badge-info{% endif %}">
-    {% if active %}
-    <i class="icon-{{direction}}-open"></i>
-    {% else %}
-    <a href="{{ urlname|url(*urlargs + (sort_name, )) }}"><i class="icon-{{direction}}-open"></i></a>
-    {% endif %}
-  </span>
+{% set active = sort_name == sort_active %}
+<span class="badge {% if active %}badge-inverse{% else %}badge-info{% endif %}">
+{% if active %}
+<i class="icon-{{direction}}-open"></i>
+{% else %}
+<a href="{{ urlname|url(*urlargs + (sort_name, )) }}"><i class="icon-{{direction}}-open"></i></a>
+{% endif %}
+</span>
 
 {%- endmacro %}

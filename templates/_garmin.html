@@ -3,21 +3,21 @@
 <hr />
 <div class="garmin col-sm-offset-2">
 	
-  <i class="icon-location"></i>
+	<i class="icon-location"></i>
 	
-  <a href="{{ activity.get_url() }}" target="_blank">{{ activity.name }}</a>
-  <span class="muted">&bull;</span>
-  {% if activity.get_session_sport() == 'swimming' %}
-    {{ (activity.distance * 1000)|floatformat(2) }} m
-  {% else %}
-    {{ activity.distance|floatformat(2) }} km
-  {% endif %}
- en {{ activity.time }}
-  <span class="muted">&bull;</span>
-  {% if activity.get_session_sport() == 'cycling' %}
-    {{ activity.get_speed_kph()|floatformat(2) }} km/h
-  {% else %}
-    {{ activity.speed|date('i:s') }} min/km
-  {% endif %}
+	<a href="{{ activity.get_url() }}" target="_blank">{{ activity.name }}</a>
+	<span class="muted">&bull;</span>
+	{% if activity.get_session_sport() == 'swimming' %}
+	{{ (activity.distance * 1000)|floatformat(2) }} m
+	{% else %}
+	{{ activity.distance|floatformat(2) }} km
+	{% endif %}
+	en {{ activity.time }}
+	<span class="muted">&bull;</span>
+	{% if activity.get_session_sport() == 'cycling' %}
+	{{ activity.get_speed_kph()|floatformat(2) }} km/h
+	{% else %}
+	{{ activity.speed|date('i:s') }} min/km
+	{% endif %}
 </div>
 {% endif %}

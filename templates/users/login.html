@@ -5,59 +5,59 @@
 {% block content %}
 
 <style scoped>
-	.form-signin {
-	  max-width: 330px;
-	  padding: 15px;
-	  margin: 0 auto;
-	}
-	.form-signin .form-signin-heading,
-	.form-signin .checkbox {
-	  margin-bottom: 10px;
-	}
-	.form-signin .checkbox {
-	  font-weight: normal;
-	}
-	.form-signin .form-control {
-	  position: relative;
-	  height: auto;
-	  -webkit-box-sizing: border-box;
-	     -moz-box-sizing: border-box;
-	          box-sizing: border-box;
-	  padding: 10px;
-	  font-size: 16px;
-	}
-	.form-signin .form-control:focus {
-	  z-index: 2;
-	}
-	.form-signin input[type="email"] {
-	  margin-bottom: -1px;
-	  border-bottom-right-radius: 0;
-	  border-bottom-left-radius: 0;
-	}
-	.form-signin input[type="password"] {
-	  margin-bottom: 10px;
-	  border-top-left-radius: 0;
-	  border-top-right-radius: 0;
-	}
+.form-signin {
+	max-width: 330px;
+	padding: 15px;
+	margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+	margin-bottom: 10px;
+}
+.form-signin .checkbox {
+	font-weight: normal;
+}
+.form-signin .form-control {
+	position: relative;
+	height: auto;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	padding: 10px;
+	font-size: 16px;
+}
+.form-signin .form-control:focus {
+	z-index: 2;
+}
+.form-signin input[type="email"] {
+	margin-bottom: -1px;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+	margin-bottom: 10px;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
 	
-	.form-signin a {
-		 margin-bottom: 10px;
-	}
+.form-signin a {
+	margin-bottom: 10px;
+}
 </style>
 
 <div class="container">
 	<form method="post" class="form-signin" role="form">
 		{% csrf_token %}
 		<h1 class="form-signin-heading">Se connecter</h1>
-	    {% with form.non_field_errors() as err %}
-	    	{% if err %}
-	    		<div class="alert alert-danger">{{ err|safe }}</div>
-	    	{% endif %}
-	    {% endwith %}
-        <input name="{{ form.username.html_name }}" {% if form.username.data %} value="{{ form.username.data }}"{% endif %} type="email" class="form-control" placeholder="Votre email" required autofocus">
-        <input name="{{ form.password.html_name }}" {% if form.password.data %} value="{{ form.password.data }}"{% endif %} type="password" class="form-control" placeholder="Votre mot de passe" required>
-        <a href="{% url password_reset %}" class="pull-right">Mot de passe oublié ?</a>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Se connecter</button>
+		{% with form.non_field_errors() as err %}
+		{% if err %}
+		<div class="alert alert-danger">{{ err|safe }}</div>
+		{% endif %}
+		{% endwith %}
+		<input name="{{ form.username.html_name }}" {% if form.username.data %} value="{{ form.username.data }}"{% endif %} type="email" class="form-control" placeholder="Votre email" required autofocus">
+		<input name="{{ form.password.html_name }}" {% if form.password.data %} value="{{ form.password.data }}"{% endif %} type="password" class="form-control" placeholder="Votre mot de passe" required>
+		<a href="{% url password_reset %}" class="pull-right">Mot de passe oublié ?</a>
+		<button class="btn btn-lg btn-primary btn-block" type="submit">Se connecter</button>
 	</form>
 </div>
 
