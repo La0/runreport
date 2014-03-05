@@ -108,9 +108,9 @@
   {% set active = sort_name == sort_active %}
   <span class="badge {% if active %}badge-inverse{% else %}badge-info{% endif %}">
     {% if active %}
-    <i class="icon-chevron-{{direction}} icon-white"></i>
+    <i class="icon-{{direction}}-open"></i>
     {% else %}
-    <a href="{{ urlname|url(*urlargs + (sort_name, )) }}"><i class="icon-chevron-{{direction}} icon-white"></i></a>
+    <a href="{{ urlname|url(*urlargs + (sort_name, )) }}"><i class="icon-{{direction}}-open"></i></a>
     {% endif %}
   </span>
 

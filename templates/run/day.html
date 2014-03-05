@@ -34,7 +34,7 @@
 
 {% block footer %}
   {% if session.pk %}
-    <a href="{% url report-day-delete day.year, day.month, day.day %}" class="delete modal-action"><i class="fa fa-trash-o"></i> Supprimer</a>
+    <a href="{% url report-day-delete day.year, day.month, day.day %}" class="delete modal-action"><i class="icon-trash"></i> Supprimer</a>
   {% endif %}
   <button class="btn" data-dismiss="modal">Fermer</button>
   <a href="{{ report.get_absolute_url() }}" class="btn btn-success">Voir cette semaine</a>
