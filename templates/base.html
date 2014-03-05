@@ -15,64 +15,6 @@
 	<link href="/medias/css/fontello-embedded.css" rel="stylesheet">
 	<link href="/medias/css/style.css" rel="stylesheet">
 	
-	<style>
-	html {
-		height: 100%;
-	}
-	
-	body {
-		min-height: 100%;
-		-moz-box-sizing: padding-box;
-		box-sizing: padding-box;
-		padding: 75px 0 31px 0;
-		position: relative;
-	}
-		
-	.navbar-brand i {
-		color: orange;
-	}
-	
-	.navbar-fixed-top:hover .navbar-brand {
-		-webkit-animation: logoAnim 2s ease;
-		animation: logoAnim 2s ease;
-	}
-	
-	@-webkit-keyframes logoAnim {
-		from {
-			-webkit-transform: rotateY(0deg);
-			transform: rotateY(0deg);
-		}
-		to {
-			-webkit-transform: rotateY(360deg);
-			transform: rotateY(360deg);
-		}
-	}
-		
-	@keyframes logoAnim {
-		from {
-			-webkit-transform: rotateY(0deg);
-			transform: rotateY(0deg);
-		}
-		to {
-			-webkit-transform: rotateY(360deg);
-			transform: rotateY(360deg);
-		}
-	}
-		
-	body > footer {
-		background: none repeat scroll 0 0 #EEEEEE;
-		border-top: 1px solid #DDDDDD;
-		text-align: center;
-		position: absolute;
-		bottom: 0;
-		font-size: 15px;
-		line-height: 30px;
-		height: 30px;
-		overflow: hidden;
-		width: 100%;
-	}
-	</style>
-	
 	{% block style %}{% endblock %}
 
 	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -98,7 +40,7 @@
 					{% for p in menu %}
 					{% if 'menu' in p %}
 					<li class="dropdown {% if p.active %}active{% endif %}">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">{% if p.icon %}<i class="fa {{ p.icon }}"></i> {% endif %}{{p.caption}} <span class="caret"></span></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">{% if p.icon %}<i class="{{ p.icon }}"></i> {% endif %}{{p.caption}} <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							{% for sub_p in p.menu%}
 							{% if sub_p == '__SEPARATOR__' %}
@@ -110,7 +52,7 @@
 						</ul>
 					</li>
 					{% else %}
-					<li {% if p.active %}class="active"{% endif %}><a href="{{p.url}}">{% if p.icon %}<i class="fa {{ p.icon }}"></i> {% endif %}{{p.caption}}</a></li>
+					<li {% if p.active %}class="active"{% endif %}><a href="{{p.url}}">{% if p.icon %}<i class="{{ p.icon }}"></i> {% endif %}{{p.caption}}</a></li>
 					{% endif %}
 					{% endfor %}
 				</ul>
