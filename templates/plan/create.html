@@ -2,16 +2,20 @@
 
 {% block content %}
 
-<h1>Nouveau plan d'entraînement</h1>
+<div class="container">
 
-<form action="" method="POST" class="form form-horizontal">
-  {% csrf_token %}
+	<h2>Nouveau plan d'entraînement</h2>
 
-  {{ macros.input(form.name, 'Nom') }}
-  {{ macros.input(form.week, 'Semaines') }}
+	<form action="" method="POST" class="form form-horizontal">
+		{% csrf_token %}
 
-  <p>
-    <input type="submit" value="Créer" class="btn btn-primary" />
-  </p>
-</form>
+		{{ macros.input(form.name, 'Nom') }}
+		{{ macros.input(form.week, 'Semaines') }}
+
+		<p>
+			<input type="submit" value="Créer" class="btn btn-primary" />
+		</p>
+	</form>
+
+</div>
 {% endblock %}

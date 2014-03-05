@@ -3,75 +3,80 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>{{club.name}} : {{members.count()}} membres</h2>
 
-{% if request.user == club.manager or request.user.is_staff %}
-<ul class="breadcrumb">
-  <li><a href="{% url 'club-current-name' club.slug, 'athletes', sort %}">Mes Athlètes</a> <span class="divider">&bull;</span></li>
-  <li><a href="{% url 'club-current-name' club.slug, 'all', sort %}">Tout le club</a> <span class="divider">&bull;</span></li>
-  <li><a href="{% url 'club-current-name' club.slug, 'prospects', sort %}">Nouveaux</a> <span class="divider">&bull;</span></li>
-  <li><a href="{% url 'club-current-name' club.slug, 'staff', sort %}">Staff</a> <span class="divider">&bull;</span></li>
-  <li><a href="{% url 'club-current-name' club.slug, 'archives', sort %}">Archives</a></li>
-</ul>
-{% endif %}
+<div class="container">
 
-{% if members %}
-<table class="table">
-  <tr>
-    <th>{{ macros.sort_title('Athlète', 'name', 'club-current-name', (club.slug, type, ), sort) }}</th>
-    {% if request.user == club.manager or request.user.is_staff %}
-    <th>Rôle</th>
-    {% endif %}
-    <th>Catégorie</th>
-    <th>Vma</th>
-    <th>Séances</th>
-    <th>{{ macros.sort_title('Dernière séance', 'date', 'club-current-name', (club.slug, type, ), sort) }}</th>
-    <th>Actions</th>
-  </tr>
-  {% for member in members %}
-  <tr>
-    <td>
-      {{ member.first_name|lower|title }} {{ member.last_name|lower|title }}
-    </td>
-    {% if request.user == club.manager or request.user.is_staff %}
-    <td>
-    {% with member.membership.role as role %}
-      {% if role == 'athlete' %}
-      <a href="{% url club-member-role club.slug, member.username %}" class="modal-action btn btn-small" >Athlète</a>
-      {% elif role == 'trainer' %}
-      <a href="{% url club-member-role club.slug, member.username %}" class="modal-action btn btn-small btn-info" >Entraîneur</a>
-      {% elif role == 'staff' %}
-      <a href="{% url club-member-role club.slug, member.username %}" class="modal-action btn btn-small btn-primary" >Staff</a>
-      {% elif role == 'archive' %}
-      <a href="{% url club-member-role club.slug, member.username %}" class="modal-action btn btn-small btn-danger" >Archivé</a>
-      {% elif role == 'prospect' %}
-      <a href="{% url club-member-role club.slug, member.username %}" class="modal-action btn btn-small btn-success" >Nouveau</a>
-      {% endif %}
-    {% endwith %}
-    </td>
-    {% endif %}
-    <td>{{ member.category.name|default('-') }}</td>
-    <td>{{ member.vma|default('-') }}</td>
-    <td>{{ member.sessions_count }}</td>
-    <td>
-      {% if member.max_report_date %}
-      <a href="{% url club-member-week club.slug, member.username, member.max_report_date|date('Y'), member.max_report_date|date('W')|add(-1) %}">{{ member.max_report_date|date('l d E') }}</a>
-      {% endif %}
-    </td>
-    <td>
-      <a class="btn" href="{% url club-member club.slug, member.username %}">Fiche</a>
-      {% if member.membership.role not in ('archive', 'prospect') %}
-      <a class="btn btn-primary" href="{% url club-member-month club.slug, member.username, today|date('Y'), today|date('m') %}">Carnet</a>
-      {% endif %}
-    </td>
-  </tinfo >
-  {% endfor %}
-</table>
-{% else %}
-<div class="alert alert-error">
-  <h4>Pas de membres</h4>
-  Aucun membre du club {{club.name}} trouvé pour cette liste.
+	<h2>{{club.name}} : {{members.count()}} membres</h2>
+
+	{% if request.user == club.manager or request.user.is_staff %}
+	<ul class="breadcrumb">
+		<li><a href="{% url 'club-current-name' club.slug, 'athletes', sort %}">Mes Athlètes</a></li>
+		<li><a href="{% url 'club-current-name' club.slug, 'all', sort %}">Tout le club</a></li>
+		<li><a href="{% url 'club-current-name' club.slug, 'prospects', sort %}">Nouveaux</a></li>
+		<li><a href="{% url 'club-current-name' club.slug, 'staff', sort %}">Staff</a></li>
+		<li><a href="{% url 'club-current-name' club.slug, 'archives', sort %}">Archives</a></li>
+	</ul>
+	{% endif %}
+
+	{% if members %}
+	<table class="table">
+		<tr>
+			<th>{{ macros.sort_title('Athlète', 'name', 'club-current-name', (club.slug, type, ), sort) }}</th>
+			{% if request.user == club.manager or request.user.is_staff %}
+			<th>Rôle</th>
+			{% endif %}
+			<th>Catégorie</th>
+			<th>Vma</th>
+			<th>Séances</th>
+			<th>{{ macros.sort_title('Dernière séance', 'date', 'club-current-name', (club.slug, type, ), sort) }}</th>
+			<th>Actions</th>
+		</tr>
+		{% for member in members %}
+		<tr>
+			<td>
+				{{ member.first_name|lower|title }} {{ member.last_name|lower|title }}
+			</td>
+			{% if request.user == club.manager or request.user.is_staff %}
+			<td>
+				{% with member.membership.role as role %}
+				{% if role == 'athlete' %}
+				<a href="{% url club-member-role club.slug, member.username %}" class="modal-action btn btn-small" >Athlète</a>
+				{% elif role == 'trainer' %}
+				<a href="{% url club-member-role club.slug, member.username %}" class="modal-action btn btn-small btn-info" >Entraîneur</a>
+				{% elif role == 'staff' %}
+				<a href="{% url club-member-role club.slug, member.username %}" class="modal-action btn btn-small btn-primary" >Staff</a>
+				{% elif role == 'archive' %}
+				<a href="{% url club-member-role club.slug, member.username %}" class="modal-action btn btn-small btn-danger" >Archivé</a>
+				{% elif role == 'prospect' %}
+				<a href="{% url club-member-role club.slug, member.username %}" class="modal-action btn btn-small btn-success" >Nouveau</a>
+				{% endif %}
+				{% endwith %}
+			</td>
+			{% endif %}
+			<td>{{ member.category.name|default('-') }}</td>
+			<td>{{ member.vma|default('-') }}</td>
+			<td>{{ member.sessions_count }}</td>
+			<td>
+				{% if member.max_report_date %}
+				<a href="{% url club-member-week club.slug, member.username, member.max_report_date|date('Y'), member.max_report_date|date('W')|add(-1) %}">{{ member.max_report_date|date('l d E') }}</a>
+				{% endif %}
+			</td>
+			<td>
+				<a class="btn" href="{% url club-member club.slug, member.username %}">Fiche</a>
+				{% if member.membership.role not in ('archive', 'prospect') %}
+				<a class="btn btn-primary" href="{% url club-member-month club.slug, member.username, today|date('Y'), today|date('m') %}">Carnet</a>
+				{% endif %}
+			</td>
+		</tinfo >
+		{% endfor %}
+	</table>
+	{% else %}
+	<div class="alert alert-error">
+		<h4>Pas de membres</h4>
+		Aucun membre du club {{club.name}} trouvé pour cette liste.
+	</div>
+	{% endif %}
+
 </div>
-{% endif %}
 
 {% endblock %}

@@ -3,8 +3,8 @@
 {% block mail %}
 <table cellpadding="0" cellspacing="0" border="0" align="center">
   <tr>
-    <td colspan="2"><h1>Séance de <a href="{{ base_uri }}
-{% url club-member club.slug, report.user.username %}">{{ report.user.first_name }} {{ report.user.last_name }}</a></h1></td>
+    <td colspan="2"><h2>Séance de <a href="{{ base_uri }}
+{% url club-member club.slug, report.user.username %}">{{ report.user.first_name }} {{ report.user.last_name }}</a></h2></td>
   </tr>
   <tr style="height: 60px; line-height: 60px;">
     <td colspan="2">Semaine {{ week_human }} du <a href="{{ base_uri }}

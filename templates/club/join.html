@@ -2,39 +2,43 @@
 
 {% block content %}
 
-<h1>Rejoindre un club</h1>
-<div class="alert alert-info">
-  <h4>Aide</h4>
-  Vous pouvez rejoindre un club, en cliquant sur "Rejoindre".<br />
-  Chaque demande est alors validée (ou non) par le gérant du club.
-</div>
+<div class="container">
 
-{% for club in clubs %}
-<div class="club-description row">
-  <h3>{{club.name}}</h3>
-  <address class="span4">
-    {{club.address}}<br />
-    <strong>{{ club.zipcode }} {{ club.city }}</strong>
-  </address>
-  <p class="span4">
-    <span class="label label-info">Gérant</span> {{ club.manager.first_name }} {{ club.manager.last_name }}
-  </p>
-  <p class="pull-right">
-    {% if club.has_user(request.user) %}
-      {% with club.clubmembership_set.get(user=request.user) as member %}
-      {% if member.role == 'archive' %}
-      <span class="btn disabled btn-danger">Refusé</span>
-      {% elif member.role == 'prospect' %}
-      <span class="btn disabled btn-info">Attente de validation</span>
-      {% else %}
-      <span class="btn disabled btn-success">Membre</span>
-      {% endif %}
-      {% endwith %}
-    {% else %}
-    <a href="{% url club-join club.slug %}" class="btn btn-success modal-action">Rejoindre</a>
-    {% endif %}
-  </p>
+	<h2>Rejoindre un club</h2>
+	<div class="alert alert-info">
+		<h4>Aide</h4>
+		Vous pouvez rejoindre un club, en cliquant sur "Rejoindre".<br />
+		Chaque demande est alors validée (ou non) par le gérant du club.
+	</div>
+
+	{% for club in clubs %}
+	<div class="club-description row">
+		<h3>{{club.name}}</h3>
+		<address class="span4">
+			{{club.address}}<br />
+			<strong>{{ club.zipcode }} {{ club.city }}</strong>
+		</address>
+		<p class="span4">
+			<span class="label label-info">Gérant</span> {{ club.manager.first_name }} {{ club.manager.last_name }}
+		</p>
+		<p class="pull-right">
+			{% if club.has_user(request.user) %}
+			{% with club.clubmembership_set.get(user=request.user) as member %}
+			{% if member.role == 'archive' %}
+			<span class="btn disabled btn-danger">Refusé</span>
+			{% elif member.role == 'prospect' %}
+			<span class="btn disabled btn-info">Attente de validation</span>
+			{% else %}
+			<span class="btn disabled btn-success">Membre</span>
+			{% endif %}
+			{% endwith %}
+			{% else %}
+			<a href="{% url club-join club.slug %}" class="btn btn-success modal-action">Rejoindre</a>
+			{% endif %}
+		</p>
+	</div>
+	{% endfor %}
+
 </div>
-{% endfor %}
 
 {% endblock %}
