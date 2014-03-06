@@ -2,9 +2,25 @@
 
 {% set page_title = type == 'help' and 'Aide' or 'News'  %}
 
+{% block style %}
+<style>
+.row {
+	padding: 5px;
+	border-top: 1px solid #ddd;
+}
+ 
+.row:nth-of-type(odd) {
+	background: #f6f6f6;
+}
+ 
+.row:last-of-type {
+	border-bottom: 1px solid #ddd;
+	margin-bottom: 21px;
+}
+</style>
+{% endblock %}
+
 {% block content %}
-
-
 
 <div class="container">
 	<h2>{{ page_title }}</h2>
@@ -16,24 +32,25 @@
 	</div>
 	{% endif %}
 	
-	{% for page in pages %}
-	<div class="row">
-		<div class="col-md-12">
-			<a href="{% url page page.type, page.slug %}">
-				<strong>{{ page.name }}</strong>
-				<div class="pull-right">
-					{% if edit and not page.published %}
-					<span class="label label-important">Privée</span>
-					{% endif %}
-					<span class="label label-default">{{ page.user.first_name }} {{ page.user.last_name|default(page.user) }}</span>
-					<span class="label label-info">{{ page.updated|date('d E Y')}}</span>
-				</div>
-			</a>
+	<div>
+		{% for page in pages %}
+		<div class="row">
+			<div class="col-sm-8">
+				<a href="{% url page page.type, page.slug %}">
+					<strong>{{ page.name }}</strong>
+
+				</a>
+			</div>
+			<div class="col-sm-4">
+				{% if edit and not page.published %}
+				<span class="label label-important">Privée</span>
+				{% endif %}
+				<span class="label label-default">{{ page.user.first_name }} {{ page.user.last_name|default(page.user) }}</span>
+				<span class="label label-info">{{ page.updated|date('d E Y')}}</span>
+			</div>
 		</div>
+		{% endfor %}
 	</div>
-	{% endfor %}
 </div>
-
-
 
 {% endblock %}

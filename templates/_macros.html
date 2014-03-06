@@ -2,7 +2,7 @@
 
 {% macro input(field, label, help=False, colLabel=2, colField=10) -%}
 <!-- <div class="form-group {% if field.errors %}has-error{% elif field.value() %}has-success{% endif %}"> -->
-<div class="form-group {% if field.errors %}has-error{% endif %}">
+<div class="form-group row {% if field.errors %}has-error{% endif %}">
 	<label class="col-sm-{{colLabel}} control-label" for="id_{{field.html_name}}">{{label}}</label>
 	<div class="col-sm-{{colField}}">
 		{{field|addcss("form-control")|safe}}
@@ -17,7 +17,7 @@
 {%- endmacro %}
 
 {% macro session_time_distance(form) -%}
-<div class="form-group time-distance ">
+<div class="form-group time-distance row">
 	<label class="col-sm-2 control-label {% if form.time.errors %}has-error{% endif %}" for="id_{{form.time.html_name}}">Temps</label>
 	<div class="col-sm-4 {% if form.time.errors %}has-error{% endif %}">
 		{{ form.time|addcss("form-control")|safe }}
@@ -39,7 +39,7 @@
 
 {% with form.instance.type as type %}
 {% with form.name as field %}
-<div class="types-name form-group {% if field.errors %}error{% elif field.value() %}success{% endif %}">
+<div class="types-name form-group row {% if field.errors %}error{% elif field.value() %}success{% endif %}">
 	{% if field.errors %}
 	<span class="help-inline">{{field.errors|safe}}</span>
 	{% endif %}
@@ -47,7 +47,7 @@
 	<div class="col-sm-10 {{form.instance.sport|default('running')}}">
 		<div class="input-group">
 			<div class="input-group-btn">
-				<button class="btn dropdown-toggle {% if type == 'race' %}btn-success{% elif type == 'rest'%}btn-info{% else %}btn-default{% endif %}" data-toggle="dropdown">
+				<button class="btn dropdown-toggle {{ type }}" data-toggle="dropdown">
 					<span class="name">
 						{% if type == 'training' %}
 						Entraînement
@@ -78,7 +78,7 @@
 
 
 {% macro race_category(form) -%}
-<div class="form-group race-category {% if form.instance.type == 'race' %}active{% endif %}">
+<div class="form-group race-category row {% if form.instance.type == 'race' %}active{% endif %}">
 <label class="col-sm-2 control-label" for="id_{{form.race_category.html_name}}">Type de course</label>
 <div class="col-sm-10 {{form.instance.sport|default('running')}}">
 	{{ form.race_category|addcss("form-control")|safe }}

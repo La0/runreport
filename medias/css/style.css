@@ -40,6 +40,10 @@ body {
 		transform: rotateY(360deg);
 	}
 }
+
+#main > .container:first-of-type > h2:first-child {
+    margin-top: 0;
+}
 	
 body > footer {
 	background: none repeat scroll 0 0 #EEEEEE;
@@ -134,16 +138,26 @@ table.calendar td.other-month {
   background: #F1F1F1;
 }
 
-table.calendar td.session {
-  background: #ccd5f9;
+button.training, button.race, button.rest {
+	color: #fff;
 }
 
-table.calendar td.session.race {
-  background: #5BB75B;
+.session {
+	border-radius: 3px;
+	margin: 3px 0;
+	font-size: 0.8em;
 }
 
-table.calendar td.session.rest{
-  background: none;
+.session.training {
+  background: #cee0f1;
+}
+
+.session.race {
+  background: #d9ebcc;
+}
+
+.session.rest{
+  background: #fddbcc;
 }
 
 table.calendar td p {
@@ -154,8 +168,8 @@ table.calendar td p.date {
   font-size: 10px;
   height: 14px;
   line-height: 14px;
-  border-bottom: 1px solid #dcdde0;
   margin: 0;
+	text-align: right;
 }
 
 div.modal.day div.modal-body input, div.modal.day div.modal-body textarea {
@@ -173,6 +187,12 @@ div.modal.day div.modal-body input, div.modal.day div.modal-body textarea {
 
 .modal-action {
 	cursor: pointer;
+}
+
+.garmin {
+    border-top: 1px solid #ddd;
+    margin-top: 10px;
+    padding-top: 5px;
 }
 
 /* Table vma */
@@ -265,21 +285,57 @@ div.year div.month div.head {
 
 div.year div.day {
   padding: 2px;
-  height: 20px;
   border-bottom: 1px solid #EEE;
   cursor: pointer;
+	overflow: hidden;
+	height: 1.42857em;
+}
+
+
+div.year div.day span.date {
+	font-size: 0.8em;
+	float: left;
+	width: 16px;
 }
 
 div.year div.day span.name {
   color: #333;
+	display: inline-block;
+	height: 1.42857em;
+	float: left;
+	width: 39px;
+	margin: 0;
+	text-overflow: clipped;
+	padding: 0 3px;
+}
+
+@media (min-width: 979px) {
+	div.year div.day span.name {
+		width: 58px;
+	}
+}
+
+@media (min-width: 1200px) {
+	div.year div.day span.name {
+		width: 74px;
+	}
+}
+
+div.year div.day:hover span.name {
+	position: absolute;
+	width: auto;
 }
 
 .training {
-  background: #ccd5f9;
+  background: #428bca;
 }
 
 .race {
-  background: #5BB75B;
+  background: #5cb85c;
+}
+
+.rest {
+  background: #f0ad4e;
 }
 
 form a.delete {

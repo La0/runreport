@@ -2,46 +2,76 @@
 
 {% set page_title = 'Mes Records' %}
 
+{% block style %}
+<style>
+h2, h3 {
+	padding-left: 5px;
+}
+
+div.row {
+	padding: 5px;
+	border-top: 1px solid #ddd;
+}
+ 
+div.row:nth-of-type(odd) {
+	background: #f6f6f6;
+}
+ 
+div.row:last-of-type {
+	border-bottom: 1px solid #ddd;
+	margin-bottom: 21px;
+}
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="container">
 	<h2>Mes records</h2>
 
 	{% if races %}
-	<table class="table">
+	
+	{% for category in categories %}
+	<h3>{{category.name}}</h3>
 
-		{% for category in categories %}
-		<tr>
-			<td style="border: 0"><h3>{{category.name}}</h3></td>
-		</tr>
-
+	<div>
 		{% for race in races[category.id] %}
-		<tr class="{% if loop.first %}race-record{% endif %}">
-			<td>{{ race.name }}</td>
-			<td>{{ race.date|date('d E Y')}}</td>
-			<td>{{ race.distance|default(0)|floatformat() }} km</td>
-			<td>{{ race.time|default('-') }}</td>
-			<td>
-				<a class="modal-action btn-default btn-sm {% if loop.first %}btn-warning{% endif %}" href="{% url report-day race.date.year, race.date.month, race.date.day %}">Voir</a>
-			</td>
-		</tr>
+		<div class="row {% if loop.first %}race-record{% endif %}">
+			<div class="col-sm-4"><strong>{{ race.name }}</strong></div>
+			<div class="col-sm-3">{{ race.date|date('d E Y')}}</div>
+			<div class="col-sm-2">{{ race.distance|default(0)|floatformat() }} km</div>
+			<div class="col-sm-2">{{ race.time|default('-') }}</div>
+			<div class="col-sm-1">
+				<a class="modal-action btn btn-xs {% if loop.first %}btn-warning{% else %}btn-default{% endif %}" href="{% url report-day race.date.year, race.date.month, race.date.day %}">Voir</a>
+			</div>
+		</div>
 		{% endfor %}
-		{% endfor %}
+	</div>
+	{% endfor %}
 
-	</table>
-	{% else %}
-	<p class="alert alert-warning">Aucune course renseignée</p>
-	{% endif %}
+		{% else %}
+		<p class="alert alert-warning">Aucune course renseignée</p>
+		{% endif %}
 
-	<h2>Mes courses futures</h2>
-	{% if future_races %}
-	<ul>
-		{% for race in future_races %}
-		<li>Dans {{race.date|timeuntil()}} : <a class="modal-action" href="{% url report-day race.date.year, race.date.month, race.date.day %}">{{ race.name }}</a> <span class="label">{{ race.race_category.name}}</span></li>
-		{% endfor %}
-	</ul>
-	{% else %}
-	<p class="alert alert-warning">Aucune future course renseignée</p>
-	{% endif %}
+		<h2>Mes courses futures</h2>
+		{% if future_races %}
+		<div>
+			{% for race in future_races %}
+			<div class="row">
+				<div class="col-sm-4">
+					<strong>Dans {{race.date|timeuntil()}}</strong>
+				</div>
+				<div class="col-sm-7">
+					<a class="modal-action" href="{% url report-day race.date.year, race.date.month, race.date.day %}">{{ race.name }}</a>
+				</div>
+				<div class="col-sm-1">
+					<span class="label label-default">{{ race.race_category.name}}</span>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+		{% else %}
+		<p class="alert alert-warning">Aucune future course renseignée</p>
+		{% endif %}
 
-</div>
-{% endblock %}
+	</div>
+	{% endblock %}

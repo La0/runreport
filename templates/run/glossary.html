@@ -4,18 +4,28 @@
 
 {% block style %}
 <style>
-#glossaire dt {
+dt {
 	border-top: 1px solid #ddd;
+	padding: 5px 5px 0 5px;
 }
 
-#glossaire dt:nth-of-type(odd), #glossaire dd:nth-of-type(odd) {
-	background: #eee;
+dd {
+	padding: 0 5px 5px 5px;
+}
+
+dt:nth-of-type(odd), dd:nth-of-type(odd) {
+	background: #f6f6f6;
+}
+ 
+dd:last-of-type {
+	border-bottom: 1px solid #ddd;
+	margin-bottom: 21px;
 }
 </style>
 {% endblock %}
 
 {% block content %}
-<div id="glossaire" class="container">
+<div class="container">
 	<h2>Glossaire</h2>
 	<dl>
 		{% for word in sorted %}

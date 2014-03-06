@@ -18,7 +18,7 @@ $(function(){
     var selector = $(this).parents('div.types-name');
     selector.find('input[type=hidden]').val(type);
     var btn = selector.find('button');
-    btn.removeClass('btn-success').removeClass('btn-info');
+    btn.removeClass('rest').removeClass('training').removeClass('race');
     var rc = $(this).parents('fieldset').find('div.race-category');
     if(type == 'race'){
 
@@ -26,17 +26,14 @@ $(function(){
       rc.show();
 
       // Button styling
-      btn.addClass('btn-success');
+      btn.addClass('race');
     }else{
 
       // Hide race category
       rc.hide();
 
       // Button styling
-      if(type == 'rest')
-        btn.addClass('btn-info');
-	  else 
-        btn.addClass('btn-default');
+      btn.addClass(type);
 		
     }
     btn.find('span.name').html($(this).text());
