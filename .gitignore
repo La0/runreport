@@ -6,3 +6,4 @@ mails_debug
 env
 logs
 gunicorn.socket
+db
