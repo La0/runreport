@@ -1,9 +1,14 @@
 from fabric.api import *
-from coach.settings import FABRIC_HOSTS, FABRIC_ENV, DATABASES, FABRIC_BASE
+from coach.settings import FABRIC_HOSTS, DATABASES # Mandatory
+try:
+  from coach.settings import FABRIC_ENV, FABRIC_BASE # Optional
+except Exception:
+  pass
 import os
 import shutil
 from time import time
 env.hosts = FABRIC_HOSTS
+from datetime import date
 
 def prod():
 
@@ -21,7 +26,7 @@ def prod():
   supervisor('start', 'runreport')
   supervisor('start', 'runreport_celery')
 
-def syncdb():
+def syncdb(update=False):
   # Backup actual sqlite db
   db = DATABASES['default']
   if db['ENGINE'].endswith('sqlite3'):
@@ -33,13 +38,19 @@ def syncdb():
       os.remove(db_src)
 
   # Import dump from server
-  prod_dump = '/tmp/runreport.json'
   local_dump = 'prod.json'
-  apps = ('run', 'users', 'club', 'page')
-  with cd(FABRIC_BASE):
-    with virtualenv(FABRIC_ENV):
-      run('./manage.py dumpdata --indent=4 -e sessions %s > %s' % (' '.join(apps), prod_dump))
-      get(prod_dump, local_dump)
+  if update:
+    print 'Try to update Database dump'
+    prod_dump = '/tmp/runreport.json'
+    apps = ('run', 'users', 'club', 'page')
+    with cd(FABRIC_BASE):
+      with virtualenv(FABRIC_ENV):
+        run('./manage.py dumpdata --indent=4 -e sessions %s > %s' % (' '.join(apps), prod_dump))
+        get(prod_dump, local_dump)
+  else:
+    print 'Use today dump on server'
+    prod_dump = '~/db/%s.json' % date.today().strftime('%Y%m%d')
+    get(prod_dump, local_dump)
 
   # Re create db & load dump
   local('./manage.py syncdb --noinput --migrate')
