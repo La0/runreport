@@ -59,23 +59,32 @@
 	</div>
 
 	<div class="visible-xs">
-		{% for day in object_list %}
-		{% with object_list[day] as session %}
-		<div class="modal-action" href="{{pageday|url(*pageargs + [day.year, day.month, day.day])}}">
-			<strong>{{day|date('l d E Y')|title()}}</strong>
-			<div>
-				<span class="type {{ session.type }}"></span>
-				{{session.name|default('Session sans nom')}}
-			</div>
-			{% if session.plan_session %}
-			<div>
-				<i class="icon-tags"> </i> {{ session.plan_session.week.plan.name|truncate(10) }}
-			</div>
-			{% endif %}
-		</div>
-		{% endwith %}
-		{% endfor %}
-	</div>
+    {% for month, days in date_list.items() %}
+    {% with days[0] as month_date %}
+    {% if month_date.month in months_active %}
+      <h3>{{ days[0]|date('E Y') }}</h3>
+      {% for day in days %}
+      {% with object_list.get(day, None) as session %}
+      {% if session %}
+      <div class="modal-action" href="{{pageday|url(*pageargs + [day.year, day.month, day.day])}}">
+        <strong>{{day|date('l d')|title()}}</strong>
+        <div>
+          <span class="type {{ session.type }}"></span>
+          {{session.name|default('Session sans nom')}}
+        </div>
+        {% if session.plan_session %}
+        <div>
+          <i class="icon-tags"> </i> {{ session.plan_session.week.plan.name|truncate(10) }}
+        </div>
+        {% endif %}
+      </div>
+      {% endif %}
+      {% endwith %}
+      {% endfor %}
+    {% endif %}
+    {% endwith %}
+    {% endfor %}
+    </div>
 
 	<ul class="pager">
 		{% if previous_year %}
