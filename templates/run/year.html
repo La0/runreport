@@ -62,7 +62,10 @@
     {% for month, days in date_list.items() %}
     {% with days[0] as month_date %}
     {% if month_date.month in months_active %}
-      <h3>{{ days[0]|date('E Y') }}</h3>
+      <h3>
+        {{ month_date|date('E Y') }}
+        <a href="{% url report-month month_date.year, month_date.month %}" class="btn btn-sm btn-info pull-right">Voir ce mois</a>
+      </h3>
       {% for day in days %}
       {% with object_list.get(day, None) as session %}
       {% if session %}
