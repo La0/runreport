@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="container">
 
 <h2>Formulaire de contact</h2>
 <div class="alert alert-info">
@@ -13,9 +14,12 @@
 	{{ macros.input(form.name, 'Votre nom') }}
 	{{ macros.input(form.email, 'Votre adresse mail') }}
 	{{ macros.input(form.body, 'Votre message') }}
-	<p>
-		<input type="submit" value="Envoyer le message" class="btn btn-primary" />
-	</p>
+	<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <input type="submit" value="Envoyer le message" class="btn btn-primary" />
+    </div>
+	</div>
 </form>
 
+</div>
 {% endblock %}

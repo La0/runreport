@@ -56,7 +56,7 @@ def add_pages(request):
     if not members:
       menu.append(_p('club-list', 'Rejoindre un club', 'icon-plus'))
 
-    
+
     # User menu
     submenu = {
       'caption' : 'Aide',
@@ -65,6 +65,7 @@ def add_pages(request):
     }
     submenu['menu'].append(_p(('page-list', 'help'), 'Aide', lazy=True))
     submenu['menu'].append(_p(('page-list', 'news'), 'News', lazy=True))
+    submenu['menu'].append(_p(('contact_form',), 'Contact', lazy=True))
     menu.append(submenu)
 
     # User menu
