@@ -1,5 +1,5 @@
 #- coding: utf-8
-from models import RunReport, RunSession
+from models import RunReport, RunSession, SESSION_TYPES
 from datetime import date
 from django import forms
 
@@ -53,3 +53,22 @@ class RunSessionForm(forms.ModelForm):
       return False
 
     return True
+
+class RunSessionAddForm(forms.Form):
+  '''
+  Form to create manually a new empty session
+  '''
+  date = forms.DateField()
+  type = forms.ChoiceField(required=False, choices=SESSION_TYPES)
+
+  def __init__(self, user, *args, **kwargs):
+    self.user = user
+    super(RunSessionAddForm, self).__init__(*args, **kwargs)
+
+  def clean_date(self):
+
+    # Check date is free
+    if RunSession.objects.filter(report__user=self.user, date=self.cleaned_data['date']):
+      raise forms.ValidationError('Une séance existe déjà à cette date.')
+
+    return self.cleaned_data['date']

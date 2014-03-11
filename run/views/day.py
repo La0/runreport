@@ -1,5 +1,5 @@
 from run.forms import RunSessionForm
-from coach.mixins import JsonResponseMixin
+from coach.mixins import JsonResponseMixin, JSON_STATUS_ERROR
 from django.views.generic import DateDetailView
 from django.views.generic.edit import ModelFormMixin, ProcessFormView, DeleteView
 from mixins import CalendarDay

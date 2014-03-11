@@ -26,7 +26,10 @@ div.row:last-of-type {
 
 {% block content %}
 <div class="container">
-	<h2>Mes records</h2>
+	<h2>
+    Mes records
+    <a href="{% url session-add-type 'race' %}" class="modal-action btn btn-primary pull-right"><span class="glyphicon glyphicon-plus"></span> Ajouter un record</a>
+  </h2>
 
 	{% if races %}
 	
