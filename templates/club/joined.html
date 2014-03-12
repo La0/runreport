@@ -1,0 +1,29 @@
+{% extends 'modal.html' %}
+
+{% set modal_title = club.name %}
+
+{% block body %}
+
+{% if error %}
+<div class="alert alert-danger">
+  {% if error == 'mail' %}
+    <h4>Problème de notification</h4>
+    Nous n'avons pu notifier le club de votre demande.
+    <br />Veuillez ré-essayer plus tard.
+  {% elif error == 'member' %}
+    <h4>Déja membre</h4>
+    Vous êtes déja en relation avec ce club.
+  {% endif %}
+</div>
+{% else %}
+<div class="alert alert-danger">
+  <h4>Demande enregistrée</h4>
+  Votre demande a bien été envoyé au club, vous recevrez une réponse dès qu'elle aura été traitée par le gérant du club.
+</div>
+{% endif %}
+
+{% endblock %}
+
+{% block footer %}
+<button class="btn btn-default" data-dismiss="modal">Fermer</button>
+{% endblock %}
