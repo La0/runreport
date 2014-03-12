@@ -74,8 +74,8 @@ def add_pages(request):
       'menu' : [],
       'icon' : 'icon-user',
     }
-    submenu['menu'].append(_p('vma', 'Mes allures'))
     submenu['menu'].append(_p('user-profile', 'Mon profil'))
+    submenu['menu'].append(_p('vma', 'Mes allures'))
     submenu['menu'].append(_p('user-races', 'Mes records'))
     submenu['menu'].append(_p('user-garmin', u'Données Garmin'))
     submenu['menu'].append(_p('vma-glossary', 'Glossaire'))
