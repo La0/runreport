@@ -17,7 +17,7 @@ class RunCalendarDay(CalendarDay, JsonResponseMixin, ModelFormMixin, ProcessForm
 
   def form_valid(self, form):
     form.save()
-    return self.render_to_response(self.get_context_data(**{'form' : form}))
+    return self.render_to_response(self.get_context_data(**{'form' : form, 'saved': True}))
 
   def form_invalid(self, form):
     self.json_status = JSON_STATUS_ERROR
