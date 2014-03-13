@@ -3,13 +3,18 @@ html {
 }
 
 body {
+	font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	min-height: 100%;
 	-moz-box-sizing: padding-box;
 	box-sizing: padding-box;
 	padding: 75px 0 31px 0;
 	position: relative;
 }
-	
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: 700;
+}
+
 .navbar-brand i {
 	color: orange;
 }
@@ -29,7 +34,7 @@ body {
 		transform: rotateY(360deg);
 	}
 }
-	
+
 @keyframes logoAnim {
 	from {
 		-webkit-transform: rotateY(0deg);
@@ -44,7 +49,7 @@ body {
 #main > .container:first-of-type > h2:first-child {
     margin-top: 0;
 }
-	
+
 body > footer {
 	background: none repeat scroll 0 0 #EEEEEE;
 	border-top: 1px solid #DDDDDD;
