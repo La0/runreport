@@ -1,2 +1,2 @@
 #!/bin/bash
-celery -A coach worker -l info
+celery -A coach worker -B -l info

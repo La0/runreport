@@ -2,10 +2,11 @@
 import requests
 import gnupg
 from datetime import datetime, time
-from coach.settings import GPG_HOME, GPG_PASSPHRASE
-from run.models import GarminActivity, RunSession, RunReport
+from coach.settings import GPG_HOME, GPG_PASSPHRASE, REPORT_START_DATE
+from run.models import GarminActivity
 import logging
 import re
+from helpers import week_to_date
 
 logger = logging.getLogger('coach.run.garmin')
 
@@ -175,3 +176,36 @@ class GarminConnector:
       resp.encoding = 'utf-8'
     activity.set_data(data_type, resp.json())
     return True
+
+  @staticmethod
+  def import_user(user):
+    '''
+    Do the import for an users
+    '''
+    min_date = week_to_date(*REPORT_START_DATE)
+
+    # Try to login
+    gc = None
+    try:
+      gc = GarminConnector(user)
+      gc.login()
+    except Exception, e:
+      logger.error("Login failed for %s: %s" % (user, str(e)))
+      return
+
+    # Import activities !
+    nb = 0
+    while True:
+      activities = []
+      try:
+        activities = gc.search(nb)
+        nb += 1
+      except Exception, e:
+        logger.error("Import failed for %s: %s" % (user, str(e)))
+        break
+
+      # End of loop ?
+      if not len(activities):
+        break
+      if min([a.date for a in activities]).date() <= min_date:
+        break

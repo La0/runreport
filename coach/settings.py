@@ -218,6 +218,17 @@ PIWIK_ID = False
 # Celery broker
 BROKER_URL = 'redis://'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_TIMEZONE = 'UTC'
+
+# Celery Periodic tasks
+from datetime import timedelta
+CELERYBEAT_SCHEDULE = {
+  'garmin-import-10-min': {
+    'task': 'run.tasks.garmin_import',
+    'schedule': timedelta(minutes=10),
+    'args': (16, 16)
+  },
+}
 
 # Import local settings, if any
 try:

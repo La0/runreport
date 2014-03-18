@@ -7,3 +7,4 @@ env
 logs
 gunicorn.socket
 db
+celerybeat-schedule
