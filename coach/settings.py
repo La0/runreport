@@ -237,7 +237,7 @@ CELERYBEAT_SCHEDULE = {
 
 # Import local settings, if any
 try:
-  from local_settings import *
+  from coach.local_settings import *
 except ImportError, e:
   pass
 
