@@ -20,3 +20,30 @@ def garmin_import(*args, **kwargs):
   users = users.exclude(garmin_login='') # don't use empty logins
   for user in users:
     GarminConnector.import_user(user)
+
+@shared_task
+def race_mail(*args, **kwargs):
+  '''
+  Send a mail to all users having a race today
+  '''
+  from run.models import RunSession
+  from datetime import date
+  from coach.mail import MailBuilder
+
+  # Setup mail builder
+  builder = MailBuilder('mail/race.html')
+
+  # Load today's race
+  races = RunSession.objects.filter(date=date.today(), type='race')
+
+  # Build and Send all mails
+  for race in races:
+    user = race.report.user
+    data = {
+      'race' : race,
+      'user' : user,
+    }
+    builder.subject = u'Votre course %s - RunReport' % (race.name,)
+    builder.to = [user.email, ]
+    mail = builder.build(data)
+    mail.send()
