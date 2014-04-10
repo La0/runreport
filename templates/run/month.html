@@ -26,20 +26,6 @@ h2 {
 	}
 }
 
-.visible-xs .modal-action {
-	padding: 5px;
-	border-top: 1px solid #ddd;
-}
- 
-.visible-xs .modal-action:nth-of-type(odd) {
-	background: #f6f6f6;
-}
- 
-.visible-xs .modal-action:last-of-type {
-	border-bottom: 1px solid #ddd;
-	margin-bottom: 21px;
-}
-
 span.type {
 	display: inline-block;
 	width: 10px;
@@ -112,7 +98,7 @@ span.type {
 		{% endfor %}
 	</table>
 
-	<div class="visible-xs">
+	<div class="visible-xs row-striped">
 		{% for day in sessions %}
 		{% with sessions[day] as session %}
 		<div class="row modal-action" href="{{pageday|url(*pageargs + [day.year, day.month, day.day])}}">

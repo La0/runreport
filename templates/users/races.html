@@ -7,20 +7,6 @@
 h2, h3 {
 	padding-left: 5px;
 }
-
-div.row {
-	padding: 5px;
-	border-top: 1px solid #ddd;
-}
- 
-div.row:nth-of-type(odd) {
-	background: #f6f6f6;
-}
- 
-div.row:last-of-type {
-	border-bottom: 1px solid #ddd;
-	margin-bottom: 21px;
-}
 </style>
 {% endblock %}
 
@@ -28,7 +14,7 @@ div.row:last-of-type {
 <div class="container">
 	<h2>
     Mes records
-    <a href="{% url session-add-type 'race' %}" class="modal-action btn btn-primary pull-right"><span class="glyphicon glyphicon-plus"></span> Ajouter un record</a>
+    <a href="{% url session-add-type 'race' %}" class="modal-action btn btn-primary pull-right"><span class="icon icon-plus"></span> Ajouter un record</a>
   </h2>
 
 	{% if races %}
@@ -36,7 +22,7 @@ div.row:last-of-type {
 	{% for category in categories %}
 	<h3>{{category.name}}</h3>
 
-	<div>
+	<div class="row-striped">
 		{% for race in races[category.id] %}
 		<div class="row {% if loop.first %}race-record{% endif %}">
 			<div class="col-sm-4"><strong>{{ race.name }}</strong></div>
@@ -57,7 +43,7 @@ div.row:last-of-type {
 
 		<h2>Mes courses futures</h2>
 		{% if future_races %}
-		<div>
+		<div class="row-striped">
 			{% for race in future_races %}
 			<div class="row">
 				<div class="col-sm-4">

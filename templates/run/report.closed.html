@@ -1,21 +1,3 @@
-<style>
-.row {
-	padding: 5px;
-	border-top: 1px solid #ddd;
-}
- 
-.row:nth-of-type(odd) {
-	background: #f6f6f6;
-}
- 
-.row:last-of-type {
-	border-bottom: 1px solid #ddd;
-	margin-bottom: 21px;
-}
-
-
-</style>
-
 <div class="container">
 	{% if trainer %}
 	<p class="alert alert-success">
@@ -28,55 +10,57 @@
 		<i class="icon-tags"> </i> Semaine {{ report.plan_week.order|add(1) }} de <a href="{% url plan-user report.plan_week.plan.slug, report.plan_week.plan.creator.username %}" target="_blank">{{ report.plan_week.plan.name }}</a>
 	</p>
 	{% endif %}
-	{% for day in report.get_days() %}
-	{% with sessions[day] as session %}
-	<div class="row">
-		<div class="col-sm-3">
-			<strong>{{day|date('l d M')}}</strong>
-		</div>
-		<div class="col-sm-9">
-			{% if session %}
-			{% if session.sport == 'cycling' %}
-			<i class="icon-bicycle"></i>
-			{% elif session.sport == 'swimming' %}
-			<i class="icon-swimming"></i>
-			{% else %}
-			<i class="icon-pitch"></i>
-			{% endif %}
-			<strong>{{session.name|default('Session sans nom')}}</strong><br />
-			{{session.comment|default('Pas de commentaire')|linebreaksbr}}
-			<div>
-				{% if session.type %}
-				{% if session.type == 'training' %}
-				<span class="label label-info">Entrainement</span>
-				{% elif session.type == 'race' %}
-				<span class="label label-success">Course</span>
+	<div class="row-striped">
+		{% for day in report.get_days() %}
+		{% with sessions[day] as session %}
+		<div class="row">
+			<div class="col-sm-3">
+				<strong>{{day|date('l d M')}}</strong>
+			</div>
+			<div class="col-sm-9">
+				{% if session %}
+				{% if session.sport == 'cycling' %}
+				<i class="icon-bicycle"></i>
+				{% elif session.sport == 'swimming' %}
+				<i class="icon-swimming"></i>
 				{% else %}
-				<span class="label label-default">Repos</span>
+				<i class="icon-pitch"></i>
 				{% endif %}
+				<strong>{{session.name|default('Session sans nom')}}</strong><br />
+				{{session.comment|default('Pas de commentaire')|linebreaksbr}}
+				<div>
+					{% if session.type %}
+					{% if session.type == 'training' %}
+					<span class="label label-info">Entrainement</span>
+					{% elif session.type == 'race' %}
+					<span class="label label-success">Course</span>
+					{% else %}
+					<span class="label label-default">Repos</span>
+					{% endif %}
+					{% endif %}
+					{% if session.time %}
+					<span class="label label-default">Temps</span> {{session.time}}
+					{% endif %}
+					{% if session.distance %}
+					<span class="label label-default">Distance</span> {{session.distance}} km
+					{% endif %}
+				</div>
+				{% if session.plan_session %}
+				<div>
+					<span class="label label-warning">Plan d'entraînement</span> {{ session.plan_session.week.plan.name }}
+				</div>
 				{% endif %}
-				{% if session.time %}
-				<span class="label label-default">Temps</span> {{session.time}}
-				{% endif %}
-				{% if session.distance %}
-				<span class="label label-default">Distance</span> {{session.distance}} km
+				{% with session.garmin_activity as activity %}
+				{% include '_garmin.html' %}
+				{% endwith %}
+				{% else %}
+				<i>Pas de séance</i>
 				{% endif %}
 			</div>
-			{% if session.plan_session %}
-			<div>
-				<span class="label label-warning">Plan d'entraînement</span> {{ session.plan_session.week.plan.name }}
-			</div>
-			{% endif %}
-			{% with session.garmin_activity as activity %}
-			{% include '_garmin.html' %}
-			{% endwith %}
-			{% else %}
-			<i>Pas de séance</i>
-			{% endif %}
 		</div>
+		{% endwith %}
+		{% endfor %}
 	</div>
-	{% endwith %}
-	{% endfor %}
 	<h4>Bilan de la semaine</h4>
 	{% if report.comment %}
 	<p>

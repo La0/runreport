@@ -186,10 +186,6 @@ div.modal.day div.modal-body input, div.modal.day div.modal-body textarea {
 	margin-left: -350px;
 }
 
-.modal-action:hover {
-	background: #eee !important;
-}
-
 .modal-action {
 	cursor: pointer;
 }
@@ -356,4 +352,18 @@ form a.delete:hover {
 img.sport {
   width: 22px;
   vertical-align: middle;
+}
+
+.row-striped > * {
+	padding: 5px;
+	border-top: 1px solid #ddd;
+}
+ 
+.row-striped > *:nth-of-type(odd) {
+	background: #f6f6f6;
+}
+ 
+.row-striped > *:last-of-type {
+	border-bottom: 1px solid #ddd;
+	margin-bottom: 21px;
 }

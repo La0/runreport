@@ -2,24 +2,6 @@
 
 {% set page_title = type == 'help' and 'Aide' or 'News'  %}
 
-{% block style %}
-<style>
-.row {
-	padding: 5px;
-	border-top: 1px solid #ddd;
-}
- 
-.row:nth-of-type(odd) {
-	background: #f6f6f6;
-}
- 
-.row:last-of-type {
-	border-bottom: 1px solid #ddd;
-	margin-bottom: 21px;
-}
-</style>
-{% endblock %}
-
 {% block content %}
 
 <div class="container">
@@ -32,7 +14,7 @@
 	</div>
 	{% endif %}
 	
-	<div>
+	<div class="row-striped">
 		{% for page in pages %}
 		<div class="row">
 			<div class="col-sm-8">

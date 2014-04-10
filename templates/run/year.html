@@ -11,20 +11,6 @@
 		text-overflow: ellipsis;
 		overflow: hidden;
 	}
-	
-	.visible-xs .modal-action {
-		padding: 5px;
-		border-top: 1px solid #ddd;
-	}
- 
-	.visible-xs .modal-action:nth-of-type(odd) {
-		background: #f6f6f6;
-	}
- 
-	.visible-xs .modal-action:last-of-type {
-		border-bottom: 1px solid #ddd;
-		margin-bottom: 21px;
-	}
 
 	span.type {
 		display: inline-block;
@@ -66,24 +52,26 @@
         {{ month_date|date('E Y') }}
         <a href="{% url report-month month_date.year, month_date.month %}" class="btn btn-sm btn-info pull-right">Voir ce mois</a>
       </h3>
-      {% for day in days %}
-      {% with object_list.get(day, None) as session %}
-      {% if session %}
-      <div class="modal-action" href="{{pageday|url(*pageargs + [day.year, day.month, day.day])}}">
-        <strong>{{day|date('l d')|title()}}</strong>
-        <div>
-          <span class="type {{ session.type }}"></span>
-          {{session.name|default('Session sans nom')}}
-        </div>
-        {% if session.plan_session %}
-        <div>
-          <i class="icon-tags"> </i> {{ session.plan_session.week.plan.name|truncate(10) }}
-        </div>
-        {% endif %}
-      </div>
-      {% endif %}
-      {% endwith %}
-      {% endfor %}
+			<div class="row-striped">
+	      {% for day in days %}
+	      {% with object_list.get(day, None) as session %}
+	      {% if session %}
+	      <div class="modal-action" href="{{pageday|url(*pageargs + [day.year, day.month, day.day])}}">
+	        <strong>{{day|date('l d')|title()}}</strong>
+	        <div>
+	          <span class="type {{ session.type }}"></span>
+	          {{session.name|default('Session sans nom')}}
+	        </div>
+	        {% if session.plan_session %}
+	        <div>
+	          <i class="icon-tags"> </i> {{ session.plan_session.week.plan.name|truncate(10) }}
+	        </div>
+	        {% endif %}
+	      </div>
+	      {% endif %}
+	      {% endwith %}
+	      {% endfor %}
+			</div>
     {% endif %}
     {% endwith %}
     {% endfor %}
