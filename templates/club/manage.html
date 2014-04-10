@@ -11,30 +11,32 @@
 		<h4>Aide</h4>
 		Vous êtes limités en nombre de compte liés au club, en fonction de chaque type d'utilisateur.
 	</div>
-	<table class="table">
-		<tr>
-			<th>Type d'utilisateur</th>
-			<th>Maximum</th>
-			<th>Utilisés</th>
-			<th>Disponible</th>
-		</tr>
-		{% for stat in stats %}
-		<tr>
-			<td>{{stat.type}}</td>
-			<td>{{stat.max}}</td>
-			<td>{{stat.used}}</td>
-			<td>
-				{% if stat.percent >= 50 %}
-				<span class="badge badge-success">{{stat.diff}}</span>
-				{% elif stat.percent >= 25 %}
-				<span class="badge badge-warning">{{stat.diff}}</span>
-				{% else %}
-				<span class="badge badge-important">{{stat.diff}}</span>
-				{% endif %}
-			</td>
-		</tr>
-		{% endfor %}
-	</table>
+	<div class="table-responsive">
+		<table class="table table-striped">
+			<tr>
+				<th>Type d'utilisateur</th>
+				<th>Maximum</th>
+				<th>Utilisés</th>
+				<th>Disponible</th>
+			</tr>
+			{% for stat in stats %}
+			<tr>
+				<td>{{stat.type}}</td>
+				<td>{{stat.max}}</td>
+				<td>{{stat.used}}</td>
+				<td>
+					{% if stat.percent >= 50 %}
+					<span class="badge badge-success">{{stat.diff}}</span>
+					{% elif stat.percent >= 25 %}
+					<span class="badge badge-warning">{{stat.diff}}</span>
+					{% else %}
+					<span class="badge badge-important">{{stat.diff}}</span>
+					{% endif %}
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
 
 	<h3>Liens publics</h3>
 	<div class="alert alert-info">
@@ -43,22 +45,24 @@
 		Ils sont utiles pour indiquer des sites externes: groupe Facebook, site officiel du club, ...
 	</div>
 	{% if links %}
-	<table class="table">
-		<tr>
-			<th>Nom</th>
-			<th>Url</th>
-			<th>Actions</th>
-		</tr>
-		{% for link in links %}
-		<tr>
-			<td>{{link.name}}</td>
-			<td><a href="{{link.url}}" target="_blank">{{link.url}}</a></td>
-			<td>
-				<a href="{% url club-link-delete club.slug, link.id%}" class="modal-action modal-post btn btn-danger btn-sm">Supprimer</a>
-			</td>
-		</tr>
-		{% endfor %}
-	</table>
+	<div class="table-responsive">
+		<table class="table table-striped">
+			<tr>
+				<th>Nom</th>
+				<th>Url</th>
+				<th>Actions</th>
+			</tr>
+			{% for link in links %}
+			<tr>
+				<td>{{link.name}}</td>
+				<td><a href="{{link.url}}" target="_blank">{{link.url}}</a></td>
+				<td>
+					<a href="{% url club-link-delete club.slug, link.id%}" class="modal-action modal-post btn btn-danger btn-xs">Supprimer</a>
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
 	{% else %}
 	<p class="alert alert-warning">
 		Aucun lien public pour votre club.
