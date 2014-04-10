@@ -33,7 +33,11 @@
 			{{ macros.input(form.garmin_password, 'Mot de passe Garmin') }}
 		</fieldset>
 
-		<p><button type="submit" class="btn btn-primary">Sauver ces informations</button></p>
+		<div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+				<button type="submit" class="btn btn-primary">Sauver ces informations</button></p>
+			</div>
+		</div>
 	</form>
 
 	{% if activities_nb %}
