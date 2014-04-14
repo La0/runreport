@@ -8,7 +8,7 @@ $(function(){
 </script>
 
 <div class="container">
-	
+
 	<form method="post" action="" class="form-horizontal report">
 		{% csrf_token %}
 
@@ -44,29 +44,37 @@ $(function(){
 		</fieldset>
 		{% endfor %}
 
-		<fieldset>
-			<legend>Bilan de la semaine</legend>
-			<p class="muted">
-				Vous pouvez indiquer votre ressenti sur cette semaine (facultatif).
-			</p>
-			{{ macros.input(form_report.comment, 'Commentaire') }}
-			<p>
+		<div class="panel panel-default">
+      <div class="panel-heading">
+        Bilan de la semaine
+      </div>
+      <div class="panel-body">
+        <p class="muted">
+          Vous pouvez indiquer votre ressenti sur cette semaine (facultatif).
+        </p>
+        {{ macros.input(form_report.comment, 'Commentaire') }}
+      </div>
+      <div class="panel-footer">
 				<span class="label label-info">Temps total</span> {{ report.time|days_time('jour', '%Hh%M') }} <span class="muted">&bull;</span> <span class="label label-info">Distance totale</span> {{ report.distance|default(0) }} km.
-			</p>
-		</fieldset>
+      </div>
+    </div>
 
-		<p>
-			<button type="submit" name="action" value="save" class="btn btn-primary">Sauver ces commentaires</button>
+		<div class="form-group row actions">
+      <div class="col-md-3 col-md-offset-3 col-sm-12">
+        <button type="submit" name="action" value="save" class="btn btn-primary">Sauver ces commentaires</button>
+      </div>
 
+      <div class="col-md-3 col-sm-12">
 			{% for m in memberships %}
-			<button {% if not report.is_publiable() %}disabled="disabled"{% endif %} type="submit" name="publish" value="{{m.club.pk}}" class="btn btn-success">
-				Envoyer à
-				{% for t in m.trainers.all() %}
-				{{ t.first_name|default(t.username) }}{% if not loop.last %}, {% endif %}
-				{% endfor %}
-			</button>
-			{% endfor %}
-		</p>
+        <button {% if not report.is_publiable() %}disabled="disabled"{% endif %} type="submit" name="publish" value="{{m.club.pk}}" class="btn btn-success">
+          Envoyer à
+          {% for t in m.trainers.all() %}
+          {{ t.first_name|default(t.username) }}{% if not loop.last %}, {% endif %}
+          {% endfor %}
+        </button>
+      {% endfor %}
+      </div>
+		</div>
 	</form>
 
 	{% if user.auto_send %}

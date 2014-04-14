@@ -78,6 +78,11 @@ form.report textarea {
   height: 100px;
 }
 
+form.report div.actions.row div {
+  margin-bottom: 5px;
+  text-align: center;
+}
+
 form div.controls.running input#id_name {
   background: url(/medias/img/icons/running.png) no-repeat center right white;
 }
@@ -358,12 +363,16 @@ img.sport {
 	padding: 5px;
 	border-top: 1px solid #ddd;
 }
- 
+
 .row-striped > *:nth-of-type(odd) {
 	background: #f6f6f6;
 }
- 
+
 .row-striped > *:last-of-type {
 	border-bottom: 1px solid #ddd;
 	margin-bottom: 21px;
+}
+
+a.btn {
+  text-decoration: none;
 }
