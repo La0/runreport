@@ -1,41 +1,51 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>{{page.name}}</h1>
 
-<ul class="breadcrumb">
-  <li>Ecrit par {{page.user.first_name}} {{page.user.last_name|default(page.user.username)}} <span class="divider">&bull;</span></li>
-  <li>le {{ page.updated|date('d E Y')}}</li>
-</ul>
+<div class="container">
 
-<div class="page">
-{{page.html|default('No content')|safe}}
+	<h2>{{page.name}}</h2>
+
+	<ul class="breadcrumb">
+    <li>Ecrit par {{page.user.first_name}} {{page.user.last_name|default(page.user.username)}}</li>
+		<li>le {{ page.updated|date('d E Y')}}</li>
+	</ul>
+
+	<div class="page">
+		{{page.html|default('No content')|safe}}
+    <hr />
+    <div class="pull-right">
+      <a href="{% url 'page-list' type %}" class="btn btn-primary">Voir les autres {% if type == 'news' %}News{% else %}pages d'aide{% endif %}</a>
+    </div>
+	</div>
+
+	{% if edit %}
+	<hr />
+
+	{% if page.published %}
+	<div class="alert alert-success">
+		Page publiée, et visible par tous.
+	</div>
+	{% else %}
+	<div class="alert alert-info">
+		<h4>Page non publiée</h4>
+		Elle n'est visible que par les administrateurs.
+	</div>
+	{% endif %}
+
+	<form action="" class="page form-horizontal" method="POST">
+		{% csrf_token %}
+		{{ macros.input(form.name, 'Nom') }}
+		{{ macros.input(form.slug, 'Slug') }}
+		{{ macros.input(form.type, 'Type') }}
+		{{ macros.input(form.published, 'Publiée') }}
+		{{ macros.input(form.markdown, 'Markdown') }}
+		<p>
+			<input class="btn btn-primary" type="submit" name="save" value="Sauver les modifications" />
+		</p>
+	</form>
+	{% endif %}
+
 </div>
 
-{% if edit %}
-<hr />
-
-{% if page.published %}
-<div class="alert alert-success">
-Page publiée, et visible par tous.
-</div>
-{% else %}
-<div class="alert alert-info">
-  <h4>Page non publiée</h4>
-  Elle n'est visible que par les administrateurs.
-</div>
-{% endif %}
-
-<form action="" class="page form-horizontal" method="POST">
-  {% csrf_token %}
-  {{ macros.input(form.name, 'Nom') }}
-  {{ macros.input(form.slug, 'Slug') }}
-  {{ macros.input(form.type, 'Type') }}
-  {{ macros.input(form.published, 'Publiée') }}
-  {{ macros.input(form.markdown, 'Markdown') }}
-  <div class="form-actions">
-    <input class="btn btn-primary" type="submit" name="save" value="Sauver les modifications" />
-  </div>
-</form>
-{% endif %}
 {% endblock %}

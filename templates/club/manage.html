@@ -2,80 +2,90 @@
 
 {% block content %}
 
-<h1>Administrer {{club.name}}</h1>
+<div class="container">
 
-<h3>Utilisateurs</h3>
-<div class="alert alert-info">
-  <h4>Aide</h4>
-  Vous êtes limités en nombre de compte liés au club, en fonction de chaque type d'utilisateur.
+	<h2>Administrer {{club.name}}</h2>
+
+	<h3>Utilisateurs</h3>
+	<div class="alert alert-info">
+		<h4>Aide</h4>
+		Vous êtes limités en nombre de compte liés au club, en fonction de chaque type d'utilisateur.
+	</div>
+	<div class="table-responsive">
+		<table class="table table-striped">
+			<tr>
+				<th>Type d'utilisateur</th>
+				<th>Maximum</th>
+				<th>Utilisés</th>
+				<th>Disponible</th>
+			</tr>
+			{% for stat in stats %}
+			<tr>
+				<td>{{stat.type}}</td>
+				<td>{{stat.max}}</td>
+				<td>{{stat.used}}</td>
+				<td>
+					{% if stat.percent >= 50 %}
+					<span class="badge badge-success">{{stat.diff}}</span>
+					{% elif stat.percent >= 25 %}
+					<span class="badge badge-warning">{{stat.diff}}</span>
+					{% else %}
+					<span class="badge badge-important">{{stat.diff}}</span>
+					{% endif %}
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
+
+	<h3>Liens publics</h3>
+	<div class="alert alert-info">
+		<h4>Aide</h4>
+		Les liens publics sont affichés dans le menu Club, en haut de page, pour tous les utilisateurs du club.<br />
+		Ils sont utiles pour indiquer des sites externes: groupe Facebook, site officiel du club, ...
+	</div>
+	{% if links %}
+	<div class="table-responsive">
+		<table class="table table-striped">
+			<tr>
+				<th>Nom</th>
+				<th>Url</th>
+				<th>Actions</th>
+			</tr>
+			{% for link in links %}
+			<tr>
+				<td>{{link.name}}</td>
+				<td><a href="{{link.url}}" target="_blank">{{link.url}}</a></td>
+				<td>
+					<a href="{% url club-link-delete club.slug, link.id%}" class="modal-action modal-post btn btn-danger btn-xs">Supprimer</a>
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
+	{% else %}
+	<p class="alert alert-warning">
+		Aucun lien public pour votre club.
+	</p>
+	{% endif %}
+	<a href="{% url club-link-add club.slug %}" class="modal-action btn btn-info pull-right">Ajouter un lien</a>
+	<div class="clearfix">&nbsp;</div>
+
+	<h3>Edition</h3>
+	<form action="" method="POST" class="form form-horizontal">
+		{% csrf_token %}
+		{{ macros.input(form.name, 'Nom du club') }}
+		{{ macros.input(form.slug, 'Slug', 'Représente le nom du club dans les urls') }}
+		{{ macros.input(form.address, 'Adresse') }}
+		{{ macros.input(form.zipcode, 'Code Postal') }}
+		{{ macros.input(form.city, 'Ville') }}
+		<div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+				<input type="submit" value="Editer" class="btn btn-primary" />
+			</div>
+		</div>
+	</form>
+
 </div>
-<table class="table">
-  <tr>
-    <th>Type d'utilisateur</th>
-    <th>Maximum</th>
-    <th>Utilisés</th>
-    <th>Disponible</th>
-  </tr>
-  {% for stat in stats %}
-  <tr>
-    <td>{{stat.type}}</td>
-    <td>{{stat.max}}</td>
-    <td>{{stat.used}}</td>
-    <td>
-      {% if stat.percent >= 50 %}
-      <span class="badge badge-success">{{stat.diff}}</span>
-      {% elif stat.percent >= 25 %}
-      <span class="badge badge-warning">{{stat.diff}}</span>
-      {% else %}
-      <span class="badge badge-important">{{stat.diff}}</span>
-      {% endif %}
-    </td>
-  </tr>
-  {% endfor %}
-</table>
-
-<h3>Liens publics</h3>
-<div class="alert alert-info">
-  <h4>Aide</h4>
-  Les liens publics sont affichés dans le menu Club, en haut de page, pour tous les utilisateurs du club.<br />
-  Ils sont utiles pour indiquer des sites externes: groupe Facebook, site officiel du club, ...
-</div>
-{% if links %}
-<table class="table">
-  <tr>
-    <th>Nom</th>
-    <th>Url</th>
-    <th>Actions</th>
-  </tr>
-  {% for link in links %}
-  <tr>
-    <td>{{link.name}}</td>
-    <td><a href="{{link.url}}" target="_blank">{{link.url}}</a></td>
-    <td>
-      <a href="{% url club-link-delete club.slug, link.id%}" class="modal-action modal-post btn btn-danger">Supprimer</a>
-    </td>
-  </tr>
-  {% endfor %}
-</table>
-{% else %}
-<p class="alert alert-warning">
-  Aucun lien public pour votre club.
-</p>
-{% endif %}
-<a href="{% url club-link-add club.slug %}" class="modal-action btn btn-info pull-right">Ajouter un lien</a>
-<div class="clearfix">&nbsp;</div>
-
-<h3>Edition</h3>
-<form action="" method="POST" class="form form-horizontal">
-  {% csrf_token %}
-  {{ macros.input(form.name, 'Nom du club') }}
-  {{ macros.input(form.slug, 'Slug', 'Représente le nom du club dans les urls') }}
-  {{ macros.input(form.address, 'Adresse') }}
-  {{ macros.input(form.zipcode, 'Code Postal') }}
-  {{ macros.input(form.city, 'Ville') }}
-  <div class="form-actions">
-    <input type="submit" value="Editer" class="btn btn-primary" />
-  </div>
-</form>
 
 {% endblock %}

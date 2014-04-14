@@ -3,31 +3,31 @@
 {% set modal_url = day|date('l d E Y')|title() %}
 
 {% block body %}
-  {% if session %}
-  <h4><img src="/medias/img/icons/{{session.sport}}.png" />{{ session.name|default('Session sans nom') }}</h4>
-  <p>{{ session.comment|default('Pas de commentaire')|linebreaksbr }}</p>
-  {% if session.type == 'training' %}
-  <span class="label label-info">Entrainement</span>
-  {% elif session.type == 'race' %}
-  <span class="label label-success">Course</span>
-  {% else %}
-  <span class="label">Repos</span>
-  {% endif %}
-  {% if session.distance %}
-  <span class="label">Temps</span> {{session.time}}
-  {% endif %}
-  {% if session.distance %}
-  <span class="label">Distance</span> {{session.distance}} km
-  {% endif %}
-  {% with session.garmin_activity as activity %}
-    {% include '_garmin.html' %}
-  {% endwith %}
-  {% else %}
-  <p class="alert alert-danger">Pas de séance</p>
-  {% endif %}
+{% if session %}
+<h4><img src="/medias/img/icons/{{session.sport}}.png" />{{ session.name|default('Session sans nom') }}</h4>
+<p>{{ session.comment|default('Pas de commentaire')|linebreaksbr }}</p>
+{% if session.type == 'training' %}
+<span class="label label-info">Entrainement</span>
+{% elif session.type == 'race' %}
+<span class="label label-success">Course</span>
+{% else %}
+<span class="label">Repos</span>
+{% endif %}
+{% if session.distance %}
+<span class="label">Temps</span> {{session.time}}
+{% endif %}
+{% if session.distance %}
+<span class="label">Distance</span> {{session.distance}} km
+{% endif %}
+{% with session.garmin_activity as activity %}
+{% include '_garmin.html' %}
+{% endwith %}
+{% else %}
+<p class="alert alert-warning">Pas de séance</p>
+{% endif %}
 {% endblock %}
 
 {% block footer %}
-  <button class="btn" data-dismiss="modal">Fermer</button>
-  <a href="{{ url('club-member-week', club.slug, report.user, report.year, report.week) }}" class="btn btn-success">Voir cette semaine</a>
+<button class="btn" data-dismiss="modal">Fermer</button>
+<a href="{{ url('club-member-week', club.slug, report.user, report.year, report.week) }}" class="btn btn-success">Voir cette semaine</a>
 {% endblock %}

@@ -1,21 +1,25 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="container">
 
-<h1>Formulaire de contact</h1>
+<h2>Formulaire de contact</h2>
 <div class="alert alert-info">
-  <h4>Besoin d'aide ?</h4>
-  N'hésitez pas à utiliser ce formulaire de contact en cas de problème à l'utilisation de RunReport, vous aurez une réponse personelle le plus rapidement possible.
+	<h4>Besoin d'aide ?</h4>
+	N'hésitez pas à utiliser ce formulaire de contact en cas de problème à l'utilisation de RunReport, vous aurez une réponse personelle le plus rapidement possible.
 </div>
 
 <form action="" method="POST" class="form-horizontal contact">
-  {% csrf_token %}
-  {{ macros.input(form.name, 'Votre nom') }}
-  {{ macros.input(form.email, 'Votre adresse mail') }}
-  {{ macros.input(form.body, 'Votre message') }}
-  <div class="form-actions">
-    <input type="submit" value="Envoyer le message" class="btn btn-primary" />
-  </div>
+	{% csrf_token %}
+	{{ macros.input(form.name, 'Votre nom') }}
+	{{ macros.input(form.email, 'Votre adresse mail') }}
+	{{ macros.input(form.body, 'Votre message') }}
+	<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <input type="submit" value="Envoyer le message" class="btn btn-primary" />
+    </div>
+	</div>
 </form>
 
+</div>
 {% endblock %}

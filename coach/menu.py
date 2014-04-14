@@ -18,9 +18,8 @@ def add_pages(request):
 
   menu = []
   if request.user.is_authenticated():
-    menu.append(_p(('page-list', 'news'), 'News', 'icon-envelope', lazy=True))
-    menu.append(_p('report-current', 'Cette semaine', 'icon-list'))
-    menu.append(_p('report-current-month', 'Calendrier', icon='icon-th-large', lazy=True))
+    menu.append(_p('report-current', 'Semaine', 'icon-list'))
+    menu.append(_p('report-current-month', 'Calendrier', icon='icon-calendar', lazy=True))
 
     # Build Club menu
     members = ClubMembership.objects.filter(user=request.user).exclude(role__in=('archive', 'prospect'))
@@ -55,10 +54,19 @@ def add_pages(request):
     # Add button to join a club
     # when no memberships exist
     if not members:
-      menu.append(_p('club-list', 'Rejoindre un club', 'icon-plus-sign'))
+      menu.append(_p('club-list', 'Rejoindre un club', 'icon-plus'))
 
-    # Help
-    menu.append(_p(('page-list', 'help'), 'Aide', 'icon-question-sign', lazy=True))
+
+    # User menu
+    submenu = {
+      'caption' : 'Aide',
+      'menu' : [],
+      'icon' : 'icon-help-circled',
+    }
+    submenu['menu'].append(_p(('page-list', 'help'), 'Aide', lazy=True))
+    submenu['menu'].append(_p(('page-list', 'news'), 'News', lazy=True))
+    submenu['menu'].append(_p(('contact_form',), 'Contact', lazy=True))
+    menu.append(submenu)
 
     # User menu
     submenu = {
@@ -66,8 +74,8 @@ def add_pages(request):
       'menu' : [],
       'icon' : 'icon-user',
     }
-    submenu['menu'].append(_p('vma', 'Mes allures'))
     submenu['menu'].append(_p('user-profile', 'Mon profil'))
+    submenu['menu'].append(_p('vma', 'Mes allures'))
     submenu['menu'].append(_p('user-races', 'Mes records'))
     submenu['menu'].append(_p('user-garmin', u'Données Garmin'))
     submenu['menu'].append(_p('vma-glossary', 'Glossaire'))
@@ -75,8 +83,8 @@ def add_pages(request):
     submenu['menu'].append(_p('logout', u'Se déconnecter'))
     menu.append(submenu)
   else:
-    menu.append(_p('user-create', u'Créer un compte', 'icon-plus-sign'))
-    menu.append(_p(('page-list', 'help'), 'Aide', 'icon-question-sign', lazy=True))
+    menu.append(_p('user-create', u'Créer un compte', 'icon-plus'))
+    menu.append(_p(('page-list', 'help'), 'Aide', 'icon-help-circled', lazy=True))
     menu.append(_p('login', 'Se connecter', 'icon-user'))
 
   # Search for active main menu

@@ -4,38 +4,43 @@
 
 <script type="text/javascript">
 $(function(){
-  $("#id_name").keyup(function(){
-    $("#id_slug").val(slugify($(this).val()));
-  });
+	$("#id_name").keyup(function(){
+		$("#id_slug").val(slugify($(this).val()));
+	});
 });
 
 function slugify(str){
-  str = str.toLowerCase();
-  str = str.replace(/\s/g, '_');
-  return str;
+	str = str.toLowerCase();
+	str = str.replace(/\s/g, '_');
+	return str;
 }
 </script>
 
+<div class="container">
 
-<h1>Créer un club</h1>
+	<h2>Créer un club</h2>
 
-<div class="alert alert-info">
-  <h4>Attention</h4>
-  Vous ne pouvez créer et gérer qu'un seul club.
+	<div class="alert alert-info">
+		<h4>Attention</h4>
+		Vous ne pouvez créer et gérer qu'un seul club.
+	</div>
+
+	<form action="" method="POST" class="form form-horizontal">
+		{% csrf_token %}
+
+		{{ macros.input(form.name, 'Nom du club') }}
+		{{ macros.input(form.slug, 'Slug', 'Représente le nom du club dans les urls') }}
+		{{ macros.input(form.address, 'Adresse') }}
+		{{ macros.input(form.zipcode, 'Code Postal') }}
+		{{ macros.input(form.city, 'Ville') }}
+
+		<div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+				<input type="submit" class="btn btn-primary" value="Créer le club" />
+			</div>
+		</div>
+	</form>
+
 </div>
-
-<form action="" method="POST" class="form form-horizontal">
-  {% csrf_token %}
-
-  {{ macros.input(form.name, 'Nom du club') }}
-  {{ macros.input(form.slug, 'Slug', 'Représente le nom du club dans les urls') }}
-  {{ macros.input(form.address, 'Adresse') }}
-  {{ macros.input(form.zipcode, 'Code Postal') }}
-  {{ macros.input(form.city, 'Ville') }}
-
-  <div class="form-actions">
-    <input type="submit" class="btn btn-primary" value="Créer le club" />
-  </div>
-</form>
 
 {% endblock %}

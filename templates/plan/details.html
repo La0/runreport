@@ -2,48 +2,52 @@
 
 {% block content %}
 
-<h1>{{ plan.name }}</h1>
+<div class="container">
 
-{% if weeks %}
+	<h2>{{ plan.name }}</h2>
 
-<table class="table table-bordered table-condensed calendar">
-  <tr>
-    <th>Lundi</th>
-    <th>Mardi</th>
-    <th>Mercredi</th>
-    <th>Jeudi</th>
-    <th>Vendredi</th>
-    <th>Samedi</th>
-    <th>Dimanche</th>
-    <th>Actions</th>
-  </tr>
-  {% for week in weeks %}
-  <tr>
-    {% for day, date, session in week.get_days() %}
-    <td class="modal-action {% if session %}session{% else %}empty{% endif %}" href="{% url plan-day plan.slug, week.order, day %}">
-      {% if session %}
-        {{ session.name }}
-      {% endif %}
-    </td>
-    {% endfor %}
-    <td>
-      <a href="{% url plan-week-delete plan.slug, week.order %}" class="btn btn-danger modal-action modal-post">Supprimer</a>
-    </td>
-  </tr>
-  {% endfor %}
-</table>
+	{% if weeks %}
+
+	<table class="table table-bordered table-condensed calendar">
+		<tr>
+			<th>Lundi</th>
+			<th>Mardi</th>
+			<th>Mercredi</th>
+			<th>Jeudi</th>
+			<th>Vendredi</th>
+			<th>Samedi</th>
+			<th>Dimanche</th>
+			<th>Actions</th>
+		</tr>
+		{% for week in weeks %}
+		<tr>
+			{% for day, date, session in week.get_days() %}
+			<td class="modal-action {% if session %}session{% else %}empty{% endif %}" href="{% url plan-day plan.slug, week.order, day %}">
+				{% if session %}
+				{{ session.name }}
+				{% endif %}
+			</td>
+			{% endfor %}
+			<td>
+				<a href="{% url plan-week-delete plan.slug, week.order %}" class="btn btn-danger modal-action modal-post">Supprimer</a>
+			</td>
+		</tr>
+		{% endfor %}
+	</table>
 
 
-{% else %}
-<p class="alert alert-danger">
-  Pas de semaines pour ce plan.
-</p>
-{% endif %}
+	{% else %}
+	<p class="alert alert-warning">
+		Pas de semaines pour ce plan.
+	</p>
+	{% endif %}
 
-<a href="{% url plan-week-add plan.slug%}" class="btn btn-primary modal-action modal-post">Ajouter une semaine</a>
+	<a href="{% url plan-week-add plan.slug%}" class="btn btn-primary modal-action modal-post">Ajouter une semaine</a>
 
-{% for club in clubs %}
-<a href="{% url plan-apply plan.slug, club.slug %}" class="btn">Appliquer {{ club.name }}</a>
-{% endfor %}
+	{% for club in clubs %}
+	<a href="{% url plan-apply plan.slug, club.slug %}" class="btn">Appliquer {{ club.name }}</a>
+	{% endfor %}
+
+</div>
 
 {% endblock %}

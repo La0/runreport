@@ -196,7 +196,9 @@ LOGGING = {
 }
 
 # Redirect urls
+LOGIN_URL = '/user/login'
 LOGIN_REDIRECT_URL = '/'
+LOGOUT_URL = '/user/logout'
 LOGOUT_REDIRECT_URL = '/'
 
 # Date & Hour of Auto send

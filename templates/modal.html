@@ -1,20 +1,20 @@
-<div class="modal hide fade day" tabindex="-1" role="dialog" >
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3>{{modal_title|default('Coach I ran')}}</h3>
-  </div>
-  {% import '_macros.html' as macros %}
-  {% if form_url %}
-  <form method="POST" action="{{form_url}}" class="{{form_class}}">
-  {% endif %}
-  <div class="modal-body">
-  {% block body %}{% endblock %}
-  </div>
-  <div class="modal-footer">
-  {% block footer %}{% endblock %}
-  </div>
-  {% if form_url %}
-  </form>
-  {% endif %}
+<div class="modal fade day" tabindex="-1" role="dialog" >
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3>{{modal_title|default('Run Report')}}</h3>
+	</div>
+	{% import '_macros.html' as macros %}
+	{% if form_url %}
+	<form method="POST" action="{{form_url}}" class="{{form_class}}">
+		{% endif %}
+		<div class="modal-body">
+			{% block body %}{% endblock %}
+		</div>
+		<div class="modal-footer">
+			{% block footer %}{% endblock %}
+		</div>
+		{% if form_url %}
+	</form>
+	{% endif %}
 </div>
 

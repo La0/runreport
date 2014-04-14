@@ -4,63 +4,83 @@
 
 {% block content %}
 
-<form class="form-horizontal" method="POST" action="">
-  {% csrf_token %}
-  <fieldset>
-    <legend>Informations personelles</legend>
-    {{ macros.input(form.first_name, 'Prénom') }}
-    {{ macros.input(form.last_name, 'Nom') }}
-    {{ macros.input(form.email, 'Adresse email') }}
-    {{ macros.input(form.birthday, 'Date de naissance') }}
-    {% if user.category %}
-    <div class="control-group">
-      <label class="control-label">Catégorie</label>
-      <div class="controls">
-        <span class="label label-info">{{user.category.name}}</span>
-      </div>
-    </div>
-    {% endif %}
-    {{ macros.input(form.license, 'License FFA') }}
-    <div class="alert alert-info">
-      <h4>Mot de passe</h4>
-      Vous pouvez changer de mot de passe en <a href="{% url user-password-update %}">utilisant cette page</a>.
-    </div>
-  </fieldset>
+<div class="container">
+	
+	<h2>Mon profil</h2>
+	
+	<form class="form-horizontal" method="POST" action="">
+		{% csrf_token %}
+		<fieldset>
+			<legend>Informations personnelles</legend>
+			{{ macros.input(form.first_name, 'Prénom', false, 4, 8) }}
+			{{ macros.input(form.last_name, 'Nom', false, 4, 8) }}
+			{{ macros.input(form.email, 'Adresse email', false, 4, 8) }}
+			{{ macros.input(form.birthday, 'Date de naissance', false, 4, 8) }}
+			{% if user.category %}
+			<div class="form-group">
+				<label class="col-sm-4 control-label">Catégorie</label>
+				<div class="col-sm-8">
+					<span class="label label-info">{{user.category.name}}</span>
+				</div>
+			</div>
+			{% endif %}
+			{{ macros.input(form.license, 'License FFA', false, 4, 8) }}
+			<div class="alert alert-info">
+				<h4>Mot de passe</h4>
+				Vous pouvez changer de mot de passe en <a href="{% url user-password-update %}">utilisant cette page</a>.
+			</div>
+		</fieldset>
 
-  <fieldset>
-    <legend>Mails</legend>
-    {{ macros.input(form.auto_send, 'Envoi automatique des commentaires en fin de semaine') }}
-  </fieldset>
+		<fieldset>
+			<legend>Mails</legend>
+			<div class="form-group {% if form.errors %}has-error{% endif %}">
+				<label class="col-sm-4 control-label">Envoi automatique des commentaires en fin de semaine</label>
+				<div class="col-sm-8">
+					<label class="checkbox-inline">
+						{{ form.auto_send|safe }}
+					</label>
+				</div>
+			</div>
+		</fieldset>
 
-  <fieldset>
-    <legend>Informations sportives</legend>
+		<fieldset>
+			<legend>Informations sportives</legend>
 
-    {{ form_trainers.management_form|safe }}
-    {% for form in form_trainers%}
-    <div class="control-group {% if form.errors %}error{% elif form.trainers.value() %}success{% endif %}">
-      <label class="control-label" for="id__">Coach du {{ form.instance.club.name }}</label>
-      <div class="controls field-multiple">
-        {{ form.id|safe }}
-        {{ form.trainers|safe }}
-      </div>
-    </div>
-    {% if form.trainers.errors %}
-    <div class="alert alert-danger">{{form.trainers.errors|safe}}</div>
-    {% endif %}
-    {% endfor %}
+			{{ form_trainers.management_form|safe }}
+			{% for form in form_trainers%}
+			<div class="form-group {% if form.errors %}has-error{% endif %}">
+				<label class="col-sm-4 control-label">Coach du {{ form.instance.club.name }}</label>
+				<div class="col-sm-8">
+					{{ form.id|safe }}
+					{% for trainer in form.trainers %}
+					<label class="checkbox-inline">
+						<input name="{{ form.trainers.html_name }}" type="checkbox" value="{{ trainer.choice_value }}" {% if trainer.is_checked() %}checked{% endif %}>
+						{{ trainer.choice_label }}
+					</label>
+					{% endfor %}
+				</div>
+			</div>
+			{% if form.trainers.errors %}
+			<div class="alert alert-danger">{{form.trainers.errors|safe}}</div>
+			{% endif %}
+			{% endfor %}
+		
+		
 
-    {{ macros.input(form.nb_sessions, 'Nb Séances hebdomadaires') }}
-    {{ macros.input(form.vma, 'Vma', 'Ex: 15.2 km/h') }}
-    {{ macros.input(form.weight, 'Poids', 'En kg') }}
-    {{ macros.input(form.height, 'Taille', 'En cm') }}
-    {{ macros.input(form.frequency_rest, 'Fréquence Cardiaque au repos') }}
-    {{ macros.input(form.frequency, 'Fréquence Cardiaque maximale') }}
-    {{ macros.input(form.comment, 'Renseignements divers') }}
-  </fieldset>
-
-  <div class="form-actions">
-    <button type="submit" class="btn btn-primary">Mettre à jour</button>
-  </div>
-</form>
+			{{ macros.input(form.nb_sessions, 'Nb Séances hebdomadaires', false, 4, 8) }}
+			{{ macros.input(form.vma, 'Vma', 'Ex: 15.2 km/h', 4, 8) }}
+			{{ macros.input(form.weight, 'Poids', 'En kg', 4, 8) }}
+			{{ macros.input(form.height, 'Taille', 'En cm', 4, 8) }}
+			{{ macros.input(form.frequency_rest, 'Fréquence Cardiaque au repos', false, 4, 8) }}
+			{{ macros.input(form.frequency, 'Fréquence Cardiaque maximale', false, 4, 8) }}
+			{{ macros.input(form.comment, 'Renseignements divers', false, 4, 8) }}
+		</fieldset>
+		<div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+				<button type="submit" class="btn btn-primary">Mettre à jour</button>
+			</div>
+		</div>
+	</form>
+</div>
 
 {% endblock %}

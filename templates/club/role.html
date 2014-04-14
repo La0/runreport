@@ -3,43 +3,43 @@
 
 {% block body %}
 <div class="roles">
-  <form method="POST" action="{% url club-member-role club.slug, member.username %}">
-  <p class="alert alert-info">
-   {{member.first_name}} {{member.last_name}} est actuellement <strong>{{membership.role|title()}}</strong> dans le club {{club.name}} 
-  </p>
-  {% csrf_token %}
-  <input class="role_value" type="hidden" name="role" value="{{membership.role}}"/>
+	<form method="POST" action="{% url club-member-role club.slug, member.username %}">
+		<p class="alert alert-info">
+			{{member.first_name}} {{member.last_name}} est actuellement <strong>{{membership.role|title()}}</strong> dans le club {{club.name}} 
+		</p>
+		{% csrf_token %}
+		<input class="role_value" type="hidden" name="role" value="{{membership.role}}"/>
 
-  {% for stat in stats %}
-  {% if stat.type != membership.role %}
-  <div class="role">
-    <h4>{{stat.type|title()}}</h4>
-    <button type="submit" name="role_local" value="{{stat.type}}" class="role btn pull-right {% if stat.diff <= 0 %}disabled{% else %}btn-success{% endif %}">Devenir {{stat.type|title()}}</button>
+		{% for stat in stats %}
+		{% if stat.type != membership.role %}
+		<div class="role">
+			<h4>{{stat.type|title()}}</h4>
+			<button type="submit" name="role_local" value="{{stat.type}}" class="role btn pull-right {% if stat.diff <= 0 %}disabled{% else %}btn-success{% endif %}">Devenir {{stat.type|title()}}</button>
 
-    Places disponibles :
-    {% if stat.percent >= 50 %}
-    <span class="badge badge-success">{{stat.diff}} / {{stat.max}}</span>
-    {% elif stat.percent >= 25 %}
-    <span class="badge badge-warning">{{stat.diff}} / {{stat.max}}</span>
-    {% else %}
-    <span class="badge badge-important">{{stat.diff}} / {{stat.max}}</span>
-    {% endif %}
-  </div>
-  {% endif %}
-  {% endfor %}
+			Places disponibles :
+			{% if stat.percent >= 50 %}
+			<span class="badge badge-success">{{stat.diff}} / {{stat.max}}</span>
+			{% elif stat.percent >= 25 %}
+			<span class="badge badge-warning">{{stat.diff}} / {{stat.max}}</span>
+			{% else %}
+			<span class="badge badge-important">{{stat.diff}} / {{stat.max}}</span>
+			{% endif %}
+		</div>
+		{% endif %}
+		{% endfor %}
 
-  {% if membership.role == 'athlete' %}
-  <hr />
-  <div class="trainers">
-    <h4>Choisir ses entraineurs</h4>
-    {{form.trainers|safe}}
-  </div>
-  <button type="submit" class="btn btn-info pull-right">Sauver</button>
-  {% endif %}
+		{% if membership.role == 'athlete' %}
+		<hr />
+		<div class="trainers">
+			<h4>Choisir ses entraineurs</h4>
+			{{form.trainers|safe}}
+		</div>
+		<button type="submit" class="btn btn-info pull-right">Sauver</button>
+		{% endif %}
 
-  <hr />
-  <h4>Zone dangereuse</h4>
-  <button type="submit" name="role_local" value="archive" class="role btn btn-danger pull-right {% if membership.role == "archive" %}disabled{% endif %}">Archiver ce compte</button>
-  </form>
+		<hr />
+		<h4>Zone dangereuse</h4>
+		<button type="submit" name="role_local" value="archive" class="role btn btn-danger pull-right {% if membership.role == "archive" %}disabled{% endif %}">Archiver ce compte</button>
+	</form>
 </div>
 {% endblock %}

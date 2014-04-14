@@ -1,5 +1,5 @@
 from run.forms import RunSessionForm
-from coach.mixins import JsonResponseMixin
+from coach.mixins import JsonResponseMixin, JSON_STATUS_ERROR
 from django.views.generic import DateDetailView
 from django.views.generic.edit import ModelFormMixin, ProcessFormView, DeleteView
 from mixins import CalendarDay
@@ -17,7 +17,7 @@ class RunCalendarDay(CalendarDay, JsonResponseMixin, ModelFormMixin, ProcessForm
 
   def form_valid(self, form):
     form.save()
-    return self.render_to_response(self.get_context_data(**{'form' : form}))
+    return self.render_to_response(self.get_context_data(**{'form' : form, 'saved': True}))
 
   def form_invalid(self, form):
     self.json_status = JSON_STATUS_ERROR

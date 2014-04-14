@@ -4,26 +4,35 @@
 
 {% block content %}
 
-{% if type == 'help' %}
-<div class="alert alert-info">
-  <h4>Un problème ? Un bug ?</h4>
-  N'hésitez pas à utiliser le <a href="/contact">formulaire de contact</a> en cas de problème sur RunReport.
-</div>
-{% endif %}
+<div class="container">
+	<h2>{{ page_title }}</h2>
+	
+	{% if type == 'help' %}
+	<div class="alert alert-info">
+		<h4>Un problème ? Un bug ?</h4>
+		N'hésitez pas à utiliser le <a href="/contact">formulaire de contact</a> en cas de problème sur RunReport.
+	</div>
+	{% endif %}
+	
+	<div class="row-striped">
+		{% for page in pages %}
+		<div class="row">
+			<div class="col-sm-8">
+				<a href="{% url page page.type, page.slug %}">
+					<strong>{{ page.name }}</strong>
 
-<div class="pages">
-  {% for page in pages %}
-  <a href="{% url page page.type, page.slug %}">
-    <strong>{{ page.name }}</strong>
-    <p class="pull-right">
-      {% if edit and not page.published %}
-      <span class="label label-important">Privée</span>
-      {% endif %}
-      <span class="label label-inverse">{{ page.user.first_name }} {{ page.user.last_name|default(page.user) }}</span>
-      <span class="label label-info">{{ page.updated|date('d E Y')}}</span>
-    </p>
-  </a>
-  {% endfor %}
+				</a>
+			</div>
+			<div class="col-sm-4">
+				{% if edit and not page.published %}
+				<span class="label label-important">Privée</span>
+				{% endif %}
+				<span class="label label-default">{{ page.user.first_name }} {{ page.user.last_name|default(page.user) }}</span>
+				<span class="label label-info">{{ page.updated|date('d E Y')}}</span>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
 </div>
 
 {% endblock %}

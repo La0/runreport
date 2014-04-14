@@ -78,6 +78,7 @@ JSON_STATUS_ERROR = 'error'
 JSON_OPTION_BODY_RELOAD = 'body_reload' # Reload the body (source)
 JSON_OPTION_NO_HTML = 'nohtml' # No output
 JSON_OPTION_CLOSE = 'close' # Close modal
+JSON_OPTION_REDIRECT_SKIP = 'redirect_skip' # Skip http redirect
 
 class JsonResponseMixin(object):
   """
@@ -127,7 +128,7 @@ class JsonResponseMixin(object):
       return self.build_response(message=str(e))
 
     # Catch redirection
-    if isinstance(resp, HttpResponseRedirect):
+    if isinstance(resp, HttpResponseRedirect) and JSON_OPTION_REDIRECT_SKIP not in self.json_options:
       self.json_status = JSON_STATUS_LOAD
       self.json_options = []
       return self.build_response(url=resp['Location'])

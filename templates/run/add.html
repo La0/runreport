@@ -1,0 +1,20 @@
+{% extends 'modal.html' %}
+
+{% set modal_title = "Ajouter une séance" %}
+
+{% set form_url = source_url %}
+
+{% block body %}
+
+  {% csrf_token %}
+  {{ macros.input(form.date, 'Date') }}
+  {% if not type_asked %}
+  {{ macros.input(form.type, 'Type') }}
+  {% endif %}
+
+{% endblock %}
+
+{% block footer %}
+  <button class="btn btn-default" data-dismiss="modal">Fermer</button>
+  <input type="submit" value="Créer" class="btn btn-primary"/>
+{% endblock %}

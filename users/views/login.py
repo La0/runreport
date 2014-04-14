@@ -16,9 +16,10 @@ class LoginUser(FormView):
     '''
     auth_login(self.request, form.get_user())
     if self.request.session.test_cookie_worked():
-        self.request.session.delete_test_cookie()
+      self.request.session.delete_test_cookie()
 
-    return HttpResponseRedirect(LOGIN_REDIRECT_URL)
+    next_url = self.request.GET.get('next', LOGIN_REDIRECT_URL)
+    return HttpResponseRedirect(next_url)
 
 class LogoutUser(View):
   def get(self, request, *args, **kwargs):

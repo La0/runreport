@@ -2,74 +2,105 @@
 
 {% set page_title = 'Mes allures' %}
 
+
+{% block style %}
+<style>
+table.table th, table.table td {
+	text-align: right;
+	font-size: 0.9em;
+}
+
+.table-responsive {
+	border: 1px solid #ECF0F1;
+	margin-bottom: 15.75px;
+	overflow-x: scroll;
+	overflow-y: hidden;
+	width: 100%;
+}
+
+.table-responsive > .table-bordered {
+	border: 0 none;
+}
+.table-responsive > .table {
+	margin-bottom: 0;
+}
+</style>
+{% endblock %}
+
 {% block content %}
 
-{% if user.vma %}
+<div class="container">
 
-<h2>Temps de passage</h2>
+	{% if user.vma %}
 
-<p class="alert alert-success">
-Votre vma actuelle est de {{user.vma}} km/h
-</p>
+	<h2>Temps de passage</h2>
 
-<div class="table-fixed">
-<table class="table table-bordered table-hover">
-  <tr>
-    <th>% VMA</tH>
-    {% for d in vma.get_distances() %}
-    <th>{{d}}</td>
-    {% endfor %}
-  </tr>
-  {% for pace in vma.get_paces() %}
-  <tr>
-    <td>{{pace.percent}}</td>
-    {% for d in vma.get_distances() %}
-    <td>
-      {% with vma.get_time(pace, d) as t %}
-      {% if t.hour > 0 %}
-      {{t|date("H\h i' s\"")}}
-      {% else %}
-      {{t|date("i' s\"")}}
-      {% endif %}
-      {% endwith %}
-    </td>
-    {% endfor %}
-  </tr>
-  {% endfor %}
-</table>
+	<p class="alert alert-success">
+		Votre vma actuelle est de {{user.vma}} km/h
+	</p>
+
+	<div class="table-responsive">
+		<table class="table table-bordered table-condensed table-hover">
+			<tr>
+				<th>% VMA</th>
+				{% for d in vma.get_distances() %}
+				<th>{{d}}m</th>
+				{% endfor %}
+			</tr>
+			{% for pace in vma.get_paces() %}
+			<tr>
+				<td>{{pace.percent}}</td>
+				{% for d in vma.get_distances() %}
+				<td>
+					{% with vma.get_time(pace, d) as t %}
+					{% if t.hour > 0 %}
+					{{t|date("g\hi's\"")}}
+					{% else %}
+					{{t|date("i's\"")}}
+					{% endif %}
+					{% endwith %}
+				</td>
+				{% endfor %}
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
+
+	<div class="alert alert-info" style="margin-top: 10px">
+		<h4>A l'aide !</h4>
+		Tous les termes sont expliqués dans le <a href="{% url vma-glossary %}">glossaire</a>.
+	</div>
+
+	<h2>Allures</h2>
+
+	<div class="table-responsive">
+		<table class="table table-bordered table-hover">
+			<tr>
+				<th>Allures</th>
+				<th>% VMA</th>
+				<th>Vitesse</th>
+				<th>Temps au km</th>
+				<th>Temps au 100m</th>
+			</tr>
+			{% for pace in vma.get_paces() %}
+			<tr>
+				<td>{{pace.name}}</td>
+				<td>{{pace.percent}}</td>
+				<td>{{vma.get_speed(pace)}}</td>
+				<td>{{vma.get_time(pace, 1000)|date("i's\"")}}</td>
+				<td>{{vma.get_time(pace, 100)|date("i's\"")}}</td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
+
+	{% else %}
+	<div class="alert alert-danger">
+		<h4>Pas de Vma !</h4>
+		Il faut renseigner ta VMA sur la <a href="{% url user-profile %}">page de profil</a> pour pouvoir afficher les tableaux.
+	</div>
+	{% endif %}
+
 </div>
-
-<div class="alert alert-info" style="margin-top: 10px">
-  <h4>A l'aide !</h4>
-  Tous les termes sont expliqués dans le <a href="{% url vma-glossary %}">glossaire</a>.
-</div>
-
-<h2>Allures</h2>
-
-<table class="table table-bordered table-hover">
-  <tr>
-    <th>Allures</th>
-    <th>% VMA</tH>
-    <th>Vitesse</th>
-    <th>Temps au km</th>
-    <th>Temps au 100m</tH>
-  </tr>
-  {% for pace in vma.get_paces() %}
-  <tr>
-    <td>{{pace.name}}</td>
-    <td>{{pace.percent}}</td>
-    <td>{{vma.get_speed(pace)}}</td>
-    <td>{{vma.get_time(pace, 1000)|date("i' s\"")}}</td>
-    <td>{{vma.get_time(pace, 100)|date("i' s\"")}}</td>
-  </tr>
-  {% endfor %}
-</table>
-
-{% else %}
-<div class="alert alert-danger">
-  <h4>Pas de Vma !</h4>
-  Il faut renseigner ta VMA sur la <a href="{% url user-profile %}">page de profil</a> pour pouvoir afficher les tableaux.
-</div>
-{% endif %}
 
 {% endblock %}
