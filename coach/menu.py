@@ -16,6 +16,18 @@ def add_pages(request):
   def _ext(url, caption):
     return {'url' : url, 'caption' : caption, 'active' : False, 'external' : True}
 
+  def _build_help():
+    # Build help menu with contact & news
+    submenu = {
+      'caption' : 'Aide',
+      'menu' : [],
+      'icon' : 'icon-help-circled',
+    }
+    submenu['menu'].append(_p(('page-list', 'help'), 'Aide', lazy=True))
+    submenu['menu'].append(_p(('page-list', 'news'), 'News', lazy=True))
+    submenu['menu'].append(_p(('contact_form',), 'Contact', lazy=True))
+    return submenu
+
   menu = []
   if request.user.is_authenticated():
     menu.append(_p('report-current', 'Semaine', 'icon-list'))
@@ -56,17 +68,8 @@ def add_pages(request):
     if not members:
       menu.append(_p('club-list', 'Rejoindre un club', 'icon-plus'))
 
-
-    # User menu
-    submenu = {
-      'caption' : 'Aide',
-      'menu' : [],
-      'icon' : 'icon-help-circled',
-    }
-    submenu['menu'].append(_p(('page-list', 'help'), 'Aide', lazy=True))
-    submenu['menu'].append(_p(('page-list', 'news'), 'News', lazy=True))
-    submenu['menu'].append(_p(('contact_form',), 'Contact', lazy=True))
-    menu.append(submenu)
+    # Help menu
+    menu.append(_build_help())
 
     # User menu
     submenu = {
@@ -84,7 +87,7 @@ def add_pages(request):
     menu.append(submenu)
   else:
     menu.append(_p('user-create', u'Créer un compte', 'icon-plus'))
-    menu.append(_p(('page-list', 'help'), 'Aide', 'icon-help-circled', lazy=True))
+    menu.append(_build_help())
     menu.append(_p('login', 'Se connecter', 'icon-user'))
 
   # Search for active main menu
