@@ -55,6 +55,5 @@ class Command(BaseCommand):
       try:
         act.update()
         act.save()
-        act.sync_session(user)
       except Exception, e:
         logger.error("Update failed: %s" % (str(e),))

@@ -193,7 +193,6 @@ class RunSession(models.Model):
   date = models.DateField()
   name = models.CharField(max_length=255, null=True, blank=True)
   comment = models.TextField(null=True, blank=True)
-  garmin_activity = models.ForeignKey('GarminActivity', null=True, blank=True)
   distance = models.FloatField(null=True, blank=True)
   time = models.TimeField(null=True, blank=True)
   type = models.CharField(max_length=12, default='training', choices=SESSION_TYPES)
@@ -213,6 +212,7 @@ class RunSession(models.Model):
 
 class GarminActivity(models.Model):
   garmin_id = models.IntegerField(unique=True)
+  session = models.ForeignKey(RunSession, related_name='garmin_activities')
   sport = models.CharField(max_length=20, default='running')
   user = models.ForeignKey(Athlete)
   name = models.CharField(max_length=255)
@@ -228,6 +228,17 @@ class GarminActivity(models.Model):
 
   def __unicode__(self):
     return "%s: %s" % (self.garmin_id, self.name)
+
+  def save(self, force_session=False, *args, **kwargs):
+    # Search session
+    if not self.session or force_session:
+      date = self.date.date()
+      week, year = date_to_week(date)
+      report,_ = RunReport.objects.get_or_create(user=self.user, year=year, week=week)
+      self.session,_ = RunSession.objects.get_or_create(date=date, report=report)
+
+    # Save instance
+    super(GarminActivity, self).save(*args, **kwargs)
 
   def get_url(self):
     return 'http://connect.garmin.com/activity/%s' % (self.garmin_id)
@@ -334,32 +345,6 @@ class GarminActivity(models.Model):
     # update name
     self.name = data['activityName']['value']
 
-  def sync_session(self, user, data=None):
-    '''
-    Link an Activity to a RunSession
-    '''
-    date = self.date.date()
-    week, year = date_to_week(date)
-    report,_ = RunReport.objects.get_or_create(user=user, year=year, week=week)
-    sess,_ = RunSession.objects.get_or_create(date=date, report=report)
-    modified = False
-    if sess.garmin_activity is None:
-      sess.garmin_activity = self
-      modified = True
-
-    fields = {
-      'name' : self.name != 'Sans titre' and self.name or None,
-      'time' : self.time,
-      'distance': self.distance,
-      'comment' : data and data['activityDescription']['value'] or None,
-      'sport' : self.get_session_sport(),
-    }
-    for f,v in fields.items():
-      if v and not getattr(sess, f):
-        setattr(sess, f, v)
-        modified = True
-    if modified:
-      sess.save()
 
   def get_session_sport(self):
     '''
