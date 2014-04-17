@@ -1,5 +1,6 @@
 {% extends 'modal.html' %}
 
+{% set modal_title = '%s %s : %s' % (member.first_name, member.last_name, day|date('l d E Y')|title()) %}
 {% set modal_url = day|date('l d E Y')|title() %}
 
 {% block body %}
