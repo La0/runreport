@@ -149,12 +149,6 @@ class GarminConnector:
 
     act.save()
 
-    # Try to map a run session
-    try:
-      act.sync_session(self._user, activity)
-    except Exception, e:
-      logger.error('%s : Failed to map %s to a RunSession. %s' % (self._user.username, activity_id, str(e) ))
-
     return act
 
   def load_json(self, activity, data_type):

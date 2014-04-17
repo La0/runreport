@@ -110,8 +110,7 @@ class RunReport(models.Model):
         content.append('%s :' % (sess.name,))
       if sess.comment:
         content.append(sess.comment)
-      activity = sess.garmin_activity
-      if activity is not None:
+      for activity in sess.garmin_activities.all():
         content.append('Garmin: %s - %s km en %s = %s min/km' % (activity.name, activity.distance, activity.time, activity.speed))
         content.append(activity.get_url())
       if i == 6 and self.comment:
@@ -193,7 +192,6 @@ class RunSession(models.Model):
   date = models.DateField()
   name = models.CharField(max_length=255, null=True, blank=True)
   comment = models.TextField(null=True, blank=True)
-  garmin_activity = models.ForeignKey('GarminActivity', null=True, blank=True)
   distance = models.FloatField(null=True, blank=True)
   time = models.TimeField(null=True, blank=True)
   type = models.CharField(max_length=12, default='training', choices=SESSION_TYPES)
@@ -213,6 +211,7 @@ class RunSession(models.Model):
 
 class GarminActivity(models.Model):
   garmin_id = models.IntegerField(unique=True)
+  session = models.ForeignKey(RunSession, related_name='garmin_activities')
   sport = models.CharField(max_length=20, default='running')
   user = models.ForeignKey(Athlete)
   name = models.CharField(max_length=255)
@@ -228,6 +227,17 @@ class GarminActivity(models.Model):
 
   def __unicode__(self):
     return "%s: %s" % (self.garmin_id, self.name)
+
+  def save(self, force_session=False, *args, **kwargs):
+    # Search session
+    if not self.session_id or force_session:
+      date = self.date.date()
+      week, year = date_to_week(date)
+      report,_ = RunReport.objects.get_or_create(user=self.user, year=year, week=week)
+      self.session,_ = RunSession.objects.get_or_create(date=date, report=report)
+
+    # Save instance
+    super(GarminActivity, self).save(*args, **kwargs)
 
   def get_url(self):
     return 'http://connect.garmin.com/activity/%s' % (self.garmin_id)
@@ -314,7 +324,7 @@ class GarminActivity(models.Model):
     if 'weightedMeanMovingSpeed' in data:
       speed = data['weightedMeanMovingSpeed']
 
-      if speed['unitAbbr'] == 'km/h' or (speed['uom'] == 'kph' and self.get_session_sport() != 'running'):
+      if speed['unitAbbr'] == 'km/h' or (speed['uom'] == 'kph' and self.get_sport_category() != 'running'):
         # Transform km/h in min/km
         s = float(speed['value'])
         mpk = 60.0 / s
@@ -334,37 +344,10 @@ class GarminActivity(models.Model):
     # update name
     self.name = data['activityName']['value']
 
-  def sync_session(self, user, data=None):
-    '''
-    Link an Activity to a RunSession
-    '''
-    date = self.date.date()
-    week, year = date_to_week(date)
-    report,_ = RunReport.objects.get_or_create(user=user, year=year, week=week)
-    sess,_ = RunSession.objects.get_or_create(date=date, report=report)
-    modified = False
-    if sess.garmin_activity is None:
-      sess.garmin_activity = self
-      modified = True
 
-    fields = {
-      'name' : self.name != 'Sans titre' and self.name or None,
-      'time' : self.time,
-      'distance': self.distance,
-      'comment' : data and data['activityDescription']['value'] or None,
-      'sport' : self.get_session_sport(),
-    }
-    for f,v in fields.items():
-      if v and not getattr(sess, f):
-        setattr(sess, f, v)
-        modified = True
-    if modified:
-      sess.save()
-
-  def get_session_sport(self):
+  def get_sport_category(self):
     '''
-    Transform Garmin sport to RunSession
-    simpler sports
+    Transform Garmin sport to simpler sports category
     Source : http://connect.garmin.com/proxy/activity-service-1.2/json/activity_types
     '''
     transforms = {
@@ -377,6 +360,8 @@ class GarminActivity(models.Model):
 
   def get_speed_kph(self):
     # Transform speed form min/km to km/h
+    if not self.speed:
+      return 0.0
     return 3600.0 / (self.speed.hour * 3600 + self.speed.minute * 60 + self.speed.second)
 
 class RaceCategory(models.Model):
