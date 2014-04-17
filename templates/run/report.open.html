@@ -37,9 +37,11 @@ $(function(){
 			{{ macros.input(session.comment, 'Commentaire') }}
 			{{ macros.session_time_distance(session) }}
 			{{ macros.race_category(session) }}
-			{% with session.instance.garmin_activity as activity %}
+      <div class="col-sm-10 col-xs-12 col-sm-offset-2">
+			{% with session.instance.garmin_activities as activities %}
 			{% include '_garmin.html' %}
 			{% endwith %}
+      </div>
 			{% endwith %}
 		</fieldset>
 		{% endfor %}

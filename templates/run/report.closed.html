@@ -50,7 +50,7 @@
 					<span class="label label-warning">Plan d'entraînement</span> {{ session.plan_session.week.plan.name }}
 				</div>
 				{% endif %}
-				{% with session.garmin_activity as activity %}
+				{% with session.garmin_activities as activities %}
 				{% include '_garmin.html' %}
 				{% endwith %}
 				{% else %}

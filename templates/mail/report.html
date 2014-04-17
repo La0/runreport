@@ -30,8 +30,7 @@
         {% endif %}
       </div>
       {% endif %}
-      {% with session.garmin_activity as activity %}
-      {% if activity %}
+      {% for activity in session.garmin_activities.all() %}
       <div class="garmin pull-right">
         Garmin : <a href="{{ activity.get_url() }}" target="_blank">{{ activity.name }}</a>
         <span>&bull;</span>
@@ -39,8 +38,7 @@
         <span>&bull;</span>
         <span>{{ activity.speed|date('i:s') }} min/km</span>
       </div>
-      {% endif %}
-      {% endwith %}
+      {% endfor %}
       {% endif %}
     </td>
     {% endwith %}

@@ -1,8 +1,8 @@
-{% if activity %}
+{% for activity in activities.all() %}
 <div class="garmin">
-	
+
 	<i class="icon-location"></i>
-	
+
 	<a href="{{ activity.get_url() }}" target="_blank">{{ activity.name }}</a>
 	<span class="muted">&bull;</span>
 	{% if activity.get_session_sport() == 'swimming' %}
@@ -18,4 +18,4 @@
 	{{ activity.speed|date('i:s') }} min/km
 	{% endif %}
 </div>
-{% endif %}
+{% endfor %}
