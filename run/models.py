@@ -230,7 +230,7 @@ class GarminActivity(models.Model):
 
   def save(self, force_session=False, *args, **kwargs):
     # Search session
-    if not self.session or force_session:
+    if not self.session_id or force_session:
       date = self.date.date()
       week, year = date_to_week(date)
       report,_ = RunReport.objects.get_or_create(user=self.user, year=year, week=week)
