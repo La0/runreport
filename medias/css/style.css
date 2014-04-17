@@ -83,18 +83,6 @@ form.report div.actions.row div {
   text-align: center;
 }
 
-form div.controls.running input#id_name {
-  background: url(/medias/img/icons/running.png) no-repeat center right white;
-}
-
-form div.controls.cycling input#id_name {
-  background: url(/medias/img/icons/cycling.png) no-repeat center right white;
-}
-
-form div.controls.swimming input#id_name {
-  background: url(/medias/img/icons/swimming.png) no-repeat center right white;
-}
-
 form div.race-category {
   display: none;
 }
@@ -102,36 +90,6 @@ form div.race-category {
 form div.race-category.active {
   display: block;
 }
-
-/*form.day div.types-name {
-  height: 30px;
-}
-
-form.day div.types-name label {
-  display: none;
-}
-
-form.day div.types-name button {
-  width: 120px;
-  text-align: right;
-}
-
-form.day div.types-name div.input-prepend input {
-  width: 380px !important;
-}
-
-form div.controls.field-multiple ul {
-  list-style-type: none;
-  margin: 0;
-}
-
-table hr {
-  margin: 5px 0;
-}
-
-table div.garmin {
-  float: right;
-}*/
 
 table.calendar td {
   height: 100px;
@@ -200,77 +158,6 @@ div.modal.day div.modal-body input, div.modal.day div.modal-body textarea {
     margin-top: 10px;
     padding-top: 5px;
 }
-
-/* Table vma */
-/*div.table-fixed{
-  width: auto;
-  overflow: auto;
-}
-
-div.table-fixed table {
-  table-layout: fixed;
-}
-
-div.table-fixed table td , div.table-fixed table th {
-  width: 80px;
-  text-align: center;
-}
-
-table tr.race-record {
-  background: #FFF563;
-  color: #142061;
-}*/
-
-/* Page */
-/*form.page div.controls input, form.page div.controls textarea{
-  width: 95%;
-}
-
-div.pages a {
-  display: block;
-  height: 40px;
-  line-height: 40px;
-  padding: 0 8px;
-  margin-bottom: 10px;
-  border-radius: 6px;
-  border: 1px solid #EEE;
-}
-
-div.pages strong {
-  font-size: 20px;
-  font-weight: normal;
-}
-div.pages a:hover {
-  text-decoration: none;
-  background: #EEE;
-  border: 1px solid #DDD;
-}*/
-
-/* Club join */
-/*div.club-description h3 {
-  border-bottom: 1px solid #CCC;
-}
-
-div.trainers ul {
-  list-style-type: none;
-  text-align: left;
-}
-
-div.trainers ul li {
-  height: 20px;
-  line-height: 20px;
-  margin: 2px 0;
-}
-
-div.trainers ul input {
-  width: 15px !important;
-  vertical-align: top;
-}*/
-
-/* Contact form */
-/*form.contact textarea, form.contact div.controls input {
-  width: 100%;
-}*/
 
 /* Calendar year */
 div.year {

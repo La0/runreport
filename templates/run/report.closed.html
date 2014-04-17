@@ -19,13 +19,6 @@
 			</div>
 			<div class="col-sm-9">
 				{% if session %}
-				{% if session.sport == 'cycling' %}
-				<i class="icon-bicycle"></i>
-				{% elif session.sport == 'swimming' %}
-				<i class="icon-swimming"></i>
-				{% else %}
-				<i class="icon-pitch"></i>
-				{% endif %}
 				<strong>{{session.name|default('Session sans nom')}}</strong><br />
 				{{session.comment|default('Pas de commentaire')|linebreaksbr}}
 				<div>

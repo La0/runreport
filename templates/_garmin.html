@@ -1,21 +1,37 @@
-{% for activity in activities.all() %}
+{% if activities.count() > 0 %}
 <div class="garmin">
+  {% for activity in activities.all() %}
+  {% with activity.get_sport_category() as sport %}
+  <div class="activity {{ sport }}">
 
-	<i class="icon-location"></i>
+    {% if sport == 'running' %}
+    <i class="icon-pitch"></i>
+    {% elif sport == 'cycling' %}
+    <i class="icon-bicycle"></i>
+    {% elif sport == 'swimming' %}
+    <i class="icon-swimming"></i>
+    {% else %}
+    <i class="icon-location"></i>
+    {% endif %}
 
-	<a href="{{ activity.get_url() }}" target="_blank">{{ activity.name }}</a>
-	<span class="muted">&bull;</span>
-	{% if activity.get_session_sport() == 'swimming' %}
-	{{ (activity.distance * 1000)|floatformat(2) }} m
-	{% else %}
-	{{ activity.distance|floatformat(2) }} km
-	{% endif %}
-	en {{ activity.time }}
-	<span class="muted">&bull;</span>
-	{% if activity.get_session_sport() == 'cycling' %}
-	{{ activity.get_speed_kph()|floatformat(2) }} km/h
-	{% else %}
-	{{ activity.speed|date('i:s') }} min/km
-	{% endif %}
+    <a href="{{ activity.get_url() }}" target="_blank">{{ activity.name }}</a>
+
+    <span class="muted">&bull;</span>
+    {% if sport == 'swimming' %}
+    {{ (activity.distance * 1000)|floatformat(2) }} m
+    {% else %}
+    {{ activity.distance|floatformat(2) }} km
+    {% endif %}
+    en {{ activity.time }}
+
+    <span class="muted">&bull;</span>
+    {% if activity.get_sport_category() == 'cycling' %}
+    {{ activity.get_speed_kph()|floatformat(2) }} km/h
+    {% else %}
+    {{ activity.speed|date('i:s') }} min/km
+    {% endif %}
+  </div>
+  {% endwith %}
+  {% endfor %}
 </div>
-{% endfor %}
+{% endif %}

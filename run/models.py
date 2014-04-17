@@ -324,7 +324,7 @@ class GarminActivity(models.Model):
     if 'weightedMeanMovingSpeed' in data:
       speed = data['weightedMeanMovingSpeed']
 
-      if speed['unitAbbr'] == 'km/h' or (speed['uom'] == 'kph' and self.get_session_sport() != 'running'):
+      if speed['unitAbbr'] == 'km/h' or (speed['uom'] == 'kph' and self.get_sport_category() != 'running'):
         # Transform km/h in min/km
         s = float(speed['value'])
         mpk = 60.0 / s
@@ -345,10 +345,9 @@ class GarminActivity(models.Model):
     self.name = data['activityName']['value']
 
 
-  def get_session_sport(self):
+  def get_sport_category(self):
     '''
-    Transform Garmin sport to RunSession
-    simpler sports
+    Transform Garmin sport to simpler sports category
     Source : http://connect.garmin.com/proxy/activity-service-1.2/json/activity_types
     '''
     transforms = {
