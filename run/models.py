@@ -229,15 +229,37 @@ class GarminActivity(models.Model):
     return "%s: %s" % (self.garmin_id, self.name)
 
   def save(self, force_session=False, *args, **kwargs):
-    # Search session
+    # Search & Attach session
     if not self.session_id or force_session:
-      date = self.date.date()
-      week, year = date_to_week(date)
-      report,_ = RunReport.objects.get_or_create(user=self.user, year=year, week=week)
-      self.session,_ = RunSession.objects.get_or_create(date=date, report=report)
+      self.attach_session()
 
-    # Save instance
     super(GarminActivity, self).save(*args, **kwargs)
+
+  def attach_session(self):
+    # Attach Activity to valid session
+    date = self.date.date()
+    week, year = date_to_week(date)
+    report,_ = RunReport.objects.get_or_create(user=self.user, year=year, week=week)
+    self.session,_ = RunSession.objects.get_or_create(date=date, report=report)
+
+    # Use title ?
+    modified = False
+    if not self.session.name and self.name not in ('Sans titre', 'Untitled'):
+      self.session.name = self.name
+      modified = True
+
+    # Use running time ?
+    if self.get_sport_category() == 'running':
+      if not self.session.distance:
+        self.session.distance = self.distance
+        modified = True
+      if not self.session.time:
+        self.session.time = self.time
+        modified = True
+
+    # Update session
+    if modified:
+      self.session.save()
 
   def get_url(self):
     return 'http://connect.garmin.com/activity/%s' % (self.garmin_id)
