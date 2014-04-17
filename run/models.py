@@ -110,8 +110,7 @@ class RunReport(models.Model):
         content.append('%s :' % (sess.name,))
       if sess.comment:
         content.append(sess.comment)
-      activity = sess.garmin_activity
-      if activity is not None:
+      for activity in sess.garmin_activities.all():
         content.append('Garmin: %s - %s km en %s = %s min/km' % (activity.name, activity.distance, activity.time, activity.speed))
         content.append(activity.get_url())
       if i == 6 and self.comment:
@@ -362,6 +361,8 @@ class GarminActivity(models.Model):
 
   def get_speed_kph(self):
     # Transform speed form min/km to km/h
+    if not self.speed:
+      return 0.0
     return 3600.0 / (self.speed.hour * 3600 + self.speed.minute * 60 + self.speed.second)
 
 class RaceCategory(models.Model):
