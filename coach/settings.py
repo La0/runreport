@@ -195,6 +195,10 @@ LOGGING = {
     }
 }
 
+# Sessions settings
+SESSION_COOKIE_NAME = 'runreport'
+SESSION_COOKIE_AGE = 7776000 # 3 months in seconds
+
 # Redirect urls
 LOGIN_URL = '/user/login'
 LOGIN_REDIRECT_URL = '/'

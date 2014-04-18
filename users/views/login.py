@@ -18,6 +18,10 @@ class LoginUser(FormView):
     if self.request.session.test_cookie_worked():
       self.request.session.delete_test_cookie()
 
+    # End session when browser is closed
+    if 'remember' not in self.request.POST:
+      self.request.session.set_expiry(0)
+
     next_url = self.request.GET.get('next', LOGIN_REDIRECT_URL)
     return HttpResponseRedirect(next_url)
 

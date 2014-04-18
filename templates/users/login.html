@@ -43,6 +43,10 @@
 .form-signin a {
 	margin-bottom: 10px;
 }
+
+p.forgot {
+  margin-top: 10px;
+}
 </style>
 
 <div class="container">
@@ -56,8 +60,13 @@
 		{% endwith %}
 		<input name="{{ form.username.html_name }}" {% if form.username.data %} value="{{ form.username.data }}"{% endif %} type="email" class="form-control" placeholder="Votre email" required autofocus">
 		<input name="{{ form.password.html_name }}" {% if form.password.data %} value="{{ form.password.data }}"{% endif %} type="password" class="form-control" placeholder="Votre mot de passe" required>
-		<a href="{% url password_reset %}" class="pull-right">Mot de passe oublié ?</a>
+    <label class="pull-right">
+      <input type="checkbox" name="remember" checked="checked" /> Rester connecté ?
+    </label>
 		<button class="btn btn-lg btn-primary btn-block" type="submit">Se connecter</button>
+    <p class="forgot">
+      <a href="{% url password_reset %}" class="pull-right">Mot de passe oublié <i class="icon-help-circled"></i></a>
+    </p>
 	</form>
 </div>
 
