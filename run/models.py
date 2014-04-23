@@ -249,7 +249,7 @@ class GarminActivity(models.Model):
       modified = True
 
     # Use running time ?
-    if self.get_sport_category() == 'running':
+    if self.sport.get_category() == 'running':
       if not self.session.distance:
         self.session.distance = self.distance
         modified = True
@@ -346,7 +346,7 @@ class GarminActivity(models.Model):
     if 'weightedMeanMovingSpeed' in data:
       speed = data['weightedMeanMovingSpeed']
 
-      if speed['unitAbbr'] == 'km/h' or (speed['uom'] == 'kph' and self.get_sport_category() != 'running'):
+      if speed['unitAbbr'] == 'km/h' or (speed['uom'] == 'kph' and self.sport.get_category() != 'running'):
         # Transform km/h in min/km
         s = float(speed['value'])
         mpk = 60.0 / s
@@ -365,20 +365,6 @@ class GarminActivity(models.Model):
 
     # update name
     self.name = data['activityName']['value']
-
-
-  def get_sport_category(self):
-    '''
-    Transform Garmin sport to simpler sports category
-    Source : http://connect.garmin.com/proxy/activity-service-1.2/json/activity_types
-    '''
-    transforms = {
-      'swimming' : 'swimming',
-      'lap_swimming' : 'swimming',
-      'open_water_swimming' : 'swimming',
-      'cycling' : 'cycling',
-    }
-    return transforms.get(self.sport, 'running')
 
   def get_speed_kph(self):
     # Transform speed form min/km to km/h
@@ -401,3 +387,9 @@ class Sport(models.Model):
 
   def __unicode__(self):
     return self.name
+
+  def get_category(self):
+    # Always give a valid parent category
+    if self.depth <= 1 or not self.parent:
+      return self.slug
+    return self.parent.get_category()
