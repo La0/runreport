@@ -212,7 +212,7 @@ class RunSession(models.Model):
 class GarminActivity(models.Model):
   garmin_id = models.IntegerField(unique=True)
   session = models.ForeignKey(RunSession, related_name='garmin_activities')
-  sport = models.CharField(max_length=20, default='running')
+  sport = models.ForeignKey('Sport')
   user = models.ForeignKey(Athlete)
   name = models.CharField(max_length=255)
   time = models.TimeField()
@@ -314,7 +314,7 @@ class GarminActivity(models.Model):
       raise Exception('Empty data for GarminActivity %s' % self)
 
     # Type of sport
-    self.sport = data['activityType']['key']
+    self.sport = Sport.objects.get(slug=data['activityType']['key'])
     logger.debug('Sport: %s' % self.sport)
 
     # Date

@@ -16,7 +16,7 @@ class RunReportAdmin(admin.ModelAdmin):
 admin.site.register(RunReport, RunReportAdmin)
 
 class GarminActivityAdmin(admin.ModelAdmin):
-  list_display = ('user', 'date', 'name', 'distance', 'time', 'speed')
+  list_display = ('name', 'user', 'date', 'sport', 'distance', 'time', 'speed')
   list_filter = ('user', )
 admin.site.register(GarminActivity, GarminActivityAdmin)
 
