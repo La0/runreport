@@ -212,7 +212,7 @@ class RunSession(models.Model):
 class GarminActivity(models.Model):
   garmin_id = models.IntegerField(unique=True)
   session = models.ForeignKey(RunSession, related_name='garmin_activities')
-  sport = models.CharField(max_length=20, default='running')
+  sport = models.ForeignKey('Sport')
   user = models.ForeignKey(Athlete)
   name = models.CharField(max_length=255)
   time = models.TimeField()
@@ -249,7 +249,7 @@ class GarminActivity(models.Model):
       modified = True
 
     # Use running time ?
-    if self.get_sport_category() == 'running':
+    if self.sport.get_category() == 'running':
       if not self.session.distance:
         self.session.distance = self.distance
         modified = True
@@ -314,7 +314,7 @@ class GarminActivity(models.Model):
       raise Exception('Empty data for GarminActivity %s' % self)
 
     # Type of sport
-    self.sport = data['activityType']['key']
+    self.sport = Sport.objects.get(slug=data['activityType']['key'])
     logger.debug('Sport: %s' % self.sport)
 
     # Date
@@ -346,7 +346,7 @@ class GarminActivity(models.Model):
     if 'weightedMeanMovingSpeed' in data:
       speed = data['weightedMeanMovingSpeed']
 
-      if speed['unitAbbr'] == 'km/h' or (speed['uom'] == 'kph' and self.get_sport_category() != 'running'):
+      if speed['unitAbbr'] == 'km/h' or (speed['uom'] == 'kph' and self.sport.get_category() != 'running'):
         # Transform km/h in min/km
         s = float(speed['value'])
         mpk = 60.0 / s
@@ -366,20 +366,6 @@ class GarminActivity(models.Model):
     # update name
     self.name = data['activityName']['value']
 
-
-  def get_sport_category(self):
-    '''
-    Transform Garmin sport to simpler sports category
-    Source : http://connect.garmin.com/proxy/activity-service-1.2/json/activity_types
-    '''
-    transforms = {
-      'swimming' : 'swimming',
-      'lap_swimming' : 'swimming',
-      'open_water_swimming' : 'swimming',
-      'cycling' : 'cycling',
-    }
-    return transforms.get(self.sport, 'running')
-
   def get_speed_kph(self):
     # Transform speed form min/km to km/h
     if not self.speed:
@@ -392,3 +378,18 @@ class RaceCategory(models.Model):
 
   def __unicode__(self):
     return self.name
+
+class Sport(models.Model):
+  name = models.CharField(max_length=250)
+  slug = models.SlugField(unique=True)
+  parent = models.ForeignKey('Sport', null=True)
+  depth = models.IntegerField(default=0)
+
+  def __unicode__(self):
+    return self.name
+
+  def get_category(self):
+    # Always give a valid parent category
+    if self.depth <= 1 or not self.parent:
+      return self.slug
+    return self.parent.get_category()
