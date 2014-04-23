@@ -392,3 +392,12 @@ class RaceCategory(models.Model):
 
   def __unicode__(self):
     return self.name
+
+class Sport(models.Model):
+  name = models.CharField(max_length=250)
+  slug = models.SlugField(unique=True)
+  parent = models.ForeignKey('Sport', null=True)
+  depth = models.IntegerField(default=0)
+
+  def __unicode__(self):
+    return self.name
