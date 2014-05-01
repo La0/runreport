@@ -9,11 +9,11 @@ class RaceCategoryAdmin(admin.ModelAdmin):
   model = RaceCategory
 admin.site.register(RaceCategory, RaceCategoryAdmin)
 
-class RunReportAdmin(admin.ModelAdmin):
+class SportWeekAdmin(admin.ModelAdmin):
   list_display = ('user', 'week', 'updated')
   list_filter = ('user', )
   inlines = [RunSessionAdmin, ]
-admin.site.register(RunReport, RunReportAdmin)
+admin.site.register(SportWeek, SportWeekAdmin)
 
 class GarminActivityAdmin(admin.ModelAdmin):
   list_display = ('name', 'user', 'date', 'sport', 'distance', 'time', 'speed')

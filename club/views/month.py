@@ -1,6 +1,6 @@
 from django.http import Http404
 from mixins import ClubMixin
-from run.models import RunReport
+from run.models import SportWeek
 from django.views.generic import MonthArchiveView, DateDetailView
 from run.models import RunSession
 from datetime import datetime, date
@@ -68,7 +68,7 @@ class ClubMemberDay(JsonResponseMixin, ClubMixin, DateDetailView):
     # Load day, report and eventual session
     self.day = date(int(self.get_year()), int(self.get_month()), int(self.get_day()))
     week = int(self.day.strftime('%W'))
-    self.report, _ = RunReport.objects.get_or_create(user=self.member, year=self.day.year, week=week)
+    self.report, _ = SportWeek.objects.get_or_create(user=self.member, year=self.day.year, week=week)
     try:
       self.object = RunSession.objects.get(report=self.report, date=self.day)
     except:

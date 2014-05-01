@@ -6,7 +6,7 @@ from helpers import week_to_date, nameize, date_to_week, date_to_day
 from base64 import b64encode
 from hashlib import md5
 from datetime import datetime, date
-from run.models import RunReport, RunSession
+from run.models import SportWeek, RunSession
 from coach.mail import MailBuilder
 
 class Plan(models.Model):
@@ -107,7 +107,7 @@ class PlanWeek(models.Model):
 
     # Init a runreport for this week
     week, year = date_to_week(start_date)
-    report, _ = RunReport.objects.get_or_create(user=user, year=year, week=week)
+    report, _ = SportWeek.objects.get_or_create(user=user, year=year, week=week)
 
     # Attach the plan week to report
     if report.plan_week is not None and report.plan_week != self:

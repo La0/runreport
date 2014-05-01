@@ -2,7 +2,7 @@ from django.views.generic import MonthArchiveView, DateDetailView, View
 from django.views.generic.dates import MonthMixin, YearMixin
 from django.views.generic.edit import ModelFormMixin, ProcessFormView
 from django.http import Http404
-from run.models import RunSession, RunReport, SESSION_TYPES
+from run.models import RunSession, SportWeek, SESSION_TYPES
 from run.forms import RunSessionForm
 from datetime import datetime, date
 import calendar

@@ -1,5 +1,5 @@
 #- coding: utf-8
-from models import RunReport, RunSession, SESSION_TYPES
+from models import SportWeek, RunSession, SESSION_TYPES
 from datetime import date
 from django import forms
 
@@ -13,9 +13,9 @@ TIME_FORMATS = [
   '%Mmin',
 ]
 
-class RunReportForm(forms.ModelForm):
+class SportWeekForm(forms.ModelForm):
   class Meta:
-    model = RunReport
+    model = SportWeek
     fields = ('comment', )
 
 class RunSessionForm(forms.ModelForm):

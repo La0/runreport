@@ -1,8 +1,8 @@
 from django.views.generic import WeekArchiveView
 from helpers import week_to_date, check_task
-from run.models import RunReport, SESSION_TYPES
+from run.models import SportWeek, SESSION_TYPES
 from datetime import datetime
-from run.forms import RunReportForm, RunSessionForm
+from run.forms import SportWeekForm, RunSessionForm
 from run.tasks import publish_report
 from django.core.exceptions import PermissionDenied
 from mixins import WeekPaginator, CurrentWeekMixin
@@ -18,7 +18,7 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
       return self.report
 
     # Init report
-    self.report, _ = RunReport.objects.get_or_create(user=self.request.user, year=self.get_year(), week=self.get_week())
+    self.report, _ = SportWeek.objects.get_or_create(user=self.request.user, year=self.get_year(), week=self.get_week())
 
     # Init sessions
     self.sessions = self.report.get_dated_sessions()
@@ -46,9 +46,9 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
     form = None, None
     if not self.report.published:
       if self.request.method == 'POST':
-        form = RunReportForm(self.request.POST, instance=self.report)
+        form = SportWeekForm(self.request.POST, instance=self.report)
       else:
-        form = RunReportForm(instance=self.report)
+        form = SportWeekForm(instance=self.report)
 
     return form
 
@@ -93,7 +93,7 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
     report_previous = None
     if self.report.is_current() and context['week_previous']:
       try:
-        report_previous = RunReport.objects.get(user=self.request.user, year=context['week_previous']['year'], week=context['week_previous']['week'], published=False)
+        report_previous = SportWeek.objects.get(user=self.request.user, year=context['week_previous']['year'], week=context['week_previous']['week'], published=False)
       except:
         pass
     context['report_previous'] = report_previous

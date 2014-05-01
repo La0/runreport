@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 from datetime import date
-from run.models import RunReport
+from run.models import SportWeek
 
 class Command(BaseCommand):
 
@@ -9,7 +9,7 @@ class Command(BaseCommand):
     Publish all reports for this week
     '''
     year, week = self.get_current_week()
-    reports = RunReport.objects.filter(year=year, week=week, published=False).order_by('user__username')
+    reports = SportWeek.objects.filter(year=year, week=week, published=False).order_by('user__username')
     reports = reports.filter(user__auto_send=True) # Auto send must be enabled per user
     for r in reports:
 

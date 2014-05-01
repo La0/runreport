@@ -8,7 +8,7 @@ from coach.settings import REPORT_SEND_DAY, REPORT_SEND_TIME
 from coach.mail import MailBuilder
 from helpers import date_to_day, week_to_date
 
-class RunReport(models.Model):
+class SportWeek(models.Model):
   user = models.ForeignKey(Athlete)
   year = models.IntegerField(default=2013)
   week = models.IntegerField(default=0)
@@ -183,7 +183,7 @@ SESSION_SPORTS = (
 )
 
 class RunSession(models.Model):
-  report = models.ForeignKey('RunReport', related_name='sessions')
+  report = models.ForeignKey('SportWeek', related_name='sessions')
   date = models.DateField()
   name = models.CharField(max_length=255, null=True, blank=True)
   comment = models.TextField(null=True, blank=True)

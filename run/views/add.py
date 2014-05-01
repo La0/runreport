@@ -1,6 +1,6 @@
 from django.views.generic.edit import FormView
 from run.forms import RunSessionAddForm
-from run.models import RunReport, RunSession
+from run.models import SportWeek, RunSession
 from helpers import date_to_week
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -31,7 +31,7 @@ class SessionAdd(JsonResponseMixin, FormView):
   def form_valid(self, form):
     # Get (or create) week report
     week, year = date_to_week(form.cleaned_data['date'])
-    report, _ = RunReport.objects.get_or_create(user=self.request.user, year=year, week=week)
+    report, _ = SportWeek.objects.get_or_create(user=self.request.user, year=year, week=week)
 
     # Create a new session
     session_type = form.cleaned_data['type'] or self.kwargs.get('type', 'training')

@@ -40,7 +40,7 @@ class GarminActivity(models.Model):
     # Attach Activity to valid session
     date = self.date.date()
     week, year = date_to_week(date)
-    report,_ = RunReport.objects.get_or_create(user=self.user, year=year, week=week)
+    report,_ = SportWeek.objects.get_or_create(user=self.user, year=year, week=week)
     self.session,_ = RunSession.objects.get_or_create(date=date, report=report)
 
     # Use title ?

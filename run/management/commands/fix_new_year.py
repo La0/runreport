@@ -1,18 +1,18 @@
 from django.core.management.base import BaseCommand, CommandError
-from run.models import RunReport
+from run.models import SportWeek
 
 class Command(BaseCommand):
   year = 2014
   def handle(self, *args, **options):
 
-    reports = RunReport.objects.filter(year=self.year, week=0).order_by('user__username')
+    reports = SportWeek.objects.filter(year=self.year, week=0).order_by('user__username')
     for r in reports:
       self.patch_report(r)
 
   def patch_report(self, report_source):
 
     # Get report dest just before
-    report_dest,_ = RunReport.objects.get_or_create(user=report_source.user, year=self.year - 1, week=52)
+    report_dest,_ = SportWeek.objects.get_or_create(user=report_source.user, year=self.year - 1, week=52)
 
     print "%s >> %s" % (report_source, report_dest)
 

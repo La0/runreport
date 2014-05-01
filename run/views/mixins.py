@@ -2,7 +2,7 @@ from datetime import datetime, timedelta, date
 from coach.settings import REPORT_START_DATE
 from django.http import Http404
 from helpers import week_to_date, date_to_day, date_to_week
-from run.models import RunReport, RunSession, SESSION_TYPES
+from run.models import SportWeek, RunSession, SESSION_TYPES
 
 class CurrentWeekMixin(object):
   '''
@@ -103,7 +103,7 @@ class CalendarDay(object):
     # Load day, report and eventual session
     self.day = date(int(self.get_year()), int(self.get_month()), int(self.get_day()))
     week, year = date_to_week(self.day)
-    self.report, _ = RunReport.objects.get_or_create(user=self.request.user, year=year, week=week)
+    self.report, _ = SportWeek.objects.get_or_create(user=self.request.user, year=year, week=week)
     try:
       self.object = RunSession.objects.get(report=self.report, date=self.day)
     except:

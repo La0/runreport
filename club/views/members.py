@@ -6,7 +6,7 @@ from users.models import Athlete
 from django.db.models import Count, Max
 from mixins import ClubMixin, ClubManagerMixin
 from run.views.mixins import CurrentWeekMixin, WeekPaginator
-from run.models import RunReport
+from run.models import SportWeek
 from club.models import ClubMembership
 from helpers import week_to_date
 from club.forms import ClubMembershipForm
@@ -54,7 +54,7 @@ class ClubMembers(ClubMixin, ListView):
       f['memberships__club'] = self.club # to avoid listing other club memberships
       members = members.filter(**f)
 
-    # Add last RunReport date, as week & year
+    # Add last SportWeek date, as week & year
     members = members.annotate(max_report_date=Max('runreport__sessions__date'))
     members = members.annotate(sessions_count=Count('runreport__sessions'))
 
@@ -161,7 +161,7 @@ class ClubMemberWeek(CurrentWeekMixin, ClubMixin, WeekPaginator, WeekArchiveView
     year = self.get_year()
     week = self.get_week()
     try:
-      report = RunReport.objects.get(user=self.member, year=year, week=week)
+      report = SportWeek.objects.get(user=self.member, year=year, week=week)
       sessions = report.get_dated_sessions()
       dates = report.get_days()
     except:
