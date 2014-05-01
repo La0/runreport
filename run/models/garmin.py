@@ -12,7 +12,7 @@ from helpers import date_to_week
 
 class GarminActivity(models.Model):
   garmin_id = models.IntegerField(unique=True)
-  session = models.ForeignKey(RunSession, related_name='garmin_activities')
+  session = models.ForeignKey(SportDay, related_name='garmin_activities')
   sport = models.ForeignKey('Sport')
   user = models.ForeignKey(Athlete)
   name = models.CharField(max_length=255)
@@ -41,7 +41,7 @@ class GarminActivity(models.Model):
     date = self.date.date()
     week, year = date_to_week(date)
     report,_ = SportWeek.objects.get_or_create(user=self.user, year=year, week=week)
-    self.session,_ = RunSession.objects.get_or_create(date=date, report=report)
+    self.session,_ = SportDay.objects.get_or_create(date=date, report=report)
 
     # Use title ?
     modified = False

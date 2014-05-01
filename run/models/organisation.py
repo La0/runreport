@@ -182,7 +182,7 @@ SESSION_SPORTS = (
   ('swimming', 'Natation'),
 )
 
-class RunSession(models.Model):
+class SportDay(models.Model):
   report = models.ForeignKey('SportWeek', related_name='sessions')
   date = models.DateField()
   name = models.CharField(max_length=255, null=True, blank=True)
@@ -202,7 +202,7 @@ class RunSession(models.Model):
     if self.type != 'race':
       self.race_category = None
 
-    super(RunSession, self).save(*args, **kwargs)
+    super(SportDay, self).save(*args, **kwargs)
 
 class RaceCategory(models.Model):
   name = models.CharField(max_length=250)

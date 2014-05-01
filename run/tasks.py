@@ -26,7 +26,7 @@ def race_mail(*args, **kwargs):
   '''
   Send a mail to all users having a race today
   '''
-  from run.models import RunSession
+  from run.models import SportDay
   from datetime import date
   from coach.mail import MailBuilder
 
@@ -34,7 +34,7 @@ def race_mail(*args, **kwargs):
   builder = MailBuilder('mail/race.html')
 
   # Load today's race
-  races = RunSession.objects.filter(date=date.today(), type='race')
+  races = SportDay.objects.filter(date=date.today(), type='race')
 
   # Build and Send all mails
   for race in races:

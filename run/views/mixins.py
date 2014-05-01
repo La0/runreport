@@ -2,7 +2,7 @@ from datetime import datetime, timedelta, date
 from coach.settings import REPORT_START_DATE
 from django.http import Http404
 from helpers import week_to_date, date_to_day, date_to_week
-from run.models import SportWeek, RunSession, SESSION_TYPES
+from run.models import SportWeek, SportDay, SESSION_TYPES
 
 class CurrentWeekMixin(object):
   '''
@@ -94,7 +94,7 @@ class WeekPaginator(object):
 
 class CalendarDay(object):
   '''
-  Load a RunSession from a date in url
+  Load a SportDay from a date in url
   '''
   month_format = '%M'
   context_object_name = 'session'
@@ -105,9 +105,9 @@ class CalendarDay(object):
     week, year = date_to_week(self.day)
     self.report, _ = SportWeek.objects.get_or_create(user=self.request.user, year=year, week=week)
     try:
-      self.object = RunSession.objects.get(report=self.report, date=self.day)
+      self.object = SportDay.objects.get(report=self.report, date=self.day)
     except:
-      self.object = RunSession(report=self.report, date=self.day)
+      self.object = SportDay(report=self.report, date=self.day)
     return self.object
 
   def get_context_data(self, **kwargs):

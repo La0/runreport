@@ -2,8 +2,8 @@ from django.views.generic import MonthArchiveView, DateDetailView, View
 from django.views.generic.dates import MonthMixin, YearMixin
 from django.views.generic.edit import ModelFormMixin, ProcessFormView
 from django.http import Http404
-from run.models import RunSession, SportWeek, SESSION_TYPES
-from run.forms import RunSessionForm
+from run.models import SportDay, SportWeek, SESSION_TYPES
+from run.forms import SportDayForm
 from datetime import datetime, date
 import calendar
 import collections
@@ -13,7 +13,7 @@ from helpers import date_to_week
 class RunCalendar(MonthArchiveView):
   template_name = 'run/month.html'
   date_field = 'date'
-  model = RunSession
+  model = SportDay
   context_object_name = 'sessions'
   allow_future = True
   allow_empty = True
@@ -42,7 +42,7 @@ class RunCalendar(MonthArchiveView):
       raise Http404(str(e))
 
     # Load all sessions for this month
-    sessions = RunSession.objects.filter(report__user=self.request.user, date__in=self.days)
+    sessions = SportDay.objects.filter(report__user=self.request.user, date__in=self.days)
     sessions_per_days = dict((r.date, r) for r in sessions)
     sessions_per_days = collections.OrderedDict(sorted(sessions_per_days.items()))
 
@@ -75,7 +75,7 @@ class ExportMonth(CsvResponseMixin, MonthMixin, YearMixin, View):
 
     # Load sessions
     data = []
-    sessions = RunSession.objects.filter(report__user=self.request.user, date__in=days)
+    sessions = SportDay.objects.filter(report__user=self.request.user, date__in=days)
     for day in days:
       if day.month != month:
         continue # Skip before & after days

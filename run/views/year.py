@@ -1,6 +1,6 @@
 from coach.settings  import REPORT_START_DATE
 from django.views.generic.dates import YearArchiveView
-from run.models import RunSession
+from run.models import SportDay
 from datetime import date, timedelta
 from django.http import Http404
 import collections
@@ -8,7 +8,7 @@ import collections
 class RunCalendarYear(YearArchiveView):
   template_name = 'run/year.html'
   date_field = 'date'
-  model = RunSession
+  model = SportDay
 
   def get_dated_items(self):
     # Check year
@@ -29,7 +29,7 @@ class RunCalendarYear(YearArchiveView):
       d += timedelta(days=1)
 
     # Load sessions
-    sessions_raw = RunSession.objects.filter(report__user=self.get_user(), date__gte=date_start, date__lte=date_end)
+    sessions_raw = SportDay.objects.filter(report__user=self.get_user(), date__gte=date_start, date__lte=date_end)
 
     # Map sessions in dict
     sessions = dict([(s.date, s) for s in sessions_raw])

@@ -1,12 +1,12 @@
 from mixins import ClubMixin
 from django.views.generic import ListView
-from run.models import RunSession
+from run.models import SportDay
 from club.models import ClubMembership
 from datetime import date
 
 class ClubRaces(ClubMixin, ListView):
   template_name = 'club/races.html'
-  model = RunSession
+  model = SportDay
   context_object_name = 'races'
 
   def get_queryset(self):

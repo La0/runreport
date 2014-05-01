@@ -2,7 +2,7 @@ from django.views.generic import WeekArchiveView
 from helpers import week_to_date, check_task
 from run.models import SportWeek, SESSION_TYPES
 from datetime import datetime
-from run.forms import SportWeekForm, RunSessionForm
+from run.forms import SportWeekForm, SportDayForm
 from run.tasks import publish_report
 from django.core.exceptions import PermissionDenied
 from mixins import WeekPaginator, CurrentWeekMixin
@@ -54,16 +54,16 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
 
   def get_dated_forms(self):
     '''
-    Build a form per day and per RunSession instance
+    Build a form per day and per SportDay instance
     Much more easier than dealing with a dynamic model formset
     '''
     forms = {}
     for day in self.report.get_days():
       instance = self.sessions[day]
       if self.request.method == 'POST':
-        f = RunSessionForm(self.request.POST, instance=instance, prefix=day)
+        f = SportDayForm(self.request.POST, instance=instance, prefix=day)
       else:
-        f = RunSessionForm(instance=instance, prefix=day)
+        f = SportDayForm(instance=instance, prefix=day)
       forms[day] = f
 
     return forms

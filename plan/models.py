@@ -6,7 +6,7 @@ from helpers import week_to_date, nameize, date_to_week, date_to_day
 from base64 import b64encode
 from hashlib import md5
 from datetime import datetime, date
-from run.models import SportWeek, RunSession
+from run.models import SportWeek, SportDay
 from coach.mail import MailBuilder
 
 class Plan(models.Model):
@@ -147,7 +147,7 @@ class PlanSession(models.Model):
       'distance' : self.distance,
       'time' : self.time,
     }
-    session, _ = RunSession.objects.get_or_create(report=report, date=day, defaults=defaults)
+    session, _ = SportDay.objects.get_or_create(report=report, date=day, defaults=defaults)
     session.plan_session = self
     session.save()
 

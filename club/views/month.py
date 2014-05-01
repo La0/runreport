@@ -2,7 +2,7 @@ from django.http import Http404
 from mixins import ClubMixin
 from run.models import SportWeek
 from django.views.generic import MonthArchiveView, DateDetailView
-from run.models import RunSession
+from run.models import SportDay
 from datetime import datetime, date
 import calendar
 from coach.mixins import JsonResponseMixin
@@ -10,7 +10,7 @@ from coach.mixins import JsonResponseMixin
 class ClubMemberMonth(ClubMixin, MonthArchiveView):
   template_name = 'run/month.html'
   date_field = 'date'
-  model = RunSession
+  model = SportDay
   context_object_name = 'sessions'
   allow_future = True
   allow_empty = True
@@ -39,7 +39,7 @@ class ClubMemberMonth(ClubMixin, MonthArchiveView):
       raise Http404(str(e))
 
     # Load all sessions for this month
-    sessions = RunSession.objects.filter(report__user=self.member, date__in=self.days)
+    sessions = SportDay.objects.filter(report__user=self.member, date__in=self.days)
     sessions_per_days = dict((r.date, r) for r in sessions)
 
     context = {
@@ -70,7 +70,7 @@ class ClubMemberDay(JsonResponseMixin, ClubMixin, DateDetailView):
     week = int(self.day.strftime('%W'))
     self.report, _ = SportWeek.objects.get_or_create(user=self.member, year=self.day.year, week=week)
     try:
-      self.object = RunSession.objects.get(report=self.report, date=self.day)
+      self.object = SportDay.objects.get(report=self.report, date=self.day)
     except:
       self.object = None
     return self.object

@@ -1,6 +1,6 @@
 from django.views.generic.edit import FormView
-from run.forms import RunSessionAddForm
-from run.models import SportWeek, RunSession
+from run.forms import SportDayAddForm
+from run.models import SportWeek, SportDay
 from helpers import date_to_week
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -8,7 +8,7 @@ from coach.mixins import JsonResponseMixin, JSON_OPTION_REDIRECT_SKIP
 
 class SessionAdd(JsonResponseMixin, FormView):
   type_asked = False
-  form_class = RunSessionAddForm
+  form_class = SportDayAddForm
   template_name = 'run/add.html'
 
   def get_context_data(self, *args, **kwargs):
@@ -35,7 +35,7 @@ class SessionAdd(JsonResponseMixin, FormView):
 
     # Create a new session
     session_type = form.cleaned_data['type'] or self.kwargs.get('type', 'training')
-    self.session = RunSession.objects.create(report=report, date=form.cleaned_data['date'], type=session_type)
+    self.session = SportDay.objects.create(report=report, date=form.cleaned_data['date'], type=session_type)
 
     return super(SessionAdd, self).form_valid(form)
 

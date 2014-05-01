@@ -1,8 +1,8 @@
 from django.contrib import admin
 from models import *
 
-class RunSessionAdmin(admin.TabularInline):
-  model = RunSession
+class SportDayAdmin(admin.TabularInline):
+  model = SportDay
   max_num = 7
 
 class RaceCategoryAdmin(admin.ModelAdmin):
@@ -12,7 +12,7 @@ admin.site.register(RaceCategory, RaceCategoryAdmin)
 class SportWeekAdmin(admin.ModelAdmin):
   list_display = ('user', 'week', 'updated')
   list_filter = ('user', )
-  inlines = [RunSessionAdmin, ]
+  inlines = [SportDayAdmin, ]
 admin.site.register(SportWeek, SportWeekAdmin)
 
 class GarminActivityAdmin(admin.ModelAdmin):

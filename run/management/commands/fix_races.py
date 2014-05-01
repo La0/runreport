@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from run.models import RunSession, RaceCategory
+from run.models import SportDay, RaceCategory
 
 class Command(BaseCommand):
 
@@ -20,7 +20,7 @@ class Command(BaseCommand):
       print "%s : %s" % (name, cat.name)
     print '-' * 40
 
-    races = RunSession.objects.filter(type='race', race_category=None).order_by('name')
+    races = SportDay.objects.filter(type='race', race_category=None).order_by('name')
     for r in races:
       self.ask_category(r)
 

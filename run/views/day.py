@@ -1,4 +1,4 @@
-from run.forms import RunSessionForm
+from run.forms import SportDayForm
 from coach.mixins import JsonResponseMixin, JSON_STATUS_ERROR
 from django.views.generic import DateDetailView
 from django.views.generic.edit import ModelFormMixin, ProcessFormView, DeleteView
@@ -7,7 +7,7 @@ from django.core.urlresolvers import reverse
 
 class RunCalendarDay(CalendarDay, JsonResponseMixin, ModelFormMixin, ProcessFormView, DateDetailView):
   template_name = 'run/day.html'
-  form_class = RunSessionForm
+  form_class = SportDayForm
 
   def get_form(self, form_class):
     # Load object before form init

@@ -1,5 +1,5 @@
 #- coding: utf-8
-from models import SportWeek, RunSession, SESSION_TYPES
+from models import SportWeek, SportDay, SESSION_TYPES
 from datetime import date
 from django import forms
 
@@ -18,11 +18,11 @@ class SportWeekForm(forms.ModelForm):
     model = SportWeek
     fields = ('comment', )
 
-class RunSessionForm(forms.ModelForm):
+class SportDayForm(forms.ModelForm):
   time = forms.TimeField(input_formats=TIME_FORMATS, widget=forms.TextInput(attrs={'placeholder':'hh:mm'}), required=False)
   distance = forms.FloatField(localize=True, widget=forms.TextInput(attrs={'placeholder': 'km'}), required=False)
   class Meta:
-    model = RunSession
+    model = SportDay
     fields = ('name', 'comment', 'distance', 'time', 'type', 'race_category')
     widgets = {
       'type' : forms.HiddenInput(),
@@ -44,7 +44,7 @@ class RunSessionForm(forms.ModelForm):
     return self.cleaned_data
 
   def is_valid(self):
-    is_valid = super(RunSessionForm, self).is_valid()
+    is_valid = super(SportDayForm, self).is_valid()
     if not is_valid:
       return False
 
@@ -54,7 +54,7 @@ class RunSessionForm(forms.ModelForm):
 
     return True
 
-class RunSessionAddForm(forms.Form):
+class SportDayAddForm(forms.Form):
   '''
   Form to create manually a new empty session
   '''
@@ -63,12 +63,12 @@ class RunSessionAddForm(forms.Form):
 
   def __init__(self, user, *args, **kwargs):
     self.user = user
-    super(RunSessionAddForm, self).__init__(*args, **kwargs)
+    super(SportDayAddForm, self).__init__(*args, **kwargs)
 
   def clean_date(self):
 
     # Check date is free
-    if RunSession.objects.filter(report__user=self.user, date=self.cleaned_data['date']):
+    if SportDay.objects.filter(report__user=self.user, date=self.cleaned_data['date']):
       raise forms.ValidationError('Une séance existe déjà à cette date.')
 
     return self.cleaned_data['date']
