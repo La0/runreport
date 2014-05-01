@@ -1,5 +1,6 @@
 # coding=utf-8
 from django.db import models
+from .organisation import SportDay
 from users.models import Athlete
 from datetime import datetime, time
 import os
