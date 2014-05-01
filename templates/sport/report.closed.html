@@ -11,7 +11,7 @@
 	</p>
 	{% endif %}
 	<div class="row-striped">
-		{% for day in report.get_days() %}
+		{% for day in report.get_dates() %}
 		{% with sessions[day] as session %}
 		<div class="row">
 			<div class="col-sm-3">

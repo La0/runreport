@@ -21,7 +21,7 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
     self.report, _ = SportWeek.objects.get_or_create(user=self.request.user, year=self.get_year(), week=self.get_week())
 
     # Init sessions
-    self.sessions = self.report.get_dated_sessions()
+    self.sessions = self.report.get_days_per_date()
 
     return self.report
 
@@ -58,7 +58,7 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
     Much more easier than dealing with a dynamic model formset
     '''
     forms = {}
-    for day in self.report.get_days():
+    for day in self.report.get_dates():
       instance = self.sessions[day]
       if self.request.method == 'POST':
         f = SportDayForm(self.request.POST, instance=instance, prefix=day)

@@ -162,8 +162,8 @@ class ClubMemberWeek(CurrentWeekMixin, ClubMixin, WeekPaginator, WeekArchiveView
     week = self.get_week()
     try:
       report = SportWeek.objects.get(user=self.member, year=year, week=week)
-      sessions = report.get_dated_sessions()
-      dates = report.get_days()
+      sessions = report.get_days_per_date()
+      dates = report.get_dates()
     except:
       report = sessions = dates = None
 

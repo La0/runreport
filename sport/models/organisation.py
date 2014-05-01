@@ -29,13 +29,13 @@ class SportWeek(models.Model):
   def __unicode__(self):
     return u'%s : %d week=%d' % (self.user, self.year, self.week)
 
-  def get_days(self):
+  def get_dates(self):
     # Days from monday to sunday
     return [self.get_date(day) for day in (1,2,3,4,5,6,0)]
 
-  def get_dated_sessions(self):
+  def get_days_per_date(self):
     sessions = {}
-    for d in self.get_days():
+    for d in self.get_dates():
       try:
         sessions[d] = self.sessions.get(date=d)
       except:
@@ -94,8 +94,8 @@ class SportWeek(models.Model):
 
     # Add content to xls
     i = 0
-    sessions = self.get_dated_sessions()
-    for day in self.get_days():
+    sessions = self.get_days_per_date()
+    for day in self.get_dates():
       ws.write(i, 0, formats.date_format(day, 'DATE_FORMAT'), style_date)
       content = []
       sess = sessions[day]
@@ -137,7 +137,7 @@ class SportWeek(models.Model):
       'week_human' : self.week + 1,
       'report': self,
       'club': membership.club,
-      'sessions' : self.get_dated_sessions(),
+      'sessions' : self.get_days_per_date(),
       'base_uri' : base_uri,
     }
 

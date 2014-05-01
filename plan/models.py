@@ -77,7 +77,7 @@ class PlanWeek(models.Model):
   class Meta:
     unique_together = (('plan', 'order',), )
 
-  def get_days(self, start_date=None):
+  def get_dates(self, start_date=None):
     '''
     List days in plan, using day id and session
     '''

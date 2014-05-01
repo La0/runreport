@@ -12,7 +12,7 @@ $(function(){
 	<form method="post" action="" class="form-horizontal report">
 		{% csrf_token %}
 
-		{% for day in report.get_days() %}
+		{% for day in report.get_dates() %}
 		{% if day == now.date() %}
 		<fieldset class="today">
 			<legend>Aujourd'hui - {{ day|date('l d E')|title }}</legend>

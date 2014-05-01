@@ -10,7 +10,7 @@
     <td colspan="2">Semaine {{ week_human }} du <a href="{{ base_uri }}
 {% url club-member-week club.slug, report.user.username, report.year, report.week %}">{{ report.get_date_start()|date("l d E") }} au {{ report.get_date_end()|date("l d E") }}</a></td>
   </tr>
-  {% for day in report.get_days() %}
+  {% for day in report.get_dates() %}
   <tr class="session">
     <td width="150">{{day|date('l d E')}}</td>
     {% with sessions[day] as session %}
