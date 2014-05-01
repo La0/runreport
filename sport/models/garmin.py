@@ -27,6 +27,9 @@ class GarminActivity(models.Model):
   created = models.DateTimeField(auto_now_add=True) # Object creation
   updated = models.DateTimeField(auto_now=True)
 
+  class Meta:
+    db_table = 'garmin_activity'
+
   def __unicode__(self):
     return "%s: %s" % (self.garmin_id, self.name)
 

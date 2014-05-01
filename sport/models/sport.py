@@ -7,6 +7,9 @@ class Sport(models.Model):
   parent = models.ForeignKey('Sport', null=True)
   depth = models.IntegerField(default=0)
 
+  class Meta:
+    db_table = 'sport_list'
+
   def __unicode__(self):
     return self.name
 

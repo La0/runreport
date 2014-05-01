@@ -11,7 +11,7 @@ class Migration(SchemaMigration):
       ("club", "0010_rename_m2m_column_membership"),
       ("page", "0003_auto__chg_field_page_user"),
       ("plan", "0007_auto__chg_field_planusage_user__chg_field_plan_creator"),
-      ("run", "0015_auto__chg_field_runreport_user__chg_field_garminactivity_user"),
+      ("sport", "0015_auto__chg_field_runreport_user__chg_field_garminactivity_user"),
     )
 
     def forwards(self, orm):

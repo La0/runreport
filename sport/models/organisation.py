@@ -7,6 +7,7 @@ import tempfile
 from coach.settings import REPORT_SEND_DAY, REPORT_SEND_TIME
 from coach.mail import MailBuilder
 from helpers import date_to_day, week_to_date
+from . import SESSION_TYPES
 
 class SportWeek(models.Model):
   user = models.ForeignKey(Athlete)
@@ -23,6 +24,7 @@ class SportWeek(models.Model):
 
   class Meta:
     unique_together = (('user', 'year', 'week'),)
+    db_table = 'sport_week'
 
   def __unicode__(self):
     return u'%s : %d week=%d' % (self.user, self.year, self.week)
@@ -169,12 +171,6 @@ class SportWeek(models.Model):
     return (self.distance, self.time)
 
 
-SESSION_TYPES = (
-  ('training', 'Entrainement'),
-  ('race', 'Course'),
-  ('rest', 'Repos'),
-)
-
 # To be replaces by SportSession
 SESSION_SPORTS = (
   ('running', 'Course à pied'),
@@ -196,6 +192,7 @@ class SportDay(models.Model):
 
   class Meta:
     unique_together = (('report', 'date'),)
+    db_table = 'sport_day'
 
   def save(self, *args, **kwargs):
     # No race category when we are not in race
@@ -207,6 +204,9 @@ class SportDay(models.Model):
 class RaceCategory(models.Model):
   name = models.CharField(max_length=250)
   distance = models.FloatField(null=True, blank=True)
+
+  class Meta:
+    db_table = 'sport_race_category'
 
   def __unicode__(self):
     return self.name
