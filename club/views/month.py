@@ -1,14 +1,14 @@
 from django.http import Http404
 from mixins import ClubMixin
-from run.models import SportWeek
+from sport.models import SportWeek
 from django.views.generic import MonthArchiveView, DateDetailView
-from run.models import SportDay
+from sport.models import SportDay
 from datetime import datetime, date
 import calendar
 from coach.mixins import JsonResponseMixin
 
 class ClubMemberMonth(ClubMixin, MonthArchiveView):
-  template_name = 'run/month.html'
+  template_name = 'sport/month.html'
   date_field = 'date'
   model = SportDay
   context_object_name = 'sessions'

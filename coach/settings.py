@@ -133,7 +133,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
-    'run',
+    'sport',
     'users',
     'club',
     'page',
@@ -188,7 +188,7 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
-        'coach.run.garmin' : {
+        'coach.sport.garmin' : {
           'handlers' : ['console'],
           'level': 'DEBUG',
         },
@@ -232,11 +232,11 @@ from datetime import timedelta
 from celery.schedules import crontab
 CELERYBEAT_SCHEDULE = {
   'garmin-import-10-min': {
-    'task': 'run.tasks.garmin_import',
+    'task': 'sport.tasks.garmin_import',
     'schedule': timedelta(minutes=10),
   },
   'send-race-mail-every-day-at-9': {
-    'task': 'run.tasks.race_mail',
+    'task': 'sport.tasks.race_mail',
     'schedule': crontab(hour=9, minute=0),
   },
 }

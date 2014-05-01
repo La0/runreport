@@ -7,7 +7,7 @@ from club.views import ClubInviteCheck
 admin.autodiscover()
 
 urlpatterns = patterns('',
-  url(r'^/?', include('run.urls')),
+  url(r'^/?', include('sport.urls')),
   url(r'^user/', include('users.urls')),
   url(r'^club/', include('club.urls')),
   url(r'^plan/', include('plan.urls')),

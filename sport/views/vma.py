@@ -1,9 +1,9 @@
 from django.views.generic import TemplateView
 import json
-from run.vma import VmaCalc
+from sport.vma import VmaCalc
 
 class VmaPaces(TemplateView):
-  template_name = 'run/vma.html'
+  template_name = 'sport/vma.html'
 
   def load_vma(self):
     vma = VmaCalc(self.request.user.vma)
@@ -18,7 +18,7 @@ class VmaPaces(TemplateView):
     return context
 
 class VmaGlossary(TemplateView):
-  template_name = 'run/glossary.html'
+  template_name = 'sport/glossary.html'
 
   def load_glossary(self):
     with open('glossaire_vma.json', 'r') as f:

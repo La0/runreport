@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 from datetime import date
-from run.models import SportWeek
+from sport.models import SportWeek
 
 class Command(BaseCommand):
 

@@ -15,7 +15,7 @@ def garmin_import(*args, **kwargs):
   Import all new Garmin Activities
   '''
   from users.models import Athlete
-  from run.garmin import GarminConnector
+  from sport.garmin import GarminConnector
   users = Athlete.objects.filter(garmin_login__isnull=False, garmin_password__isnull=False)
   users = users.exclude(garmin_login='') # don't use empty logins
   for user in users:
@@ -26,7 +26,7 @@ def race_mail(*args, **kwargs):
   '''
   Send a mail to all users having a race today
   '''
-  from run.models import SportDay
+  from sport.models import SportDay
   from datetime import date
   from coach.mail import MailBuilder
 

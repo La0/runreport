@@ -6,7 +6,7 @@ from helpers import week_to_date, nameize, date_to_week, date_to_day
 from base64 import b64encode
 from hashlib import md5
 from datetime import datetime, date
-from run.models import SportWeek, SportDay
+from sport.models import SportWeek, SportDay
 from coach.mail import MailBuilder
 
 class Plan(models.Model):

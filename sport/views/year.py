@@ -1,12 +1,12 @@
 from coach.settings  import REPORT_START_DATE
 from django.views.generic.dates import YearArchiveView
-from run.models import SportDay
+from sport.models import SportDay
 from datetime import date, timedelta
 from django.http import Http404
 import collections
 
 class RunCalendarYear(YearArchiveView):
-  template_name = 'run/year.html'
+  template_name = 'sport/year.html'
   date_field = 'date'
   model = SportDay
 

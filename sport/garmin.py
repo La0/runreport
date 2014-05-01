@@ -3,12 +3,12 @@ import requests
 import gnupg
 from datetime import datetime, time
 from coach.settings import GPG_HOME, GPG_PASSPHRASE, REPORT_START_DATE
-from run.models import GarminActivity
+from sport.models import GarminActivity
 import logging
 import re
 from helpers import week_to_date
 
-logger = logging.getLogger('coach.run.garmin')
+logger = logging.getLogger('coach.sport.garmin')
 
 class GarminConnector:
   _user = None

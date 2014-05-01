@@ -23,7 +23,7 @@ $(function(){
 
 			{% with forms[day] as session %}
 			{% with session.instance.plan_session as plan_session %}
-			{% include 'run/_plan.html' %}
+			{% include 'sport/_plan.html' %}
 			{% endwith %}
 			{% with session.non_field_errors() as err %}
 			{% if err %}

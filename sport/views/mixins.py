@@ -2,7 +2,7 @@ from datetime import datetime, timedelta, date
 from coach.settings import REPORT_START_DATE
 from django.http import Http404
 from helpers import week_to_date, date_to_day, date_to_week
-from run.models import SportWeek, SportDay, SESSION_TYPES
+from sport.models import SportWeek, SportDay, SESSION_TYPES
 
 class CurrentWeekMixin(object):
   '''

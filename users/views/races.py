@@ -1,5 +1,5 @@
 from django.views.generic import TemplateView
-from run.models import SportDay, RaceCategory
+from sport.models import SportDay, RaceCategory
 from datetime import date
 
 class RacesView(TemplateView):

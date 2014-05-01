@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 from django.contrib.auth.decorators import login_required
-from run.views import *
+from sport.views import *
 
 urlpatterns = patterns('',
   url(r'^/?$', WeeklyReport.as_view(), name="report-current"),

@@ -5,8 +5,8 @@ from django.views.generic.dates import WeekArchiveView
 from users.models import Athlete
 from django.db.models import Count, Max
 from mixins import ClubMixin, ClubManagerMixin
-from run.views.mixins import CurrentWeekMixin, WeekPaginator
-from run.models import SportWeek
+from sport.views.mixins import CurrentWeekMixin, WeekPaginator
+from sport.models import SportWeek
 from club.models import ClubMembership
 from helpers import week_to_date
 from club.forms import ClubMembershipForm

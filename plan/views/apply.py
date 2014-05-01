@@ -3,7 +3,7 @@ from datetime import date, timedelta, datetime
 from helpers import date_to_week, date_to_day, check_task
 from mixins import PlanMixin
 from plan.forms import PlanApplyWeekForm
-from run.models import SportWeek
+from sport.models import SportWeek
 from plan.tasks import apply_plan
 
 class PlanApply(PlanMixin, FormView):

@@ -1,13 +1,13 @@
 from django.core.management.base import BaseCommand, CommandError
-from run.models import GarminActivity
+from sport.models import GarminActivity
 from users.models import Athlete
-from run.garmin import GarminConnector
+from sport.garmin import GarminConnector
 from datetime import datetime
 from django.utils.timezone import utc
 import logging
 from optparse import make_option
 
-logger = logging.getLogger('coach.run.garmin')
+logger = logging.getLogger('coach.sport.garmin')
 
 class Command(BaseCommand):
   option_list = BaseCommand.option_list + (

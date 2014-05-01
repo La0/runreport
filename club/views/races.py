@@ -1,6 +1,6 @@
 from mixins import ClubMixin
 from django.views.generic import ListView
-from run.models import SportDay
+from sport.models import SportDay
 from club.models import ClubMembership
 from datetime import date
 

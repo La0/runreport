@@ -1,14 +1,14 @@
 from django.views.generic import WeekArchiveView
 from helpers import week_to_date, check_task
-from run.models import SportWeek, SESSION_TYPES
+from sport.models import SportWeek, SESSION_TYPES
 from datetime import datetime
-from run.forms import SportWeekForm, SportDayForm
-from run.tasks import publish_report
+from sport.forms import SportWeekForm, SportDayForm
+from sport.tasks import publish_report
 from django.core.exceptions import PermissionDenied
 from mixins import WeekPaginator, CurrentWeekMixin
 
 class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
-  template_name = 'run/report.html'
+  template_name = 'sport/report.html'
   week_format = '%W'
   date_field = 'date'
   report = None

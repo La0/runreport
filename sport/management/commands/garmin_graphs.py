@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from run.models import GarminActivity
+from sport.models import GarminActivity
 
 class Command(BaseCommand):
   _min_date = None

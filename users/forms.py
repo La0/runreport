@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from coach.settings import GPG_HOME, GPG_KEY
 from helpers import nameize
 import gnupg
-from run.garmin import GarminConnector
+from sport.garmin import GarminConnector
 
 class UserForm(forms.ModelForm):
   class Meta:

@@ -1,11 +1,11 @@
 from django.core.management.base import BaseCommand, CommandError
 from coach.settings import HOME
-from run.models import Sport
+from sport.models import Sport
 import os
 import json
 
 class Command(BaseCommand):
-  path = HOME + '/run/management/data/sports.json'
+  path = HOME + '/sport/management/data/sports.json'
   sports = []
 
   def handle(self, *args, **options):
