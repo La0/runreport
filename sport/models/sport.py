@@ -9,6 +9,7 @@ class Sport(models.Model):
 
   class Meta:
     db_table = 'sport_list'
+    app_label = 'sport'
 
   def __unicode__(self):
     return self.name

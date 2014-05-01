@@ -29,6 +29,7 @@ class GarminActivity(models.Model):
 
   class Meta:
     db_table = 'garmin_activity'
+    app_label = 'sport'
 
   def __unicode__(self):
     return "%s: %s" % (self.garmin_id, self.name)

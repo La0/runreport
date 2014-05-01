@@ -25,6 +25,7 @@ class SportWeek(models.Model):
   class Meta:
     unique_together = (('user', 'year', 'week'),)
     db_table = 'sport_week'
+    app_label = 'sport'
 
   def __unicode__(self):
     return u'%s : %d week=%d' % (self.user, self.year, self.week)
@@ -193,6 +194,7 @@ class SportDay(models.Model):
   class Meta:
     unique_together = (('report', 'date'),)
     db_table = 'sport_day'
+    app_label = 'sport'
 
   def save(self, *args, **kwargs):
     # No race category when we are not in race
@@ -207,6 +209,7 @@ class RaceCategory(models.Model):
 
   class Meta:
     db_table = 'sport_race_category'
+    app_label = 'sport'
 
   def __unicode__(self):
     return self.name
