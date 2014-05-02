@@ -27,7 +27,7 @@ class Command(BaseCommand):
       except Exception, e:
         pass # Go on...
 
-      sess_source.report = report_dest
+      sess_source.week = report_dest
       sess_source.save()
 
     # Update dest

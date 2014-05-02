@@ -14,16 +14,16 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
   report = None
 
   def get_report(self):
-    if self.report is not None:
-      return self.report
+    if self.week is not None:
+      return self.week
 
     # Init report
-    self.report, _ = SportWeek.objects.get_or_create(user=self.request.user, year=self.get_year(), week=self.get_week())
+    self.week, _ = SportWeek.objects.get_or_create(user=self.request.user, year=self.get_year(), week=self.get_week())
 
     # Init sessions
-    self.sessions = self.report.get_days_per_date()
+    self.sessions = self.week.get_days_per_date()
 
-    return self.report
+    return self.week
 
   def get_dated_items(self):
     # Init dates
@@ -33,10 +33,10 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
     self.check_limits()
 
     # Init report & sessions
-    self.report = self.get_report()
+    self.week = self.get_report()
 
     context = {
-      'report' : self.report,
+      'report' : self.week,
       'now' : datetime.now(),
     }
     return ([], self.sessions, context)
@@ -44,11 +44,11 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
   def get_form_report(self):
 
     form = None, None
-    if not self.report.published:
+    if not self.week.published:
       if self.request.method == 'POST':
-        form = SportWeekForm(self.request.POST, instance=self.report)
+        form = SportWeekForm(self.request.POST, instance=self.week)
       else:
-        form = SportWeekForm(instance=self.report)
+        form = SportWeekForm(instance=self.week)
 
     return form
 
@@ -58,7 +58,7 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
     Much more easier than dealing with a dynamic model formset
     '''
     forms = {}
-    for day in self.report.get_dates():
+    for day in self.week.get_dates():
       instance = self.sessions[day]
       if self.request.method == 'POST':
         f = SportDayForm(self.request.POST, instance=instance, prefix=day)
@@ -72,13 +72,13 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
     context = super(WeeklyReport, self).get_context_data(**kwargs)
 
     # Check the task on report
-    check_task(self.report)
+    check_task(self.week)
 
     # Full context
     context.update({
       'forms' : self.get_dated_forms(),
       'form_report' : self.get_form_report(),
-      'report' : self.report,
+      'report' : self.week,
       'now' : datetime.now(),
       'memberships' : self.request.user.memberships.all(),
       'sessions': self.sessions,
@@ -91,7 +91,7 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
 
     # Get previous report if not published
     report_previous = None
-    if self.report.is_current() and context['week_previous']:
+    if self.week.is_current() and context['week_previous']:
       try:
         report_previous = SportWeek.objects.get(user=self.request.user, year=context['week_previous']['year'], week=context['week_previous']['week'], published=False)
       except:
@@ -113,7 +113,7 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
       raise PermissionDenied
     self.date_list, self.object_list, extra_context = self.get_dated_items()
     context = self.get_context_data(**{'object_list': self.object_list})
-    if not self.report.published:
+    if not self.week.published:
 
       # Save form per form, to only create necessary objects
       calc_report = False
@@ -121,26 +121,26 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
         if form.is_valid():
           calc_report = True
           session = form.save(commit=False)
-          session.report = self.report
+          session.week = self.week
           session.date = day
           session.save()
 
       # Save report
       form_report = context['form_report']
       if calc_report:
-        self.report.calc_distance_time()
+        self.week.calc_distance_time()
       if form_report.is_valid() or calc_report:
         form_report.save()
 
 
       # Publish through a celery task ?
-      if 'publish' in request.POST and self.report.is_publiable():
+      if 'publish' in request.POST and self.week.is_publiable():
         member = self.request.user.memberships.get(club__pk=int(request.POST['publish']))
         uri = self.request.build_absolute_uri('/')[:-1] # remove trailing /
-        task = publish_report.delay(self.report, member, uri)
+        task = publish_report.delay(self.week, member, uri)
 
         # Save task id in report
-        self.report.task = task.id
-        self.report.save()
+        self.week.task = task.id
+        self.week.save()
 
     return self.render_to_response(context)

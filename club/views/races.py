@@ -14,4 +14,4 @@ class ClubRaces(ClubMixin, ListView):
     # TODO: put in query manager
     users = [m.user for m in ClubMembership.objects.filter(club=self.club, trainers=self.request.user, role='athlete')]
 
-    return self.model.objects.filter(type='race', date__gte=date.today(), report__user__in=users).order_by('date', 'report__user__first_name')
+    return self.model.objects.filter(type='race', date__gte=date.today(), week__user__in=users).order_by('date', 'week__user__first_name')

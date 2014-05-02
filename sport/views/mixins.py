@@ -103,17 +103,17 @@ class CalendarDay(object):
     # Load day, report and eventual session
     self.day = date(int(self.get_year()), int(self.get_month()), int(self.get_day()))
     week, year = date_to_week(self.day)
-    self.report, _ = SportWeek.objects.get_or_create(user=self.request.user, year=year, week=week)
+    self.week, _ = SportWeek.objects.get_or_create(user=self.request.user, year=year, week=week)
     try:
-      self.object = SportDay.objects.get(report=self.report, date=self.day)
+      self.object = SportDay.objects.get(report=self.week, date=self.day)
     except:
-      self.object = SportDay(report=self.report, date=self.day)
+      self.object = SportDay(report=self.week, date=self.day)
     return self.object
 
   def get_context_data(self, **kwargs):
     context = super(CalendarDay, self).get_context_data(**kwargs)
     context['day'] = self.day
-    context['report'] = self.report
+    context['report'] = self.week
     context['session_types'] = SESSION_TYPES
     return context
 

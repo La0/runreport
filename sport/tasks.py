@@ -38,7 +38,7 @@ def race_mail(*args, **kwargs):
 
   # Build and Send all mails
   for race in races:
-    user = race.report.user
+    user = race.week.user
     data = {
       'race' : race,
       'user' : user,

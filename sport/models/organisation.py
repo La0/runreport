@@ -180,7 +180,7 @@ SESSION_SPORTS = (
 )
 
 class SportDay(models.Model):
-  report = models.ForeignKey('SportWeek', related_name='sessions')
+  week = models.ForeignKey('SportWeek', related_name='sessions')
   date = models.DateField()
   name = models.CharField(max_length=255, null=True, blank=True)
   comment = models.TextField(null=True, blank=True)
@@ -192,7 +192,7 @@ class SportDay(models.Model):
   race_category = models.ForeignKey('RaceCategory', null=True, blank=True)
 
   class Meta:
-    unique_together = (('report', 'date'),)
+    unique_together = (('week', 'date'),)
     db_table = 'sport_day'
     app_label = 'sport'
 

@@ -29,7 +29,7 @@ class RunCalendarYear(YearArchiveView):
       d += timedelta(days=1)
 
     # Load sessions
-    sessions_raw = SportDay.objects.filter(report__user=self.get_user(), date__gte=date_start, date__lte=date_end)
+    sessions_raw = SportDay.objects.filter(week__user=self.get_user(), date__gte=date_start, date__lte=date_end)
 
     # Map sessions in dict
     sessions = dict([(s.date, s) for s in sessions_raw])

@@ -12,7 +12,7 @@ class RacesView(TemplateView):
 
   def get_races(self):
     # List races
-    all_races = SportDay.objects.filter(report__user=self.request.user, type='race')
+    all_races = SportDay.objects.filter(week__user=self.request.user, type='race')
     future_races = all_races.filter(date__gt=date.today()).order_by('date')
     past_races = all_races.filter(date__lte=date.today())
 

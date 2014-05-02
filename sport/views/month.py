@@ -42,7 +42,7 @@ class RunCalendar(MonthArchiveView):
       raise Http404(str(e))
 
     # Load all sessions for this month
-    sessions = SportDay.objects.filter(report__user=self.request.user, date__in=self.days)
+    sessions = SportDay.objects.filter(week__user=self.request.user, date__in=self.days)
     sessions_per_days = dict((r.date, r) for r in sessions)
     sessions_per_days = collections.OrderedDict(sorted(sessions_per_days.items()))
 
@@ -75,7 +75,7 @@ class ExportMonth(CsvResponseMixin, MonthMixin, YearMixin, View):
 
     # Load sessions
     data = []
-    sessions = SportDay.objects.filter(report__user=self.request.user, date__in=days)
+    sessions = SportDay.objects.filter(week__user=self.request.user, date__in=days)
     for day in days:
       if day.month != month:
         continue # Skip before & after days

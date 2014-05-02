@@ -25,7 +25,7 @@ class Command(BaseCommand):
       self.ask_category(r)
 
   def ask_category(self, race):
-    print "%s le %s par %s" % (race.name, race.date, race.report.user.username)
+    print "%s le %s par %s" % (race.name, race.date, race.week.user.username)
 
     cat_name = None
     while cat_name is None:
