@@ -70,7 +70,7 @@ class ClubMemberDay(JsonResponseMixin, ClubMixin, DateDetailView):
     week = int(self.day.strftime('%W'))
     self.week, _ = SportWeek.objects.get_or_create(user=self.member, year=self.day.year, week=week)
     try:
-      self.object = SportDay.objects.get(report=self.week, date=self.day)
+      self.object = SportDay.objects.get(week=self.week, date=self.day)
     except:
       self.object = None
     return self.object

@@ -105,9 +105,9 @@ class CalendarDay(object):
     week, year = date_to_week(self.day)
     self.week, _ = SportWeek.objects.get_or_create(user=self.request.user, year=year, week=week)
     try:
-      self.object = SportDay.objects.get(report=self.week, date=self.day)
+      self.object = SportDay.objects.get(week=self.week, date=self.day)
     except:
-      self.object = SportDay(report=self.week, date=self.day)
+      self.object = SportDay(week=self.week, date=self.day)
     return self.object
 
   def get_context_data(self, **kwargs):

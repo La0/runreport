@@ -137,17 +137,17 @@ class PlanSession(models.Model):
     d += timedelta(days=self.week.order * 7 + self.day)
     return d
 
-  def apply(self, report):
+  def apply(self, week):
     '''
-    Apply a plan session to a report day
+    Apply a plan session to a week day
     '''
-    day = report.get_date((self.day+1)%7) # in report date are stored using sunday as 0
+    day = week.get_date((self.day+1)%7) # in report date are stored using sunday as 0
     defaults = {
       'name' : self.name,
       'distance' : self.distance,
       'time' : self.time,
     }
-    session, _ = SportDay.objects.get_or_create(report=report, date=day, defaults=defaults)
+    session, _ = SportDay.objects.get_or_create(week=week, date=day, defaults=defaults)
     session.plan_session = self
     session.save()
 

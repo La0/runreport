@@ -31,11 +31,11 @@ class SessionAdd(JsonResponseMixin, FormView):
   def form_valid(self, form):
     # Get (or create) week report
     week, year = date_to_week(form.cleaned_data['date'])
-    report, _ = SportWeek.objects.get_or_create(user=self.request.user, year=year, week=week)
+    sport_week, _ = SportWeek.objects.get_or_create(user=self.request.user, year=year, week=week)
 
     # Create a new session
     session_type = form.cleaned_data['type'] or self.kwargs.get('type', 'training')
-    self.session = SportDay.objects.create(report=report, date=form.cleaned_data['date'], type=session_type)
+    self.session = SportDay.objects.create(week=sport_week, date=form.cleaned_data['date'], type=session_type)
 
     return super(SessionAdd, self).form_valid(form)
 
