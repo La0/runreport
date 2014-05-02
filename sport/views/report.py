@@ -21,7 +21,7 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
     self.week, _ = SportWeek.objects.get_or_create(user=self.request.user, year=self.get_year(), week=self.get_week())
 
     # Init sessions
-    self.sessions = self.week.get_days_per_date()
+    self.days = self.week.get_days_per_date()
 
     return self.week
 
@@ -39,7 +39,7 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
       'report' : self.week,
       'now' : datetime.now(),
     }
-    return ([], self.sessions, context)
+    return ([], self.days, context)
 
   def get_form_report(self):
 
@@ -59,7 +59,7 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
     '''
     forms = {}
     for day in self.week.get_dates():
-      instance = self.sessions[day]
+      instance = self.days[day]
       if self.request.method == 'POST':
         f = SportDayForm(self.request.POST, instance=instance, prefix=day)
       else:
@@ -81,7 +81,7 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
       'report' : self.week,
       'now' : datetime.now(),
       'memberships' : self.request.user.memberships.all(),
-      'sessions': self.sessions,
+      'sessions': self.days,
       'pagename' : 'report-week',
       'session_types':SESSION_TYPES,
     })

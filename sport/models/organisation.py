@@ -38,7 +38,7 @@ class SportWeek(models.Model):
     sessions = {}
     for d in self.get_dates():
       try:
-        sessions[d] = self.sessions.get(date=d)
+        sessions[d] = self.days.get(date=d)
       except:
         sessions[d] = None
     return sessions
@@ -161,12 +161,12 @@ class SportWeek(models.Model):
   def calc_distance_time(self):
     # Distance, through SQL Sum
     from django.db.models import Sum
-    out = self.sessions.aggregate(total_distance=Sum('distance'))
+    out = self.days.aggregate(total_distance=Sum('distance'))
     self.distance = out['total_distance']
 
     # Time
     time = timedelta()
-    for s in self.sessions.filter(time__isnull=False):
+    for s in self.days.filter(time__isnull=False):
       time += timedelta(hours=s.time.hour, minutes=s.time.minute, seconds=s.time.second)
     self.time = time.days * 86400 + time.seconds
     return (self.distance, self.time)
@@ -180,7 +180,7 @@ SESSION_SPORTS = (
 )
 
 class SportDay(models.Model):
-  week = models.ForeignKey('SportWeek', related_name='sessions')
+  week = models.ForeignKey('SportWeek', related_name='days')
   date = models.DateField()
   name = models.CharField(max_length=255, null=True, blank=True)
   comment = models.TextField(null=True, blank=True)

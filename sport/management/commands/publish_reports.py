@@ -14,7 +14,7 @@ class Command(BaseCommand):
     for r in reports:
 
       # Skip empty report
-      sessions = r.sessions.exclude(comment=None)
+      sessions = r.days.exclude(comment=None)
       if sessions.count() == 0:
         print 'No active sessions for report %s' % r
         continue

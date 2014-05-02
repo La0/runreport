@@ -59,7 +59,7 @@ class PlanApply(PlanMixin, FormView):
     # Look for busied run reports
     # in the time interval
     users = [ca.user for ca in club_athletes]
-    reports_busy = SportWeek.objects.filter(user__in=users, sessions__date__range=(date_start, date_end), plan_week__isnull=False).distinct()
+    reports_busy = SportWeek.objects.filter(user__in=users, days__date__range=(date_start, date_end), plan_week__isnull=False).distinct()
 
     # Linearize by athlete & year/week
     # to display a table of 6 weeks availiblity

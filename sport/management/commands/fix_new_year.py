@@ -17,12 +17,12 @@ class Command(BaseCommand):
     print "%s >> %s" % (report_source, report_dest)
 
     # Backup every session
-    for sess_source in report_source.sessions.all():
+    for sess_source in report_source.days.all():
       print ' > %s' % sess_source.date
 
       # Detect conflict
       try:
-        sess_dest = report_dest.sessions.get(date=sess_source.date)
+        sess_dest = report_dest.days.get(date=sess_source.date)
         sess_dest.delete()
       except Exception, e:
         pass # Go on...
