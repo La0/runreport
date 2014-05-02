@@ -1,6 +1,7 @@
 # coding=utf-8
 from django.db import models
 from .organisation import SportDay
+from .sport import SportSession
 from users.models import Athlete
 from datetime import datetime, time
 import os
@@ -13,7 +14,7 @@ from helpers import date_to_week
 
 class GarminActivity(models.Model):
   garmin_id = models.IntegerField(unique=True)
-  session = models.ForeignKey(SportDay, related_name='garmin_activities')
+  session = models.ForeignKey(SportSession, related_name='garmin_activities')
   sport = models.ForeignKey('Sport')
   user = models.ForeignKey(Athlete)
   name = models.CharField(max_length=255)
@@ -46,26 +47,8 @@ class GarminActivity(models.Model):
     date = self.date.date()
     week, year = date_to_week(date)
     sport_week,_ = SportWeek.objects.get_or_create(user=self.user, year=year, week=week)
-    self.session,_ = SportDay.objects.get_or_create(date=date, week=sport_week)
-
-    # Use title ?
-    modified = False
-    if not self.session.name and self.name not in ('Sans titre', 'Untitled'):
-      self.session.name = self.name
-      modified = True
-
-    # Use running time ?
-    if self.sport.get_category() == 'running':
-      if not self.session.distance:
-        self.session.distance = self.distance
-        modified = True
-      if not self.session.time:
-        self.session.time = self.time
-        modified = True
-
-    # Update session
-    if modified:
-      self.session.save()
+    day,_ = SportDay.objects.get_or_create(date=date, week=sport_week)
+    self.session,_ = SportSession.objects.get_or_create(sport=self.sport.get_parent(), day=day)
 
   def get_url(self):
     return 'http://connect.garmin.com/activity/%s' % (self.garmin_id)

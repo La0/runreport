@@ -172,13 +172,6 @@ class SportWeek(models.Model):
     return (self.distance, self.time)
 
 
-# To be replaces by SportSession
-SESSION_SPORTS = (
-  ('running', 'Course à pied'),
-  ('cycling', 'Vélo'),
-  ('swimming', 'Natation'),
-)
-
 class SportDay(models.Model):
   week = models.ForeignKey('SportWeek', related_name='days')
   date = models.DateField()
@@ -187,7 +180,7 @@ class SportDay(models.Model):
   distance = models.FloatField(null=True, blank=True)
   time = models.TimeField(null=True, blank=True)
   type = models.CharField(max_length=12, default='training', choices=SESSION_TYPES)
-  sport = models.CharField(choices=SESSION_SPORTS, max_length=20, default='running')
+  sports = models.ManyToManyField('Sport', through='SportSession')
   plan_session = models.ForeignKey('plan.PlanSession', null=True, blank=True)
   race_category = models.ForeignKey('RaceCategory', null=True, blank=True)
 

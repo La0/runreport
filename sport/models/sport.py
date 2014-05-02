@@ -1,5 +1,6 @@
 # coding=utf-8
 from django.db import models
+#from .organisation import SportDay
 
 class Sport(models.Model):
   name = models.CharField(max_length=250)
@@ -20,3 +21,19 @@ class Sport(models.Model):
       return self.slug
     return self.parent.get_category()
 
+class SportSession(models.Model):
+  day = models.ForeignKey('SportDay', related_name="sessions")
+  sport = models.ForeignKey(Sport)
+  time = models.TimeField(null=True, blank=True)
+  distance = models.FloatField(null=True, blank=True)
+
+  class Meta:
+    db_table = 'sport_session'
+    app_label = 'sport'
+
+  def save(self, *args, **kwargs):
+    # Only allow depth 1 sports
+    if self.sport.depth != 1:
+      raise Exception("Invalid sport '%s', only level 1 authorized for SportSession" % self.sport)
+
+    super(SportSession, self).save(*args, **kwargs)
