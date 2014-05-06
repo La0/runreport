@@ -4,16 +4,7 @@
   {% with activity.sport.get_category() as sport %}
   <div class="activity {{ sport }}">
 
-    {% if sport == 'running' %}
-    <i class="icon-pitch"></i>
-    {% elif sport == 'cycling' %}
-    <i class="icon-bicycle"></i>
-    {% elif sport == 'swimming' %}
-    <i class="icon-swimming"></i>
-    {% else %}
     <i class="icon-location"></i>
-    {% endif %}
-
     <a href="{{ activity.get_url() }}" target="_blank">{{ activity.name }}</a>
 
     <span class="muted">&bull;</span>

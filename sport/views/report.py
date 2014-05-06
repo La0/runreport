@@ -1,8 +1,8 @@
 from django.views.generic import WeekArchiveView
 from helpers import week_to_date, check_task
-from sport.models import SportWeek, SESSION_TYPES
+from sport.models import SportWeek, SportSession, Sport, SESSION_TYPES
 from datetime import datetime
-from sport.forms import SportWeekForm, SportDayForm
+from sport.forms import SportWeekForm, SportDayForm, SportSessionForm
 from sport.tasks import publish_report
 from django.core.exceptions import PermissionDenied
 from mixins import WeekPaginator, CurrentWeekMixin
@@ -17,10 +17,10 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
     if self.week is not None:
       return self.week
 
-    # Init report
+    # Init week 
     self.week, _ = SportWeek.objects.get_or_create(user=self.request.user, year=self.get_year(), week=self.get_week())
 
-    # Init sessions
+    # Init days 
     self.days = self.week.get_days_per_date()
 
     return self.week
@@ -58,14 +58,9 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
     Much more easier than dealing with a dynamic model formset
     '''
     forms = {}
-    for day in self.week.get_dates():
-      instance = self.days[day]
-      if self.request.method == 'POST':
-        f = SportDayForm(self.request.POST, instance=instance, prefix=day)
-      else:
-        f = SportDayForm(instance=instance, prefix=day)
-      forms[day] = f
-
+    for day_date in self.week.get_dates():
+      post_data = self.request.method == 'POST' and self.request.POST or None
+      forms[day_date] = SportDayForm(post_data, week=self.week, date=day_date, instance=self.days[day_date], prefix=day_date)
     return forms
 
   def get_context_data(self, **kwargs):
@@ -116,22 +111,14 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
     if not self.week.published:
 
       # Save form per form, to only create necessary objects
-      calc_report = False
       for day, form in context['forms'].items():
         if form.is_valid():
-          calc_report = True
-          session = form.save(commit=False)
-          session.week = self.week
-          session.date = day
-          session.save()
+          form.save()
 
       # Save report
       form_report = context['form_report']
-      if calc_report:
-        self.week.calc_distance_time()
-      if form_report.is_valid() or calc_report:
+      if form_report.is_valid():
         form_report.save()
-
 
       # Publish through a celery task ?
       if 'publish' in request.POST and self.week.is_publiable():

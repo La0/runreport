@@ -78,16 +78,10 @@ span.type {
 				{% if session %}
 				<p class="session {{ session.type }}">
 					{{session.name|default('Session sans nom')}}
-          {% with session.garmin_activities.count() as garmin_nb %}
-					{% if garmin_nb > 0 %}
-            <i class="icon-location"></i>{% if garmin_nb > 1 %}x{{ garmin_nb }}{% endif %}
-          {% endif %}
-          {% endwith %}
-					{% if session.sport == 'cycling' %}
-					<i class="icon-bicycle"></i>
-					{% elif session.sport == 'swimming' %}
-					<i class="icon-swimming"></i>
-					{% endif %}
+
+          {% for sport in session.sports.all() %}
+					<i class="icon-{{sport.slug}}"></i>
+          {% endfor %}
 				</p>
 				{% if session.plan_session %}
 				<p>
@@ -111,16 +105,9 @@ span.type {
 				<div>
 					<span class="type {{ session.type }}"></span>
 					{{session.name|default('Session sans nom')}}
-          {% with session.garmin_activities.count() as garmin_nb %}
-					{% if garmin_nb > 0 %}
-            <i class="icon-location"></i>{% if garmin_nb > 1 %}x{{ garmin_nb }}{% endif %}
-          {% endif %}
-          {% endwith %}
-					{% if session.sport == 'cycling' %}
-					<i class="icon-bicycle"></i>
-					{% elif session.sport == 'swimming' %}
-					<i class="icon-swimming"></i>
-					{% endif %}
+          {% for sport in session.sports.all() %}
+					<i class="icon-{{sport.slug}}"></i>
+          {% endfor %}
 				</div>
 				{% if session.plan_session %}
 				<div>

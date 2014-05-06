@@ -16,17 +16,20 @@
 </div>
 {%- endmacro %}
 
-{% macro session_time_distance(form) -%}
+{% macro sport_session(form) -%}
 <div class="form-group time-distance row">
-	<label class="col-sm-2 control-label {% if form.time.errors %}has-error{% endif %}" for="id_{{form.time.html_name}}">Temps</label>
+  <div class="col-sm-2">
+    {{ form.sport|safe }}
+  </div>
 	<div class="col-sm-4 {% if form.time.errors %}has-error{% endif %}">
+    <label class="control-label {% if form.time.errors %}has-error{% endif %}" for="id_{{form.time.html_name}}">Temps</label>
 		{{ form.time|addcss("form-control")|safe }}
 		{% if form.time.errors %}
 		<div class="help-block">{{form.time.errors|safe}}</div>
 		{% endif %}
 	</div>
-	<label class="col-sm-2 control-label" for="id_{{form.distance.html_name}}" rel="tooltip" title="Distance en course à pied uniquement.">Distance Cap</label>
 	<div class="col-sm-4 {% if form.distance.errors %}has-error{% endif %}">
+    <label class="control-label" for="id_{{form.distance.html_name}}" rel="tooltip" title="Distance en course à pied uniquement.">Distance</label>
 		{{ form.distance|addcss("form-control")|safe }}
 		{% if form.distance.errors %}
 		<div class="help-block">{{form.distance.errors|safe}}</div>

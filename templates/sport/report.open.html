@@ -21,11 +21,13 @@ $(function(){
 			<legend>{{ day|date('l d E')|title }}</legend>
 			{% endif %}
 
-			{% with forms[day] as session %}
-			{% with session.instance.plan_session as plan_session %}
+			{% with forms[day] as day_form %}
+
+			{% with day_form.instance.plan_session as plan_session %}
 			{% include 'sport/_plan.html' %}
 			{% endwith %}
-			{% with session.non_field_errors() as err %}
+
+			{% with day_form.non_field_errors() as err %}
 			{% if err %}
 			<div class="alert alert-danger">
 				<h4>Erreur pour cette séance</h4>
@@ -33,15 +35,20 @@ $(function(){
 			</div>
 			{% endif %}
 			{% endwith %}
-			{{ macros.session_types_name(session, session_types) }}
-			{{ macros.input(session.comment, 'Commentaire') }}
-			{{ macros.session_time_distance(session) }}
-			{{ macros.race_category(session) }}
-      <div class="col-sm-10 col-xs-12 col-sm-offset-2">
-			{% with session.instance.garmin_activities as activities %}
-			{% include '_garmin.html' %}
-			{% endwith %}
+
+			{{ macros.session_types_name(day_form, session_types) }}
+			{{ macros.input(day_form.comment, 'Commentaire') }}
+			{{ macros.race_category(day_form) }}
+
+      <div class="form-group row">
+        <label class="control-label col-sm-2 hidden-xs">Sports</label>
+        <div class="col-sm-10 col-xs-12">
+        {% with day_form.sessions as sessions %}
+        {% include 'sport/_sessions.forms.html' %}
+        {% endwith %}
+        </div>
       </div>
+
 			{% endwith %}
 		</fieldset>
 		{% endfor %}

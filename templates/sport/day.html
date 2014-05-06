@@ -22,7 +22,6 @@
 <fieldset>
 	{{ macros.session_types_name(form, session_types) }}
 	{{ macros.input(form.comment, 'Commentaire', false, 2, 10) }}
-	{{ macros.session_time_distance(form) }}
 	{{ macros.race_category(form) }}
 	{% if session %}
 	{% if session.plan_session %}
@@ -30,8 +29,8 @@
 	{% include 'sport/_plan.html' %}
 	{% endwith %}
 	{% endif %}
-	{% with session.garmin_activities as activities %}
-	{% include '_garmin.html' %}
+	{% with form.sessions as sessions %}
+	{% include 'sport/_sessions.forms.html' %}
 	{% endwith %}
 	{% endif %}
 </fieldset>

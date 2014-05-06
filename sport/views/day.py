@@ -9,11 +9,15 @@ class RunCalendarDay(CalendarDay, JsonResponseMixin, ModelFormMixin, ProcessForm
   template_name = 'sport/day.html'
   form_class = SportDayForm
 
-  def get_form(self, form_class):
-    # Load object before form init
-    if not hasattr(self, 'object'):
-      self.get_object()
-    return super(RunCalendarDay, self).get_form(form_class)
+  def get_form_kwargs(self, *args, **kwargs):
+    '''
+    Gives to form SportDay & parent week, with post data
+    '''
+    return {
+      'instance' : self.get_object(),
+      'week' : self.week,
+      'data' : self.request.method == 'POST' and self.request.POST or None,
+    }
 
   def form_valid(self, form):
     form.save()

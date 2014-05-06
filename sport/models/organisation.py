@@ -17,8 +17,6 @@ class SportWeek(models.Model):
   created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
   comment = models.TextField(null=True, blank=True)
-  distance = models.FloatField(null=True, blank=True, editable=False)
-  time = models.FloatField(null=True, blank=True, editable=False)
   task = models.CharField(max_length=36, null=True, blank=True)
   plan_week = models.ForeignKey('plan.PlanWeek', null=True, blank=True)
 
@@ -177,8 +175,6 @@ class SportDay(models.Model):
   date = models.DateField()
   name = models.CharField(max_length=255, null=True, blank=True)
   comment = models.TextField(null=True, blank=True)
-  distance = models.FloatField(null=True, blank=True)
-  time = models.TimeField(null=True, blank=True)
   type = models.CharField(max_length=12, default='training', choices=SESSION_TYPES)
   sports = models.ManyToManyField('Sport', through='SportSession')
   plan_session = models.ForeignKey('plan.PlanSession', null=True, blank=True)
