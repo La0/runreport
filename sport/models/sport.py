@@ -30,6 +30,7 @@ class SportSession(models.Model):
   class Meta:
     db_table = 'sport_session'
     app_label = 'sport'
+    unique_together = (('day', 'sport'), )
 
   def save(self, *args, **kwargs):
     # Only allow depth 1 sports
