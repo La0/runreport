@@ -83,6 +83,10 @@ form.report div.actions.row div {
   text-align: center;
 }
 
+form div.sport-session.extra {
+  display: none;
+}
+
 form div.race-category {
   display: none;
 }

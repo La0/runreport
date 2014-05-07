@@ -17,7 +17,7 @@
 {%- endmacro %}
 
 {% macro sport_session(form) -%}
-<div class="form-group time-distance row">
+<div class="form-group sport-session row {% if form.extra %}extra{% endif %}">
   <div class="col-sm-2">
     {{ form.sport|safe }}
   </div>
@@ -36,6 +36,12 @@
 		{% endif %}
 	</div>
 </div>
+
+{% if form.extra %}
+<span class="btn btn-default extra-sport-add">
+  Ajouter un sport
+</span>
+{% endif %}
 {%- endmacro %}
 
 {% macro session_types_name(form, types) -%}

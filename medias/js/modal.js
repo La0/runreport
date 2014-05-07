@@ -39,6 +39,12 @@ $(function(){
     btn.find('span.name').html($(this).text());
     selector.find('.btn-group').removeClass('open');
   });
+
+  // Show extra sport
+  $(document).on('click', 'span.extra-sport-add', function(){
+    $(this).siblings('div.sport-session.extra').show();
+    $(this).hide();
+  });
 });
 
 function submit_form(evt){

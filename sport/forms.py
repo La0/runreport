@@ -55,8 +55,12 @@ class SportDayForm(forms.ModelForm):
         sport = Sport.objects.exclude(sport__in=sports)[0]
       else:
         sport = default_sport
+
+      # Build extra form
       session = SportSession(sport=sport)
-      self.sessions.append(SportSessionForm(data, instance=session, prefix='%s-extra' % (self.prefix, )))
+      extra_form = SportSessionForm(data, instance=session, prefix='%s-extra' % (self.prefix,))
+      extra_form.extra = True # mark for templates
+      self.sessions.append(extra_form)
 
     else:
       # Add a default sport session
