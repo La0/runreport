@@ -117,12 +117,16 @@ class SportDayForm(forms.ModelForm):
       day.date = self.date
     day.save()
 
-    # Save sessions linked to day
     for session_form in self.sessions:
       if session_form.is_valid():
+        # Save valid sessions linked to day
         session = session_form.save(commit=False)
         session.day = day
         session.save()
+      elif session_form.instance.pk is not None:
+        # Delete invalid sessions
+        # Maybe a bad action here ?
+        session_form.instance.delete()
 
     # Re-init sessions forms
     # to display new extra form
