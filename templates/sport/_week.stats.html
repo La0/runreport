@@ -1,0 +1,14 @@
+{% for sport, time, distance in stats %}
+<p>
+  <strong>{{ sport.name }}</strong>
+  <span class="text-muted">&bull;</span>
+
+  <span class="label label-info">Temps total</span>
+  {{ time|days_time('jour', '%Hh%M') }}
+  <span class="text-muted">&bull;</span>
+
+  <span class="label label-info">Distance totale</span>
+  {{ distance|default(0) }} km.
+  </p>
+{% endfor %}
+

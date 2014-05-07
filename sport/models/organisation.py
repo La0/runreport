@@ -8,6 +8,7 @@ from coach.settings import REPORT_SEND_DAY, REPORT_SEND_TIME
 from coach.mail import MailBuilder
 from helpers import date_to_day, week_to_date
 from . import SESSION_TYPES
+from .sport import SportSession
 
 class SportWeek(models.Model):
   user = models.ForeignKey(Athlete)
@@ -156,19 +157,26 @@ class SportWeek(models.Model):
     self.published = True
     self.save()
 
-  def calc_distance_time(self):
-    # Distance, through SQL Sum
-    from django.db.models import Sum
-    out = self.days.aggregate(total_distance=Sum('distance'))
-    self.distance = out['total_distance']
 
-    # Time
-    time = timedelta()
-    for s in self.days.filter(time__isnull=False):
-      time += timedelta(hours=s.time.hour, minutes=s.time.minute, seconds=s.time.second)
-    self.time = time.days * 86400 + time.seconds
-    return (self.distance, self.time)
+  def get_sports_stats(self):
+    '''
+    List all the cumulated distances & time
+    per sport for this week
+    '''
+    stats = []
+    sessions = SportSession.objects.filter(day__week=self)
+    sports = set([s.sport for s in sessions])
 
+    for sport in sports:
+      t, d = 0.0, 0.0
+      for s in sessions.filter(sport=sport):
+        if s.time:
+          t += s.time.hour * 3600 + s.time.minute * 60 + s.time.second
+        if s.distance:
+          d += s.distance
+      stats.append((sport, t, d))
+
+    return stats
 
 class SportDay(models.Model):
   week = models.ForeignKey('SportWeek', related_name='days')

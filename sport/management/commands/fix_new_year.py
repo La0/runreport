@@ -30,9 +30,5 @@ class Command(BaseCommand):
       sess_source.week = report_dest
       sess_source.save()
 
-    # Update dest
-    report_dest.calc_distance_time()
-    report_dest.save()
-
     # Destroy source
     report_source.delete()

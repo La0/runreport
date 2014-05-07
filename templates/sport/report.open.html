@@ -64,7 +64,9 @@ $(function(){
         {{ macros.input(form_report.comment, 'Commentaire') }}
       </div>
       <div class="panel-footer">
-				<span class="label label-info">Temps total</span> {{ report.time|days_time('jour', '%Hh%M') }} <span class="muted">&bull;</span> <span class="label label-info">Distance totale</span> {{ report.distance|default(0) }} km.
+        {% with report.get_sports_stats() as stats %}
+        {% include 'sport/_week.stats.html' %}
+        {% endwith %}
       </div>
     </div>
 
