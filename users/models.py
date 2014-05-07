@@ -16,6 +16,9 @@ class Athlete(AbstractUser):
   nb_sessions = models.IntegerField(null=True, blank=True)
   license = models.CharField(max_length=12, null=True, blank=True)
 
+  # Sport
+  default_sport = models.ForeignKey('sport.Sport', default=3, limit_choices_to={'depth': 1,}) # default to running
+
   # Mail
   auto_send = models.BooleanField(default=False)
 

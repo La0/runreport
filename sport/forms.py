@@ -41,8 +41,7 @@ class SportDayForm(forms.ModelForm):
       self.sessions = [SportSessionForm(data, instance=s, prefix='%s-%d' % (self.prefix, s.pk)) for s in sessions]
     else:
       # Add a default sport session
-      default_sport = Sport.objects.get(slug='running')
-      session = SportSession(sport=default_sport)
+      session = SportSession(sport=self.week.user.default_sport)
       self.sessions = [SportSessionForm(data, instance=session, prefix='%s-default' % (self.prefix, )), ]
 
   def clean(self):
