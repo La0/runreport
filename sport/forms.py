@@ -35,16 +35,54 @@ class SportDayForm(forms.ModelForm):
     if not self.prefix:
       self.prefix = 'day'
 
+    # Sessions init
+    self.build_sessions(data)
+
+  def build_sessions(self, data=None):
+    '''
+    Build all the SportSession forms
+    '''
+    default_sport = self.week.user.default_sport
     sessions = self.instance.sessions.all()
     if sessions:
       # Add sessions form
       self.sessions = [SportSessionForm(data, instance=s, prefix='%s-%d' % (self.prefix, s.pk)) for s in sessions]
+
+      # Add an empty extra session
+      sports = [s.sport for s in sessions]
+      if default_sport in sports:
+        # Pick another sport
+        sport = Sport.objects.exclude(sport__in=sports)[0]
+      else:
+        sport = default_sport
+      session = SportSession(sport=sport)
+      self.sessions.append(SportSessionForm(data, instance=session, prefix='%s-extra' % (self.prefix, )))
+
     else:
       # Add a default sport session
-      session = SportSession(sport=self.week.user.default_sport)
+      session = SportSession(sport=default_sport)
       self.sessions = [SportSessionForm(data, instance=session, prefix='%s-default' % (self.prefix, )), ]
 
+
   def clean(self):
+
+    # Clean sessions
+    sports = []
+    for s in self.sessions:
+      if s.is_valid():
+        s.clean()
+
+        # No duplicate sports ?
+        sport = s.cleaned_data['sport']
+        if sport in sports:
+          raise forms.ValidationError('Sport déja utilisé : %s' % sport)
+        sports.append(sport)
+
+        # Alert user about missing comment & name
+        if not self.cleaned_data.get('name', None) and not self.cleaned_data.get('comment', None):
+          raise forms.ValidationError(u'Vous devez spécifier un nom de séance et/ou un commentaire.')
+
+
     # Only for race
     if self.cleaned_data['type'] == 'race':
 
@@ -64,10 +102,6 @@ class SportDayForm(forms.ModelForm):
     if not is_valid:
       return False
 
-    # Check sessions
-    if False in [s.is_valid() for s in self.sessions]:
-      return False
-
     # Don't save any empty sesion, but no message for user
     if not self.cleaned_data.get('name', None) and not self.cleaned_data.get('comment', None):
       return False
@@ -85,9 +119,14 @@ class SportDayForm(forms.ModelForm):
 
     # Save sessions linked to day
     for session_form in self.sessions:
-      session = session_form.save(commit=False)
-      session.day = day
-      session.save()
+      if session_form.is_valid():
+        session = session_form.save(commit=False)
+        session.day = day
+        session.save()
+
+    # Re-init sessions forms
+    # to display new extra form
+    self.build_sessions()
 
     return day
 
@@ -104,6 +143,16 @@ class SportSessionForm(forms.ModelForm):
 
     # Load only sports of depth 1 for this form
     self.fields['sport'].queryset = Sport.objects.filter(depth=1)
+
+  def is_valid(self, *args, **kwargs):
+    '''
+    Valid only with time or distance specified
+    '''
+    is_valid = super(SportSessionForm, self).is_valid()
+    if not is_valid:
+      return False
+
+    return self.cleaned_data['distance'] is not None or self.cleaned_data['time'] is not None
 
 class SportDayAddForm(forms.Form):
   '''
