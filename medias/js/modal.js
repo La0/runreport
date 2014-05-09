@@ -3,16 +3,32 @@ $(function(){
   // Modals show
   $(document).on('click', '.modal-action', load_modal);
 
+  // Tooltips show
+  $('.do-tooltip').tooltip();
+
   // Roles custom
   $(document).on('click', 'div.roles button.role', function(){
     if($(this).hasClass('disabled')) return false;
     $(this).parents('div.roles').find('input.role_value').val($(this).val());
   });
 
+  // Sport choice
+  // * update input value
+  // * update selector
+  $(document).on('click', 'form ul.sports li a', function(){
+    var sport = $(this).attr('value');
+    $(this).parent().addClass('active').siblings('li.active').removeClass('active');
+    var selector = $(this).parents('div.sport-session');
+    selector.find('input[type=hidden]').val(sport);
+    var btn = selector.find('button');
+    btn.find('span.name').html($(this).text());
+    selector.find('.btn-group').removeClass('open');
+  });
+
   // Session types
   // * update input value
   // * update selector
-  $(document).on('click', 'ul.types li a', function(){
+  $(document).on('click', 'form ul.types li a', function(){
     var type = $(this).attr('value');
     $(this).parent().addClass('active').siblings('li.active').removeClass('active');
     var selector = $(this).parents('div.types-name');
@@ -44,6 +60,11 @@ $(function(){
   $(document).on('click', 'span.extra-sport-add', function(){
     $(this).siblings('div.sport-session.extra').show();
     $(this).hide();
+  });
+
+  // Don't reload page when hitting a dropdown choice
+  $(document).on('click', 'form .dropdown-menu li a', function(evt){
+    evt.preventDefault();
   });
 });
 

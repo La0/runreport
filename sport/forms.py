@@ -69,7 +69,6 @@ class SportDayForm(forms.ModelForm):
       session = SportSession(sport=default_sport)
       self.sessions = [SportSessionForm(data, instance=session, multi_sports=multi_sports, prefix='%s-default' % (self.prefix, )), ]
 
-
   def clean(self):
 
     # Clean sessions
@@ -148,6 +147,10 @@ class SportSessionForm(forms.ModelForm):
   class Meta:
     model = SportSession
     fields = ('sport', 'distance', 'time')
+    widgets = {
+      'sport' : forms.HiddenInput(),
+    }
+
 
   def __init__(self, *args, **kwargs):
 
@@ -159,12 +162,15 @@ class SportSessionForm(forms.ModelForm):
 
     super(SportSessionForm, self).__init__(*args, **kwargs)
 
+    self.sports = []
     if multi_sports:
       # Load only sports of depth 1 for this form
-      self.fields['sport'].queryset = Sport.objects.filter(depth=1)
+      self.sports = Sport.objects.filter(depth=1)
+      self.fields['sport'].queryset = self.sports
     else:
       # No sport choice when multi_sports is disabled
       del self.fields['sport']
+        
 
   def is_valid(self, *args, **kwargs):
     '''

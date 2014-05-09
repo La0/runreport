@@ -19,22 +19,44 @@
 {% macro sport_session(form, multi_sports) -%}
 <div class="form-group sport-session row {% if form.extra %}extra{% endif %}">
   <div class="col-sm-2">
-  {% if multi_sports %}
-    {{ form.sport|safe }}
-  {% else %}
-    {{ form.instance.sport }}
-  {% endif %}
+    {% if multi_sports %}
+      <button class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown">
+        <span class="name">
+          {{ form.instance.sport }}
+        </span>
+        <span class="caret"></span>
+      </button>
+
+      <ul class="dropdown-menu sports">
+        {% for sport in form.sports %}
+        <li class="{% if sport == form.instance.sport %}active{% endif %}">
+          <a href="#" value="{{sport.pk}}">{{sport.name}}</a>
+        </li>
+        {% endfor %}
+      </ul>
+      {{ form.sport|safe }}
+
+    {% else %}
+    <span class="btn btn-warning btn-sm do-tooltip" data-toggle="tooltip" data-placement="top" title="Pour changer de sport, activer l'option Multi Sports dans votre profil.">
+      {{ form.instance.sport }}
+    </span>
+    {% endif %}
   </div>
+
 	<div class="col-sm-4 {% if form.time.errors %}has-error{% endif %}">
-    <label class="control-label {% if form.time.errors %}has-error{% endif %}" for="id_{{form.time.html_name}}">Temps</label>
-		{{ form.time|addcss("form-control")|safe }}
+    <div class="input-group {% if form.time.errors %}has-error{% endif %}">
+      <span class="input-group-addon input-sm">Temps</span>
+      {{ form.time|addcss("form-control input-sm")|safe }}
+    </div>
 		{% if form.time.errors %}
 		<div class="help-block">{{form.time.errors|safe}}</div>
 		{% endif %}
 	</div>
 	<div class="col-sm-4 {% if form.distance.errors %}has-error{% endif %}">
-    <label class="control-label" for="id_{{form.distance.html_name}}" rel="tooltip" title="Distance en course à pied uniquement.">Distance</label>
-		{{ form.distance|addcss("form-control")|safe }}
+    <div class="input-group {% if form.distance.errors %}has-error{% endif %}">
+      <span class="input-group-addon input-sm">Distance</span>
+      {{ form.distance|addcss("form-control input-sm")|safe }}
+    </div>
 		{% if form.distance.errors %}
 		<div class="help-block">{{form.distance.errors|safe}}</div>
 		{% endif %}
