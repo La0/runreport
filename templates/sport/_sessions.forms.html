@@ -1,7 +1,7 @@
 {% if sessions %}
 {% for session in sessions %}
 
-  {{ macros.sport_session(session) }}
+  {{ macros.sport_session(session, user.multi_sports) }}
 
   {% with session.instance.garmin_activities.all() as activities %}
   {% include '_garmin.html' %}

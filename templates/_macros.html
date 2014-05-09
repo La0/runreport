@@ -16,10 +16,14 @@
 </div>
 {%- endmacro %}
 
-{% macro sport_session(form) -%}
+{% macro sport_session(form, multi_sports) -%}
 <div class="form-group sport-session row {% if form.extra %}extra{% endif %}">
   <div class="col-sm-2">
+  {% if multi_sports %}
     {{ form.sport|safe }}
+  {% else %}
+    {{ form.instance.sport }}
+  {% endif %}
   </div>
 	<div class="col-sm-4 {% if form.time.errors %}has-error{% endif %}">
     <label class="control-label {% if form.time.errors %}has-error{% endif %}" for="id_{{form.time.html_name}}">Temps</label>

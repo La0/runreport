@@ -17,6 +17,7 @@ class Athlete(AbstractUser):
   license = models.CharField(max_length=12, null=True, blank=True)
 
   # Sport
+  multi_sports = models.BooleanField(default=False)
   default_sport = models.ForeignKey('sport.Sport', default=3, limit_choices_to={'depth': 1,}) # default to running
 
   # Mail

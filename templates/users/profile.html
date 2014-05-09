@@ -65,9 +65,9 @@
 			{% endif %}
 			{% endfor %}
 		
-		
-
+			{{ macros.input(form.multi_sports, 'Multi sports', 'Quand cette option est activée, vous pouvez choisir les différents sport pratiqués dans une même journée.', 4, 8) }}
 			{{ macros.input(form.default_sport, 'Sport par défaut', false, 4, 8) }}
+
 			{{ macros.input(form.nb_sessions, 'Nb Séances hebdomadaires', false, 4, 8) }}
 			{{ macros.input(form.vma, 'Vma', 'Ex: 15.2 km/h', 4, 8) }}
 			{{ macros.input(form.weight, 'Poids', 'En kg', 4, 8) }}

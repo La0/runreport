@@ -43,10 +43,11 @@ class SportDayForm(forms.ModelForm):
     Build all the SportSession forms
     '''
     default_sport = self.week.user.default_sport
+    multi_sports = self.week.user.multi_sports
     sessions = self.instance.sessions.all()
     if sessions:
       # Add sessions form
-      self.sessions = [SportSessionForm(data, instance=s, prefix='%s-%d' % (self.prefix, s.pk)) for s in sessions]
+      self.sessions = [SportSessionForm(data, instance=s, multi_sports=multi_sports, prefix='%s-%d' % (self.prefix, s.pk)) for s in sessions]
 
       # Add an empty extra session
       sports = [s.sport for s in sessions]
@@ -56,16 +57,17 @@ class SportDayForm(forms.ModelForm):
       else:
         sport = default_sport
 
-      # Build extra form
-      session = SportSession(sport=sport)
-      extra_form = SportSessionForm(data, instance=session, prefix='%s-extra' % (self.prefix,))
-      extra_form.extra = True # mark for templates
-      self.sessions.append(extra_form)
+      # Build extra form, when multi sports is used
+      if self.week.user.multi_sports:
+        session = SportSession(sport=sport)
+        extra_form = SportSessionForm(data, instance=session, prefix='%s-extra' % (self.prefix,))
+        extra_form.extra = True # mark for templates
+        self.sessions.append(extra_form)
 
     else:
       # Add a default sport session
       session = SportSession(sport=default_sport)
-      self.sessions = [SportSessionForm(data, instance=session, prefix='%s-default' % (self.prefix, )), ]
+      self.sessions = [SportSessionForm(data, instance=session, multi_sports=multi_sports, prefix='%s-default' % (self.prefix, )), ]
 
 
   def clean(self):
@@ -77,10 +79,11 @@ class SportDayForm(forms.ModelForm):
         s.clean()
 
         # No duplicate sports ?
-        sport = s.cleaned_data['sport']
-        if sport in sports:
-          raise forms.ValidationError('Sport déja utilisé : %s' % sport)
-        sports.append(sport)
+        if self.week.user.multi_sports:
+          sport = s.cleaned_data['sport']
+          if sport in sports:
+            raise forms.ValidationError('Sport déja utilisé : %s' % sport)
+          sports.append(sport)
 
         # Alert user about missing comment & name
         if not self.cleaned_data.get('name', None) and not self.cleaned_data.get('comment', None):
@@ -147,10 +150,21 @@ class SportSessionForm(forms.ModelForm):
     fields = ('sport', 'distance', 'time')
 
   def __init__(self, *args, **kwargs):
+
+    # Extract multi sports
+    # otherwise it causes multiple args bug
+    multi_sports = False
+    if 'multi_sports' in kwargs:
+      multi_sports = kwargs.pop('multi_sports')
+
     super(SportSessionForm, self).__init__(*args, **kwargs)
 
-    # Load only sports of depth 1 for this form
-    self.fields['sport'].queryset = Sport.objects.filter(depth=1)
+    if multi_sports:
+      # Load only sports of depth 1 for this form
+      self.fields['sport'].queryset = Sport.objects.filter(depth=1)
+    else:
+      # No sport choice when multi_sports is disabled
+      del self.fields['sport']
 
   def is_valid(self, *args, **kwargs):
     '''

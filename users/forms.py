@@ -9,7 +9,7 @@ from sport.garmin import GarminConnector
 class UserForm(forms.ModelForm):
   class Meta:
     model = Athlete
-    fields = ('first_name', 'last_name', 'email', 'birthday', 'vma', 'frequency', 'frequency_rest', 'height', 'weight', 'comment', 'license', 'auto_send', 'nb_sessions', 'default_sport' )
+    fields = ('first_name', 'last_name', 'email', 'birthday', 'vma', 'frequency', 'frequency_rest', 'height', 'weight', 'comment', 'license', 'auto_send', 'nb_sessions', 'default_sport', 'multi_sports')
     widgets = {
       'nb_sessions' : forms.Select(choices=[(i,i) for i in range(0,21)]),
     }
