@@ -1,15 +1,7 @@
 {% if sessions %}
 {% for session in sessions.all() %}
 <div class="row">
-  {% if session.sport.slug == 'running' %}
-  <i class="icon-pitch"></i>
-  {% elif session.sport.slug == 'cycling' %}
-  <i class="icon-bicycle"></i>
-  {% elif session.sport.slug == 'swimming' %}
-  <i class="icon-swimming"></i>
-  {% else %}
-  <i class="icon-location"></i>
-  {% endif %}
+  <i class="icon-sport-{{session.sport.slug}}"></i>
   <span>{{ session.sport.name }}</span>
 
   <span class="label label-default">Distance</span> {{ session.distance }} km

@@ -22,7 +22,9 @@
     {% if multi_sports %}
       <button class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown">
         <span class="name">
-          {{ form.instance.sport }}
+          {% with form.instance.sport as sport %}
+            <i class="icon-sport-{{sport.slug}}"></i> {{sport.name}}
+          {% endwith %}
         </span>
         <span class="caret"></span>
       </button>
@@ -30,7 +32,9 @@
       <ul class="dropdown-menu sports">
         {% for sport in form.sports %}
         <li class="{% if sport == form.instance.sport %}active{% endif %}">
-          <a href="#" value="{{sport.pk}}">{{sport.name}}</a>
+          <a href="#" value="{{sport.pk}}">
+            <i class="icon-sport-{{sport.slug}}"></i> {{sport.name}}
+          </a>
         </li>
         {% endfor %}
       </ul>

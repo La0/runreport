@@ -21,7 +21,7 @@ $(function(){
     var selector = $(this).parents('div.sport-session');
     selector.find('input[type=hidden]').val(sport);
     var btn = selector.find('button');
-    btn.find('span.name').html($(this).text());
+    btn.find('span.name').html($(this).html());
     selector.find('.btn-group').removeClass('open');
   });
 

@@ -80,7 +80,7 @@ span.type {
 					{{session.name|default('Session sans nom')}}
 
           {% for sport in session.sports.all() %}
-					<i class="icon-{{sport.slug}}"></i>
+					<i class="icon-sport-{{sport.slug}}"></i>
           {% endfor %}
 				</p>
 				{% if session.plan_session %}
