@@ -15,11 +15,15 @@ class Sport(models.Model):
   def __unicode__(self):
     return self.name
 
+  def get_parent(self):
+    # Always give a valid parent
+    if self.depth <= 1 or not self.parent:
+      return self
+    return self.parent
+
   def get_category(self):
     # Always give a valid parent category
-    if self.depth <= 1 or not self.parent:
-      return self.slug
-    return self.parent.get_category()
+    return self.get_parent().slug
 
 class SportSession(models.Model):
   day = models.ForeignKey('SportDay', related_name="sessions")

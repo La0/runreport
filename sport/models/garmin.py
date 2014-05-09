@@ -1,7 +1,7 @@
 # coding=utf-8
 from django.db import models
-from .organisation import SportDay
-from .sport import SportSession
+from .organisation import SportDay, SportWeek
+from .sport import SportSession, Sport
 from users.models import Athlete
 from datetime import datetime, time
 import os
