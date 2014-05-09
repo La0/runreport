@@ -106,9 +106,6 @@ class SportWeek(models.Model):
         content.append('%s :' % (sess.name,))
       if sess.comment:
         content.append(sess.comment)
-      for activity in sess.garmin_activities.all():
-        content.append('Garmin: %s - %s km en %s = %s min/km' % (activity.name, activity.distance, activity.time, activity.speed))
-        content.append(activity.get_url())
       if i == 6 and self.comment:
         content.append('Bilan de la semaine :')
         content.append(self.comment)
