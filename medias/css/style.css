@@ -158,9 +158,10 @@ div.modal.day div.modal-body input, div.modal.day div.modal-body textarea {
 }
 
 .garmin {
-    border-top: 1px solid #ddd;
-    margin-top: 10px;
-    padding-top: 5px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 8px;
+    margin-left: 8px;
+    padding-bottom: 8px;
 }
 
 /* Calendar year */

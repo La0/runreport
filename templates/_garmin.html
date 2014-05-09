@@ -22,8 +22,10 @@
     {{ activity.speed|date('i:s') }} min/km
     {% endif %}
 
+    {% if activity.sport != activity.session.sport %}
     <span class="muted">&bull;</span>
     <span class="label label-default">{{ activity.sport.name }}</span>
+    {% endif %}
   </div>
   {% endwith %}
   {% endfor %}
