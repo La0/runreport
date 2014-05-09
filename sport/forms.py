@@ -60,7 +60,7 @@ class SportDayForm(forms.ModelForm):
       # Build extra form, when multi sports is used
       if self.week.user.multi_sports:
         session = SportSession(sport=sport)
-        extra_form = SportSessionForm(data, instance=session, prefix='%s-extra' % (self.prefix,))
+        extra_form = SportSessionForm(data, instance=session, multi_sports=multi_sports, prefix='%s-extra' % (self.prefix,))
         extra_form.extra = True # mark for templates
         self.sessions.append(extra_form)
 
@@ -79,7 +79,7 @@ class SportDayForm(forms.ModelForm):
 
         # No duplicate sports ?
         if self.week.user.multi_sports:
-          sport = s.cleaned_data['sport']
+          sport = s.cleaned_data.get('sport', None)
           if sport in sports:
             raise forms.ValidationError('Sport déja utilisé : %s' % sport)
           sports.append(sport)
@@ -87,6 +87,10 @@ class SportDayForm(forms.ModelForm):
         # Alert user about missing comment & name
         if not self.cleaned_data.get('name', None) and not self.cleaned_data.get('comment', None):
           raise forms.ValidationError(u'Vous devez spécifier un nom de séance et/ou un commentaire.')
+
+      elif s.errors:
+        # Remove 'extra' attribute when there are some errors
+        s.extra = False
 
 
     # Only for race
@@ -123,16 +127,20 @@ class SportDayForm(forms.ModelForm):
       day.date = self.date
     day.save()
 
+    all_valid = True
     for session_form in self.sessions:
       if session_form.is_valid():
         # Save valid sessions linked to day
         session = session_form.save(commit=False)
         session.day = day
         session.save()
+      else:
+        all_valid = False
 
     # Re-init sessions forms
     # to display new extra form
-    self.build_sessions()
+    if all_valid:
+      self.build_sessions()
 
     return day
 
@@ -146,7 +154,6 @@ class SportSessionForm(forms.ModelForm):
     widgets = {
       'sport' : forms.HiddenInput(),
     }
-
 
   def __init__(self, *args, **kwargs):
 
