@@ -129,10 +129,6 @@ class SportDayForm(forms.ModelForm):
         session = session_form.save(commit=False)
         session.day = day
         session.save()
-      elif session_form.instance.pk is not None:
-        # Delete invalid sessions
-        # Maybe a bad action here ?
-        session_form.instance.delete()
 
     # Re-init sessions forms
     # to display new extra form
