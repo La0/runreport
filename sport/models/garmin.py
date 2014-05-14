@@ -14,7 +14,7 @@ from helpers import date_to_week
 
 class GarminActivity(models.Model):
   garmin_id = models.IntegerField(unique=True)
-  session = models.ForeignKey(SportSession, related_name='garmin_activities')
+  session = models.OneToOneField(SportSession, related_name='garmin_activity')
   sport = models.ForeignKey('Sport')
   user = models.ForeignKey(Athlete)
   name = models.CharField(max_length=255)
@@ -48,7 +48,7 @@ class GarminActivity(models.Model):
     week, year = date_to_week(date)
     sport_week,_ = SportWeek.objects.get_or_create(user=self.user, year=year, week=week)
     day,_ = SportDay.objects.get_or_create(date=date, week=sport_week)
-    self.session,_ = SportSession.objects.get_or_create(sport=self.sport.get_parent(), day=day)
+    self.session = SportSession.objects.create(sport=self.sport.get_parent(), day=day, time=self.time, distance=self.distance)
 
   def get_url(self):
     return 'http://connect.garmin.com/activity/%s' % (self.garmin_id)

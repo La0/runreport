@@ -34,7 +34,6 @@ class SportSession(models.Model):
   class Meta:
     db_table = 'sport_session'
     app_label = 'sport'
-    unique_together = (('day', 'sport'), )
 
   def save(self, *args, **kwargs):
     # Only allow depth 1 sports
@@ -42,3 +41,7 @@ class SportSession(models.Model):
       raise Exception("Invalid sport '%s', only level 1 authorized for SportSession" % self.sport)
 
     super(SportSession, self).save(*args, **kwargs)
+
+  def has_garmin(self):
+    # Helper for templates (no hasattr)
+    return hasattr(self, 'garmin_activity')

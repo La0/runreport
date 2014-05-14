@@ -31,7 +31,7 @@
         <span class="label">Distance</span> {{s.distance}} km
         {% endif %}
 
-        {% for activity in s.garmin_activities.all() %}
+        {% if session.garmin_activity %}
         <div class="garmin pull-right">
           Garmin : <a href="{{ activity.get_url() }}" target="_blank">{{ activity.name }}</a>
           <span>&bull;</span>
@@ -39,7 +39,7 @@
           <span>&bull;</span>
           <span>{{ activity.speed|date('i:s') }} min/km</span>
         </div>
-        {% endfor %}
+        {% endif %}
       </div>
       {% endfor %}
       {% endif %}

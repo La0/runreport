@@ -7,7 +7,7 @@
   <span class="label label-default">Distance</span> {{ session.distance }} km
   <span class="label label-default">Temps</span> {{ session.time }}
 
-  {% with session.garmin_activities.all() as activities %}
+  {% with session as sport_session %}
   {% include '_garmin.html' %}
   {% endwith %}
 </div>

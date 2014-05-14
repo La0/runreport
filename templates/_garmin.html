@@ -1,6 +1,6 @@
-{% if activities.count() > 0 %}
+{% if sport_session.has_garmin() %}
+{% with sport_session.garmin_activity as activity %}
 <div class="garmin">
-  {% for activity in activities.all() %}
   {% with activity.sport.get_category() as sport %}
   <div class="activity {{ sport }}">
 
@@ -22,12 +22,12 @@
     {{ activity.speed|date('i:s') }} min/km
     {% endif %}
 
-    {% if activity.sport != activity.session.sport %}
+    {% if activity.sport != sport_session.sport %}
     <span class="muted">&bull;</span>
     <span class="label label-default">{{ activity.sport.name }}</span>
     {% endif %}
   </div>
   {% endwith %}
-  {% endfor %}
 </div>
+{% endwith %}
 {% endif %}

@@ -21,9 +21,11 @@ class Migration(DataMigration):
         sport_week,_ = orm.SportWeek.objects.get_or_create(user=activity.user, year=year, week=week)
         day,_ = orm.SportDay.objects.get_or_create(date=date, week=sport_week)
 
-        # Fetch main sport
+        # Fetch main sport, because Sport methods are not accessible (get_parent)
         sport = activity.sport.depth == 1 and activity.sport or activity.sport.parent
-        activity.session,_ = orm.SportSession.objects.get_or_create(sport=sport, day=day)
+
+        # Create new Sport Session
+        activity.session = orm.SportSession.objects.create(sport=sport, day=day, time=activity.time, distance=activity.distance)
         activity.save()
 
     def backwards(self, orm):

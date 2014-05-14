@@ -23,7 +23,8 @@ class Migration(SchemaMigration):
         orm.GarminActivity.objects.all().update(session=None)
 
         # Changing field 'GarminActivity.session'
-        db.alter_column('garmin_activity', 'session_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sport.SportSession'], null=True))
+        db.alter_column('garmin_activity', 'session_id', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['sport.SportSession'], unique=True, null=True))
+        db.create_unique('garmin_activity', 'session_id')
 
         # Deleting field 'SportDay.sport'
         db.delete_column('sport_day', 'sport')

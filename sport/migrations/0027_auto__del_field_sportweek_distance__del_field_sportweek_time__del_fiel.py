@@ -14,13 +14,6 @@ class Migration(SchemaMigration):
         # Deleting field 'SportWeek.time'
         db.delete_column('sport_week', 'time')
 
-        # Deleting field 'SportDay.distance'
-        db.delete_column('sport_day', 'distance')
-
-        # Deleting field 'SportDay.time'
-        db.delete_column('sport_day', 'time')
-
-
     def backwards(self, orm):
         # Adding field 'SportWeek.distance'
         db.add_column('sport_week', 'distance',
@@ -30,16 +23,6 @@ class Migration(SchemaMigration):
         # Adding field 'SportWeek.time'
         db.add_column('sport_week', 'time',
                       self.gf('django.db.models.fields.FloatField')(null=True, blank=True),
-                      keep_default=False)
-
-        # Adding field 'SportDay.distance'
-        db.add_column('sport_day', 'distance',
-                      self.gf('django.db.models.fields.FloatField')(null=True, blank=True),
-                      keep_default=False)
-
-        # Adding field 'SportDay.time'
-        db.add_column('sport_day', 'time',
-                      self.gf('django.db.models.fields.TimeField')(null=True, blank=True),
                       keep_default=False)
 
 

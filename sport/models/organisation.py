@@ -185,6 +185,11 @@ class SportDay(models.Model):
   plan_session = models.ForeignKey('plan.PlanSession', null=True, blank=True)
   race_category = models.ForeignKey('RaceCategory', null=True, blank=True)
 
+  # Keep the references on time & distance for db migrations
+  # Remove after multi sports migrations
+  time = models.TimeField(null=True, blank=True)
+  distance = models.FloatField(null=True, blank=True)
+
   class Meta:
     unique_together = (('week', 'date'),)
     db_table = 'sport_day'
