@@ -12,12 +12,13 @@
 		<div class="help-block">{{help}}</div>
 		{% endif %}
 	</div>
-    
+
 </div>
 {%- endmacro %}
 
-{% macro sport_session(form, multi_sports) -%}
-<div class="form-group sport-session row {% if form.extra %}extra{% endif %}">
+{% macro sport_session(form, multi_sports, extra) -%}
+{{ form.id|safe }}
+<div class="form-group sport-session row {% if extra %}extra{% endif %}">
   <div class="col-sm-3">
     {% if multi_sports %}
       <button class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown">
@@ -42,9 +43,12 @@
 
     {% else %}
     <span class="btn btn-warning btn-sm do-tooltip" data-toggle="tooltip" data-placement="top" title="Pour changer de sport, activer l'option Multi Sports dans votre profil.">
-      {{ form.instance.sport }}
+      {% with form.instance.sport as sport %}
+        <i class="icon-sport-{{sport.slug}}"></i> {{sport.name}}
+      {% endwith %}
     </span>
     {% endif %}
+
   </div>
 
 	<div class="col-sm-4 {% if form.time.errors %}has-error{% endif %}">
@@ -65,13 +69,20 @@
 		<div class="help-block">{{form.distance.errors|safe}}</div>
 		{% endif %}
 	</div>
+
 </div>
 
-{% if form.extra %}
-<span class="btn btn-default btn-sm extra-sport-add">
-  Ajouter un sport
+{% with form.non_field_errors() as err %}
+{% if err %}
+<div class="row">
+  <div class="col-sm-12">
+    <div class="form-group has-error">
+      <label class="control-label">{{ err|safe }}</label>
+    </div>
+  </div>
 </span>
 {% endif %}
+{% endwith %}
 {%- endmacro %}
 
 {% macro session_types_name(form, types) -%}

@@ -1,12 +1,19 @@
 {% if sessions %}
+{{ sessions.management_form|safe }}
 {% for session in sessions %}
 
-  {{ macros.sport_session(session, user.multi_sports) }}
+  {{ macros.sport_session(session, user.multi_sports, user.multi_sports and (sessions|length() - loop.index0) < 4 ) }}
 
   {% with session.instance as sport_session %}
   {% include '_garmin.html' %}
   {% endwith %}
 {% endfor %}
+
+{% if user.multi_sports %}
+<span class="btn btn-default btn-sm extra-sport-add">
+  Ajouter un sport
+</span>
+{% endif %}
 {% else %}
 <p class="alert alert-danger">No sports sessions.</p>
 {% endif %}

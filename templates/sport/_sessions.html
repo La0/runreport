@@ -4,8 +4,10 @@
   <i class="icon-sport-{{session.sport.slug}}"></i>
   <span>{{ session.sport.name }}</span>
 
-  <span class="label label-default">Distance</span> {{ session.distance }} km
+  <span class="label label-default">Distance</span> {{ session.distance|default(0)|floatformat(2) }} km
+  {% if session.time %}
   <span class="label label-default">Temps</span> {{ session.time }}
+  {% endif %}
 
   {% with session as sport_session %}
   {% include '_garmin.html' %}

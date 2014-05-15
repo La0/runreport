@@ -6,7 +6,6 @@
 {% block body %}
 {% if session %}
 <h4>{{ session.name|default('Session sans nom') }}</h4>
-<p>{{ session.comment|default('Pas de commentaire')|linebreaksbr }}</p>
 {% if session.type == 'training' %}
 <span class="label label-info">Entrainement</span>
 {% elif session.type == 'race' %}
@@ -14,15 +13,12 @@
 {% else %}
 <span class="label">Repos</span>
 {% endif %}
-{% if session.distance %}
-<span class="label">Temps</span> {{session.time}}
-{% endif %}
-{% if session.distance %}
-<span class="label">Distance</span> {{session.distance}} km
-{% endif %}
+<p>{{ session.comment|default('Pas de commentaire')|linebreaksbr }}</p>
+
 {% with session.sessions as sessions %}
 {% include 'sport/_sessions.html' %}
 {% endwith %}
+
 {% else %}
 <p class="alert alert-warning">Pas de séance</p>
 {% endif %}

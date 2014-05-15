@@ -2,6 +2,7 @@
 from models import Sport, SportWeek, SportDay, SportSession, SESSION_TYPES
 from datetime import date
 from django import forms
+from django.forms.models import BaseFormSet, inlineformset_factory
 
 TIME_FORMATS = [
   '%H:%M:%S',
@@ -13,12 +14,58 @@ TIME_FORMATS = [
   '%Mmin',
 ]
 
+class SportSessionForm(forms.ModelForm):
+  time = forms.TimeField(input_formats=TIME_FORMATS, widget=forms.TextInput(attrs={'placeholder':'hh:mm'}), required=False)
+  distance = forms.FloatField(localize=True, widget=forms.TextInput(attrs={'placeholder': 'km'}), required=False)
+
+  class Meta:
+    model = SportSession
+    fields = ('sport', 'distance', 'time')
+    widgets = {
+      'sport' : forms.HiddenInput(),
+    }
+
+  def __init__(self, *args, **kwargs):
+
+    # Load multi sports from initial data
+    initial = kwargs.get('initial', {})
+    multi_sports = False
+    if 'multi_sports' in initial:
+      multi_sports = initial['multi_sports']
+
+    super(SportSessionForm, self).__init__(*args, **kwargs)
+
+    self.sports = []
+    if multi_sports:
+      # Load only sports of depth 1 for this form
+      self.sports = Sport.objects.filter(depth=1)
+      self.fields['sport'].queryset = self.sports
+    else:
+      # No sport choice when multi_sports is disabled
+      del self.fields['sport']
+
+    # Apply default sport to instance
+    if not hasattr(self.instance, 'sport') and 'sport' in self.initial:
+      self.instance.sport = self.initial['sport']
+
+  def clean(self, *args, **kwargs):
+    super(SportSessionForm, self).clean(*args, **kwargs)
+
+    if 'distance' in self.cleaned_data and self.cleaned_data['distance'] is None \
+      and 'time' in self.cleaned_data and self.cleaned_data['time'] is None:
+      raise forms.ValidationError('Spécifiez une distance ou un temps pour ajouter un sport.')
+
+    return self.cleaned_data
+
+
 class SportWeekForm(forms.ModelForm):
   class Meta:
     model = SportWeek
     fields = ('comment', )
 
 class SportDayForm(forms.ModelForm):
+  nb_extras = 4
+
   class Meta:
     model = SportDay
     fields = ('name', 'comment', 'type', 'race_category')
@@ -35,63 +82,30 @@ class SportDayForm(forms.ModelForm):
     if not self.prefix:
       self.prefix = 'day'
 
-    # Sessions init
-    self.build_sessions(data)
-
-  def build_sessions(self, data=None):
-    '''
-    Build all the SportSession forms
-    '''
-    default_sport = self.week.user.default_sport
+    # FormSet initial datas
     multi_sports = self.week.user.multi_sports
-    sessions = self.instance.sessions.all()
-    if sessions:
-      # Add sessions form
-      self.sessions = [SportSessionForm(data, instance=s, multi_sports=multi_sports, prefix='%s-%d' % (self.prefix, s.pk)) for s in sessions]
+    initial = {
+      'sport' : self.week.user.default_sport,
+      'multi_sports' : multi_sports,
+    }
+    if not multi_sports:
+      self.nb_extras = 1
 
-      # Add an empty extra session
-      sports = [s.sport for s in sessions]
-      if default_sport in sports:
-        # Pick another sport
-        sport = Sport.objects.exclude(sport__in=sports)[0]
-      else:
-        sport = default_sport
+    # Create FormSet from factory
+    SportSessionFormSet = inlineformset_factory(SportDay, SportSession, extra=self.nb_extras, form=SportSessionForm)
 
-      # Build extra form, when multi sports is used
-      if self.week.user.multi_sports:
-        session = SportSession(sport=sport)
-        extra_form = SportSessionForm(data, instance=session, multi_sports=multi_sports, prefix='%s-extra' % (self.prefix,))
-        extra_form.extra = True # mark for templates
-        self.sessions.append(extra_form)
-
-    else:
-      # Add a default sport session
-      session = SportSession(sport=default_sport)
-      self.sessions = [SportSessionForm(data, instance=session, multi_sports=multi_sports, prefix='%s-default' % (self.prefix, )), ]
+    # Instanciate formset
+    self.sessions = SportSessionFormSet(data, instance=self.instance, prefix=self.prefix, initial=[initial for i in range(self.nb_extras)])
 
   def clean(self):
+    super(SportDayForm, self).clean()
 
-    # Clean sessions
-    sports = []
-    for s in self.sessions:
-      if s.is_valid():
-        s.clean()
-
-        # No duplicate sports ?
-        if self.week.user.multi_sports:
-          sport = s.cleaned_data.get('sport', None)
-          if sport in sports:
-            raise forms.ValidationError('Sport déja utilisé : %s' % sport)
-          sports.append(sport)
-
-        # Alert user about missing comment & name
-        if not self.cleaned_data.get('name', None) and not self.cleaned_data.get('comment', None):
-          raise forms.ValidationError(u'Vous devez spécifier un nom de séance et/ou un commentaire.')
-
-      elif s.errors:
-        # Remove 'extra' attribute when there are some errors
-        s.extra = False
-
+    # Alert user about missing comment & name
+    # Only when adding a sport session
+    self.sessions.clean()
+    if len([s for s in self.sessions if s.cleaned_data]):
+      if not self.cleaned_data.get('name', None) and not self.cleaned_data.get('comment', None):
+        raise forms.ValidationError(u'Vous devez spécifier un nom de séance et/ou un commentaire.')
 
     # Only for race
     if self.cleaned_data['type'] == 'race':
@@ -112,11 +126,11 @@ class SportDayForm(forms.ModelForm):
     if not is_valid:
       return False
 
-    # Don't save any empty sesion, but no message for user
-    if not self.cleaned_data.get('name', None) and not self.cleaned_data.get('comment', None):
+    if not self.sessions.is_valid():
       return False
 
-    return True
+    # No error displayed for empty days
+    return self.cleaned_data['name'] or self.cleaned_data['comment']
 
   def save(self, *args, **kwargs):
     # Save day
@@ -127,63 +141,12 @@ class SportDayForm(forms.ModelForm):
       day.date = self.date
     day.save()
 
-    all_valid = True
-    for session_form in self.sessions:
-      if session_form.is_valid():
-        # Save valid sessions linked to day
-        session = session_form.save(commit=False)
-        session.day = day
-        session.save()
-      else:
-        all_valid = False
-
-    # Re-init sessions forms
-    # to display new extra form
-    if all_valid:
-      self.build_sessions()
+    # Save sessions from formset
+    for s in self.sessions.save(commit=False):
+      s.day = day
+      s.save()
 
     return day
-
-class SportSessionForm(forms.ModelForm):
-  time = forms.TimeField(input_formats=TIME_FORMATS, widget=forms.TextInput(attrs={'placeholder':'hh:mm'}), required=False)
-  distance = forms.FloatField(localize=True, widget=forms.TextInput(attrs={'placeholder': 'km'}), required=False)
-
-  class Meta:
-    model = SportSession
-    fields = ('sport', 'distance', 'time')
-    widgets = {
-      'sport' : forms.HiddenInput(),
-    }
-
-  def __init__(self, *args, **kwargs):
-
-    # Extract multi sports
-    # otherwise it causes multiple args bug
-    multi_sports = False
-    if 'multi_sports' in kwargs:
-      multi_sports = kwargs.pop('multi_sports')
-
-    super(SportSessionForm, self).__init__(*args, **kwargs)
-
-    self.sports = []
-    if multi_sports:
-      # Load only sports of depth 1 for this form
-      self.sports = Sport.objects.filter(depth=1)
-      self.fields['sport'].queryset = self.sports
-    else:
-      # No sport choice when multi_sports is disabled
-      del self.fields['sport']
-        
-
-  def is_valid(self, *args, **kwargs):
-    '''
-    Valid only with time or distance specified
-    '''
-    is_valid = super(SportSessionForm, self).is_valid()
-    if not is_valid:
-      return False
-
-    return self.cleaned_data['distance'] is not None or self.cleaned_data['time'] is not None
 
 class SportDayAddForm(forms.Form):
   '''
