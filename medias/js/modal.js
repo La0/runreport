@@ -50,7 +50,7 @@ $(function(){
 
       // Button styling
       btn.addClass(type);
-		
+
     }
     btn.find('span.name').html($(this).text());
     selector.find('.btn-group').removeClass('open');
@@ -58,8 +58,18 @@ $(function(){
 
   // Show extra sport
   $(document).on('click', 'span.extra-sport-add', function(){
-    $(this).siblings('div.sport-session.extra').show();
-    $(this).hide();
+
+    // List extra forms
+    var forms = $(this).siblings('div.sport-session.extra');
+    if(!forms.length)
+      return;
+
+    // Show new form
+    forms.first().show().removeClass('extra');
+
+    // Hide button on last form
+    if(forms.length == 1)
+      $(this).hide();
   });
 
   // Don't reload page when hitting a dropdown choice
