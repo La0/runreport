@@ -2,7 +2,7 @@
 {{ sessions.management_form|safe }}
 {% for session in sessions %}
 
-  {{ macros.sport_session(session, user.multi_sports, user.multi_sports and (sessions|length() - loop.index0) < 4 ) }}
+  {{ macros.sport_session(session, user.multi_sports, not session.instance.pk and user.multi_sports and (sessions|length() - loop.index0) < 4 ) }}
 
   {% with session.instance as sport_session %}
   {% include '_garmin.html' %}

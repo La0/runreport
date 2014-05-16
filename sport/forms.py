@@ -82,6 +82,10 @@ class SportDayForm(forms.ModelForm):
     if not self.prefix:
       self.prefix = 'day'
 
+    # Build formset with datas
+    self.init_formset(data)
+
+  def init_formset(self, data=None):
     # FormSet initial datas
     multi_sports = self.week.user.multi_sports
     initial = {
@@ -145,6 +149,9 @@ class SportDayForm(forms.ModelForm):
     for s in self.sessions.save(commit=False):
       s.day = day
       s.save()
+
+    # Reset empty formset
+    self.init_formset()
 
     return day
 
