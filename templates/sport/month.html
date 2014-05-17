@@ -79,8 +79,8 @@ span.type {
 				<p class="session {{ session.type }}">
 					{{session.name|default('Session sans nom')}}
 
-          {% for sport in session.sports.all() %}
-					<i class="icon-sport-{{sport.slug}}"></i>
+          {% for sport, count in session.sports_count() %}
+          <i class="icon-sport-{{sport.slug}}"></i>{% if count > 1 %}x {{ count }}{% endif %}
           {% endfor %}
 				</p>
 				{% if session.plan_session %}

@@ -1,5 +1,6 @@
 # coding=utf-8
 from django.db import models
+from django.db.models import Count
 from users.models import Athlete
 from datetime import datetime, date, time, timedelta
 import xlwt
@@ -202,6 +203,11 @@ class SportDay(models.Model):
 
     super(SportDay, self).save(*args, **kwargs)
 
+  def sports_count(self):
+    # List sports usage in this day
+    counts = self.sports.all().values('pk').annotate(total=Count('pk')).order_by('total')
+    return [(self.sports.filter(pk=c['pk']).first(), c['total']) for c in counts]
+
 class RaceCategory(models.Model):
   name = models.CharField(max_length=250)
   distance = models.FloatField(null=True, blank=True)
@@ -212,5 +218,3 @@ class RaceCategory(models.Model):
 
   def __unicode__(self):
     return self.name
-
-
