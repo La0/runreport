@@ -4,9 +4,9 @@ from datetime import time
 register = template.Library()
 
 @register.filter(is_safe=True)
-def days_time(t, day_name='day', time_format='%H:%M:%S'):
+def total_time(t):
   '''
-  Display nb of days and nicely formatted time
+  Display total time as a nicely formatted string
   from a timestamp
   '''
   out = ''
@@ -16,12 +16,8 @@ def days_time(t, day_name='day', time_format='%H:%M:%S'):
     t = int(t)
   except:
     return '-'
-  days = int(t / 86400)
-  if days > 0:
-    out += '%d %s%s ' % (days, day_name, days > 1 and 's' or '')
-  t = t % 86400
-  t = time(t / 3600, (t % 3600) / 60, t % 60)
-  out += t.strftime(time_format)
 
-  return out
+  hours = int(t / 3600)
+  minutes = int((t % 3600) / 60)
 
+  return '%dh%02d' % (hours, minutes)

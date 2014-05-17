@@ -59,7 +59,7 @@
         {% for sport, time, distance in report.get_sports_stats() %}
         <tr>
           <td>{{sport.name}}</td>
-          <td>{{time|days_time('jour', '%Hh%M')}}</td>
+          <td>{{time|total_time()}}</td>
           <td>{{distance|default('0')}} km</td>
         </tr>
         {% endfor %}
