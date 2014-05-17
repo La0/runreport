@@ -5,6 +5,7 @@ from datetime import datetime
 from sport.forms import SportWeekForm, SportDayForm, SportSessionForm
 from sport.tasks import publish_report
 from django.core.exceptions import PermissionDenied
+from django.http import HttpResponseRedirect
 from mixins import WeekPaginator, CurrentWeekMixin
 
 class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
@@ -106,28 +107,39 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
   def post(self, request, *args, **kwargs):
     if not request.user.is_authenticated():
       raise PermissionDenied
+
     self.date_list, self.object_list, extra_context = self.get_dated_items()
     context = self.get_context_data(**{'object_list': self.object_list})
-    if not self.week.published:
 
-      # Save form per form, to only create necessary objects
-      for day, form in context['forms'].items():
-        if form.is_valid():
-          form.save()
+    # No post when published
+    if self.week.published:
+      return HttpResponseRedirect(self.week.get_absolute_url())
 
-      # Save report
-      form_report = context['form_report']
-      if form_report.is_valid():
-        form_report.save()
+    # Save form per form, to only create necessary objects
+    redirect = True # will redirect as a GET to lose POST
+    for day, form in context['forms'].items():
+      if form.is_valid():
+        form.save()
+      elif form.has_errors():
+        redirect = False
 
-      # Publish through a celery task ?
-      if 'publish' in request.POST and self.week.is_publiable():
-        member = self.request.user.memberships.get(club__pk=int(request.POST['publish']))
-        uri = self.request.build_absolute_uri('/')[:-1] # remove trailing /
-        task = publish_report.delay(self.week, member, uri)
+    # Save report
+    form_report = context['form_report']
+    if form_report.is_valid():
+      form_report.save()
 
-        # Save task id in report
-        self.week.task = task.id
-        self.week.save()
+    # Publish through a celery task ?
+    if 'publish' in request.POST and self.week.is_publiable():
+      member = self.request.user.memberships.get(club__pk=int(request.POST['publish']))
+      uri = self.request.build_absolute_uri('/')[:-1] # remove trailing /
+      task = publish_report.delay(self.week, member, uri)
 
+      # Save task id in report
+      self.week.task = task.id
+      self.week.save()
+
+    # Redirect to lose POST on valid action
+    if redirect:
+      return HttpResponseRedirect(self.week.get_absolute_url())
     return self.render_to_response(context)
+

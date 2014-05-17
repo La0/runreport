@@ -85,6 +85,18 @@ class SportDayForm(forms.ModelForm):
     # Build formset with datas
     self.init_formset(data)
 
+  def has_errors(self):
+    '''
+    Used by week view to detect if a redirect
+    on valid action is possible to lose POST
+    and not insert same sessions over and over
+    on reload.
+    '''
+    if self.errors:
+      return True
+    return len([s for s in self.sessions if s.errors]) > 0
+
+
   def init_formset(self, data=None):
     # FormSet initial datas
     multi_sports = self.week.user.multi_sports
