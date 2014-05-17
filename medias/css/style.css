@@ -278,3 +278,8 @@ img.sport {
 a.btn {
   text-decoration: none;
 }
+
+div.week div.day div.sport-session {
+  height: 42px;
+  margin: 5px 0;
+}

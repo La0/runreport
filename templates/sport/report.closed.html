@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container week">
 	{% if trainer %}
 	<p class="alert alert-success">
 		Ce rapport a bien été envoyé à {{trainer.first_name|default(trainer.username)}}
@@ -13,31 +13,22 @@
 	<div class="row-striped">
 		{% for day in report.get_dates() %}
 		{% with sessions[day] as session %}
-		<div class="row">
+		<div class="row day">
 			<div class="col-sm-3">
 				<strong>{{day|date('l d M')}}</strong>
 			</div>
 			<div class="col-sm-9">
 				{% if session %}
+        {% if session.type == 'training' %}
+        <span class="label label-info">Entrainement</span>
+        {% elif session.type == 'race' %}
+        <span class="label label-success">Course</span>
+        {% else %}
+        <span class="label label-default">Repos</span>
+        {% endif %}
 				<strong>{{session.name|default('Session sans nom')}}</strong><br />
 				{{session.comment|default('Pas de commentaire')|linebreaksbr}}
-				<div>
-					{% if session.type %}
-					{% if session.type == 'training' %}
-					<span class="label label-info">Entrainement</span>
-					{% elif session.type == 'race' %}
-					<span class="label label-success">Course</span>
-					{% else %}
-					<span class="label label-default">Repos</span>
-					{% endif %}
-					{% endif %}
-					{% if session.time %}
-					<span class="label label-default">Temps</span> {{session.time}}
-					{% endif %}
-					{% if session.distance %}
-					<span class="label label-default">Distance</span> {{session.distance}} km
-					{% endif %}
-				</div>
+
 				{% if session.plan_session %}
 				<div>
 					<span class="label label-warning">Plan d'entraînement</span> {{ session.plan_session.week.plan.name }}
