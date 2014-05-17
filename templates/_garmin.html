@@ -7,24 +7,29 @@
     <i class="icon-location"></i>
     <a href="{{ activity.get_url() }}" target="_blank">{{ activity.name }}</a>
 
-    <span class="muted">&bull;</span>
-    {% if sport == 'swimming' %}
-    {{ (activity.distance * 1000)|floatformat(2) }} m
-    {% else %}
-    {{ activity.distance|floatformat(2) }} km
-    {% endif %}
-    en {{ activity.time }}
 
-    <span class="muted">&bull;</span>
-    {% if activity.sport.get_category() == 'cycling' %}
-    {{ activity.get_speed_kph()|floatformat(2) }} km/h
-    {% else %}
-    {{ activity.speed|date('i:s') }} min/km
+    {% if activity.distance != sport_session.distance or activity.time != sport_session.time %}
+      <span class="muted">&bull;</span>
+      {% if sport == 'swimming' %}
+        {{ (activity.distance * 1000)|floatformat(0) }} m
+      {% else %}
+        {{ activity.distance|floatformat(2) }} km
+      {% endif %}
+      en {{ activity.time }}
+
+      {% if sport != 'swimming' %}
+        <span class="muted">&bull;</span>
+        {% if activity.sport.get_category() == 'cycling' %}
+          {{ activity.get_speed_kph()|floatformat(2) }} km/h
+        {% else %}
+          {{ activity.speed|date('i:s') }} min/km
+        {% endif %}
+      {% endif %}
     {% endif %}
 
     {% if activity.sport != sport_session.sport %}
     <span class="muted">&bull;</span>
-    <span class="label label-default">{{ activity.sport.name }}</span>
+    <span class="label label-success">{{ activity.sport.name }}</span>
     {% endif %}
   </div>
   {% endwith %}

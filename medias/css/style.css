@@ -87,6 +87,10 @@ form div.sport-session.extra {
   display: none;
 }
 
+form div.sport-session.form-group{
+  margin-bottom: 2px;
+}
+
 form div.sport-session .sport {
   margin-bottom: 4px;
 }
@@ -162,10 +166,12 @@ div.modal.day div.modal-body input, div.modal.day div.modal-body textarea {
 }
 
 .garmin {
-    border-bottom: 1px solid #ddd;
-    margin-bottom: 8px;
-    margin-left: 8px;
-    padding-bottom: 8px;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+}
+
+form .garmin {
+  margin-left: 8px;
 }
 
 /* Calendar year */

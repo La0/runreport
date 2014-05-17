@@ -1,10 +1,16 @@
 {% if sessions %}
 {% for session in sessions.all() %}
-<div class="row">
+<div class="">
   <i class="icon-sport-{{session.sport.slug}}"></i>
   <span>{{ session.sport.name }}</span>
 
-  <span class="label label-default">Distance</span> {{ session.distance|default(0)|floatformat(2) }} km
+  <span class="label label-default">Distance</span>
+  {% if session.sport.get_category() == 'swimming' %}
+    {{ (session.distance * 1000)|floatformat(0) }} m
+  {% else %}
+    {{ session.distance|floatformat(2) }} km
+  {% endif %}
+
   {% if session.time %}
   <span class="label label-default">Temps</span> {{ session.time }}
   {% endif %}
