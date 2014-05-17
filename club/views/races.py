@@ -14,4 +14,7 @@ class ClubRaces(ClubMixin, ListView):
     # TODO: put in query manager
     users = [m.user for m in ClubMembership.objects.filter(club=self.club, trainers=self.request.user, role='athlete')]
 
+    # Add myself to view my races
+    users.append(self.request.user)
+
     return self.model.objects.filter(type='race', date__gte=date.today(), week__user__in=users).order_by('date', 'week__user__first_name')
