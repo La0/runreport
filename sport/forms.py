@@ -26,14 +26,16 @@ class SportSessionForm(forms.ModelForm):
     }
 
   def __init__(self, *args, **kwargs):
-
-    # Load multi sports from initial data
-    initial = kwargs.get('initial', {})
-    multi_sports = False
-    if 'multi_sports' in initial:
-      multi_sports = initial['multi_sports']
-
     super(SportSessionForm, self).__init__(*args, **kwargs)
+
+    multi_sports = False
+    if hasattr(self, 'instance') and self.instance.pk:
+      # Load multi sports from instance
+      multi_sports = self.instance.day.week.user.multi_sports
+
+    elif 'initial' in kwargs and 'multi_sports' in kwargs['initial']:
+      # Load multi sports from initial data
+      multi_sports = kwargs['initial']['multi_sports']
 
     self.sports = []
     if multi_sports:
