@@ -19,7 +19,7 @@
 {% macro sport_session(form, multi_sports, extra) -%}
 {{ form.id|safe }}
 <div class="form-group sport-session row {% if extra %}extra{% endif %}">
-  <div class="col-sm-3">
+  <div class="col-sm-3 col-xs-12 sport">
     {% if multi_sports %}
       <button class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown">
         <span class="name">
@@ -51,7 +51,7 @@
 
   </div>
 
-	<div class="col-sm-4 {% if form.time.errors %}has-error{% endif %}">
+	<div class="col-sm-4 col-xs-6 {% if form.time.errors %}has-error{% endif %}">
     <div class="input-group {% if form.time.errors %}has-error{% endif %}">
       <span class="input-group-addon input-sm">Temps</span>
       {{ form.time|addcss("form-control input-sm")|safe }}
@@ -60,7 +60,7 @@
 		<div class="help-block">{{form.time.errors|safe}}</div>
 		{% endif %}
 	</div>
-	<div class="col-sm-4 {% if form.distance.errors %}has-error{% endif %}">
+	<div class="col-sm-4 col-xs-6 {% if form.distance.errors %}has-error{% endif %}">
     <div class="input-group {% if form.distance.errors %}has-error{% endif %}">
       <span class="input-group-addon input-sm">Distance</span>
       {{ form.distance|addcss("form-control input-sm")|safe }}

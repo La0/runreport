@@ -35,7 +35,12 @@
 			<div class="day modal-action" href="{{ pageday|url(*pageargs + [day.year, day.month, day.day]) }}">
 				<span class="date">{{ day.day }}</span>
 				{% if session %}
-				<span class="name {% if session %}session {{ session.type }}{% endif %}">{{ session.name}}</span>
+        <span class="name {% if session %}session {{ session.type }}{% endif %}">
+          {{ session.name}}
+          {% for sport, count in session.sports_count() %}
+          <i class="icon-sport-{{sport.slug}}"></i>{% if count > 1 %}x {{ count }}{% endif %}
+          {% endfor %}
+        </span>
 				{% endif %}
 			</div>
 			{% endwith %}
@@ -61,6 +66,9 @@
 	        <div>
 	          <span class="type {{ session.type }}"></span>
 	          {{session.name|default('Session sans nom')}}
+            {% for sport, count in session.sports_count() %}
+            <i class="icon-sport-{{sport.slug}}"></i>{% if count > 1 %}x {{ count }}{% endif %}
+            {% endfor %}
 	        </div>
 	        {% if session.plan_session %}
 	        <div>
