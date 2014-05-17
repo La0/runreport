@@ -1,5 +1,5 @@
 from django import template
-from datetime import time
+from datetime import time, timedelta
 
 register = template.Library()
 
@@ -7,8 +7,11 @@ register = template.Library()
 def total_time(t):
   '''
   Display total time as a nicely formatted string
-  from a timestamp
+  from a timestamp or timedelta
   '''
+  if isinstance(t, timedelta):
+    t = t.total_seconds()
+
   out = ''
   if t is None:
     return '-'

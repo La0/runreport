@@ -43,7 +43,7 @@ h2, h3 {
       </div>
 
       <div class="col-sm-2">
-      <p><strong>{{ race.time_total}}</strong></p>
+      <p><strong>{{ race.time_total|total_time()}}</strong></p>
       {% if sessions.count() > 1 %}
       {% for session in sessions %}
       <p>
