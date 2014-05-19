@@ -15,6 +15,11 @@ def prod():
   supervisor('stop', 'runreport')
   supervisor('stop', 'runreport_celery')
 
+  # Brutally kill celery workers as supervisor
+  # doesn't do its job :(
+  with settings(warn_only=True):
+    run("ps auxww | grep 'celery -A coach worker' | awk '{print $2}' |xargs kill -9")
+
   with cd(FABRIC_BASE):
     pull()
     with virtualenv(FABRIC_ENV):
