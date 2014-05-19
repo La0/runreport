@@ -10,7 +10,7 @@ class Command(BaseCommand):
     '''
     year, week = self.get_current_week()
     reports = RunReport.objects.filter(year=year, week=week, published=False).order_by('user__username')
-    reports = reports.filter(user__userprofile__auto_send=True) # Auto send must be enabled per user
+    reports = reports.filter(user__auto_send=True) # Auto send must be enabled per user
     for r in reports:
 
       # Skip empty report
@@ -20,7 +20,8 @@ class Command(BaseCommand):
         continue
 
       # Publish
-      r.publish()
+      for m in r.user.memberships.all():
+        r.publish(m, 'https://runreport.fr') # TODO : use a config
       print 'Published %s' % r
 
   def get_current_week(self):
