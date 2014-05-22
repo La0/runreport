@@ -4,3 +4,4 @@ from day import RunCalendarDay, RunCalendarDayDelete
 from report import WeeklyReport
 from year import RunCalendarYear
 from add import SessionAdd
+from session import SportSessionAdd

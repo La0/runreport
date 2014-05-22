@@ -13,6 +13,8 @@ day_patterns = patterns('',
   # Delete
   url(r'^/delete/?$', login_required(RunCalendarDayDelete.as_view()), name="report-day-delete"),
 
+  # Session add
+  url(r'^/session/add$', login_required(SportSessionAdd.as_view()), name="sport-session-add"),
 )
 
 

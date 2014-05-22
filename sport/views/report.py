@@ -2,7 +2,7 @@ from django.views.generic import WeekArchiveView
 from helpers import week_to_date, check_task
 from sport.models import SportWeek, SportSession, Sport, SESSION_TYPES
 from datetime import datetime
-from sport.forms import SportWeekForm, SportDayForm, SportSessionForm
+from sport.forms import SportWeekForm, SportDayForm
 from sport.tasks import publish_report
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect

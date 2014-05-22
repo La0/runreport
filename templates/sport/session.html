@@ -1,0 +1,16 @@
+{% extends 'modal.html' %}
+
+{% set modal_title = '%s : Ajouter une séance' % day|date('l d E Y')|title() %}
+
+{% set form_url = "sport-session-add"|url(day.year, day.month, day.day) %}
+{% set form_class = "session" %}
+
+{% block body %}
+  {{ macros.sport_session(form, user.multi_sports, False) }}
+{% endblock %}
+
+{% block footer %}
+<button class="btn btn-default btn-sm" data-dismiss="modal">Fermer</button>
+<input class="btn btn-primary btn-sm" type="submit" value="Sauvegarder">
+{% endblock %}
+

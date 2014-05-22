@@ -33,11 +33,7 @@ $(function(){
   </div>
 
   <div class="form-group row actions">
-    <div class="col-md-3 col-md-offset-3 col-sm-12">
-      <button type="submit" name="action" value="save" class="btn btn-primary">Sauver ces commentaires</button>
-    </div>
-
-    <div class="col-md-3 col-sm-12">
+    <div class="col-md-offset-5 col-md-3 col-sm-12">
     {% for m in memberships %}
       <button {% if not report.is_publiable() %}disabled="disabled"{% endif %} type="submit" name="publish" value="{{m.club.pk}}" class="btn btn-success">
         Envoyer à

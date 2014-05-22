@@ -21,3 +21,9 @@
 </div>
 {% endfor %}
 {% endif %}
+
+{% if user.multi_sports %}
+<a href="{% url sport-session-add day.year, day.month, day.day %}" class="modal-action btn btn-default btn-sm extra-sport-add">
+  <i class="icon-plus"></i> Ajouter un sport
+</a>
+{% endif %}

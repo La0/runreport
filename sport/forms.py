@@ -25,17 +25,8 @@ class SportSessionForm(forms.ModelForm):
       'sport' : forms.HiddenInput(),
     }
 
-  def __init__(self, *args, **kwargs):
+  def __init__(self, multi_sports, default_sport, *args, **kwargs):
     super(SportSessionForm, self).__init__(*args, **kwargs)
-
-    multi_sports = False
-    if hasattr(self, 'instance') and self.instance.pk:
-      # Load multi sports from instance
-      multi_sports = self.instance.day.week.user.multi_sports
-
-    elif 'initial' in kwargs and 'multi_sports' in kwargs['initial']:
-      # Load multi sports from initial data
-      multi_sports = kwargs['initial']['multi_sports']
 
     self.sports = []
     if multi_sports:
@@ -47,8 +38,8 @@ class SportSessionForm(forms.ModelForm):
       del self.fields['sport']
 
     # Apply default sport to instance
-    if not hasattr(self.instance, 'sport') and 'sport' in self.initial:
-      self.instance.sport = self.initial['sport']
+    if not hasattr(self.instance, 'sport'):
+      self.instance.sport = default_sport
 
   def clean(self, *args, **kwargs):
     super(SportSessionForm, self).clean(*args, **kwargs)

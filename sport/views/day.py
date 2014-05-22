@@ -2,7 +2,7 @@ from sport.forms import SportDayForm
 from sport.models import SportDay
 from coach.mixins import JsonResponseMixin, JSON_STATUS_ERROR
 from django.views.generic import DateDetailView
-from django.views.generic.edit import ModelFormMixin, ProcessFormView, DeleteView, UpdateView, CreateView
+from django.views.generic.edit import ModelFormMixin, ProcessFormView, DeleteView
 from mixins import CalendarDay
 from django.core.urlresolvers import reverse
 from datetime import datetime
