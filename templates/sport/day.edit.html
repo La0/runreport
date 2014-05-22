@@ -1,0 +1,20 @@
+<form method="post" action="{% url report-day-edit day.year, day.month, day.day %}" class="form-horizontal report box">
+  {% csrf_token %}
+
+  {% if day == now.date() %}
+  <fieldset class="today">
+    <legend>Aujourd'hui - {{ day|date('l d E')|title }}</legend>
+  {% else %}
+  <fieldset>
+    <legend>{{ day|date('l d E')|title }}</legend>
+  {% endif %}
+
+    {% include 'sport/_day.form.html' %}
+
+    <div class="row">
+      <div class-"col-sm-10 col-sm-offset-2 col-xs-12">
+        <input type="submit" class="btn btn-primary" value="Sauver" />
+      </div>
+    </div>
+  </fieldset>
+</form>

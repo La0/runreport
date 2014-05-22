@@ -1,6 +1,20 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import patterns, url, include
 from django.contrib.auth.decorators import login_required
 from sport.views import *
+
+day_patterns = patterns('',
+
+  # Modal View
+  url(r'^/?$', login_required(RunCalendarDay.as_view()), name="report-day"),
+
+  # Edit form
+  url(r'^/edit/?$', login_required(RunCalendarDay.as_view()), {'template_name' : 'sport/day.edit.html'}, name="report-day-edit"),
+
+  # Delete
+  url(r'^/delete/?$', login_required(RunCalendarDayDelete.as_view()), name="report-day-delete"),
+
+)
+
 
 urlpatterns = patterns('',
   url(r'^/?$', WeeklyReport.as_view(), name="report-current"),
@@ -13,8 +27,9 @@ urlpatterns = patterns('',
   # Calendar month
   url(r'^calendar/?$', login_required(RunCalendar.as_view()), name="report-current-month"),
   url(r'^calendar/(?P<year>\d{4})/(?P<month>\d{1,2})/?$', login_required(RunCalendar.as_view()), name="report-month"),
-  url(r'^calendar/(?P<year>\d{4})/(?P<month>\d{1,2})/(?P<day>\d{1,2})/?$', login_required(RunCalendarDay.as_view()), name="report-day"),
-  url(r'^calendar/(?P<year>\d{4})/(?P<month>\d{1,2})/(?P<day>\d{1,2})/delete/?$', login_required(RunCalendarDayDelete.as_view()), name="report-day-delete"),
+
+  # Day
+  url(r'^calendar/(?P<year>\d{4})/(?P<month>\d{1,2})/(?P<day>\d{1,2})', include(day_patterns)),
 
   # Calendar year
   url(r'^calendar/(?P<year>\d{4})/?$', login_required(RunCalendarYear.as_view()), name="report-year"),

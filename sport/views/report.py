@@ -61,7 +61,7 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
     forms = {}
     for day_date in self.week.get_dates():
       post_data = self.request.method == 'POST' and self.request.POST or None
-      forms[day_date] = SportDayForm(post_data, week=self.week, date=day_date, instance=self.days[day_date], prefix=day_date)
+      forms[day_date] = SportDayForm(post_data, week=self.week, date=day_date, instance=self.days[day_date])
     return forms
 
   def get_context_data(self, **kwargs):
@@ -114,14 +114,6 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
     # No post when published
     if self.week.published:
       return HttpResponseRedirect(self.week.get_absolute_url())
-
-    # Save form per form, to only create necessary objects
-    redirect = True # will redirect as a GET to lose POST
-    for day, form in context['forms'].items():
-      if form.is_valid():
-        form.save()
-      elif form.has_errors():
-        redirect = False
 
     # Save report
     form_report = context['form_report']

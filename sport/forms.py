@@ -84,49 +84,16 @@ class SportDayForm(forms.ModelForm):
     if not self.prefix:
       self.prefix = 'day'
 
-    # Build formset with datas
-    self.init_formset(data)
-
-  def has_errors(self):
-    '''
-    Used by week view to detect if a redirect
-    on valid action is possible to lose POST
-    and not insert same sessions over and over
-    on reload.
-    '''
-    if self.errors:
-      return True
-    return len([s for s in self.sessions if s.errors]) > 0
-
-
-  def init_formset(self, data=None):
-    # FormSet initial datas
-    multi_sports = self.week.user.multi_sports
-    initial = {
-      'sport' : self.week.user.default_sport,
-      'multi_sports' : multi_sports,
-    }
-    if not multi_sports:
-      self.nb_extras = 1
-
-    # Create FormSet from factory
-    SportSessionFormSet = inlineformset_factory(SportDay, SportSession, extra=self.nb_extras, form=SportSessionForm)
-
-    # Instanciate formset
-    self.sessions = SportSessionFormSet(data, instance=self.instance, prefix=self.prefix, initial=[initial for i in range(self.nb_extras)])
 
   def clean(self):
-    super(SportDayForm, self).clean()
+    data = super(SportDayForm, self).clean()
 
     # Alert user about missing comment & name
-    # Only when adding a sport session
-    self.sessions.clean()
-    if len([s for s in self.sessions if s.cleaned_data]):
-      if not self.cleaned_data.get('name', None) and not self.cleaned_data.get('comment', None):
-        raise forms.ValidationError(u'Vous devez spécifier un nom de séance et/ou un commentaire.')
+    if not self.cleaned_data.get('name', None) and not self.cleaned_data.get('comment', None):
+      raise forms.ValidationError(u'Vous devez spécifier un nom de séance et/ou un commentaire.')
 
     # Only for race
-    if self.cleaned_data['type'] == 'race':
+    if data['type'] == 'race':
 
       # Check time & distance are set, for past races
       #session_date = self.instance.date or self.prefix # Get the date even if not in db
@@ -134,21 +101,10 @@ class SportDayForm(forms.ModelForm):
       #  raise forms.ValidationError(u"Pour une course passée, renseignez la distance et le temps.")
 
       # Check race category
-      if not self.cleaned_data['race_category']:
+      if not data['race_category']:
         raise forms.ValidationError(u"Sélectionnez un type de course.")
 
-    return self.cleaned_data
-
-  def is_valid(self):
-    is_valid = super(SportDayForm, self).is_valid()
-    if not is_valid:
-      return False
-
-    if not self.sessions.is_valid():
-      return False
-
-    # No error displayed for empty days
-    return self.cleaned_data['name'] or self.cleaned_data['comment']
+    return data
 
   def save(self, *args, **kwargs):
     # Save day
@@ -158,14 +114,6 @@ class SportDayForm(forms.ModelForm):
     if self.date:
       day.date = self.date
     day.save()
-
-    # Save sessions from formset
-    for s in self.sessions.save(commit=False):
-      s.day = day
-      s.save()
-
-    # Reset empty formset
-    self.init_formset()
 
     return day
 

@@ -1,0 +1,32 @@
+{% import '_macros.html' as macros %}
+
+{% if saved %}
+<div class="alert alert-success">
+  Séance enregistrée.
+</div>
+{% endif %}
+
+{% with form.instance.plan_session as plan_session %}
+{% include 'sport/_plan.html' %}
+{% endwith %}
+
+{% with form.non_field_errors() as err %}
+{% if err %}
+<div class="alert alert-danger">
+  {{ err|safe }}
+</div>
+{% endif %}
+{% endwith %}
+
+{{ macros.session_types_name(form, session_types) }}
+{{ macros.input(form.comment, 'Commentaire') }}
+{{ macros.race_category(form) }}
+
+<div class="form-group row">
+  <label class="control-label col-sm-2 hidden-xs">Sports</label>
+  <div class="col-sm-10 col-xs-12">
+  {% with day.sessions as sessions %}
+  {% include 'sport/_sessions.html' %}
+  {% endwith %}
+  </div>
+</div>

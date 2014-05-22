@@ -3,6 +3,9 @@ $(function(){
   // Modals show
   $(document).on('click', '.modal-action', load_modal);
 
+  // Form load
+  $(document).on('submit', 'form.box', load_form);
+
   // Tooltips show
   $('.do-tooltip').tooltip();
 
@@ -85,14 +88,18 @@ function submit_form(evt){
   var data = $(this).serialize();
 
   // Send data
-  load_box(this.getAttribute('action'), 'POST', data);
+  output = $(this).hasClass('box') ? 'box' : 'modal';
+  load_box(this.getAttribute('action'), 'POST', data, output);
   return false;
 }
 
 // Load & Display a json "box"
 var modal = null;
-function load_box(url, method, data){
-  if(modal == null)
+function load_box(url, method, data, output){
+  method = method.toUpperCase();
+  if(!output)
+    output = 'box'; // Box by default
+  if(output =='modal' && modal == null)
     $('body').modalmanager('loading'); // loading state
 
   $.ajax({
@@ -121,19 +128,28 @@ function load_box(url, method, data){
         return;
       }
 
+      if(output == 'modal'){
       // Build a new modal
-      modal = $(data.html).modal({
-        show : true,
-        replace : true,
-      });
+        modal = $(data.html).modal({
+          show : true,
+          replace : true,
+        });
 
-      // Trigger forms
-      modal.find('form').on('submit', submit_form);
+        // Trigger forms
+        modal.find('form').on('submit', submit_form);
+
+      } else if(output instanceof jQuery) {
+        // Render box element
+        output.html(data.html);
+      }
     },
+    error : function(xhr, st, err){
+      console.error("Failed to load box from "+url+" : "+err);
+    }
   });
 }
 
-// Init methos, used from click
+// Init a modal, used from click
 function load_modal(evt){
   // Get url
   var url = this.getAttribute('href');
@@ -146,7 +162,20 @@ function load_modal(evt){
   data = null;
   if(this.hasAttribute('data-action'))
     data = { 'action' : this.getAttribute('data-action')};
-  load_box(url, method, data);
+  load_box(url, method, data, 'modal');
   return false;
 }
 
+// Load a form
+function load_form(evt){
+  var url = this.getAttribute('action');
+  var method = this.getAttribute('method');
+  if(!url || !method){
+    console.error("No url or method for form");
+    return false;
+  }
+  evt.preventDefault();
+  var data = $(this).serialize();
+  load_box(url, method, data, $(this));
+  return false;
+}
