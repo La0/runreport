@@ -3,10 +3,10 @@
 {% set modal_title = day|date('l d E Y')|title() %}
 
 {% block body %}
-Etes vous sûr de vouloir supprimer cette séance <strong>{{ session.name }}</strong> ?
+Etes vous sûr de vouloir supprimer cette journée <strong>{{ session.name }}</strong> ?
 {% endblock %}
 
 {% block footer %}
 <button class="btn" data-dismiss="modal">Annuler</button>
-<a href="{% url report-day-delete day.year, day.month, day.day %}" class="btn btn-danger modal-action modal-post">Supprimer cette séance</a>
+<a href="{% url report-day-delete day.year, day.month, day.day %}" class="btn btn-danger modal-action modal-post">Supprimer cette journée</a>
 {% endblock %}

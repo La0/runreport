@@ -1,8 +1,6 @@
 {% extends 'modal.html' %}
 
-{% set modal_title = '%s : Ajouter une séance' % day|date('l d E Y')|title() %}
-
-{% set form_url = "sport-session-add"|url(day.year, day.month, day.day) %}
+{% set modal_title = '%s : %s' % (day|date('l d E Y')|title(), session.pk and 'Edition de séance' or 'Ajouter une séance') %}
 
 {% block body %}
   {% with form.non_field_errors() as err %}

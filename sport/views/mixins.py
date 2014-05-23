@@ -1,8 +1,10 @@
 from datetime import datetime, timedelta, date
 from coach.settings import REPORT_START_DATE
+from coach.mixins import JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE
 from django.http import Http404
+from django.core.urlresolvers import reverse
 from helpers import week_to_date, date_to_day, date_to_week
-from sport.models import SportWeek, SportDay, SESSION_TYPES
+from sport.models import SportWeek, SportDay, SportSession, SESSION_TYPES
 
 class CurrentWeekMixin(object):
   '''
@@ -117,3 +119,26 @@ class CalendarDay(object):
     context['session_types'] = SESSION_TYPES
     return context
 
+class CalendarSession(CalendarDay):
+
+  def reload_box(self):
+    # COnfigure output to reload parent form box
+    self.json_options = [JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE]
+    self.json_boxes = {
+      'day-%s' % self.day : reverse('report-day-edit', args=[self.day.year, self.day.month, self.day.day]),
+    }
+
+  def get_object(self):
+    super(CalendarSession, self).get_object()
+    # Init a session
+    if 'session' in self.kwargs:
+      self.session = SportSession.objects.get(pk=self.kwargs['session'], day__week__user=self.request.user)
+    else:
+      self.session = SportSession(sport=self.request.user.default_sport, day=self.object)
+
+    return self.session
+
+  def get_context_data(self, *args, **kwargs):
+    context = super(CalendarSession, self).get_context_data(*args, **kwargs)
+    context['session'] = self.session
+    return context

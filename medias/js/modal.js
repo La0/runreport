@@ -106,9 +106,7 @@ function load_box(url, method, data, output){
 
       // Close modal
       if($.inArray('close', data.options) != -1 && modal != null){
-        modal.hide();
-        $('.modal-backdrop').remove();
-        $('.modal-scrollable').remove();
+        modal.modal('hide');
       }
 
       // Reload parent

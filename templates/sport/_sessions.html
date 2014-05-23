@@ -15,6 +15,9 @@
   <span class="label label-default">Temps</span> {{ session.time }}
   {% endif %}
 
+  <a class="modal-action btn btn-info btn-xs" href="{% url sport-session-edit day.year, day.month, day.day, session.pk %}">Editer</a>
+  <a class="modal-action btn btn-danger btn-xs" href="{% url sport-session-delete day.year, day.month, day.day, session.pk %}">Supprimer</a>
+
   {% with session as sport_session %}
   {% include '_garmin.html' %}
   {% endwith %}

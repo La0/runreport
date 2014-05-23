@@ -1,21 +1,16 @@
-from django.views.generic.edit import ModelFormMixin, ProcessFormView
+from django.views.generic.edit import ModelFormMixin, ProcessFormView, DeleteView
 from django.views.generic import DateDetailView
 from sport.forms import SportSessionForm
-from sport.models import SportSession
-from coach.mixins import JsonResponseMixin, JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE
-from mixins import CalendarDay
+from coach.mixins import JsonResponseMixin
+from mixins import CalendarSession
 from django.core.urlresolvers import reverse
 
-class SportSessionAdd(CalendarDay, JsonResponseMixin, ModelFormMixin, ProcessFormView, DateDetailView):
-  model = SportSession
+class SportSessionView(CalendarSession, JsonResponseMixin, ModelFormMixin, ProcessFormView, DateDetailView):
   form_class = SportSessionForm
   template_name = 'sport/session.html'
 
   def get_form_kwargs(self, *args, **kwargs):
-    self.get_object() # Load day
-
-    # Init a session
-    self.session = SportSession(sport=self.request.user.default_sport, day=self.object)
+    self.get_object() # Load day & session
 
     return {
       'instance' : self.session,
@@ -25,8 +20,16 @@ class SportSessionAdd(CalendarDay, JsonResponseMixin, ModelFormMixin, ProcessFor
     }
 
   def get_context_data(self, *args, **kwargs):
-    context = super(SportSessionAdd, self).get_context_data(*args, **kwargs)
-    context['session'] = self.session
+    context = super(SportSessionView, self).get_context_data(*args, **kwargs)
+
+    # Url for edit or add ?
+    args = [self.day.year, self.day.month, self.day.day]
+    base = 'sport-session-add'
+    if self.session.pk:
+      args += [self.session.pk, ]
+      base = 'sport-session-edit'
+    context['form_url'] = reverse(base, args=args)
+
     return context
 
   def form_valid(self, form):
@@ -39,9 +42,18 @@ class SportSessionAdd(CalendarDay, JsonResponseMixin, ModelFormMixin, ProcessFor
     session.save()
 
     # Configure output
-    self.json_options = [JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE]
-    self.json_boxes = {
-      'day-%s' % self.day : reverse('report-day-edit', args=[self.day.year, self.day.month, self.day.day]),
-    }
+    self.reload_box()
 
+    return self.render_to_response({})
+
+class SportSessionDelete(CalendarSession, JsonResponseMixin, DeleteView, DateDetailView):
+  template_name = 'sport/session.delete.html'
+
+  def delete(self, *args, **kwargs):
+    '''
+    Delete session, then reload parent box
+    '''
+    self.get_object()
+    self.session.delete()
+    self.reload_box()
     return self.render_to_response({})
