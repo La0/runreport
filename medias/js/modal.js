@@ -99,6 +99,11 @@ function load_box(url, method, data, output){
         return;
       }
 
+      // Reload boxes
+      $.each(data.boxes, function(box, url){
+        load_box(url, 'GET', {}, $('#'+box));
+      });
+
       // Close modal
       if($.inArray('close', data.options) != -1 && modal != null){
         modal.hide();
