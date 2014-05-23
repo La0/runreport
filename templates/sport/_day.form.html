@@ -25,7 +25,7 @@
 <div class="form-group row">
   <label class="control-label col-sm-2 hidden-xs">Sports</label>
   <div class="col-sm-10 col-xs-12">
-  {% with day.sessions as sessions %}
+  {% with form.instance.sessions.all() as sessions %}
   {% include 'sport/_sessions.html' %}
   {% endwith %}
   </div>

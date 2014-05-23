@@ -1,4 +1,4 @@
-<form method="post" action="{% url report-day-edit day.year, day.month, day.day %}" class="form-horizontal report box">
+<form id="day-{{day}}" method="post" action="{% url report-day-edit day.year, day.month, day.day %}" class="form-horizontal report box">
   {% csrf_token %}
 
   {% if day == now.date() %}
