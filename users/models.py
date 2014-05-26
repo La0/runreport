@@ -37,6 +37,9 @@ class Athlete(AbstractUser):
       pass
     return self.category
 
+# Add unique to Athlete email. Can't override in class
+Athlete._meta.get_field_by_name('email')[0]._unique=True
+
 class UserCategory(models.Model):
   code = models.CharField(max_length=10)
   name = models.CharField(max_length=120)
