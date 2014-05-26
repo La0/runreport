@@ -1,6 +1,11 @@
 {% for sport, time, distance in stats %}
 <p>
+  {% if sport %}
+  <i class="icon-sport-{{ sport.slug }}"></i>
   <strong>{{ sport.name }}</strong>
+  {% else %}
+  <strong>Total</strong>
+  {% endif %}
   <span class="text-muted">&bull;</span>
 
   <span class="label label-info">Temps total</span>

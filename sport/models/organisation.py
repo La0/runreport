@@ -158,7 +158,7 @@ class SportWeek(models.Model):
 
   def get_sports_stats(self):
     '''
-    List all the cumulated distances & time
+    List all the cumulated time & distance
     per sport for this week
     '''
     stats = []
@@ -173,6 +173,9 @@ class SportWeek(models.Model):
         if s.distance:
           d += s.distance
       stats.append((sport, t, d))
+
+    # Add total
+    stats.append((None, sum([s[1] for s in stats]), sum([s[2] for s in stats])))
 
     return stats
 
