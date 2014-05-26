@@ -15,8 +15,10 @@
   {% endif %}
   {% endwith %}
   {{ macros.sport_session(form, user.multi_sports) }}
+  {{ macros.input(form.name, 'Séance', false, 4, 8) }}
   {{ macros.input(form.distance, 'Distance', false, 4, 8) }}
   {{ macros.input(form.time, 'Temps', false, 4, 8) }}
+  {{ macros.input(form.comment, 'Commentaire', false, 4, 8) }}
 {% endblock %}
 
 {% block footer %}

@@ -1,8 +1,12 @@
 {% if sessions %}
 {% for session in sessions.all() %}
-<div class="sport-session">
+<div class="sport-session row">
   <i class="icon-sport-{{session.sport.slug}}"></i>
   <span>{{ session.sport.name }}</span>
+
+  {% if session.name %}
+  <strong>{{session.name}}</strong>
+  {% endif %}
 
   {% if session.distance %}
   <span class="label label-default">Distance</span>
@@ -15,6 +19,10 @@
 
   {% if session.time %}
   <span class="label label-default">Temps</span> {{ session.time }}
+  {% endif %}
+
+  {% if session.comment%}
+  {{session.comment|truncatechars(20)}}
   {% endif %}
 
   <a class="modal-action btn btn-info btn-xs" href="{% url sport-session-edit day.year, day.month, day.day, session.pk %}">Editer</a>

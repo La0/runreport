@@ -280,6 +280,6 @@ a.btn {
 }
 
 div.week div.day div.sport-session {
-  height: 42px;
+  line-height: 21px;
   margin: 5px 0;
 }

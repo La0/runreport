@@ -20,7 +20,7 @@ class SportSessionForm(forms.ModelForm):
 
   class Meta:
     model = SportSession
-    fields = ('sport', 'distance', 'time')
+    fields = ('sport', 'distance', 'time', 'name', 'comment')
     widgets = {
       'sport' : forms.HiddenInput(),
     }

@@ -30,7 +30,7 @@ h2, h3 {
 
       {% with race.sessions.filter(sport__depth=1) as sessions %}
       <div class="col-sm-2">
-      <p><strong>{{ race.distance_total|floatformat(2)}} km</strong></p>
+      <p><strong>{{ race.distance_total|default(0)|floatformat(2)}} km</strong></p>
 
       {% if sessions.count() > 1 %}
       {% for session in sessions %}

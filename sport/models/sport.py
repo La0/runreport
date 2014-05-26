@@ -30,6 +30,8 @@ class SportSession(models.Model):
   sport = models.ForeignKey(Sport)
   time = models.TimeField(null=True, blank=True)
   distance = models.FloatField(null=True, blank=True)
+  name = models.CharField(max_length=255, null=True, blank=True)
+  comment = models.TextField(null=True, blank=True)
 
   class Meta:
     db_table = 'sport_session'
