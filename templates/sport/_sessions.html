@@ -4,11 +4,13 @@
   <i class="icon-sport-{{session.sport.slug}}"></i>
   <span>{{ session.sport.name }}</span>
 
+  {% if session.distance %}
   <span class="label label-default">Distance</span>
   {% if session.sport.get_category() == 'swimming' %}
     {{ (session.distance * 1000)|floatformat(0) }} m
   {% else %}
     {{ session.distance|floatformat(2) }} km
+  {% endif %}
   {% endif %}
 
   {% if session.time %}

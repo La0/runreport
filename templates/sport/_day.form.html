@@ -25,8 +25,21 @@
 <div class="form-group row">
   <label class="control-label col-sm-2 hidden-xs">Sports</label>
   <div class="col-sm-10 col-xs-12">
-  {% with form.instance.sessions.all() as sessions %}
-  {% include 'sport/_sessions.html' %}
-  {% endwith %}
+  {% if form.session %}
+    <div class="col-sm-2 hidden-xs" style="padding-left: 0">
+      <span class="do-tooltip" data-toggle="tooltip" data-placement="top" title="Pour changer de sport, activer l'option Multi Sports dans votre profil.">
+        {% with form.session.instance.sport as sport %}
+          <i class="icon-sport-{{sport.slug}}"></i> {{sport.name}}
+        {% endwith %}
+      </span>
+    </div>
+
+    {{ macros.input_prepend(form.session.time, 'Temps') }}
+    {{ macros.input_prepend(form.session.distance, 'Distance') }}
+  {% else %}
+    {% with form.instance.sessions.all() as sessions %}
+    {% include 'sport/_sessions.html' %}
+    {% endwith %}
+  {% endif %}
   </div>
 </div>

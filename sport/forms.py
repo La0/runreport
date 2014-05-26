@@ -51,13 +51,9 @@ class SportSessionForm(forms.ModelForm):
     return self.cleaned_data
 
 
-class SportWeekForm(forms.ModelForm):
-  class Meta:
-    model = SportWeek
-    fields = ('comment', )
-
 class SportDayForm(forms.ModelForm):
   nb_extras = 4
+  session = None
 
   class Meta:
     model = SportDay
@@ -72,12 +68,36 @@ class SportDayForm(forms.ModelForm):
 
     # Base init
     super(SportDayForm, self).__init__(data, *args, **kwargs)
-    if not self.prefix:
-      self.prefix = 'day'
 
+    # We need a unique SportSessionForm when:
+    # * multi_sports is disabled
+    # * maximum one SportSession exists
+    # That's the easy editing mode
+    multi_sports = self.week.user.multi_sports
+    nb_sessions = self.instance.sessions.count()
+    if not multi_sports and (not self.instance.pk or nb_sessions <= 1):
+      instance = nb_sessions == 1 and self.instance.sessions.all()[0] or None
+      self.session = SportSessionForm(multi_sports, self.week.user.default_sport, data, instance=instance)
+
+  def is_valid(self):
+    # Check session
+    if self.session and not self.session.is_valid():
+      return False
+
+    # Check day
+    is_valid = super(SportDayForm, self).is_valid()
+    if not is_valid:
+      return False
+
+    return True
 
   def clean(self):
     data = super(SportDayForm, self).clean()
+
+    # Clean Session
+    print 'Clean'
+    if self.session:
+      self.session.clean()
 
     # Alert user about missing comment & name
     if not self.cleaned_data.get('name', None) and not self.cleaned_data.get('comment', None):
@@ -106,6 +126,12 @@ class SportDayForm(forms.ModelForm):
       day.date = self.date
     day.save()
 
+    # Save session
+    if self.session:
+      session = self.session.save(commit=False)
+      session.day = day
+      session.save()
+
     return day
 
 class SportDayAddForm(forms.Form):
@@ -126,3 +152,8 @@ class SportDayAddForm(forms.Form):
       raise forms.ValidationError('Une séance existe déjà à cette date.')
 
     return self.cleaned_data['date']
+
+class SportWeekForm(forms.ModelForm):
+  class Meta:
+    model = SportWeek
+    fields = ('comment', )
