@@ -1,19 +1,29 @@
-{% for sport, time, distance in stats %}
-<p>
-  {% if sport %}
-  <i class="icon-sport-{{ sport.slug }}"></i>
-  <strong>{{ sport.name }}</strong>
-  {% else %}
-  <strong>Total</strong>
-  {% endif %}
-  <span class="text-muted">&bull;</span>
-
-  <span class="label label-info">Temps total</span>
-  {{ time|total_time() }}
-  <span class="text-muted">&bull;</span>
-
-  <span class="label label-info">Distance totale</span>
-  {{ distance|default(0) }} km.
-  </p>
-{% endfor %}
-
+<div class="row">
+  <div class="col-sm-6 col-sm-offset-3 col-xs-12">
+    <table class="table table-condensed table-striped">
+      <tr>
+        <th>Sport</th>
+        <th>Temps</th>
+        <th>Distance</th>
+      </tr>
+      {% for sport, time, distance in stats %}
+      <tr class="{% if not sport %}info{% endif %}">
+        <td>
+          {% if sport %}
+          <i class="icon-sport-{{ sport.slug }}"></i>
+          {{ sport.name }}
+          {% else %}
+          <strong>Total</strong>
+          {% endif %}
+        </td>
+        <td>
+          {{ time|total_time() }}
+        </td>
+        <td>
+          {{ distance|default(0) }} km.
+        </td>
+      {% endfor %}
+      </tr>
+    </table>
+  </div>
+</div>

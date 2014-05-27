@@ -48,10 +48,11 @@
     <a class="modal-action btn btn-info btn-xs" href="{% url sport-session-edit day.year, day.month, day.day, session.pk %}">Editer</a>
     <a class="modal-action btn btn-danger btn-xs" href="{% url sport-session-delete day.year, day.month, day.day, session.pk %}">Supprimer</a>
   </div>
-  {% with session as sport_session %}
-  {% include '_garmin.html' %}
-  {% endwith %}
 </div>
+
+{% with session as sport_session %}
+{% include '_garmin.html' %}
+{% endwith %}
 
 <div class="row visible-xs">
   <div class="col-xs-5">

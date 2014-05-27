@@ -14,10 +14,10 @@
 		{% for day in report.get_dates() %}
 		{% with sessions[day] as session %}
 		<div class="row day">
-			<div class="col-sm-3">
+			<div class="col-sm-2">
 				<strong>{{day|date('l d M')}}</strong>
 			</div>
-			<div class="col-sm-9">
+			<div class="col-sm-10">
 				{% if session %}
         {% if session.type == 'training' %}
         <span class="label label-info">Entrainement</span>

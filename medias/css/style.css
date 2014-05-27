@@ -168,6 +168,7 @@ div.modal.day div.modal-body input, div.modal.day div.modal-body textarea {
 .garmin {
   margin-bottom: 8px;
   padding-bottom: 8px;
+  border-bottom: 1px solid #EEE;
 }
 
 form .garmin {
@@ -280,6 +281,4 @@ a.btn {
 }
 
 div.week div.day div.sport-session {
-  line-height: 21px;
-  margin: 5px 0;
 }
