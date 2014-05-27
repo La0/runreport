@@ -76,13 +76,16 @@ span.type {
 					{% endif %}
 				</p>
 				{% if session %}
-				<p class="session {{ session.type }}">
-					{{session.name|default('Session sans nom')}}
-
-          {% for sport, count in session.sports_count() %}
-          <i class="icon-sport-{{sport.slug}}"></i>{% if count > 1 %}x {{ count }}{% endif %}
+          {% if session.name %}
+          <p>
+            {{session.name}}
+          </p>
+          {% endif %}
+          {% for s in session.sessions.all() %}
+          <p class="session {{ session.type }}">
+            <i class="icon-sport-{{s.sport.slug}}"></i> {{ s.name|default('...') }}
+          </p>
           {% endfor %}
-				</p>
 				{% if session.plan_session %}
 				<p>
 					<i class="icon-tags"> </i> {{ session.plan_session.week.plan.name|truncate(10) }}

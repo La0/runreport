@@ -12,8 +12,13 @@
     {% include 'sport/_day.form.html' %}
 
     <div class="row">
-      <div class-"col-sm-10 col-sm-offset-2 col-xs-12">
-        <input type="submit" class="btn btn-primary" value="Sauver" />
+      <div class="col-sm-10 col-sm-offset-2">
+        {% if user.multi_sports %}
+        <a href="{% url sport-session-add day.year, day.month, day.day %}" class="modal-action btn btn-default btn-sm extra-sport-add">
+          <i class="icon-plus"></i> Ajouter une séance
+        </a>
+        {% endif %}
+        <button type="submit" class="btn btn-sm btn-primary" >Sauver la journée <i class="icon-right-open"></i></button>
       </div>
     </div>
   </fieldset>

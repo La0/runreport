@@ -23,6 +23,9 @@
 
 {% block footer %}
 <button class="btn btn-default btn-sm" data-dismiss="modal">Fermer</button>
+{% if session.pk %}
+<a class="modal-action btn btn-danger btn-sm" href="{% url sport-session-delete day.year, day.month, day.day, session.pk %}">Supprimer</a>
+{% endif %}
 <input class="btn btn-primary btn-sm" type="submit" value="Sauvegarder">
 {% endblock %}
 

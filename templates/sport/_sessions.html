@@ -1,42 +1,76 @@
 {% if sessions %}
 {% for session in sessions.all() %}
-<div class="sport-session row">
-  <i class="icon-sport-{{session.sport.slug}}"></i>
-  <span>{{ session.sport.name }}</span>
+<div class="sport-session row hidden-xs">
+  <div class="col-sm-2">
+    <i class="icon-sport-{{session.sport.slug}}"></i>
+    <span>{{ session.sport.name }}</span>
+  </div>
 
-  {% if session.name %}
-  <strong>{{session.name}}</strong>
-  {% endif %}
+  <div class="col-sm-2">
+    {% if session.name %}
+    <strong>{{session.name}}</strong>
+    {% else %}
+    <i class="text-muted">Pas de nom</i>
+    {% endif %}
+  </div>
 
+  <div class="col-sm-2">
   {% if session.distance %}
-  <span class="label label-default">Distance</span>
-  {% if session.sport.get_category() == 'swimming' %}
-    {{ (session.distance * 1000)|floatformat(0) }} m
+    {% if session.sport.get_category() == 'swimming' %}
+      {{ (session.distance * 1000)|floatformat(0) }} m
+    {% else %}
+      {{ session.distance|floatformat(2) }} km
+    {% endif %}
   {% else %}
-    {{ session.distance|floatformat(2) }} km
+    <span class="label label-warning">Pas de Distance</span>
   {% endif %}
-  {% endif %}
+  </div>
 
+  <div class="col-sm-1">
   {% if session.time %}
-  <span class="label label-default">Temps</span> {{ session.time }}
+    {{ session.time }}
+  {% else %}
+    <span class="label label-warning">Pas de Temps</span>
   {% endif %}
+  </div>
 
+  <div class="col-sm-2">
   {% if session.comment%}
-  {{session.comment|truncatechars(20)}}
+    {{session.comment|truncatechars(15)}}
+  {% else %}
+    <i class="text-muted">Pas de commentaire</i>
   {% endif %}
+  </div>
 
-  <a class="modal-action btn btn-info btn-xs" href="{% url sport-session-edit day.year, day.month, day.day, session.pk %}">Editer</a>
-  <a class="modal-action btn btn-danger btn-xs" href="{% url sport-session-delete day.year, day.month, day.day, session.pk %}">Supprimer</a>
-
+  <div class="col-sm-3">
+    <a class="modal-action btn btn-info btn-xs" href="{% url sport-session-edit day.year, day.month, day.day, session.pk %}">Editer</a>
+    <a class="modal-action btn btn-danger btn-xs" href="{% url sport-session-delete day.year, day.month, day.day, session.pk %}">Supprimer</a>
+  </div>
   {% with session as sport_session %}
   {% include '_garmin.html' %}
   {% endwith %}
 </div>
-{% endfor %}
-{% endif %}
 
-{% if user.multi_sports %}
-<a href="{% url sport-session-add day.year, day.month, day.day %}" class="modal-action btn btn-default btn-sm extra-sport-add">
-  <i class="icon-plus"></i> Ajouter un sport
-</a>
+<div class="row visible-xs">
+  <div class="col-xs-5">
+    <i class="icon-sport-{{ session.sport.slug }}"></i>
+    {% if session.name %}
+    <strong>{{session.name}}</strong>
+    {% else %}
+    <i class="text-muted">Pas de nom</i>
+    {% endif %}
+  </div>
+  <div class="col-xs-3">
+    {{ session.distance|default(0)|floatformat(2) }} km
+  </div>
+  <div class="col-xs-2">
+    {% if session.time %}{{ session.time }}{% else %}-{% endif %}
+  </div>
+  <div class="col-xs-1">
+    <a class="modal-action btn btn-info btn-xs" href="{% url sport-session-edit day.year, day.month, day.day, session.pk %}">Editer</a>
+  </div>
+</div>
+{% endfor %}
+{% else %}
+<i class="text-muted">Pas de séances.</i>
 {% endif %}
