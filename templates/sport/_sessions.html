@@ -1,7 +1,7 @@
 {% if sessions %}
 {% for session in sessions.all() %}
 <div class="sport-session row hidden-xs">
-  <div class="col-sm-2">
+  <div class="{% if modal %}col-sm-3{% else %}col-sm-2{% endif %}">
     <i class="icon-sport-{{session.sport.slug}}"></i>
     <span>{{ session.sport.name }}</span>
   </div>
@@ -26,7 +26,7 @@
   {% endif %}
   </div>
 
-  <div class="col-sm-1">
+  <div class="{% if modal %}col-sm-2{% else %}col-sm-1{% endif %}">
   {% if session.time %}
     {{ session.time }}
   {% else %}
@@ -34,6 +34,7 @@
   {% endif %}
   </div>
 
+  {% if not modal %}
   <div class="col-sm-2">
   {% if session.comment%}
     {{session.comment|truncatechars(15)}}
@@ -41,6 +42,7 @@
     <i class="text-muted">Pas de commentaire</i>
   {% endif %}
   </div>
+  {% endif %}
 
   <div class="col-sm-3">
     <a class="modal-action btn btn-info btn-xs" href="{% url sport-session-edit day.year, day.month, day.day, session.pk %}">Editer</a>

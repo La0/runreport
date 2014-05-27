@@ -6,7 +6,9 @@
 {% set form_class = "day" %}
 
 {% block body %}
-{% include 'sport/_day.form.html' %}
+  {% with True as modal %}
+    {% include 'sport/_day.form.html' %}
+  {% endwith %}
 {% endblock %}
 
 {% block footer %}
