@@ -42,7 +42,7 @@
     {{ macros.input_prepend(form.session.distance, 'Distance') }}
   {% else %}
     {% with form.instance.sessions.all() as sessions %}
-    {% include 'sport/_sessions.html' %}
+    {% include 'sport/session/list.html' %}
     {% endwith %}
   {% endif %}
   </div>

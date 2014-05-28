@@ -35,7 +35,7 @@
 				</div>
 				{% endif %}
         {% with session.sessions as sessions %}
-        {% include 'sport/_sessions.html' %}
+        {% include 'sport/session/list.html' %}
         {% endwith %}
 				{% else %}
 				<i>Pas de séance</i>
@@ -53,7 +53,7 @@
 	{% endif %}
 
   {% with report.get_sports_stats() as stats %}
-  {% include 'sport/_week.stats.html' %}
+  {% include 'sport/week/_stats.html' %}
   {% endwith %}
 
 </div>

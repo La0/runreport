@@ -7,7 +7,7 @@ from django.core.urlresolvers import reverse
 
 class SportSessionView(CalendarSession, JsonResponseMixin, ModelFormMixin, ProcessFormView, DateDetailView):
   form_class = SportSessionForm
-  template_name = 'sport/session.html'
+  template_name = 'sport/session/edit.html'
 
   def get_form_kwargs(self, *args, **kwargs):
     self.get_object() # Load day & session
@@ -47,7 +47,7 @@ class SportSessionView(CalendarSession, JsonResponseMixin, ModelFormMixin, Proce
     return self.render_to_response({})
 
 class SportSessionDelete(CalendarSession, JsonResponseMixin, DeleteView, DateDetailView):
-  template_name = 'sport/session.delete.html'
+  template_name = 'sport/session/delete.html'
 
   def delete(self, *args, **kwargs):
     '''

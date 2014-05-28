@@ -18,7 +18,7 @@
 <p>{{ session.comment|default('Pas de commentaire')|linebreaksbr }}</p>
 
 {% with session.sessions as sessions %}
-{% include 'sport/_sessions.html' %}
+{% include 'sport/session/list.html' %}
 {% endwith %}
 
 {% else %}

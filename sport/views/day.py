@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse
 from datetime import datetime
 
 class RunCalendarDay(CalendarDay, JsonResponseMixin, ModelFormMixin, ProcessFormView, DateDetailView):
-  template_name = 'sport/day.html'
+  template_name = 'sport/day/modal.html'
   form_class = SportDayForm
 
   def get_template_names(self):
@@ -43,7 +43,7 @@ class RunCalendarDay(CalendarDay, JsonResponseMixin, ModelFormMixin, ProcessForm
     return self.render_to_response(self.get_context_data(**{'form' : form}))
 
 class RunCalendarDayDelete(CalendarDay, JsonResponseMixin, DeleteView, DateDetailView):
-  template_name = 'sport/day_delete.html'
+  template_name = 'sport/day/delete.html'
 
   def get_success_url(self):
     return reverse('report-month', args=(self.day.year, self.day.month))

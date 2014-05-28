@@ -23,9 +23,9 @@
 </div>
 
 {% if forms and not report.published and not report.task %}
-{% include 'sport/report.open.html' %}
+{% include 'sport/week/edit.html' %}
 {% else %}
-{% include 'sport/report.closed.html' %}
+{% include 'sport/week/published.html' %}
 {% endif %}
 
 {% include '_weeks.html' %}

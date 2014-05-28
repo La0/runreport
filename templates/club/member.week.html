@@ -12,7 +12,7 @@
 		du {{report.get_date_start()|date('l d E')}} au {{report.get_date_end()|date('l d E')}}
 	</div>
 
-	{% include 'sport/report.closed.html' %}
+	{% include 'sport/week/published.html' %}
 	{% else %}
 	<div class="alert alert-warning">
 		<h4>Semaine {{week|add(1)}} de {{year}}</h4>

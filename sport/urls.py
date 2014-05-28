@@ -8,7 +8,7 @@ day_patterns = patterns('',
   url(r'^/?$', login_required(RunCalendarDay.as_view()), name="report-day"),
 
   # Edit form
-  url(r'^/edit/?$', login_required(RunCalendarDay.as_view()), {'template_name' : 'sport/day.edit.html'}, name="report-day-edit"),
+  url(r'^/edit/?$', login_required(RunCalendarDay.as_view()), {'template_name' : 'sport/day/_edit.html'}, name="report-day-edit"),
 
   # Delete
   url(r'^/delete/?$', login_required(RunCalendarDayDelete.as_view()), name="report-day-delete"),

@@ -9,7 +9,7 @@ from django.http import HttpResponseRedirect
 from mixins import WeekPaginator, CurrentWeekMixin
 
 class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
-  template_name = 'sport/report.html'
+  template_name = 'sport/week/base.html'
   week_format = '%W'
   date_field = 'date'
   report = None
