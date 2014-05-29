@@ -18,7 +18,7 @@
 
 
 {% macro input_prepend(field, label) -%}
-<div class="col-sm-4 col-xs-6 {% if field.errors %}has-error{% endif %}">
+<div class="col-sm-3 col-xs-6 {% if field.errors %}has-error{% endif %}">
    <div class="input-group {% if field.errors %}has-error{% endif %}">
      <span class="input-group-addon input-sm">{{ label }}</span>
      {{ field|addcss("form-control input-sm")|safe }}
@@ -30,33 +30,29 @@
 {%- endmacro %}
 
 
-{% macro sport_session(form, multi_sports, extra) -%}
+{% macro sport_session(form) -%}
 {{ form.id|safe }}
-<div class="form-group sport-session row {% if extra %}extra{% endif %}">
-	<label class="col-sm-4 control-label hidden-xs">Sport</label>
-  <div class="col-sm-4 col-xs-12 sport">
-    <button class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
-      <span class="name">
-        {% with form.instance.sport as sport %}
-          <i class="icon-sport-{{sport.slug}}"></i> {{sport.name}}
-        {% endwith %}
-      </span>
-      <span class="caret"></span>
-    </button>
+<div class="col-sm-3 col-xs-12 sport">
+  <button class="btn btn-sm btn-warning dropdown-toggle" data-toggle="dropdown">
+    <span class="name">
+      {% with form.instance.sport as sport %}
+        <i class="icon-sport-{{sport.slug}}"></i> {{sport.name}}
+      {% endwith %}
+    </span>
+    <span class="caret"></span>
+  </button>
 
-    <ul class="dropdown-menu sports">
-      {% for sport in form.sports %}
-      <li class="{% if sport == form.instance.sport %}active{% endif %}">
-        <a href="#" value="{{sport.pk}}">
-          <i class="icon-sport-{{sport.slug}}"></i> {{sport.name}}
-        </a>
-      </li>
-      {% endfor %}
-    </ul>
-    {{ form.sport|safe }}
-  </div>
+  <ul class="dropdown-menu sports">
+    {% for sport in form.sports %}
+    <li class="{% if sport == form.instance.sport %}active{% endif %}">
+      <a href="#" value="{{sport.pk}}">
+        <i class="icon-sport-{{sport.slug}}"></i> {{sport.name}}
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+  {{ form.sport|safe }}
 </div>
-
 {%- endmacro %}
 
 {% macro session_types_name(form, types) -%}
@@ -67,7 +63,7 @@
 	{% if field.errors %}
 	<span class="help-inline">{{field.errors|safe}}</span>
 	{% endif %}
-	<label class="col-sm-2 control-label" for="id_{{field.name}}">Journée</label>
+	<label class="col-sm-2 control-label" for="id_{{field.name}}">Séance</label>
 	<div class="col-sm-10 {{form.instance.sport|default('running')}}">
 		<div class="input-group">
 			<div class="input-group-btn">

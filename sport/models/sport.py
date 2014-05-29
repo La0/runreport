@@ -1,6 +1,6 @@
 # coding=utf-8
 from django.db import models
-#from .organisation import SportDay
+from . import SESSION_TYPES
 
 class Sport(models.Model):
   name = models.CharField(max_length=250)
@@ -32,12 +32,18 @@ class SportSession(models.Model):
   distance = models.FloatField(null=True, blank=True)
   name = models.CharField(max_length=255, null=True, blank=True)
   comment = models.TextField(null=True, blank=True)
+  type = models.CharField(max_length=12, default='training', choices=SESSION_TYPES)
+  race_category = models.ForeignKey('RaceCategory', null=True, blank=True)
 
   class Meta:
     db_table = 'sport_session'
     app_label = 'sport'
 
   def save(self, *args, **kwargs):
+    # No race category when we are not in race
+    if self.type != 'race':
+      self.race_category = None
+
     # Only allow depth 1 sports
     if self.sport.depth != 1:
       raise Exception("Invalid sport '%s', only level 1 authorized for SportSession" % self.sport)

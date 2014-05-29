@@ -4,6 +4,7 @@ from sport.forms import SportSessionForm
 from coach.mixins import JsonResponseMixin
 from mixins import CalendarSession
 from django.core.urlresolvers import reverse
+from datetime import datetime
 
 class SportSessionView(CalendarSession, JsonResponseMixin, ModelFormMixin, ProcessFormView, DateDetailView):
   form_class = SportSessionForm
@@ -11,16 +12,16 @@ class SportSessionView(CalendarSession, JsonResponseMixin, ModelFormMixin, Proce
 
   def get_form_kwargs(self, *args, **kwargs):
     self.get_object() # Load day & session
-
     return {
       'instance' : self.session,
-      'multi_sports' : self.request.user.multi_sports,
       'default_sport' : self.request.user.default_sport,
       'data' : self.request.method == 'POST' and self.request.POST or None,
+      'day_date' : self.day,
     }
 
-  def get_context_data(self, *args, **kwargs):
+  def get_context_data(self, extra=None, *args, **kwargs):
     context = super(SportSessionView, self).get_context_data(*args, **kwargs)
+    context['now'] = datetime.now()
 
     # Url for edit or add ?
     args = [self.day.year, self.day.month, self.day.day]
@@ -29,6 +30,10 @@ class SportSessionView(CalendarSession, JsonResponseMixin, ModelFormMixin, Proce
       args += [self.session.pk, ]
       base = 'sport-session-edit'
     context['form_url'] = reverse(base, args=args)
+
+    # Override form data
+    if extra:
+      context.update(extra)
 
     return context
 
@@ -42,9 +47,10 @@ class SportSessionView(CalendarSession, JsonResponseMixin, ModelFormMixin, Proce
     session.save()
 
     # Configure output
-    self.reload_box()
+    #self.reload_box()
 
-    return self.render_to_response({})
+    context = self.get_context_data(extra={'form' : form, 'saved' : True})
+    return self.render_to_response(context)
 
 class SportSessionDelete(CalendarSession, JsonResponseMixin, DeleteView, DateDetailView):
   template_name = 'sport/session/delete.html'

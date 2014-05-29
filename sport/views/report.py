@@ -2,7 +2,7 @@ from django.views.generic import WeekArchiveView
 from helpers import week_to_date, check_task
 from sport.models import SportWeek, SportSession, Sport, SESSION_TYPES
 from datetime import datetime
-from sport.forms import SportWeekForm, SportDayForm
+from sport.forms import SportWeekForm, SportSessionForm
 from sport.tasks import publish_report
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
@@ -55,13 +55,25 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
 
   def get_dated_forms(self):
     '''
-    Build a form per day and per SportDay instance
+    Build a form per session and per SportSession instance
+    Sorted by days
     Much more easier than dealing with a dynamic model formset
     '''
+    default_sport = self.request.user.default_sport
+    post_data = self.request.method == 'POST' and self.request.POST or None
     forms = {}
     for day_date in self.week.get_dates():
-      post_data = self.request.method == 'POST' and self.request.POST or None
-      forms[day_date] = SportDayForm(post_data, week=self.week, date=day_date, instance=self.days[day_date])
+
+      sport_day = self.days[day_date]
+      if sport_day and sport_day.sessions.count() > 0: 
+        # Load existing sessions
+        day_forms = [SportSessionForm(default_sport, day_date, post_data, instance=s) for s in sport_day.sessions.all() ]
+      else:
+        # At least one empty form
+        day_forms = [SportSessionForm(default_sport, day_date, post_data) ]
+
+      forms[day_date] = day_forms
+
     return forms
 
   def get_context_data(self, **kwargs):

@@ -76,13 +76,8 @@ span.type {
 					{% endif %}
 				</p>
 				{% if session %}
-          {% if session.name %}
-          <p>
-            {{session.name}}
-          </p>
-          {% endif %}
           {% for s in session.sessions.all() %}
-          <p class="session {{ session.type }}">
+          <p class="session {{ s.type }}">
             <i class="icon-sport-{{s.sport.slug}}"></i> {{ s.name|default('...') }}
           </p>
           {% endfor %}

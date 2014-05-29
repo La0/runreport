@@ -1,0 +1,31 @@
+{% extends 'modal.html' %}
+
+{% set modal_title = '%s : %s' % (day|date('l d E Y')|title(), session.pk and 'Edition de séance' or 'Ajouter une séance') %}
+
+{% block body %}
+  {% with form.non_field_errors() as err %}
+  {% if err %}
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="alert alert-danger">
+        {{ err|safe }}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  {% endwith %}
+  {{ macros.sport_session(form) }}
+  {{ macros.input(form.name, 'Séance', false, 4, 8) }}
+  {{ macros.input(form.time, 'Temps', false, 4, 8) }}
+  {{ macros.input(form.distance, 'Distance', false, 4, 8) }}
+  {{ macros.input(form.comment, 'Commentaire', false, 4, 8) }}
+{% endblock %}
+
+{% block footer %}
+<button class="btn btn-default btn-sm" data-dismiss="modal">Fermer</button>
+{% if session.pk %}
+<a class="modal-action btn btn-danger btn-sm" href="{% url sport-session-delete day.year, day.month, day.day, session.pk %}">Supprimer</a>
+{% endif %}
+<input class="btn btn-primary btn-sm" type="submit" value="Sauvegarder">
+{% endblock %}
+

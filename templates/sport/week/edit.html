@@ -10,9 +10,25 @@ $(function(){
 <div class="container">
 
   {% for day in report.get_dates() %}
-  {% with forms[day] as form %}
-  {% include 'sport/day/_edit.html' %}
-  {% endwith %}
+    {% if day == now.date() %}
+    <legend>Aujourd'hui - {{ day|date('l d E')|title }}</legend>
+    {% else %}
+    <legend>{{ day|date('l d E')|title }}</legend>
+    {% endif %}
+
+    <div id="sessions-{{day}}">
+    {% for form in forms[day] %}
+    {% include 'sport/session/edit.html' %}
+    {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class="col-sm-10 col-sm-offset-2">
+        <a href="{% url sport-session-add day.year, day.month, day.day %}" class="modal-action btn btn-default btn-sm extra-sport-add" data-append="sessions-{{day}}">
+          <i class="icon-plus"></i> Ajouter une séance
+        </a>
+      </div>
+    </div>
   {% endfor %}
 
   <div class="panel panel-default">

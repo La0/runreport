@@ -12,7 +12,7 @@ from . import SESSION_TYPES
 from .sport import SportSession
 
 class SportWeek(models.Model):
-  user = models.ForeignKey(Athlete)
+  user = models.ForeignKey(Athlete, related_name='sportweek')
   year = models.IntegerField(default=2013)
   week = models.IntegerField(default=0)
   published = models.BooleanField(default=False)
@@ -182,29 +182,22 @@ class SportWeek(models.Model):
 class SportDay(models.Model):
   week = models.ForeignKey('SportWeek', related_name='days')
   date = models.DateField()
-  name = models.CharField(max_length=255, null=True, blank=True)
-  comment = models.TextField(null=True, blank=True)
-  type = models.CharField(max_length=12, default='training', choices=SESSION_TYPES)
   sports = models.ManyToManyField('Sport', through='SportSession')
   plan_session = models.ForeignKey('plan.PlanSession', null=True, blank=True)
-  race_category = models.ForeignKey('RaceCategory', null=True, blank=True)
 
-  # Keep the references on time & distance for db migrations
+  # Keep the references for db migrations
   # Remove after multi sports migrations
+  name = models.CharField(max_length=255, null=True, blank=True)
+  comment = models.TextField(null=True, blank=True)
   time = models.TimeField(null=True, blank=True)
   distance = models.FloatField(null=True, blank=True)
+  type = models.CharField(max_length=12, default='training', choices=SESSION_TYPES)
+  race_category = models.ForeignKey('RaceCategory', null=True, blank=True)
 
   class Meta:
     unique_together = (('week', 'date'),)
     db_table = 'sport_day'
     app_label = 'sport'
-
-  def save(self, *args, **kwargs):
-    # No race category when we are not in race
-    if self.type != 'race':
-      self.race_category = None
-
-    super(SportDay, self).save(*args, **kwargs)
 
   def sports_count(self):
     # List sports usage in this day

@@ -149,7 +149,14 @@ function load_modal(evt){
   data = null;
   if(this.hasAttribute('data-action'))
     data = { 'action' : this.getAttribute('data-action')};
-  load_box(url, method, data, 'modal');
+
+  // Append target ?
+  target = 'modal';
+  if(this.hasAttribute('data-append')){
+    target = $('<div/>', {'class': 'appended'});
+    $('#' + this.getAttribute('data-append')).append(target)
+  }
+  load_box(url, method, data, target);
   return false;
 }
 

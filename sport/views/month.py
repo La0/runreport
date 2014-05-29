@@ -3,7 +3,6 @@ from django.views.generic.dates import MonthMixin, YearMixin
 from django.views.generic.edit import ModelFormMixin, ProcessFormView
 from django.http import Http404
 from sport.models import SportDay, SportWeek, SESSION_TYPES
-from sport.forms import SportDayForm
 from datetime import datetime, date
 import calendar
 import collections

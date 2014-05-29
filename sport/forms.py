@@ -20,84 +20,30 @@ class SportSessionForm(forms.ModelForm):
 
   class Meta:
     model = SportSession
-    fields = ('sport', 'distance', 'time', 'name', 'comment')
+    fields = ('sport', 'distance', 'time', 'name', 'comment', 'type', 'race_category')
     widgets = {
       'sport' : forms.HiddenInput(),
+      'type' : forms.HiddenInput(),
     }
 
-  def __init__(self, multi_sports, default_sport, *args, **kwargs):
+  def __init__(self, default_sport=None, day_date=None, *args, **kwargs):
+    self.day_date = day_date
     super(SportSessionForm, self).__init__(*args, **kwargs)
 
-    self.sports = []
-    if multi_sports:
-      # Load only sports of depth 1 for this form
-      self.sports = Sport.objects.filter(depth=1)
-      self.fields['sport'].queryset = self.sports
-    else:
-      # No sport choice when multi_sports is disabled
-      del self.fields['sport']
+    # Load only sports of depth 1 for this form
+    self.sports = Sport.objects.filter(depth=1)
+    self.fields['sport'].queryset = self.sports
 
     # Apply default sport to instance
     if not hasattr(self.instance, 'sport'):
       self.instance.sport = default_sport
 
   def clean(self, *args, **kwargs):
-    super(SportSessionForm, self).clean(*args, **kwargs)
+    data = super(SportSessionForm, self).clean(*args, **kwargs)
 
-    if 'distance' in self.cleaned_data and self.cleaned_data['distance'] is None \
-      and 'time' in self.cleaned_data and self.cleaned_data['time'] is None:
-      raise forms.ValidationError('Spécifiez une distance ou un temps pour ajouter un sport.')
-
-    return self.cleaned_data
-
-
-class SportDayForm(forms.ModelForm):
-  nb_extras = 4
-  session = None
-
-  class Meta:
-    model = SportDay
-    fields = ('name', 'comment', 'type', 'race_category')
-    widgets = {
-      'type' : forms.HiddenInput(),
-    }
-
-  def __init__(self, data=None, week=None, date=None, *args, **kwargs):
-    self.week = week
-    self.date = date
-
-    # Base init
-    super(SportDayForm, self).__init__(data, *args, **kwargs)
-
-    # We need a unique SportSessionForm when:
-    # * multi_sports is disabled
-    # * maximum one SportSession exists
-    # That's the easy editing mode
-    multi_sports = self.week.user.multi_sports
-    nb_sessions = self.instance.sessions.count()
-    if not multi_sports and (not self.instance.pk or nb_sessions <= 1):
-      instance = nb_sessions == 1 and self.instance.sessions.all()[0] or None
-      self.session = SportSessionForm(multi_sports, self.week.user.default_sport, data, instance=instance)
-
-  def is_valid(self):
-    # Check session
-    if self.session and not self.session.is_valid():
-      return False
-
-    # Check day
-    is_valid = super(SportDayForm, self).is_valid()
-    if not is_valid:
-      return False
-
-    return True
-
-  def clean(self):
-    data = super(SportDayForm, self).clean()
-
-    # Clean Session
-    print 'Clean'
-    if self.session:
-      self.session.clean()
+    if 'distance' in data and data['distance'] is None \
+      and 'time' in data and data['time'] is None:
+      raise forms.ValidationError(u'Spécifiez une distance ou un temps pour ajouter une séance.')
 
     # Alert user about missing comment & name
     if not self.cleaned_data.get('name', None) and not self.cleaned_data.get('comment', None):
@@ -115,24 +61,7 @@ class SportDayForm(forms.ModelForm):
       if not data['race_category']:
         raise forms.ValidationError(u"Sélectionnez un type de course.")
 
-    return data
-
-  def save(self, *args, **kwargs):
-    # Save day
-    day = super(SportDayForm, self).save(commit=False, *args, **kwargs)
-    if self.week:
-      day.week = self.week
-    if self.date:
-      day.date = self.date
-    day.save()
-
-    # Save session
-    if self.session:
-      session = self.session.save(commit=False)
-      session.day = day
-      session.save()
-
-    return day
+    return self.cleaned_data
 
 class SportDayAddForm(forms.Form):
   '''

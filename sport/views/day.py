@@ -1,4 +1,4 @@
-from sport.forms import SportDayForm
+from sport.forms import SportSessionForm
 from sport.models import SportDay
 from coach.mixins import JsonResponseMixin, JSON_STATUS_ERROR
 from django.views.generic import DateDetailView
@@ -9,7 +9,7 @@ from datetime import datetime
 
 class RunCalendarDay(CalendarDay, JsonResponseMixin, ModelFormMixin, ProcessFormView, DateDetailView):
   template_name = 'sport/day/modal.html'
-  form_class = SportDayForm
+  form_class = SportSessionForm
 
   def get_template_names(self):
     '''
@@ -23,6 +23,7 @@ class RunCalendarDay(CalendarDay, JsonResponseMixin, ModelFormMixin, ProcessForm
     '''
     Gives to form SportDay & parent week, with post data
     '''
+    print 'PLOP from RunCalendarDay'
     return {
       'instance' : self.get_object(),
       'week' : self.week,

@@ -17,6 +17,7 @@ day_patterns = patterns('',
   url(r'^/session/add$', login_required(SportSessionView.as_view()), name="sport-session-add"),
   url(r'^/session/(?P<session>\d+)/edit$', login_required(SportSessionView.as_view()), name="sport-session-edit"),
   url(r'^/session/(?P<session>\d+)/delete$', login_required(SportSessionDelete.as_view()), name="sport-session-delete"),
+
 )
 
 
