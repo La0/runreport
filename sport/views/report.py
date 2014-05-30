@@ -67,10 +67,12 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
       sport_day = self.days[day_date]
       if sport_day and sport_day.sessions.count() > 0: 
         # Load existing sessions
-        day_forms = [SportSessionForm(default_sport, day_date, post_data, instance=s) for s in sport_day.sessions.all() ]
+        sessions = sport_day.sessions.all().order_by('created')
+        day_forms = [SportSessionForm(default_sport, day_date, post_data, instance=s) for s in sessions]
       else:
         # At least one empty form
-        day_forms = [SportSessionForm(default_sport, day_date, post_data) ]
+        instance = SportSession(sport=default_sport)
+        day_forms = [SportSessionForm(default_sport, day_date, post_data, instance=instance) ]
 
       forms[day_date] = day_forms
 

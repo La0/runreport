@@ -31,8 +31,7 @@
 
 
 {% macro sport_session(form) -%}
-{{ form.id|safe }}
-<div class="col-sm-3 col-xs-12 sport">
+<div class="col-sm-2 col-xs-12 sport">
   <button class="btn btn-sm btn-warning dropdown-toggle" data-toggle="dropdown">
     <span class="name">
       {% with form.instance.sport as sport %}
@@ -52,6 +51,9 @@
     {% endfor %}
   </ul>
   {{ form.sport|safe }}
+	{% if form.sport.errors %}
+	<div class="help-block">{{form.sport.errors|safe}}</div>
+	{% endif %}
 </div>
 {%- endmacro %}
 

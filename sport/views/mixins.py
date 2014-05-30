@@ -121,13 +121,6 @@ class CalendarDay(object):
 
 class CalendarSession(CalendarDay):
 
-  def reload_box(self):
-    # COnfigure output to reload parent form box
-    self.json_options = [JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE]
-    self.json_boxes = {
-      'day-%s' % self.day : reverse('report-day-edit', args=[self.day.year, self.day.month, self.day.day]),
-    }
-
   def get_object(self):
     super(CalendarSession, self).get_object()
     # Init a session

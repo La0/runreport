@@ -1,7 +1,7 @@
 from django.views.generic.edit import ModelFormMixin, ProcessFormView, DeleteView
 from django.views.generic import DateDetailView
 from sport.forms import SportSessionForm
-from coach.mixins import JsonResponseMixin
+from coach.mixins import JsonResponseMixin, JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML
 from mixins import CalendarSession
 from django.core.urlresolvers import reverse
 from datetime import datetime
@@ -12,6 +12,7 @@ class SportSessionView(CalendarSession, JsonResponseMixin, ModelFormMixin, Proce
 
   def get_form_kwargs(self, *args, **kwargs):
     self.get_object() # Load day & session
+    print self.request.POST
     return {
       'instance' : self.session,
       'default_sport' : self.request.user.default_sport,
@@ -46,9 +47,7 @@ class SportSessionView(CalendarSession, JsonResponseMixin, ModelFormMixin, Proce
     session.day = self.object
     session.save()
 
-    # Configure output
-    #self.reload_box()
-
+    # Render as saved
     context = self.get_context_data(extra={'form' : form, 'saved' : True})
     return self.render_to_response(context)
 
@@ -57,9 +56,12 @@ class SportSessionDelete(CalendarSession, JsonResponseMixin, DeleteView, DateDet
 
   def delete(self, *args, **kwargs):
     '''
-    Delete session, then reload parent box
+    Delete session, then reload
     '''
     self.get_object()
     self.session.delete()
-    self.reload_box()
+
+    # Configure output to reload page
+    self.json_options = [JSON_OPTION_NO_HTML, JSON_OPTION_BODY_RELOAD]
+
     return self.render_to_response({})
