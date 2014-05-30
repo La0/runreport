@@ -34,6 +34,8 @@ class SportSession(models.Model):
   comment = models.TextField(null=True, blank=True)
   type = models.CharField(max_length=12, default='training', choices=SESSION_TYPES)
   race_category = models.ForeignKey('RaceCategory', null=True, blank=True)
+  created = models.DateTimeField(auto_now_add=True)
+  updated = models.DateTimeField(auto_now=True)
 
   class Meta:
     db_table = 'sport_session'
