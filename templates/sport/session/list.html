@@ -1,17 +1,32 @@
 {% if sessions %}
 {% for session in sessions.all() %}
 <div class="sport-session row hidden-xs">
-  <div class="{% if modal %}col-sm-3{% else %}col-sm-2{% endif %}">
+  <div class="col-sm-6">
     <i class="icon-sport-{{session.sport.slug}}"></i>
-    <span>{{ session.sport.name }}</span>
-  </div>
 
-  <div class="col-sm-2">
-    {% if session.name %}
-    <strong>{{session.name}}</strong>
-    {% else %}
-    <i class="text-muted">Pas de nom</i>
+    {% if session.has_garmin() %}
+    <i class="icon-location"></i>
     {% endif %}
+
+    {% if session.type == 'training' %}
+    <span class="label label-info">Entrainement</span>
+    {% elif session.type == 'race' %}
+    <span class="label label-success">Course</span>
+    {% else %}
+    <span class="label label-default">Repos</span>
+    {% endif %}
+
+    {% if member %}
+    <a href="{% url club-member-day club.slug, member.username, session.day.date.year, session.day.date.month, session.day.date.day %}" class="modal-action">
+    {% else %}
+    <a href="{% url report-day session.day.date.year, session.day.date.month, session.day.date.day %}" class="modal-action">
+    {% endif %}
+      {% if session.name %}
+      {{session.name}}</strong>
+      {% else %}
+      <i>Pas de nom</i>
+      {% endif %}
+    </a>
   </div>
 
   <div class="col-sm-2">
@@ -34,25 +49,15 @@
   {% endif %}
   </div>
 
-  {% if not modal %}
-  <div class="col-sm-2">
+  <div class="col-sm-12 comment">
   {% if session.comment%}
-    {{session.comment|truncatechars(15)}}
+    {{session.comment|linebreaksbr()}}
   {% else %}
     <i class="text-muted">Pas de commentaire</i>
   {% endif %}
   </div>
-  {% endif %}
 
-  <div class="col-sm-3">
-    <a class="modal-action btn btn-info btn-xs" href="{% url sport-session-edit day.year, day.month, day.day, session.pk %}">Editer</a>
-    <a class="modal-action btn btn-danger btn-xs" href="{% url sport-session-delete day.year, day.month, day.day, session.pk %}">Supprimer</a>
-  </div>
 </div>
-
-{% with session as sport_session %}
-{% include '_garmin.html' %}
-{% endwith %}
 
 <div class="row visible-xs">
   <div class="col-xs-5">

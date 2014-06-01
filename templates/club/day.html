@@ -5,17 +5,6 @@
 
 {% block body %}
 {% if session %}
-<h4>
-  {% if session.type == 'training' %}
-  <span class="label label-info">Entrainement</span>
-  {% elif session.type == 'race' %}
-  <span class="label label-success">Course</span>
-  {% else %}
-  <span class="label label-default">Repos</span>
-  {% endif %}
-  {{ session.name|default('Session sans nom') }}
-</h4>
-<p>{{ session.comment|default('Pas de commentaire')|linebreaksbr }}</p>
 
 {% with session.sessions as sessions %}
 {% include 'sport/session/list.html' %}

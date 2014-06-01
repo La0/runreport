@@ -19,16 +19,6 @@
 			</div>
 			<div class="col-sm-10">
 				{% if session %}
-        {% if session.type == 'training' %}
-        <span class="label label-info">Entrainement</span>
-        {% elif session.type == 'race' %}
-        <span class="label label-success">Course</span>
-        {% else %}
-        <span class="label label-default">Repos</span>
-        {% endif %}
-				<strong>{{session.name|default('Session sans nom')}}</strong><br />
-				{{session.comment|default('Pas de commentaire')|linebreaksbr}}
-
 				{% if session.plan_session %}
 				<div>
 					<span class="label label-warning">Plan d'entraînement</span> {{ session.plan_session.week.plan.name }}

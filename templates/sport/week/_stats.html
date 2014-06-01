@@ -20,7 +20,7 @@
           {{ time|total_time() }}
         </td>
         <td>
-          {{ distance|default(0) }} km.
+          {{ distance|default(0)|floatformat(2) }} km.
         </td>
       {% endfor %}
       </tr>

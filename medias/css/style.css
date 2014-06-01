@@ -281,4 +281,11 @@ a.btn {
 }
 
 div.week div.day div.sport-session {
+  margin-bottom: 5px;
+}
+
+div.comment {
+  padding-left: 10px;
+  margin-left: 25px;
+  border-left: 2px solid #CCC;
 }
