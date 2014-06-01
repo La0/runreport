@@ -118,11 +118,17 @@ class Migration(SchemaMigration):
         },
         'sport.sportsession': {
             'Meta': {'object_name': 'SportSession', 'db_table': "'sport_session'"},
+            'comment': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'day': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'sessions'", 'to': "orm['sport.SportDay']"}),
             'distance': ('django.db.models.fields.FloatField', [], {'null': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'race_category': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['sport.RaceCategory']", 'null': 'True', 'blank': 'True'}),
             'sport': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['sport.Sport']"}),
-            'time': ('django.db.models.fields.TimeField', [], {'null': 'True', 'blank': 'True'})
+            'time': ('django.db.models.fields.TimeField', [], {'null': 'True', 'blank': 'True'}),
+            'type': ('django.db.models.fields.CharField', [], {'default': "'training'", 'max_length': '12'}),
+            'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'})
         },
         'sport.sportweek': {
             'Meta': {'unique_together': "(('user', 'year', 'week'),)", 'object_name': 'SportWeek', 'db_table': "'sport_week'"},
