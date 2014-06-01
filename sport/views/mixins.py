@@ -5,6 +5,7 @@ from django.http import Http404
 from django.core.urlresolvers import reverse
 from helpers import week_to_date, date_to_day, date_to_week
 from sport.models import SportWeek, SportDay, SportSession, SESSION_TYPES
+from sport.forms import SportSessionForm
 
 class CurrentWeekMixin(object):
   '''
@@ -135,3 +136,21 @@ class CalendarSession(CalendarDay):
     context = super(CalendarSession, self).get_context_data(*args, **kwargs)
     context['session'] = self.session
     return context
+
+class SportSessionForms(object):
+
+  def get_sessions_forms(self, date, day=None):
+    '''
+    Build SportSessionForm instances for a day
+    '''
+    default_sport = self.request.user.default_sport
+    post_data = self.request.method == 'POST' and self.request.POST or None
+
+    # Load existing sessions
+    if day and day.sessions.count() > 0:
+      sessions = day.sessions.all().order_by('created')
+      return [SportSessionForm(default_sport, date, post_data, instance=s) for s in sessions]
+
+    # At least one empty form
+    instance = SportSession(sport=default_sport)
+    return [SportSessionForm(default_sport, date, post_data, instance=instance) ]

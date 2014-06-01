@@ -12,7 +12,6 @@ class SportSessionView(CalendarSession, JsonResponseMixin, ModelFormMixin, Proce
 
   def get_form_kwargs(self, *args, **kwargs):
     self.get_object() # Load day & session
-    print self.request.POST
     return {
       'instance' : self.session,
       'default_sport' : self.request.user.default_sport,

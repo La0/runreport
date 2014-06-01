@@ -6,9 +6,9 @@ from sport.forms import SportWeekForm, SportSessionForm
 from sport.tasks import publish_report
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
-from mixins import WeekPaginator, CurrentWeekMixin
+from mixins import WeekPaginator, CurrentWeekMixin, SportSessionForms
 
-class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
+class WeeklyReport(SportSessionForms, CurrentWeekMixin, WeekArchiveView, WeekPaginator):
   template_name = 'sport/week/base.html'
   week_format = '%W'
   date_field = 'date'
@@ -59,22 +59,9 @@ class WeeklyReport(CurrentWeekMixin, WeekArchiveView, WeekPaginator):
     Sorted by days
     Much more easier than dealing with a dynamic model formset
     '''
-    default_sport = self.request.user.default_sport
-    post_data = self.request.method == 'POST' and self.request.POST or None
     forms = {}
     for day_date in self.week.get_dates():
-
-      sport_day = self.days[day_date]
-      if sport_day and sport_day.sessions.count() > 0: 
-        # Load existing sessions
-        sessions = sport_day.sessions.all().order_by('created')
-        day_forms = [SportSessionForm(default_sport, day_date, post_data, instance=s) for s in sessions]
-      else:
-        # At least one empty form
-        instance = SportSession(sport=default_sport)
-        day_forms = [SportSessionForm(default_sport, day_date, post_data, instance=instance) ]
-
-      forms[day_date] = day_forms
+      forms[day_date] = self.get_sessions_forms(day_date, self.days[day_date])
 
     return forms
 

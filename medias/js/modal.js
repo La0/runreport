@@ -72,7 +72,7 @@ function submit_form(evt){
   var data = $(this).serialize();
 
   // Send data
-  output = $(this).hasClass('box') ? 'box' : 'modal';
+  output = $(this).hasClass('box') ? $(this) : 'modal';
   load_box(this.getAttribute('action'), 'POST', data, output);
   return false;
 }

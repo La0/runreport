@@ -42,7 +42,7 @@
         <div class="col-sm-4 col-xs-12">
           <button type="submit" class="pull-right btn btn-sm btn-primary" >Sauver la séance <i class="icon-right-open"></i></button>
           {% if form.instance.pk %}
-          <a href="{% url sport-session-delete day.year, day.month, day.day, form.instance.pk %}" class="modal-action pull-right btn btn-sm btn-danger">Supprimer</a>
+          <a href="{% url sport-session-delete day.year, day.month, day.day, form.instance.pk %}" class="modal-action pull-right btn btn-sm btn-danger"><i class="icon-trash"></i> Supprimer</a>
           {% endif %}
         </div>
       </div>

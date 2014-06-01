@@ -2,20 +2,20 @@
 
 {% set modal_title = day|date('l d E Y')|title() %}
 
-{% set form_url = "report-day"|url(day.year, day.month, day.day) %}
 {% set form_class = "day" %}
 
 {% block body %}
   {% with True as modal %}
-    {% include 'sport/day/_form.html' %}
+  {% for form in forms %}
+    {% include 'sport/session/edit.html' %}
+  {% endfor %}
   {% endwith %}
 {% endblock %}
 
 {% block footer %}
 {% if session.pk %}
-<a href="{% url report-day-delete day.year, day.month, day.day %}" class="pull-left btn btn-danger btn-sm modal-action"><i class="icon-trash"></i> Supprimer</a>
+<a href="{% url report-day-delete day.year, day.month, day.day %}" class="pull-left btn btn-danger btn-sm modal-action"><i class="icon-trash"></i> Supprimer la journée</a>
 {% endif %}
 <button class="btn btn-default btn-sm" data-dismiss="modal">Fermer</button>
 <a href="{{ report.get_absolute_url() }}" class="btn btn-success btn-sm">Voir cette semaine</a>
-<input class="btn btn-primary btn-sm" type="submit" value="Sauvegarder">
 {% endblock %}
