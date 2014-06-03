@@ -131,8 +131,5 @@ class WeeklyReport(SportSessionForms, CurrentWeekMixin, WeekArchiveView, WeekPag
       self.week.task = task.id
       self.week.save()
 
-    # Redirect to lose POST on valid action
-    if redirect:
-      return HttpResponseRedirect(self.week.get_absolute_url())
     return self.render_to_response(context)
 

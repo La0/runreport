@@ -144,7 +144,7 @@ class SportSessionForms(object):
     Build SportSessionForm instances for a day
     '''
     default_sport = self.request.user.default_sport
-    post_data = self.request.method == 'POST' and self.request.POST or None
+    post_data = None # No need for POST, as the action is on another url
 
     # Load existing sessions
     if day and day.sessions.count() > 0:
