@@ -1,5 +1,5 @@
 {% if sessions %}
-{% for session in sessions.all() %}
+{% for session in sessions.order_by('created') %}
 <div class="sport-session row hidden-xs">
   <div class="col-sm-6">
     <i class="icon-sport-{{session.sport.slug}}"></i>

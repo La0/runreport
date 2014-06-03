@@ -7,9 +7,10 @@ $(function(){
 });
 </script>
 
-<div class="container">
+<div class="container week">
 
   {% for day in report.get_dates() %}
+  <div class="day {% if day == now.date() %}today{% endif %}" id="day-{{ day }}">
     {% if day == now.date() %}
     <legend>Aujourd'hui - {{ day|date('l d E')|title }}</legend>
     {% else %}
@@ -19,6 +20,7 @@ $(function(){
     <div id="sessions-{{day}}">
     {% for form in forms[day] %}
     {% include 'sport/session/edit.html' %}
+    {% if not loop.last %}<hr />{% endif %}
     {% endfor %}
     </div>
 
@@ -29,6 +31,7 @@ $(function(){
         </a>
       </div>
     </div>
+  </div>
   {% endfor %}
 
   <div class="panel panel-default">
