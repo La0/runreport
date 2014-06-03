@@ -35,6 +35,9 @@ class SportSessionView(CalendarSession, JsonResponseMixin, ModelFormMixin, Proce
     if extra:
       context.update(extra)
 
+    # Modal from form ?
+    context['modal'] = 'modal' in self.request.POST
+
     return context
 
   def form_valid(self, form):

@@ -6,6 +6,9 @@
 <form id="session-{{day}}-add" method="post" action="{% url sport-session-add day.year, day.month, day.day %}" class="form-horizontal report box">
 {% endif %}
   {% csrf_token %}
+  {% if modal %}
+  <input type="hidden" name="modal" value="true" />
+  {% endif %}
 
   {% if saved %}
   <div class="alert alert-success">
