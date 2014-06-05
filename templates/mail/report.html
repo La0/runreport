@@ -16,14 +16,14 @@
     {% with sessions[day] as session %}
     <td width="400">
       {% if session %}
-      {% if session.name %}
-      <strong>{{session.name}}</strong><br />
-      {% endif %}
-      {{session.comment|default('')|linebreaksbr}}
-
       {% for s in session.sessions.all() %}
       <div>
-        <strong>{{s.sport.name}}</strong>
+        <strong>{{s.sport.name}} : {{s.name}}</strong>
+        {% if s.comment %}
+        <p>
+        {{s.comment|linebreaksbr}}
+        </p>
+        {% endif %}
         {% if s.time %}
         <span class="label">Temps</span> {{s.time}}
         {% endif %}

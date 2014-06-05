@@ -103,10 +103,15 @@ class SportWeek(models.Model):
       if not sess:
         i += 1
         continue
-      if sess.name:
-        content.append('%s :' % (sess.name,))
-      if sess.comment:
-        content.append(sess.comment)
+
+      # Sessions listing
+      for s in sess.sessions.all().order_by('created'):
+        if s.name:
+          content.append('%s - %s :' % (s.sport.name, s.name,))
+        if s.comment:
+          content.append(s.comment)
+
+      # Add week comment
       if i == 6 and self.comment:
         content.append('Bilan de la semaine :')
         content.append(self.comment)
