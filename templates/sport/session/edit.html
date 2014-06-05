@@ -28,6 +28,29 @@
   {{ macros.input(form.comment, 'Commentaire') }}
   {{ macros.race_category(form) }}
 
+  {% if form.instance.has_garmin() %}
+  {% with form.instance.garmin_activity as act %}
+  <div class="form-group row">
+    <label class="control-label col-sm-2 hidden-xs"><i class="icon-location"></i> Garmin</label>
+    <div class="col-sm-3 col-xs-6">
+      <div class="input-group ">
+        <span class="input-group-addon input-sm">Temps</span>
+        <input class="form-control input-sm" disabled="disabled" value="{{ act.time }}" />
+      </div>
+    </div>
+    <div class="col-sm-3 col-xs-6">
+      <div class="input-group ">
+        <span class="input-group-addon input-sm">Distance</span>
+        <input class="form-control input-sm" disabled="disabled" value="{{ act.distance|default(0)|floatformat(2)}} km" />
+      </div>
+    </div>
+    <div class="col-sm-4 col-xs-12 actions">
+      <a href="{{ act.get_url() }}" target="_blank" class="pull-right btn btn-sm btn-success">Détails <i class="icon-right-open"></i></a>
+    </div>
+  </div>
+  {% endwith %}
+  {% endif %}
+
   <div class="form-group row">
     {% if modal %}
     <div class="col-xs-12">

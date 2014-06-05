@@ -1,4 +1,6 @@
 <div class="container week">
+  <h2>Semaine du {{ report.get_date_start()|date('l d E')|title() }} au {{ report.get_date_end()|date('l d E')|title() }}</h2>
+
 	{% if trainer %}
 	<p class="alert alert-success">
 		Ce rapport a bien été envoyé à {{trainer.first_name|default(trainer.username)}}
@@ -35,15 +37,19 @@
 		{% endwith %}
 		{% endfor %}
 	</div>
-	<h4>Bilan de la semaine</h4>
-	{% if report.comment %}
-	<p>
-		<strong>Commentaire:</strong> {{ report.comment }}
-	</p>
-	{% endif %}
 
-  {% with report.get_sports_stats() as stats %}
-  {% include 'sport/week/_stats.html' %}
-  {% endwith %}
+    <div>
+      {% if report.comment %}
+      <h4>Bilan de la semaine</h4>
+      <p>
+        <strong>Commentaire:</strong> {{ report.comment }}
+      </p>
+      {% endif %}
+
+      {% with report.get_sports_stats() as stats %}
+      {% include 'sport/week/_stats.html' %}
+      {% endwith %}
+    </div>
+  </div>
 
 </div>

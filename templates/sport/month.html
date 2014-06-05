@@ -78,7 +78,11 @@ span.type {
 				{% if session %}
           {% for s in session.sessions.all() %}
           <p class="session {{ s.type }}">
-            <i class="icon-sport-{{s.sport.slug}}"></i> {{ s.name|default('...') }}
+            <i class="icon-sport-{{s.sport.slug}}"></i>
+            {% if s.has_garmin() %}
+            <i class="icon-location"></i>
+            {% endif %}
+            {{ s.name|default('...') }}
           </p>
           {% endfor %}
 				{% if session.plan_session %}
