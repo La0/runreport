@@ -58,7 +58,8 @@ def syncdb(update=False):
     get(prod_dump, local_dump)
 
   # Re create db & load dump
-  local('./manage.py syncdb --noinput --migrate')
+  local('./manage.py syncdb --noinput --all')
+  local('./manage.py migrate --fake')
   local('./manage.py loaddata %s' % local_dump)
   os.remove(local_dump)
 
