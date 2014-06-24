@@ -30,14 +30,14 @@
 			<div class="head">
 				<a href="{{ pagemonth|url(*pageargs + [days[0].year, days[0].month]) }}" >{{ days[0]|date('F')|title() }}</a>
 			</div>
-			{% for day in days %}
-			{% with object_list[day] as session %}
-			<div class="day modal-action" href="{{ pageday|url(*pageargs + [day.year, day.month, day.day]) }}">
-				<span class="date">{{ day.day }}</span>
-				{% if session %}
-        <span class="name {% if session %}session {{ session.type }}{% endif %}">
-          {{ session.name}}
-          {% for sport, count in session.sports_count() %}
+			{% for day_date in days %}
+			{% with object_list[day_date] as day %}
+			<div class="day modal-action" href="{{ pageday|url(*pageargs + [day_date.year, day_date.month, day_date.day]) }}">
+				<span class="date">{{ day_date.day }}</span>
+				{% if day %}
+        <span class="name {% if day %}session {{ day.best_type() }}{% endif %}">
+          {{ day.name}}
+          {% for sport, count in day.sports_count() %}
           <i class="icon-sport-{{sport.slug}}"></i>{% if count > 1 %}x {{ count }}{% endif %}
           {% endfor %}
         </span>
@@ -58,25 +58,9 @@
         <a href="{% url report-month month_date.year, month_date.month %}" class="btn btn-sm btn-info pull-right">Voir ce mois</a>
       </h3>
 			<div class="row-striped">
-	      {% for day in days %}
-	      {% with object_list.get(day, None) as session %}
-	      {% if session %}
-	      <div class="modal-action" href="{{pageday|url(*pageargs + [day.year, day.month, day.day])}}">
-	        <strong>{{day|date('l d')|title()}}</strong>
-	        <div>
-	          <span class="type {{ session.type }}"></span>
-	          {{session.name|default('Session sans nom')}}
-            {% for sport, count in session.sports_count() %}
-            <i class="icon-sport-{{sport.slug}}"></i>{% if count > 1 %}x {{ count }}{% endif %}
-            {% endfor %}
-	        </div>
-	        {% if session.plan_session %}
-	        <div>
-	          <i class="icon-tags"> </i> {{ session.plan_session.week.plan.name|truncate(10) }}
-	        </div>
-	        {% endif %}
-	      </div>
-	      {% endif %}
+	      {% for day_date in days %}
+	      {% with object_list.get(day_date, None) as day %}
+        {% include 'sport/calendar/_day.xs.html' %}
 	      {% endwith %}
 	      {% endfor %}
 			</div>

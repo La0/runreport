@@ -60,16 +60,22 @@
     {% endif %}
 
       <div class="form-group sport-session row">
-        {{ macros.sport_session(form) }}
+        <div class="col-sm-2 hidden-xs">
+          {{ macros.sport_session(form) }}
+        </div>
 
         {{ macros.input_prepend(form.time, 'Temps') }}
         {{ macros.input_prepend(form.distance, 'Distance') }}
 
         <div class="col-sm-4 col-xs-12 actions">
-          <button type="submit" class="pull-right btn btn-sm btn-primary" >Sauver {% if not modal %}la séance {% endif %}<i class="icon-right-open"></i></button>
+          <button type="submit" class="pull-right btn btn-sm btn-primary" >Sauver<span class="hidden-xs"> {% if not modal %}la séance {% endif %}</span><i class="icon-right-open"></i></button>
           {% if form.instance.pk %}
-          <a href="{% url sport-session-delete day.year, day.month, day.day, form.instance.pk %}" class="modal-action pull-right btn btn-sm btn-danger"><i class="icon-trash"></i>{% if not modal %}Supprimer{% endif %}</a>
+          <a href="{% url sport-session-delete day.year, day.month, day.day, form.instance.pk %}" class="modal-action pull-right btn btn-sm btn-danger"><i class="icon-trash"></i><span class="hidden-xs">{% if not modal %}Supprimer{% endif %}</span></a>
           {% endif %}
+
+          <div class="visible-xs">
+            {{ macros.sport_session(form) }}
+          </div>
         </div>
       </div>
     </div>

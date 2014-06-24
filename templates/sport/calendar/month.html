@@ -99,26 +99,10 @@ span.type {
 	</table>
 
 	<div class="visible-xs row-striped">
-		{% for day in sessions %}
-		{% with sessions[day] as session %}
-		<div class="row modal-action" href="{{pageday|url(*pageargs + [day.year, day.month, day.day])}}">
-			<div class="col-xs-12">
-				<strong>{{day|date('l d E Y')|title()}}</strong>
-				<div>
-					<span class="type {{ session.type }}"></span>
-					{{session.name|default('Session sans nom')}}
-          {% for sport, count in session.sports_count() %}
-          <i class="icon-sport-{{sport.slug}}"></i>{% if count > 1 %}x {{ count }}{% endif %}
-          {% endfor %}
-				</div>
-				{% if session.plan_session %}
-				<div>
-					<i class="icon-tags"> </i> {{ session.plan_session.week.plan.name|truncate(10) }}
-				</div>
-				{% endif %}
-			</div>
-		</div>
-		{% endwith %}
+		{% for day_date in date_list %}
+      {% with object_list.get(day_date, None) as day %}
+      {% include 'sport/calendar/_day.xs.html' %}
+      {% endwith %}
 		{% endfor %}
 	</div>
 

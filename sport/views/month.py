@@ -10,7 +10,7 @@ from coach.mixins import JsonResponseMixin, JSON_STATUS_ERROR, CsvResponseMixin
 from helpers import date_to_week
 
 class RunCalendar(MonthArchiveView):
-  template_name = 'sport/month.html'
+  template_name = 'sport/calendar/month.html'
   date_field = 'date'
   model = SportDay
   context_object_name = 'sessions'

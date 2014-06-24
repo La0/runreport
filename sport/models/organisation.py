@@ -209,6 +209,20 @@ class SportDay(models.Model):
     counts = self.sports.all().values('pk').annotate(total=Count('pk')).order_by('total')
     return [(self.sports.filter(pk=c['pk']).first(), c['total']) for c in counts]
 
+  def types_count(self):
+    # List types usage in this day
+    counts = self.sessions.values('type').annotate(total=Count('type')).order_by('total')
+    return [(c['type'], c['total']) for c in counts]
+
+  def best_type(self):
+    # Gives the best type reprensenting day
+    # Race > Training > Rest
+    types = [t[0] for t in self.types_count()]
+    for t in ('race', 'training', 'rest'):
+      if t in types:
+        return t
+    return 'rest'
+
 class RaceCategory(models.Model):
   name = models.CharField(max_length=250)
   distance = models.FloatField(null=True, blank=True)

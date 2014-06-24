@@ -8,7 +8,7 @@ import calendar
 from coach.mixins import JsonResponseMixin
 
 class ClubMemberMonth(ClubMixin, MonthArchiveView):
-  template_name = 'sport/month.html'
+  template_name = 'sport/calendar/month.html'
   date_field = 'date'
   model = SportDay
   context_object_name = 'sessions'

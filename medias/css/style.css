@@ -278,7 +278,13 @@ a.btn {
   text-decoration: none;
 }
 
-div.actions *.btn {
+@media(max-width:767px){
+  div.actions {
+    margin-top: 4px;
+  }
+}
+
+div.actions *.btn.pull-right {
   margin: 0 2px;
 }
 

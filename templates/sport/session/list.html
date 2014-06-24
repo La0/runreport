@@ -61,6 +61,7 @@
 
 <div class="row visible-xs">
   <div class="col-xs-5">
+    <span class="type {{ session.type }}"></span>
     <i class="icon-sport-{{ session.sport.slug }}"></i>
     {% if session.name %}
     <strong>{{session.name}}</strong>
@@ -74,9 +75,11 @@
   <div class="col-xs-2">
     {% if session.time %}{{ session.time }}{% else %}-{% endif %}
   </div>
+  {% if not member %}
   <div class="col-xs-1">
     <a class="modal-action btn btn-info btn-xs" href="{% url sport-session-edit day.year, day.month, day.day, session.pk %}">Editer</a>
   </div>
+  {% endif %}
 </div>
 {% endfor %}
 {% else %}

@@ -6,7 +6,7 @@ from django.http import Http404
 import collections
 
 class RunCalendarYear(YearArchiveView):
-  template_name = 'sport/year.html'
+  template_name = 'sport/calendar/year.html'
   date_field = 'date'
   model = SportDay
 
@@ -28,16 +28,16 @@ class RunCalendarYear(YearArchiveView):
       months[d.month].append(d)
       d += timedelta(days=1)
 
-    # Load sessions
-    sessions_raw = SportDay.objects.filter(week__user=self.get_user(), date__gte=date_start, date__lte=date_end)
+    # Load days
+    days_raw = SportDay.objects.filter(week__user=self.get_user(), date__gte=date_start, date__lte=date_end)
 
-    # Map sessions in dict
-    sessions = dict([(s.date, s) for s in sessions_raw])
-    sessions = collections.OrderedDict(sorted(sessions.items()))
+    # Map days in dict
+    days = dict([(s.date, s) for s in days_raw])
+    days = collections.OrderedDict(sorted(days.items()))
 
-    # List only month with active sessions
+    # List only month with active days
     # for small displays
-    months_active = set([d.date.month for d in sessions_raw])
+    months_active = set([d.date.month for d in days_raw])
 
     context = {
       'year' : year,
@@ -48,7 +48,7 @@ class RunCalendarYear(YearArchiveView):
     }
     context.update(self.get_links())
 
-    return (months, sessions, context)
+    return (months, days, context)
 
   def get_user(self):
     return self.request.user
