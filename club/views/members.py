@@ -56,8 +56,8 @@ class ClubMembers(ClubMixin, ListView):
 
     # Add last SportWeek date, as week & year
     # TODO: broken because SportWeek is in a sub directory of models ?
-    #members = members.annotate(max_report_date=Max('sportweek__days__date'))
-    #members = members.annotate(sessions_count=Count('sportweek__days'))
+    members = members.annotate(max_report_date=Max('sportweek__days__date'))
+    members = members.annotate(sessions_count=Count('sportweek__days'))
 
     # Sort members
     default_sort = 'username'

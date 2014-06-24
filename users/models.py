@@ -33,6 +33,10 @@ class AthleteBase(AbstractBaseUser, PermissionsMixin):
 
   objects = UserManager()
 
+  def get_username(self):
+    # Still use username, instead of email
+    return self.username
+
   class Meta:
     verbose_name = _('user')
     verbose_name_plural = _('users')
