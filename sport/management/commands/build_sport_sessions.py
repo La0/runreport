@@ -40,7 +40,8 @@ class Command(BaseCommand):
     # Debug
     #print '-' * 80
     #print 'Day #%d "%s" %s %s' % (day.pk, day.name, day.time, day.distance)
-    #for session in day.sessions.all():
+
+    for session in day.sessions.all():
     #  print 'Session #%d "%s" %s %s %s' % (session.pk, session.name, session.sport, session.time, session.distance)
       
       # Search for closest session
