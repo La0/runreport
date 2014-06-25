@@ -1,0 +1,83 @@
+{% import '_macros.html' as macros %}
+
+{% if form.instance and form.instance.pk %}
+<form id="session-{{day}}-{{form.instance.pk}}" method="post" action="{% url sport-session-edit day.year, day.month, day.day, form.instance.pk %}" class="form-horizontal report box">
+{% else %}
+<form id="session-{{day}}-add" method="post" action="{% url sport-session-add day.year, day.month, day.day %}" class="form-horizontal report box">
+{% endif %}
+  {% csrf_token %}
+  {% if modal %}
+  <input type="hidden" name="modal" value="true" />
+  {% endif %}
+
+  {% if saved %}
+  <div class="alert alert-success">
+    Séance enregistrée.
+  </div>
+  {% endif %}
+
+  {% with form.non_field_errors() as err %}
+  {% if err %}
+  <div class="alert alert-danger">
+    {{ err|safe }}
+  </div>
+  {% endif %}
+  {% endwith %}
+
+  {{ macros.session_types_name(form, session_types) }}
+  {{ macros.input(form.comment, 'Commentaire') }}
+  {{ macros.race_category(form) }}
+
+  {% if form.instance.has_garmin() %}
+  {% with form.instance.garmin_activity as act %}
+  <div class="form-group row">
+    <label class="control-label col-sm-2 hidden-xs"><i class="icon-location"></i> Garmin</label>
+    <div class="col-sm-3 col-xs-6">
+      <div class="input-group ">
+        <span class="input-group-addon input-sm">Temps</span>
+        <input class="form-control input-sm" disabled="disabled" value="{{ act.time }}" />
+      </div>
+    </div>
+    <div class="col-sm-3 col-xs-6">
+      <div class="input-group ">
+        <span class="input-group-addon input-sm">Distance</span>
+        <input class="form-control input-sm" disabled="disabled" value="{{ act.distance|default(0)|floatformat(2)}} km" />
+      </div>
+    </div>
+    <div class="col-sm-4 col-xs-12 actions">
+      <a href="{{ act.get_url() }}" target="_blank" class="pull-right btn btn-sm btn-success">Détails <i class="icon-right-open"></i></a>
+    </div>
+  </div>
+  {% endwith %}
+  {% endif %}
+
+  <div class="form-group row">
+    {% if modal %}
+    <div class="col-xs-12">
+    {% else %}
+    <label class="control-label col-sm-2 hidden-xs">Sport</label>
+    <div class="col-sm-10 col-xs-12">
+    {% endif %}
+
+      <div class="form-group sport-session row">
+        <div class="col-sm-2 hidden-xs">
+          {{ macros.sport_session(form) }}
+        </div>
+
+        {{ macros.input_prepend(form.time, 'Temps') }}
+        {{ macros.input_prepend(form.distance, 'Distance') }}
+
+        <div class="col-sm-4 col-xs-12 actions">
+          <button type="submit" class="pull-right btn btn-sm btn-primary" >Sauver<span class="hidden-xs"> {% if not modal %}la séance {% endif %}</span><i class="icon-right-open"></i></button>
+          {% if form.instance.pk %}
+          <a href="{% url sport-session-delete day.year, day.month, day.day, form.instance.pk %}" class="modal-action pull-right btn btn-sm btn-danger"><i class="icon-trash"></i><span class="hidden-xs">{% if not modal %}Supprimer{% endif %}</span></a>
+          {% endif %}
+
+          <div class="visible-xs">
+            {{ macros.sport_session(form) }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

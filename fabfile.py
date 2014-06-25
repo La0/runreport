@@ -47,7 +47,7 @@ def syncdb(update=False):
   if update:
     print 'Try to update Database dump'
     prod_dump = '/tmp/runreport.json'
-    apps = ('run', 'users', 'club', 'page')
+    apps = ('sport', 'users', 'club', 'page')
     with cd(FABRIC_BASE):
       with virtualenv(FABRIC_ENV):
         run('./manage.py dumpdata --indent=4 -e sessions %s > %s' % (' '.join(apps), prod_dump))
@@ -58,7 +58,8 @@ def syncdb(update=False):
     get(prod_dump, local_dump)
 
   # Re create db & load dump
-  local('./manage.py syncdb --noinput --migrate')
+  local('./manage.py syncdb --noinput --all')
+  local('./manage.py migrate --fake')
   local('./manage.py loaddata %s' % local_dump)
   os.remove(local_dump)
 

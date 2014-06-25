@@ -1,0 +1,33 @@
+{% extends 'modal.html' %}
+
+{% set modal_title = day|date('l d E Y')|title() %}
+{% set modal_width = 800 %}
+
+{% set form_class = "day" %}
+
+{% block body %}
+  <div id="sessions-{{day}}">
+  {% with True as modal %}
+  {% for form in forms %}
+    {% include 'sport/session/edit.html' %}
+    {% if not loop.last %}<hr />{% endif %}
+  {% endfor %}
+  {% endwith %}
+  </div>
+
+  <div class="row">
+    <div class="col-sm-10 col-sm-offset-2">
+      <a href="{% url sport-session-add day.year, day.month, day.day %}" class="modal-action btn btn-default btn-sm extra-sport-add" data-append="sessions-{{day}}">
+        <i class="icon-plus"></i> Ajouter une séance
+      </a>
+    </div>
+  </div>
+{% endblock %}
+
+{% block footer %}
+{% if session.pk %}
+<a href="{% url report-day-delete day.year, day.month, day.day %}" class="pull-left btn btn-danger btn-sm modal-action"><i class="icon-trash"></i> Supprimer la journée</a>
+{% endif %}
+<button class="btn btn-default btn-sm" data-dismiss="modal">Fermer</button>
+<a href="{{ report.get_absolute_url() }}" class="pull-right btn btn-info btn-sm">Voir cette semaine</a>
+{% endblock %}

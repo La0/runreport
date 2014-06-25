@@ -6,7 +6,7 @@ from helpers import week_to_date, nameize, date_to_week, date_to_day
 from base64 import b64encode
 from hashlib import md5
 from datetime import datetime, date
-from run.models import RunReport, RunSession
+from sport.models import SportWeek, SportDay
 from coach.mail import MailBuilder
 
 class Plan(models.Model):
@@ -77,7 +77,7 @@ class PlanWeek(models.Model):
   class Meta:
     unique_together = (('plan', 'order',), )
 
-  def get_days(self, start_date=None):
+  def get_dates(self, start_date=None):
     '''
     List days in plan, using day id and session
     '''
@@ -107,7 +107,7 @@ class PlanWeek(models.Model):
 
     # Init a runreport for this week
     week, year = date_to_week(start_date)
-    report, _ = RunReport.objects.get_or_create(user=user, year=year, week=week)
+    report, _ = SportWeek.objects.get_or_create(user=user, year=year, week=week)
 
     # Attach the plan week to report
     if report.plan_week is not None and report.plan_week != self:
@@ -137,17 +137,17 @@ class PlanSession(models.Model):
     d += timedelta(days=self.week.order * 7 + self.day)
     return d
 
-  def apply(self, report):
+  def apply(self, week):
     '''
-    Apply a plan session to a report day
+    Apply a plan session to a week day
     '''
-    day = report.get_date((self.day+1)%7) # in report date are stored using sunday as 0
+    day = week.get_date((self.day+1)%7) # in report date are stored using sunday as 0
     defaults = {
       'name' : self.name,
       'distance' : self.distance,
       'time' : self.time,
     }
-    session, _ = RunSession.objects.get_or_create(report=report, date=day, defaults=defaults)
+    session, _ = SportDay.objects.get_or_create(week=week, date=day, defaults=defaults)
     session.plan_session = self
     session.save()
 

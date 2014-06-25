@@ -63,14 +63,12 @@ body > footer {
 	width: 100%;
 }
 
-form.report fieldset{
-  margin-bottom: 10px;
-  padding: 5px;
+div.week div.day {
+  padding: 0 5px;
 }
-
-form.report fieldset.today {
+div.week div.day.today {
   background: rgb(245, 245, 245);
-  border-bottom: 1px solid rgb(0, 136, 204);
+  border-radius: 5px 5px;
 }
 
 form.report textarea {
@@ -81,6 +79,18 @@ form.report textarea {
 form.report div.actions.row div {
   margin-bottom: 5px;
   text-align: center;
+}
+
+form div.sport-session.extra {
+  display: none;
+}
+
+form div.sport-session.form-group{
+  margin-bottom: 2px;
+}
+
+form div.sport-session .sport {
+  margin-bottom: 4px;
 }
 
 form div.race-category {
@@ -154,9 +164,13 @@ div.modal.day div.modal-body input, div.modal.day div.modal-body textarea {
 }
 
 .garmin {
-    border-top: 1px solid #ddd;
-    margin-top: 10px;
-    padding-top: 5px;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #EEE;
+}
+
+form .garmin {
+  margin-left: 8px;
 }
 
 /* Calendar year */
@@ -262,4 +276,24 @@ img.sport {
 
 a.btn {
   text-decoration: none;
+}
+
+@media(max-width:767px){
+  div.actions {
+    margin-top: 4px;
+  }
+}
+
+div.actions *.btn.pull-right {
+  margin: 0 2px;
+}
+
+div.week div.day {
+  margin-bottom: 14px;
+}
+
+div.comment {
+  padding-left: 10px;
+  margin-left: 25px;
+  border-left: 2px solid #CCC;
 }

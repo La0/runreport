@@ -86,6 +86,7 @@ class JsonResponseMixin(object):
   """
   json_status = JSON_STATUS_OK # Response inner status
   json_options = []
+  json_boxes = {}
 
   def render_to_response(self, context):
     # Render normally html, using parents code
@@ -100,6 +101,7 @@ class JsonResponseMixin(object):
     data = {
       'status' : self.json_status,
       'options' : self.json_options,
+      'boxes' : self.json_boxes,
     }
 
     # Add optional datas

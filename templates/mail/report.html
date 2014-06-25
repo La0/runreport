@@ -10,33 +10,36 @@
     <td colspan="2">Semaine {{ week_human }} du <a href="{{ base_uri }}
 {% url club-member-week club.slug, report.user.username, report.year, report.week %}">{{ report.get_date_start()|date("l d E") }} au {{ report.get_date_end()|date("l d E") }}</a></td>
   </tr>
-  {% for day in report.get_days() %}
+  {% for day in report.get_dates() %}
   <tr class="session">
     <td width="150">{{day|date('l d E')}}</td>
     {% with sessions[day] as session %}
     <td width="400">
       {% if session %}
-      {% if session.name %}
-      <strong>{{session.name}}</strong><br />
-      {% endif %}
-      {{session.comment|default('')|linebreaksbr}}
-      {% if session.time or session.distance %}
+      {% for s in session.sessions.all() %}
       <div>
-        {% if session.time %}
-        <span class="label">Temps</span> {{session.time}}
+        <strong>{{s.sport.name}} : {{s.name}}</strong>
+        {% if s.comment %}
+        <p>
+        {{s.comment|linebreaksbr}}
+        </p>
         {% endif %}
-        {% if session.distance %}
-        <span class="label">Distance</span> {{session.distance}} km
+        {% if s.time %}
+        <span class="label">Temps</span> {{s.time}}
         {% endif %}
-      </div>
-      {% endif %}
-      {% for activity in session.garmin_activities.all() %}
-      <div class="garmin pull-right">
-        Garmin : <a href="{{ activity.get_url() }}" target="_blank">{{ activity.name }}</a>
-        <span>&bull;</span>
-        {{ activity.distance|floatformat(2) }} km en {{ activity.time }}
-        <span>&bull;</span>
-        <span>{{ activity.speed|date('i:s') }} min/km</span>
+        {% if s.distance %}
+        <span class="label">Distance</span> {{s.distance}} km
+        {% endif %}
+
+        {% if session.garmin_activity %}
+        <div class="garmin pull-right">
+          Garmin : <a href="{{ activity.get_url() }}" target="_blank">{{ activity.name }}</a>
+          <span>&bull;</span>
+          {{ activity.distance|floatformat(2) }} km en {{ activity.time }}
+          <span>&bull;</span>
+          <span>{{ activity.speed|date('i:s') }} min/km</span>
+        </div>
+        {% endif %}
       </div>
       {% endfor %}
       {% endif %}
@@ -46,13 +49,24 @@
   {% endfor %}
 
   <tr>
-    <td>Temps Total</td>
-    <td>{{report.time|days_time('jour', '%Hh%M')}}</td>
+    <td colspan="2">
+      <table>
+        <tr>
+          <th>Sport</th>
+          <th>Temps total</th>
+          <th>Distance totale</th>
+        </tr>
+        {% for sport, time, distance in report.get_sports_stats() %}
+        <tr>
+          <td>{% if sport %}{{sport.name}}{% else %}Total{% endif %}</td>
+          <td>{{time|total_time()}}</td>
+          <td>{{distance|default('0')}} km</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </td>
   </tr>
-  <tr>
-    <td>Distance Totale</td>
-    <td>{{report.distance|default('0')}} km</td>
-  </tr>
+
   {% if report.comment %}
   <tr>
     <td colspan="2">

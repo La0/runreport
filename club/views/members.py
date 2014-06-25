@@ -5,8 +5,8 @@ from django.views.generic.dates import WeekArchiveView
 from users.models import Athlete
 from django.db.models import Count, Max
 from mixins import ClubMixin, ClubManagerMixin
-from run.views.mixins import CurrentWeekMixin, WeekPaginator
-from run.models import RunReport
+from sport.views.mixins import CurrentWeekMixin, WeekPaginator
+from sport.models import SportWeek
 from club.models import ClubMembership
 from helpers import week_to_date
 from club.forms import ClubMembershipForm
@@ -54,9 +54,10 @@ class ClubMembers(ClubMixin, ListView):
       f['memberships__club'] = self.club # to avoid listing other club memberships
       members = members.filter(**f)
 
-    # Add last RunReport date, as week & year
-    members = members.annotate(max_report_date=Max('runreport__sessions__date'))
-    members = members.annotate(sessions_count=Count('runreport__sessions'))
+    # Add last SportWeek date, as week & year
+    # TODO: broken because SportWeek is in a sub directory of models ?
+    members = members.annotate(max_report_date=Max('sportweek__days__date'))
+    members = members.annotate(sessions_count=Count('sportweek__days'))
 
     # Sort members
     default_sort = 'username'
@@ -161,9 +162,9 @@ class ClubMemberWeek(CurrentWeekMixin, ClubMixin, WeekPaginator, WeekArchiveView
     year = self.get_year()
     week = self.get_week()
     try:
-      report = RunReport.objects.get(user=self.member, year=year, week=week)
-      sessions = report.get_dated_sessions()
-      dates = report.get_days()
+      report = SportWeek.objects.get(user=self.member, year=year, week=week)
+      sessions = report.get_days_per_date()
+      dates = report.get_dates()
     except:
       report = sessions = dates = None
 

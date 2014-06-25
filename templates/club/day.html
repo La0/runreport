@@ -5,24 +5,11 @@
 
 {% block body %}
 {% if session %}
-<h4>{{ session.name|default('Session sans nom') }}</h4>
-<p>{{ session.comment|default('Pas de commentaire')|linebreaksbr }}</p>
-{% if session.type == 'training' %}
-<span class="label label-info">Entrainement</span>
-{% elif session.type == 'race' %}
-<span class="label label-success">Course</span>
-{% else %}
-<span class="label">Repos</span>
-{% endif %}
-{% if session.distance %}
-<span class="label">Temps</span> {{session.time}}
-{% endif %}
-{% if session.distance %}
-<span class="label">Distance</span> {{session.distance}} km
-{% endif %}
-{% with session.garmin_activities as activities %}
-{% include '_garmin.html' %}
+
+{% with session.sessions as sessions %}
+{% include 'sport/session/list.html' %}
 {% endwith %}
+
 {% else %}
 <p class="alert alert-warning">Pas de séance</p>
 {% endif %}

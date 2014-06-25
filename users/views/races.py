@@ -1,5 +1,6 @@
 from django.views.generic import TemplateView
-from run.models import RunSession, RaceCategory
+from django.db.models import Sum
+from sport.models import SportDay, RaceCategory
 from datetime import date
 
 class RacesView(TemplateView):
@@ -12,7 +13,7 @@ class RacesView(TemplateView):
 
   def get_races(self):
     # List races
-    all_races = RunSession.objects.filter(report__user=self.request.user, type='race')
+    all_races = SportDay.objects.filter(week__user=self.request.user, type='race')
     future_races = all_races.filter(date__gt=date.today()).order_by('date')
     past_races = all_races.filter(date__lte=date.today())
 
@@ -20,10 +21,13 @@ class RacesView(TemplateView):
     cat_ids= [r['race_category'] for r in past_races.values('race_category').distinct() if r['race_category']]
     categories = RaceCategory.objects.filter(pk__in=cat_ids).order_by('name')
 
+    # Sum sessions time & distance per race
+    past_races = past_races.annotate(time_total=Sum('sessions__time'), distance_total=Sum('sessions__distance'))
+
     # Categorize races
     races = {}
     for c in categories:
-      races[c.id] = past_races.filter(race_category=c).order_by('time')
+      races[c.id] = past_races.filter(race_category=c).order_by('time_total')
 
     return {
       'future_races' : future_races,

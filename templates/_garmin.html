@@ -1,40 +1,40 @@
-{% if activities.count() > 0 %}
-<div class="garmin">
-  {% for activity in activities.all() %}
+{% if sport_session.has_garmin() %}
+{% with sport_session.garmin_activity as activity %}
+<div class="garmin row hidden-xs">
   {% with activity.sport.get_category() as sport %}
-  <div class="activity {{ sport }}">
 
-    {% if sport == 'running' %}
-    <i class="icon-pitch"></i>
-    {% elif sport == 'cycling' %}
-    <i class="icon-bicycle"></i>
-    {% elif sport == 'swimming' %}
-    <i class="icon-swimming"></i>
-    {% else %}
+  <div class="col-sm-4">
     <i class="icon-location"></i>
-    {% endif %}
-
     <a href="{{ activity.get_url() }}" target="_blank">{{ activity.name }}</a>
-
-    <span class="muted">&bull;</span>
-    {% if sport == 'swimming' %}
-    {{ (activity.distance * 1000)|floatformat(2) }} m
-    {% else %}
-    {{ activity.distance|floatformat(2) }} km
-    {% endif %}
-    en {{ activity.time }}
-
-    <span class="muted">&bull;</span>
-    {% if activity.sport.get_category() == 'cycling' %}
-    {{ activity.get_speed_kph()|floatformat(2) }} km/h
-    {% else %}
-    {{ activity.speed|date('i:s') }} min/km
-    {% endif %}
-
-    <span class="muted">&bull;</span>
-    <span class="label label-default">{{ activity.sport.name }}</span>
   </div>
+
+    {% if activity.distance != sport_session.distance or activity.time != sport_session.time %}
+    <div class="col-sm-3">
+      {% if sport == 'swimming' %}
+        {{ (activity.distance * 1000)|floatformat(0) }} m
+      {% else %}
+        {{ activity.distance|floatformat(2) }} km
+      {% endif %}
+      en {{ activity.time }}
+    </div>
+
+    <div class="col-sm-2">
+      {% if sport != 'swimming' %}
+        {% if activity.sport.get_category() == 'cycling' %}
+          {{ activity.get_speed_kph()|floatformat(2) }} km/h
+        {% else %}
+          {{ activity.speed|date('i:s') }} min/km
+        {% endif %}
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% if activity.sport != sport_session.sport %}
+    <div class="col-sm-2">
+      <span class="label label-success">{{ activity.sport.name }}</span>
+    </div>
+    {% endif %}
   {% endwith %}
-  {% endfor %}
 </div>
+{% endwith %}
 {% endif %}

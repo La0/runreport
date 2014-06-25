@@ -24,7 +24,7 @@ Votre entraîneur {{ plan.creator.first_name }} vous a attribué un plan d'entra
       <th>Temps</th>
       <th>Distance</th>
     </tr>
-    {% for day,date,session in week.get_days(start_date) %}
+    {% for day,date,session in week.get_dates(start_date) %}
     <tr>
       <td style="text-align: right; color: #888;">{{ date|date('l d E') }}</td>
       {% if session %}

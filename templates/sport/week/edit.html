@@ -1,0 +1,92 @@
+<script type="text/javascript">
+$('span.add-on').tooltip();
+$(function(){
+	$('button.type').click(function(){
+		$(this).siblings('input').val(this.value);
+	});
+});
+</script>
+
+<div class="container week">
+
+  {% for day in report.get_dates() %}
+  <div class="day {% if day == now.date() %}today{% endif %}" id="day-{{ day }}">
+    {% if day == now.date() %}
+    <legend>Aujourd'hui - {{ day|date('l d E')|title }}</legend>
+    {% else %}
+    <legend>{{ day|date('l d E')|title }}</legend>
+    {% endif %}
+
+    <div id="sessions-{{day}}">
+    {% for form in forms[day] %}
+    {% include 'sport/session/edit.html' %}
+    {% if not loop.last %}<hr />{% endif %}
+    {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class="col-sm-10 col-sm-offset-2">
+        <a href="{% url sport-session-add day.year, day.month, day.day %}" class="modal-action btn btn-default btn-sm extra-sport-add" data-append="sessions-{{day}}">
+          <i class="icon-plus"></i> Ajouter une séance
+        </a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+
+  <form method="post" action="{{ report.get_absolute_url() }}">
+    {% csrf_token %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Bilan de la semaine
+      </div>
+      <div class="panel-body">
+        <p class="text-muted">
+          Vous pouvez indiquer votre ressenti sur cette semaine (facultatif).
+        </p>
+        {{ macros.input(form_report.comment, 'Commentaire') }}
+        <div class="col-sm-10 col-xs-12 col-sm-offset-2">
+          <input type="submit" value="Sauver le commentaire" class="btn btn-sm btn-primary" />
+        </div>
+      </div>
+      <div class="panel-footer">
+        {% with report.get_sports_stats() as stats %}
+        {% include 'sport/week/_stats.html' %}
+        {% endwith %}
+      </div>
+    </div>
+
+    <div class="form-group row actions">
+      <div class="col-md-offset-5 col-md-3 col-sm-12">
+      {% for m in memberships %}
+        <button {% if not report.is_publiable() %}disabled="disabled"{% endif %} type="submit" name="publish" value="{{m.club.pk}}" class="btn btn-success">
+          Envoyer à
+          {% for t in m.trainers.all() %}
+          {{ t.first_name|default(t.username) }}{% if not loop.last %}, {% endif %}
+          {% endfor %}
+        </button>
+      {% endfor %}
+      </div>
+    </div>
+  </form>
+
+	{% if user.auto_send %}
+
+	{% if report.is_current() %}
+	<p class="alert alert-info">
+		Tous les commentaires remplis seront envoyés automatiquement dans {{ report.get_send_date()|timeuntil }}.
+	</p>
+	{% else %}
+	<p class="alert alert-warning">
+		L'envoi automatique des commentaires n'est actif que pour la <strong>semaine en cours</strong>.
+	</p>
+	{% endif %}
+
+	{% else %}
+	<div class="alert alert-warning">
+		<h4>Envoi automatique désactivé !</h4>
+		Pour activer l'envoi automatique, veuillez sélectionnez l'option dans <a href="{% url user-profile %}">votre profil</a>
+	</div>
+	{% endif %}
+
+</div>

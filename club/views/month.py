@@ -1,16 +1,16 @@
 from django.http import Http404
 from mixins import ClubMixin
-from run.models import RunReport
+from sport.models import SportWeek
 from django.views.generic import MonthArchiveView, DateDetailView
-from run.models import RunSession
+from sport.models import SportDay
 from datetime import datetime, date
 import calendar
 from coach.mixins import JsonResponseMixin
 
 class ClubMemberMonth(ClubMixin, MonthArchiveView):
-  template_name = 'run/month.html'
+  template_name = 'sport/calendar/month.html'
   date_field = 'date'
-  model = RunSession
+  model = SportDay
   context_object_name = 'sessions'
   allow_future = True
   allow_empty = True
@@ -39,7 +39,7 @@ class ClubMemberMonth(ClubMixin, MonthArchiveView):
       raise Http404(str(e))
 
     # Load all sessions for this month
-    sessions = RunSession.objects.filter(report__user=self.member, date__in=self.days)
+    sessions = SportDay.objects.filter(week__user=self.member, date__in=self.days)
     sessions_per_days = dict((r.date, r) for r in sessions)
 
     context = {
@@ -61,16 +61,16 @@ class ClubMemberDay(JsonResponseMixin, ClubMixin, DateDetailView):
   def get_context_data(self, **kwargs):
     context = super(ClubMemberDay, self).get_context_data(**kwargs)
     context['day'] = self.day
-    context['report'] = self.report
+    context['report'] = self.week
     return context
 
   def get_object(self):
     # Load day, report and eventual session
     self.day = date(int(self.get_year()), int(self.get_month()), int(self.get_day()))
     week = int(self.day.strftime('%W'))
-    self.report, _ = RunReport.objects.get_or_create(user=self.member, year=self.day.year, week=week)
+    self.week, _ = SportWeek.objects.get_or_create(user=self.member, year=self.day.year, week=week)
     try:
-      self.object = RunSession.objects.get(report=self.report, date=self.day)
+      self.object = SportDay.objects.get(week=self.week, date=self.day)
     except:
       self.object = None
     return self.object

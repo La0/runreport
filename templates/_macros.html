@@ -12,26 +12,48 @@
 		<div class="help-block">{{help}}</div>
 		{% endif %}
 	</div>
-    
+
 </div>
 {%- endmacro %}
 
-{% macro session_time_distance(form) -%}
-<div class="form-group time-distance row">
-	<label class="col-sm-2 control-label {% if form.time.errors %}has-error{% endif %}" for="id_{{form.time.html_name}}">Temps</label>
-	<div class="col-sm-4 {% if form.time.errors %}has-error{% endif %}">
-		{{ form.time|addcss("form-control")|safe }}
-		{% if form.time.errors %}
-		<div class="help-block">{{form.time.errors|safe}}</div>
-		{% endif %}
-	</div>
-	<label class="col-sm-2 control-label" for="id_{{form.distance.html_name}}" rel="tooltip" title="Distance en course à pied uniquement.">Distance Cap</label>
-	<div class="col-sm-4 {% if form.distance.errors %}has-error{% endif %}">
-		{{ form.distance|addcss("form-control")|safe }}
-		{% if form.distance.errors %}
-		<div class="help-block">{{form.distance.errors|safe}}</div>
-		{% endif %}
-	</div>
+
+{% macro input_prepend(field, label) -%}
+<div class="col-sm-3 col-xs-6 {% if field.errors %}has-error{% endif %}">
+   <div class="input-group {% if field.errors %}has-error{% endif %}">
+     <span class="input-group-addon input-sm">{{ label }}</span>
+     {{ field|addcss("form-control input-sm")|safe }}
+   </div>
+	{% if field.errors %}
+	<div class="help-block">{{field.errors|safe}}</div>
+	{% endif %}
+</div>
+{%- endmacro %}
+
+
+{% macro sport_session(form) -%}
+<div class="sport">
+  <button class="btn btn-sm btn-warning dropdown-toggle" data-toggle="dropdown">
+    <span class="name">
+      {% with form.instance.sport as sport %}
+        <i class="icon-sport-{{sport.slug}}"></i> {{sport.name}}
+      {% endwith %}
+    </span>
+    <span class="caret"></span>
+  </button>
+
+  <ul class="dropdown-menu sports">
+    {% for sport in form.sports %}
+    <li class="{% if sport == form.instance.sport %}active{% endif %}">
+      <a href="#" value="{{sport.pk}}">
+        <i class="icon-sport-{{sport.slug}}"></i> {{sport.name}}
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+  {{ form.sport|safe }}
+	{% if form.sport.errors %}
+	<div class="help-block">{{form.sport.errors|safe}}</div>
+	{% endif %}
 </div>
 {%- endmacro %}
 

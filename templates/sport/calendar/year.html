@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% set page_title = 'Année %s' % year %}
+{% set page_size = 'fullscreen' %}
+
+{% block style %}
+<style>
+	.head a {
+		width: 100%;
+		display: block;
+		text-overflow: ellipsis;
+		overflow: hidden;
+	}
+
+	span.type {
+		display: inline-block;
+		width: 10px;
+		height: 10px;
+	}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+	<h2>{% if member %}{{ member.first_name }} {{ member.last_name }} - {% endif %}Année {{ year }}</h2>
+
+	<div class="year hidden-xs">
+		{% for month, days in date_list.items() %}
+		<div class="month">
+			<div class="head">
+				<a href="{{ pagemonth|url(*pageargs + [days[0].year, days[0].month]) }}" >{{ days[0]|date('F')|title() }}</a>
+			</div>
+			{% for day_date in days %}
+			{% with object_list[day_date] as day %}
+			<div class="day modal-action" href="{{ pageday|url(*pageargs + [day_date.year, day_date.month, day_date.day]) }}">
+				<span class="date">{{ day_date.day }}</span>
+				{% if day %}
+        <span class="name {% if day %}session {{ day.best_type() }}{% endif %}">
+          {{ day.name}}
+          {% for sport, count in day.sports_count() %}
+          <i class="icon-sport-{{sport.slug}}"></i>{% if count > 1 %}x {{ count }}{% endif %}
+          {% endfor %}
+        </span>
+				{% endif %}
+			</div>
+			{% endwith %}
+			{% endfor %}
+		</div>
+		{% endfor %}
+	</div>
+
+	<div class="visible-xs">
+    {% for month, days in date_list.items() %}
+    {% with days[0] as month_date %}
+    {% if month_date.month in months_active %}
+      <h3>
+        {{ month_date|date('E Y') }}
+        <a href="{% url report-month month_date.year, month_date.month %}" class="btn btn-sm btn-info pull-right">Voir ce mois</a>
+      </h3>
+			<div class="row-striped">
+	      {% for day_date in days %}
+	      {% with object_list.get(day_date, None) as day %}
+        {% include 'sport/calendar/_day.xs.html' %}
+	      {% endwith %}
+	      {% endfor %}
+			</div>
+    {% endif %}
+    {% endwith %}
+    {% endfor %}
+    </div>
+
+	<ul class="pager">
+		{% if previous_year %}
+		<li class="previous">
+			<a href="{{ pageyear|url(*pageargs + [previous_year, ]) }}">&laquo; Année {{ previous_year }}</a>
+		</li>
+		{% endif %}
+		{% if next_year %}
+		<li class="next">
+			<a href="{{ pageyear|url(*pageargs + [next_year, ]) }}">Année {{ next_year }} &raquo;</a>
+		</li>
+		{% endif %}
+	</ul>
+</div>
+{% endblock %}

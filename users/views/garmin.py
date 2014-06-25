@@ -1,7 +1,7 @@
 from django.views.generic.edit import UpdateView
 from users.forms import GarminForm
 from users.models import Athlete
-from run.models import GarminActivity
+from sport.models import GarminActivity
 from django.db.models import Max
 from django.core.urlresolvers import reverse
 

@@ -27,8 +27,32 @@ h2, h3 {
 		<div class="row {% if loop.first %}race-record{% endif %}">
 			<div class="col-sm-4"><strong>{{ race.name }}</strong></div>
 			<div class="col-sm-3">{{ race.date|date('d E Y')}}</div>
-			<div class="col-sm-2">{{ race.distance|default(0)|floatformat() }} km</div>
-			<div class="col-sm-2">{{ race.time|default('-') }}</div>
+
+      {% with race.sessions.filter(sport__depth=1) as sessions %}
+      <div class="col-sm-2">
+      <p><strong>{{ race.distance_total|default(0)|floatformat(2)}} km</strong></p>
+
+      {% if sessions.count() > 1 %}
+      {% for session in sessions %}
+      <p>
+        <i class="icon-sport-{{ session.sport.slug }}" title="{{ session.sport.name }}"></i>
+        {{ session.distance|default(0)|floatformat(2) }} km
+      </p>
+      {% endfor %}
+      {% endif %}
+      </div>
+
+      <div class="col-sm-2">
+      <p><strong>{{ race.time_total|total_time()}}</strong></p>
+      {% if sessions.count() > 1 %}
+      {% for session in sessions %}
+      <p>
+        {{ session.time }}
+      </p>
+      {% endfor %}
+      {% endif %}
+      </div>
+      {% endwith %}
 			<div class="col-sm-1">
 				<a class="modal-action btn btn-xs {% if loop.first %}btn-warning{% else %}btn-default{% endif %}" href="{% url report-day race.date.year, race.date.month, race.date.day %}">Voir</a>
 			</div>

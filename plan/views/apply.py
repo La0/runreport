@@ -3,7 +3,7 @@ from datetime import date, timedelta, datetime
 from helpers import date_to_week, date_to_day, check_task
 from mixins import PlanMixin
 from plan.forms import PlanApplyWeekForm
-from run.models import RunReport
+from sport.models import SportWeek
 from plan.tasks import apply_plan
 
 class PlanApply(PlanMixin, FormView):
@@ -59,7 +59,7 @@ class PlanApply(PlanMixin, FormView):
     # Look for busied run reports
     # in the time interval
     users = [ca.user for ca in club_athletes]
-    reports_busy = RunReport.objects.filter(user__in=users, sessions__date__range=(date_start, date_end), plan_week__isnull=False).distinct()
+    reports_busy = SportWeek.objects.filter(user__in=users, days__date__range=(date_start, date_end), plan_week__isnull=False).distinct()
 
     # Linearize by athlete & year/week
     # to display a table of 6 weeks availiblity

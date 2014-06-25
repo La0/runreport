@@ -1,4 +1,4 @@
-from run.views import RunCalendarYear
+from sport.views import RunCalendarYear
 from mixins import ClubMixin
 
 class ClubMemberYear(ClubMixin, RunCalendarYear):
