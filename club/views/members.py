@@ -54,11 +54,6 @@ class ClubMembers(ClubMixin, ListView):
       f['memberships__club'] = self.club # to avoid listing other club memberships
       members = members.filter(**f)
 
-    # Add last SportWeek date, as week & year
-    # TODO: broken because SportWeek is in a sub directory of models ?
-    members = members.annotate(max_report_date=Max('sportweek__days__date'))
-    members = members.annotate(sessions_count=Count('sportweek__days'))
-
     # Sort members
     default_sort = 'username'
     sorts = {
@@ -73,6 +68,14 @@ class ClubMembers(ClubMixin, ListView):
     # Apply club membership
     for m in members:
       m.membership = m.memberships.get(club=self.club)
+
+    # Add last SportWeek date, as week & year
+    # Enhance query performance by separating annotation
+    # then applying manually the results on queryset
+    agg = members.values('pk').annotate(max_date=Max('sportweek__days__date'), nb=Count('sportweek__days'))
+    agg = dict((a['pk'], (a['max_date'], a['nb'])) for a in agg)
+    for m in members:
+      m.max_report_date, m.sessions_count = agg[m.pk]
 
     return {
       'type' : self.kwargs.get('type', default_type),
