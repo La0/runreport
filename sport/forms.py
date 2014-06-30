@@ -41,6 +41,10 @@ class SportSessionForm(forms.ModelForm):
   def clean(self, *args, **kwargs):
     data = super(SportSessionForm, self).clean(*args, **kwargs)
 
+    # No check for rest session
+    if data['type'] == 'rest':
+      return self.cleaned_data
+
     if 'distance' in data and data['distance'] is None \
       and 'time' in data and data['time'] is None:
       raise forms.ValidationError(u'Spécifiez une distance ou un temps pour ajouter une séance.')
