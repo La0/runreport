@@ -117,7 +117,9 @@ class GarminConnector:
     for activity in data['results']['activities']:
       try:
         activity = activity['activity']
-        activities.append(self.load_activity(activity))
+        act = self.load_activity(activity)
+        if act:
+          activities.append(act)
       except Exception, e:
         logger.error('Activity import failed: %s' % (str(e),))
 
@@ -131,10 +133,13 @@ class GarminConnector:
     try:
       act = GarminActivity.objects.get(garmin_id=activity_id , user=self._user)
       logger.info("%s : Existing activity %s" % (self._user.username, activity_id))
-    except:
+    except GarminActivity.DoesNotExist, e:
       act = GarminActivity(garmin_id=activity_id, user=self._user)
       created = True
       logger.info("%s : Created activity %s" % (self._user.username, activity_id))
+    except Exception, e:
+      logger.error("%s : Failed to import activity %s : %s" % (self._user.username, activity_id, str(e)))
+      return None
 
     # Update raw data
     act.update(activity)
