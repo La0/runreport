@@ -241,6 +241,15 @@ CELERYBEAT_SCHEDULE = {
   },
 }
 
+# Dev cache in files
+CACHES = {
+  'default': {
+    'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+    'LOCATION': os.path.join(HOME, 'cache'),
+  }
+}
+
+
 # Import local settings, if any
 try:
   from coach.local_settings import *

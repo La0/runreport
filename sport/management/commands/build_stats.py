@@ -3,14 +3,26 @@ from sport.models import SportDay
 from sport.stats import StatsMonth
 from users.models import Athlete
 from datetime import date, timedelta
+from optparse import make_option
 
 class Command(BaseCommand):
+  option_list = BaseCommand.option_list + (
+    make_option('--username',
+      action='store',
+      dest='username',
+      type='string',
+      default=False,
+      help='Ran the import on the specified user.'),
+  )
 
   def handle(self, *args, **options):
     today = date.today()
     print today
 
     users = Athlete.objects.all()
+    if options['username']:
+      users = users.filter(username=options['username'])
+
 
     for user in users:
       print user

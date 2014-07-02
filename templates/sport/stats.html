@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% set page_title = 'Statistiques' %}
+
+{% block content %}
+
+<script type="text/javascript">
+$(function(){
+
+
+var distances = [
+{% for m in months %}[{{m.timestamp()*1000}}, {{m.distance|default(0)}}],{% endfor %}
+];
+var hours = [
+{% for m in months %}[{{m.timestamp()*1000}}, {{m.hours|default(0)}}],{% endfor %}
+];
+  $.plot("#myChart", [
+      { data: distances, label: "Distances" },
+      { data: hours, label: "Heures", yaxis: 2 }
+    ], {
+    xaxes: [ { 
+      mode : 'time',
+      timeformat: "%b %Y",
+      monthNames: ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil", "Aout", "Sep", "Oct", "Nov", "Déc"],
+    } ],
+      yaxes: [ { min: 0 }, {
+        min: 0,
+        // align if we are to the right
+        alignTicksWithAxis: true,
+        position: 'right',
+        //tickFormatter: euroFormatter
+      } ],
+      legend: { position: "sw" }
+  });
+});
+</script>
+
+<div class="container">
+  {% if date_range == 'last' %}
+  <h1>Les 12 derniers mois</h1>
+  {% endif %}
+
+  <div id="myChart" style="width: 100%; height: 400px;"></div>
+  
+</div>
+{% endblock %}

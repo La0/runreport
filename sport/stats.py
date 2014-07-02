@@ -3,6 +3,7 @@ from django.db.models import Count, Sum
 from models import SportSession
 from calendar import monthrange
 from datetime import date
+import math
 
 class StatsMonth:
   '''
@@ -12,6 +13,7 @@ class StatsMonth:
   year = None
   month = None
   key = ''
+  data = {}
 
   def __init__(self, user, year, month):
     self.user = user
@@ -21,8 +23,28 @@ class StatsMonth:
     # Build cache key
     self.key = 'stats:%s:%s:%s' % (self.user.username, self.year, self.month)
 
+    # Initial fetch
+    self.fetch()
+
+  def __getattr__(self, name):
+    if self.data and name in self.data:
+      return self.data[name]
+
+  def date(self):
+    # Gives time of month
+    return date(year=self.year, month=self.month, day=1)
+
+  def timestamp(self):
+    return int(self.date().strftime('%s'))
+
   def fetch(self):
-    return cache.get(self.key)
+    self.data = cache.get(self.key)
+    return self.data
+
+  def timedelta_to_hours(self, td):
+    if not td:
+      return 0
+    return math.ceil(td.total_seconds() / 3600)
 
   def build(self):
 
@@ -41,21 +63,26 @@ class StatsMonth:
 
     # Get stats per sports
     sports = sessions.values('sport').annotate(nb=Count('sport'), distance=Sum('distance'), time=Sum('time'))
-    sports = dict((s['sport'], {'distance' : s['distance'], 'time' : s['time']}) for s in sports)
+    sports = dict((s['sport'], {
+      'distance' : s['distance'],
+      'time' : s['time'],
+      'hours' : self.timedelta_to_hours(s['time']),
+    }) for s in sports)
 
     # Total stats
     total = sessions.aggregate(distance=Sum('distance'), time=Sum('time'))
 
     # Join data
-    data = {
+    self.data = {
       'sessions' : types,
       'days' : len(sessions.values('day').distinct()), # total nb of days with sport
       'distance' : total['distance'],
       'time' : total['time'],
+      'hours' : self.timedelta_to_hours(total['time']),
       'sports' : sports,
     }
 
     # Save in cache
-    cache.set(self.key, data)
+    cache.set(self.key, self.data)
 
-    return data
+    return self.data
