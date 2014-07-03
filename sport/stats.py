@@ -67,6 +67,7 @@ class StatsMonth:
       'distance' : s['distance'],
       'time' : s['time'],
       'hours' : self.timedelta_to_hours(s['time']),
+      'nb' : s['nb'],
     }) for s in sports)
 
     # Total stats

@@ -12,7 +12,16 @@ $(function(){
   // Setup data sets
   var distances = [{% for m in months %}[{{m.timestamp()*1000}}, {{m.distance|default(0)}}],{% endfor %}];
   var hours     = [{% for m in months %}[{{m.timestamp()*1000}}, {{m.hours|default(0)}}],{% endfor %}];
+  var sports    = [
+    {% for sport in sports %}
+    {
+      label : '{{sport.name}}',
+      data : [{% for m in months %}[{{m.timestamp()*1000}}, {% if m.sports[sport.pk] %}{{m.sports[sport.pk]['nb']|default(0)}}{% else %}0{% endif %}],{% endfor %}],
+    },
+    {% endfor %}  
+  ];
 
+  // Hours & distances
 	$.plot("#stats .hours_distances", [
     { data: distances, label: "Distances" },
     { data: hours, label: "Heures", yaxis: 2 }
@@ -33,15 +42,33 @@ $(function(){
   },
   yaxes: [ { min: 0 }, {
     min: 0,
-    // align if we are to the right
     alignTicksWithAxis: true,
     position: 'right',
-    //tickFormatter: euroFormatter
     }],
     grid: {
       hoverable: true,
-      clickable: true
     },
+  });
+
+  // Sports
+  $.plot("#stats .sports", sports, {
+    legend: { position: "sw" },
+    xaxis: { 
+      mode : 'time',
+      timeformat: "%b %Y",
+      monthNames: months_short,
+    },
+    yaxis : {
+      min: 0,
+    },
+    series: {
+      stack: true,
+      bars: {
+        show: true,
+        fill: true,
+        barWidth: 24 * 60 * 60 * 1000 * 15, // for time series, with must be set in seconds !
+      }
+    }
   });
 
   // Tooltip
@@ -53,7 +80,6 @@ $(function(){
     }
 
     // Display the tooltip
-    console.log(item);
     var unit = item.series.label == 'Heures' ? 'h' : 'km';
     var date = new Date(item.datapoint[0]);
     
@@ -74,8 +100,12 @@ $(function(){
   {% endif %}
 
   <div id="stats">
+    <h3>Heures et distances</h3>
     <div class="hours_distances"></div>
     <div class="tooltip"></div>
+
+    <h3>Sports</h3>
+    <div class="sports"></div>
   </div>
   
 </div>
