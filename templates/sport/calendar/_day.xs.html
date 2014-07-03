@@ -2,15 +2,13 @@
 <div class="row modal-action" href="{{pageday|url(*pageargs + [day.date.year, day.date.month, day.date.day])}}">
   <div class="col-xs-12">
     <strong>{{day.date|date('l d E Y')|title()}}</strong>
+    {% for session in day.sessions.all() %}
     <div>
-      {% for type, count in day.types_count() %}
-      <span class="type {{ type }}"></span>
-      {% endfor %}
-      {{day.name|default('day sans nom')}}
-      {% for sport, count in day.sports_count() %}
-      <i class="icon-sport-{{sport.slug}}"></i>{% if count > 1 %}x {{ count }}{% endif %}
-      {% endfor %}
+      <span class="type {{ session.type }}"></span>
+      <i class="icon-sport-{{session.sport.slug}}"></i>
+      {{ session.name|default('...')}}
     </div>
+    {% endfor %}
     {% if day.plan_day %}
     <div>
       <i class="icon-tags"> </i> {{ day.plan_day.week.plan.name|truncate(10) }}

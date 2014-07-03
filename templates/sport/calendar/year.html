@@ -36,7 +36,7 @@
 				<span class="date">{{ day_date.day }}</span>
 				{% if day %}
         <span class="name {% if day %}session {{ day.best_type() }}{% endif %}">
-          {{ day.name}}
+          {{ day.sessions.first().name|default('...') }}
           {% for sport, count in day.sports_count() %}
           <i class="icon-sport-{{sport.slug}}"></i>{% if count > 1 %}x {{ count }}{% endif %}
           {% endfor %}
