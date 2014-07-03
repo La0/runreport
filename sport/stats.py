@@ -82,7 +82,7 @@ class StatsMonth:
       'sports' : sports,
     }
 
-    # Save in cache
-    cache.set(self.key, self.data)
+    # Save in cache, no expiry !
+    cache.set(self.key, self.data, None)
 
     return self.data

@@ -297,3 +297,18 @@ div.comment {
   margin-left: 25px;
   border-left: 2px solid #CCC;
 }
+
+/* stats */
+#stats .hours_distances {
+  width: 100%;
+  height: 400px;
+}
+
+#stats .tooltip {
+  position: absolute;
+  display: none;
+  border: 1px solid #fdd;
+  padding: 2px;
+  background-color: #fee;
+  opacity: 0.80;
+}

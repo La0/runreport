@@ -6,32 +6,65 @@
 
 <script type="text/javascript">
 $(function(){
+  var months = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Décembre'];
+  var months_short = ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil", "Aout", "Sep", "Oct", "Nov", "Déc"];
 
+  // Setup data sets
+  var distances = [{% for m in months %}[{{m.timestamp()*1000}}, {{m.distance|default(0)}}],{% endfor %}];
+  var hours     = [{% for m in months %}[{{m.timestamp()*1000}}, {{m.hours|default(0)}}],{% endfor %}];
 
-var distances = [
-{% for m in months %}[{{m.timestamp()*1000}}, {{m.distance|default(0)}}],{% endfor %}
-];
-var hours = [
-{% for m in months %}[{{m.timestamp()*1000}}, {{m.hours|default(0)}}],{% endfor %}
-];
-  $.plot("#myChart", [
-      { data: distances, label: "Distances" },
-      { data: hours, label: "Heures", yaxis: 2 }
-    ], {
-    xaxes: [ { 
-      mode : 'time',
-      timeformat: "%b %Y",
-      monthNames: ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil", "Aout", "Sep", "Oct", "Nov", "Déc"],
-    } ],
-      yaxes: [ { min: 0 }, {
-        min: 0,
-        // align if we are to the right
-        alignTicksWithAxis: true,
-        position: 'right',
-        //tickFormatter: euroFormatter
-      } ],
-      legend: { position: "sw" }
+	$.plot("#stats .hours_distances", [
+    { data: distances, label: "Distances" },
+    { data: hours, label: "Heures", yaxis: 2 }
+  ], {
+  xaxes: [ { 
+    mode : 'time',
+    timeformat: "%b %Y",
+    monthNames: months_short,
+  } ],
+  legend: { position: "sw" },
+  series: {
+    lines: {
+      show: true
+    },
+    points: {
+      show: true
+    }
+  },
+  yaxes: [ { min: 0 }, {
+    min: 0,
+    // align if we are to the right
+    alignTicksWithAxis: true,
+    position: 'right',
+    //tickFormatter: euroFormatter
+    }],
+    grid: {
+      hoverable: true,
+      clickable: true
+    },
   });
+
+  // Tooltip
+  var tooltip = $("#stats .tooltip");
+  $("#stats .hours_distances").on("plothover", function (event, pos, item) {
+    if(!item){
+      tooltip.hide();
+      return;
+    }
+
+    // Display the tooltip
+    console.log(item);
+    var unit = item.series.label == 'Heures' ? 'h' : 'km';
+    var date = new Date(item.datapoint[0]);
+    
+    var val = item.datapoint[1];
+    if (unit == 'km')
+      val = val.toFixed(2);
+    tooltip.html(months[date.getMonth()] + " " + date.getFullYear() + " : " + val + "  " + unit)
+      .css({top: item.pageY+5, left: item.pageX+5})
+      .fadeIn(200);
+  });
+
 });
 </script>
 
@@ -40,7 +73,10 @@ var hours = [
   <h1>Les 12 derniers mois</h1>
   {% endif %}
 
-  <div id="myChart" style="width: 100%; height: 400px;"></div>
+  <div id="stats">
+    <div class="hours_distances"></div>
+    <div class="tooltip"></div>
+  </div>
   
 </div>
 {% endblock %}
