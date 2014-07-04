@@ -49,6 +49,9 @@ class SportSessionView(CalendarSession, JsonResponseMixin, ModelFormMixin, Proce
     session.day = self.object
     session.save()
 
+    # Invalidate day cache
+    self.object.rebuild_cache()
+
     # Render as saved
     context = self.get_context_data(extra={'form' : form, 'saved' : True})
     return self.render_to_response(context)
@@ -62,6 +65,7 @@ class SportSessionDelete(CalendarSession, JsonResponseMixin, DeleteView, DateDet
     '''
     self.get_object()
     self.session.delete()
+    self.object.rebuild_cache()
 
     # Configure output to reload page
     self.json_options = [JSON_OPTION_NO_HTML, JSON_OPTION_BODY_RELOAD]

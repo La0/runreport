@@ -1,6 +1,6 @@
 from django.core.cache import cache
 from django.db.models import Count, Sum
-from models import SportSession
+import sport
 from calendar import monthrange
 from datetime import date
 import math
@@ -15,7 +15,7 @@ class StatsMonth:
   key = ''
   data = {}
 
-  def __init__(self, user, year, month):
+  def __init__(self, user, year, month, preload=True):
     self.user = user
     self.year = year
     self.month = month
@@ -24,7 +24,8 @@ class StatsMonth:
     self.key = 'stats:%s:%s:%s' % (self.user.username, self.year, self.month)
 
     # Initial fetch
-    self.fetch()
+    if preload:
+      self.fetch()
 
   def __getattr__(self, name):
     if self.data and name in self.data:
@@ -54,7 +55,7 @@ class StatsMonth:
     end = date(self.year, self.month, last_day)
 
     # Fetch all sessions in the month
-    sessions = SportSession.objects.filter(day__week__user=self.user, day__date__gte=start, day__date__lte=end)
+    sessions = sport.models.SportSession.objects.filter(day__week__user=self.user, day__date__gte=start, day__date__lte=end)
 
     # Get stats per types
     types = sessions.values('type').annotate(nb=Count('type'))

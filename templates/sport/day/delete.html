@@ -3,7 +3,12 @@
 {% set modal_title = day|date('l d E Y')|title() %}
 
 {% block body %}
-Etes vous sûr de vouloir supprimer cette journée <strong>{{ session.name }}</strong> ?
+Etes vous sûr de vouloir supprimer cette journée ?
+<ul>
+  {% for s in session.sessions.all() %}
+  <li><span class="icon-sport-{{s.sport.slug}}"></span> {{ s.name }}</li>
+  {% endfor %}
+</ul>
 {% endblock %}
 
 {% block footer %}
