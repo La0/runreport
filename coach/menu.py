@@ -78,6 +78,7 @@ def add_pages(request):
       'icon' : 'icon-user',
     }
     submenu['menu'].append(_p('user-profile', 'Mon profil'))
+    submenu['menu'].append(_p('stats', 'Mes statistiques', lazy=True))
     submenu['menu'].append(_p('vma', 'Mes allures'))
     submenu['menu'].append(_p('user-races', 'Mes records'))
     submenu['menu'].append(_p('user-garmin', u'Données Garmin'))
