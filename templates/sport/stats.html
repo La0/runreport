@@ -22,8 +22,11 @@ $(function(){
     {% endfor %}  
   ];
 
+  // Build months urls
+  var urls = [{% for m in months %}'{{ url_month|url(*url_args + [m.year, m.month])}}',{% endfor %}];
+
   // Plot charts
-  plot_hours_distances(hours, distances);
+  plot_hours_distances(hours, distances, urls);
   plot_sports(sports);
 });
 </script>

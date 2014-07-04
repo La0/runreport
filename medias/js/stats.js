@@ -1,7 +1,7 @@
 var months = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Décembre'];
 var months_short = ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil", "Aout", "Sep", "Oct", "Nov", "Déc"];
 
-function plot_hours_distances(hours, distances){
+function plot_hours_distances(hours, distances, urls){
 
   // Hours & distances
 	$.plot("#stats .hours_distances", [
@@ -29,6 +29,7 @@ function plot_hours_distances(hours, distances){
     }],
     grid: {
       hoverable: true,
+      clickable: true,
     },
   });
 
@@ -50,6 +51,13 @@ function plot_hours_distances(hours, distances){
     tooltip.html(months[date.getMonth()] + " " + date.getFullYear() + " : " + val + "  " + unit)
       .css({top: item.pageY+5, left: item.pageX+5})
       .fadeIn(200);
+  });
+
+  // Load month page
+  $("#stats .hours_distances").on("plotclick", function (event, pos, item) {
+    if(!item)
+      return;
+    window.location = urls[item.dataIndex];
   });
 }
 

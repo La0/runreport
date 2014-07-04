@@ -75,6 +75,7 @@ class SportStats(TemplateView):
     # Gives user direct stats context
     return {
       'url_base' : 'stats',
+      'url_month' : 'report-month',
       'url_args' : [],
     }
 

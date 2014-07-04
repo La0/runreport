@@ -7,5 +7,6 @@ class ClubMemberStats(ClubMixin, SportStats):
     # Gives club url context
     return {
       'url_base' : 'club-member-stats',
+      'url_month' : 'club-member-month',
       'url_args' : [self.club.slug, self.member.username],
     }
