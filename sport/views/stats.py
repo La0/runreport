@@ -8,10 +8,6 @@ from django.db.models import Min
 class SportStats(TemplateView):
   template_name = 'sport/stats.html'
 
-  # Date boundaries type
-  # * last : last 12 months (default)
-  date_range = 'last'
-
   def get_stats_months(self):
     '''
     Date boundaries for dataset
@@ -19,8 +15,14 @@ class SportStats(TemplateView):
     '''
     today = date.today()
 
+    # Get user from club or current
+    try:
+      user = self.member
+    except AttributeError, e:
+      user = self.request.user
+
     # List available years
-    limits = SportDay.objects.filter(week__user=self.request.user).aggregate(min=Min('date'))
+    limits = SportDay.objects.filter(week__user=user).aggregate(min=Min('date'))
     years = reversed(range(limits['min'].year, today.year+1))
 
     year_delta = timedelta(days=365)
@@ -29,26 +31,26 @@ class SportStats(TemplateView):
       year = int(self.kwargs['year'])
       start = date(year=year, month=1, day=1)
       end = start + year_delta
-      self.date_range = 'year'
+      date_range = 'year'
 
     elif 'all' in self.kwargs:
       # All the months !
       start = limits['min']
       end = today
-      self.date_range = 'all'
+      date_range = 'all'
 
     else:
       # Default: last 12 months
       end = today
       start = end - year_delta
-      self.date_range = 'last'
+      date_range = 'last'
 
     # Load the StatsMonths
     d = start
     months = []
     sports = []
     while d < end:
-      stat = StatsMonth(self.request.user, d.year, d.month)
+      stat = StatsMonth(user, d.year, d.month)
       if stat.sports:
         sports += stat.sports.keys()
       months.append(stat)
@@ -64,14 +66,21 @@ class SportStats(TemplateView):
       'start' : start,
       'end' : end,
       'months' : months,
-      'date_range' : self.date_range,
+      'date_range' : date_range,
       'sports' : sports,
       'years' : years,
     }
 
+  def get_url_context(self):
+    # Gives user direct stats context
+    return {
+      'url_base' : 'stats',
+      'url_args' : [],
+    }
 
   def get_context_data(self, *args, **kwargs):
     context = super(SportStats, self).get_context_data(*args, **kwargs)
     context.update(self.get_stats_months())
+    context.update(self.get_url_context())
     return context
 
