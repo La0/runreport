@@ -312,3 +312,32 @@ div.comment {
   background-color: #fee;
   opacity: 0.80;
 }
+
+/* Generic calendar */
+#calendar table.table {
+	table-layout: fixed;
+}
+
+#calendar h2 {
+	margin-top: 0;
+}
+
+#calendar .buttons {
+	text-align: right;
+}
+
+#calendar .buttons .btn {
+	margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+	#calendar .buttons {
+		text-align: left;
+	}
+}
+
+#calendar span.type {
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+}

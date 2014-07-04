@@ -2,41 +2,9 @@
 
 {% set page_title = 'Calendrier %s' % (months.1|date('E Y'), ) %}
 
-{% block style %}
-<style>
-table.table {
-	table-layout: fixed;
-}
-
-h2 {
-	margin-top: 0;
-}
-
-.buttons {
-	text-align: right;
-}
-
-.buttons .btn {
-	margin-bottom: 10px;
-}
-
-@media (max-width: 768px) { 
-	.buttons {
-		text-align: left;
-	}
-}
-
-span.type {
-	display: inline-block;
-	width: 10px;
-	height: 10px;
-}
-</style>
-{% endblock %}
-
 {% block content %}
 
-<div class="container">
+<div class="container" id="calendar">
 
 	<div class="row">
 		<h2 class="col-sm-6">
@@ -44,7 +12,11 @@ span.type {
 		</h2>
 
 		<div class="col-sm-6 buttons">
-			{% if not member %}
+			{% if member %}
+			<a class="btn btn-success" href="{% url club-member-stats-year club.slug, member.username, months.1.year %}"><i class="icon-plus"></i> Statistiques</a>
+
+      {% else %}
+			<a class="btn btn-success" href="{% url stats-year months.1.year %}"><i class="icon-plus"></i> Statistiques</a>
 			<a class="btn btn-default" href="{% url export-month months.1.year, months.1.month %}"><i class="icon-down-open"></i> Export CSV</a>
 			{% endif %}
 			<a class="btn btn-info" href="{{pageyear|url(*pageargs + [months.1.year ])}}"><i class="icon-list-alt"></i> Calendrier annuel</a>
