@@ -31,6 +31,12 @@ class SportStats(TemplateView):
       end = start + year_delta
       self.date_range = 'year'
 
+    elif 'all' in self.kwargs:
+      # All the months !
+      start = limits['min']
+      end = today
+      self.date_range = 'all'
+
     else:
       # Default: last 12 months
       end = today

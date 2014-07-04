@@ -45,5 +45,6 @@ urlpatterns = patterns('',
 
   # Stats
   url(r'^stats/?$', login_required(SportStats.as_view()), name='stats'),
+  url(r'^stats/all/?$', login_required(SportStats.as_view()), name='stats-all', kwargs={'all': True}),
   url(r'^stats/(?P<year>\d{4})/?$', login_required(SportStats.as_view()), name='stats-year'),
 )
