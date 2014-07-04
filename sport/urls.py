@@ -44,5 +44,6 @@ urlpatterns = patterns('',
   url(r'^vma/?', login_required(VmaPaces.as_view()), name="vma"),
 
   # Stats
-  url(r'^stats/?', login_required(SportStats.as_view()), name='stats'),
+  url(r'^stats/?$', login_required(SportStats.as_view()), name='stats'),
+  url(r'^stats/(?P<year>\d{4})/?$', login_required(SportStats.as_view()), name='stats-year'),
 )

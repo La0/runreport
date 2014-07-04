@@ -97,14 +97,32 @@ $(function(){
 <div class="container">
   {% if date_range == 'last' %}
   <h1>Les 12 derniers mois</h1>
+  {% elif date_range == 'year' %}
+  <h1>Année {{start.year}}</h1>
   {% endif %}
+
+  <ul class="breadcrumb">
+    {% if date_range == 'last' %}
+    <li class="active">Les 12 derniers mois</li>
+    {% else %}
+    <li><a href="{% url stats %}">Les 12 derniers mois</a> <span class="divider"></span></li>
+    {% endif %}
+
+    {% for year in years %}
+      {% if date_range == 'year' and year == start.year %}
+      <li class="active">Année {{year}}</li>
+      {% else %}
+      <li><a href="{% url stats-year year %}">Année {{year}}</a> <span class="divider"></span></li>
+      {% endif %}
+    {% endfor %}
+  </ul>
 
   <div id="stats">
     <h3>Heures et distances</h3>
     <div class="hours_distances"></div>
     <div class="tooltip"></div>
 
-    <h3>Sports</h3>
+    <h3>Séances de Sports</h3>
     <div class="sports"></div>
   </div>
   

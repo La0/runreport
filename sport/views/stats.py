@@ -2,7 +2,8 @@ from django.views.generic import TemplateView
 from datetime import date, timedelta
 from sport.stats import StatsMonth
 from calendar import monthrange
-from sport.models import Sport
+from sport.models import Sport, SportDay
+from django.db.models import Min
 
 class SportStats(TemplateView):
   template_name = 'sport/stats.html'
@@ -16,11 +17,25 @@ class SportStats(TemplateView):
     Date boundaries for dataset
     By default, last 12 months
     '''
+    today = date.today()
 
-    # Default
-    end = date.today()
-    start = end - timedelta(days=365)
-    self.date_range = 'last'
+    # List available years
+    limits = SportDay.objects.filter(week__user=self.request.user).aggregate(min=Min('date'))
+    years = reversed(range(limits['min'].year, today.year+1))
+
+    year_delta = timedelta(days=365)
+    if 'year' in self.kwargs:
+      # Full Year
+      year = int(self.kwargs['year'])
+      start = date(year=year, month=1, day=1)
+      end = start + year_delta
+      self.date_range = 'year'
+
+    else:
+      # Default: last 12 months
+      end = today
+      start = end - year_delta
+      self.date_range = 'last'
 
     # Load the StatsMonths
     d = start
@@ -28,7 +43,8 @@ class SportStats(TemplateView):
     sports = []
     while d < end:
       stat = StatsMonth(self.request.user, d.year, d.month)
-      sports += stat.sports.keys()
+      if stat.sports:
+        sports += stat.sports.keys()
       months.append(stat)
 
       # Switch to next month
@@ -44,6 +60,7 @@ class SportStats(TemplateView):
       'months' : months,
       'date_range' : self.date_range,
       'sports' : sports,
+      'years' : years,
     }
 
 
