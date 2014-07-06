@@ -246,6 +246,9 @@ CACHES = {
   'default': {
     'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
     'LOCATION': os.path.join(HOME, 'cache'),
+    'OPTIONS': {
+        'MAX_ENTRIES': 1000,
+    }
   }
 }
 
