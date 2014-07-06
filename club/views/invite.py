@@ -1,4 +1,5 @@
 from club.models import ClubInvite
+from users.models import Athlete
 from django.views.generic import DetailView, RedirectView
 from django.http import Http404
 from django.core.urlresolvers import reverse
@@ -15,4 +16,15 @@ class ClubInviteCheck(RedirectView, DetailView):
     # Save invite in session
     self.request.session['invite'] = self.invite.slug
 
+    # If user is not connected
+    if not self.request.user.is_authenticated():
+      try:
+        # Redirect to login if account exists
+        Athlete.objects.get(email=self.invite.recipient)
+        return reverse('login')
+      except Athlete.DoesNotExist, e:
+        # Redirect to account creation
+        return reverse('user-create')
+
+    # User is connected, redirect to club creation
     return reverse('club-create')

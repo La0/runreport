@@ -8,7 +8,7 @@ class ClubLinkAdmin(admin.TabularInline):
   model = ClubLink
 
 class ClubInviteAdmin(admin.ModelAdmin):
-  list_display = ('club', 'type', 'sender', 'slug', 'created')
+  list_display = ('recipient', 'slug', 'club', 'type', 'sender', 'created')
 admin.site.register(ClubInvite, ClubInviteAdmin)
 
 class ClubAdmin(admin.ModelAdmin):

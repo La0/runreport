@@ -4,8 +4,9 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponseRedirect
 from coach.settings import LOGIN_REDIRECT_URL, LOGOUT_REDIRECT_URL
 from django.contrib.auth import login as auth_login, logout as auth_logout
+from .mixins import UserInviteMixin
 
-class LoginUser(FormView):
+class LoginUser(UserInviteMixin, FormView):
   form_class = AuthenticationForm
   template_name = 'users/login.html'
 

@@ -104,8 +104,8 @@ class ClubInvite(models.Model):
   INVITE_TYPES = (
     ('create', 'Create a club (Beta)'),
   )
-  sender = models.ForeignKey(Athlete, related_name="inviter")
-  recipient = models.ForeignKey(Athlete, related_name="invitee", null=True)
+  sender = models.ForeignKey(Athlete, related_name="inviter", limit_choices_to={'is_staff':True})
+  recipient = models.EmailField()
   club = models.ForeignKey(Club, null=True, blank=True, related_name="invites")
   type = models.CharField(max_length=15, choices=INVITE_TYPES)
   slug = models.CharField(max_length=30, unique=True, blank=True) # not a slug: no char restriction
@@ -113,6 +113,9 @@ class ClubInvite(models.Model):
   updated = models.DateTimeField(auto_now=True)
   sent = models.DateTimeField(null=True, blank=True)
   used = models.DateTimeField(null=True, blank=True)
+
+  def __unicode__(self):
+    return '%s - %s' % (self.recipient, self.slug)
 
   def save(self, *args, **kwargs):
     if not self.slug:
