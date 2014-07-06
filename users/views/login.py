@@ -1,5 +1,6 @@
 from django.views.generic import View
 from django.views.generic.edit import FormView
+from django.core.urlresolvers import reverse
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponseRedirect
 from coach.settings import LOGIN_REDIRECT_URL, LOGOUT_REDIRECT_URL
@@ -23,7 +24,13 @@ class LoginUser(UserInviteMixin, FormView):
     if 'remember' not in self.request.POST:
       self.request.session.set_expiry(0)
 
-    next_url = self.request.GET.get('next', LOGIN_REDIRECT_URL)
+    if self.invite:
+      # Redirect to club creation on invite
+      next_url = reverse('club-create')
+    else:
+      # Classic redirection, precedence to ?next=
+      next_url = self.request.GET.get('next', LOGIN_REDIRECT_URL)
+
     return HttpResponseRedirect(next_url)
 
 class LogoutUser(View):
