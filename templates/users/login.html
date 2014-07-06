@@ -60,6 +60,12 @@ p.forgot {
 	<form method="post" class="form-signin" role="form">
 		{% csrf_token %}
 		<h1 class="form-signin-heading">Se connecter</h1>
+    {% if invite %}
+    <div class="alert alert-info">
+      <h4>Invitation de création de club</h4>
+      Veuillez vous connecter pour utiliser l'invitation.
+    </div>
+    {% endif %}
 		{% with form.non_field_errors() as err %}
 		{% if err %}
 		<div class="alert alert-danger">{{ err|safe }}</div>
