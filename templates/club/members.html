@@ -65,6 +65,7 @@
 				<td>
 					<a class="btn btn-default btn-xs" href="{% url club-member club.slug, member.username %}">Fiche</a>
 					{% if member.membership.role not in ('archive', 'prospect') %}
+					<a class="btn btn-success btn-xs" href="{% url club-member-stats club.slug, member.username %}">Stats</a>
 					<a class="btn btn-primary btn-xs" href="{% url club-member-month club.slug, member.username, today|date('Y'), today|date('m') %}">Carnet</a>
 					{% endif %}
 				</td>

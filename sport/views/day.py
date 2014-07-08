@@ -1,6 +1,6 @@
 from sport.forms import SportSessionForm
 from sport.models import SportDay
-from coach.mixins import JsonResponseMixin, JSON_STATUS_ERROR
+from coach.mixins import JsonResponseMixin, JSON_OPTION_NO_HTML, JSON_OPTION_BODY_RELOAD
 from .mixins import SportSessionForms
 from django.views.generic import DateDetailView
 from django.views.generic.edit import DeleteView
@@ -20,6 +20,14 @@ class RunCalendarDay(SportSessionForms, CalendarDay, JsonResponseMixin, DateDeta
 class RunCalendarDayDelete(CalendarDay, JsonResponseMixin, DeleteView, DateDetailView):
   template_name = 'sport/day/delete.html'
 
-  def get_success_url(self):
-    return reverse('report-month', args=(self.day.year, self.day.month))
+  def delete(self, *args, **kwargs):
+    '''
+    Delete day, then reload
+    '''
+    self.get_object()
+    self.object.delete()
+    self.object.rebuild_cache()
 
+    # Configure output to reload page
+    self.json_options = [JSON_OPTION_NO_HTML, JSON_OPTION_BODY_RELOAD]
+    return self.render_to_response({})

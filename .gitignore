@@ -8,3 +8,4 @@ logs
 gunicorn.socket
 db
 celerybeat-schedule
+cache

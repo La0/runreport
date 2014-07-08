@@ -1,4 +1,5 @@
 # coding=utf-8
+from __future__ import absolute_import
 from django.db import models
 from django.db.models import Count
 from users.models import Athlete
@@ -9,6 +10,7 @@ from coach.settings import REPORT_SEND_DAY, REPORT_SEND_TIME
 from coach.mail import MailBuilder
 from helpers import date_to_day, week_to_date
 from . import SESSION_TYPES
+from sport.stats import StatsMonth
 from .sport import SportSession
 
 class SportWeek(models.Model):
@@ -222,6 +224,11 @@ class SportDay(models.Model):
       if t in types:
         return t
     return 'rest'
+
+  def rebuild_cache(self):
+    # Rebuild the stats cache
+    st = StatsMonth(self.week.user, self.date.year, self.date.month, preload=False)
+    st.build()
 
 class RaceCategory(models.Model):
   name = models.CharField(max_length=250)

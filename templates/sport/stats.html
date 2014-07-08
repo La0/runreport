@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% set page_title = 'Statistiques' %}
+
+{% block js %}
+<script type="text/javascript" src="/medias/js/jquery.flot.js" ></script>
+<script type="text/javascript" src="/medias/js/jquery.flot.time.js" ></script>
+<script type="text/javascript" src="/medias/js/jquery.flot.stack.js" ></script>
+<script type="text/javascript" src="/medias/js/stats.js" ></script>
+<script type="text/javascript">
+$(function(){
+
+  // Setup data sets
+  var distances = [{% for m in months %}[{{m.timestamp()*1000}}, {{m.distance|default(0)}}],{% endfor %}];
+  var hours     = [{% for m in months %}[{{m.timestamp()*1000}}, {{m.hours|default(0)}}],{% endfor %}];
+  var sports    = [
+    {% for sport in sports %}
+    {
+      label : '{{sport.name}}',
+      data : [{% for m in months %}[{{m.timestamp()*1000}}, {% if m.sports[sport.pk] %}{{m.sports[sport.pk]['nb']|default(0)}}{% else %}0{% endif %}],{% endfor %}],
+    },
+    {% endfor %}  
+  ];
+
+  // Build months urls
+  var urls = [{% for m in months %}'{{ url_month|url(*url_args + [m.year, m.month])}}',{% endfor %}];
+
+  // Plot charts
+  plot_hours_distances(hours, distances, urls);
+  plot_sports(sports);
+});
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  {% if date_range == 'year' %}
+  <h1>{% if member %}{{ member.first_name }} {{ member.last_name }} : {% endif %}Année {{start.year}}</h1>
+  {% elif date_range == 'all' %}
+  <h1>{% if member %}{{ member.first_name }} {{ member.last_name }} : {% endif %}Toutes les séances</h1>
+  {% else %}
+  <h1>{% if member %}{{ member.first_name }} {{ member.last_name }} : {% endif %}Les 12 derniers mois</h1>
+  {% endif %}
+
+  <ul class="breadcrumb">
+    {% if date_range == 'last' %}
+    <li class="active">Les 12 derniers mois</li>
+    {% else %}
+    <li><a href="{{ url_base|url(*url_args) }}">Les 12 derniers mois</a> <span class="divider"></span></li>
+    {% endif %}
+
+    {% for year in years %}
+      {% if date_range == 'year' and year == start.year %}
+      <li class="active">Année {{year}}</li>
+      {% else %}
+      <li><a href="{{ (url_base + '-year')|url(*url_args + [year]) }}">Année {{year}}</a> <span class="divider"></span></li>
+      {% endif %}
+    {% endfor %}
+
+    {% if date_range == 'all' %}
+    <li class="active">Toutes les séances</li>
+    {% else %}
+    <li><a href="{{ (url_base + '-all')|url(*url_args) }}">Toutes les séances</a> <span class="divider"></span></li>
+    {% endif %}
+  </ul>
+
+  <div id="stats">
+    <h3>Heures et distances</h3>
+    <div class="hours_distances"></div>
+    <div class="tooltip"></div>
+
+    <h3>Séances de Sports</h3>
+    <div class="sports"></div>
+  </div>
+  
+</div>
+{% endblock %}

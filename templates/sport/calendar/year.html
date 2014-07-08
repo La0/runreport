@@ -21,9 +21,24 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
-	<h2>{% if member %}{{ member.first_name }} {{ member.last_name }} - {% endif %}Année {{ year }}</h2>
+<div class="container" id="calendar">
 
+	<div class="row">
+		<h2 class="col-sm-6">
+      {% if member %}{{ member.first_name }} {{ member.last_name }} - {% endif %}Année {{ year }}
+		</h2>
+
+		<div class="col-sm-2 col-sm-offset-4 buttons">
+			{% if member %}
+			<a class="btn btn-success" href="{% url club-member-stats-year club.slug, member.username, year %}"><i class="icon-plus"></i> Statistiques</a>
+      {% else %}
+			<a class="btn btn-success" href="{% url stats-year year %}"><i class="icon-plus"></i> Statistiques</a>
+			{% endif %}
+		</div>
+	</div>
+
+	<table class="table table-bordered table-condensed calendar hidden-xs">
+		<tr>
 	<div class="year hidden-xs">
 		{% for month, days in date_list.items() %}
 		<div class="month">
