@@ -23,7 +23,7 @@ class ClubMembers(ClubMixin, ListView):
     filters = {
       'all' : None,
       'athletes' : {
-        'memberships__role' : 'athlete',
+        'memberships__role__in' : ('athlete', 'trainer'),
         'memberships__trainers' : self.request.user,
       },
       'staff' : {
