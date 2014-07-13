@@ -89,9 +89,8 @@ SECRET_KEY = 'nq!g^hyy-_l!*apn3302^5(jwt$t-&amp;!fo4my*^u3j!zj7=if%r'
 
 # Load template trough jinja
 TEMPLATE_LOADERS = (
-  'coach.jinja.Loader',
-  'django.template.loaders.filesystem.Loader',
-  'django.template.loaders.app_directories.Loader',
+  'coach.jinja.FileSystemLoader',
+  'coach.jinja.AppLoader',
 )
 
 JINJA2_TEMPLATE_LOADERS = (
@@ -271,8 +270,10 @@ try:
 except ImportError, e:
   pass
 
-# Apps in prod
-if not DEBUG:
+# Apps in prod or dev
+if DEBUG:
+  INSTALLED_APPS = INSTALLED_APPS + ('debug_toolbar',)
+else:
   INSTALLED_APPS = INSTALLED_APPS + ('raven.contrib.django.raven_compat',)
 
 # Load some settings constants in the templates
