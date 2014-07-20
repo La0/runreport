@@ -20,3 +20,7 @@ wsgiref==0.1.2
 xlwt==0.7.5
 django-redis-sessions==0.4.0
 django-contact-form==1.0
+kombu==3.0.21
+billiard==3.3.0.18
+pytz==2014.4
+psycopg2==2.5.3
