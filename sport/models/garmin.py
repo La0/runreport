@@ -10,7 +10,7 @@ import hashlib
 from coach.settings import GARMIN_DIR
 import logging
 from django.utils.timezone import utc
-from helpers import date_to_week
+from helpers import date_to_week, time_to_seconds as t2s
 
 class GarminActivity(models.Model):
   garmin_id = models.IntegerField(unique=True)
@@ -48,7 +48,34 @@ class GarminActivity(models.Model):
     week, year = date_to_week(date)
     sport_week,_ = SportWeek.objects.get_or_create(user=self.user, year=year, week=week)
     day,_ = SportDay.objects.get_or_create(date=date, week=sport_week)
-    self.session = SportSession.objects.create(sport=self.sport.get_parent(), day=day, time=self.time, distance=self.distance)
+
+    # Search an existing session
+    sessions = day.sessions.filter(sport=self.sport.get_parent(), garmin_activity__isnull=True)
+    min_ratio = None
+    if sessions.count():
+      # Sort by closest distance & time
+      # using a rationalised diff for distance & time
+      for s in sessions:
+        ratio_time, ratio_distance = None, None
+        if s.time and self.time:
+          t = t2s(self.time)
+          ratio_time = abs(t2s(s.time) - t) / t
+        if s.distance and self.distance:
+          ratio_distance = abs(s.distance - self.distance) / self.distance
+
+        # Sum ratios with compensation for empty values
+        ratio = (ratio_time or 0) + (ratio_distance or 0)
+        if ratio_time is None or ratio_distance is None:
+          ratio *= 2
+
+        # Compare ratio to find best session
+        if min_ratio is None or ratio < min_ratio:
+          min_ratio = ratio
+          self.session = s
+
+    else:
+      # Create new session
+      self.session = SportSession.objects.create(sport=self.sport.get_parent(), day=day, time=self.time, distance=self.distance)
 
   def get_url(self):
     return 'http://connect.garmin.com/activity/%s' % (self.garmin_id)
