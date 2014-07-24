@@ -11,6 +11,10 @@ body {
 	position: relative;
 }
 
+body.demo {
+  padding-top: 100px;
+}
+
 h1, h2, h3, h4, h5, h6 {
 	font-weight: 700;
 }
@@ -340,4 +344,12 @@ div.comment {
 	display: inline-block;
 	width: 10px;
 	height: 10px;
+}
+
+/* Demo warning */
+header div.demo-warning {
+  background: #f39c12;
+  color: white;
+  line-height: 26px;
+  text-align: center;
 }

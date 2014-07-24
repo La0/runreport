@@ -24,7 +24,7 @@
 	<script type="text/javascript" src="/medias/js/modal.js" ></script>
 	{% block js %}{% endblock %}
 </head>
-<body>
+<body class="{% if user.demo %}demo{% endif %}">
 	<header class="navbar navbar-default navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
@@ -63,9 +63,13 @@
 					{% endif %}
 					{% endfor %}
 				</ul>
-
 			</div>
 		</div>
+      {% if user.demo %}
+      <div class="demo-warning">
+        <i class="icon-fire"></i> Vous utilisez un compte démo, certaines fonctionalités sont inactives.
+      </div>
+      {% endif %}
 	</header>
 
 	<div id="main" role="main">
