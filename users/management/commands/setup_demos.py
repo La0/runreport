@@ -45,6 +45,10 @@ class Command(BaseCommand):
         continue
       self.build_day(user, day)
 
+    # Re init stats
+    for w in user.sportweek.all():
+      w.rebuild_cache()
+
   def build_day(self, user, day):
     # Build new week/day chain
     w,y = date_to_week(day)

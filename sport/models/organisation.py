@@ -186,6 +186,12 @@ class SportWeek(models.Model):
 
     return stats
 
+  def rebuild_cache(self):
+    # Rebuild the stats cache
+    st = StatsMonth(self.user, self.year, self.get_date_start().month, preload=False)
+    st.build()
+
+
 class SportDay(models.Model):
   week = models.ForeignKey('SportWeek', related_name='days')
   date = models.DateField()
