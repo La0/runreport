@@ -18,10 +18,10 @@ class WeeklyReport(SportSessionForms, CurrentWeekMixin, WeekArchiveView, WeekPag
     if self.week is not None:
       return self.week
 
-    # Init week 
+    # Init week
     self.week, _ = SportWeek.objects.get_or_create(user=self.request.user, year=self.get_year(), week=self.get_week())
 
-    # Init days 
+    # Init days
     self.days = self.week.get_days_per_date()
 
     return self.week
@@ -123,6 +123,8 @@ class WeeklyReport(SportSessionForms, CurrentWeekMixin, WeekArchiveView, WeekPag
 
     # Publish through a celery task ?
     if 'publish' in request.POST and self.week.is_publiable():
+      if request.user.demo:
+        raise Exception("No publish in demo")
       member = self.request.user.memberships.get(club__pk=int(request.POST['publish']))
       uri = self.request.build_absolute_uri('/')[:-1] # remove trailing /
       task = publish_report.delay(self.week, member, uri)

@@ -81,7 +81,7 @@
 		</fieldset>
 		<div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
-				<button type="submit" class="btn btn-primary">Mettre à jour</button>
+				<button type="submit" class="btn btn-primary" {% if user.demo %}disabled{% endif %}>Mettre à jour</button>
 			</div>
 		</div>
 	</form>

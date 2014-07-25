@@ -59,7 +59,7 @@ $(function(){
     <div class="form-group row actions">
       <div class="col-md-offset-5 col-md-3 col-sm-12">
       {% for m in memberships %}
-        <button {% if not report.is_publiable() %}disabled="disabled"{% endif %} type="submit" name="publish" value="{{m.club.pk}}" class="btn btn-success">
+        <button {% if not report.is_publiable() or user.demo %}disabled="disabled"{% endif %} type="submit" name="publish" value="{{m.club.pk}}" class="btn btn-success">
           Envoyer à
           {% for t in m.trainers.all() %}
           {{ t.first_name|default(t.username) }}{% if not loop.last %}, {% endif %}

@@ -21,6 +21,9 @@ class Profile(UpdateView):
     return context
 
   def form_valid(self, form):
+    if self.request.user.demo:
+      raise Exception('No edition for demo')
+
     context = self.get_context_data(form=form)
 
     # Update user category
