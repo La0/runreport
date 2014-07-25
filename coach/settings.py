@@ -239,6 +239,10 @@ CELERYBEAT_SCHEDULE = {
     'task': 'sport.tasks.race_mail',
     'schedule': crontab(hour=9, minute=0),
   },
+  'build-demos-every-day-at-1am': {
+    'task': 'users.tasks.build_demos',
+    'schedule': crontab(hour=1, minute=0),
+  },
 }
 
 # Dev cache in files
