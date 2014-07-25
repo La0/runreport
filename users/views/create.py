@@ -17,7 +17,7 @@ class CreateUser(FormView):
     user.save()
 
     # Auto login
-    valid_user = authenticate(username=user.username, password=form.cleaned_data['password'])
+    valid_user = authenticate(username=user.email, password=form.cleaned_data['password'])
     if valid_user is not None:
       auth_login(self.request, valid_user)
     return HttpResponseRedirect(reverse('club-list'))

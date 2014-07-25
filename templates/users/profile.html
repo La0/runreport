@@ -14,7 +14,9 @@
 			<legend>Informations personnelles</legend>
 			{{ macros.input(form.first_name, 'Prénom', false, 4, 8) }}
 			{{ macros.input(form.last_name, 'Nom', false, 4, 8) }}
+      {% if not user.demo %}
 			{{ macros.input(form.email, 'Adresse email', false, 4, 8) }}
+      {% endif %}
 			{{ macros.input(form.birthday, 'Date de naissance', false, 4, 8) }}
 			{% if user.category %}
 			<div class="form-group">
@@ -25,10 +27,12 @@
 			</div>
 			{% endif %}
 			{{ macros.input(form.license, 'License FFA', false, 4, 8) }}
+      {% if not user.demo %}
 			<div class="alert alert-info">
 				<h4>Mot de passe</h4>
 				Vous pouvez changer de mot de passe en <a href="{% url user-password-update %}">utilisant cette page</a>.
 			</div>
+      {% endif %}
 		</fieldset>
 
 		<fieldset>

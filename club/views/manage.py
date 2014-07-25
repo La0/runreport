@@ -13,8 +13,9 @@ class ClubManage(ClubManagerMixin, UpdateView):
   form_class = ClubCreateForm
 
   def form_valid(self, form):
-    club = form.save()
-    self.club = club
+    if not self.request.user.demo:
+      club = form.save()
+      self.club = club
     return HttpResponseRedirect(reverse('club-manage', kwargs={'slug' : self.club.slug}))
 
   def get_context_data(self, *args, **kwargs):
@@ -51,7 +52,7 @@ class ClubLinkDelete(ClubManagerMixin, JsonResponseMixin, BaseDeleteView):
 
   def get_object(self):
     try:
-      self.link = self.model.objects.get(pk=self.kwargs['id'], club=self.club) 
+      self.link = self.model.objects.get(pk=self.kwargs['id'], club=self.club)
     except:
       raise Exception("No link found")
 

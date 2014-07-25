@@ -8,6 +8,7 @@ class ClubList(ListView):
   model = Club
   template_name = 'club/join.html'
   context_object_name = 'clubs'
+  queryset = Club.objects.filter(demo=False)
 
 class ClubJoin(JsonResponseMixin, TemplateView, ):
   template_name = 'club/joined.html'

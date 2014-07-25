@@ -173,3 +173,11 @@ function load_form(evt){
   load_box(url, method, data, $(this));
   return false;
 }
+
+// Autologin for demo
+function demo(login, password){
+  $('input[name="username"]').val(login);
+  $('input[name="password"]').val(password);
+  $('form.form-signin').submit();
+  return false;
+}

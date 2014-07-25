@@ -9,6 +9,7 @@
 	max-width: 330px;
 	padding: 15px;
 	margin: 0 auto;
+  margin-bottom: 40px;
 }
 .form-signin .form-signin-heading,
 .form-signin .checkbox {
@@ -44,6 +45,12 @@
 	margin-bottom: 10px;
 }
 
+.form-signin p.demos {
+  margin-top: 30px;
+  padding: 8px;
+  text-align: center;
+}
+
 p.forgot {
   margin-top: 10px;
 }
@@ -67,7 +74,16 @@ p.forgot {
     <p class="forgot">
       <a href="{% url password_reset %}" class="pull-right">Mot de passe oublié <i class="icon-help-circled"></i></a>
     </p>
+
+    <p class="demos">
+      <hr />
+      <span>Comptes Démos : </span>
+      <button class="btn btn-info btn-xs" onclick="return demo('demo.athlete@runreport.fr', 'demo');">Athlète</button>
+      <button class="btn btn-success btn-xs" onclick="return demo('demo.trainer@runreport.fr', 'demo');">Entraineur</button>
+    </p>
 	</form>
 </div>
+
+
 
 {% endblock %}

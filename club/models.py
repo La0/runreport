@@ -20,6 +20,9 @@ class Club(models.Model):
   zipcode = models.CharField(max_length=10)
   city = models.CharField(max_length=250)
 
+  # Demo dummy club ?
+  demo = models.BooleanField(default=False)
+
   def __unicode__(self):
     return self.name
 

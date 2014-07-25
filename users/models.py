@@ -68,6 +68,9 @@ class Athlete(AthleteBase):
   garmin_login = models.CharField(max_length=255, null=True, blank=True)
   garmin_password = models.TextField(null=True, blank=True)
 
+  # Demo dummy account ?
+  demo = models.BooleanField(default=False)
+
   def search_category(self):
     if not self.birthday:
       return None
