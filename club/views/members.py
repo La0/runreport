@@ -125,6 +125,9 @@ class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, Proces
     return super(ClubMemberRole, self).get_form(form_class)
 
   def form_valid(self, form):
+    if self.request.user.demo:
+      raise Exception("No edit for demo")
+
     try:
       membership = form.save(commit=False)
       membership.trainers = form.cleaned_data['trainers'] # Weird :/

@@ -81,7 +81,14 @@
 		{{ macros.input(form.city, 'Ville') }}
 		<div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
+        {% if user.demo %}
+        <div class="alert alert-warning">
+          <h4>Compte Démo</h4>
+          L'édition est désactivée pour la démo.
+        </div>
+        {% else %}
 				<input type="submit" value="Editer" class="btn btn-primary" />
+        {% endif %}
 			</div>
 		</div>
 	</form>
