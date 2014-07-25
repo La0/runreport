@@ -46,7 +46,8 @@ def add_pages(request):
       if m.role in ('trainer', 'staff') or request.user.is_superuser:
         submenu['menu'].append(_p(('club-current-name', m.club.slug, 'athletes', 'name'), u'Mes Athlètes'))
         submenu['menu'].append(_p(('club-races', m.club.slug, ), u'Les courses', lazy=True))
-        submenu['menu'].append(_p(('plans', ), u'Mes plans', lazy=True))
+        # Removed plans because non functional
+        #submenu['menu'].append(_p(('plans', ), u'Mes plans', lazy=True))
 
         # Manage links
         if m.club.manager == request.user or request.user.is_superuser:
