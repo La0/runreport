@@ -23,7 +23,7 @@ class SportStats(TemplateView):
 
     # List available years
     limits = SportDay.objects.filter(week__user=user).aggregate(min=Min('date'))
-    years = reversed(range(limits['min'].year, today.year+1))
+    years = limits['min'] and reversed(range(limits['min'].year, today.year+1)) or (today.year+1,)
 
     year_delta = timedelta(days=365)
     if 'year' in self.kwargs:
