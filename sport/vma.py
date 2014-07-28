@@ -22,6 +22,8 @@ class VmaCalc:
 
   def __init__(self, vma):
     self._vma = vma
+    if self._vma <= 0:
+      raise Exception("Invalid VMA Value")
 
   def get_paces(self):
     return self._paces

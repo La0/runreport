@@ -14,7 +14,10 @@ class VmaPaces(TemplateView):
 
   def get_context_data(self, **kwargs):
     context = super(VmaPaces, self).get_context_data(**kwargs)
-    context.update(self.load_vma())
+    try:
+      context.update(self.load_vma())
+    except:
+      pass
     return context
 
 class VmaGlossary(TemplateView):
