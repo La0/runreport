@@ -5,6 +5,9 @@ from django.contrib.auth.models import AbstractBaseUser, UserManager, Permission
 from django.db.models.signals import post_save
 from django.core import validators
 from django.utils import timezone
+from django.core.validators import MaxValueValidator, MinValueValidator
+
+
 
 class AthleteBase(AbstractBaseUser, PermissionsMixin):
   '''
@@ -49,13 +52,13 @@ class Athlete(AthleteBase):
   # Personal infos for trainer
   birthday = models.DateField(null=True, blank=True)
   category = models.ForeignKey('UserCategory', null=True, blank=True)
-  vma = models.FloatField(null=True, blank=True)
-  frequency = models.IntegerField(null=True, blank=True)
-  frequency_rest = models.IntegerField(null=True, blank=True)
-  height = models.IntegerField(null=True, blank=True)
-  weight = models.IntegerField(null=True, blank=True)
+  vma = models.FloatField(null=True, blank=True, validators=[MinValueValidator(0)])
+  frequency = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0)])
+  frequency_rest = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0)])
+  height = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0)])
+  weight = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0)])
   comment = models.TextField(null=True, blank=True)
-  nb_sessions = models.IntegerField(null=True, blank=True)
+  nb_sessions = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0)])
   license = models.CharField(max_length=12, null=True, blank=True)
 
   # Sport
