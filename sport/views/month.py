@@ -2,7 +2,7 @@ from django.views.generic import MonthArchiveView, DateDetailView, View
 from django.views.generic.dates import MonthMixin, YearMixin
 from django.views.generic.edit import ModelFormMixin, ProcessFormView
 from django.http import Http404
-from sport.models import SportDay, SportWeek, SESSION_TYPES
+from sport.models import SportSession, SportDay, SportWeek, SESSION_TYPES
 from datetime import datetime, date
 import calendar
 import collections
@@ -68,32 +68,31 @@ class ExportMonth(CsvResponseMixin, MonthMixin, YearMixin, View):
     # Load calendar
     try:
       cal = calendar.Calendar(calendar.MONDAY)
-      days = [d for d in cal.itermonthdates(year, month)]
+      days = [d for d in cal.itermonthdates(year, month) if d.month == month]
     except:
       raise Http404('Invalid export date.')
 
     # Load sessions
+    day_format = '%A %d %B %Y'
     data = []
-    sessions = SportDay.objects.filter(week__user=self.request.user, date__in=days)
+    sessions = SportSession.objects.filter(day__week__user=self.request.user, day__date__in=days)
     for day in days:
-      if day.month != month:
-        continue # Skip before & after days
+      day_sessions = sessions.filter(day__date=day)
+      if day_sessions.count() > 0:
 
-      day_data = [ day.strftime('%A %d %B %Y'), ]
-      try:
-        session = sessions.get(date=day)
-
-        # Serialize a session as a list, for csv render
-        day_data += [
-          session.type,
-          session.name.encode('utf-8'),
-          session.comment.encode('utf-8'),
-          session.distance,
-          session.time,
-        ]
-      except:
-        pass
-      data.append(day_data)
+        # Serialize every session as a list, for csv render
+        for session in day_sessions.all():
+          data.append([
+            day.strftime(day_format),
+            session.type,
+            session.name.encode('utf-8'),
+            session.comment.encode('utf-8'),
+            session.distance,
+            session.time,
+          ])
+      else:
+        # Just display empty day
+        data.append([ day.strftime(day_format), ])
 
     # Build csv lines
     context = {
