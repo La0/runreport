@@ -1,0 +1,542 @@
+[
+{
+  "pk": 1, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 0, 
+    "name": "Any Activity Type", 
+    "parent": null, 
+    "slug": "all"
+  }
+},
+{
+  "pk": 2, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 0, 
+    "name": "Uncategorized", 
+    "parent": 1, 
+    "slug": "uncategorized"
+  }
+},
+{
+  "pk": 3, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 1, 
+    "name": "Course \u00e0 pied", 
+    "parent": 1, 
+    "slug": "running"
+  }
+},
+{
+  "pk": 4, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Street Running", 
+    "parent": 3, 
+    "slug": "street_running"
+  }
+},
+{
+  "pk": 5, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Track Running", 
+    "parent": 3, 
+    "slug": "track_running"
+  }
+},
+{
+  "pk": 6, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Trail Running", 
+    "parent": 3, 
+    "slug": "trail_running"
+  }
+},
+{
+  "pk": 7, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Treadmill Running", 
+    "parent": 3, 
+    "slug": "treadmill_running"
+  }
+},
+{
+  "pk": 8, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 1, 
+    "name": "V\u00e9lo", 
+    "parent": 1, 
+    "slug": "cycling"
+  }
+},
+{
+  "pk": 9, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Cyclocross", 
+    "parent": 8, 
+    "slug": "cyclocross"
+  }
+},
+{
+  "pk": 10, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Downhill Biking", 
+    "parent": 8, 
+    "slug": "downhill_biking"
+  }
+},
+{
+  "pk": 11, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Indoor Cycling", 
+    "parent": 8, 
+    "slug": "indoor_cycling"
+  }
+},
+{
+  "pk": 12, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Mountain Biking", 
+    "parent": 8, 
+    "slug": "mountain_biking"
+  }
+},
+{
+  "pk": 13, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Recumbent Cycling", 
+    "parent": 8, 
+    "slug": "recumbent_cycling"
+  }
+},
+{
+  "pk": 14, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Road Cycling", 
+    "parent": 8, 
+    "slug": "road_biking"
+  }
+},
+{
+  "pk": 15, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Track Cycling", 
+    "parent": 8, 
+    "slug": "track_cycling"
+  }
+},
+{
+  "pk": 16, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 1, 
+    "name": "Fitness", 
+    "parent": 1, 
+    "slug": "fitness_equipment"
+  }
+},
+{
+  "pk": 17, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Elliptical", 
+    "parent": 16, 
+    "slug": "elliptical"
+  }
+},
+{
+  "pk": 18, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Indoor Cardio", 
+    "parent": 16, 
+    "slug": "indoor_cardio"
+  }
+},
+{
+  "pk": 19, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Indoor Rowing", 
+    "parent": 16, 
+    "slug": "indoor_rowing"
+  }
+},
+{
+  "pk": 20, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Stair Climbing", 
+    "parent": 16, 
+    "slug": "stair_climbing"
+  }
+},
+{
+  "pk": 21, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Strength Training", 
+    "parent": 16, 
+    "slug": "strength_training"
+  }
+},
+{
+  "pk": 22, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 1, 
+    "name": "Randonn\u00e9e", 
+    "parent": 1, 
+    "slug": "hiking"
+  }
+},
+{
+  "pk": 23, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 1, 
+    "name": "Natation", 
+    "parent": 1, 
+    "slug": "swimming"
+  }
+},
+{
+  "pk": 24, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Lap Swimming", 
+    "parent": 23, 
+    "slug": "lap_swimming"
+  }
+},
+{
+  "pk": 25, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Open Water Swimming", 
+    "parent": 23, 
+    "slug": "open_water_swimming"
+  }
+},
+{
+  "pk": 26, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 1, 
+    "name": "Marche", 
+    "parent": 1, 
+    "slug": "walking"
+  }
+},
+{
+  "pk": 27, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Casual Walking", 
+    "parent": 26, 
+    "slug": "casual_walking"
+  }
+},
+{
+  "pk": 28, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Speed Walking", 
+    "parent": 26, 
+    "slug": "speed_walking"
+  }
+},
+{
+  "pk": 29, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 1, 
+    "name": "Transition", 
+    "parent": 1, 
+    "slug": "transition"
+  }
+},
+{
+  "pk": 30, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Swim to Bike Transition", 
+    "parent": 29, 
+    "slug": "swimToBikeTransition"
+  }
+},
+{
+  "pk": 31, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Bike to Run Transition", 
+    "parent": 29, 
+    "slug": "bikeToRunTransition"
+  }
+},
+{
+  "pk": 32, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Run to Bike Transition", 
+    "parent": 29, 
+    "slug": "runToBikeTransition"
+  }
+},
+{
+  "pk": 33, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 0, 
+    "name": "Moto", 
+    "parent": 1, 
+    "slug": "motorcycling"
+  }
+},
+{
+  "pk": 34, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 1, 
+    "name": "Autre", 
+    "parent": 1, 
+    "slug": "other"
+  }
+},
+{
+  "pk": 35, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Backcountry Skiing/Snowboarding", 
+    "parent": 34, 
+    "slug": "backcountry_skiing_snowboarding"
+  }
+},
+{
+  "pk": 36, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Boating", 
+    "parent": 34, 
+    "slug": "boating"
+  }
+},
+{
+  "pk": 37, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Cross Country Skiing", 
+    "parent": 34, 
+    "slug": "cross_country_skiing"
+  }
+},
+{
+  "pk": 38, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Driving", 
+    "parent": 34, 
+    "slug": "driving_general"
+  }
+},
+{
+  "pk": 39, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Flying", 
+    "parent": 34, 
+    "slug": "flying"
+  }
+},
+{
+  "pk": 40, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Golf", 
+    "parent": 34, 
+    "slug": "golf"
+  }
+},
+{
+  "pk": 41, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Horseback Riding", 
+    "parent": 34, 
+    "slug": "horseback_riding"
+  }
+},
+{
+  "pk": 42, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Inline Skating", 
+    "parent": 34, 
+    "slug": "inline_skating"
+  }
+},
+{
+  "pk": 43, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Mountaineering", 
+    "parent": 34, 
+    "slug": "mountaineering"
+  }
+},
+{
+  "pk": 44, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Paddling", 
+    "parent": 34, 
+    "slug": "paddling"
+  }
+},
+{
+  "pk": 45, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Resort Skiing/Snowboarding", 
+    "parent": 34, 
+    "slug": "resort_skiing_snowboarding"
+  }
+},
+{
+  "pk": 46, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Rowing", 
+    "parent": 34, 
+    "slug": "rowing"
+  }
+},
+{
+  "pk": 47, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Sailing", 
+    "parent": 34, 
+    "slug": "sailing"
+  }
+},
+{
+  "pk": 48, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Skate Skiing", 
+    "parent": 34, 
+    "slug": "skate_skiing"
+  }
+},
+{
+  "pk": 49, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Skating", 
+    "parent": 34, 
+    "slug": "skating"
+  }
+},
+{
+  "pk": 50, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Snowmobiling", 
+    "parent": 34, 
+    "slug": "snowmobiling"
+  }
+},
+{
+  "pk": 51, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Snowshoeing", 
+    "parent": 34, 
+    "slug": "snow_shoe"
+  }
+},
+{
+  "pk": 52, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Stand Up Paddleboarding", 
+    "parent": 34, 
+    "slug": "stand_up_paddleboarding"
+  }
+},
+{
+  "pk": 53, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Whitewater Kayaking/Rafting", 
+    "parent": 34, 
+    "slug": "whitewater_rafting_kayaking"
+  }
+},
+{
+  "pk": 54, 
+  "model": "sport.sport", 
+  "fields": {
+    "depth": 2, 
+    "name": "Wind/Kite Surfing", 
+    "parent": 34, 
+    "slug": "wind_kite_surfing"
+  }
+}
+]
