@@ -13,11 +13,16 @@ class GarminLogin(UpdateView):
   def get_object(self):
     return self.request.user
 
-  def get_success_url(self):
-    return reverse('user-garmin')
+  def form_valid(self, form, *args, **kwargs):
+    form.save()
+    ctx = {
+      'form' : form,
+      'connected' : True,
+    }
+    return self.render_to_response(self.get_context_data(**ctx))
 
-  def get_context_data(self, **kwargs):
-    context = super(GarminLogin, self).get_context_data(**kwargs)
+  def get_context_data(self, *args, **kwargs):
+    context = super(GarminLogin, self).get_context_data(*args, **kwargs)
 
     # Imported Activities
     activities = GarminActivity.objects.filter(user=self.request.user)

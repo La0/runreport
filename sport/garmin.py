@@ -10,6 +10,9 @@ from helpers import week_to_date
 
 logger = logging.getLogger('coach.sport.garmin')
 
+class GarminAuthException(Exception):
+  pass
+
 class GarminConnector:
   _user = None
   _login = None
@@ -38,7 +41,7 @@ class GarminConnector:
     elif login and password:
       # Load from login/pass
       self._login = login
-      self.load_password(password)
+      self._password = password
     else:
       raise Exception("Missing login infos")
 
@@ -54,13 +57,16 @@ class GarminConnector:
     Authentify session, using new CAS ticket
     See protocol on http://www.jasig.org/cas/protocol
     '''
+    if not self._password:
+      raise Exception("No Garmin password available")
+
     self._session = requests.Session()
 
     # Get SSO server hostname
     res = self._session.get(self._url_hostname)
     sso_hostname = res.json().get('host', None)
     if not sso_hostname:
-      raise Exception('No SSO server available')
+      raise GarminAuthException('No SSO server available')
 
     # Load login page to get login ticket
     params = {
@@ -69,13 +75,13 @@ class GarminConnector:
     }
     res = self._session.get(self._url_login, params=params)
     if res.status_code != 200:
-      raise Exception('No login form')
+      raise GarminAuthException('No login form')
 
     # Get the login ticket value
     regex = '<input\s+type="hidden"\s+name="lt"\s+value="(?P<lt>\w+)"\s+/>'
     res = re.search(regex, res.text)
     if not res:
-      raise Exception('No login ticket')
+      raise GarminAuthException('No login ticket')
     login_ticket = res.group('lt')
 
     # Login/Password with login ticket
@@ -88,19 +94,19 @@ class GarminConnector:
     }
     res = self._session.post(self._url_login, params=params, data=data)
     if res.status_code != 200:
-      raise Exception('Authentification failed.')
+      raise GarminAuthException('Authentification failed.')
 
     # Second auth step
     # Don't know why this one is necessary :/
     res = self._session.get(self._url_post_login)
     if res.status_code != 200:
-      raise Exception('Second auth step failed.')
+      raise GarminAuthException('Second auth step failed.')
 
     # Check login
     res = self._session.get(self._url_check_login)
     user = res.json()
     if not user.get('username', None):
-      raise Exception("Authentification failed.")
+      raise GarminAuthException("Login check failed.")
     logger.info('Logged in as %s' % (user['username']))
 
   def search(self, nb_pass=0):

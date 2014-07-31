@@ -7,6 +7,12 @@
 <div class="container">
 	<h2>Connection Garmin</h2>
 
+  {% if connected %}
+  <div class="alert alert-success">
+    <h4>Connection validée</h4>
+    Votre compte RunReport est maintenant associé à votre compte Garmin.
+  </div>
+  {% else %}
 	<div class="alert alert-warning">
 		<h4>Attention !</h4>
 		Je suis obligé de vous demander votre login/mot de passe pour récupérer régulièrement vos informations sur <a href="http://connect.garmin.com" target="_blank"> Garmin Connect</a>, ne disposant pas d'API officielle.
@@ -15,6 +21,7 @@
 		<br />
 		Pour un maximum de sécurité, je vous conseille de changer votre mot de passe Garmin Connect pour un mot de passe unique (qui ne serait pas réutilisé sur votre compte mail, ou autre...)
 	</div>
+  {% endif %}
 
 	<form class="form form-horizontal" action="" method="POST">
 		{% csrf_token %}
