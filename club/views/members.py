@@ -12,7 +12,6 @@ from helpers import week_to_date
 from club.forms import ClubMembershipForm
 from datetime import date, timedelta, MINYEAR
 from coach.mixins import JsonResponseMixin, JSON_STATUS_ERROR
-import operator
 
 class ClubMembers(ClubMixin, ListView):
   template_name = 'club/members.html'
