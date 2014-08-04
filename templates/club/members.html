@@ -6,7 +6,7 @@
 
 <div class="container">
 
-	<h2>{{club.name}} : {{members.count()}} membres</h2>
+	<h2>{{club.name}} : {{members|length()}} membres</h2>
 
 	{% if request.user == club.manager or request.user.is_staff %}
 	<ul class="breadcrumb">
@@ -59,7 +59,13 @@
 				<td>{{ member.sessions_count }}</td>
 				<td>
 					{% if member.max_report_date %}
-					<a href="{% url club-member-week club.slug, member.username, member.max_report_date|date('Y'), member.max_report_date|date('W')|add(-1) %}">{{ member.max_report_date|date('l d E') }}</a>
+					<a href="{% url club-member-week club.slug, member.username, member.max_report_date|date('Y'), member.max_report_date|date('W')|add(-1) %}">
+            {% if member.max_report_date >= max_diff_date %}
+            {{ member.max_report_date|timesince() }}
+            {% else %}
+            {{ member.max_report_date|date('l d E') }}
+            {% endif %}
+          </a>
 					{% endif %}
 				</td>
 				<td>

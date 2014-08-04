@@ -10,8 +10,9 @@ from sport.models import SportWeek
 from club.models import ClubMembership
 from helpers import week_to_date
 from club.forms import ClubMembershipForm
-from datetime import date
+from datetime import date, timedelta, MINYEAR
 from coach.mixins import JsonResponseMixin, JSON_STATUS_ERROR
+import operator
 
 class ClubMembers(ClubMixin, ListView):
   template_name = 'club/members.html'
@@ -54,17 +55,6 @@ class ClubMembers(ClubMixin, ListView):
       f['memberships__club'] = self.club # to avoid listing other club memberships
       members = members.filter(**f)
 
-    # Sort members
-    default_sort = 'username'
-    sorts = {
-      'name' : default_sort,
-      'name-r' : '-username',
-      'date' : '-max_report_date',
-      'date-r' : 'max_report_date',
-    }
-    sort = 'sort' in self.kwargs and sorts.get(self.kwargs['sort'], default_sort) or default_sort
-    members = members.order_by(sort)
-
     # Apply club membership
     for m in members:
       m.membership = m.memberships.get(club=self.club)
@@ -72,21 +62,50 @@ class ClubMembers(ClubMixin, ListView):
     # Add last SportWeek date, as week & year
     # Enhance query performance by separating annotation
     # then applying manually the results on queryset
-    agg = members.values('pk').annotate(max_date=Max('sportweek__days__date'), nb=Count('sportweek__days'))
+    agg = members.filter(sportweek__days__date__lte=date.today()).values('pk').annotate(max_date=Max('sportweek__days__date'), nb=Count('sportweek__days'))
     agg = dict((a['pk'], (a['max_date'], a['nb'])) for a in agg)
     for m in members:
-      m.max_report_date, m.sessions_count = agg[m.pk]
+      m.max_report_date, m.sessions_count = agg.get(m.pk, (None, 0))
+
+    # Sort helpers
+    mindate = date(MINYEAR, 1, 1)
+    def date_sort(a):
+      return a.max_report_date or mindate
+    def name_sort(a):
+      return a.first_name.lower() + a.last_name.lower()
+
+    # Sort members
+    # Using sorted instead of order_by
+    # to be able to use added attrs (date)
+    default_sort = 'name'
+    sort = self.kwargs.get('sort', default_sort)
+    sorts = {
+      'name'   : (name_sort, False),
+      'name-r' : (name_sort, True),
+      'date'   : (date_sort, True),
+      'date-r' : (date_sort, False),
+    }
+    if sort not in sorts:
+      raise Http404('Invalid sort')
+    sort_key, sort_reversed = sorts[sort]
+    print sort_key, sort_reversed
+    members = sorted(members, key=sort_key, reverse=sort_reversed)
+    print members
 
     return {
       'type' : self.kwargs.get('type', default_type),
-      'sort' : self.kwargs.get('sort', default_sort),
+      'sort' : sort,
       'members' : members,
     }
 
   def get_context_data(self, **kwargs):
     context = super(ClubMembers, self).get_context_data(**kwargs)
     context.update(self.load_members())
-    context['today'] = date.today()
+
+    # Add date limits
+    today = date.today()
+    context['today'] = today
+    context['max_diff_date'] = today - timedelta(days=28)
     return context
 
 class ClubMember(ClubMixin, DetailView):
