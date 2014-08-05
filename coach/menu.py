@@ -24,7 +24,7 @@ def add_pages(request):
       'icon' : 'icon-help-circled',
     }
     submenu['menu'].append(_p(('page-list', 'help'), 'Aide', lazy=True))
-    submenu['menu'].append(_p('vma-glossary', 'Glossaire', lazy=True))
+    submenu['menu'].append(_p('vma-glossary', 'Glossaire'))
     submenu['menu'].append(_p(('page-list', 'news'), 'News', lazy=True))
     submenu['menu'].append(_p(('contact_form',), 'Contact', lazy=True))
     return submenu
