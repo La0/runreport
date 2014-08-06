@@ -11,12 +11,13 @@ $(function(){
 
   {% for day in report.get_dates() %}
   <div class="day {% if day == now.date() %}today{% endif %}" id="day-{{ day }}">
+      <fieldset>
     {% if day == now.date() %}
     <legend>Aujourd'hui - {{ day|date('l d E')|title }}</legend>
     {% else %}
     <legend>{{ day|date('l d E')|title }}</legend>
     {% endif %}
-
+    </fieldset>
     <div id="sessions-{{day}}">
     {% for form in forms[day] %}
     {% include 'sport/session/edit.html' %}
