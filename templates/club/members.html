@@ -33,49 +33,49 @@
 				<th>Actions</th>
 			</tr>
 			{% for member in members %}
-			<tr>
-				<td>
-					{{ member.first_name|lower|title }} {{ member.last_name|lower|title }}
-				</td>
-				{% if request.user == club.manager or request.user.is_staff %}
-				<td>
-					{% with member.membership.role as role %}
-					{% if role == 'athlete' %}
-					<a href="{% url club-member-role club.slug, member.username %}" class="modal-action btn btn-default btn-xs" >Athlète</a>
-					{% elif role == 'trainer' %}
-					<a href="{% url club-member-role club.slug, member.username %}" class="modal-action btn btn-xs btn-info" >Entraîneur</a>
-					{% elif role == 'staff' %}
-					<a href="{% url club-member-role club.slug, member.username %}" class="modal-action btn btn-xs btn-primary" >Staff</a>
-					{% elif role == 'archive' %}
-					<a href="{% url club-member-role club.slug, member.username %}" class="modal-action btn btn-xs btn-danger" >Archivé</a>
-					{% elif role == 'prospect' %}
-					<a href="{% url club-member-role club.slug, member.username %}" class="modal-action btn btn-xs btn-success" >Nouveau</a>
-					{% endif %}
-					{% endwith %}
-				</td>
-				{% endif %}
-				<td>{{ member.category.name|default('-') }}</td>
-				<td>{{ member.vma|default('-') }}</td>
-				<td>{{ member.sessions_count }}</td>
-				<td>
-					{% if member.max_report_date %}
-					<a href="{% url club-member-week club.slug, member.username, member.max_report_date|date('Y'), member.max_report_date|date('W')|add(-1) %}">
-            {% if member.max_report_date >= max_diff_date %}
-            {{ member.max_report_date|timesince() }}
-            {% else %}
-            {{ member.max_report_date|date('l d E') }}
-            {% endif %}
-          </a>
-					{% endif %}
-				</td>
-				<td>
-					<a class="btn btn-default btn-xs" href="{% url club-member club.slug, member.username %}">Fiche</a>
-					{% if member.membership.role not in ('archive', 'prospect') %}
-					<a class="btn btn-success btn-xs" href="{% url club-member-stats club.slug, member.username %}">Stats</a>
-					<a class="btn btn-primary btn-xs" href="{% url club-member-month club.slug, member.username, today|date('Y'), today|date('m') %}">Carnet</a>
-					{% endif %}
-				</td>
-			</tinfo >
+            <tr>
+                <td>
+                    {{ member.first_name|lower|title }} {{ member.last_name|lower|title }}
+                </td>
+                {% if request.user == club.manager or request.user.is_staff %}
+                <td>
+                    {% with member.membership.role as role %}
+                    {% if role == 'athlete' %}
+                        <a href="{% url club-member-role club.slug, member.username %}" class="modal-action btn btn-default btn-xs">Athlète</a>
+                    {% elif role == 'trainer' %}
+                        <a href="{% url club-member-role club.slug, member.username %}" class="modal-action btn btn-xs btn-info">Entraîneur</a>
+                    {% elif role == 'staff' %}
+                        <a href="{% url club-member-role club.slug, member.username %}" class="modal-action btn btn-xs btn-primary">Staff</a>
+                    {% elif role == 'archive' %}
+                        <a href="{% url club-member-role club.slug, member.username %}" class="modal-action btn btn-xs btn-danger">Archivé</a>
+                    {% elif role == 'prospect' %}
+                        <a href="{% url club-member-role club.slug, member.username %}" class="modal-action btn btn-xs btn-success">Nouveau</a>
+                    {% endif %}
+                    {% endwith %}
+                </td>
+                {% endif %}
+                <td>{{ member.category.name|default('-') }}</td>
+                <td>{{ member.vma|default('-') }}</td>
+                <td>{{ member.sessions_count }}</td>
+                <td>
+                    {% if member.max_report_date %}
+                        <a href="{% url club-member-week club.slug, member.username, member.max_report_date|date('Y'), member.max_report_date|date('W')|add(-1) %}">
+                        {% if member.max_report_date >= max_diff_date %}
+                        {{ member.max_report_date|timesince() }}
+                        {% else %}
+                        {{ member.max_report_date|date('l d E') }}
+                        {% endif %}
+                        </a>
+                    {% endif %}
+                </td>
+                <td>
+                    <a class="btn btn-default btn-xs" href="{% url club-member club.slug, member.username %}">Fiche</a>
+                    {% if member.membership.role not in ('archive', 'prospect') %}
+                    <a class="btn btn-success btn-xs" href="{% url club-member-stats club.slug, member.username %}">Stats</a>
+                    <a class="btn btn-primary btn-xs" href="{% url club-member-month club.slug, member.username, today|date('Y'), today|date('m') %}">Carnet</a>
+                    {% endif %}
+                </td>
+            </tr>
 			{% endfor %}
 		</table>
 	</div>
