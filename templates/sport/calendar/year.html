@@ -37,32 +37,36 @@
 		</div>
 	</div>
 
-	<table class="table table-bordered table-condensed calendar hidden-xs">
+	<table class="table  table-condensed calendar hidden-xs">
 		<tr>
-	<div class="year hidden-xs">
-		{% for month, days in date_list.items() %}
-		<div class="month">
-			<div class="head">
-				<a href="{{ pagemonth|url(*pageargs + [days[0].year, days[0].month]) }}" >{{ days[0]|date('F')|title() }}</a>
-			</div>
-			{% for day_date in days %}
-			{% with object_list[day_date] as day %}
-			<div class="day modal-action" href="{{ pageday|url(*pageargs + [day_date.year, day_date.month, day_date.day]) }}">
-				<span class="date">{{ day_date.day }}</span>
-				{% if day %}
-        <span class="name {% if day %}session {{ day.best_type() }}{% endif %}">
-          {{ day.sessions.first().name|default('...') }}
-          {% for sport, count in day.sports_count() %}
-          <i class="icon-sport-{{sport.slug}}"></i>{% if count > 1 %}x {{ count }}{% endif %}
-          {% endfor %}
-        </span>
-				{% endif %}
-			</div>
-			{% endwith %}
-			{% endfor %}
-		</div>
-		{% endfor %}
-	</div>
+            <td>
+                <div class="year hidden-xs">
+                    {% for month, days in date_list.items() %}
+                    <div class="month">
+                        <div class="head">
+                            <a href="{{ pagemonth|url(*pageargs + [days[0].year, days[0].month]) }}" >{{ days[0]|date('F')|title() }}</a>
+                        </div>
+                        {% for day_date in days %}
+                        {% with object_list[day_date] as day %}
+                        <div class="day modal-action" href="{{ pageday|url(*pageargs + [day_date.year, day_date.month, day_date.day]) }}">
+                            <span class="date">{{ day_date.day }}</span>
+                            {% if day %}
+                    <span class="name {% if day %}session {{ day.best_type() }}{% endif %}">
+                      {{ day.sessions.first().name|default('...') }}
+                      {% for sport, count in day.sports_count() %}
+                      <i class="icon-sport-{{sport.slug}}"></i>{% if count > 1 %}x {{ count }}{% endif %}
+                      {% endfor %}
+                    </span>
+                            {% endif %}
+                        </div>
+                        {% endwith %}
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </td>
+        </tr>
+    </table>
 
 	<div class="visible-xs">
     {% for month, days in date_list.items() %}
