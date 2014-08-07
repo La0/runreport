@@ -58,10 +58,50 @@ def syncdb(update=False):
     get(prod_dump, local_dump)
 
   # Re create db & load dump
-  local('./manage.py syncdb --noinput --all')
-  local('./manage.py migrate --fake')
+  createdb(False) # no fixtures here
   local('./manage.py loaddata %s' % local_dump)
   os.remove(local_dump)
+
+def createdb(use_fixtures=True):
+  '''
+  Create the Pgsql database
+   * delete old database if exists
+   * create new one through psql
+  '''
+  # Drop old database manually
+  db = DATABASES['default']
+  psql('drop database if exists %s' % db['NAME'], 'postgres')
+
+  # Create new database
+  psql('create database %(NAME)s with owner = %(USER)s' % db, 'postgres')
+
+  # Create structure
+  local('./manage.py syncdb --noinput --all')
+  local('./manage.py migrate --fake')
+
+  if use_fixtures:
+    # Load some basic fixtures
+    fixtures = (
+      'sport/data/sports.json',
+      'users/data/categories.json',
+      'users/data/demo.json',
+      'club/data/demo.json',
+    )
+    for f in fixtures:
+      local('./manage.py loaddata %s' % f)
+
+def psql(sql, dbname=None):
+  '''
+  Run a pgsql command through cli
+  '''
+  db = DATABASES['default']
+  if not db['ENGINE'].endswith('postgresql_psycopg2'):
+    raise Exception('Only Postgresql is supported')
+
+  cmd = 'PGPASSWORD="%(PASSWORD)s" psql --username=%(USER)s --host=%(HOST)s' % db
+  cmd += ' --dbname=%s' % dbname or db['NAME']
+  cmd += ' --command="%s"' % sql
+  local(cmd)
 
 def virtualenv(name='django'):
   '''
