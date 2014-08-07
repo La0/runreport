@@ -1,0 +1,122 @@
+[
+{
+    "pk": 1, 
+    "model": "users.usercategory", 
+    "fields": {
+        "min_year": 2013, 
+        "max_year": 2004, 
+        "code": "EA", 
+        "name": "Ecole d'athl\u00e9tisme"
+    }
+},
+{
+    "pk": 2, 
+    "model": "users.usercategory", 
+    "fields": {
+        "min_year": 2003, 
+        "max_year": 2002, 
+        "code": "PO", 
+        "name": "Poussins"
+    }
+},
+{
+    "pk": 3, 
+    "model": "users.usercategory", 
+    "fields": {
+        "min_year": 2001, 
+        "max_year": 2000, 
+        "code": "BE", 
+        "name": "Benjamins"
+    }
+},
+{
+    "pk": 4, 
+    "model": "users.usercategory", 
+    "fields": {
+        "min_year": 1999, 
+        "max_year": 1998, 
+        "code": "MI", 
+        "name": "Minimes"
+    }
+},
+{
+    "pk": 5, 
+    "model": "users.usercategory", 
+    "fields": {
+        "min_year": 1997, 
+        "max_year": 1996, 
+        "code": "CA", 
+        "name": "Cadets"
+    }
+},
+{
+    "pk": 6, 
+    "model": "users.usercategory", 
+    "fields": {
+        "min_year": 1995, 
+        "max_year": 1994, 
+        "code": "JU", 
+        "name": "Juniors"
+    }
+},
+{
+    "pk": 7, 
+    "model": "users.usercategory", 
+    "fields": {
+        "min_year": 1993, 
+        "max_year": 1991, 
+        "code": "ES", 
+        "name": "Espoirs"
+    }
+},
+{
+    "pk": 8, 
+    "model": "users.usercategory", 
+    "fields": {
+        "min_year": 1990, 
+        "max_year": 1974, 
+        "code": "SE", 
+        "name": "Seniors"
+    }
+},
+{
+    "pk": 9, 
+    "model": "users.usercategory", 
+    "fields": {
+        "min_year": 1973, 
+        "max_year": 1964, 
+        "code": "V1", 
+        "name": "V\u00e9t\u00e9rans 1"
+    }
+},
+{
+    "pk": 10, 
+    "model": "users.usercategory", 
+    "fields": {
+        "min_year": 1963, 
+        "max_year": 1954, 
+        "code": "V2", 
+        "name": "V\u00e9t\u00e9rans 2"
+    }
+},
+{
+    "pk": 11, 
+    "model": "users.usercategory", 
+    "fields": {
+        "min_year": 1953, 
+        "max_year": 1944, 
+        "code": "V3", 
+        "name": "V\u00e9t\u00e9rans 3"
+    }
+},
+{
+    "pk": 12, 
+    "model": "users.usercategory", 
+    "fields": {
+        "min_year": 1943, 
+        "max_year": 1900, 
+        "code": "V4", 
+        "name": "V\u00e9t\u00e9rans 4"
+    }
+}
+]
