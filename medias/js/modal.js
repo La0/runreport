@@ -119,7 +119,7 @@ function load_box(url, method, data, output){
       // Build a new modal
         modal = $(data.html).modal({
           show : true,
-          replace : true,
+          replace : true
         });
 
         // Trigger forms

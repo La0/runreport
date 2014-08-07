@@ -11,7 +11,7 @@ function plot_hours_distances(hours, distances, urls){
   xaxes: [ { 
     mode : 'time',
     timeformat: "%b %Y",
-    monthNames: months_short,
+    monthNames: months_short
   } ],
   legend: { position: "sw" },
   series: {
@@ -25,12 +25,12 @@ function plot_hours_distances(hours, distances, urls){
   yaxes: [ { min: 0 }, {
     min: 0,
     alignTicksWithAxis: true,
-    position: 'right',
+    position: 'right'
     }],
     grid: {
       hoverable: true,
-      clickable: true,
-    },
+      clickable: true
+    }
   });
 
   // Tooltip
@@ -69,17 +69,17 @@ function plot_sports(sports){
     xaxis: { 
       mode : 'time',
       timeformat: "%b %Y",
-      monthNames: months_short,
+      monthNames: months_short
     },
     yaxis : {
-      min: 0,
+      min: 0
     },
     series: {
       stack: true,
       bars: {
         show: true,
         fill: true,
-        barWidth: 24 * 60 * 60 * 1000 * 15, // for time series, with must be set in seconds !
+        barWidth: 24 * 60 * 60 * 1000 * 15 // for time series, with must be set in seconds !
       }
     }
   });
