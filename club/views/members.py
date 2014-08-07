@@ -88,9 +88,7 @@ class ClubMembers(ClubMixin, ListView):
     if sort not in sorts:
       raise Http404('Invalid sort')
     sort_key, sort_reversed = sorts[sort]
-    print sort_key, sort_reversed
     members = sorted(members, key=sort_key, reverse=sort_reversed)
-    print members
 
     return {
       'type' : self.kwargs.get('type', default_type),
