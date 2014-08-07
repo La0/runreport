@@ -32,15 +32,6 @@ def prod():
   supervisor('start', 'runreport_celery')
 
 def syncdb(update=False):
-  # Backup actual sqlite db
-  db = DATABASES['default']
-  if db['ENGINE'].endswith('sqlite3'):
-    db_src = db['NAME']
-    if os.path.exists(db_src):
-      db_backup = '%s.%s' % (db_src, time())
-      print 'Backuped local db in %s' % db_backup
-      shutil.copyfile(db_src, db_backup)
-      os.remove(db_src)
 
   # Import dump from server
   local_dump = 'prod.json'
