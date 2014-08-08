@@ -14,6 +14,7 @@ def prod():
 
   supervisor('stop', 'runreport')
   supervisor('stop', 'runreport_celery')
+  supervisor('stop', 'runreport_garmin')
 
   # Brutally kill celery workers as supervisor
   # doesn't do its job :(
@@ -30,6 +31,7 @@ def prod():
   # Start again
   supervisor('start', 'runreport')
   supervisor('start', 'runreport_celery')
+  supervisor('start', 'runreport_garmin')
 
 def syncdb(update=False):
 
