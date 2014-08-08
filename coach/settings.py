@@ -244,6 +244,11 @@ CELERYBEAT_SCHEDULE = {
     'schedule': crontab(hour=1, minute=0),
   },
 }
+CELERY_ROUTES = {
+  'sport.tasks.garmin_import' : {
+    'queue' : 'garmin',
+  },
+}
 
 # Dev cache in files
 CACHES = {
