@@ -44,5 +44,16 @@
 "Spé" : "Spécifique",
 "VMA" : "Vitesse Maximale Aérobie",
 "VMA C" : "Vitesse Maximale Aérobie Courte",
-"VMA L" : "Vitesse Maximale Aéropbie Longue"
+"VMA L" : "Vitesse Maximale Aéropbie Longue",
+"class=icon-award" : "Prix/Médaille",
+"class=icon-help-circled" : "Aide - Info - ToolTip",
+"class=icon-sport-cycling" : "Running",
+"class=icon-sport-fitness_equipment" : "Fitness",
+"class=icon-sport-hiking" : "Randonnée",
+"class=icon-sport-other" : "Autre type de sport",
+"class=icon-sport-running" : "Running",
+"class=icon-sport-skiing" : "Ski",
+"class=icon-sport-swimming" : "Natation",
+"class=icon-sport-walking" : "Marche à pied"
+
 }
