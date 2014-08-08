@@ -39,7 +39,7 @@
 "S" : "Semi",
 "SL" : "Sortie Longue (à partir de 1h15)",
 "Spé" : "Spécifique",
-"VMA" : "Vitesse Maximal Aérobie",
-"VMA C" : "vma Courte",
-"VMA L" : "vma Longue"
+"VMA" : "Vitesse Maximale Aérobie",
+"VMA C" : "Vitesse Maximale Aérobie Courte",
+"VMA L" : "Vitesse Maximale Aéropbie Longue"
 }

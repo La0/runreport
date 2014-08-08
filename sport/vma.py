@@ -8,13 +8,13 @@ class VmaCalc:
   _vma = 0.0
   _paces = [
     Pace('L', 50),
-    Pace('1', 60),
-    Pace('2', 70),
+    Pace('A1', 60),
+    Pace('A2', 70),
     Pace('EMA 1', 80),
     Pace('EMA 2', 85),
     Pace('EMA 3', 90),
     Pace('VMA L', 95),
-    Pace('VMA C', 100),
+    Pace('VMA', 100),
     Pace('VMA C', 105),
   ]
 
