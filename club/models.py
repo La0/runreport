@@ -135,11 +135,28 @@ class ClubInvite(models.Model):
   def get_absolute_url(self):
     return ('club-invite', (self.slug, ))
 
-  def use(self):
+  def send(self):
+    '''
+    Send the invite by mail
+    '''
+    if self.sent:
+      raise Exception('Invite already sent')
+
+    context = {
+      'invite_url' : self.get_absolute_url()
+    }
+    mb = MailBuilder('mail/club_invite.html')
+    mb.to = [self.recipient]
+    mb.subject = 'Invitation RunReport.fr'
+    mail = mb.build(context)
+    mail.send()
+
+  def use(self, club):
     '''
     Mark the invite as used
     '''
     # Set used
     from datetime import datetime
     self.used = datetime.now()
+    self.club = club
     self.save()

@@ -1,0 +1,18 @@
+{% extends 'mail/base.html' %}
+
+{% block mail %}
+<div>
+Bonjour,
+</div>
+<div>
+Vous pouvez dès maintenant créer votre propre club ou groupe d'athlètes sur <a href="https://runreport.fr">RunReport.fr</a> afin de suivre leurs progressions personelles.
+
+<br />
+<br />
+
+Pour créer le club, utilisez le lien suivant : <a href="https://{{site.domain}}{{ invite_url }}">https://{{site.domain}}{{ invite_url }}</a>.
+<br />
+<br />
+</div>
+{% endblock %}
+
