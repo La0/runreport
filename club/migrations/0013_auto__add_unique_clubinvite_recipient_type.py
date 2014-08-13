@@ -8,24 +8,14 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-
-        # Renaming column for 'ClubInvite.recipient' to match new field type.
-        db.rename_column(u'club_clubinvite', 'recipient_id', 'recipient')
-        # Changing field 'ClubInvite.recipient'
-        db.alter_column(u'club_clubinvite', 'recipient', self.gf('django.db.models.fields.EmailField')(default='test@runreport.fr', max_length=75))
-        # Removing index on 'ClubInvite', fields ['recipient']
-        db.delete_index(u'club_clubinvite', ['recipient_id'])
+        # Adding unique constraint on 'ClubInvite', fields ['recipient', 'type']
+        db.create_unique(u'club_clubinvite', ['recipient', 'type'])
 
 
     def backwards(self, orm):
-        # Adding index on 'ClubInvite', fields ['recipient']
-        db.create_index(u'club_clubinvite', ['recipient_id'])
+        # Removing unique constraint on 'ClubInvite', fields ['recipient', 'type']
+        db.delete_unique(u'club_clubinvite', ['recipient', 'type'])
 
-
-        # Renaming column for 'ClubInvite.recipient' to match new field type.
-        db.rename_column(u'club_clubinvite', 'recipient', 'recipient_id')
-        # Changing field 'ClubInvite.recipient'
-        db.alter_column(u'club_clubinvite', 'recipient_id', self.gf('django.db.models.fields.related.ForeignKey')(null=True, to=orm['users.Athlete']))
 
     models = {
         u'auth.group': {
@@ -47,7 +37,6 @@ class Migration(SchemaMigration):
             'city': ('django.db.models.fields.CharField', [], {'max_length': '250'}),
             'demo': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-
             'main_trainer': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'club_main_trainer'", 'null': 'True', 'to': u"orm['users.Athlete']"}),
             'manager': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'club_manager'", 'to': u"orm['users.Athlete']"}),
             'max_athlete': ('django.db.models.fields.IntegerField', [], {'default': '20'}),
@@ -59,7 +48,7 @@ class Migration(SchemaMigration):
             'zipcode': ('django.db.models.fields.CharField', [], {'max_length': '10'})
         },
         u'club.clubinvite': {
-            'Meta': {'object_name': 'ClubInvite'},
+            'Meta': {'unique_together': "(('recipient', 'type'),)", 'object_name': 'ClubInvite'},
             'club': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'invites'", 'null': 'True', 'to': u"orm['club.Club']"}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -112,6 +101,7 @@ class Migration(SchemaMigration):
             'comment': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
             'default_sport': ('django.db.models.fields.related.ForeignKey', [], {'default': '3', 'to': "orm['sport.Sport']"}),
+            'demo': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'email': ('django.db.models.fields.EmailField', [], {'unique': 'True', 'max_length': '75', 'blank': 'True'}),
             'first_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
             'frequency': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),

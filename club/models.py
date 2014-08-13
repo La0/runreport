@@ -114,6 +114,9 @@ class ClubInvite(models.Model):
   sent = models.DateTimeField(null=True, blank=True)
   used = models.DateTimeField(null=True, blank=True)
 
+  class Meta:
+    unique_together = (('recipient', 'type'),)
+
   def __unicode__(self):
     return '%s - %s' % (self.recipient, self.slug)
 

@@ -3,6 +3,7 @@ from users.models import Athlete
 from club.models import ClubInvite
 from optparse import make_option
 from datetime import datetime
+from django.db import IntegrityError
 
 class Command(BaseCommand):
   option_list = BaseCommand.option_list + (
@@ -29,8 +30,6 @@ class Command(BaseCommand):
       self.build_invite(options['recipient'])
 
   def build_invite(self, recipient):
-    print 'Build invite for %s' % recipient
-
 
     # Build the invite
     data = {
@@ -38,8 +37,12 @@ class Command(BaseCommand):
       'type' : 'create',
       'recipient' : recipient,
     }
-    invite = ClubInvite.objects.create(**data)
-    print "Created invite : %s" % invite.slug
+    try:
+      invite = ClubInvite.objects.create(**data)
+    except IntegrityError:
+      print 'Duplicate invitation for %s' % recipient
+      return
+    print "Created invite %s for %s" % (invite.slug, recipient)
 
     # Send it !
     invite.send()
