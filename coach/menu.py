@@ -40,7 +40,7 @@ def add_pages(request):
       submenu = {
         'caption' : m.club.name,
         'menu' : [],
-        'icon' : 'icon-star',
+        'icon' : 'icon-club',
       }
 
       # Add club admin links for trainers
