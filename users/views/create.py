@@ -13,9 +13,10 @@ class CreateUser(UserInviteMixin, FormView):
   def get_context_data(self, *args, **kwargs):
     context = super(CreateUser, self).get_context_data(*args, **kwargs)
 
-    # Use invite recipient email by default
+    # Use invite recipient data by default
     if self.invite:
       context['form'].fields['email'].initial = self.invite.recipient
+      context['form'].fields['lastname'].initial = self.invite.name
 
     return context
 
