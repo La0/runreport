@@ -106,6 +106,7 @@ class ClubInvite(models.Model):
   )
   sender = models.ForeignKey(Athlete, related_name="inviter", limit_choices_to={'is_staff':True})
   recipient = models.EmailField()
+  name = models.CharField(max_length=250, null=True, blank=True)
   club = models.ForeignKey(Club, null=True, blank=True, related_name="invites")
   type = models.CharField(max_length=15, choices=INVITE_TYPES)
   slug = models.CharField(max_length=30, unique=True, blank=True) # not a slug: no char restriction
@@ -146,7 +147,8 @@ class ClubInvite(models.Model):
       raise Exception('Invite already sent')
 
     context = {
-      'invite_url' : self.get_absolute_url()
+      'invite_url' : self.get_absolute_url(),
+      'name' : self.name,
     }
     mb = MailBuilder('mail/club_invite.html')
     mb.to = [self.recipient]
