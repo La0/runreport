@@ -2,6 +2,7 @@
 from django.db import models
 from users.models import Athlete
 from coach.mail import MailBuilder
+from datetime import datetime
 
 class Club(models.Model):
   name = models.CharField(max_length=250)
@@ -156,12 +157,15 @@ class ClubInvite(models.Model):
     mail = mb.build(context)
     mail.send()
 
+    # Save sent date
+    self.sent = datetime.now()
+    self.save()
+
   def use(self, club):
     '''
     Mark the invite as used
     '''
     # Set used
-    from datetime import datetime
     self.used = datetime.now()
     self.club = club
     self.save()
