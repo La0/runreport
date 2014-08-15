@@ -89,6 +89,7 @@ def add_pages(request):
     menu.append(submenu)
   else:
     menu.append(_p('user-create', u'Créer un compte', 'icon-plus'))
+    menu.append(_p('landing-club', u'Créer un club', 'icon-club'))
     menu.append(_build_help())
     menu.append(_p('login', 'Se connecter', 'icon-user'))
 

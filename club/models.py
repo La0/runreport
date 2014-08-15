@@ -3,6 +3,7 @@ from django.db import models
 from users.models import Athlete
 from coach.mail import MailBuilder
 from datetime import datetime
+from club import ROLES
 
 class Club(models.Model):
   name = models.CharField(max_length=250)
@@ -49,17 +50,10 @@ class Club(models.Model):
     return self.clubmembership_set.filter(user=user).count() == 1
 
 class ClubMembership(models.Model):
-  CLUB_ROLES = (
-    ('athlete', 'Athlete'),
-    ('trainer', 'Trainer'),
-    ('staff', 'Staff'), # For presidents...
-    ('archive', 'Archive'),
-    ('prospect', 'Prospect'), # For newcomers
-  )
   user = models.ForeignKey(Athlete, related_name="memberships")
   club = models.ForeignKey(Club)
   trainers = models.ManyToManyField(Athlete, related_name="trainees")
-  role = models.CharField(max_length=10, choices=CLUB_ROLES)
+  role = models.CharField(max_length=10, choices=ROLES)
   created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
 

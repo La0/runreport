@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% set page_title = "Créer un club" %}
+
+{% block content %}
+<div class="container" id="landing-club">
+
+  <header class="jumbotron hero-spacer">
+    <h1>Gérez tous vos athlètes</h1>
+    <p>Qu'ils soient coureurs, triathlètes ou cyclistes de tous niveaux, vous pourrez gérer tous vos athlètes de manière simple et efficace.</p>
+    <p>
+      <a class="btn btn-primary btn-lg" href="{% url login %}">Essayer la démo Entraîneur</a>
+      <a class="btn btn-success btn-lg" href="{% url contact_form %}">Demander une création de club (Beta)</a>
+    </p>
+  </header>
+
+  <hr/>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <h3>Principales fonctionalités</h3>
+    </div>
+  </div>
+
+  <div class="row text-center">
+
+    <div class="col-md-3 col-sm-6 hero-feature">
+      <div class="thumbnail">
+        <img src="/medias/img/landing/club.png" alt="" />
+        <div class="caption">
+          <h3>Calendriers</h3>
+          <p>...</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6 hero-feature">
+      <div class="thumbnail">
+        <img src="/medias/img/landing/club.png" alt="" />
+        <div class="caption">
+          <h3>Multi Entraineurs</h3>
+          <p>...</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6 hero-feature">
+      <div class="thumbnail">
+        <img src="/medias/img/landing/club.png" alt="" />
+        <div class="caption">
+          <h3>Gestion course</h3>
+          <p>...</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6 hero-feature">
+      <div class="thumbnail">
+        <img src="/medias/img/landing/club.png" alt="" />
+        <div class="caption">
+          <h3></h3>
+          <p>...</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

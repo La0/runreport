@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, url, include
 from django.contrib.auth.decorators import login_required
 from club.views import *
+from django.views.generic.base import TemplateView
 
 user_patterns = patterns('',
   url(r'^year/(?P<year>[\d]{4})/?', ClubMemberYear.as_view(), name="club-member-year"),
@@ -45,4 +46,7 @@ urlpatterns = patterns('',
 
   # List to Join
   url(r'join/?$', login_required(ClubList.as_view()), name="club-list"),
+
+  # Landing page
+  url(r'^/?', TemplateView.as_view(template_name='landing/club.html'), name="landing-club"),
 )

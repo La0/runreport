@@ -353,3 +353,9 @@ header div.demo-warning {
   line-height: 26px;
   text-align: center;
 }
+
+/* Club Landing */
+#landing-club header {
+  background: url(/medias/img/club_bg.png) repeat top left;
+  color: white !important;
+}

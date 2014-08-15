@@ -19,6 +19,8 @@ class ClubMembershipForm(forms.ModelForm):
 class UserModelChoiceField(forms.ModelMultipleChoiceField):
   def label_from_instance(self, obj):
     try:
+      if obj.first_name and obj.last_name:
+        return '%s %s' % (obj.first_name, obj.last_name)
       return obj.first_name and obj.first_name or obj.username
     except:
       return '-'

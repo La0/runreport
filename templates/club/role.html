@@ -13,7 +13,7 @@
 		{% for stat in stats %}
 		{% if stat.type != membership.role %}
 		<div class="role">
-			<h4>{{stat.type|title()}}</h4>
+			<h4>{{roles[stat.type]}}</h4>
 			<button type="submit" name="role_local" value="{{stat.type}}" class="role btn pull-right {% if stat.diff <= 0 or user.demo %}disabled{% else %}btn-success{% endif %}">Devenir {{stat.type|title()}}</button>
 
 			Places disponibles :
