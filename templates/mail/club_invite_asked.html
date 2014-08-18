@@ -1,0 +1,16 @@
+{% extends 'mail/base.html' %}
+
+{% block mail %}
+<div>
+Bonjour {{ invite.sender.first_name }},
+</div>
+<div>
+Une invitation pour créer un club vient d'être demandée:
+  <ul>
+    <li>Mail: {{invite.recipient}}</li>
+    <li>Slug: {{invite.slug}}</li>
+  </ul>
+</div>
+
+</div>
+{% endblock %}

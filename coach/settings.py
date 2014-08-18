@@ -218,6 +218,9 @@ GPG_PASSPHRASE=''
 # Garmin user data (json)
 GARMIN_DIR=os.path.join(HOME, 'garmin_data')
 
+# Club Invite sender username
+CLUB_INVITE_SENDER = 'sender'
+
 # PIWIK stats
 PIWIK_HOST = False
 PIWIK_ID = False

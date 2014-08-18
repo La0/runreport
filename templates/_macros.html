@@ -17,7 +17,7 @@
 {%- endmacro %}
 
 
-{% macro input_prepend(field, label) -%}
+{% macro input_prepend(field, label, large=False) -%}
 <div class="col-sm-3 col-xs-6 {% if field.errors %}has-error{% endif %}">
    <div class="input-group {% if field.errors %}has-error{% endif %}">
      <span class="input-group-addon input-sm">{{ label }}</span>

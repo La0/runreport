@@ -10,6 +10,7 @@ from sport.models import SportWeek
 from club.models import ClubMembership
 from helpers import week_to_date
 from club.forms import ClubMembershipForm
+from club import ROLES
 from datetime import date, timedelta, MINYEAR
 from coach.mixins import JsonResponseMixin, JSON_STATUS_ERROR
 
@@ -131,6 +132,7 @@ class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, Proces
     context['membership'] = self.membership
     context['member'] = self.member
     context['stats'] = self.stats
+    context['roles'] = dict(ROLES)
     return context
 
   def get_form(self, form_class):
