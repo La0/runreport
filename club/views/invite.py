@@ -1,8 +1,10 @@
 from club.models import ClubInvite
+from club.forms import InviteAskForm
 from users.models import Athlete
 from django.views.generic import DetailView, RedirectView
 from django.http import Http404
 from django.core.urlresolvers import reverse
+from django.views.generic.edit import CreateView
 
 class ClubInviteCheck(RedirectView, DetailView):
   model = ClubInvite
@@ -28,3 +30,16 @@ class ClubInviteCheck(RedirectView, DetailView):
 
     # User is connected, redirect to club creation
     return reverse('club-create')
+
+class ClubInviteAsk(CreateView):
+  template_name = 'club/ask_invite.html'
+  model = ClubInvite
+  form_class = InviteAskForm
+
+  def form_valid(self, form):
+    invite = form.save(commit=False)
+    invite.type = 'create' # Only use club creation
+    invite.sender = Athlete.objects.get(username='inviter')
+    invite.save()
+
+    return self.render_to_response({'form': form, 'asked' : True})

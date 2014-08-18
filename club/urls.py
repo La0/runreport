@@ -48,5 +48,5 @@ urlpatterns = patterns('',
   url(r'join/?$', login_required(ClubList.as_view()), name="club-list"),
 
   # Landing page
-  url(r'^/?', TemplateView.as_view(template_name='landing/club.html'), name="landing-club"),
+  url(r'^/?', ClubInviteAsk.as_view(), name="club-landing"),
 )

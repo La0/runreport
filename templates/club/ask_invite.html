@@ -7,20 +7,48 @@
 
   <header class="jumbotron hero-spacer">
     <h1>Gérez tous vos athlètes</h1>
+    
     <p>Qu'ils soient coureurs, triathlètes ou cyclistes de tous niveaux, vous pourrez gérer tous vos athlètes de manière simple et efficace.</p>
-    <p>
-      <a class="btn btn-primary btn-lg" href="{% url login %}">Essayer la démo Entraîneur</a>
-      <a class="btn btn-success btn-lg" href="{% url contact_form %}">Demander une création de club (Beta)</a>
-    </p>
+
+    <hr />
+
+    <div class="row">
+
+      <div class="col-sm-6 col-xs-12">
+        {% if asked %}
+        <p class="alert alert-success">
+          Votre demande de création de club a bien été enregistrée.
+          <br />Nous vous enverrons un mail d'invitation dans les plus brefs délais.
+        </p>
+        {% else %}
+        <p class="text-muted">
+          RunReport est en &#x3b2;eta: pour assure un meilleur support les créations de club sont limitées.
+        </p>
+        <form action="{% url club-landing %}" method="post" role="form" class="form-inline">
+          {% csrf_token %}
+
+          <div class="col-xs-6 {% if form.recipient.errors %}has-error{% endif %}">
+            {{ form.recipient|addcss("form-control")|safe }}
+            {% if form.recipient.errors %}
+            <div class="help-block">{{form.recipient.errors|safe}}</div>
+            {% endif %}
+          </div>
+
+          <button type="submit" class="btn btn-success">Demander invitation</button>
+        </form>
+        {% endif %}
+      </div>
+
+      <div class="col-sm-6 col-xs-12">
+        <p class="text-muted">
+          Testez RunReport en utilisant le compte Entraineur !
+        </p>
+        <a class="btn btn-primary" href="{% url login %}">Essayer la démo</a>
+      </div>
+
+    </div>
   </header>
 
-  <hr/>
-
-  <div class="row">
-    <div class="col-xs-12">
-      <h3>Principales fonctionalités</h3>
-    </div>
-  </div>
 
   <div class="row text-center">
 

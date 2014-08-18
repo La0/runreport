@@ -359,3 +359,14 @@ header div.demo-warning {
   background: url(/medias/img/club_bg.png) repeat top left;
   color: white !important;
 }
+
+#landing-club header hr {
+  border: 1px solid #444;
+  border-top: 0;
+  margin: 40px 0;
+}
+
+
+#landing-club header div {
+  text-align: center;
+}
