@@ -134,6 +134,20 @@ class ClubInvite(models.Model):
   def get_absolute_url(self):
     return ('club-invite', (self.slug, ))
 
+  def warn_sender(self):
+    '''
+    Send a warning message to sender
+    Used when the invite is asked
+    '''
+    context = {
+      'invite' : self,
+    }
+    mb = MailBuilder('mail/club_invite_asked.html')
+    mb.to = [self.sender.email]
+    mb.subject = 'Demande Invitation RunReport.fr'
+    mail = mb.build(context)
+    mail.send()
+
   def send(self):
     '''
     Send the invite by mail
