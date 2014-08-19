@@ -22,7 +22,7 @@
         </p>
         {% else %}
         <p class="text-muted">
-          Pour assure un meilleur support, les créations de club sont pour l'instant restreintes à un club par personne.
+          Pour assurer un meilleur support, les créations de club sont pour l'instant limitées.
         </p>
         <form action="{% url club-landing %}" method="post" role="form" class="form-inline">
           {% csrf_token %}
@@ -34,7 +34,7 @@
             {% endif %}
           </div>
 
-          <button type="submit" class="btn btn-success">Demander invitation</button>
+          <button type="submit" class="btn btn-success">Demander une invitation</button>
         </form>
         {% endif %}
       </div>
