@@ -37,8 +37,9 @@ class VmaGlossary(TemplateView):
       glossary = json.loads(f.read())
       f.close()
     return {
-      'glossary' : glossary,
-      'sorted' : sorted(glossary),
+      'sports' : glossary['sports'],
+      'glossary' : glossary['text'],
+      'sorted' : sorted(glossary['text']),
     }
 
   def get_context_data(self, **kwargs):
