@@ -11,33 +11,39 @@
 		Chaque demande est alors validée (ou non) par le gérant du club.
 	</div>
 
-	{% for club in clubs %}
-	<div class="club-description row">
-		<h3>{{club.name}}</h3>
-		<address class="span4">
-			{{club.address}}<br />
-			<strong>{{ club.zipcode }} {{ club.city }}</strong>
-		</address>
-		<p class="span4">
-			<span class="label label-info">Gérant</span> {{ club.manager.first_name }} {{ club.manager.last_name }}
-		</p>
-		<p class="pull-right">
-			{% if club.has_user(request.user) %}
-			{% with club.clubmembership_set.get(user=request.user) as member %}
-			{% if member.role == 'archive' %}
-			<span class="btn disabled btn-danger">Refusé</span>
-			{% elif member.role == 'prospect' %}
-			<span class="btn disabled btn-info">Attente de validation</span>
-			{% else %}
-			<span class="btn disabled btn-success">Membre</span>
-			{% endif %}
-			{% endwith %}
-			{% else %}
-			<a href="{% url club-join club.slug %}" class="btn btn-success modal-action">Rejoindre</a>
-			{% endif %}
-		</p>
-	</div>
-	{% endfor %}
+  <div class="row">
+    {% for club in clubs %}
+    <div class="col-sm-6 col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">{{club.name}}</div>
+        <div class="panel-body">
+          <p class="pull-right">
+            {% if club.has_user(request.user) %}
+            {% with club.clubmembership_set.get(user=request.user) as member %}
+            {% if member.role == 'archive' %}
+            <span class="btn disabled btn-danger">Refusé</span>
+            {% elif member.role == 'prospect' %}
+            <span class="btn disabled btn-info">Attente de validation</span>
+            {% else %}
+            <span class="btn disabled btn-success">Membre</span>
+            {% endif %}
+            {% endwith %}
+            {% else %}
+            <a href="{% url club-join club.slug %}" class="btn btn-success modal-action">Rejoindre</a>
+            {% endif %}
+          </p>
+          <address class="span4">
+            {{club.address}}<br />
+            <strong>{{ club.zipcode }} {{ club.city }}</strong>
+          </address>
+          <p class="span4">
+            <span class="label label-info">Gérant</span> {{ club.manager.first_name }} {{ club.manager.last_name }}
+          </p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
 
 </div>
 

@@ -2,6 +2,8 @@
 from django.db import models
 from users.models import Athlete
 from coach.mail import MailBuilder
+from datetime import datetime
+from club import ROLES
 
 class Club(models.Model):
   name = models.CharField(max_length=250)
@@ -48,17 +50,10 @@ class Club(models.Model):
     return self.clubmembership_set.filter(user=user).count() == 1
 
 class ClubMembership(models.Model):
-  CLUB_ROLES = (
-    ('athlete', 'Athlete'),
-    ('trainer', 'Trainer'),
-    ('staff', 'Staff'), # For presidents...
-    ('archive', 'Archive'),
-    ('prospect', 'Prospect'), # For newcomers
-  )
   user = models.ForeignKey(Athlete, related_name="memberships")
   club = models.ForeignKey(Club)
   trainers = models.ManyToManyField(Athlete, related_name="trainees")
-  role = models.CharField(max_length=10, choices=CLUB_ROLES)
+  role = models.CharField(max_length=10, choices=ROLES)
   created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
 
@@ -104,8 +99,9 @@ class ClubInvite(models.Model):
   INVITE_TYPES = (
     ('create', 'Create a club (Beta)'),
   )
-  sender = models.ForeignKey(Athlete, related_name="inviter")
-  recipient = models.ForeignKey(Athlete, related_name="invitee", null=True)
+  sender = models.ForeignKey(Athlete, related_name="inviter", limit_choices_to={'is_staff':True})
+  recipient = models.EmailField()
+  name = models.CharField(max_length=250, null=True, blank=True)
   club = models.ForeignKey(Club, null=True, blank=True, related_name="invites")
   type = models.CharField(max_length=15, choices=INVITE_TYPES)
   slug = models.CharField(max_length=30, unique=True, blank=True) # not a slug: no char restriction
@@ -113,6 +109,12 @@ class ClubInvite(models.Model):
   updated = models.DateTimeField(auto_now=True)
   sent = models.DateTimeField(null=True, blank=True)
   used = models.DateTimeField(null=True, blank=True)
+
+  class Meta:
+    unique_together = (('recipient', 'type'),)
+
+  def __unicode__(self):
+    return '%s - %s' % (self.recipient, self.slug)
 
   def save(self, *args, **kwargs):
     if not self.slug:
@@ -132,11 +134,46 @@ class ClubInvite(models.Model):
   def get_absolute_url(self):
     return ('club-invite', (self.slug, ))
 
-  def use(self):
+  def warn_sender(self):
+    '''
+    Send a warning message to sender
+    Used when the invite is asked
+    '''
+    context = {
+      'invite' : self,
+    }
+    mb = MailBuilder('mail/club_invite_asked.html')
+    mb.to = [self.sender.email]
+    mb.subject = 'Demande Invitation RunReport.fr'
+    mail = mb.build(context)
+    mail.send()
+
+  def send(self):
+    '''
+    Send the invite by mail
+    '''
+    if self.sent:
+      raise Exception('Invite already sent')
+
+    context = {
+      'invite_url' : self.get_absolute_url(),
+      'name' : self.name,
+    }
+    mb = MailBuilder('mail/club_invite.html')
+    mb.to = [self.recipient]
+    mb.subject = 'Invitation RunReport.fr'
+    mail = mb.build(context)
+    mail.send()
+
+    # Save sent date
+    self.sent = datetime.now()
+    self.save()
+
+  def use(self, club):
     '''
     Mark the invite as used
     '''
     # Set used
-    from datetime import datetime
     self.used = datetime.now()
+    self.club = club
     self.save()

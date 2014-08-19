@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% set page_title = "Créer un club" %}
+
+{% block content %}
+<div class="container" id="landing-club">
+
+  <header class="jumbotron hero-spacer">
+    <h1>Gérez tous vos athlètes</h1>
+    
+    <p>Qu'ils soient coureurs, triathlètes ou cyclistes de tous niveaux, vous pourrez gérer tous vos athlètes de manière simple et efficace.</p>
+
+    <hr />
+
+    <div class="row">
+
+      <div class="col-sm-6 col-xs-12">
+        {% if asked %}
+        <p class="alert alert-success">
+          Votre demande de création de club a bien été enregistrée.
+          <br />Nous vous enverrons un mail d'invitation dans les plus brefs délais.
+        </p>
+        {% else %}
+        <p class="text-muted">
+          RunReport est en &#x3b2;eta: pour assure un meilleur support les créations de club sont limitées.
+        </p>
+        <form action="{% url club-landing %}" method="post" role="form" class="form-inline">
+          {% csrf_token %}
+
+          <div class="col-xs-6 {% if form.recipient.errors %}has-error{% endif %}">
+            {{ form.recipient|addcss("form-control")|safe }}
+            {% if form.recipient.errors %}
+            <div class="help-block">{{form.recipient.errors|safe}}</div>
+            {% endif %}
+          </div>
+
+          <button type="submit" class="btn btn-success">Demander invitation</button>
+        </form>
+        {% endif %}
+      </div>
+
+      <div class="col-sm-6 col-xs-12">
+        <p class="text-muted">
+          Testez RunReport en utilisant le compte Entraineur !
+        </p>
+        <a class="btn btn-primary" href="{% url login %}">Essayer la démo</a>
+      </div>
+
+    </div>
+  </header>
+
+
+  <div class="row text-center">
+
+    <div class="col-md-3 col-sm-6 hero-feature">
+      <div class="thumbnail">
+        <h3>Calendriers</h3>
+        <img src="/medias/img/landing/calendar_2.png" alt="" />
+        <div class="caption">
+          <p>Visualisez simplement le parcours sportif passé et à venir de tout votre club.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6 hero-feature">
+      <div class="thumbnail">
+        <h3>Gestion club</h3>
+        <img src="/medias/img/landing/list.png" alt="" />
+        <div class="caption">
+          <p>Gérez toutes les personnes de votre club en fonction de leur rôles: Entraineurs, Athlètes, Staff, Anciens athlètes...p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6 hero-feature">
+      <div class="thumbnail">
+        <h3>Progression Athlètes</h3>
+        <img src="/medias/img/landing/stats.png" alt="" />
+        <div class="caption">
+          <p>Suivez la progression sportive de vos athlètes de manière graphique.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6 hero-feature">
+      <div class="thumbnail">
+        <h3>Rapports par mail</h3>
+        <img src="/medias/img/landing/mail.png" alt="" />
+        <div class="caption">
+          <p>Recevez directement sur votre boite mail les rapports hebdomadaires de vos athlètes.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

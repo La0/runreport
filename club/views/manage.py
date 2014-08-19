@@ -2,6 +2,7 @@ from mixins import ClubManagerMixin
 from django.views.generic.edit import UpdateView, CreateView, BaseDeleteView
 from club.models import Club, ClubLink
 from club.forms import ClubCreateForm, ClubLinkForm
+from club import ROLES
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from coach.mixins import JsonResponseMixin, JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE
@@ -22,6 +23,7 @@ class ClubManage(ClubManagerMixin, UpdateView):
     context = super(ClubManage, self).get_context_data(*args, **kwargs)
     context['stats'] = self.club.load_stats()
     context['links'] = self.club.links.all().order_by('name')
+    context['roles'] = dict(ROLES)
     return context
 
 class ClubLinkAdd(ClubManagerMixin, JsonResponseMixin, CreateView):

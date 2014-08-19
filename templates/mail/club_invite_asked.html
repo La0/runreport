@@ -1,0 +1,18 @@
+{% extends 'mail/base.html' %}
+
+{% block mail %}
+<div>
+Bonjour {{ invite.sender.first_name }},
+</div>
+<div>
+Une invitation pour créer un club vient d'être demandée:
+  <ul>
+    <li>Mail: {{invite.recipient}}</li>
+    <li>Slug: {{invite.slug}}</li>
+  </ul>
+</div>
+
+Vous pouvez l'activer en utilisant ce <a href="http://{{site.domain}}{% url "admin:club-invite-send" invite.id %}">lien d'administration</a>
+
+</div>
+{% endblock %}

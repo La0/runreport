@@ -1,3 +1,4 @@
+# encoding:utf-8
 from models import ClubMembership, Club, ClubInvite, ClubLink
 from django import forms
 from users.models import Athlete
@@ -19,6 +20,8 @@ class ClubMembershipForm(forms.ModelForm):
 class UserModelChoiceField(forms.ModelMultipleChoiceField):
   def label_from_instance(self, obj):
     try:
+      if obj.first_name and obj.last_name:
+        return '%s %s' % (obj.first_name, obj.last_name)
       return obj.first_name and obj.first_name or obj.username
     except:
       return '-'
@@ -58,3 +61,19 @@ class ClubLinkForm(forms.ModelForm):
 
 # Init the formset using above form
 TrainersFormSet = modelformset_factory(ClubMembership, fields=('trainers',), form=TrainersForm, extra=0)
+
+
+class InviteAskForm(forms.ModelForm):
+  class Meta:
+    model = ClubInvite
+    fields = ('recipient', )
+    widgets = {
+      'recipient' : forms.TextInput(attrs={'placeholder' : 'Votre email', }),
+    }
+
+  def clean_recipient(self):
+    recipient = self.cleaned_data['recipient']
+    if ClubInvite.objects.filter(recipient=recipient).exists():
+      raise forms.ValidationError(u'Invitation déja demandée')
+
+    return recipient

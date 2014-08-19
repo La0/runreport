@@ -8,15 +8,13 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding field 'Athlete.demo'
-        db.add_column(u'users_athlete', 'demo',
-                      self.gf('django.db.models.fields.BooleanField')(default=False),
-                      keep_default=False)
+        # Adding unique constraint on 'ClubInvite', fields ['recipient', 'type']
+        db.create_unique(u'club_clubinvite', ['recipient', 'type'])
 
 
     def backwards(self, orm):
-        # Deleting field 'Athlete.demo'
-        db.delete_column(u'users_athlete', 'demo')
+        # Removing unique constraint on 'ClubInvite', fields ['recipient', 'type']
+        db.delete_unique(u'club_clubinvite', ['recipient', 'type'])
 
 
     models = {
@@ -32,6 +30,53 @@ class Migration(SchemaMigration):
             'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['contenttypes.ContentType']"}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
+        },
+        u'club.club': {
+            'Meta': {'object_name': 'Club'},
+            'address': ('django.db.models.fields.CharField', [], {'max_length': '250'}),
+            'city': ('django.db.models.fields.CharField', [], {'max_length': '250'}),
+            'demo': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'main_trainer': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'club_main_trainer'", 'null': 'True', 'to': u"orm['users.Athlete']"}),
+            'manager': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'club_manager'", 'to': u"orm['users.Athlete']"}),
+            'max_athlete': ('django.db.models.fields.IntegerField', [], {'default': '20'}),
+            'max_staff': ('django.db.models.fields.IntegerField', [], {'default': '1'}),
+            'max_trainer': ('django.db.models.fields.IntegerField', [], {'default': '2'}),
+            'members': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['users.Athlete']", 'through': u"orm['club.ClubMembership']", 'symmetrical': 'False'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '250'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '20'}),
+            'zipcode': ('django.db.models.fields.CharField', [], {'max_length': '10'})
+        },
+        u'club.clubinvite': {
+            'Meta': {'unique_together': "(('recipient', 'type'),)", 'object_name': 'ClubInvite'},
+            'club': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'invites'", 'null': 'True', 'to': u"orm['club.Club']"}),
+            'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'recipient': ('django.db.models.fields.EmailField', [], {'max_length': '75'}),
+            'sender': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'inviter'", 'to': u"orm['users.Athlete']"}),
+            'sent': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
+            'slug': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30', 'blank': 'True'}),
+            'type': ('django.db.models.fields.CharField', [], {'max_length': '15'}),
+            'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
+            'used': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'})
+        },
+        u'club.clublink': {
+            'Meta': {'object_name': 'ClubLink'},
+            'club': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'links'", 'to': u"orm['club.Club']"}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '250'}),
+            'position': ('django.db.models.fields.IntegerField', [], {}),
+            'url': ('django.db.models.fields.URLField', [], {'max_length': '250'})
+        },
+        u'club.clubmembership': {
+            'Meta': {'unique_together': "(('user', 'club'),)", 'object_name': 'ClubMembership'},
+            'club': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['club.Club']"}),
+            'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'role': ('django.db.models.fields.CharField', [], {'max_length': '10'}),
+            'trainers': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'trainees'", 'symmetrical': 'False', 'to': u"orm['users.Athlete']"}),
+            'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'memberships'", 'to': u"orm['users.Athlete']"})
         },
         u'contenttypes.contenttype': {
             'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
@@ -89,4 +134,4 @@ class Migration(SchemaMigration):
         }
     }
 
-    complete_apps = ['users']
+    complete_apps = ['club']

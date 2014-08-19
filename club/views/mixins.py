@@ -58,7 +58,6 @@ class ClubCreateMixin(object):
     * logged in
     * does not already manage a club
     * has a loaded invite in session
-    * belongs to right user
   """
   invite = None
 
@@ -72,8 +71,6 @@ class ClubCreateMixin(object):
     try:
       invite_slug = request.session['invite']
       self.invite = ClubInvite.objects.get(slug=invite_slug)
-      if self.invite.recipient != request.user:
-        raise Exception('Invalid user')
     except:
       raise Http404('Invalid or missing Beta invitation.')
 

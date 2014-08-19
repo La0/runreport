@@ -1,6 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Accès non autorisé</h1>
+
+<div class="container">
+  <h1>Accès non autorisé</h1>
+  <p class="alert alert-warning">
+    Vous n'avez pas accès à cette page.
+  </p>
+    <a class="btn btn-danger pull-right" href="{% url report-current %}">Retour à l'accueil</a>
+</div>
 
 {% endblock %}
