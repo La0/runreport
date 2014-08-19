@@ -1,0 +1,21 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<h1>Send invite to {{invite.recipient}}</h1>
+<p>
+  Created on {{ invite.created }}
+</p>
+
+{% if invite.sent %}
+<p>
+  This invite has been sent on {{ invite.sent }}.
+</p>
+{% else %}
+  Send this invite right now ?
+  <form action="{% url "admin:club-invite-send" invite.pk %}" method="POST">
+    {% csrf_token %}
+    <button type="submit">Send</button>
+  </form>
+{% endif %}
+
+{% endblock %}
