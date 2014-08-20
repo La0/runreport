@@ -29,9 +29,14 @@ dd:last-of-type {
 	<h2>Glossaire</h2>
 	<dl>
 		{% for word in sorted %}
+        {% if word.startswith('class=') %}
+		<dt><i {{word}}></i></dt>
+        {% else %}
 		<dt>{{word}}</dt>
+        {% endif %}
 		<dd>{{glossary[word]}}</dd>
 		{% endfor %}
 	</dl>
+
 </div>
 {% endblock %}
