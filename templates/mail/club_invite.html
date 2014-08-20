@@ -1,23 +1,19 @@
 {% extends 'mail/base.html' %}
 
+{% set title = 'Création de club' %}
+
 {% block mail %}
-<div>
 {% if name %}
 Bonjour {{ name }},
 {% else %}
 Bonjour,
 {% endif %}
-</div>
-<div>
+<br />
+
 <p>
-Vous pouvez dès maintenant créer votre propre club ou groupe d'athlètes sur <a href="https://runreport.fr">RunReport.fr</a> afin de suivre leurs progressions personnelles.
+Vous pouvez dès maintenant créer votre propre club ou groupe d'athlètes sur <a href="http://{{ site.domain }}">Run Report</a> afin de suivre leurs progressions personnelles.
 </p>
 <br />
-<br />
 
-Pour créer le club, utilisez le lien suivant : <a href="https://{{site.domain}}{{ invite_url }}">https://{{site.domain}}{{ invite_url }}</a>.
-<br />
-<br />
-</div>
+Pour créer le club, utilisez cette <a href="https://{{site.domain}}{{ invite_url }}">invitation unique</a>
 {% endblock %}
-

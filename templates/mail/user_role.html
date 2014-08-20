@@ -1,10 +1,12 @@
 {% extends 'mail/base.html' %}
 
+{% set title = 'Inscription Club' %}
+
 {% block mail %}
-<div>
 Bonjour {{ user.first_name }},
-</div>
-<div>
+<br />
+<br />
+
 {% if old_role == 'prospect' %}
   {% if new_role == 'archive' %}
   Désolé, mais votre candidature au club {{ club.name }} a été refusée.
@@ -22,10 +24,9 @@ Bonjour {{ user.first_name }},
   Votre rôle au sein du club {{ club.name }} a évolué, vous êtes maintenant un Athlète.
   {% endif %}
 {% endif %}
-</div>
-<div>
-Bonne course !
 <br />
-L'équipe Coach I ran.
+<br />
+
+Bonne course !
 </div>
 {% endblock %}

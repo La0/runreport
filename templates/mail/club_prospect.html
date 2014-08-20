@@ -1,10 +1,11 @@
 {% extends 'mail/base.html' %}
 
+{% set title = 'Nouveau membre' %}
+
 {% block mail %}
-<div>
 Bonjour {{ manager.first_name }},
-</div>
-<div>
+<br />
+<br />
 Un nouveau membre "{{ user.first_name }} {{ user.last_name }}" vient de s'inscrire à votre club {{ club.name }} !
 
 <br />
@@ -19,5 +20,4 @@ Si vous n'acceptez pas ce membre, vous pouvez archiver cette candidature sur la 
 <br />
 <br />
 Dans les deux cas, un mail sera envoyé automatiquement à cette personne.
-</div>
 {% endblock %}
