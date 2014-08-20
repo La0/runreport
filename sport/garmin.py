@@ -7,6 +7,7 @@ from sport.models import GarminActivity
 import logging
 import re
 from helpers import week_to_date
+from django.db import transaction
 
 logger = logging.getLogger('coach.sport.garmin')
 
@@ -123,9 +124,12 @@ class GarminConnector:
     for activity in data['results']['activities']:
       try:
         activity = activity['activity']
-        act = self.load_activity(activity)
-        if act:
-          activities.append(act)
+        with transaction.atomic():
+          act = self.load_activity(activity)
+          if act:
+            activities.append(act)
+          else:
+            transaction.rollback()
       except Exception, e:
         logger.error('Activity import failed: %s' % (str(e),))
 
