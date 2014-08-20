@@ -38,7 +38,7 @@ class GarminConnector:
   _url_laps = 'http://connect.garmin.com/proxy/activity-service-1.3/json/activity/%s'
   _url_details = 'http://connect.garmin.com/proxy/activity-service-1.3/json/activityDetails/%s'
 
-  _max_activities = 5 # per request
+  _max_activities = 20 # per request
 
   def __init__(self, user=None, login=None, password=None):
     if user:
