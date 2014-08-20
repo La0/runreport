@@ -36,7 +36,7 @@ class Command(BaseCommand):
         GarminConnector.import_user(user)
 
     # Browse all users
-    elif options['offline']:
+    else:
       users = Athlete.objects.filter(garmin_login__isnull=False, garmin_password__isnull=False)
       users = users.exclude(garmin_login='') # don't use empty logins
       for user in users:

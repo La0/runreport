@@ -7,10 +7,19 @@ from sport.models import GarminActivity
 import logging
 import re
 from helpers import week_to_date
+from django.db import transaction
+import hashlib
+import json
 
 logger = logging.getLogger('coach.sport.garmin')
 
 class GarminAuthException(Exception):
+  pass
+
+class GarminSkipUpdateException(Exception):
+  '''
+  Used when an update for an user is not realy needed
+  '''
   pass
 
 class GarminConnector:
@@ -29,7 +38,7 @@ class GarminConnector:
   _url_laps = 'http://connect.garmin.com/proxy/activity-service-1.3/json/activity/%s'
   _url_details = 'http://connect.garmin.com/proxy/activity-service-1.3/json/activityDetails/%s'
 
-  _max_activities = 10 # per request
+  _max_activities = 20 # per request
 
   def __init__(self, user=None, login=None, password=None):
     if user:
@@ -120,14 +129,24 @@ class GarminConnector:
     data = resp.json()
 
     activities = []
+    updated_nb = 0
     for activity in data['results']['activities']:
       try:
         activity = activity['activity']
-        act = self.load_activity(activity)
-        if act:
-          activities.append(act)
+        with transaction.atomic():
+          act, updated = self.load_activity(activity)
+          if act:
+            activities.append(act)
+            if updated:
+              updated_nb += 1
+          else:
+            transaction.rollback()
       except Exception, e:
         logger.error('Activity import failed: %s' % (str(e),))
+
+    # When no update has been made, stop import
+    if updated_nb == 0:
+      raise GarminSkipUpdateException()
 
     return activities
 
@@ -138,14 +157,21 @@ class GarminConnector:
     activity_id = activity['activityId']
     try:
       act = GarminActivity.objects.get(garmin_id=activity_id , user=self._user)
-      logger.info("%s : Existing activity %s" % (self._user.username, activity_id))
+
+      # Check the activity needs an update
+      # by comparing md5
+      if act.md5_raw == hashlib.md5(json.dumps(activity)).hexdigest():
+        logger.info("%s : Existing activity %s did not change" % (self._user.username, activity_id))
+        return act, False
+
+      logger.info("%s : Existing activity %s needs update" % (self._user.username, activity_id))
     except GarminActivity.DoesNotExist, e:
       act = GarminActivity(garmin_id=activity_id, user=self._user)
       created = True
       logger.info("%s : Created activity %s" % (self._user.username, activity_id))
     except Exception, e:
       logger.error("%s : Failed to import activity %s : %s" % (self._user.username, activity_id, str(e)))
-      return None
+      return None, None
 
     # Update raw data
     act.update(activity)
@@ -160,7 +186,7 @@ class GarminConnector:
 
     act.save()
 
-    return act
+    return act, True
 
   def load_json(self, activity, data_type):
     '''
@@ -205,6 +231,9 @@ class GarminConnector:
       try:
         activities = gc.search(nb)
         nb += 1
+      except GarminSkipUpdateException, e:
+        logger.info("Update not needed for %s" % (user,))
+        break
       except Exception, e:
         logger.error("Import failed for %s: %s" % (user, str(e)))
         break
