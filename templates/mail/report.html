@@ -1,56 +1,70 @@
 {% extends "mail/base.html" %}
 
+{% set title = 'Semaine %s du %s au %s' % (week_human, report.get_date_start()|date("l d E"), report.get_date_end()|date("l d E")  ) %}
+
 {% block mail %}
 <table cellpadding="0" cellspacing="0" border="0" align="center">
   <tr>
-    <td colspan="2"><h2>Séance de <a href="{{ base_uri }}
-{% url club-member club.slug, report.user.username %}">{{ report.user.first_name }} {{ report.user.last_name }}</a></h2></td>
-  </tr>
-  <tr style="height: 60px; line-height: 60px;">
-    <td colspan="2">Semaine {{ week_human }} du <a href="{{ base_uri }}
-{% url club-member-week club.slug, report.user.username, report.year, report.week %}">{{ report.get_date_start()|date("l d E") }} au {{ report.get_date_end()|date("l d E") }}</a></td>
-  </tr>
-  {% for day in report.get_dates() %}
-  <tr class="session">
-    <td width="150">{{day|date('l d E')}}</td>
-    {% with sessions[day] as session %}
-    <td width="400">
-      {% if session %}
-      {% for s in session.sessions.all() %}
-      <div>
-        <strong>{{s.sport.name}} : {{s.name}}</strong>
-        {% if s.comment %}
-        <p>
-        {{s.comment|linebreaksbr}}
-        </p>
-        {% endif %}
-        {% if s.time %}
-        <span class="label">Temps</span> {{s.time}}
-        {% endif %}
-        {% if s.distance %}
-        <span class="label">Distance</span> {{s.distance}} km
-        {% endif %}
-
-        {% if session.garmin_activity %}
-        <div class="garmin pull-right">
-          Garmin : <a href="{{ activity.get_url() }}" target="_blank">{{ activity.name }}</a>
-          <span>&bull;</span>
-          {{ activity.distance|floatformat(2) }} km en {{ activity.time }}
-          <span>&bull;</span>
-          <span>{{ activity.speed|date('i:s') }} min/km</span>
-        </div>
-        {% endif %}
-      </div>
-      {% endfor %}
-      {% endif %}
+    <td>
+    Voir la semaine de <a href="http://{{ site.domain }}{% url club-member-week club.slug, report.user.username,  report.year, report.week %}">{{ report.user.first_name }} {{ report.user.last_name }}</a>
     </td>
-    {% endwith %}
   </tr>
-  {% endfor %}
-
   <tr>
-    <td colspan="2">
-      <table>
+    <td>
+      <table style="width: 100%;" >
+        {% for day in report.get_dates() %}
+        <tr class="session">
+          <td width="30%" style="text-align: right; color: #CCC; padding-right: 6px; border-bottom: 1px solid rgb(19, 82, 157);">
+            <br />
+            {{day|date('l d E')}}
+          </td>
+          {% with sessions[day] as session %}
+          <td width="70%" style="text-align: left; border-bottom: 1px solid rgb(19, 82, 157);">
+            <br />
+            {% if session %}
+            {% for s in session.sessions.all() %}
+            <div>
+              <span style="color: orange;">{{s.sport.name}} : {{s.name}}</span>
+              <br />
+              {% if s.comment %}
+              <p>
+              {{s.comment|linebreaksbr}}
+              </p>
+              {% endif %}
+              {% if s.time %}
+              <span class="label">Temps</span> {{s.time}}
+              {% endif %}
+              {% if s.distance %}
+              <span class="label">Distance</span> {{s.distance}} km
+              {% endif %}
+
+              {% if session.garmin_activity %}
+              <div class="garmin pull-right">
+                Garmin : <a href="{{ activity.get_url() }}" target="_blank">{{ activity.name }}</a>
+                <span>&bull;</span>
+                {{ activity.distance|floatformat(2) }} km en {{ activity.time }}
+                <span>&bull;</span>
+                <span>{{ activity.speed|date('i:s') }} min/km</span>
+              </div>
+              {% endif %}
+            </div>
+            {% endfor %}
+            {% else %}
+
+            <span style="font-style: italic; color: #EEE;">Pas de séance</span>
+            {% endif %}
+          </td>
+          {% endwith %}
+        </tr>
+        {% endfor %}
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <br />
+      <br />
+      <table style="width: 100%">
         <tr>
           <th>Sport</th>
           <th>Temps total</th>
@@ -69,12 +83,12 @@
 
   {% if report.comment %}
   <tr>
-    <td colspan="2">
+    <td>
       <h3 style="margin-top: 20px">Bilan de la semaine</h3>
     </td>
   </tr>
   <tr>
-    <td colspan="2">
+    <td>
     {{ report.comment }}
     </td>
   </tr>
