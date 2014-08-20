@@ -42,7 +42,7 @@ table.table th, table.table td {
 	<div class="table-responsive">
 		<table class="table table-bordered table-condensed table-hover">
 			<tr>
-				<th>% VMA</th>
+				<th title="{{ glossary['VMA'] }}">% VMA</th>
 				{% for d in vma.get_distances() %}
 				<th>{{d}}m</th>
 				{% endfor %}
@@ -76,15 +76,15 @@ table.table th, table.table td {
 	<div class="table-responsive">
 		<table class="table table-bordered table-hover">
 			<tr>
-				<th>Allures</th>
-				<th>% VMA</th>
+				<th>Allures </th>
+				<th title="{{ glossary['VMA'] }}">% VMA</th>
 				<th>Vitesse</th>
 				<th>Temps au km</th>
 				<th>Temps au 100m</th>
 			</tr>
 			{% for pace in vma.get_paces() %}
 			<tr>
-				<td>{{pace.name}}</td>
+				<td title="{{ glossary[pace.name] }}">{{pace.name}}</td>
 				<td>{{pace.percent}}</td>
 				<td>{{vma.get_speed(pace)}}</td>
 				<td>{{vma.get_time(pace, 1000)|date("i's\"")}}</td>
@@ -97,7 +97,7 @@ table.table th, table.table td {
 	{% else %}
 	<div class="alert alert-danger">
 		<h4>Pas de Vma !</h4>
-		Il faut renseigner ta VMA sur la <a href="{% url user-profile %}">page de profil</a> pour pouvoir afficher les tableaux.
+		Il faut renseigner ta VMA sur la <a href="{% url user-profile %}#id_nb_sessions">page de profil</a> pour pouvoir afficher les tableaux.
 	</div>
 	{% endif %}
 

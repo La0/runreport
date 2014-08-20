@@ -8,7 +8,7 @@
   <header class="jumbotron hero-spacer">
     <h1>Gérez tous vos athlètes</h1>
     
-    <p>Qu'ils soient coureurs, triathlètes ou cyclistes de tous niveaux, vous pourrez gérer tous vos athlètes de manière simple et efficace.</p>
+    <p>Qu'ils soient coureurs, triathlètes ou cyclistes, quelque soit leur niveau, vous pourrez gérer l'ensemble de vos athlètes de manière simple et efficace.</p>
 
     <hr />
 
@@ -22,7 +22,7 @@
         </p>
         {% else %}
         <p class="text-muted">
-          RunReport est en &#x3b2;eta: pour assure un meilleur support les créations de club sont limitées.
+          Pour assurer un meilleur support, les créations de club sont pour l'instant limitées.
         </p>
         <form action="{% url club-landing %}" method="post" role="form" class="form-inline">
           {% csrf_token %}
@@ -34,7 +34,7 @@
             {% endif %}
           </div>
 
-          <button type="submit" class="btn btn-success">Demander invitation</button>
+          <button type="submit" class="btn btn-success">Demander une invitation</button>
         </form>
         {% endif %}
       </div>
