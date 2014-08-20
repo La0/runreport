@@ -1,134 +1,25 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% if title %}{{ title }} - {% endif %}Run Report</title>
-  <style type="text/css">
-  @import url(http://fonts.googleapis.com/css?family=Lato);
-
-  /* Take care of image borders and formatting */
-
-  img {
-    max-width: 600px;
-    outline: none;
-    text-decoration: none;
-    -ms-interpolation-mode: bicubic;
-  }
-
-  a {
-    text-decoration: none;
-    border: 0;
-    outline: none;
-    color: #bbbbbb;
-  }
-
-  a img {
-    border: none;
-  }
-
-  .content a {
-    border: 1px solid rgba(0, 0, 0, 0);
-    border-radius: 4px;
-    cursor: pointer;
-    display: inline-block;
-    font-size: 15px;
-    font-weight: normal;
-    line-height: 1.42857;
-    margin-bottom: 0;
-    padding: 5px;
-    text-align: center;
-    vertical-align: middle;
-    white-space: nowrap;
-    background-color: #3498db;
-    border-color: #3498db;
-    color: #ffffff;
-  }
-
-  /* General styling */
-
-  td, h1, h2, h3  {
-    font-family: Helvetica, Arial, sans-serif;
-    font-weight: 400;
-  }
-
-  td {
-    text-align: center;
-  }
-
-  body {
-    -webkit-font-smoothing:antialiased;
-    -webkit-text-size-adjust:none;
-    width: 100%;
-    height: 100%;
-    color: #37302d;
-    background: #ffffff;
-    font-size: 16px;
-  }
-
-   table {
-    border-collapse: collapse !important;
-  }
-
-  .headline {
-    color: rgb(255,165,0);
-    font-size: 22px;
-  }
-
- .force-full-width {
-  width: 100% !important;
- }
-
- .force-width-80 {
-  width: 80% !important;
- }
-
-
-
-
-  </style>
-
-  <style type="text/css" media="screen">
-      @media screen {
-         /*Thanks Outlook 2013! http://goo.gl/XLxpyl*/
-        td, h1, h2, h3 {
-          font-family: 'Lato', 'Helvetica Neue', 'Arial', 'sans-serif' !important;
-        }
-      }
-  </style>
-
-  <style type="text/css" media="only screen and (max-width: 480px)">
-    /* Mobile styles */
-    @media only screen and (max-width: 480px) {
-
-      table[class="w320"] {
-        width: 320px !important;
-      }
-
-      td[class="mobile-block"] {
-        width: 100% !important;
-        display: block !important;
-      }
-
-
-    }
-  </style>
 </head>
-<body class="body" style="padding:0 !important; margin:0 !important; display:block !important; background:#ffffff; -webkit-text-size-adjust:none" bgcolor="#ffffff">
-<table align="center" cellpadding="0" cellspacing="0" class="force-full-width" height="100%" >
+<body class="body" style="padding: 0 !important;margin: 0 !important;display: block !important;background: #ffffff;-webkit-text-size-adjust: none;-webkit-font-smoothing: antialiased;width: 100%;height: 100%;color: #37302d;font-size: 16px;" bgcolor="#ffffff">
+<table align="center" cellpadding="0" cellspacing="0" class="force-full-width" height="100%" style="border-collapse: collapse !important;width: 100% !important;">
   <tr>
-    <td align="center" valign="top" bgcolor="#ffffff"  width="100%">
+    <td align="center" valign="top" bgcolor="#ffffff" width="100%" style="font-family: 'Lato', 'Helvetica Neue', 'Arial', 'sans-serif' !important;font-weight: 400;text-align: center;">
       <center>
-        <table style="margin: 0 auto;" cellpadding="0" cellspacing="0" width="600" class="w320">
+        <table style="margin: 0 auto;border-collapse: collapse !important;" cellpadding="0" cellspacing="0" width="600" class="w320">
           <tr>
-            <td align="center" valign="top">
+            <td align="center" valign="top" style="font-family: 'Lato', 'Helvetica Neue', 'Arial', 'sans-serif' !important;font-weight: 400;text-align: center;">
 
-                <table style="margin: 0 auto;" cellpadding="0" cellspacing="0" class="force-full-width" style="margin:0 auto;">
+                <table style="margin: 0 auto;border-collapse: collapse !important;width: 100% !important;" cellpadding="0" cellspacing="0" class="force-full-width">
                   <tr>
-                    <td style="font-size: 30px; text-align:center;">
+                    <td style="font-size: 30px;text-align: center;font-family: 'Lato', 'Helvetica Neue', 'Arial', 'sans-serif' !important;font-weight: 400;">
                       <br>
-                        <a href="http://{{site.domain}}" target="_blank" style="color:#111">Run Report</a>
-                        <br />
+                        <a href="http://{{site.domain}}" target="_blank" style="color: #111;text-decoration: none;border: 0;outline: none;">Run Report</a>
+                        <br>
                     <span style="color: #888; font-size:15px;">Carnet d'entraînement et gestion d'athlètes</span>
                       <br>
                       <br>
@@ -136,22 +27,22 @@
                   </tr>
                 </table>
 
-                <table style="margin: 0 auto;" cellpadding="0" cellspacing="0" class="force-full-width" bgcolor="#2c3e50">
+                <table style="margin: 0 auto;border-collapse: collapse !important;width: 100% !important;" cellpadding="0" cellspacing="0" class="force-full-width" bgcolor="#2c3e50">
                   {% if title %}
                   <tr>
-                    <td class="headline">
-                      <br />
+                    <td class="headline" style="font-family: 'Lato', 'Helvetica Neue', 'Arial', 'sans-serif' !important;font-weight: 400;text-align: center;color: rgb(255,165,0);font-size: 22px;">
+                      <br>
                       {{ title }}
                     </td>
                   </tr>
                   {% endif %}
                   <tr>
-                    <td>
+                    <td style="font-family: 'Lato', 'Helvetica Neue', 'Arial', 'sans-serif' !important;font-weight: 400;text-align: center;">
 
                       <center>
-                        <table style="margin: 0 auto; color: white;" cellpadding="0" cellspacing="0" width="90%">
+                        <table style="margin: 0 auto;color: white;border-collapse: collapse !important;" cellpadding="0" cellspacing="0" width="90%">
                           <tr>
-                            <td class="content">
+                            <td class="content" style="font-family: 'Lato', 'Helvetica Neue', 'Arial', 'sans-serif' !important;font-weight: 400;text-align: center;">
                             <br>
                             {% block mail %}{% endblock %}
                             <br>
@@ -167,11 +58,11 @@
 
 
 
-                <table style="margin: 0 auto;" cellpadding="0" cellspacing="0" class="force-full-width" bgcolor="#414141" style="margin: 0 auto">
+                <table style="margin: 0 auto;border-collapse: collapse !important;width: 100% !important;" cellpadding="0" cellspacing="0" class="force-full-width" bgcolor="#414141">
                   <tr>
-                    <td style="color:#bbbbbb; font-size:12px;">
-                      <br />
-                      <a href="http://{{site.domain}}/club" target="_blank">Créer un club</a> | <a href="http://{{site.domain}}/news" target="_blank">News</a> | <a href="http://{{site.domain}}/contact" target="_blank">Contact</a>
+                    <td style="color: #bbbbbb;font-size: 12px;font-family: 'Lato', 'Helvetica Neue', 'Arial', 'sans-serif' !important;font-weight: 400;text-align: center;">
+                      <br>
+                      <a href="http://{{site.domain}}/club" target="_blank" style="text-decoration: none;border: 0;outline: none;color: #bbbbbb;">Créer un club</a> | <a href="http://{{site.domain}}/news" target="_blank" style="text-decoration: none;border: 0;outline: none;color: #bbbbbb;">News</a> | <a href="http://{{site.domain}}/contact" target="_blank" style="text-decoration: none;border: 0;outline: none;color: #bbbbbb;">Contact</a>
                       <br><br>
                     </td>
                   </tr>

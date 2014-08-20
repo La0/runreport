@@ -14,12 +14,12 @@
       <table style="width: 100%;" >
         {% for day in report.get_dates() %}
         <tr class="session">
-          <td width="30%" style="text-align: right; color: #CCC; padding-right: 6px; border-bottom: 1px solid rgb(19, 82, 157);">
+          <td width="30%" style="text-align: right; color: #CCC; padding-right: 6px; ">
             <br />
             {{day|date('l d E')}}
           </td>
           {% with sessions[day] as session %}
-          <td width="70%" style="text-align: left; border-bottom: 1px solid rgb(19, 82, 157);">
+          <td width="70%" style="text-align: left;">
             <br />
             {% if session %}
             {% for s in session.sessions.all() %}
