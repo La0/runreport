@@ -24,6 +24,10 @@ class Profile(UpdateView):
     if self.request.user.demo:
       raise Exception('No edition for demo')
 
+    # Cleanup previous avatar
+    if form.cleaned_data['avatar']:
+      self.request.user.clean_avatars()
+
     context = self.get_context_data(form=form)
 
     # Update user category

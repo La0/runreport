@@ -1,4 +1,6 @@
 # coding=utf-8
+import glob
+import os
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import AbstractBaseUser, UserManager, PermissionsMixin
@@ -55,7 +57,7 @@ def build_avatar_path(instance, filename):
   # using his username, and a secret hash
   # unique per upload
   h = md5('%s:%s:%d' % (settings.SECRET_KEY, datetime.now(), instance.pk)).hexdigest()
-  return 'avatars/%s_%s.png' % (instance.username, h[0:8])
+  return 'avatars/%s.%s.png' % (instance.username, h[0:8])
 
 class Athlete(AthleteBase):
   # Personal infos for trainer
@@ -95,6 +97,12 @@ class Athlete(AthleteBase):
       self.category = None
       pass
     return self.category
+
+  def clean_avatars(self):
+    # Remove previous avatars for this user
+    avatar_filter = os.path.join(settings.MEDIA_ROOT, 'avatars', '%s.*' % self.username)
+    for f in glob.glob(avatar_filter):
+      os.unlink(f)
 
 class UserCategory(models.Model):
   code = models.CharField(max_length=10)
