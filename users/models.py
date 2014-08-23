@@ -6,7 +6,9 @@ from django.db.models.signals import post_save
 from django.core import validators
 from django.utils import timezone
 from django.core.validators import MaxValueValidator, MinValueValidator
-
+from django.conf import settings
+from hashlib import md5
+from datetime import datetime
 
 
 class AthleteBase(AbstractBaseUser, PermissionsMixin):
@@ -48,6 +50,13 @@ class AthleteBase(AbstractBaseUser, PermissionsMixin):
     verbose_name_plural = _('users')
     abstract = True
 
+def build_avatar_path(instance, filename):
+  # Build an avatar file path for a user
+  # using his username, and a secret hash
+  # unique per upload
+  h = md5('%s:%s:%d' % (settings.SECRET_KEY, datetime.now(), instance.pk)).hexdigest()
+  return 'avatars/%s_%s.png' % (instance.username, h[0:8])
+
 class Athlete(AthleteBase):
   # Personal infos for trainer
   birthday = models.DateField(null=True, blank=True)
@@ -73,6 +82,9 @@ class Athlete(AthleteBase):
 
   # Demo dummy account ?
   demo = models.BooleanField(default=False)
+
+  # Avatar image
+  avatar = models.ImageField(upload_to=build_avatar_path)
 
   def search_category(self):
     if not self.birthday:

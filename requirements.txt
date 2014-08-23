@@ -25,3 +25,4 @@ billiard==3.3.0.18
 pytz==2014.4
 psycopg2==2.5.3
 django-debug-toolbar==1.2.1
+Pillow==2.5.3

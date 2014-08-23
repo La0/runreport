@@ -8,7 +8,7 @@
 	
 	<h2>Mon profil</h2>
 	
-	<form class="form-horizontal" method="POST" action="">
+	<form class="form-horizontal" method="POST" action="" enctype="multipart/form-data">
 		{% csrf_token %}
 		<fieldset>
 			<legend>Informations personnelles</legend>
@@ -34,6 +34,15 @@
 			</div>
       {% endif %}
 		</fieldset>
+
+    <fieldset>
+      <legend>Photo de profil</legend>
+      {{ form.avatar|safe }}
+
+      {% if user.avatar %}
+      <img class="img-responsive img-thumbnail" style="max-width: 300px" src="{{ user.avatar.url }}" alt="{{ user.first_name }} {{ user.last_name }} avatar"/>
+      {% endif %}
+    </fieldset>
 
 		<fieldset>
 			<legend>Mails</legend>

@@ -10,7 +10,7 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
         # Adding field 'Athlete.avatar'
         db.add_column(u'users_athlete', 'avatar',
-                      self.gf('django.db.models.fields.files.FileField')(default='avatars/default.jpg', max_length=100),
+                      self.gf('django.db.models.fields.files.ImageField')(default='avatars/default.jpg', max_length=200),
                       keep_default=False)
 
 
@@ -57,6 +57,7 @@ class Migration(SchemaMigration):
             'comment': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
             'default_sport': ('django.db.models.fields.related.ForeignKey', [], {'default': '3', 'to': "orm['sport.Sport']"}),
+            'demo': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'email': ('django.db.models.fields.EmailField', [], {'unique': 'True', 'max_length': '75', 'blank': 'True'}),
             'first_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
             'frequency': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
