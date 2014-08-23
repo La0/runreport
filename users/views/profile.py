@@ -25,8 +25,10 @@ class Profile(UpdateView):
       raise Exception('No edition for demo')
 
     # Cleanup previous avatar
-    if form.cleaned_data['avatar']:
+    avatar_updated = False
+    if form.cleaned_data['avatar'] and self.request.FILES:
       self.request.user.clean_avatars()
+      avatar_updated = True
 
     context = self.get_context_data(form=form)
 
@@ -34,6 +36,10 @@ class Profile(UpdateView):
     user = form.save(commit=False)
     user.search_category()
     user.save()
+
+    # Crop updated avatar
+    if avatar_updated:
+      user.crop_avatar()
 
     # Manually save trainers form
     # This is really dirty.

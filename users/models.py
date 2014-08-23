@@ -11,7 +11,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.conf import settings
 from hashlib import md5
 from datetime import datetime
-
+from PIL import Image
 
 class AthleteBase(AbstractBaseUser, PermissionsMixin):
   '''
@@ -103,6 +103,13 @@ class Athlete(AthleteBase):
     avatar_filter = os.path.join(settings.MEDIA_ROOT, 'avatars', '%s.*' % self.username)
     for f in glob.glob(avatar_filter):
       os.unlink(f)
+
+  def crop_avatar(self):
+    # Crop the recently uploaded avatar
+    img = Image.open(self.avatar.file)
+    print img.size
+    crop = img.crop((100,100, 400, 400))
+    crop.save(self.avatar.path, 'png')
 
 class UserCategory(models.Model):
   code = models.CharField(max_length=10)

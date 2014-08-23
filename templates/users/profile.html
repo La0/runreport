@@ -40,7 +40,7 @@
       {{ form.avatar|safe }}
 
       {% if user.avatar %}
-      <img class="img-responsive img-thumbnail" style="max-width: 300px" src="{{ user.avatar.url }}" alt="{{ user.first_name }} {{ user.last_name }} avatar"/>
+      <img class="img-responsive img-thumbnail" src="{{ user.avatar.url }}" alt="{{ user.first_name }} {{ user.last_name }} avatar"/>
       {% endif %}
     </fieldset>
 
