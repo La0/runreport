@@ -1,6 +1,7 @@
 # coding=utf-8
 import glob
 import os
+import math
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import AbstractBaseUser, UserManager, PermissionsMixin
@@ -104,12 +105,40 @@ class Athlete(AthleteBase):
     for f in glob.glob(avatar_filter):
       os.unlink(f)
 
-  def crop_avatar(self):
+  def crop_avatar(self, crop_size=400):
     # Crop the recently uploaded avatar
+    if not os.path.exists(self.avatar.path):
+      raise Exception('Missing avatar file :%s' % self.avatar.file)
+
+    # Load image
     img = Image.open(self.avatar.file)
-    print img.size
-    crop = img.crop((100,100, 400, 400))
-    crop.save(self.avatar.path, 'png')
+    w,h = img.size
+    small_size = min(w,h)
+    print 'Small size = %d' % small_size
+
+    # Resize before crop ?
+    if small_size > crop_size:
+      ratio = float(crop_size) / float(small_size)
+      w = int(math.floor(w * ratio))
+      h = int(math.floor(h * ratio))
+      img = img.resize((w, h))
+
+    crop_box = None
+    if w < h:
+      # Vertical Crop
+      offset = int(math.floor((h - crop_size) / 2))
+      crop_box = (0, offset, w, h - offset)
+    elif w > h:
+      # Horizontal crop
+      offset = int(math.floor((w - crop_size) / 2))
+      crop_box = (offset, 0, w - offset, h)
+
+    # Do the crop
+    if crop_box:
+      img = img.crop(crop_box)
+
+    # Save the resulting image
+    img.save(self.avatar.path, 'png')
 
 class UserCategory(models.Model):
   code = models.CharField(max_length=10)
