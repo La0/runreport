@@ -272,7 +272,11 @@ except ImportError, e:
 
 # Apps in prod or dev
 if DEBUG:
-  INSTALLED_APPS = INSTALLED_APPS + ('debug_toolbar',)
+  try:
+    import debug_toolbar
+    INSTALLED_APPS = INSTALLED_APPS + ('debug_toolbar',)
+  except:
+    print "Missing debug toolbar module"
 else:
   INSTALLED_APPS = INSTALLED_APPS + ('raven.contrib.django.raven_compat',)
 
