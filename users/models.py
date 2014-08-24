@@ -114,7 +114,6 @@ class Athlete(AthleteBase):
     img = Image.open(self.avatar.file)
     w,h = img.size
     small_size = min(w,h)
-    print 'Small size = %d' % small_size
 
     # Resize before crop ?
     if small_size > crop_size:

@@ -22,7 +22,7 @@
 	<div class="table-responsive">
 		<table class="table table-striped">
 			<tr>
-				<th>{{ macros.sort_title('Athlète', 'name', 'club-current-name', (club.slug, type, ), sort) }}</th>
+				<th colspan="2">{{ macros.sort_title('Athlète', 'name', 'club-current-name', (club.slug, type, ), sort) }}</th>
 				{% if request.user == club.manager or request.user.is_staff %}
 				<th>Rôle</th>
 				{% endif %}
@@ -33,7 +33,10 @@
 				<th>Actions</th>
 			</tr>
 			{% for member in members %}
-            <tr>
+            <tr class="member">
+                <td class="avatar">
+                  <img class="small" src="{{ member.avatar.url }}" alt="{{ member.username }} avatar"/>
+                </td>
                 <td>
                     {{ member.first_name|lower|title }} {{ member.last_name|lower|title }}
                 </td>

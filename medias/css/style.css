@@ -378,3 +378,14 @@ header div.demo-warning {
   margin-left: 10px;
   list-style-type: none;
 }
+
+/* Avatars */
+img.avatar.small, .avatar img.small {
+  width: 60px;
+  height: 60px;
+  vertical-align: middle;
+}
+
+tr.member td {
+  line-height: 60px !important;
+}
