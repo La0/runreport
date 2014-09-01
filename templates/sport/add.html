@@ -6,6 +6,11 @@
 
 {% block body %}
 
+  <div class="alert alert-info">
+    <h4>Aide</h4>
+    Le format de saisie de date est : JJ/MM/AAAA
+  </div>
+
   {% csrf_token %}
   {{ macros.input(form.date, 'Date') }}
   {% if not type_asked %}

@@ -81,7 +81,7 @@ class SportDayAddForm(forms.Form):
   def clean_date(self):
 
     # Check date is free
-    if SportDay.objects.filter(report__user=self.user, date=self.cleaned_data['date']):
+    if SportDay.objects.filter(week__user=self.user, date=self.cleaned_data['date']):
       raise forms.ValidationError('Une séance existe déjà à cette date.')
 
     return self.cleaned_data['date']
