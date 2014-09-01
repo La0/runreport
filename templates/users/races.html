@@ -25,36 +25,21 @@ h2, h3 {
 	<div class="row-striped">
 		{% for race in races[category.id] %}
 		<div class="row {% if loop.first %}race-record{% endif %}">
-			<div class="col-sm-4"><strong>{{ race.name }}</strong></div>
-			<div class="col-sm-3">{{ race.date|date('d E Y')}}</div>
+			<div class="col-sm-4">
+        <i class="icon-sport-{{ race.sport.slug }}" title="{{ race.sport.name }}"></i>
+        <strong>{{ race.name }}</strong>
+      </div>
+			<div class="col-sm-3">{{ race.day.date|date('d E Y')}}</div>
 
-      {% with race.sessions.filter(sport__depth=1) as sessions %}
       <div class="col-sm-2">
-      <p><strong>{{ race.distance_total|default(0)|floatformat(2)}} km</strong></p>
-
-      {% if sessions.count() > 1 %}
-      {% for session in sessions %}
-      <p>
-        <i class="icon-sport-{{ session.sport.slug }}" title="{{ session.sport.name }}"></i>
-        {{ session.distance|default(0)|floatformat(2) }} km
-      </p>
-      {% endfor %}
-      {% endif %}
+      <p><strong>{{ race.distance|default(0)|floatformat(2)}} km</strong></p>
       </div>
 
       <div class="col-sm-2">
-      <p><strong>{{ race.time_total|total_time()}}</strong></p>
-      {% if sessions.count() > 1 %}
-      {% for session in sessions %}
-      <p>
-        {{ session.time }}
-      </p>
-      {% endfor %}
-      {% endif %}
+      <p><strong>{{ race.time|total_time()}}</strong></p>
       </div>
-      {% endwith %}
 			<div class="col-sm-1">
-				<a class="modal-action btn btn-xs {% if loop.first %}btn-warning{% else %}btn-default{% endif %}" href="{% url report-day race.date.year, race.date.month, race.date.day %}">Voir</a>
+				<a class="modal-action btn btn-xs {% if loop.first %}btn-warning{% else %}btn-default{% endif %}" href="{% url report-day race.day.date.year, race.day.date.month, race.day.date.day %}">Voir</a>
 			</div>
 		</div>
 		{% endfor %}
@@ -71,10 +56,10 @@ h2, h3 {
 			{% for race in future_races %}
 			<div class="row">
 				<div class="col-sm-4">
-					<strong>Dans {{race.date|timeuntil()}}</strong>
+					<strong>Dans {{race.day.date|timeuntil()}}</strong>
 				</div>
 				<div class="col-sm-7">
-					<a class="modal-action" href="{% url report-day race.date.year, race.date.month, race.date.day %}">{{ race.name }}</a>
+					<a class="modal-action" href="{% url report-day race.day.date.year, race.day.date.month, race.day.date.day %}">{{ race.name }}</a>
 				</div>
 				<div class="col-sm-1">
 					<span class="label label-default">{{ race.race_category.name}}</span>
