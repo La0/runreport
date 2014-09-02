@@ -19,29 +19,62 @@ h2, h3 {
 
 	{% if races %}
 	
-	{% for category in categories %}
+	{% for category in categories.values() %}
 	<h3>{{category.name}}</h3>
 
 	<div class="row-striped">
 		{% for race in races[category.id] %}
+    {% with race.sessions.filter(type='race') as sessions %}
 		<div class="row {% if loop.first %}race-record{% endif %}">
+
 			<div class="col-sm-4">
-        <i class="icon-sport-{{ race.sport.slug }}" title="{{ race.sport.name }}"></i>
-        <strong>{{ race.name }}</strong>
+        {% if race.nb_sessions > 1 %}
+        <p>
+          <span class="badge">{{race.nb_sessions}}</span> parties
+        </p>
+        {% endif %}
+        {% for session in sessions %}
+        <p>
+          <i class="icon-sport-{{ session.sport.slug }}" title="{{ session.sport.name }}"></i>
+          {{ session.name }}
+        </p>
+        {% endfor %}
       </div>
-			<div class="col-sm-3">{{ race.day.date|date('d E Y')}}</div>
+
+			<div class="col-sm-3">
+        {{ race.date|date('d E Y')}}
+      </div>
 
       <div class="col-sm-2">
-      <p><strong>{{ race.distance|default(0)|floatformat(2)}} km</strong></p>
+        <p>
+          <strong>{{ race.distance_total|default(0)|floatformat(2)}} km</strong>
+        </p>
+        {% if race.nb_sessions > 1 %}
+        {% for session in sessions %}
+        <p>
+          {{ session.distance|default(0)|floatformat(2) }} km
+        </p>
+        {% endfor %}
+        {% endif %}
       </div>
 
       <div class="col-sm-2">
-      <p><strong>{{ race.time|total_time()}}</strong></p>
+        <p>
+          <strong>{{ race.time_total}}</strong>
+        </p>
+        {% if race.nb_sessions > 1 %}
+        {% for session in sessions %}
+        <p>
+          {{ session.time }}
+        </p>
+        {% endfor %}
+        {% endif %}
       </div>
 			<div class="col-sm-1">
-				<a class="modal-action btn btn-xs {% if loop.first %}btn-warning{% else %}btn-default{% endif %}" href="{% url report-day race.day.date.year, race.day.date.month, race.day.date.day %}">Voir</a>
+				<a class="modal-action btn btn-xs {% if loop.first %}btn-warning{% else %}btn-default{% endif %}" href="{% url report-day race.date.year, race.date.month, race.date.day %}">Voir</a>
 			</div>
 		</div>
+		{% endwith %}
 		{% endfor %}
 	</div>
 	{% endfor %}
