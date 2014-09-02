@@ -1,8 +1,9 @@
 from mixins import ClubMixin
-from django.views.generic import ListView
+from django.views.generic import ListView, TemplateView
 from sport.models import SportDay
 from club.models import ClubMembership
 from datetime import date
+from sport.views.mixins import AthleteRaces
 
 class ClubRaces(ClubMixin, ListView):
   template_name = 'club/races.html'
@@ -18,3 +19,18 @@ class ClubRaces(ClubMixin, ListView):
     users.append(self.request.user)
 
     return self.model.objects.filter(type='race', date__gte=date.today(), week__user__in=users).order_by('date', 'week__user__first_name')
+
+
+
+class ClubMemberRaces(ClubMixin, AthleteRaces, TemplateView):
+  template_name = 'users/races.html'
+
+  def get_context_data(self, *args, **kwargs):
+    context = super(ClubMemberRaces, self).get_context_data(*args, **kwargs)
+
+    # Add url parameters to see reports
+    context.update({
+      'raceurl' : 'club-member-day',
+      'raceargs' : [self.club.slug, self.member.username],
+    })
+    return context

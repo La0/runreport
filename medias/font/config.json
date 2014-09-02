@@ -161,6 +161,12 @@
       "css": "sport-walking",
       "code": 59401,
       "src": "elusive"
+    },
+    {
+      "uid": "862d4faacb164c0412cb3249d43d5d39",
+      "css": "sport-transition",
+      "code": 59418,
+      "src": "linecons"
     }
   ]
 }
