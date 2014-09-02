@@ -2,6 +2,15 @@
 
 {% set page_title = 'Mon profil' %}
 
+{% block js %}
+<script type="text/javascript">
+// Enable buttons with radio state
+$(function(){
+  $('.btn').button()
+});
+</script>
+{% endblock %}
+
 {% block content %}
 
 
@@ -18,6 +27,11 @@
     <li>
       <a href="#avatar" role="tab" data-toggle="tab">
         Photo de profil
+      </a>
+    </li>
+    <li>
+      <a href="#privacy" role="tab" data-toggle="tab">
+        Visibilité du profil
       </a>
     </li>
     <li>
@@ -94,6 +108,16 @@
           {% if user.avatar %}
           <img class="img-responsive img-thumbnail avatar-upload" src="{{ user.avatar.url }}" alt="{{ user.first_name }} {{ user.last_name }} avatar"/>
           {% endif %}
+        </div>
+      </div>
+
+      <div class="tab-pane" id="privacy">
+        {{ macros.input_choices(form.privacy_profile, 'Visibilité du profil') }}
+        {{ macros.input_choices(form.privacy_avatar, 'Visibilité de votre photo') }}
+        <div class="form-group">
+          <div class="col-sm-offset-4 col-sm-8">
+            <button type="submit" class="btn btn-primary" {% if user.demo %}disabled{% endif %}>Mettre à jour</button>
+          </div>
         </div>
       </div>
 

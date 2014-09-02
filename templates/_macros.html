@@ -1,7 +1,6 @@
 
 
 {% macro input(field, label, help=False, colLabel=2, colField=10) -%}
-<!-- <div class="form-group {% if field.errors %}has-error{% elif field.value() %}has-success{% endif %}"> -->
 <div class="form-group row {% if field.errors %}has-error{% endif %}">
 	<label class="col-sm-{{colLabel}} control-label" for="id_{{field.html_name}}">{{label}}</label>
 	<div class="col-sm-{{colField}}">
@@ -26,6 +25,32 @@
 	{% if field.errors %}
 	<div class="help-block">{{field.errors|safe}}</div>
 	{% endif %}
+</div>
+{%- endmacro %}
+
+{% macro input_choices(field, label) -%}
+<div class="form-group row {% if field.errors %}has-error{% endif %}">
+	<label class="col-sm-4 control-label" for="id_{{field.html_name}}">{{label}}</label>
+	<div class="col-sm-8">
+
+    {% with field.field.choices as choices %}
+    <div class="btn-group" data-toggle="buttons">
+      {% with field.value() as value %}
+      {% for choice, name in choices %}
+      <label class="btn btn-default {% if value == choice %}active{% endif %}">
+        <input type="radio" name="{{field.name}}" value="{{choice}}" {% if value == choice %}checked="checked"{% endif %}> {{ name }}
+      </label>
+      {% endfor %}
+      {% endwith %}
+    </div>
+    {% endwith %}
+
+    {% if field.errors %}
+    <div class="help-block">{{field.errors|safe}}</div>
+    {% elif help %}
+    <div class="help-block">{{help}}</div>
+    {% endif %}
+	</div>
 </div>
 {%- endmacro %}
 
