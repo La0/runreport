@@ -37,11 +37,20 @@
 
     <fieldset>
       <legend>Photo de profil</legend>
-      {{ form.avatar|safe }}
+      <div class="col-sm-6">
+        <p class="text-muted">
+          Vous pouvez utiliser une image au format JPEG ou PNG.
+          <br />Seule la partie centrale de l'image sera utilisée pour faire un "avatar" carré
+        </p>
+        <input id="id_avatar" name="avatar" type="file" />
+      </div>
 
-      {% if user.avatar %}
-      <img class="img-responsive img-thumbnail" src="{{ user.avatar.url }}" alt="{{ user.first_name }} {{ user.last_name }} avatar"/>
-      {% endif %}
+      <div class="col-sm-6">
+        <p class="text-muted">Votre photo actuelle</p>
+        {% if user.avatar %}
+        <img class="img-responsive img-thumbnail avatar-upload" src="{{ user.avatar.url }}" alt="{{ user.first_name }} {{ user.last_name }} avatar"/>
+        {% endif %}
+      </div>
     </fieldset>
 
 		<fieldset>
@@ -89,7 +98,7 @@
 			{{ macros.input(form.comment, 'Renseignements divers', false, 4, 8) }}
 		</fieldset>
 		<div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
+      <div class="col-sm-offset-4 col-sm-8">
 				<button type="submit" class="btn btn-primary" {% if user.demo %}disabled{% endif %}>Mettre à jour</button>
 			</div>
 		</div>

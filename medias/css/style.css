@@ -389,3 +389,7 @@ img.avatar.small, .avatar img.small {
 tr.member td {
   line-height: 60px !important;
 }
+
+img.avatar-upload {
+  max-width: 200px;
+}
