@@ -2,6 +2,21 @@
 
 {% set page_title = member and 'Records de %s %s' % (member.first_name, member.last_name) or 'Mes Records' %}
 
+{% block js %}
+<script type="text/javascript">
+$(function(){
+  $('#add_record').datepicker()
+    .on('changeDate', function(ev){
+      var dt = new Date(ev.date);
+
+      var url = '/calendar/' + (1900 + dt.getYear()) + '/' + dt.getMonth() + '/' + dt.getDay();
+      load_box(url, 'get', {}, 'modal');
+      $('#add_record').datepicker('hide');
+    });
+});
+</script>
+{% endblock %}
+
 {% block style %}
 <style>
 h2, h3 {
@@ -20,7 +35,9 @@ h2, h3 {
     </p>
     {% else %}
     Mes records
-    <a href="{% url session-add-type 'race' %}" class="modal-action btn btn-primary pull-right"><span class="icon icon-plus"></span> Ajouter un record</a>
+    <button id="add_record" class="modal-action btn btn-primary pull-right" data-date-format="yyyy-mm-dd" data-date="{{ today }}">
+      <span class="icon icon-plus"></span> Ajouter un record
+    </button>
     {% endif %}
   </h2>
 
