@@ -9,6 +9,7 @@ user_patterns = patterns('',
   url(r'^week/(?P<year>[\d]{4})/(?P<week>[\d]{1,2})/?', ClubMemberWeek.as_view(), name="club-member-week"),
   url(r'^day/(?P<year>[\d]{4})/(?P<month>[\d]{1,2})/(?P<day>[\d]{1,2})/?', ClubMemberDay.as_view(), name="club-member-day"),
   url(r'^role/?', ClubMemberRole.as_view(), name="club-member-role"),
+  url(r'^races/?', ClubMemberRaces.as_view(), name="club-member-races"),
 
   # Stats for a club member
   url(r'^stats/?$', ClubMemberStats.as_view(), name='club-member-stats'),

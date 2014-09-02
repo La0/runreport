@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% set page_title = 'Mes Records' %}
+{% set page_title = member and 'Records de %s %s' % (member.first_name, member.last_name) or 'Mes Records' %}
 
 {% block style %}
 <style>
@@ -13,8 +13,15 @@ h2, h3 {
 {% block content %}
 <div class="container">
 	<h2>
+    {% if member %}
+    Records de {{ member.first_name }} {{ member.last_name }}
+    <p class="actions pull-right">
+      <a class="btn btn-success" href="{% url club-current club.slug %}">Retour au club</a>
+    </p>
+    {% else %}
     Mes records
     <a href="{% url session-add-type 'race' %}" class="modal-action btn btn-primary pull-right"><span class="icon icon-plus"></span> Ajouter un record</a>
+    {% endif %}
   </h2>
 
 	{% if races %}
@@ -71,7 +78,7 @@ h2, h3 {
         {% endif %}
       </div>
 			<div class="col-sm-1">
-				<a class="modal-action btn btn-xs {% if loop.first %}btn-warning{% else %}btn-default{% endif %}" href="{% url report-day race.date.year, race.date.month, race.date.day %}">Voir</a>
+				<a class="modal-action btn btn-xs {% if loop.first %}btn-warning{% else %}btn-default{% endif %}" href="{{ raceurl|url(*raceargs + [race.date.year, race.date.month, race.date.day]) }}">Voir</a>
 			</div>
 		</div>
 		{% endwith %}
@@ -83,16 +90,17 @@ h2, h3 {
 		<p class="alert alert-warning">Aucune course renseignée</p>
 		{% endif %}
 
-		<h2>Mes courses futures</h2>
+    <h2>Courses à venir</h2>
+
 		{% if future_races %}
 		<div class="row-striped">
 			{% for race in future_races %}
 			<div class="row">
 				<div class="col-sm-4">
-					<strong>Dans {{race.day.date|timeuntil()}}</strong>
+					<strong>Dans {{race.date|timeuntil()}}</strong>
 				</div>
 				<div class="col-sm-7">
-					<a class="modal-action" href="{% url report-day race.day.date.year, race.day.date.month, race.day.date.day %}">{{ race.name }}</a>
+					<a class="modal-action" href="{% url report-day race.date.year, race.date.month, race.date.day %}">{{ race.name }}</a>
 				</div>
 				<div class="col-sm-1">
 					<span class="label label-default">{{ race.race_category.name}}</span>
