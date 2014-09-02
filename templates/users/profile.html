@@ -4,104 +4,152 @@
 
 {% block content %}
 
+
+
 <div class="container">
 	
 	<h2>Mon profil</h2>
+  <ul class="nav nav-tabs" role="tablist">
+    <li class="active">
+      <a href="#profile" role="tab" data-toggle="tab">
+        Informations personelles
+      </a>
+    </li>
+    <li>
+      <a href="#avatar" role="tab" data-toggle="tab">
+        Photo de profil
+      </a>
+    </li>
+    <li>
+      <a href="#mails" role="tab" data-toggle="tab">
+        Mails
+      </a>
+    </li>
+    <li>
+      <a href="#sport" role="tab" data-toggle="tab">
+        Informations sportives
+      </a>
+    </li>
+    {% if not user.demo %}
+    <li>
+      <a href="#password" role="tab" data-toggle="tab">
+        Mot de passe
+      </a>
+    </li>
+    {% endif %}
+  </ul>
 	
 	<form class="form-horizontal" method="POST" action="" enctype="multipart/form-data">
 		{% csrf_token %}
-		<fieldset>
-			<legend>Informations personnelles</legend>
-			{{ macros.input(form.first_name, 'Prénom', false, 4, 8) }}
-			{{ macros.input(form.last_name, 'Nom', false, 4, 8) }}
-      {% if not user.demo %}
-			{{ macros.input(form.email, 'Adresse email', false, 4, 8) }}
-      {% endif %}
-			{{ macros.input(form.birthday, 'Date de naissance', false, 4, 8) }}
-			{% if user.category %}
-			<div class="form-group">
-				<label class="col-sm-4 control-label">Catégorie</label>
-				<div class="col-sm-8">
-					<span class="label label-info">{{user.category.name}}</span>
-				</div>
-			</div>
-			{% endif %}
-			{{ macros.input(form.license, 'License FFA', false, 4, 8) }}
-      {% if not user.demo %}
-			<div class="alert alert-info">
-				<h4>Mot de passe</h4>
-				Vous pouvez changer de mot de passe en <a href="{% url user-password-update %}">utilisant cette page</a>.
-			</div>
-      {% endif %}
-		</fieldset>
 
-    <fieldset>
-      <legend>Photo de profil</legend>
-      <div class="col-sm-6">
-        <p class="text-muted">
-          Vous pouvez utiliser une image au format JPEG ou PNG.
-          <br />Seule la partie centrale de l'image sera utilisée pour faire un "avatar" carré
-        </p>
-        <input id="id_avatar" name="avatar" type="file" />
-      </div>
-
-      <div class="col-sm-6">
-        <p class="text-muted">Votre photo actuelle</p>
-        {% if user.avatar %}
-        <img class="img-responsive img-thumbnail avatar-upload" src="{{ user.avatar.url }}" alt="{{ user.first_name }} {{ user.last_name }} avatar"/>
+    <div class="tab-content">
+      <div class="tab-pane active" id="profile">
+        {{ macros.input(form.first_name, 'Prénom', false, 4, 8) }}
+        {{ macros.input(form.last_name, 'Nom', false, 4, 8) }}
+        {% if not user.demo %}
+        {{ macros.input(form.email, 'Adresse email', false, 4, 8) }}
         {% endif %}
+        {{ macros.input(form.birthday, 'Date de naissance', false, 4, 8) }}
+        {% if user.category %}
+        <div class="form-group">
+          <label class="col-sm-4 control-label">Catégorie</label>
+          <div class="col-sm-8">
+            <span class="label label-info">{{user.category.name}}</span>
+          </div>
+        </div>
+        {% endif %}
+        {{ macros.input(form.license, 'License FFA', false, 4, 8) }}
+
+        <div class="form-group">
+          <div class="col-sm-offset-4 col-sm-8">
+            <button type="submit" class="btn btn-primary" {% if user.demo %}disabled{% endif %}>Mettre à jour</button>
+          </div>
+        </div>
       </div>
-    </fieldset>
 
-		<fieldset>
-			<legend>Mails</legend>
-			<div class="form-group {% if form.errors %}has-error{% endif %}">
-				<label class="col-sm-4 control-label">Envoi automatique des commentaires en fin de semaine</label>
-				<div class="col-sm-8">
-					<label class="checkbox-inline">
-						{{ form.auto_send|safe }}
-					</label>
-				</div>
-			</div>
-		</fieldset>
+      <div class="tab-pane" id="avatar">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <p class="text-muted">
+              Vous pouvez utiliser une image au format JPEG ou PNG.
+              <br />Seule la partie centrale de l'image sera utilisée pour faire un "avatar" carré
+            </p>
+            <input id="id_avatar" name="avatar" type="file" />
+          </div>
 
-		<fieldset>
-			<legend>Informations sportives</legend>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary" {% if user.demo %}disabled{% endif %}>Utiliser cette photo</button>
+          </div>
+        </div>
 
-			{{ form_trainers.management_form|safe }}
-			{% for form in form_trainers%}
-			<div class="form-group {% if form.errors %}has-error{% endif %}">
-				<label class="col-sm-4 control-label">Coach du {{ form.instance.club.name }}</label>
-				<div class="col-sm-8">
-					{{ form.id|safe }}
-					{% for trainer in form.trainers %}
-					<label class="checkbox-inline">
-						<input name="{{ form.trainers.html_name }}" type="checkbox" value="{{ trainer.choice_value }}" {% if trainer.is_checked() %}checked{% endif %}>
-						{{ trainer.choice_label }}
-					</label>
-					{% endfor %}
-				</div>
-			</div>
-			{% if form.trainers.errors %}
-			<div class="alert alert-danger">{{form.trainers.errors|safe}}</div>
-			{% endif %}
-			{% endfor %}
-		
-			{{ macros.input(form.default_sport, 'Sport par défaut', false, 4, 8) }}
+        <div class="col-sm-6">
+          <p class="text-muted">Votre photo actuelle</p>
+          {% if user.avatar %}
+          <img class="img-responsive img-thumbnail avatar-upload" src="{{ user.avatar.url }}" alt="{{ user.first_name }} {{ user.last_name }} avatar"/>
+          {% endif %}
+        </div>
+      </div>
 
-			{{ macros.input(form.nb_sessions, 'Nb Séances hebdomadaires', false, 4, 8) }}
-			{{ macros.input(form.vma, 'Vma', 'Ex: 15.2 km/h', 4, 8) }}
-			{{ macros.input(form.weight, 'Poids', 'En kg', 4, 8) }}
-			{{ macros.input(form.height, 'Taille', 'En cm', 4, 8) }}
-			{{ macros.input(form.frequency_rest, 'Fréquence Cardiaque au repos', false, 4, 8) }}
-			{{ macros.input(form.frequency, 'Fréquence Cardiaque maximale', false, 4, 8) }}
-			{{ macros.input(form.comment, 'Renseignements divers', false, 4, 8) }}
-		</fieldset>
-		<div class="form-group">
-      <div class="col-sm-offset-4 col-sm-8">
-				<button type="submit" class="btn btn-primary" {% if user.demo %}disabled{% endif %}>Mettre à jour</button>
-			</div>
-		</div>
+      <div class="tab-pane" id="mails">
+        <div class="form-group {% if form.errors %}has-error{% endif %}">
+          <label class="col-sm-4 control-label">Envoi automatique des commentaires en fin de semaine</label>
+          <div class="col-sm-8">
+            <label class="checkbox-inline">
+              {{ form.auto_send|safe }}
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-4 col-sm-8">
+            <button type="submit" class="btn btn-primary" {% if user.demo %}disabled{% endif %}>Mettre à jour</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane" id="sport">
+        {{ form_trainers.management_form|safe }}
+        {% for form in form_trainers%}
+        <div class="form-group {% if form.errors %}has-error{% endif %}">
+          <label class="col-sm-4 control-label">Coach du {{ form.instance.club.name }}</label>
+          <div class="col-sm-8">
+            {{ form.id|safe }}
+            {% for trainer in form.trainers %}
+            <label class="checkbox-inline">
+              <input name="{{ form.trainers.html_name }}" type="checkbox" value="{{ trainer.choice_value }}" {% if trainer.is_checked() %}checked{% endif %}>
+              {{ trainer.choice_label }}
+            </label>
+            {% endfor %}
+          </div>
+        </div>
+        {% if form.trainers.errors %}
+        <div class="alert alert-danger">{{form.trainers.errors|safe}}</div>
+        {% endif %}
+        {% endfor %}
+      
+        {{ macros.input(form.default_sport, 'Sport par défaut', false, 4, 8) }}
+
+        {{ macros.input(form.nb_sessions, 'Nb Séances hebdomadaires', false, 4, 8) }}
+        {{ macros.input(form.vma, 'Vma', 'Ex: 15.2 km/h', 4, 8) }}
+        {{ macros.input(form.weight, 'Poids', 'En kg', 4, 8) }}
+        {{ macros.input(form.height, 'Taille', 'En cm', 4, 8) }}
+        {{ macros.input(form.frequency_rest, 'Fréquence Cardiaque au repos', false, 4, 8) }}
+        {{ macros.input(form.frequency, 'Fréquence Cardiaque maximale', false, 4, 8) }}
+        {{ macros.input(form.comment, 'Renseignements divers', false, 4, 8) }}
+
+        <div class="form-group">
+          <div class="col-sm-offset-4 col-sm-8">
+            <button type="submit" class="btn btn-primary" {% if user.demo %}disabled{% endif %}>Mettre à jour</button>
+          </div>
+        </div>
+      </div>
+
+      {% if not user.demo %}
+      <div class="tab-pane" id="password">
+        Vous pouvez changer de mot de passe en <a class="btn btn-info" href="{% url user-password-update %}">utilisant cette page</a>.
+      </div>
+      {% endif %}
+
+    </div>
 	</form>
 </div>
 

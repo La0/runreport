@@ -393,3 +393,7 @@ tr.member td {
 img.avatar-upload {
   max-width: 200px;
 }
+
+form div.tab-content {
+  margin-top: 20px;
+}
