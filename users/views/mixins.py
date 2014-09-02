@@ -76,10 +76,11 @@ class ProfilePrivacyMixin(DetailView):
 
     # Club & public rights
     # when visitor is in same club
-    member_clubs = set([m['club__id'] for m in self.member.memberships.values('club__id')])
-    user_clubs = set([m['club__id'] for m in self.request.user.memberships.values('club__id')])
-    if len(member_clubs & user_clubs) > 0:
-      return ('public', 'club')
+    if self.request.user.is_authenticated():
+      member_clubs = set([m['club__id'] for m in self.member.memberships.values('club__id')])
+      user_clubs = set([m['club__id'] for m in self.request.user.memberships.values('club__id')])
+      if len(member_clubs & user_clubs) > 0:
+        return ('public', 'club')
 
     # By default, public
     return ('public', )
