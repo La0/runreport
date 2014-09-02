@@ -29,4 +29,7 @@ urlpatterns = patterns('',
   url(r'^password/done/?$', password_reset_done, name='password_reset_done', kwargs={
     'template_name' : 'users/password_reset_done.html',
   }),
+
+  # Fallback to user public profile
+  url(r'^(?P<username>[\w_]+)/?', PublicProfile.as_view(), name="user-public-profile"),
 )

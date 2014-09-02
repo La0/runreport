@@ -14,6 +14,12 @@ from hashlib import md5
 from datetime import datetime
 from PIL import Image
 
+PRIVACY = (
+  ('public', 'Public'),
+  ('club', 'Club'),
+  ('private', 'Private'),
+)
+
 class AthleteBase(AbstractBaseUser, PermissionsMixin):
   '''
   Straight from AbstractUser
@@ -88,6 +94,10 @@ class Athlete(AthleteBase):
 
   # Avatar image
   avatar = models.ImageField(upload_to=build_avatar_path)
+
+  # Profile privacy
+  privacy_profile = models.CharField(max_length=50, choices=PRIVACY, default='club')
+  privacy_avatar = models.CharField(max_length=50, choices=PRIVACY, default='club')
 
   def search_category(self):
     if not self.birthday:

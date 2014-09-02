@@ -2,6 +2,7 @@ from users.forms import UserForm, UserPasswordForm
 from club.forms import TrainersFormSet
 from django.views.generic.edit import UpdateView, FormView
 from users.models import Athlete
+from users.views.mixins import ProfilePrivacyMixin
 
 class Profile(UpdateView):
   template_name = 'users/profile.html'
@@ -63,3 +64,7 @@ class UpdatePassword(FormView):
     self.request.user.save()
 
     return self.render_to_response({'form' : None})
+
+
+class PublicProfile(ProfilePrivacyMixin):
+  template_name = 'users/public.html'

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+  <h1>{{ member.first_name }} {{ member.last_name }}</h1>
+
+  {% if 'avatar' in privacy %}
+  <img src="{{ member.avatar.url }}" alt="Avatar de {{ member.first_name }} {{ member.last_name }}"/>
+  {% endif %}
+</div>
+
+{% endblock %}
