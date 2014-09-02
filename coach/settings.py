@@ -275,6 +275,9 @@ if DEBUG:
   try:
     import debug_toolbar
     INSTALLED_APPS = INSTALLED_APPS + ('debug_toolbar',)
+    DEBUG_TOOLBAR_CONFIG = {
+      'JQUERY_URL' : '',
+    }
   except:
     print "Missing debug toolbar module"
 else:
