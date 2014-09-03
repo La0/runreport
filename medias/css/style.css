@@ -391,12 +391,16 @@ img.avatar.small, .avatar img.small {
   vertical-align: middle;
 }
 
-tr.member td {
+div.member div {
   line-height: 60px !important;
 }
 
 img.avatar-upload {
   max-width: 200px;
+}
+
+td.avatar {
+  width: 60px;
 }
 
 form div.tab-content {

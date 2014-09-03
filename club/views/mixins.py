@@ -10,6 +10,12 @@ class ClubMixin(object):
     * check the logged in user is a club trainer
     * or an admin
   """
+  roles_allowed = (
+    'trainer',
+    'staff',
+  )
+  role = None # Role of the visitor
+
   def check(self, request, *args, **kwargs):
     if not request.user.is_authenticated():
       raise PermissionDenied
@@ -20,7 +26,9 @@ class ClubMixin(object):
     # Check we have a trainer or an admin or a staff member
     if not request.user.is_staff:
       try:
-        request.user.memberships.get(club=self.club, role__in=("trainer", "staff"))
+        m = request.user.memberships.get(club=self.club, role__in=self.roles_allowed)
+        self.role = m.role
+        print self.role
       except:
         raise PermissionDenied
 
@@ -38,6 +46,7 @@ class ClubMixin(object):
     context = super(ClubMixin, self).get_context_data(**kwargs)
     context['club'] = self.club
     context['member'] = self.member
+    context['role'] = self.role
     return context
 
 class ClubManagerMixin(ClubMixin):

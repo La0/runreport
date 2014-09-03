@@ -18,6 +18,9 @@ class ClubMembers(ClubMixin, ListView):
   template_name = 'club/members.html'
   model = Athlete
 
+  # A club athlete has access too
+  roles_allowed = ('staff', 'trainer', 'athlete',)
+
   def load_members(self):
     # Filter members
     default_type = 'athletes'
@@ -96,9 +99,31 @@ class ClubMembers(ClubMixin, ListView):
       'members' : members,
     }
 
+  def load_simplified_members(self):
+    '''
+    Just list the co-members with a public profile available
+    for athletes
+    '''
+    members = self.club.members.prefetch_related('memberships')
+    members = members.filter(memberships__role__in=('athlete', 'trainer', 'staff'))
+    members = members.filter(privacy_profile__in=('public', 'club'))
+    members = members.order_by('first_name', 'last_name')
+    for m in members:
+      m.membership = m.memberships.get(club=self.club)
+    return {
+      'members' : members,
+    }
+
   def get_context_data(self, **kwargs):
     context = super(ClubMembers, self).get_context_data(**kwargs)
-    context.update(self.load_members())
+
+    if self.role == 'athlete':
+      # For athletes just list same club athletes
+      self.template_name = 'club/members.athletes.html'
+      context.update(self.load_simplified_members())
+    else:
+      # For staff/trainers load full lists
+      context.update(self.load_members())
 
     # Add date limits
     today = date.today()

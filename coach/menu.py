@@ -43,6 +43,11 @@ def add_pages(request):
         'icon' : 'icon-club',
       }
 
+      # Add club list for athletes
+      if m.role in ('athlete', ):
+        submenu['menu'].append(_p(('club-current', m.club.slug), u'Les membres'))
+        submenu['menu'].append('__SEPARATOR__')
+
       # Add club admin links for trainers
       if m.role in ('trainer', 'staff') or request.user.is_superuser:
         submenu['menu'].append(_p(('club-current-name', m.club.slug, 'athletes', 'name'), u'Mes Athlètes'))

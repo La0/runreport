@@ -1,8 +1,8 @@
 from club.models import ClubInvite
 from django.shortcuts import get_object_or_404
-from django.http import Http404
 from django.views.generic import DetailView
 from users.models import Athlete, PRIVACY_LEVELS
+from django.core.exceptions import PermissionDenied
 
 class UserInviteMixin(object):
   invite = None
@@ -56,7 +56,7 @@ class ProfilePrivacyMixin(DetailView):
 
     # Check basic profile access
     if 'profile' not in self.privacy:
-      raise Http404('Private profile')
+      raise PermissionDenied
 
     return self.member
 
