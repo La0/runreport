@@ -10,11 +10,11 @@
 
 	{% if request.user == club.manager or request.user.is_staff %}
 	<ul class="breadcrumb">
-		<li><a href="{% url 'club-current-name' club.slug, 'athletes', sort %}">Mes Athlètes</a></li>
-		<li><a href="{% url 'club-current-name' club.slug, 'all', sort %}">Tout le club</a></li>
-		<li><a href="{% url 'club-current-name' club.slug, 'prospects', sort %}">Nouveaux</a></li>
-		<li><a href="{% url 'club-current-name' club.slug, 'staff', sort %}">Staff</a></li>
-		<li><a href="{% url 'club-current-name' club.slug, 'archives', sort %}">Archives</a></li>
+		<li><a href="{% url 'club-members-name' club.slug, 'athletes', sort %}">Mes Athlètes</a></li>
+		<li><a href="{% url 'club-members-name' club.slug, 'all', sort %}">Tout le club</a></li>
+		<li><a href="{% url 'club-members-name' club.slug, 'prospects', sort %}">Nouveaux</a></li>
+		<li><a href="{% url 'club-members-name' club.slug, 'staff', sort %}">Staff</a></li>
+		<li><a href="{% url 'club-members-name' club.slug, 'archives', sort %}">Archives</a></li>
 	</ul>
 	{% endif %}
 
@@ -22,14 +22,14 @@
 	<div class="table-responsive">
 		<table class="table table-striped">
 			<tr>
-				<th colspan="2">{{ macros.sort_title('Athlète', 'name', 'club-current-name', (club.slug, type, ), sort) }}</th>
+				<th colspan="2">{{ macros.sort_title('Athlète', 'name', 'club-members-name', (club.slug, type, ), sort) }}</th>
 				{% if request.user == club.manager or request.user.is_staff %}
 				<th>Rôle</th>
 				{% endif %}
 				<th>Catégorie</th>
 				<th>Vma</th>
 				<th>Séances</th>
-				<th>{{ macros.sort_title('Dernière séance', 'date', 'club-current-name', (club.slug, type, ), sort) }}</th>
+				<th>{{ macros.sort_title('Dernière séance', 'date', 'club-members-name', (club.slug, type, ), sort) }}</th>
 				<th>Actions</th>
 			</tr>
 			{% for member in members %}

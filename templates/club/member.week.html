@@ -22,7 +22,7 @@
 
 	{% include '_weeks.html' %}
 
-	<a class="btn btn-success pull-right" style="margin-left: 5px" href="{% url club-current club.slug %}">Retour au club</a>
+	<a class="btn btn-success pull-right" style="margin-left: 5px" href="{% url club-members club.slug %}">Retour au club</a>
 	<a class="btn btn-primary pull-right" href="{% url club-member club.slug, member.username %}">Fiche de {{member.first_name|default(member.username)}}</a>
 
 </div>

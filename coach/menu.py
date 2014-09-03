@@ -45,21 +45,21 @@ def add_pages(request):
 
       # Add club list for athletes
       if m.role in ('athlete', ):
-        submenu['menu'].append(_p(('club-current', m.club.slug), u'Les membres'))
+        submenu['menu'].append(_p(('club-members', m.club.slug), u'Les membres'))
         submenu['menu'].append('__SEPARATOR__')
 
       # Add club admin links for trainers
       if m.role in ('trainer', 'staff') or request.user.is_superuser:
-        submenu['menu'].append(_p(('club-current-name', m.club.slug, 'athletes', 'name'), u'Mes Athlètes'))
+        submenu['menu'].append(_p(('club-members-name', m.club.slug, 'athletes', 'name'), u'Mes Athlètes'))
         submenu['menu'].append(_p(('club-races', m.club.slug, ), u'Les courses', lazy=True))
         # Removed plans because non functional
         #submenu['menu'].append(_p(('plans', ), u'Mes plans', lazy=True))
 
         # Manage links
         if m.club.manager == request.user or request.user.is_superuser:
-          submenu['menu'].append(_p(('club-current-name', m.club.slug, 'prospects', 'name'), u'Nouveaux'))
-          submenu['menu'].append(_p(('club-current-name', m.club.slug, 'all', 'name'), u'Tout le club'))
-          submenu['menu'].append(_p(('club-current-name', m.club.slug, 'archives', 'name'), u'Archives'))
+          submenu['menu'].append(_p(('club-members-name', m.club.slug, 'prospects', 'name'), u'Nouveaux'))
+          submenu['menu'].append(_p(('club-members-name', m.club.slug, 'all', 'name'), u'Tout le club'))
+          submenu['menu'].append(_p(('club-members-name', m.club.slug, 'archives', 'name'), u'Archives'))
           submenu['menu'].append(_p(('club-manage', m.club.slug), u'Administrer'))
 
         submenu['menu'].append('__SEPARATOR__')

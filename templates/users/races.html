@@ -31,7 +31,7 @@ h2, h3 {
     {% if member %}
     Records de {{ member.first_name }} {{ member.last_name }}
     <p class="actions pull-right">
-      <a class="btn btn-success" href="{% url club-current club.slug %}">Retour au club</a>
+      <a class="btn btn-success" href="{% url club-members club.slug %}">Retour au club</a>
     </p>
     {% else %}
     Mes records

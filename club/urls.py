@@ -30,9 +30,9 @@ club_patterns = patterns('',
   url(r'join/?$', login_required(ClubJoin.as_view()), name="club-join"),
 
   # Members
-  url(r'^/?$', ClubMembers.as_view(), name="club-current"),
-  url(r'^(?P<type>[\w]+)-by-(?P<sort>[\w-]+)/?$', ClubMembers.as_view(), name="club-current-name"),
-  url(r'^by-(?P<sort>[\w-]+)/?$', ClubMembers.as_view(), name="club-current-sort"),
+  url(r'^/?$', ClubMembers.as_view(), name="club-members"),
+  url(r'^(?P<type>[\w]+)-by-(?P<sort>[\w-]+)/?$', ClubMembers.as_view(), name="club-members-name"),
+  url(r'^by-(?P<sort>[\w-]+)/?$', ClubMembers.as_view(), name="club-members-sort"),
 
   # Member
   url(r'^(?P<username>[\w\_]+)/', include(user_patterns)),
