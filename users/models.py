@@ -98,6 +98,9 @@ class Athlete(AthleteBase):
   # Profile privacy
   privacy_profile = models.CharField(max_length=50, choices=PRIVACY_LEVELS, default='club')
   privacy_avatar = models.CharField(max_length=50, choices=PRIVACY_LEVELS, default='club')
+  privacy_races = models.CharField(max_length=50, choices=PRIVACY_LEVELS, default='club')
+  privacy_records = models.CharField(max_length=50, choices=PRIVACY_LEVELS, default='club')
+  privacy_stats = models.CharField(max_length=50, choices=PRIVACY_LEVELS, default='club')
 
   def search_category(self):
     if not self.birthday:

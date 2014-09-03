@@ -9,7 +9,7 @@ from sport.garmin import GarminConnector, GarminAuthException
 class UserForm(forms.ModelForm):
   class Meta:
     model = Athlete
-    fields = ('first_name', 'last_name', 'email', 'birthday', 'vma', 'frequency', 'frequency_rest', 'height', 'weight', 'comment', 'license', 'auto_send', 'nb_sessions', 'default_sport', 'avatar', 'privacy_profile', 'privacy_avatar')
+    fields = ('first_name', 'last_name', 'email', 'birthday', 'vma', 'frequency', 'frequency_rest', 'height', 'weight', 'comment', 'license', 'auto_send', 'nb_sessions', 'default_sport', 'avatar', 'privacy_profile', 'privacy_avatar', 'privacy_records', 'privacy_races', 'privacy_stats')
     widgets = {
       'nb_sessions' : forms.Select(choices=[(i,i) for i in range(0,21)]),
     }
