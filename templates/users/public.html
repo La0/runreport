@@ -1,8 +1,30 @@
 {% extends 'base.html' %}
 
+{% set page_title = '%s %s' % (member.first_name, member.last_name) %}
+
 {% block content %}
 
+{% set owner_css = {
+  'public' : 'alert-success',
+  'club' : 'alert-warning',
+  'private' : 'alert-danger',
+} %}
+
 <div class="container">
+
+  {% if member == user %}
+  <div class="alert {{ owner_css[user.privacy_profile] }}">
+    <h4>Votre profil {{ levels[user.privacy_profile] }} </h4>
+    {% if user.privacy_profile == 'private' %}
+    Vous êtes le seul à pouvoir voir votre profil public.
+    {% elif user.privacy_profile == 'club' %}
+    Tous les membres de vos clubs peuvent voir votre profil public.
+    {% else %}
+    Tout le monde peut voir votre profil public.
+    {% endif %}
+  </div>
+  {% endif %}
+
   <h1>{{ member.first_name }} {{ member.last_name }}</h1>
 
   {% if 'avatar' in privacy %}

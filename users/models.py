@@ -14,7 +14,7 @@ from hashlib import md5
 from datetime import datetime
 from PIL import Image
 
-PRIVACY = (
+PRIVACY_LEVELS = (
   ('public', u'Public'),
   ('club', u'Club'),
   ('private', u'Privé'),
@@ -96,8 +96,8 @@ class Athlete(AthleteBase):
   avatar = models.ImageField(upload_to=build_avatar_path)
 
   # Profile privacy
-  privacy_profile = models.CharField(max_length=50, choices=PRIVACY, default='club')
-  privacy_avatar = models.CharField(max_length=50, choices=PRIVACY, default='club')
+  privacy_profile = models.CharField(max_length=50, choices=PRIVACY_LEVELS, default='club')
+  privacy_avatar = models.CharField(max_length=50, choices=PRIVACY_LEVELS, default='club')
 
   def search_category(self):
     if not self.birthday:

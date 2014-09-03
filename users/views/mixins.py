@@ -2,7 +2,7 @@ from club.models import ClubInvite
 from django.shortcuts import get_object_or_404
 from django.http import Http404
 from django.views.generic import DetailView
-from users.models import Athlete
+from users.models import Athlete, PRIVACY_LEVELS
 
 class UserInviteMixin(object):
   invite = None
@@ -63,6 +63,7 @@ class ProfilePrivacyMixin(DetailView):
   def get_context_data(self, *args, **kwargs):
     context = super(ProfilePrivacyMixin, self).get_context_data(*args, **kwargs)
     context['privacy'] = self.privacy
+    context['levels'] = dict(PRIVACY_LEVELS)
     return context
 
   def load_visitor_rights(self):
