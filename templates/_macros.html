@@ -28,7 +28,7 @@
 </div>
 {%- endmacro %}
 
-{% macro input_choices(field, label) -%}
+{% macro input_choices(field, label, help=None, field_classes=()) -%}
 <div class="form-group row {% if field.errors %}has-error{% endif %}">
 	<label class="col-sm-4 control-label" for="id_{{field.html_name}}">{{label}}</label>
 	<div class="col-sm-8">
@@ -37,9 +37,11 @@
     <div class="btn-group" data-toggle="buttons">
       {% with field.value() as value %}
       {% for choice, name in choices %}
-      <label class="btn btn-default {% if value == choice %}active{% endif %}">
+      {% with field_classes and field_classes[loop.index0 % field_classes|length()] as fclass %}
+      <label class="btn btn-default {% if value == choice %}active {{fclass}}{% endif %}">
         <input type="radio" name="{{field.name}}" value="{{choice}}" {% if value == choice %}checked="checked"{% endif %}> {{ name }}
       </label>
+      {% endwith %}
       {% endfor %}
       {% endwith %}
     </div>

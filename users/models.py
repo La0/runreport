@@ -15,9 +15,9 @@ from datetime import datetime
 from PIL import Image
 
 PRIVACY = (
-  ('public', 'Public'),
-  ('club', 'Club'),
-  ('private', 'Private'),
+  ('public', u'Public'),
+  ('club', u'Club'),
+  ('private', u'Privé'),
 )
 
 class AthleteBase(AbstractBaseUser, PermissionsMixin):
