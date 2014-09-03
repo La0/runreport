@@ -117,10 +117,18 @@ h2, h3 {
 					<strong>Dans {{race.date|timeuntil()}}</strong>
 				</div>
 				<div class="col-sm-7">
-					<a class="modal-action" href="{% url report-day race.date.year, race.date.month, race.date.day %}">{{ race.name }}</a>
+          {% for session in race.sessions.all() %}
+          <p>
+            <a class="modal-action" href="{% url report-day race.date.year, race.date.month, race.date.day %}">{{ session.name }}</a>
+          </p>
+          {% endfor %}
 				</div>
 				<div class="col-sm-1">
-					<span class="label label-default">{{ race.race_category.name}}</span>
+          {% for session in race.sessions.all() %}
+          <p>
+            <span class="label label-info">{{ session.race_category.name}}</span>
+          </p>
+          {% endfor %}
 				</div>
 			</div>
 			{% endfor %}
