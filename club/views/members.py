@@ -104,12 +104,18 @@ class ClubMembers(ClubMixin, ListView):
     Just list the co-members with a public profile available
     for athletes
     '''
-    members = self.club.members.prefetch_related('memberships')
-    members = members.filter(memberships__role__in=('athlete', 'trainer', 'staff'))
-    members = members.filter(privacy_profile__in=('public', 'club'))
-    members = members.order_by('first_name', 'last_name')
-    for m in members:
+
+    # Sadly, the members list must be constructed as a single filter
+    # to avoid users not having club AND valid role
+    members = Athlete.objects.filter(
+      memberships__club=self.club,
+      memberships__role__in=('trainer', 'staff', 'athlete'),
+      privacy_profile__in=('public', 'club'),
+    ).prefetch_related('memberships').order_by('first_name', 'last_name')
+
+    for i, m in enumerate(members):
       m.membership = m.memberships.get(club=self.club)
+
     return {
       'members' : members,
     }
