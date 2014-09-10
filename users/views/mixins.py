@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView
 from users.models import Athlete, PRIVACY_LEVELS
 from django.core.exceptions import PermissionDenied
+from club import ROLES
 
 class UserInviteMixin(object):
   invite = None
@@ -47,10 +48,7 @@ class ProfilePrivacyMixin(DetailView):
     self.member = get_object_or_404(Athlete, username=self.kwargs['username'])
 
     # Load all member privacy settings
-    fields = [
-      'profile',
-      'avatar',
-    ]
+    fields = [k[12:-8] for k in Athlete.__dict__ if 'privacy' in k] # all the fields as 'get_privacy_%s_display'
     rights = self.load_visitor_rights()
     self.privacy = [f for f in fields if getattr(self.member, 'privacy_%s' % f) in rights]
 
@@ -64,6 +62,7 @@ class ProfilePrivacyMixin(DetailView):
     context = super(ProfilePrivacyMixin, self).get_context_data(*args, **kwargs)
     context['privacy'] = self.privacy
     context['levels'] = dict(PRIVACY_LEVELS)
+    context['roles'] = dict(ROLES)
     return context
 
   def load_visitor_rights(self):
