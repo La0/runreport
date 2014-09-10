@@ -13,7 +13,7 @@
 
 		<div class="col-sm-6 buttons">
 			{% if member %}
-			<a class="btn btn-success" href="{% url club-member-stats-year club.slug, member.username, months.1.year %}"><i class="icon-plus"></i> Statistiques</a>
+			<a class="btn btn-success" href="{% url athlete-stats-year club.slug, member.username, months.1.year %}"><i class="icon-plus"></i> Statistiques</a>
 
       {% else %}
 			<a class="btn btn-success" href="{% url stats-year months.1.year %}"><i class="icon-plus"></i> Statistiques</a>

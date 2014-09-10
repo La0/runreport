@@ -1,14 +1,11 @@
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import ModelFormMixin, ProcessFormView
 from django.http import Http404
-from django.views.generic.dates import WeekArchiveView
 from users.models import Athlete
 from django.db.models import Count, Max
 from mixins import ClubMixin, ClubManagerMixin
-from sport.views.mixins import CurrentWeekMixin, WeekPaginator
 from sport.models import SportWeek
 from club.models import ClubMembership
-from helpers import week_to_date
 from club.forms import ClubMembershipForm
 from club import ROLES
 from datetime import date, timedelta, MINYEAR
@@ -207,34 +204,3 @@ class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, Proces
     self.object = self.membership # needed for inherited classes
     return self.object
 
-class ClubMemberWeek(CurrentWeekMixin, ClubMixin, WeekPaginator, WeekArchiveView):
-  template_name = 'club/member.week.html'
-  context_object_name = 'sessions'
-
-  def get_dated_items(self):
-
-    # Load report & sessions
-    year = self.get_year()
-    week = self.get_week()
-    try:
-      report = SportWeek.objects.get(user=self.member, year=year, week=week)
-      sessions = report.get_days_per_date()
-      dates = report.get_dates()
-    except:
-      report = sessions = dates = None
-
-    context = {
-      'year' : year,
-      'week' : week,
-      'report' : report,
-      'member' : self.member,
-      'pagename' : 'club-member-week',
-      'pageargs' : [self.club.slug, self.member.username],
-    }
-
-    # Pagination
-    self.date = week_to_date(year, week)
-    self.check_limits()
-    context.update(self.paginate(self.date, self.min_date, self.max_date))
-
-    return (dates, sessions, context)

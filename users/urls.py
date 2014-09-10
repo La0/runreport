@@ -3,6 +3,21 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import password_reset, password_reset_done, password_reset_confirm, password_reset_complete
 from views import *
 
+user_patterns = patterns('',
+  # Calendar for a user
+  url(r'^year/(?P<year>[\d]{4})/?', AthleteCalendarYear.as_view(), name="user-calendar-year"),
+  url(r'^month/(?P<year>[\d]{4})/(?P<month>[\d]{1,2})/?', AthleteCalendarMonth.as_view(), name="user-calendar-month"),
+  url(r'^week/(?P<year>[\d]{4})/(?P<week>[\d]{1,2})/?', AthleteCalendarWeek.as_view(), name="user-calendar-week"),
+  url(r'^day/(?P<year>[\d]{4})/(?P<month>[\d]{1,2})/(?P<day>[\d]{1,2})/?', AthleteCalendarDay.as_view(), name="user-calendar-day"),
+
+  # Stats for a user
+  url(r'^stats/?$', AthleteStats.as_view(), name='athlete-stats'),
+  url(r'^stats/all/?$', AthleteStats.as_view(), name='athlete-stats-all', kwargs={'all': True}),
+  url(r'^stats/(?P<year>\d{4})/?$', AthleteStats.as_view(), name='athlete-stats-year'),
+
+  url(r'^/?', PublicProfile.as_view(), name="user-public-profile"),
+)
+
 urlpatterns = patterns('',
   url(r'^login/?$', LoginUser.as_view(), name='login'),
   url(r'^profile/?$', login_required(Profile.as_view()), name='user-profile'),
@@ -31,5 +46,5 @@ urlpatterns = patterns('',
   }),
 
   # Fallback to user public profile
-  url(r'^(?P<username>[\w_]+)/?', PublicProfile.as_view(), name="user-public-profile"),
+  url(r'^(?P<username>[\w\_]+)/', include(user_patterns)),
 )

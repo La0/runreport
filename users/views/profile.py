@@ -1,5 +1,6 @@
 from users.forms import UserForm, UserPasswordForm
 from club.forms import TrainersFormSet
+from django.views.generic import DetailView
 from django.views.generic.edit import UpdateView, FormView
 from users.models import Athlete
 from users.views.mixins import ProfilePrivacyMixin
@@ -68,8 +69,12 @@ class UpdatePassword(FormView):
     return self.render_to_response({'form' : None})
 
 
-class PublicProfile(ProfilePrivacyMixin, SportStatsMixin, AthleteRaces):
+class PublicProfile(ProfilePrivacyMixin, DetailView, SportStatsMixin, AthleteRaces):
   template_name = 'users/profile/index.html'
+  context_object_name = 'member'
+
+  def get_object(self):
+    return self.member
 
   def get_context_data(self, *args, **kwargs):
     context = super(PublicProfile, self).get_context_data(*args, **kwargs)

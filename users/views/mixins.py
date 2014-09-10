@@ -1,6 +1,5 @@
 from club.models import ClubInvite
 from django.shortcuts import get_object_or_404
-from django.views.generic import DetailView
 from users.models import Athlete, PRIVACY_LEVELS
 from django.core.exceptions import PermissionDenied
 from club import ROLES
@@ -31,16 +30,15 @@ class UserInviteMixin(object):
     return True
 
 
-class ProfilePrivacyMixin(DetailView):
+class ProfilePrivacyMixin(object):
   '''
   Check the user has any right to view a public profile
   Loads available rights according to context
   '''
-  context_object_name = 'member'
   member = None
   privacy = [] # Rights available to visitor
 
-  def get_object(self):
+  def get_member(self):
     '''
     Load the requested athlete
     with available privacy for connected visitor
@@ -57,6 +55,12 @@ class ProfilePrivacyMixin(DetailView):
       raise PermissionDenied
 
     return self.member
+
+  def dispatch(self, *args, **kwargs):
+    # Check you have the rights
+    self.get_member()
+
+    return super(ProfilePrivacyMixin, self).dispatch(*args, **kwargs)
 
   def get_context_data(self, *args, **kwargs):
     context = super(ProfilePrivacyMixin, self).get_context_data(*args, **kwargs)

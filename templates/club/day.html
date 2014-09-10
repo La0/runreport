@@ -17,5 +17,5 @@
 
 {% block footer %}
 <button class="btn" data-dismiss="modal">Fermer</button>
-<a href="{{ url('club-member-week', club.slug, report.user, report.year, report.week) }}" class="btn btn-success">Voir cette semaine</a>
+<a href="{{ url('user-calendar-week', report.user, report.year, report.week) }}" class="btn btn-success">Voir cette semaine</a>
 {% endblock %}
