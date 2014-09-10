@@ -1,1 +1,24 @@
-<h3>Statistiques</h3>
+<h3>Statistiques des 12 derniers mois</h3>
+
+{% if months %}
+<script type="text/javascript">
+$(function(){
+
+  // Setup data sets
+  var distances = [{% for m in months %}[{{m.timestamp()*1000}}, {{m.distance|default(0)}}],{% endfor %}];
+  var hours     = [{% for m in months %}[{{m.timestamp()*1000}}, {{m.hours|default(0)}}],{% endfor %}];
+
+  // Plot charts
+  plot_hours_distances(hours, distances);
+});
+</script>
+
+<div id="stats">
+  <div class="hours_distances"></div>
+</div>
+
+{% else %}
+<div class="alert alert-warning">
+  Les statistiques de {{ member.first_name }} ne sont pas disponibles.
+</div>
+{% endif %}

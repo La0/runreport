@@ -2,6 +2,15 @@
 
 {% set page_title = '%s %s' % (member.first_name, member.last_name) %}
 
+{% if 'stats' in privacy %}
+  {% block js %}
+  <script type="text/javascript" src="/medias/js/jquery.flot.js" ></script>
+  <script type="text/javascript" src="/medias/js/jquery.flot.time.js" ></script>
+  <script type="text/javascript" src="/medias/js/jquery.flot.stack.js" ></script>
+  <script type="text/javascript" src="/medias/js/stats.js" ></script>
+  {% endblock %}
+{% endif %}
+
 {% block content %}
 
 {% set owner_css = {
@@ -56,6 +65,10 @@
     {% endif %}
   </div>
 
+  {% if 'stats' in privacy %}
+  {% include 'users/profile/stats.html' %}
+  {% endif %}
+
   {% if 'races' in privacy %}
   {% include 'users/profile/races.html' %}
   {% endif %}
@@ -64,9 +77,6 @@
   {% include 'users/profile/records.html' %}
   {% endif %}
 
-  {% if 'stats' in privacy %}
-  {% include 'users/profile/stats.html' %}
-  {% endif %}
 </div>
 
 {% endblock %}

@@ -5,7 +5,7 @@ from calendar import monthrange
 from datetime import date
 import math
 
-class StatsMonth:
+class StatsMonth(object):
   '''
   Represents a month of sport stats about a user
   '''
@@ -19,7 +19,7 @@ class StatsMonth:
     self.user = user
     self.year = year
     self.month = month
-    
+
     # Build cache key
     self.key = 'stats:%s:%s:%s' % (self.user.username, self.year, self.month)
 
@@ -30,6 +30,9 @@ class StatsMonth:
   def __getattr__(self, name):
     if self.data and name in self.data:
       return self.data[name]
+
+  def __unicode__(self):
+    return u'%s : %d/%d' % (self.user.username, self.month, self.year)
 
   def date(self):
     # Gives time of month

@@ -5,10 +5,10 @@ function plot_hours_distances(hours, distances, urls){
 
   // Hours & distances
 	$.plot("#stats .hours_distances", [
-    { data: distances, label: "Distances" },
+    { data: distances, label: "Distances (km)" },
     { data: hours, label: "Heures", yaxis: 2 }
   ], {
-  xaxes: [ { 
+  xaxes: [ {
     mode : 'time',
     timeformat: "%b %Y",
     monthNames: months_short
@@ -44,7 +44,7 @@ function plot_hours_distances(hours, distances, urls){
     // Display the tooltip
     var unit = item.series.label == 'Heures' ? 'h' : 'km';
     var date = new Date(item.datapoint[0]);
-    
+
     var val = item.datapoint[1];
     if (unit == 'km')
       val = val.toFixed(2);
@@ -55,7 +55,7 @@ function plot_hours_distances(hours, distances, urls){
 
   // Load month page
   $("#stats .hours_distances").on("plotclick", function (event, pos, item) {
-    if(!item)
+    if(!item || !urls || !urls[item.dataIndex])
       return;
     window.location = urls[item.dataIndex];
   });
@@ -66,7 +66,7 @@ function plot_sports(sports){
   // Sports
   $.plot("#stats .sports", sports, {
     legend: { position: "sw" },
-    xaxis: { 
+    xaxis: {
       mode : 'time',
       timeformat: "%b %Y",
       monthNames: months_short
