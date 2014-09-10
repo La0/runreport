@@ -1,2 +1,37 @@
 <h3>Courses à venir</h3>
+{% if future_races %}
 
+<div class="row-striped">
+  {% for race in future_races %}
+  {% with race.sessions.filter(type='race') as sessions %}
+  <div class="row">
+    <div class="col-sm-2">
+      {% for session in sessions %}
+      <p>
+        <span class="label label-info">{{ session.race_category.name}}</span>
+      </p>
+      {% endfor %}
+    </div>
+    <div class="col-sm-6">
+      {% for session in sessions %}
+      <p>
+        <i class="icon-sport-{{session.sport.slug}} do-tooltip" data-placement="top" title="{{ session.sport.name }}"></i>
+        {{ session.name }}
+      </p>
+      {% endfor %}
+    </div>
+    <div class="col-sm-4">
+      <button type="button" class="pull-right do-tooltip btn btn-default btn-sm" data-toggle="tooltip" data-placement="left" title="{{ race.date|date('l d E Y') }}">
+        Dans {{race.date|timeuntil()}}
+      </button>
+    </div>
+  </div>
+  {% endwith %}
+  {% endfor %}
+</div>
+
+{% else %}
+<div class="alert alert-info">
+  {{ member.first_name }} n'a pas de courses à venir.
+</div>
+{% endif %}

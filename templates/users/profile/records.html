@@ -1,1 +1,36 @@
 <h3>Records</h3>
+
+{% if races %}
+
+<div class="row-striped">
+  {% for category_id, category in categories.items() %}
+  {% with races[category_id].pop() as record %}
+  {% with record.sessions.filter(type='race') as sessions %}
+  <div class="row">
+    <div class="col-sm-2">
+      <span class="label label-info">{{ category.name}}</span>
+    </div>
+    <div class="col-sm-6">
+      {% for session in sessions %}
+      <p>
+        <i class="icon-sport-{{session.sport.slug}} do-tooltip" data-placement="top" title="{{ session.sport.name }}"></i>
+        {{ session.name }}
+      </p>
+      {% endfor %}
+    </div>
+    <div class="col-sm-4">
+      <button type="button" class="pull-right do-tooltip btn btn-default btn-sm" data-placement="left" title="Il y'a {{record.date|timesince()}}">
+        {{ record.date|date('d E Y') }}
+      </button>
+    </div>
+  </div>
+  {% endwith %}
+  {% endwith %}
+  {% endfor %}
+</div>
+
+{% else %}
+<div class="alert alert-info">
+  {{ member.first_name }} n'a pas de records.
+</div>
+{% endif %}

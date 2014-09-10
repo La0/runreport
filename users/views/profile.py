@@ -3,6 +3,7 @@ from club.forms import TrainersFormSet
 from django.views.generic.edit import UpdateView, FormView
 from users.models import Athlete
 from users.views.mixins import ProfilePrivacyMixin
+from sport.views.mixins import AthleteRaces
 
 class Profile(UpdateView):
   template_name = 'users/preferences.html'
@@ -66,5 +67,14 @@ class UpdatePassword(FormView):
     return self.render_to_response({'form' : None})
 
 
-class PublicProfile(ProfilePrivacyMixin):
+class PublicProfile(ProfilePrivacyMixin, AthleteRaces):
   template_name = 'users/profile/index.html'
+
+  def get_context_data(self, *args, **kwargs):
+    context = super(PublicProfile, self).get_context_data(*args, **kwargs)
+
+    # Load races
+    if 'races' in self.privacy or 'records' in self.privacy:
+      context.update(self.get_races(self.member))
+
+    return context

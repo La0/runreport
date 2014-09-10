@@ -31,17 +31,30 @@
   </div>
   {% endif %}
 
-  {% if 'avatar' in privacy %}
-  <img class="img-responsive img-thumbnail avatar pull-right" src="{{ member.avatar.url }}" alt="Avatar de {{ member.first_name }} {{ member.last_name }}"/>
-  {% endif %}
+  <div class="row">
 
-  <h1>{{ member.first_name }} {{ member.last_name }}</h1>
+    <div class="col-sm-7">
+      <h1>{{ member.first_name }} {{ member.last_name }}</h1>
 
-  {% for m in member.memberships.exclude(role__in=('prospect', 'archive')) %}
-  <h4>
-    <span class="label {{ role_css[m.role] }}">{{ roles[m.role] }}</span> au {{ m.club.name }}
-  </h4>
-  {% endfor %}
+      {% for m in member.memberships.exclude(role__in=('prospect', 'archive')) %}
+      <h4>
+        <span class="label {{ role_css[m.role] }}">{{ roles[m.role] }}</span> au <a href="{% url club-members m.club.slug %}">{{ m.club.name }}</a>
+      </h4>
+        {% with m.trainers.exclude(pk=member.pk) as trainers %}
+          {% for trainer in trainers %}
+          <span class="label {{ role_css['trainer'] }}">Entrainé</span> par 
+            <a href="{% url user-public-profile  trainer.username %}">{{ trainer.first_name }} {{ trainer.last_name }}</a>
+          {% endfor %}
+        {% endwith %}
+      {% endfor %}
+    </diV>
+
+    {% if 'avatar' in privacy %}
+    <div class="col-sm-4 col-sm-offset-1">
+      <img class="img-responsive img-thumbnail avatar pull-right" src="{{ member.avatar.url }}" alt="Avatar de {{ member.first_name }} {{ member.last_name }}"/>
+    </div>
+    {% endif %}
+  </div>
 
   {% if 'races' in privacy %}
   {% include 'users/profile/races.html' %}
