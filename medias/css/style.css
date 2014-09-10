@@ -406,3 +406,11 @@ td.avatar {
 form div.tab-content {
   margin-top: 20px;
 }
+
+div.profile img.avatar {
+  width: 200px;
+}
+
+div.list-title {
+  font-weight: bold;
+}

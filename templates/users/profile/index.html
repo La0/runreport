@@ -9,8 +9,14 @@
   'club' : 'alert-warning',
   'private' : 'alert-danger',
 } %}
+{% set role_css = {
+  'athlete' : 'label-info',
+  'trainer' : 'label-success',
+  'staff' : 'label-danger',
+} %}
 
-<div class="container">
+
+<div class="container profile">
 
   {% if member == user %}
   <div class="alert {{ owner_css[user.privacy_profile] }}">
@@ -25,10 +31,28 @@
   </div>
   {% endif %}
 
+  {% if 'avatar' in privacy %}
+  <img class="img-responsive img-thumbnail avatar pull-right" src="{{ member.avatar.url }}" alt="Avatar de {{ member.first_name }} {{ member.last_name }}"/>
+  {% endif %}
+
   <h1>{{ member.first_name }} {{ member.last_name }}</h1>
 
-  {% if 'avatar' in privacy %}
-  <img src="{{ member.avatar.url }}" alt="Avatar de {{ member.first_name }} {{ member.last_name }}"/>
+  {% for m in member.memberships.exclude(role__in=('prospect', 'archive')) %}
+  <h4>
+    <span class="label {{ role_css[m.role] }}">{{ roles[m.role] }}</span> au {{ m.club.name }}
+  </h4>
+  {% endfor %}
+
+  {% if 'races' in privacy %}
+  {% include 'users/profile/races.html' %}
+  {% endif %}
+
+  {% if 'records' in privacy %}
+  {% include 'users/profile/records.html' %}
+  {% endif %}
+
+  {% if 'stats' in privacy %}
+  {% include 'users/profile/stats.html' %}
   {% endif %}
 </div>
 

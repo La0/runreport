@@ -5,7 +5,7 @@ from users.models import Athlete
 from users.views.mixins import ProfilePrivacyMixin
 
 class Profile(UpdateView):
-  template_name = 'users/profile.html'
+  template_name = 'users/preferences.html'
   form_class = UserForm
   model = Athlete
 
@@ -67,4 +67,4 @@ class UpdatePassword(FormView):
 
 
 class PublicProfile(ProfilePrivacyMixin):
-  template_name = 'users/public.html'
+  template_name = 'users/profile/index.html'
