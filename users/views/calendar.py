@@ -10,7 +10,7 @@ from sport.views.mixins import CurrentWeekMixin, WeekPaginator
 from sport.models import SportDay
 from datetime import datetime, date
 from coach.mixins import JsonResponseMixin
-from sport.views import RunCalendarYear
+from sport.views import RunCalendarYear, RunCalendar
 from helpers import week_to_date
 
 class AthleteCalendarYear(ProfilePrivacyMixin, RunCalendarYear):
@@ -26,56 +26,21 @@ class AthleteCalendarYear(ProfilePrivacyMixin, RunCalendarYear):
       'pageday' : 'user-calendar-day',
     }
 
-#TODO: refactor as Year above
-class AthleteCalendarMonth(ProfilePrivacyMixin, MonthArchiveView):
-  template_name = 'sport/calendar/month.html'
-  date_field = 'date'
-  model = SportDay
-  context_object_name = 'sessions'
-  allow_future = True
-  allow_empty = True
+class AthleteCalendarMonth(ProfilePrivacyMixin, RunCalendar):
+  def get_user(self):
+    return self.member
 
-  def get_year(self):
-    year = datetime.now().year
-    return int(self.kwargs.get('year', year))
-
-  def get_month(self):
-    month = datetime.now().month
-    return int(self.kwargs.get('month', month))
-
-  # Load all days & weeks for this month
-  def load_calendar(self, year, month):
-    cal = calendar.Calendar(calendar.MONDAY)
-    self.days = [d for d in cal.itermonthdates(year, month)]
-    self.weeks = cal.monthdatescalendar(year, month)
-
-  def get_dated_items(self):
-    year = self.get_year()
-    month = self.get_month()
-    day = datetime.strptime('%s %s 1' % (year, month), '%Y %m %d')
-    try:
-      self.load_calendar(year, month)
-    except Exception, e:
-      raise Http404(str(e))
-
-    # Load all sessions for this month
-    sessions = SportDay.objects.filter(week__user=self.member, date__in=self.days)
-    sessions_per_days = dict((r.date, r) for r in sessions)
-
-    context = {
-      'months' : (self.get_previous_month(day), day, self.get_next_month(day)),
-      'days' : self.days,
-      'weeks' : self.weeks,
+  def get_links(self):
+    return {
+      'pageargs' : [self.member.username, ],
       'pageyear' : 'user-calendar-year',
       'pagemonth' : 'user-calendar-month',
       'pageday' : 'user-calendar-day',
-      'pageargs' : [self.member.username],
     }
-    return (self.days, sessions_per_days, context)
 
-#TODO: refactor as Year above
+
 class AthleteCalendarWeek(CurrentWeekMixin, ProfilePrivacyMixin, WeekPaginator, WeekArchiveView):
-  template_name = 'club/member.week.html'
+  template_name = 'users/calendar/week.html'
   context_object_name = 'sessions'
 
   def get_dated_items(self):
@@ -106,9 +71,8 @@ class AthleteCalendarWeek(CurrentWeekMixin, ProfilePrivacyMixin, WeekPaginator, 
 
     return (dates, sessions, context)
 
-#TODO: refactor as Year above
 class AthleteCalendarDay(ProfilePrivacyMixin, JsonResponseMixin, DateDetailView):
-  template_name = 'club/day.html'
+  template_name = 'users/calendar/day.html'
   month_format = '%M'
   context_object_name = 'session'
 

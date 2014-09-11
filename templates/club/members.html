@@ -75,7 +75,7 @@
                     <a class="btn btn-default btn-xs" href="{% url club-member club.slug, member.username %}">Fiche</a>
                     {% if member.membership.role not in ('archive', 'prospect') %}
                     <a class="btn btn-danger btn-xs" href="{% url club-member-races club.slug, member.username %}">Records</a>
-                    <a class="btn btn-success btn-xs" href="{% url athlete-stats club.slug, member.username %}">Stats</a>
+                    <a class="btn btn-success btn-xs" href="{% url athlete-stats member.username %}">Stats</a>
                     <a class="btn btn-primary btn-xs" href="{% url user-calendar-month member.username, today|date('Y'), today|date('m') %}">Carnet</a>
                     {% endif %}
                 </td>
