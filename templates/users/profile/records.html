@@ -10,7 +10,7 @@
     <div class="col-sm-2">
       <span class="label label-info">{{ category.name}}</span>
     </div>
-    <div class="col-sm-6">
+    <div class="col-sm-3">
       {% for session in sessions %}
       <p>
         <i class="icon-sport-{{session.sport.slug}} do-tooltip" data-placement="top" title="{{ session.sport.name }}"></i>
@@ -18,7 +18,31 @@
       </p>
       {% endfor %}
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-2">
+      {% for session in sessions %}
+      <p>
+        {{ session.distance|floatformat(2) }} km
+      </p>
+      {% endfor %}
+      {% if record.nb_sessions > 1 %}
+      <p>
+        <strong>{{ record.distance_total|floatformat(2) }} km</strong>
+      </p>
+      {% endif %}
+    </div>
+    <div class="col-sm-2">
+      {% for session in sessions %}
+      <p>
+        {{ session.time }}
+      </p>
+      {% endfor %}
+      {% if record.nb_sessions > 1 %}
+      <p>
+        <strong>{{ record.time_total|total_time() }}</strong>
+      </p>
+      {% endif %}
+    </div>
+    <div class="col-sm-3">
       <button type="button" class="pull-right do-tooltip btn btn-default btn-sm" data-placement="left" title="Il y'a {{record.date|timesince()}}">
         {{ record.date|date('d E Y') }}
       </button>
