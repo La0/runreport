@@ -64,6 +64,7 @@ class ProfilePrivacyMixin(object):
 
   def get_context_data(self, *args, **kwargs):
     context = super(ProfilePrivacyMixin, self).get_context_data(*args, **kwargs)
+    context['member'] = self.member
     context['privacy'] = self.privacy
     context['levels'] = dict(PRIVACY_LEVELS)
     context['roles'] = dict(ROLES)
