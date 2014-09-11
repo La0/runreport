@@ -37,22 +37,35 @@ class ProfilePrivacyMixin(object):
   '''
   member = None
   privacy = [] # Rights available to visitor
+  rights_needed = ('profile',) # Needed rights to access the page
 
   def get_member(self):
     '''
     Load the requested athlete
     with available privacy for connected visitor
     '''
+    fields = [k[12:-8] for k in Athlete.__dict__ if 'privacy' in k] # all the fields as 'get_privacy_%s_display'
     self.member = get_object_or_404(Athlete, username=self.kwargs['username'])
 
+    # Super user views everything
+    if self.request.user.is_superuser:
+      self.privacy = fields # all access
+      return self.member
+
+    # A trainer sees evertything for his athletes
+    for m in self.member.memberships.all():
+      if self.request.user in m.trainers.all() and m.role in ('athlete', 'staff', 'trainer'):
+        self.privacy = fields # all access
+        return self.member
+
     # Load all member privacy settings
-    fields = [k[12:-8] for k in Athlete.__dict__ if 'privacy' in k] # all the fields as 'get_privacy_%s_display'
     rights = self.load_visitor_rights()
     self.privacy = [f for f in fields if getattr(self.member, 'privacy_%s' % f) in rights]
 
-    # Check basic profile access
-    if 'profile' not in self.privacy:
-      raise PermissionDenied
+    # Check basic access
+    for right in self.rights_needed:
+      if right not in self.privacy:
+        raise PermissionDenied
 
     return self.member
 
@@ -81,9 +94,10 @@ class ProfilePrivacyMixin(object):
 
     # Club & public rights
     # when visitor is in same club
+    # with an active profile
     if self.request.user.is_authenticated():
-      member_clubs = set([m['club__id'] for m in self.member.memberships.values('club__id')])
-      user_clubs = set([m['club__id'] for m in self.request.user.memberships.values('club__id')])
+      member_clubs = set([m['club__id'] for m in self.member.memberships.exclude(role__in=('prospect', 'archive')).values('club__id')])
+      user_clubs = set([m['club__id'] for m in self.request.user.memberships.exclude(role__in=('prospect', 'archive')).values('club__id')])
       if len(member_clubs & user_clubs) > 0:
         return ('public', 'club')
 
