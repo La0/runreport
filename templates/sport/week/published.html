@@ -27,7 +27,8 @@
                 </div>
                 {% endif %}
                 {% with session.sessions as sessions %}
-                {% include 'sport/session/list.html' %}
+                  {% set session_links = True %}
+                  {% include 'sport/session/list.html' %}
                 {% endwith %}
                 {% else %}
                 <i>Pas de séance</i>
