@@ -2,6 +2,7 @@ from mixins import ProfilePrivacyMixin
 from sport.views import SportStats
 
 class AthleteStats(ProfilePrivacyMixin, SportStats):
+  rights_needed = ('profile', 'stats')
 
   def get_url_context(self):
     # Gives club url context
