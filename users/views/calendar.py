@@ -14,6 +14,7 @@ from sport.views import RunCalendarYear, RunCalendar
 from helpers import week_to_date
 
 class AthleteCalendarYear(ProfilePrivacyMixin, RunCalendarYear):
+  rights_needed = ('profile', 'calendar')
 
   def get_user(self):
     return self.member
@@ -27,6 +28,8 @@ class AthleteCalendarYear(ProfilePrivacyMixin, RunCalendarYear):
     }
 
 class AthleteCalendarMonth(ProfilePrivacyMixin, RunCalendar):
+  rights_needed = ('profile', 'calendar')
+
   def get_user(self):
     return self.member
 
@@ -40,6 +43,7 @@ class AthleteCalendarMonth(ProfilePrivacyMixin, RunCalendar):
 
 
 class AthleteCalendarWeek(CurrentWeekMixin, ProfilePrivacyMixin, WeekPaginator, WeekArchiveView):
+  rights_needed = ('profile', 'calendar')
   template_name = 'users/calendar/week.html'
   context_object_name = 'sessions'
 
@@ -72,6 +76,7 @@ class AthleteCalendarWeek(CurrentWeekMixin, ProfilePrivacyMixin, WeekPaginator, 
     return (dates, sessions, context)
 
 class AthleteCalendarDay(ProfilePrivacyMixin, JsonResponseMixin, DateDetailView):
+  rights_needed = ('profile', 'calendar')
   template_name = 'users/calendar/day.html'
   month_format = '%M'
   context_object_name = 'session'

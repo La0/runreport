@@ -124,9 +124,10 @@ $(function(){
         {% with ('btn-success', 'btn-warning', 'btn-danger', )  as btn_classes %}
         {{ macros.input_choices(form.privacy_profile, 'Visibilité globale du profil', 'Détermine si votre page de profil public est visible et par qui.', btn_classes) }}
         {{ macros.input_choices(form.privacy_avatar, 'Visibilité de votre photo', False, btn_classes) }}
+        {{ macros.input_choices(form.privacy_calendar, 'Visibilité de votre calendrier complet', False, btn_classes) }}
+        {{ macros.input_choices(form.privacy_stats, 'Visibilité de vos statistiques', False, btn_classes) }}
         {{ macros.input_choices(form.privacy_records, 'Visibilité de vos records en course', False, btn_classes) }}
         {{ macros.input_choices(form.privacy_races, 'Visibilité de vos futures courses', False, btn_classes) }}
-        {{ macros.input_choices(form.privacy_stats, 'Visibilité de vos statistiques', False, btn_classes) }}
         {% endwith %}
         <div class="form-group">
           <div class="col-sm-offset-4 col-sm-8">
