@@ -370,3 +370,11 @@ header div.demo-warning {
 #landing-club header div {
   text-align: center;
 }
+
+/* Team */
+#team ul {
+  padding: 0;
+  margin-top : 10px;
+  margin-left: 10px;
+  list-style-type: none;
+}

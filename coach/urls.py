@@ -19,6 +19,9 @@ urlpatterns = patterns('',
   # Landing pages
   url(r'^features/?', TemplateView.as_view(template_name='landing/features.html'), name="landing-features"),
 
+  # Team
+  url(r'^team/?', TemplateView.as_view(template_name='landing/team.html'), name="landing-team"),
+
   # Contact Form
   url(r'^contact/', include('contact_form.urls')),
 )
