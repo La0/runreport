@@ -1,6 +1,7 @@
 # encoding: utf-8
 from django.core.management.base import BaseCommand, CommandError
 from users.models import Athlete
+from club.models import Club
 from sport.models import SportSession, SportDay, SportWeek
 from datetime import datetime, timedelta
 import random
@@ -30,6 +31,11 @@ class Command(BaseCommand):
     # Build days
     for a in Athlete.objects.filter(demo=True):
       self.build_days(a, days)
+
+    # Cleanup clubs
+    clubs = Club.objects.filter(demo=True)
+    for club in clubs:
+      self.cleanup_links(club)
 
   def build_days(self, user, days):
     print 'Setup demo for %s' % user
@@ -85,3 +91,10 @@ class Command(BaseCommand):
         'comment' : random.choice(self.comments),
       })
     session = SportSession.objects.create(**session_data)
+
+  def cleanup_links(self, club):
+    # Cleanup the links on a club
+    club.links.all().delete()
+
+    # Add a link to ffa
+    club.links.create(name=u'Fédération Athlé', url='http://www.athle.fr/index.aspx', position=0)

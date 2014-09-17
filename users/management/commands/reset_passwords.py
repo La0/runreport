@@ -10,7 +10,7 @@ class Command(BaseCommand):
     self.reset(len(args) == 1 and args[0] or 'plop')
 
   def reset(self, password):
-    for user in Athlete.objects.all():
+    for user in Athlete.objects.filter(demo=False):
       print user
       user.set_password(password)
       user.save()
