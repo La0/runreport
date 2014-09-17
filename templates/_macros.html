@@ -138,11 +138,11 @@
 </div>
 {%- endmacro %}
 
-{% macro tr(fields, item='td') -%}
-<tr>
-{% for f in fields %}
-<{{item}}>{{f|default('-')}}</{{item}}>
-{% endfor %}
+{% macro tr(fields, item='td', css_class=None) -%}
+<tr {% if css_class %}class="{{css_class}}"{% endif %}>
+  {% for f in fields %}
+  <{{item}}>{{f|default('-')}}</{{item}}>
+  {% endfor %}
 </tr>
 {%- endmacro %}
 

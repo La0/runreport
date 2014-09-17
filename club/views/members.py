@@ -134,21 +134,6 @@ class ClubMembers(ClubMixin, ListView):
     context['max_diff_date'] = today - timedelta(days=28)
     return context
 
-class ClubMember(ClubMixin, DetailView):
-  template_name = 'club/member.html'
-  context_object_name = 'membership'
-  model = ClubMembership
-
-  def get_context_data(self, **kwargs):
-    context = super(ClubMember, self).get_context_data(**kwargs)
-    context['membership'] = self.membership
-    context['member'] = self.member
-    return context
-
-  def get_object(self):
-    self.object = self.membership # needed for inherited classes
-    return self.object
-
 class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, ProcessFormView, DetailView):
   template_name = 'club/role.html'
   context_object_name = 'membership'

@@ -50,12 +50,14 @@ class ProfilePrivacyMixin(object):
     # Super user views everything
     if self.request.user.is_superuser:
       self.privacy = fields # all access
+      self.privacy += ['admin', ] # and has admin right
       return self.member
 
     # A trainer sees evertything for his athletes
     for m in self.member.memberships.all():
       if self.request.user in m.trainers.all() and m.role in ('athlete', 'staff', 'trainer'):
         self.privacy = fields # all access
+        self.privacy += ['trainer', ] # and has trainer right
         return self.member
 
     # Load all member privacy settings

@@ -6,8 +6,6 @@ from django.views.generic.base import TemplateView
 user_patterns = patterns('',
   url(r'^role/?', ClubMemberRole.as_view(), name="club-member-role"),
   url(r'^races/?', ClubMemberRaces.as_view(), name="club-member-races"),
-
-  url(r'', ClubMember.as_view(), name="club-member"),
 )
 
 club_patterns = patterns('',

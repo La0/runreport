@@ -1,0 +1,17 @@
+{% import '_macros.html' as macros %}
+
+<h3>Informations entraîneur</h3>
+
+<table class="table table-bordered table-stripped table-condensed">
+  {{ macros.tr(('Mail', member.email)) }}
+  {{ macros.tr(('Date de naissance', member.birthday|date('d/m/Y'))) }}
+  {{ macros.tr(('Catégorie', member.category.name|default('-'))) }}
+  {{ macros.tr(('Vma', member.vma,), css_class='info') }}
+  {{ macros.tr(('Poids', member.weight)) }}
+  {{ macros.tr(('Taille', member.height)) }}
+  {{ macros.tr(('FC repos', member.frequency_rest)) }}
+  {{ macros.tr(('FC max', member.frequency)) }}
+  {{ macros.tr(('Licence FFA', member.license,), css_class='success') }}
+  {{ macros.tr(('Nb Séances hebdomadaires', member.nb_sessions)) }}
+  {{ macros.tr(('Renseignements', member.comment)) }}
+</table>
