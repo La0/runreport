@@ -12,18 +12,17 @@
   <tr>
     <td>
       <table style="width: 100%;" >
-        {% for day in report.get_dates() %}
+        {% for day_date, day in days.items() %}
         <tr class="session">
           <td width="30%" style="text-align: right; color: #CCC; padding-right: 6px; ">
             <br />
-            {{day|date('l d E')}}
+            {{day_date|date('l d E')}}
           </td>
-          {% with sessions[day] as session %}
           <td width="70%" style="text-align: left;">
             <br />
-            {% if session %}
-            {% for s in session.sessions.all() %}
-            <div>
+            {% if day %}
+            {% for s in day.sessions.all().order_by('created') %}
+            <div id="session_{{s.id}}">
               <span style="color: orange;">{{s.sport.name}} : {{s.name}}</span>
               <br />
               {% if s.comment %}
@@ -37,24 +36,12 @@
               {% if s.distance %}
               <span class="label">Distance</span> {{s.distance}} km
               {% endif %}
-
-              {% if session.garmin_activity %}
-              <div class="garmin pull-right">
-                Garmin : <a href="{{ activity.get_url() }}" target="_blank">{{ activity.name }}</a>
-                <span>&bull;</span>
-                {{ activity.distance|floatformat(2) }} km en {{ activity.time }}
-                <span>&bull;</span>
-                <span>{{ activity.speed|date('i:s') }} min/km</span>
-              </div>
-              {% endif %}
             </div>
             {% endfor %}
             {% else %}
-
             <span style="font-style: italic; color: #EEE;">Pas de séance</span>
             {% endif %}
           </td>
-          {% endwith %}
         </tr>
         {% endfor %}
       </table>

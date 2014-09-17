@@ -97,17 +97,16 @@ class SportWeek(models.Model):
 
     # Add content to xls
     i = 0
-    sessions = self.get_days_per_date()
-    for day in self.get_dates():
-      ws.write(i, 0, formats.date_format(day, 'DATE_FORMAT'), style_date)
+    days = self.get_days_per_date()
+    for day_date, day in days.items():
+      ws.write(i, 0, formats.date_format(day_date, 'DATE_FORMAT'), style_date)
       content = []
-      sess = sessions[day]
-      if not sess:
+      if not day:
         i += 1
         continue
 
       # Sessions listing
-      for s in sess.sessions.all().order_by('created'):
+      for s in day.sessions.all().order_by('created'):
         if s.name:
           content.append('%s - %s :' % (s.sport.name, s.name,))
         if s.comment:
@@ -142,7 +141,7 @@ class SportWeek(models.Model):
       'week_human' : self.week + 1,
       'report': self,
       'club': membership.club,
-      'sessions' : self.get_days_per_date(),
+      'days' : self.get_days_per_date(),
       'base_uri' : base_uri,
     }
 
