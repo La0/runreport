@@ -138,15 +138,8 @@ $(function(){
       </div>
 
       <div class="tab-pane" id="mails">
-        <div class="form-group {% if form.errors %}has-error{% endif %}">
-          <label class="col-sm-4 control-label">Envoi automatique des commentaires en fin de semaine</label>
-          <div class="col-sm-8">
-            <label class="checkbox-inline">
-              {{ form.auto_send|safe }}
-            </label>
-          </div>
-        </div>
-        <div class="form-group">
+        {{ macros.input_bool(form.auto_send, 'Envoi automatique des commentaires en fin de semaine', None, 4, 8) }}
+         <div class="form-group">
           <div class="col-sm-offset-4 col-sm-8">
             <button type="submit" class="btn btn-primary" {% if user.demo %}disabled{% endif %}>Mettre à jour</button>
           </div>

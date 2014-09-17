@@ -34,6 +34,16 @@ def add_pages(request):
     menu.append(_p('report-current', 'Semaine', 'icon-list'))
     menu.append(_p('report-current-month', 'Calendrier', icon='icon-calendar', lazy=True))
 
+    # Build generic club menu
+    menu.append({
+      'caption' : 'Les clubs',
+      'menu': [
+        _p('club-list', u'Voir les clubs'),
+        _p('club-landing', u'Créer un club'),
+      ],
+      'icon' : 'icon-star',
+    })
+
     # Build Club menu
     members = ClubMembership.objects.filter(user=request.user).exclude(role__in=('archive', 'prospect'))
     for m in members:
@@ -95,6 +105,7 @@ def add_pages(request):
     menu.append(submenu)
   else:
     menu.append(_p('user-create', u'Créer un compte', 'icon-plus'))
+    menu.append(_p('club-list', u'Les clubs', 'icon-star'))
     menu.append(_p('club-landing', u'Créer un club', 'icon-club'))
     menu.append(_build_help())
     menu.append(_p('login', 'Se connecter', 'icon-user'))

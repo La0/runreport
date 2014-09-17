@@ -25,6 +25,9 @@ class Club(models.Model):
   # Demo dummy club ?
   demo = models.BooleanField(default=False)
 
+  # Private club ?
+  private = models.BooleanField(default=False)
+
   def __unicode__(self):
     return self.name
 

@@ -16,7 +16,7 @@ class ClubMembers(ClubMixin, ListView):
   model = Athlete
 
   # A club athlete has access too
-  roles_allowed = ('staff', 'trainer', 'athlete',)
+  roles_allowed = ('staff', 'trainer', 'athlete', 'public')
 
   def load_members(self):
     # Filter members
@@ -98,16 +98,19 @@ class ClubMembers(ClubMixin, ListView):
 
   def load_simplified_members(self):
     '''
-    Just list the co-members with a public profile available
+    Just list the co-members with a club profile available
     for athletes
+    For public, list public profile athlets
     '''
+
+    members_roles = self.role == 'athlete' and ('public', 'club', ) or ('public', )
 
     # Sadly, the members list must be constructed as a single filter
     # to avoid users not having club AND valid role
     members = Athlete.objects.filter(
       memberships__club=self.club,
       memberships__role__in=('trainer', 'staff', 'athlete'),
-      privacy_profile__in=('public', 'club'),
+      privacy_profile__in=members_roles,
     ).prefetch_related('memberships').order_by('first_name', 'last_name')
 
     for i, m in enumerate(members):
@@ -120,8 +123,9 @@ class ClubMembers(ClubMixin, ListView):
   def get_context_data(self, **kwargs):
     context = super(ClubMembers, self).get_context_data(**kwargs)
 
-    if self.role == 'athlete':
-      # For athletes just list same club athletes
+    if self.role in ('athlete', 'public'):
+      # For athletes, list same club athletes
+      # For public, list public athletes
       self.template_name = 'club/members.athletes.html'
       context.update(self.load_simplified_members())
     else:

@@ -29,7 +29,7 @@ class UserModelChoiceField(forms.ModelMultipleChoiceField):
 class ClubCreateForm(forms.ModelForm):
   class Meta:
     model = Club
-    fields = ('name', 'slug', 'address', 'zipcode', 'city',)
+    fields = ('name', 'slug', 'address', 'zipcode', 'city', 'private')
 
   def clean_slug(self):
     # Check the slug is not already taken

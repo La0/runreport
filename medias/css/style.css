@@ -376,6 +376,11 @@ header div.demo-warning {
   text-align: center;
 }
 
+
+#clubs .btn {
+  margin-bottom: 5px;
+}
+
 /* Team */
 #team ul {
   padding: 0;

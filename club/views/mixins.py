@@ -17,26 +17,33 @@ class ClubMixin(object):
   role = None # Role of the visitor
 
   def check(self, request, *args, **kwargs):
-    if not request.user.is_authenticated():
-      raise PermissionDenied
-
     # Load club
     self.club = get_object_or_404(Club, slug=kwargs['slug'])
+
+    if not request.user.is_authenticated():
+      self.check_public()
 
     # Check we have a trainer or an admin or a staff member
     if not request.user.is_staff:
       try:
         m = request.user.memberships.get(club=self.club, role__in=self.roles_allowed)
         self.role = m.role
-        print self.role
       except:
-        raise PermissionDenied
+        self.check_public()
 
     # Load members
     self.member = None
     if 'username' in kwargs:
       self.membership = ClubMembership.objects.get(user__username=kwargs['username'], club=self.club)
       self.member = self.membership.user
+
+  def check_public(self):
+    # Special case for public pages (members list)
+    # on public clubs
+    if not self.club.private and 'public' in self.roles_allowed:
+      self.role = 'public'
+    else:
+      raise PermissionDenied
 
   def dispatch(self, request, *args, **kwargs):
     self.check(request, *args, **kwargs)

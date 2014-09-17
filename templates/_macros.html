@@ -1,6 +1,8 @@
 
 
 {% macro input(field, label, help=False, colLabel=2, colField=10) -%}
+{{ field.type}}
+
 <div class="form-group row {% if field.errors %}has-error{% endif %}">
 	<label class="col-sm-{{colLabel}} control-label" for="id_{{field.html_name}}">{{label}}</label>
 	<div class="col-sm-{{colField}}">
@@ -15,6 +17,21 @@
 </div>
 {%- endmacro %}
 
+{% macro input_bool(field, label, help=False, colLabel=2, colField=10) -%}
+<div class="form-group {% if field.errors %}has-error{% endif %}">
+  <label class="col-sm-{{colLabel}} control-label">{{label}}</label>
+  <div class="col-sm-{{colField}}">
+    <label class="checkbox-inline">
+      {{ field|safe }}
+    </label>
+		{% if field.errors %}
+		<div class="help-block">{{field.errors|safe}}</div>
+		{% elif help %}
+		<div class="help-block">{{help}}</div>
+		{% endif %}
+  </div>
+</div>
+{%- endmacro %}
 
 {% macro input_prepend(field, label, large=False) -%}
 <div class="col-sm-3 col-xs-6 {% if field.errors %}has-error{% endif %}">

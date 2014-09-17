@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% set page_title = 'Administration du %s' % club.name %}
+
 {% block content %}
 
 <div class="container">
@@ -76,9 +78,11 @@
 		{% csrf_token %}
 		{{ macros.input(form.name, 'Nom du club') }}
 		{{ macros.input(form.slug, 'Slug', 'Représente le nom du club dans les urls') }}
-		{{ macros.input(form.address, 'Adresse') }}
+		{{ macros.input_bool(form.private, 'Club Privé', 'Si le club est privé il n\'est accessible que par les membres du club') }}
+		{{ macros.input(form.address, 'Addresse') }}
 		{{ macros.input(form.zipcode, 'Code Postal') }}
 		{{ macros.input(form.city, 'Ville') }}
+
 		<div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
         {% if user.demo %}
