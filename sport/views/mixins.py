@@ -190,7 +190,7 @@ class AthleteRaces(object):
     categories = dict([(c.id, c) for c in RaceCategory.objects.filter(pk__in=cat_ids).order_by('name')])
 
     # Sum sessions time & distance per race
-    past_races = past_races.annotate(time_total=Sum('sessions__time'), distance_total=Sum('sessions__distance'), nb_sessions=Count('sessions'))
+    past_races = past_races.annotate(time_total=Sum('sessions__time'), distance_total=Sum('sessions__distance'), nb_sessions=Count('sessions')).order_by('time_total')
 
     '''
     for c in categories:

@@ -4,13 +4,24 @@
 
 <div class="row-striped">
   {% for category_id, category in categories.items() %}
-  {% with races[category_id].pop() as record %}
+  {% with races[category_id][0] as record %}
   {% with record.sessions.filter(type='race') as sessions %}
   <div class="row">
-    <div class="col-sm-2">
+    <div class="col-sm-2 col-xs-6">
       <span class="label label-info">{{ category.name}}</span>
     </div>
-    <div class="col-sm-3">
+    <div class="col-xs-6 visible-xs">
+      {% if 'calendar' in privacy %}
+      <a href="{% url user-calendar-day member.username, record.date.year, record.date.month, record.date.day %}" class="do-tooltip modal-action btn btn-info btn-xs pull-right">
+        {{ record.date|date('d E Y') }} <i class="icon-right-open"></i>
+      </a>
+      {% else %}
+      <p class="text-info">
+        {{ record.date|date('d E Y') }}
+      </p>
+      {% endif %}
+    </div>
+    <div class="col-sm-3 col-xs-6">
       {% for session in sessions %}
       <p>
         <i class="icon-sport-{{session.sport.slug}} do-tooltip" data-placement="top" title="{{ session.sport.name }}"></i>
@@ -18,7 +29,7 @@
       </p>
       {% endfor %}
     </div>
-    <div class="col-sm-2">
+    <div class="col-sm-2 col-xs-3">
       {% for session in sessions %}
       <p>
         {{ session.distance|floatformat(2) }} km
@@ -30,7 +41,7 @@
       </p>
       {% endif %}
     </div>
-    <div class="col-sm-2">
+    <div class="col-sm-2 col-xs-3">
       {% for session in sessions %}
       <p>
         {{ session.time }}
@@ -42,10 +53,16 @@
       </p>
       {% endif %}
     </div>
-    <div class="col-sm-3">
+    <div class="col-sm-3 hidden-xs">
+      {% if 'calendar' in privacy %}
+      <a href="{% url user-calendar-day member.username, record.date.year, record.date.month, record.date.day %}" class="do-tooltip modal-action btn btn-info btn-sm pull-right">
+        {{ record.date|date('d E Y') }} <i class="icon-right-open"></i>
+      </a>
+      {% else %}
       <button type="button" class="pull-right do-tooltip btn btn-default btn-sm" data-placement="left" title="Il y'a {{record.date|timesince()}}">
         {{ record.date|date('d E Y') }}
       </button>
+      {% endif %}
     </div>
   </div>
   {% endwith %}

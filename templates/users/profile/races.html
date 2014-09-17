@@ -5,14 +5,14 @@
   {% for race in future_races %}
   {% with race.sessions.filter(type='race') as sessions %}
   <div class="row">
-    <div class="col-sm-2">
+    <div class="col-sm-2 col-xs-3">
       {% for session in sessions %}
       <p>
         <span class="label label-info">{{ session.race_category.name}}</span>
       </p>
       {% endfor %}
     </div>
-    <div class="col-sm-6">
+    <div class="col-sm-6 col-xs-6">
       {% for session in sessions %}
       <p>
         <i class="icon-sport-{{session.sport.slug}} do-tooltip" data-placement="top" title="{{ session.sport.name }}"></i>
@@ -20,10 +20,19 @@
       </p>
       {% endfor %}
     </div>
-    <div class="col-sm-4">
-      <button type="button" class="pull-right do-tooltip btn btn-default btn-sm" data-toggle="tooltip" data-placement="left" title="{{ race.date|date('l d E Y') }}">
-        Dans {{race.date|timeuntil()}}
+    <div class="col-sm-4 col-xs-3">
+      {% if 'calendar' in privacy %}
+      <a href="{% url user-calendar-day member.username, race.date.year, race.date.month, race.date.day %}" class="do-tooltip modal-action btn btn-info btn-sm pull-right" data-toggle="tooltip" data-placement="left" title="Dans {{race.date|timeuntil()}}">
+        {{ race.date|date('d E Y') }} <i class="icon-right-open"></i>
+      </a>
+      {% else %}
+      <button type="button" class="hidden-xs pull-right do-tooltip btn btn-default btn-sm" data-toggle="tooltip" data-placement="left" title="Dans {{race.date|timeuntil()}}">
+        {{ race.date|date('l d E Y') }}
       </button>
+      <span class="visible-xs text-info">
+        {{ race.date|date('d E Y') }}
+      </span>
+      {% endif %}
     </div>
   </div>
   {% endwith %}

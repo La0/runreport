@@ -41,9 +41,12 @@
   {% endif %}
 
   <div class="row">
-
-    <div class="col-sm-7">
+    
+    <div class="col-xs-12">
       <h1>{{ member.first_name }} {{ member.last_name }}</h1>
+    </div>
+
+    <div class="col-sm-9 col-xs-9">
 
       {% for m in member.memberships.exclude(role__in=('prospect', 'archive')) %}
       <h4>
@@ -56,10 +59,34 @@
           {% endfor %}
         {% endwith %}
       {% endfor %}
+
+      {% if 'calendar' in privacy %}
+      <hr />
+      <div class="row">
+        {% if last_sessions %}
+        <div class="col-sm-6 col-xs-12">
+          <p>
+            <span class="label label-danger">{{ last_sessions|length() }} dernières séances</span>
+          </p>
+          {% for session in last_sessions %}
+          <p>
+            <i class="icon-sport-{{session.sport.slug }}"></i>
+            <a class="modal-action" href="{% url user-calendar-day member.username, session.day.date.year, session.day.date.month, session.day.date.day %}">{{ session.name}}</a>, il y'a {{ session.day.date|timesince }}
+          </p>
+          {% endfor %}
+        </div>
+
+        <div class="col-sm-6 col-xs-12">
+          <a class="btn btn-primary" href="{% url user-calendar-month member.username, today.year, today.month %}">Voir le calendrier <i class="icon-calendar"></i></a>
+        </div>
+
+        {% endif %}
+      </div>
+      {% endif %}
     </diV>
 
     {% if 'avatar' in privacy %}
-    <div class="col-sm-4 col-sm-offset-1">
+    <div class="col-sm-3 col-xs-3">
       <img class="img-responsive img-thumbnail avatar pull-right" src="{{ member.avatar.url }}" alt="Avatar de {{ member.first_name }} {{ member.last_name }}"/>
     </div>
     {% endif %}
