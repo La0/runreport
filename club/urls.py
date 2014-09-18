@@ -16,7 +16,8 @@ club_patterns = patterns('',
   url(r'^/link/delete/(?P<id>\d+)?$', ClubLinkDelete.as_view(), name="club-link-delete"),
 
   # Join
-  url(r'^/join/?$', login_required(ClubJoin.as_view()), name="club-join"),
+  url(r'^/join/?$', ClubJoin.as_view(), name="club-join"),
+  url(r'^/join/(?P<secret>[\w]+)/?$', ClubJoin.as_view(), name="club-join-private"),
 
   # Member
   url(r'^/(?P<username>[\w\_]+)/', include(user_patterns)),
@@ -32,7 +33,7 @@ urlpatterns = patterns('',
   url(r'^create/?$', ClubCreate.as_view(), name="club-create"),
 
   # List to Join
-  url(r'join/?$', ClubList.as_view(), name="club-list"),
+  url(r'^join/?$', ClubList.as_view(), name="club-list"),
 
   # With an existing club
   url(r'^(?P<slug>[\w\_\-]+)', include(club_patterns)),

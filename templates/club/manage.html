@@ -40,6 +40,25 @@
 		</table>
 	</div>
 
+  {% if club.private %}
+  <div class="alert alert-danger">
+    <h4>Inscriptions pour un club privé</h4>
+    <p>
+      Votre club étant <strong>privé</strong>, vous devez communiquer <a href="{% url club-join-private club.slug, club.get_private_hash() %}">ce lien</a> aux futurs membres.
+    </p>
+  </div>
+  {% else %}
+  <div class="alert alert-success">
+    <h4>Inscriptions pour un club public</h4>
+    <p>
+      Votre club étant <strong>public</strong>, les utilisateurs voient votre club dans la <a href="{% url club-list %}">liste</a>
+    </p>
+    <p>
+      Vous pouvez cependant leur communiquer <a href="{% url club-join club.slug %}">ce lien</a> pour rejoindre directement votre club.
+    </p>
+  </div>
+  {% endif %}
+
 	<h3>Liens publics</h3>
 	<div class="alert alert-info">
 		<h4>Aide</h4>

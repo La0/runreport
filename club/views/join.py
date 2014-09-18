@@ -2,7 +2,8 @@ from django.views.generic import TemplateView
 from django.views.generic.list import ListView
 from django.shortcuts import get_object_or_404
 from club.models import Club, ClubMembership
-from coach.mixins import JsonResponseMixin, JSON_OPTION_NO_HTML, JSON_OPTION_BODY_RELOAD
+from coach.mixins import JsonResponseMixin, JSON_OPTION_NO_HTML, JSON_OPTION_BODY_RELOAD, JSON_OPTION_ONLY_AJAX
+from django.core.exceptions import PermissionDenied
 
 class ClubList(ListView):
   model = Club
@@ -26,19 +27,32 @@ class ClubList(ListView):
 
 class ClubJoin(JsonResponseMixin, TemplateView, ):
   template_name = 'club/joined.html'
+  json_template_name = 'club/joined.modal.html'
+  json_options = [JSON_OPTION_ONLY_AJAX, ]
+
+  def check_access(self):
+    self.club = get_object_or_404(Club, slug=self.kwargs['slug'])
+
+    # Check hash
+    print self.club, self.club.private
+    if self.club.private and self.club.get_private_hash() != self.kwargs.get('secret', None):
+      raise PermissionDenied
 
   def get_context_data(self, *args, **kwargs):
-    context = {}
+
+    # Check access for private clubs
+    self.check_access()
 
     # Check there is no existing relation
-    club = get_object_or_404(Club, slug=kwargs['slug'])
-    context['club'] = club
-    if club.has_user(self.request.user):
+    context = {
+      'club' : self.club,
+    }
+    if self.club.has_user(self.request.user):
       context['error'] = 'member'
       return context
 
     # Create new membership
-    member = ClubMembership.objects.create(club=club, user=self.request.user, role='prospect')
+    member = ClubMembership.objects.create(club=self.club, user=self.request.user, role='prospect')
 
     # Send notification to manager
     try:

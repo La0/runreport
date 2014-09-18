@@ -79,6 +79,7 @@ JSON_OPTION_BODY_RELOAD = 'body_reload' # Reload the body (source)
 JSON_OPTION_NO_HTML = 'nohtml' # No output
 JSON_OPTION_CLOSE = 'close' # Close modal
 JSON_OPTION_REDIRECT_SKIP = 'redirect_skip' # Skip http redirect
+JSON_OPTION_ONLY_AJAX = 'only_ajax' # Send json only to ajax
 
 class JsonResponseMixin(object):
   """
@@ -89,6 +90,21 @@ class JsonResponseMixin(object):
   json_boxes = {}
 
   def render_to_response(self, context):
+    ajax = self.request.is_ajax()
+    print ajax
+    context['ajax'] = ajax
+
+    if JSON_OPTION_ONLY_AJAX in self.json_options:
+      # Skip when not Ajax
+      if not ajax:
+        return super(JsonResponseMixin, self).render_to_response(context)
+
+      # Load valid template
+      if hasattr(self, 'json_template_name'):
+        self.template_name = self.json_template_name
+
+    print self.template_name
+
     # Render normally html, using parents code
     html = None
     if JSON_OPTION_NO_HTML not in self.json_options:

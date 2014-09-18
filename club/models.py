@@ -4,6 +4,7 @@ from users.models import Athlete
 from coach.mail import MailBuilder
 from datetime import datetime
 from club import ROLES
+from django.conf import settings
 
 class Club(models.Model):
   name = models.CharField(max_length=250)
@@ -30,6 +31,14 @@ class Club(models.Model):
 
   def __unicode__(self):
     return self.name
+
+  def get_private_hash(self):
+    '''
+    Build a secret hash to join private club
+    '''
+    from hashlib import md5
+    contents = '%s:club:%d' % (settings.SECRET_KEY, self.pk)
+    return md5(contents).hexdigest()[0:10]
 
   def load_stats(self):
     '''
