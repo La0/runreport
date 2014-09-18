@@ -8,16 +8,26 @@
   <h1>Rejoindre le club {{ club.name }}</h1>
 
   {% if error %}
-  <div class="alert alert-danger">
     {% if error == 'mail' %}
+    <div class="alert alert-danger">
       <h4>Problème de notification</h4>
       Nous n'avons pu notifier le club de votre demande.
       <br />Veuillez ré-essayer plus tard.
+    </div>
+    {% elif error == 'logout' %}
+    <div class="alert alert-warning">
+      <h4>Pas de compte</h4>
+      Vous n'êtes actuellement pas connecté avec un compte utilisateur.
+    </div>
+    <p>
+      Veuillez <a class="btn btn-sm btn-primary" href="{% url user-create %}">créer un compte</a> ou vous <a class="btn btn-sm btn-primary" href="{% url login %}">connecter avec votre compte</a>.
+    </p>
     {% elif error == 'member' %}
+    <div class="alert alert-info">
       <h4>Déja membre</h4>
       Vous êtes déja en relation avec ce club.
+    </div>
     {% endif %}
-  </div>
   {% else %}
   <div class="alert alert-danger">
     <h4>Demande enregistrée</h4>

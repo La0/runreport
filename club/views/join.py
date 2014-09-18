@@ -18,6 +18,11 @@ class ClubList(ListView):
     if self.request.user.is_authenticated():
       club_ids += [c['club__pk'] for c in self.request.user.memberships.values('club__pk')]
 
+    # Add club from session (from user without auth first)
+    if 'club_join' in self.request.session:
+      club_id, club_secret = self.request.session['club_join']
+      club_ids += [club_id, ]
+
     # Load club queryset
     clubs = Club.objects.filter(pk__in=club_ids)
     clubs = clubs.prefetch_related('clubmembership_set')
@@ -33,20 +38,30 @@ class ClubJoin(JsonResponseMixin, TemplateView, ):
   def check_access(self):
     self.club = get_object_or_404(Club, slug=self.kwargs['slug'])
 
-    # Check hash
-    print self.club, self.club.private
-    if self.club.private and self.club.get_private_hash() != self.kwargs.get('secret', None):
-      raise PermissionDenied
+    # Check hash from GET args or session
+    if self.club.private:
+      secret = self.kwargs.get('secret', None)
+      if not secret:
+        _, secret = self.request.session.get('club_join', (None, None))
+      if self.club.get_private_hash() != secret:
+        raise PermissionDenied
 
   def get_context_data(self, *args, **kwargs):
-
     # Check access for private clubs
     self.check_access()
-
-    # Check there is no existing relation
     context = {
       'club' : self.club,
     }
+
+    # When user is not connected:
+    # * save club & hash in session
+    # * display an helpful message
+    if not self.request.user.is_authenticated():
+      self.request.session['club_join'] = (self.club.pk, self.kwargs.get('secret', None))
+      context['error'] = 'logout'
+      return context
+
+    # Check there is no existing relation
     if self.club.has_user(self.request.user):
       context['error'] = 'member'
       return context
@@ -62,5 +77,9 @@ class ClubJoin(JsonResponseMixin, TemplateView, ):
       # Don't keep membership when no mail is sent
       member.delete()
       context['error'] = 'mail'
+
+    # Cleanup session
+    if 'club_join' in self.request.session:
+      del self.request.session['club_join']
 
     return context

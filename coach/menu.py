@@ -34,18 +34,28 @@ def add_pages(request):
     menu.append(_p('report-current', 'Semaine', 'icon-list'))
     menu.append(_p('report-current-month', 'Calendrier', icon='icon-calendar', lazy=True))
 
-    # Build generic club menu
-    menu.append({
-      'caption' : 'Les clubs',
-      'menu': [
-        _p('club-list', u'Voir les clubs'),
-        _p('club-landing', u'Créer un club'),
-      ],
-      'icon' : 'icon-star',
-    })
+    # Load memberships
+    members = request.user.memberships.exclude(role__in=('archive', 'prospect'))
+
+    if members:
+      # Build generic club menu
+      menu.append({
+        'caption' : 'Les clubs',
+        'menu': [
+          _p('club-list', u'Voir les clubs'),
+          _p('club-landing', u'Créer un club'),
+        ],
+        'icon' : 'icon-star',
+      })
+
+    else:
+      # Add direct buttons to create & join a club
+      # when no memberships exist
+      menu.append(_p('club-landing', u'Créer un club', 'icon-plus'))
+      menu.append(_p('club-list', u'Rejoindre un club', 'icon-club'))
+
 
     # Build Club menu
-    members = ClubMembership.objects.filter(user=request.user).exclude(role__in=('archive', 'prospect'))
     for m in members:
       submenu = {
         'caption' : m.club.name,
@@ -79,11 +89,6 @@ def add_pages(request):
         submenu['menu'].append(_ext(link.url, link.name))
 
       menu.append(submenu)
-
-    # Add button to join a club
-    # when no memberships exist
-    if not members:
-      menu.append(_p('club-list', 'Rejoindre un club', 'icon-plus'))
 
     # Help menu
     menu.append(_build_help())
