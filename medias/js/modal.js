@@ -115,9 +115,11 @@ function load_box(url, method, data, output){
         return;
       }
 
+      var dom = null;
       if(output == 'modal'){
-      // Build a new modal
-        modal = $(data.html).modal({
+        // Build a new modal
+        dom = $(data.html);
+        modal = dom.modal({
           show : true,
           replace : true
         });
@@ -128,7 +130,15 @@ function load_box(url, method, data, output){
       } else if(output instanceof jQuery) {
         // Render box element
         output.html(data.html);
+        dom = output;
+      } else {
+        return;
       }
+
+      // Add slow hideme trigger to fade out
+      setInterval(function(){
+        dom.find('.hideme').fadeOut('slow');
+      }, 3000);
     },
     error : function(xhr, st, err){
       console.error("Failed to load box from "+url+" : "+err);
