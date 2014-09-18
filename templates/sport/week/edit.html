@@ -20,8 +20,10 @@ $(function(){
     </fieldset>
     <div id="sessions-{{day}}">
     {% for form in forms[day] %}
-    {% include 'sport/session/edit.html' %}
-    {% if not loop.last %}<hr />{% endif %}
+      {% with form.instance as session %}
+        {% include 'sport/session/edit.html' %}
+      {% endwith %}
+      {% if not loop.last %}<hr />{% endif %}
     {% endfor %}
     </div>
 

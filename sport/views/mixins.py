@@ -119,15 +119,25 @@ class CalendarDay(object):
     context['day'] = self.day
     context['report'] = self.week
     context['session_types'] = SESSION_TYPES
+    context['session'] = self.object
     return context
 
 class CalendarSession(CalendarDay):
 
   def get_object(self):
     super(CalendarSession, self).get_object()
-    # Init a session
+
+    session_id = None
     if 'session' in self.kwargs:
-      self.session = SportSession.objects.get(pk=self.kwargs['session'], day__week__user=self.request.user)
+      # Check get for session id
+      session_id = self.kwargs['session']
+    elif self.request.method == 'POST' and 'session' in self.request.POST:
+      # Check raw post for session id
+      session_id = self.request.POST['session']
+
+    # Init a session
+    if session_id:
+      self.session = SportSession.objects.get(pk=session_id, day__week__user=self.request.user)
     else:
       self.session = SportSession(sport=self.request.user.default_sport, day=self.object)
 

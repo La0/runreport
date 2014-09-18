@@ -1,7 +1,8 @@
 {% import '_macros.html' as macros %}
 
-{% if form.instance and form.instance.pk %}
-<form id="session-{{day}}-{{form.instance.pk}}" method="post" action="{% url sport-session-edit day.year, day.month, day.day, form.instance.pk %}" class="form-horizontal report box">
+{% if session.pk %}
+<form id="session-{{day}}-{{session.pk}}" method="post" action="{% url sport-session-edit day.year, day.month, day.day, session.pk %}" class="form-horizontal report box">
+  <input type="hidden" name="session" value="{{session.pk}}" />
 {% else %}
 <form id="session-{{day}}-add" method="post" action="{% url sport-session-add day.year, day.month, day.day %}" class="form-horizontal report box">
 {% endif %}
@@ -69,7 +70,7 @@
 
         <div class="col-sm-4 col-xs-12 actions">
           <button type="submit" class="pull-right btn btn-sm btn-primary" >Sauver<span class="hidden-xs"> {% if not modal %}la séance {% endif %}</span><i class="icon-right-open"></i></button>
-          {% if form.instance.pk %}
+          {% if session.pk %}
           <a href="{% url sport-session-delete day.year, day.month, day.day, form.instance.pk %}" class="modal-action pull-right btn btn-sm btn-danger"><i class="icon-trash"></i><span class="hidden-xs">{% if not modal %}Supprimer{% endif %}</span></a>
           {% endif %}
 
