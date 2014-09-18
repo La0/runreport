@@ -13,6 +13,7 @@ from django.conf import settings
 from hashlib import md5
 from datetime import datetime
 from PIL import Image
+from avatar_generator import Avatar
 
 PRIVACY_LEVELS = (
   ('public', u'Public'),
@@ -59,12 +60,9 @@ class AthleteBase(AbstractBaseUser, PermissionsMixin):
     verbose_name_plural = _('users')
     abstract = True
 
+# Alias accessible from model field
 def build_avatar_path(instance, filename):
-  # Build an avatar file path for a user
-  # using his username, and a secret hash
-  # unique per upload
-  h = md5('%s:%s:%d' % (settings.SECRET_KEY, datetime.now(), instance.pk)).hexdigest()
-  return 'avatars/%s.%s.png' % (instance.username, h[0:8])
+  return instance.build_avatar_path()
 
 class Athlete(AthleteBase):
   # Personal infos for trainer
@@ -118,6 +116,28 @@ class Athlete(AthleteBase):
     avatar_filter = os.path.join(settings.MEDIA_ROOT, 'avatars', '%s.*' % self.username)
     for f in glob.glob(avatar_filter):
       os.unlink(f)
+
+  def build_avatar_path(self):
+    # Build an avatar file path for a user
+    # using his username, and a secret hash
+    # unique per upload
+    h = md5('%s:%s:%d' % (settings.SECRET_KEY, datetime.now(), self.pk)).hexdigest()
+    return 'avatars/%s.%s.png' % (self.username, h[0:8])
+
+
+  def build_avatar(self, size=400):
+    path = self.build_avatar_path()
+    full_path = os.path.join(settings.MEDIA_ROOT, path)
+
+    # Build a random default avatar
+    avatar_data = Avatar.generate(size, self.first_name)
+    with open(full_path, 'w+') as fd:
+      fd.write(avatar_data)
+
+    # Save the new path, but don't save
+    self.avatar = path
+
+    return path
 
   def crop_avatar(self, crop_size=400):
     # Crop the recently uploaded avatar
