@@ -9,7 +9,9 @@
   <div id="sessions-{{day}}">
   {% with True as modal %}
   {% for form in forms %}
-    {% include 'sport/session/edit.html' %}
+    {% with form.instance as session %}
+      {% include 'sport/session/edit.html' %}
+    {% endwith %}
     {% if not loop.last %}<hr />{% endif %}
   {% endfor %}
   {% endwith %}
