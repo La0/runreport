@@ -1,13 +1,13 @@
 from mixins import ClubMixin
 from django.views.generic import ListView, TemplateView
-from sport.models import SportDay
+from sport.models import SportSession
 from club.models import ClubMembership
 from datetime import date
 from sport.views.mixins import AthleteRaces
 
 class ClubRaces(ClubMixin, ListView):
   template_name = 'club/races.html'
-  model = SportDay
+  model = SportSession
   context_object_name = 'races'
 
   def get_queryset(self):
@@ -18,7 +18,9 @@ class ClubRaces(ClubMixin, ListView):
     # Add myself to view my races
     users.append(self.request.user)
 
-    return self.model.objects.filter(type='race', date__gte=date.today(), week__user__in=users).order_by('date', 'week__user__first_name')
+    races = self.model.objects.filter(type='race', day__date__gte=date.today(), day__week__user__in=users)
+    races = races.order_by('day__date', 'day__week__user__first_name')
+    return races
 
 
 
