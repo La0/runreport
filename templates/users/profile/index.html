@@ -71,7 +71,7 @@
           {% for session in last_sessions %}
           <p>
             <i class="icon-sport-{{session.sport.slug }}"></i>
-            <a class="modal-action" href="{% url user-calendar-day member.username, session.day.date.year, session.day.date.month, session.day.date.day %}">{{ session.name|truncate(40)|default('Séance')}}</a>, il y'a {{ session.day.date|timesince }}
+            <a class="modal-action" href="{% url user-calendar-day member.username, session.day.date.year, session.day.date.month, session.day.date.day %}">{{ session.name|default('Séance')|truncate(40)}}</a>, il y'a {{ session.day.date|timesince }}
           </p>
           {% endfor %}
         </div>
