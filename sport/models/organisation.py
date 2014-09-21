@@ -12,6 +12,7 @@ from helpers import date_to_day, week_to_date
 from . import SESSION_TYPES
 from sport.stats import StatsMonth
 from .sport import SportSession
+from collections import OrderedDict
 
 class SportWeek(models.Model):
   user = models.ForeignKey(Athlete, related_name='sportweek')
@@ -37,7 +38,7 @@ class SportWeek(models.Model):
     return [self.get_date(day) for day in (1,2,3,4,5,6,0)]
 
   def get_days_per_date(self):
-    sessions = {}
+    sessions = OrderedDict()
     for d in self.get_dates():
       try:
         sessions[d] = self.days.get(date=d)
