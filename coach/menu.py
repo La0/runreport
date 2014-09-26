@@ -16,6 +16,16 @@ def add_pages(request):
   def _ext(url, caption):
     return {'url' : url, 'caption' : caption, 'active' : False, 'external' : True}
 
+  def _build_club_generic():
+    return {
+      'caption' : 'Les clubs',
+      'menu': [
+        _p('club-list', u'Voir les clubs'),
+        _p('club-landing', u'Créer un club'),
+      ],
+      'icon' : 'icon-star',
+    }
+
   def _build_help():
     # Build help menu with contact & news
     submenu = {
@@ -37,23 +47,8 @@ def add_pages(request):
     # Load memberships
     members = request.user.memberships.exclude(role__in=('archive', 'prospect'))
 
-    if members:
-      # Build generic club menu
-      menu.append({
-        'caption' : 'Les clubs',
-        'menu': [
-          _p('club-list', u'Voir les clubs'),
-          _p('club-landing', u'Créer un club'),
-        ],
-        'icon' : 'icon-star',
-      })
-
-    else:
-      # Add direct buttons to create & join a club
-      # when no memberships exist
-      menu.append(_p('club-landing', u'Créer un club', 'icon-plus'))
-      menu.append(_p('club-list', u'Rejoindre un club', 'icon-club'))
-
+    # Build generic club menu
+    menu.append(_build_club_generic())
 
     # Build Club menu
     for m in members:
@@ -110,8 +105,7 @@ def add_pages(request):
     menu.append(submenu)
   else:
     menu.append(_p('user-create', u'Créer un compte', 'icon-plus'))
-    menu.append(_p('club-list', u'Les clubs', 'icon-star'))
-    menu.append(_p('club-landing', u'Créer un club', 'icon-club'))
+    menu.append(_build_club_generic())
     menu.append(_build_help())
     menu.append(_p('login', 'Se connecter', 'icon-user'))
 
