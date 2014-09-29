@@ -6,7 +6,7 @@
 <table cellpadding="0" cellspacing="0" border="0" align="center">
   <tr>
     <td>
-    Voir la semaine de <a href="http://{{ site.domain }}{% url club-member-week club.slug, report.user.username,  report.year, report.week %}">{{ report.user.first_name }} {{ report.user.last_name }}</a>
+    Voir la semaine de <a href="http://{{ site.domain }}{% url user-calendar-week report.user.username,  report.year, report.week %}">{{ report.user.first_name }} {{ report.user.last_name }}</a>
     </td>
   </tr>
   <tr>

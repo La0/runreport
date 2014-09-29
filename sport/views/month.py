@@ -25,6 +25,17 @@ class RunCalendar(MonthArchiveView):
     month = datetime.now().month
     return int(self.kwargs.get('month', month))
 
+  def get_user(self):
+    return self.request.user
+
+  def get_links(self):
+    return {
+      'pageargs' : [],
+      'pageyear' : 'report-year',
+      'pagemonth' : 'report-month',
+      'pageday' : 'report-day',
+    }
+
   # Load all days & weeks for this month
   def load_calendar(self, year, month):
     cal = calendar.Calendar(calendar.MONDAY)
@@ -41,7 +52,7 @@ class RunCalendar(MonthArchiveView):
       raise Http404(str(e))
 
     # Load all sessions for this month
-    sessions = SportDay.objects.filter(week__user=self.request.user, date__in=self.days)
+    sessions = SportDay.objects.filter(week__user=self.get_user(), date__in=self.days)
     sessions_per_days = dict((r.date, r) for r in sessions)
     sessions_per_days = collections.OrderedDict(sorted(sessions_per_days.items()))
 
@@ -49,11 +60,8 @@ class RunCalendar(MonthArchiveView):
       'months' : (self.get_previous_month(date), date, self.get_next_month(date)),
       'days' : self.days,
       'weeks' : self.weeks,
-      'pageargs' : [],
-      'pageyear' : 'report-year',
-      'pagemonth' : 'report-month',
-      'pageday' : 'report-day',
     }
+    context.update(self.get_links())
     return (self.days, sessions_per_days, context)
 
 class ExportMonth(CsvResponseMixin, MonthMixin, YearMixin, View):

@@ -57,7 +57,7 @@ MEDIA_ROOT = HOME + '/medias'
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = ''
+MEDIA_URL = '/medias/'
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -89,9 +89,8 @@ SECRET_KEY = 'nq!g^hyy-_l!*apn3302^5(jwt$t-&amp;!fo4my*^u3j!zj7=if%r'
 
 # Load template trough jinja
 TEMPLATE_LOADERS = (
-  'coach.jinja.Loader',
-  'django.template.loaders.filesystem.Loader',
-  'django.template.loaders.app_directories.Loader',
+  'coach.jinja.FileSystemLoader',
+  'coach.jinja.AppLoader',
 )
 
 JINJA2_TEMPLATE_LOADERS = (
@@ -271,8 +270,17 @@ try:
 except ImportError, e:
   pass
 
-# Apps in prod
-if not DEBUG:
+# Apps in prod or dev
+if DEBUG:
+  try:
+    import debug_toolbar
+    INSTALLED_APPS = INSTALLED_APPS + ('debug_toolbar',)
+    DEBUG_TOOLBAR_CONFIG = {
+      'JQUERY_URL' : '',
+    }
+  except:
+    print "Missing debug toolbar module"
+else:
   INSTALLED_APPS = INSTALLED_APPS + ('raven.contrib.django.raven_compat',)
 
 # Load some settings constants in the templates

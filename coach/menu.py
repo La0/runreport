@@ -16,6 +16,16 @@ def add_pages(request):
   def _ext(url, caption):
     return {'url' : url, 'caption' : caption, 'active' : False, 'external' : True}
 
+  def _build_club_generic():
+    return {
+      'caption' : 'Les clubs',
+      'menu': [
+        _p('club-list', u'Voir les clubs'),
+        _p('club-landing', u'Créer un club'),
+      ],
+      'icon' : 'icon-star',
+    }
+
   def _build_help():
     # Build help menu with contact & news
     submenu = {
@@ -34,8 +44,13 @@ def add_pages(request):
     menu.append(_p('report-current', 'Semaine', 'icon-list'))
     menu.append(_p('report-current-month', 'Calendrier', icon='icon-calendar', lazy=True))
 
+    # Load memberships
+    members = request.user.memberships.exclude(role__in=('archive', 'prospect'))
+
+    # Build generic club menu
+    menu.append(_build_club_generic())
+
     # Build Club menu
-    members = ClubMembership.objects.filter(user=request.user).exclude(role__in=('archive', 'prospect'))
     for m in members:
       submenu = {
         'caption' : m.club.name,
@@ -43,18 +58,23 @@ def add_pages(request):
         'icon' : 'icon-club',
       }
 
+      # Add club list for athletes
+      if m.role in ('athlete', ):
+        submenu['menu'].append(_p(('club-members', m.club.slug), u'Les membres'))
+        submenu['menu'].append('__SEPARATOR__')
+
       # Add club admin links for trainers
       if m.role in ('trainer', 'staff') or request.user.is_superuser:
-        submenu['menu'].append(_p(('club-current-name', m.club.slug, 'athletes', 'name'), u'Mes Athlètes'))
+        submenu['menu'].append(_p(('club-members-name', m.club.slug, 'athletes', 'name'), u'Mes Athlètes'))
         submenu['menu'].append(_p(('club-races', m.club.slug, ), u'Les courses', lazy=True))
         # Removed plans because non functional
         #submenu['menu'].append(_p(('plans', ), u'Mes plans', lazy=True))
 
         # Manage links
         if m.club.manager == request.user or request.user.is_superuser:
-          submenu['menu'].append(_p(('club-current-name', m.club.slug, 'prospects', 'name'), u'Nouveaux'))
-          submenu['menu'].append(_p(('club-current-name', m.club.slug, 'all', 'name'), u'Tout le club'))
-          submenu['menu'].append(_p(('club-current-name', m.club.slug, 'archives', 'name'), u'Archives'))
+          submenu['menu'].append(_p(('club-members-name', m.club.slug, 'prospects', 'name'), u'Nouveaux'))
+          submenu['menu'].append(_p(('club-members-name', m.club.slug, 'all', 'name'), u'Tout le club'))
+          submenu['menu'].append(_p(('club-members-name', m.club.slug, 'archives', 'name'), u'Archives'))
           submenu['menu'].append(_p(('club-manage', m.club.slug), u'Administrer'))
 
         submenu['menu'].append('__SEPARATOR__')
@@ -65,11 +85,6 @@ def add_pages(request):
 
       menu.append(submenu)
 
-    # Add button to join a club
-    # when no memberships exist
-    if not members:
-      menu.append(_p('club-list', 'Rejoindre un club', 'icon-plus'))
-
     # Help menu
     menu.append(_build_help())
 
@@ -79,7 +94,8 @@ def add_pages(request):
       'menu' : [],
       'icon' : 'icon-user',
     }
-    submenu['menu'].append(_p('user-profile', 'Mon profil'))
+    submenu['menu'].append(_p('user-preferences', u'Mes préfèrences'))
+    submenu['menu'].append(_p(('user-public-profile', request.user.username), 'Mon profil public'))
     submenu['menu'].append(_p('stats', 'Mes statistiques', lazy=True))
     submenu['menu'].append(_p('vma', 'Mes allures'))
     submenu['menu'].append(_p('user-races', 'Mes records'))
@@ -89,7 +105,7 @@ def add_pages(request):
     menu.append(submenu)
   else:
     menu.append(_p('user-create', u'Créer un compte', 'icon-plus'))
-    menu.append(_p('club-landing', u'Créer un club', 'icon-club'))
+    menu.append(_build_club_generic())
     menu.append(_build_help())
     menu.append(_p('login', 'Se connecter', 'icon-user'))
 

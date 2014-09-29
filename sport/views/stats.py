@@ -5,10 +5,9 @@ from calendar import monthrange
 from sport.models import Sport, SportDay
 from django.db.models import Min
 
-class SportStats(TemplateView):
-  template_name = 'sport/stats.html'
+class SportStatsMixin(object):
 
-  def get_stats_months(self):
+  def get_stats_months(self, args={}):
     '''
     Date boundaries for dataset
     By default, last 12 months
@@ -26,14 +25,14 @@ class SportStats(TemplateView):
     years = limits['min'] and reversed(range(limits['min'].year, today.year+1)) or (today.year+1,)
 
     year_delta = timedelta(days=365)
-    if 'year' in self.kwargs:
+    if 'year' in args:
       # Full Year
-      year = int(self.kwargs['year'])
+      year = int(args['year'])
       start = date(year=year, month=1, day=1)
       end = start + year_delta
       date_range = 'year'
 
-    elif 'all' in self.kwargs:
+    elif 'all' in args:
       # All the months !
       start = limits['min']
       end = today
@@ -71,6 +70,9 @@ class SportStats(TemplateView):
       'years' : years,
     }
 
+class SportStats(SportStatsMixin, TemplateView):
+  template_name = 'sport/stats.html'
+
   def get_url_context(self):
     # Gives user direct stats context
     return {
@@ -81,7 +83,7 @@ class SportStats(TemplateView):
 
   def get_context_data(self, *args, **kwargs):
     context = super(SportStats, self).get_context_data(*args, **kwargs)
-    context.update(self.get_stats_months())
+    context.update(self.get_stats_months(self.kwargs))
     context.update(self.get_url_context())
     return context
 

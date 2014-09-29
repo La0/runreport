@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% set page_title = '%s %s' % (member.first_name, member.last_name) %}
+
+{% if 'stats' in privacy %}
+  {% block js %}
+  <script type="text/javascript" src="/medias/js/jquery.flot.js" ></script>
+  <script type="text/javascript" src="/medias/js/jquery.flot.time.js" ></script>
+  <script type="text/javascript" src="/medias/js/jquery.flot.stack.js" ></script>
+  <script type="text/javascript" src="/medias/js/stats.js" ></script>
+  {% endblock %}
+{% endif %}
+
+{% block content %}
+
+{% set owner_css = {
+  'public' : 'alert-success',
+  'club' : 'alert-warning',
+  'private' : 'alert-danger',
+} %}
+{% set role_css = {
+  'athlete' : 'label-info',
+  'trainer' : 'label-success',
+  'staff' : 'label-danger',
+} %}
+
+
+<div class="container profile">
+
+  {% if member == user %}
+  <div class="alert {{ owner_css[user.privacy_profile] }}">
+    <h4>Votre profil {{ levels[user.privacy_profile] }} </h4>
+    {% if user.privacy_profile == 'private' %}
+    Vous êtes le seul à pouvoir voir votre profil public.
+    {% elif user.privacy_profile == 'club' %}
+    Tous les membres de vos clubs peuvent voir votre profil public.
+    {% else %}
+    Tout le monde peut voir votre profil public.
+    {% endif %}
+  </div>
+  {% endif %}
+
+  <div class="row">
+    
+    <div class="col-xs-12">
+      <h1>{{ member.first_name }} {{ member.last_name }}</h1>
+    </div>
+
+    <div class="col-sm-9 col-xs-9">
+
+      {% for m in member.memberships.exclude(role__in=('prospect', 'archive')) %}
+      <h4>
+        <span class="label {{ role_css[m.role] }}">{{ roles[m.role] }}</span> au <a href="{% url club-members m.club.slug %}">{{ m.club.name }}</a>
+      </h4>
+        {% with m.trainers.exclude(pk=member.pk) as trainers %}
+          {% for trainer in trainers %}
+          <span class="label {{ role_css['trainer'] }}">Entrainé</span> par 
+            <a href="{% url user-public-profile  trainer.username %}">{{ trainer.first_name }} {{ trainer.last_name }}</a>
+          {% endfor %}
+        {% endwith %}
+      {% endfor %}
+
+      {% if 'calendar' in privacy %}
+      <hr />
+      <div class="row">
+        {% if last_sessions %}
+        <div class="col-sm-6 col-xs-12">
+          <p>
+            <span class="label label-danger">{{ last_sessions|length() }} dernières séances</span>
+          </p>
+          {% for session in last_sessions %}
+          <p>
+            <i class="icon-sport-{{session.sport.slug }}"></i>
+            <a class="modal-action" href="{% url user-calendar-day member.username, session.day.date.year, session.day.date.month, session.day.date.day %}">{{ session.name|default('Séance')|truncate(40)}}</a>, il y'a {{ session.day.date|timesince }}
+          </p>
+          {% endfor %}
+        </div>
+
+        <div class="col-sm-6 col-xs-12">
+          <a class="btn btn-primary" href="{% url user-calendar-month member.username, today.year, today.month %}">Voir le calendrier <i class="icon-calendar"></i></a>
+        </div>
+
+        {% endif %}
+      </div>
+      {% endif %}
+    </diV>
+
+    {% if 'avatar' in privacy %}
+    <div class="col-sm-3 col-xs-3">
+      <img class="img-responsive img-thumbnail avatar pull-right" src="{{ member.avatar.url }}" alt="Avatar de {{ member.first_name }} {{ member.last_name }}"/>
+    </div>
+    {% endif %}
+  </div>
+
+  {% if 'trainer' in privacy %}
+  {% include 'users/profile/trainer.html' %}
+  {% endif %}
+
+  {% if 'stats' in privacy %}
+  {% include 'users/profile/stats.html' %}
+  {% endif %}
+
+  {% if 'races' in privacy %}
+  {% include 'users/profile/races.html' %}
+  {% endif %}
+
+  {% if 'records' in privacy %}
+  {% include 'users/profile/records.html' %}
+  {% endif %}
+
+</div>
+
+{% endblock %}

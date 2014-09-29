@@ -10,11 +10,11 @@
 
 	{% if request.user == club.manager or request.user.is_staff %}
 	<ul class="breadcrumb">
-		<li><a href="{% url 'club-current-name' club.slug, 'athletes', sort %}">Mes Athlètes</a></li>
-		<li><a href="{% url 'club-current-name' club.slug, 'all', sort %}">Tout le club</a></li>
-		<li><a href="{% url 'club-current-name' club.slug, 'prospects', sort %}">Nouveaux</a></li>
-		<li><a href="{% url 'club-current-name' club.slug, 'staff', sort %}">Staff</a></li>
-		<li><a href="{% url 'club-current-name' club.slug, 'archives', sort %}">Archives</a></li>
+		<li><a href="{% url 'club-members-name' club.slug, 'athletes', sort %}">Mes Athlètes</a></li>
+		<li><a href="{% url 'club-members-name' club.slug, 'all', sort %}">Tout le club</a></li>
+		<li><a href="{% url 'club-members-name' club.slug, 'prospects', sort %}">Nouveaux</a></li>
+		<li><a href="{% url 'club-members-name' club.slug, 'staff', sort %}">Staff</a></li>
+		<li><a href="{% url 'club-members-name' club.slug, 'archives', sort %}">Archives</a></li>
 	</ul>
 	{% endif %}
 
@@ -22,18 +22,21 @@
 	<div class="table-responsive">
 		<table class="table table-striped">
 			<tr>
-				<th>{{ macros.sort_title('Athlète', 'name', 'club-current-name', (club.slug, type, ), sort) }}</th>
+				<th colspan="2">{{ macros.sort_title('Athlète', 'name', 'club-members-name', (club.slug, type, ), sort) }}</th>
 				{% if request.user == club.manager or request.user.is_staff %}
 				<th>Rôle</th>
 				{% endif %}
 				<th>Catégorie</th>
 				<th>Vma</th>
 				<th>Séances</th>
-				<th>{{ macros.sort_title('Dernière séance', 'date', 'club-current-name', (club.slug, type, ), sort) }}</th>
+				<th>{{ macros.sort_title('Dernière séance', 'date', 'club-members-name', (club.slug, type, ), sort) }}</th>
 				<th>Actions</th>
 			</tr>
 			{% for member in members %}
-            <tr>
+            <tr class="member">
+                <td class="avatar">
+                  <img class="small" src="{{ member.avatar.url }}" alt="{{ member.username }} avatar"/>
+                </td>
                 <td>
                     {{ member.first_name|lower|title }} {{ member.last_name|lower|title }}
                 </td>
@@ -59,7 +62,7 @@
                 <td>{{ member.sessions_count }}</td>
                 <td>
                     {% if member.max_report_date %}
-                        <a href="{% url club-member-week club.slug, member.username, member.max_report_date|date('Y'), member.max_report_date|date('W')|add(-1) %}">
+                        <a href="{% url user-calendar-week member.username, member.max_report_date|date('Y'), member.max_report_date|date('W')|add(-1) %}">
                         {% if member.max_report_date >= max_diff_date %}
                         {{ member.max_report_date|timesince() }}
                         {% else %}
@@ -69,11 +72,11 @@
                     {% endif %}
                 </td>
                 <td>
-                    <a class="btn btn-default btn-xs" href="{% url club-member club.slug, member.username %}">Fiche</a>
+                    <a class="btn btn-default btn-xs" href="{% url user-public-profile member.username %}">Profil</a>
                     {% if member.membership.role not in ('archive', 'prospect') %}
                     <a class="btn btn-danger btn-xs" href="{% url club-member-races club.slug, member.username %}">Records</a>
-                    <a class="btn btn-success btn-xs" href="{% url club-member-stats club.slug, member.username %}">Stats</a>
-                    <a class="btn btn-primary btn-xs" href="{% url club-member-month club.slug, member.username, today|date('Y'), today|date('m') %}">Carnet</a>
+                    <a class="btn btn-success btn-xs" href="{% url athlete-stats member.username %}">Stats</a>
+                    <a class="btn btn-primary btn-xs" href="{% url user-calendar-month member.username, today|date('Y'), today|date('m') %}">Carnet</a>
                     {% endif %}
                 </td>
             </tr>

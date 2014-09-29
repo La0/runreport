@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+
+{% set page_title = 'Mes préfèrences' %}
+
+{% block js %}
+<script type="text/javascript">
+// Enable buttons with radio state
+$(function(){
+  $('.btn').button()
+});
+</script>
+{% endblock %}
+
+{% block content %}
+
+
+
+<div class="container">
+	
+	<h2>Mes préfèrences</h2>
+  <ul class="nav nav-tabs" role="tablist">
+    <li class="active">
+      <a href="#profile" role="tab" data-toggle="tab">
+        Informations personelles
+      </a>
+    </li>
+    <li>
+      <a href="#avatar" role="tab" data-toggle="tab">
+        Photo de profil
+      </a>
+    </li>
+    <li>
+      <a href="#privacy" role="tab" data-toggle="tab">
+        Visibilité du profil
+      </a>
+    </li>
+    <li>
+      <a href="#mails" role="tab" data-toggle="tab">
+        Mails
+      </a>
+    </li>
+    <li>
+      <a href="#sport" role="tab" data-toggle="tab">
+        Informations sportives
+      </a>
+    </li>
+    {% if not user.demo %}
+    <li>
+      <a href="#password" role="tab" data-toggle="tab">
+        Mot de passe
+      </a>
+    </li>
+    {% endif %}
+  </ul>
+	
+	<form class="form-horizontal" method="POST" action="" enctype="multipart/form-data">
+		{% csrf_token %}
+
+    <div class="tab-content">
+      <div class="tab-pane active" id="profile">
+        {{ macros.input(form.first_name, 'Prénom', false, 4, 8) }}
+        {{ macros.input(form.last_name, 'Nom', false, 4, 8) }}
+        {% if not user.demo %}
+        {{ macros.input(form.email, 'Adresse email', false, 4, 8) }}
+        {% endif %}
+        {{ macros.input(form.birthday, 'Date de naissance', false, 4, 8) }}
+        {% if user.category %}
+        <div class="form-group">
+          <label class="col-sm-4 control-label">Catégorie</label>
+          <div class="col-sm-8">
+            <span class="label label-info">{{user.category.name}}</span>
+          </div>
+        </div>
+        {% endif %}
+        {{ macros.input(form.license, 'License FFA', false, 4, 8) }}
+
+        <div class="form-group">
+          <div class="col-sm-offset-4 col-sm-8">
+            <button type="submit" class="btn btn-primary" {% if user.demo %}disabled{% endif %}>Mettre à jour</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane" id="avatar">
+
+        {% if form.avatar.errors %}
+        <div class="alert alert-danger">
+          {{ form.avatar.errors|safe }}
+        </div>
+        {% endif %}
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <p class="text-muted">
+              Vous pouvez utiliser une image au format JPEG ou PNG.
+              <br />Seule la partie centrale de l'image sera utilisée pour faire un "avatar" carré
+            </p>
+            <input id="id_avatar" name="avatar" type="file" />
+          </div>
+
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary" {% if user.demo %}disabled{% endif %}>Utiliser cette photo</button>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <p class="text-muted">Votre photo actuelle</p>
+          {% if user.avatar %}
+          <img class="img-responsive img-thumbnail avatar-upload" src="{{ user.avatar.url }}" alt="{{ user.first_name }} {{ user.last_name }} avatar"/>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="tab-pane" id="privacy">
+        <div class="col-xs-12">
+          Choisissez un niveau de visibilité pour les différentes parties de votre profil public:
+          <ul class="nopill">
+            <li><span class="label label-success">Public</span> Tout le monde peut voir cette partie (y compris des personnes sans compte RunReport)</li>
+            <li><span class="label label-warning">Club</span> Uniquement les personnes dans vos clubs peuvent voir cette partie.</li>
+            <li><span class="label label-danger">Privé</span> Vous êtes la seule personne qui peut voir cette partie.</li>
+          </ul>
+        </div>
+
+        {% with ('btn-success', 'btn-warning', 'btn-danger', )  as btn_classes %}
+        {{ macros.input_choices(form.privacy_profile, 'Visibilité globale du profil', 'Détermine si votre page de profil public est visible et par qui.', btn_classes) }}
+        {{ macros.input_choices(form.privacy_avatar, 'Visibilité de votre photo', False, btn_classes) }}
+        {{ macros.input_choices(form.privacy_calendar, 'Visibilité de votre calendrier complet', False, btn_classes) }}
+        {{ macros.input_choices(form.privacy_stats, 'Visibilité de vos statistiques', False, btn_classes) }}
+        {{ macros.input_choices(form.privacy_records, 'Visibilité de vos records en course', False, btn_classes) }}
+        {{ macros.input_choices(form.privacy_races, 'Visibilité de vos futures courses', False, btn_classes) }}
+        {% endwith %}
+        <div class="form-group">
+          <div class="col-sm-offset-4 col-sm-8">
+            <button type="submit" class="btn btn-primary" {% if user.demo %}disabled{% endif %}>Mettre à jour</button>
+            <a class="btn btn-success" target="_blank" href="{% url user-public-profile user.username %}">Voir votre profil public <i class="icon-right-open"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane" id="mails">
+        {{ macros.input_bool(form.auto_send, 'Envoi automatique des commentaires en fin de semaine', None, 4, 8) }}
+         <div class="form-group">
+          <div class="col-sm-offset-4 col-sm-8">
+            <button type="submit" class="btn btn-primary" {% if user.demo %}disabled{% endif %}>Mettre à jour</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane" id="sport">
+        {{ form_trainers.management_form|safe }}
+        {% for form in form_trainers%}
+        <div class="form-group {% if form.errors %}has-error{% endif %}">
+          <label class="col-sm-4 control-label">Coach du {{ form.instance.club.name }}</label>
+          <div class="col-sm-8">
+            {{ form.id|safe }}
+            {% for trainer in form.trainers %}
+            <label class="checkbox-inline">
+              <input name="{{ form.trainers.html_name }}" type="checkbox" value="{{ trainer.choice_value }}" {% if trainer.is_checked() %}checked{% endif %}>
+              {{ trainer.choice_label }}
+            </label>
+            {% endfor %}
+          </div>
+        </div>
+        {% if form.trainers.errors %}
+        <div class="alert alert-danger">{{form.trainers.errors|safe}}</div>
+        {% endif %}
+        {% endfor %}
+      
+        {{ macros.input(form.default_sport, 'Sport par défaut', false, 4, 8) }}
+
+        {{ macros.input(form.nb_sessions, 'Nb Séances hebdomadaires', false, 4, 8) }}
+        {{ macros.input(form.vma, 'Vma', 'Ex: 15.2 km/h', 4, 8) }}
+        {{ macros.input(form.weight, 'Poids', 'En kg', 4, 8) }}
+        {{ macros.input(form.height, 'Taille', 'En cm', 4, 8) }}
+        {{ macros.input(form.frequency_rest, 'Fréquence Cardiaque au repos', false, 4, 8) }}
+        {{ macros.input(form.frequency, 'Fréquence Cardiaque maximale', false, 4, 8) }}
+        {{ macros.input(form.comment, 'Renseignements divers', false, 4, 8) }}
+
+        <div class="form-group">
+          <div class="col-sm-offset-4 col-sm-8">
+            <button type="submit" class="btn btn-primary" {% if user.demo %}disabled{% endif %}>Mettre à jour</button>
+          </div>
+        </div>
+      </div>
+
+      {% if not user.demo %}
+      <div class="tab-pane" id="password">
+        Vous pouvez changer de mot de passe en <a class="btn btn-info" href="{% url user-password-update %}">utilisant cette page</a>.
+      </div>
+      {% endif %}
+
+    </div>
+	</form>
+</div>
+
+{% endblock %}

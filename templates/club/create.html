@@ -30,6 +30,7 @@ function slugify(str){
 
 		{{ macros.input(form.name, 'Nom du club') }}
 		{{ macros.input(form.slug, 'Slug', 'Représente le nom du club dans les urls') }}
+		{{ macros.input_bool(form.private, 'Club Privé', 'Si le club est privé il n\'est accessible que par les membres du club') }}
 		{{ macros.input(form.address, 'Adresse') }}
 		{{ macros.input(form.zipcode, 'Code Postal') }}
 		{{ macros.input(form.city, 'Ville') }}

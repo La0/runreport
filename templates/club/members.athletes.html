@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% set page_title = 'Membres du %s' % (club.name, ) %}
+
+{% block content %}
+
+<div class="container">
+
+	<h2>{{club.name}} : {{members|length()}} membres publics</h2>
+
+	{% if members %}
+	<div class="athletes">
+    <div class="row hidden-xs list-title">
+      <div class="col-sm-6">Membre</div>
+      <div class="col-sm-2">Rôle</div>
+      <div class="col-sm-2">Catégorie</div>
+      <div class="col-sm-2">Actions</div>
+    </div>
+    {% for member in members %}
+    <div class="row member">
+      <div class="avatar col-sm-6 col-xs-9">
+        <a href="{% url user-public-profile member.username %}" target="_blank">
+          <img class="small" src="{{ member.avatar.url }}" alt="{{ member.username }} avatar"/>
+        </a>
+        <a href="{% url user-public-profile member.username %}" target="_blank">
+          {{ member.first_name|lower|title }} {{ member.last_name|lower|title }}
+        </a>
+      </div>
+      <div class="col-sm-2 col-xs-3">
+        {% with member.membership.role as role %}
+        {% if role == 'trainer' %}
+        <span class="label label-info">Entraineur</span>
+        {% elif role == 'staff' %}
+        <span class="label label-primary">Staff</span>
+        {% else %}
+        <span class="label label-default">Athlète</span>
+        {% endif %}
+        {% endwith %}
+      </div>
+      <div class="col-sm-2 hidden-xs">
+        {{ member.category.name|default('-') }}
+      </div>
+      <div class="col-sm-2 hidden-xs">
+        <a class="btn btn-primary" href="{% url user-public-profile member.username %}" target="_blank">Voir profil</a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+	{% else %}
+	<div class="alert alert-warning">
+		<h4>Pas de membres</h4>
+		Aucun membre du club {{club.name}} trouvé pour cette liste.
+	</div>
+	{% endif %}
+
+</div>
+
+{% endblock %}

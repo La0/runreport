@@ -23,12 +23,12 @@
 			</tr>
 			{% for race in races %}
 			<tr>
-				<td><a href="{% url club-member club.slug, race.day.week.user.username %}">{{ race.day.week.user.first_name }} {{ race.day.week.user.last_name }}</a></td>
+				<td><a href="{% url user-public-profile race.day.week.user.username %}">{{ race.day.week.user.first_name }} {{ race.day.week.user.last_name }}</a></td>
 				<td>{{ race.race_category.name }}</td>
 				<td>{{ race.name|truncatechars(30) }}</td>
 				<td>{{ race.day.date|date('d E Y') }}</td>
 				<td>{{ race.day.date|timeuntil() }}</td>
-				<td><a class="modal-action btn btn-info btn-xs" href="{% url club-member-day club.slug, race.day.week.user.username, race.day.date.year, race.day.date.month, race.day.date.day %}">Voir</a></td>
+				<td><a class="modal-action btn btn-info btn-xs" href="{% url user-calendar-day race.day.week.user.username, race.day.date.year, race.day.date.month, race.day.date.day %}">Voir</a></td>
 			</tr>
 			{% endfor %}
 		</table>

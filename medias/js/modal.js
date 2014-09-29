@@ -63,6 +63,21 @@ $(function(){
   $(document).on('click', 'form .dropdown-menu li a', function(evt){
     evt.preventDefault();
   });
+
+  // Remember & activate tab for current page
+  // in short lived page session storage
+  var tab_name = 'tab:'+window.location.href;
+  var tab_href = sessionStorage.getItem(tab_name);
+  if(tab_href){
+    console.info("Showing tab : "+tab_href);
+    $('a[href="'+tab_href+'"]').tab('show');
+  }
+  $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+    // Save new tab
+    tab_href = $(e.target).attr('href');
+    sessionStorage.setItem(tab_name, tab_href);
+    console.info("Saved tab : "+tab_href);
+  });
 });
 
 function submit_form(evt){

@@ -8,15 +8,31 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding field 'Athlete.avatar'
-        db.add_column(u'users_athlete', 'avatar',
-                      self.gf('django.db.models.fields.files.ImageField')(default='avatars/default.jpg', max_length=200),
+        # Adding field 'Athlete.privacy_races'
+        db.add_column(u'users_athlete', 'privacy_races',
+                      self.gf('django.db.models.fields.CharField')(default='club', max_length=50),
+                      keep_default=False)
+
+        # Adding field 'Athlete.privacy_records'
+        db.add_column(u'users_athlete', 'privacy_records',
+                      self.gf('django.db.models.fields.CharField')(default='club', max_length=50),
+                      keep_default=False)
+
+        # Adding field 'Athlete.privacy_stats'
+        db.add_column(u'users_athlete', 'privacy_stats',
+                      self.gf('django.db.models.fields.CharField')(default='club', max_length=50),
                       keep_default=False)
 
 
     def backwards(self, orm):
-        # Deleting field 'Athlete.avatar'
-        db.delete_column(u'users_athlete', 'avatar')
+        # Deleting field 'Athlete.privacy_races'
+        db.delete_column(u'users_athlete', 'privacy_races')
+
+        # Deleting field 'Athlete.privacy_records'
+        db.delete_column(u'users_athlete', 'privacy_records')
+
+        # Deleting field 'Athlete.privacy_stats'
+        db.delete_column(u'users_athlete', 'privacy_stats')
 
 
     models = {
@@ -51,7 +67,7 @@ class Migration(SchemaMigration):
         u'users.athlete': {
             'Meta': {'object_name': 'Athlete'},
             'auto_send': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'avatar': ('django.db.models.fields.files.FileField', [], {'max_length': '100'}),
+            'avatar': ('django.db.models.fields.files.ImageField', [], {'max_length': '100'}),
             'birthday': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
             'category': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['users.UserCategory']", 'null': 'True', 'blank': 'True'}),
             'comment': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
@@ -75,6 +91,11 @@ class Migration(SchemaMigration):
             'license': ('django.db.models.fields.CharField', [], {'max_length': '12', 'null': 'True', 'blank': 'True'}),
             'nb_sessions': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'password': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
+            'privacy_avatar': ('django.db.models.fields.CharField', [], {'default': "'club'", 'max_length': '50'}),
+            'privacy_profile': ('django.db.models.fields.CharField', [], {'default': "'club'", 'max_length': '50'}),
+            'privacy_races': ('django.db.models.fields.CharField', [], {'default': "'club'", 'max_length': '50'}),
+            'privacy_records': ('django.db.models.fields.CharField', [], {'default': "'club'", 'max_length': '50'}),
+            'privacy_stats': ('django.db.models.fields.CharField', [], {'default': "'club'", 'max_length': '50'}),
             'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "u'user_set'", 'blank': 'True', 'to': u"orm['auth.Permission']"}),
             'username': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'}),
             'vma': ('django.db.models.fields.FloatField', [], {'null': 'True', 'blank': 'True'}),

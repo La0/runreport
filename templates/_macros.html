@@ -1,7 +1,8 @@
 
 
 {% macro input(field, label, help=False, colLabel=2, colField=10) -%}
-<!-- <div class="form-group {% if field.errors %}has-error{% elif field.value() %}has-success{% endif %}"> -->
+{{ field.type}}
+
 <div class="form-group row {% if field.errors %}has-error{% endif %}">
 	<label class="col-sm-{{colLabel}} control-label" for="id_{{field.html_name}}">{{label}}</label>
 	<div class="col-sm-{{colField}}">
@@ -16,6 +17,21 @@
 </div>
 {%- endmacro %}
 
+{% macro input_bool(field, label, help=False, colLabel=2, colField=10) -%}
+<div class="form-group {% if field.errors %}has-error{% endif %}">
+  <label class="col-sm-{{colLabel}} control-label">{{label}}</label>
+  <div class="col-sm-{{colField}}">
+    <label class="checkbox-inline">
+      {{ field|safe }}
+    </label>
+		{% if field.errors %}
+		<div class="help-block">{{field.errors|safe}}</div>
+		{% elif help %}
+		<div class="help-block">{{help}}</div>
+		{% endif %}
+  </div>
+</div>
+{%- endmacro %}
 
 {% macro input_prepend(field, label, large=False) -%}
 <div class="col-sm-3 col-xs-6 {% if field.errors %}has-error{% endif %}">
@@ -26,6 +42,34 @@
 	{% if field.errors %}
 	<div class="help-block">{{field.errors|safe}}</div>
 	{% endif %}
+</div>
+{%- endmacro %}
+
+{% macro input_choices(field, label, help=None, field_classes=()) -%}
+<div class="form-group row {% if field.errors %}has-error{% endif %}">
+	<label class="col-sm-4 control-label" for="id_{{field.html_name}}">{{label}}</label>
+	<div class="col-sm-8">
+
+    {% with field.field.choices as choices %}
+    <div class="btn-group" data-toggle="buttons">
+      {% with field.value() as value %}
+      {% for choice, name in choices %}
+      {% with field_classes and field_classes[loop.index0 % field_classes|length()] as fclass %}
+      <label class="btn btn-default {% if value == choice %}active {{fclass}}{% endif %}">
+        <input type="radio" name="{{field.name}}" value="{{choice}}" {% if value == choice %}checked="checked"{% endif %}> {{ name }}
+      </label>
+      {% endwith %}
+      {% endfor %}
+      {% endwith %}
+    </div>
+    {% endwith %}
+
+    {% if field.errors %}
+    <div class="help-block">{{field.errors|safe}}</div>
+    {% elif help %}
+    <div class="help-block">{{help}}</div>
+    {% endif %}
+	</div>
 </div>
 {%- endmacro %}
 
@@ -111,11 +155,11 @@
 </div>
 {%- endmacro %}
 
-{% macro tr(fields, item='td') -%}
-<tr>
-{% for f in fields %}
-<{{item}}>{{f|default('-')}}</{{item}}>
-{% endfor %}
+{% macro tr(fields, item='td', css_class=None) -%}
+<tr {% if css_class %}class="{{css_class}}"{% endif %}>
+  {% for f in fields %}
+  <{{item}}>{{f|default('-')}}</{{item}}>
+  {% endfor %}
 </tr>
 {%- endmacro %}
 

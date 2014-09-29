@@ -16,8 +16,8 @@
 
 	{% block style %}{% endblock %}
 
-	<script src="/medias/js/jquery-1.11.0.min.js"></script>
-	<script src="/medias/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/medias/js/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="/medias/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/medias/js/bootstrap-datepicker.js"></script>
 	<script type="text/javascript" src="/medias/js/csrf.js" ></script>
 	<script type="text/javascript" src="/medias/js/bootstrap-modalmanager.js" ></script>
@@ -34,7 +34,7 @@
         </a>
         {% if DEBUG %}
         <span class="navbar-brand text-muted">
-          <i class="icon-fire"></i> Version Dev.
+          <i class="icon-fire"></i><span class="hidden-sm hidden-xs"> Version Dev</span>
         </span>
         {% endif %}
 				<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">

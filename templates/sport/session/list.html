@@ -16,17 +16,23 @@
     <span class="label label-default">Repos</span>
     {% endif %}
 
-    {% if member %}
-    <a href="{% url club-member-day club.slug, member.username, session.day.date.year, session.day.date.month, session.day.date.day %}" class="modal-action">
-    {% else %}
-    <a href="{% url report-day session.day.date.year, session.day.date.month, session.day.date.day %}" class="modal-action">
-    {% endif %}
-      {% if session.name %}
-      <strong>{{session.name}}</strong>
+    {% if session_links %}
+      {% if member %}
+      <a href="{% url user-calendar-day member.username, session.day.date.year, session.day.date.month, session.day.date.day %}" class="modal-action">
       {% else %}
-      <i>Pas de nom</i>
+      <a href="{% url report-day session.day.date.year, session.day.date.month, session.day.date.day %}" class="modal-action">
       {% endif %}
-    </a>
+    {% endif %}
+
+    {% if session.name %}
+    <strong>{{session.name}}</strong>
+    {% else %}
+    <i>Pas de nom</i>
+    {% endif %}
+
+    {% if session_links %}
+      </a>
+    {% endif %}
   </div>
 
   <div class="col-sm-2">

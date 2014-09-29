@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% set page_title = 'Administration du %s' % club.name %}
+
 {% block content %}
 
 <div class="container">
@@ -37,6 +39,25 @@
 			{% endfor %}
 		</table>
 	</div>
+
+  {% if club.private %}
+  <div class="alert alert-danger">
+    <h4>Inscriptions pour un club privé</h4>
+    <p>
+      Votre club étant <strong>privé</strong>, vous devez communiquer <a href="{% url club-join-private club.slug, club.get_private_hash() %}">ce lien</a> aux futurs membres.
+    </p>
+  </div>
+  {% else %}
+  <div class="alert alert-success">
+    <h4>Inscriptions pour un club public</h4>
+    <p>
+      Votre club étant <strong>public</strong>, les utilisateurs voient votre club dans la <a href="{% url club-list %}">liste</a>
+    </p>
+    <p>
+      Vous pouvez cependant leur communiquer <a href="{% url club-join club.slug %}">ce lien</a> pour rejoindre directement votre club.
+    </p>
+  </div>
+  {% endif %}
 
 	<h3>Liens publics</h3>
 	<div class="alert alert-info">
@@ -76,9 +97,11 @@
 		{% csrf_token %}
 		{{ macros.input(form.name, 'Nom du club') }}
 		{{ macros.input(form.slug, 'Slug', 'Représente le nom du club dans les urls') }}
-		{{ macros.input(form.address, 'Adresse') }}
+		{{ macros.input_bool(form.private, 'Club Privé', 'Si le club est privé il n\'est accessible que par les membres du club') }}
+		{{ macros.input(form.address, 'Addresse') }}
 		{{ macros.input(form.zipcode, 'Code Postal') }}
 		{{ macros.input(form.city, 'Ville') }}
+
 		<div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
         {% if user.demo %}

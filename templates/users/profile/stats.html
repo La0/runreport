@@ -1,0 +1,34 @@
+<h3>Statistiques des 12 derniers mois</h3>
+
+{% if months %}
+<ul class="breadcrumb">
+  {% for year in years %}
+    <li><a href="{% url athlete-stats-year member.username, year %}">Année {{year}}</a> <span class="divider"></span></li>
+  {% endfor %}
+  <li><a href="{% url athlete-stats-all member.username %}">Toutes les séances</a> <span class="divider"></span></li>
+</ul>
+
+<script type="text/javascript">
+$(function(){
+
+  // Setup data sets
+  var distances = [{% for m in months %}[{{m.timestamp()*1000}}, {{m.distance|default(0)}}],{% endfor %}];
+  var hours     = [{% for m in months %}[{{m.timestamp()*1000}}, {{m.hours|default(0)}}],{% endfor %}];
+
+  // Build months urls
+  var urls = [{% for m in months %}'{% url user-calendar-month member.username, m.year, m.month %}',{% endfor %}];
+
+  // Plot charts
+  plot_hours_distances(hours, distances, urls);
+});
+</script>
+
+<div id="stats">
+  <div class="hours_distances"></div>
+</div>
+
+{% else %}
+<div class="alert alert-warning">
+  Les statistiques de {{ member.first_name }} ne sont pas disponibles.
+</div>
+{% endif %}

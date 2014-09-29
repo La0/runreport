@@ -30,7 +30,7 @@
 
 		<div class="col-sm-2 col-sm-offset-4 buttons">
 			{% if member %}
-			<a class="btn btn-success" href="{% url club-member-stats-year club.slug, member.username, year %}"><i class="icon-plus"></i> Statistiques</a>
+			<a class="btn btn-success" href="{% url athlete-stats-year member.username, year %}"><i class="icon-plus"></i> Statistiques</a>
       {% else %}
 			<a class="btn btn-success" href="{% url stats-year year %}"><i class="icon-plus"></i> Statistiques</a>
 			{% endif %}

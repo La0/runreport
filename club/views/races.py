@@ -32,7 +32,7 @@ class ClubMemberRaces(ClubMixin, AthleteRaces, TemplateView):
 
     # Add url parameters to see reports
     context.update({
-      'raceurl' : 'club-member-day',
-      'raceargs' : [self.club.slug, self.member.username],
+      'raceurl' : 'user-calendar-day',
+      'raceargs' : [self.member.username],
     })
     return context

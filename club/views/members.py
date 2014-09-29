@@ -1,14 +1,11 @@
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import ModelFormMixin, ProcessFormView
 from django.http import Http404
-from django.views.generic.dates import WeekArchiveView
 from users.models import Athlete
 from django.db.models import Count, Max
 from mixins import ClubMixin, ClubManagerMixin
-from sport.views.mixins import CurrentWeekMixin, WeekPaginator
 from sport.models import SportWeek
 from club.models import ClubMembership
-from helpers import week_to_date
 from club.forms import ClubMembershipForm
 from club import ROLES
 from datetime import date, timedelta, MINYEAR
@@ -17,6 +14,9 @@ from coach.mixins import JsonResponseMixin, JSON_STATUS_ERROR
 class ClubMembers(ClubMixin, ListView):
   template_name = 'club/members.html'
   model = Athlete
+
+  # A club athlete has access too
+  roles_allowed = ('staff', 'trainer', 'athlete', 'public')
 
   def load_members(self):
     # Filter members
@@ -96,30 +96,47 @@ class ClubMembers(ClubMixin, ListView):
       'members' : members,
     }
 
+  def load_simplified_members(self):
+    '''
+    Just list the co-members with a club profile available
+    for athletes
+    For public, list public profile athlets
+    '''
+
+    members_roles = self.role == 'athlete' and ('public', 'club', ) or ('public', )
+
+    # Sadly, the members list must be constructed as a single filter
+    # to avoid users not having club AND valid role
+    members = Athlete.objects.filter(
+      memberships__club=self.club,
+      memberships__role__in=('trainer', 'staff', 'athlete'),
+      privacy_profile__in=members_roles,
+    ).prefetch_related('memberships').order_by('first_name', 'last_name')
+
+    for i, m in enumerate(members):
+      m.membership = m.memberships.get(club=self.club)
+
+    return {
+      'members' : members,
+    }
+
   def get_context_data(self, **kwargs):
     context = super(ClubMembers, self).get_context_data(**kwargs)
-    context.update(self.load_members())
+
+    if self.role in ('athlete', 'public'):
+      # For athletes, list same club athletes
+      # For public, list public athletes
+      self.template_name = 'club/members.athletes.html'
+      context.update(self.load_simplified_members())
+    else:
+      # For staff/trainers load full lists
+      context.update(self.load_members())
 
     # Add date limits
     today = date.today()
     context['today'] = today
     context['max_diff_date'] = today - timedelta(days=28)
     return context
-
-class ClubMember(ClubMixin, DetailView):
-  template_name = 'club/member.html'
-  context_object_name = 'membership'
-  model = ClubMembership
-
-  def get_context_data(self, **kwargs):
-    context = super(ClubMember, self).get_context_data(**kwargs)
-    context['membership'] = self.membership
-    context['member'] = self.member
-    return context
-
-  def get_object(self):
-    self.object = self.membership # needed for inherited classes
-    return self.object
 
 class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, ProcessFormView, DetailView):
   template_name = 'club/role.html'
@@ -176,34 +193,3 @@ class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, Proces
     self.object = self.membership # needed for inherited classes
     return self.object
 
-class ClubMemberWeek(CurrentWeekMixin, ClubMixin, WeekPaginator, WeekArchiveView):
-  template_name = 'club/member.week.html'
-  context_object_name = 'sessions'
-
-  def get_dated_items(self):
-
-    # Load report & sessions
-    year = self.get_year()
-    week = self.get_week()
-    try:
-      report = SportWeek.objects.get(user=self.member, year=year, week=week)
-      sessions = report.get_days_per_date()
-      dates = report.get_dates()
-    except:
-      report = sessions = dates = None
-
-    context = {
-      'year' : year,
-      'week' : week,
-      'report' : report,
-      'member' : self.member,
-      'pagename' : 'club-member-week',
-      'pageargs' : [self.club.slug, self.member.username],
-    }
-
-    # Pagination
-    self.date = week_to_date(year, week)
-    self.check_limits()
-    context.update(self.paginate(self.date, self.min_date, self.max_date))
-
-    return (dates, sessions, context)
