@@ -1,6 +1,7 @@
 from coffin.conf.urls import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import password_reset, password_reset_done, password_reset_confirm, password_reset_complete
+from django.views.generic.base import RedirectView
 from views import *
 
 user_patterns = patterns('',
@@ -19,8 +20,11 @@ user_patterns = patterns('',
 )
 
 urlpatterns = patterns('',
+  # Preferences, old & new
+  url(r'^profile/?$', RedirectView.as_view(url='/user/preferences')),
+  url(r'^preferences/?$', login_required(Preferences.as_view()), name='user-preferences'),
+
   url(r'^login/?$', LoginUser.as_view(), name='login'),
-  url(r'^profile/?$', login_required(Profile.as_view()), name='user-profile'),
   url(r'^my-profile/?$', login_required(OwnProfile.as_view()), name='user-own-profile'),
   url(r'^garmin/?$', login_required(GarminLogin.as_view()), name='user-garmin'),
   url(r'^create/?$', CreateUser.as_view(), name='user-create'),
