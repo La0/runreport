@@ -7,20 +7,22 @@ from datetime import timedelta
 
 class Migration(DataMigration):
 
-    def forwards(self, orm):
-        # Note: Don't use "from appname.models import ModelName".
-        # Use orm.ModelName to refer to models in this application,
-        # and orm['appname.ModelName'] for models in other applications.
+    def _update_time(self, obj):
+      t = obj.time_old
+      if not t:
+        return
+      obj.time = timedelta(hours=t.hour, minutes=t.minute, seconds=t.second)
+      obj.save()
+      print type(obj), obj.pk, obj.time
 
+    def forwards(self, orm):
       # Move SportSession time_old to time
       for session in orm['sport.SportSession'].objects.all():
-        t = session.time_old
-        if not t:
-          continue
-        session.time = timedelta(hours=t.hour, minutes=t.minute, seconds=t.second)
-        session.save()
+        self._update_time(session)
 
-        print session.pk, session.time
+      # Move GarminActivity time_old to time
+      for activity in orm['sport.GarminActivity'].objects.all():
+        self._update_time(activity)
 
     def backwards(self, orm):
       # No need for backward
@@ -86,7 +88,8 @@ class Migration(DataMigration):
             'session': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'garmin_activity'", 'unique': 'True', 'to': "orm['sport.SportSession']"}),
             'speed': ('django.db.models.fields.TimeField', [], {}),
             'sport': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['sport.Sport']"}),
-            'time': ('django.db.models.fields.TimeField', [], {}),
+            'time': ('interval.fields.IntervalField', [], {}),
+            'time_old': ('django.db.models.fields.TimeField', [], {}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['users.Athlete']"})
         },

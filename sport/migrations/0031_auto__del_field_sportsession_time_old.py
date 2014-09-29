@@ -11,10 +11,18 @@ class Migration(SchemaMigration):
         # Deleting field 'SportSession.time_old'
         db.delete_column('sport_session', 'time_old')
 
+        # Deleting field 'GarminActivity.time_old'
+        db.delete_column('garmin_activity', 'time_old')
+
 
     def backwards(self, orm):
         # Adding field 'SportSession.time_old'
         db.add_column('sport_session', 'time_old',
+                      self.gf('django.db.models.fields.TimeField')(null=True, blank=True),
+                      keep_default=False)
+
+        # Adding field 'GarminActivity.time_old'
+        db.add_column('garmin_activity', 'time_old',
                       self.gf('django.db.models.fields.TimeField')(null=True, blank=True),
                       keep_default=False)
 
@@ -79,7 +87,7 @@ class Migration(SchemaMigration):
             'session': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'garmin_activity'", 'unique': 'True', 'to': "orm['sport.SportSession']"}),
             'speed': ('django.db.models.fields.TimeField', [], {}),
             'sport': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['sport.Sport']"}),
-            'time': ('django.db.models.fields.TimeField', [], {}),
+            'time': ('interval.fields.IntervalField', [], {}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['users.Athlete']"})
         },

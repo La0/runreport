@@ -3,7 +3,7 @@ from south.utils import datetime_utils as datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
-
+from datetime import timedelta
 
 class Migration(SchemaMigration):
 
@@ -12,11 +12,19 @@ class Migration(SchemaMigration):
         # Rename field 'SportSession.time' to 'SportSession.time_old'
         db.rename_column('sport_session', 'time', 'time_old')
 
+        # Rename field 'GarminActivity.time' to 'GarminActivity.time_old'
+        db.rename_column('garmin_activity', 'time', 'time_old')
+
         # Adding field 'SportSession.time'
         db.add_column('sport_session', 'time',
               self.gf('interval.fields.IntervalField')
                       (null=True, blank=True),
                       keep_default=False)
+
+        # Adding field 'GarminActivity.time'
+        db.add_column('garmin_activity', 'time',
+              self.gf('interval.fields.IntervalField')
+                      (default=timedelta()))
 
 
     def backwards(self, orm):
@@ -25,6 +33,12 @@ class Migration(SchemaMigration):
 
         # Rename field 'SportSession.time_old' to 'SportSession.time'
         db.rename_column('sport_session', 'time_old', 'time')
+
+        # Deleting field 'GarminActivity.time'
+        db.delete_column('garmin_activity', 'time')
+
+        # Rename field 'GarminActivity.time_old' to 'GarminActivity.time'
+        db.rename_column('garmin_activity', 'time_old', 'time')
 
     models = {
         u'auth.group': {
@@ -86,7 +100,8 @@ class Migration(SchemaMigration):
             'session': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'garmin_activity'", 'unique': 'True', 'to': "orm['sport.SportSession']"}),
             'speed': ('django.db.models.fields.TimeField', [], {}),
             'sport': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['sport.Sport']"}),
-            'time': ('django.db.models.fields.TimeField', [], {}),
+            'time': ('interval.fields.IntervalField', [], {}),
+            'time_old': ('django.db.models.fields.TimeField', [], {}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['users.Athlete']"})
         },

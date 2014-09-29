@@ -29,6 +29,7 @@ class Sport(models.Model):
 class SportSession(models.Model):
   day = models.ForeignKey('SportDay', related_name="sessions")
   sport = models.ForeignKey(Sport)
+  time_old = models.TimeField(null=True, blank=True) # TRASHME
   time = IntervalField(format='DHMSX', null=True, blank=True)
   distance = models.FloatField(null=True, blank=True)
   name = models.CharField(max_length=255, null=True, blank=True)

@@ -11,6 +11,7 @@ from coach.settings import GARMIN_DIR
 import logging
 from django.utils.timezone import utc
 from helpers import date_to_week, time_to_seconds as t2s
+from interval.fields import IntervalField
 
 class GarminActivity(models.Model):
   garmin_id = models.IntegerField(unique=True)
@@ -18,7 +19,8 @@ class GarminActivity(models.Model):
   sport = models.ForeignKey('Sport')
   user = models.ForeignKey(Athlete)
   name = models.CharField(max_length=255)
-  time = models.TimeField()
+  time_old = models.TimeField() # TRASHME
+  time = IntervalField()
   distance = models.FloatField() # Kilometers
   speed = models.TimeField() # Time per kilometer
   md5_raw = models.CharField(max_length=32)
