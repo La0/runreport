@@ -69,11 +69,11 @@ def add_pages(request):
         submenu['menu'].append(_p(('club-races', m.club.slug, ), u'Les courses', lazy=True))
         # Removed plans because non functional
         #submenu['menu'].append(_p(('plans', ), u'Mes plans', lazy=True))
+        submenu['menu'].append(_p(('club-members-name', m.club.slug, 'all', 'name'), u'Tout le club'))
 
         # Manage links
         if m.club.manager == request.user or request.user.is_superuser:
           submenu['menu'].append(_p(('club-members-name', m.club.slug, 'prospects', 'name'), u'Nouveaux'))
-          submenu['menu'].append(_p(('club-members-name', m.club.slug, 'all', 'name'), u'Tout le club'))
           submenu['menu'].append(_p(('club-members-name', m.club.slug, 'archives', 'name'), u'Archives'))
           submenu['menu'].append(_p(('club-manage', m.club.slug), u'Administrer'))
 

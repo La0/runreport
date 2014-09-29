@@ -48,7 +48,10 @@ class ClubMembers(ClubMixin, ListView):
     # Load members, sorted by name
     asked_type = self.kwargs.get('type', default_type)
     if asked_type not in filters:
-      raise Http404('Invalid type')
+      # Fallback to simplified members
+      self.template_name = 'club/members.athletes.html'
+      return self.load_simplified_members()
+
     f = filters[asked_type]
     members = self.club.members.prefetch_related('memberships')
     if f: # Don't use ternary !
@@ -103,7 +106,7 @@ class ClubMembers(ClubMixin, ListView):
     For public, list public profile athlets
     '''
 
-    members_roles = self.role == 'athlete' and ('public', 'club', ) or ('public', )
+    members_roles = self.role in ('athlete', 'staff', 'trainer') and ('public', 'club', ) or ('public', )
 
     # Sadly, the members list must be constructed as a single filter
     # to avoid users not having club AND valid role
