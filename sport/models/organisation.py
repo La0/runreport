@@ -176,7 +176,7 @@ class SportWeek(models.Model):
       t, d = 0.0, 0.0
       for s in sessions.filter(sport=sport):
         if s.time:
-          t += s.time.hour * 3600 + s.time.minute * 60 + s.time.second
+          t += s.time.total_seconds()
         if s.distance:
           d += s.distance
       stats.append((sport, t, d))
