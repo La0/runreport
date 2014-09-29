@@ -1,7 +1,8 @@
 from users.forms import UserForm, UserPasswordForm
 from club.forms import TrainersFormSet
-from django.views.generic import DetailView
+from django.views.generic import DetailView, RedirectView
 from django.views.generic.edit import UpdateView, FormView
+from django.core.urlresolvers import reverse
 from users.models import Athlete
 from users.views.mixins import ProfilePrivacyMixin
 from sport.views.mixins import AthleteRaces
@@ -103,3 +104,8 @@ class PublicProfile(ProfilePrivacyMixin, DetailView, SportStatsMixin, AthleteRac
       'today' : today,
       'last_sessions' : sessions,
     }
+
+class OwnProfile(RedirectView):
+  def get_redirect_url(self):
+    # redirect to own profile
+    return reverse('user-public-profile', args=(self.request.user.username, ))
