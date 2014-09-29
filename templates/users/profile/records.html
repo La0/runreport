@@ -32,19 +32,23 @@
     <div class="col-sm-2 col-xs-3">
       {% for session in sessions %}
       <p>
+        {% if session.distance %}
         {{ session.distance|floatformat(2) }} km
+        {% else %}
+        -
+        {% endif %}
       </p>
       {% endfor %}
       {% if record.nb_sessions > 1 %}
       <p>
-        <strong>{{ record.distance_total|floatformat(2) }} km</strong>
+        <strong>{{ record.distance_total|default(0)|floatformat(2) }} km</strong>
       </p>
       {% endif %}
     </div>
     <div class="col-sm-2 col-xs-3">
       {% for session in sessions %}
       <p>
-        {{ session.time }}
+        {{ session.time|default('-') }}
       </p>
       {% endfor %}
       {% if record.nb_sessions > 1 %}
