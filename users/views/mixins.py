@@ -54,11 +54,15 @@ class ProfilePrivacyMixin(object):
       return self.member
 
     # A trainer sees evertything for his athletes
+    trainers_roles = ['athlete', 'staff', 'trainer']
     for m in self.member.memberships.all():
-      if self.request.user in m.trainers.all() and m.role in ('athlete', 'staff', 'trainer'):
-        self.privacy = fields # all access
-        self.privacy += ['trainer', ] # and has trainer right
-        return self.member
+      if self.request.user in m.trainers.all():
+        # Add archive roles for managers
+        trainers_roles += m.club.manager == self.request.user and ['archive', ] or []
+        if m.role in trainers_roles:
+          self.privacy = fields # all access
+          self.privacy += ['trainer', ] # and has trainer right
+          return self.member
 
     # Load all member privacy settings
     rights = self.load_visitor_rights()
