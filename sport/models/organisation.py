@@ -198,15 +198,6 @@ class SportDay(models.Model):
   sports = models.ManyToManyField('Sport', through='SportSession')
   plan_session = models.ForeignKey('plan.PlanSession', null=True, blank=True)
 
-  # Keep the references for db migrations
-  # Remove after multi sports migrations
-  name = models.CharField(max_length=255, null=True, blank=True)
-  comment = models.TextField(null=True, blank=True)
-  time = models.TimeField(null=True, blank=True)
-  distance = models.FloatField(null=True, blank=True)
-  type = models.CharField(max_length=12, default='training', choices=SESSION_TYPES)
-  race_category = models.ForeignKey('RaceCategory', null=True, blank=True)
-
   class Meta:
     unique_together = (('week', 'date'),)
     db_table = 'sport_day'
