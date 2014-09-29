@@ -31,7 +31,7 @@
               </p>
               {% endif %}
               {% if s.time %}
-              <span class="label">Temps</span> {{s.time}}
+              <span class="label">Temps</span> {{s.time|total_time()}}
               {% endif %}
               {% if s.distance %}
               <span class="label">Distance</span> {{s.distance}} km

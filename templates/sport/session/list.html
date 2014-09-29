@@ -49,7 +49,7 @@
 
   <div class="{% if modal %}col-sm-2{% else %}col-sm-1{% endif %}">
   {% if session.time %}
-    {{ session.time }}
+    {{ session.time|total_time() }}
   {% else %}
     <span class="label label-warning">Pas de Temps</span>
   {% endif %}
@@ -79,7 +79,7 @@
     {{ session.distance|default(0)|floatformat(2) }} km
   </div>
   <div class="col-xs-2">
-    {% if session.time %}{{ session.time }}{% else %}-{% endif %}
+    {% if session.time %}{{ session.time|total_time() }}{% else %}-{% endif %}
   </div>
   {% if not member %}
   <div class="col-xs-1">

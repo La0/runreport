@@ -48,7 +48,7 @@
     <div class="col-sm-2 col-xs-3">
       {% for session in sessions %}
       <p>
-        {{ session.time|default('-') }}
+        {{ session.time|default(0)|total_time() }}
       </p>
       {% endfor %}
       {% if record.nb_sessions > 1 %}
