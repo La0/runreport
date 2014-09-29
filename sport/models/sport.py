@@ -1,6 +1,7 @@
 # coding=utf-8
 from django.db import models
 from . import SESSION_TYPES
+from interval.fields import IntervalField
 
 class Sport(models.Model):
   name = models.CharField(max_length=250)
@@ -28,7 +29,8 @@ class Sport(models.Model):
 class SportSession(models.Model):
   day = models.ForeignKey('SportDay', related_name="sessions")
   sport = models.ForeignKey(Sport)
-  time = models.TimeField(null=True, blank=True)
+  time_old = models.TimeField(null=True, blank=True)
+  time = IntervalField(format='DHMSX', null=True, blank=True)
   distance = models.FloatField(null=True, blank=True)
   name = models.CharField(max_length=255, null=True, blank=True)
   comment = models.TextField(null=True, blank=True)
