@@ -10,7 +10,7 @@ import hashlib
 from coach.settings import GARMIN_DIR
 import logging
 from django.utils.timezone import utc
-from helpers import date_to_week, time_to_seconds as t2s
+from helpers import date_to_week
 from interval.fields import IntervalField
 
 class GarminActivity(models.Model):
@@ -41,6 +41,11 @@ class GarminActivity(models.Model):
     if not self.session_id or force_session:
       self.attach_session()
 
+    # Update session name ?
+    if self.session_id and not self.session.name and self.name:
+      self.session.name = self.name
+      self.session.save()
+
     super(GarminActivity, self).save(*args, **kwargs)
 
   def attach_session(self):
@@ -59,8 +64,8 @@ class GarminActivity(models.Model):
       for s in sessions:
         ratio_time, ratio_distance = None, None
         if s.time and self.time:
-          t = t2s(self.time)
-          ratio_time = abs(t2s(s.time) - t) / t
+          t = self.time.total_seconds()
+          ratio_time = abs(s.time.total_seconds() - t) / t
         if s.distance and self.distance:
           ratio_distance = abs(s.distance - self.distance) / self.distance
 
@@ -74,9 +79,14 @@ class GarminActivity(models.Model):
           min_ratio = ratio
           self.session = s
 
+
+        # Update title
+        if self.name and not self.session.name:
+          self.session.name = self.name
+          self.session.save()
     else:
       # Create new session
-      self.session = SportSession.objects.create(sport=self.sport.get_parent(), day=day, time=self.time, distance=self.distance)
+      self.session = SportSession.objects.create(sport=self.sport.get_parent(), day=day, time=self.time, distance=self.distance, name=self.name)
 
   def get_url(self):
     return 'http://connect.garmin.com/activity/%s' % (self.garmin_id)
@@ -180,7 +190,9 @@ class GarminActivity(models.Model):
     logger.debug('Speed : %s' % self.speed)
 
     # update name
-    self.name = data['activityName']['value']
+    skip_titles = ('Sans titre', 'No title', )
+    name = data['activityName']['value']
+    self.name = name not in skip_titles and name or ''
 
   def get_speed_kph(self):
     # Transform speed form min/km to km/h
