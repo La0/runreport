@@ -15,7 +15,7 @@ class Page(models.Model):
   html = models.TextField(null=True, blank=True)
   type = models.CharField(max_length=12, choices=PAGE_TYPES)
   user = models.ForeignKey(Athlete)
-  published = models.BooleanField()
+  published = models.BooleanField(default=False)
   created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
 
