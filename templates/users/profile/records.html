@@ -63,7 +63,7 @@
         {{ record.date|date('d E Y') }} <i class="icon-right-open"></i>
       </a>
       {% else %}
-      <button type="button" class="pull-right do-tooltip btn btn-default btn-sm" data-placement="left" title="Il y'a {{record.date|timesince()}}">
+      <button type="button" class="pull-right do-tooltip btn btn-default btn-sm" data-placement="left" title="Il y a {{record.date|timesince()}}">
         {{ record.date|date('d E Y') }}
       </button>
       {% endif %}
