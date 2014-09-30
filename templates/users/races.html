@@ -85,12 +85,12 @@ h2, h3 {
 
       <div class="col-sm-2">
         <p>
-          <strong>{{ race.time_total}}</strong>
+          <strong>{{ race.time_total|default(0)|total_time()}}</strong>
         </p>
         {% if race.nb_sessions > 1 %}
         {% for session in sessions %}
         <p>
-          {{ session.time }}
+          {{ session.time|default(0)|total_time() }}
         </p>
         {% endfor %}
         {% endif %}

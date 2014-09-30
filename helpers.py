@@ -73,3 +73,22 @@ def check_task(model):
 
 def time_to_seconds(t):
   return t.hour*3600 + t.minute*60 + t.second
+
+def seconds_humanize(t):
+  '''
+  Format total seconds as HH:MM:SS
+  Never display days (1 day 1h = 25h)
+  '''
+  out = ''
+  if t is None:
+    return '-'
+  try:
+    t = int(t)
+  except:
+    return '-'
+
+  hours = int(t / 3600)
+  minutes = int((t % 3600) / 60)
+  seconds = t % 60
+
+  return '%d:%02d:%02d' % (hours, minutes, seconds)

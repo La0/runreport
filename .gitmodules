@@ -4,3 +4,6 @@
 [submodule "libs/flot"]
 	path = libs/flot
 	url = git@github.com:flot/flot.git
+[submodule "libs/intervals"]
+	path = libs/intervals
+	url = https://github.com/mpasternak/django-interval-field

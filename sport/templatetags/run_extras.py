@@ -1,5 +1,6 @@
 from django import template
 from datetime import time, timedelta
+from helpers import seconds_humanize
 
 register = template.Library()
 
@@ -12,15 +13,4 @@ def total_time(t):
   if isinstance(t, timedelta):
     t = t.total_seconds()
 
-  out = ''
-  if t is None:
-    return '-'
-  try:
-    t = int(t)
-  except:
-    return '-'
-
-  hours = int(t / 3600)
-  minutes = int((t % 3600) / 60)
-
-  return '%dh%02d' % (hours, minutes)
+  return seconds_humanize(t)

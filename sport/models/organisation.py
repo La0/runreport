@@ -176,7 +176,7 @@ class SportWeek(models.Model):
       t, d = 0.0, 0.0
       for s in sessions.filter(sport=sport):
         if s.time:
-          t += s.time.hour * 3600 + s.time.minute * 60 + s.time.second
+          t += s.time.total_seconds()
         if s.distance:
           d += s.distance
       stats.append((sport, t, d))
@@ -197,15 +197,6 @@ class SportDay(models.Model):
   date = models.DateField()
   sports = models.ManyToManyField('Sport', through='SportSession')
   plan_session = models.ForeignKey('plan.PlanSession', null=True, blank=True)
-
-  # Keep the references for db migrations
-  # Remove after multi sports migrations
-  name = models.CharField(max_length=255, null=True, blank=True)
-  comment = models.TextField(null=True, blank=True)
-  time = models.TimeField(null=True, blank=True)
-  distance = models.FloatField(null=True, blank=True)
-  type = models.CharField(max_length=12, default='training', choices=SESSION_TYPES)
-  race_category = models.ForeignKey('RaceCategory', null=True, blank=True)
 
   class Meta:
     unique_together = (('week', 'date'),)

@@ -3,19 +3,10 @@ from models import Sport, SportWeek, SportDay, SportSession, SESSION_TYPES
 from datetime import date
 from django import forms
 from django.forms.models import BaseFormSet, inlineformset_factory
-
-TIME_FORMATS = [
-  '%H:%M:%S',
-  '%H:%M',
-  '%Hh%M',
-  '%Hh %M',
-  '%Hh %Mm %Ss',
-  '%Mmin %Ss',
-  '%Mmin',
-]
+from sport.fields import IntervalWidget, IntervalFormField
 
 class SportSessionForm(forms.ModelForm):
-  time = forms.TimeField(input_formats=TIME_FORMATS, widget=forms.TextInput(attrs={'placeholder':'hh:mm'}), required=False)
+  time = IntervalFormField(widget=IntervalWidget(attrs={'placeholder': 'hh:mm'}), required=False)
   distance = forms.FloatField(localize=True, widget=forms.TextInput(attrs={'placeholder': 'km'}), required=False)
 
   class Meta:
