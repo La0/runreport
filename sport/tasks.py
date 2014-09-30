@@ -3,6 +3,31 @@ from __future__ import absolute_import
 from celery import shared_task
 
 @shared_task
+def auto_publish_reports():
+  '''
+  Publish all reports for this week
+  '''
+  from datetime import date
+  from sport.models import SportWeek
+  from django.db.models import Count
+  today = date.today()
+  year, week = today.year, int(today.strftime('%W'))
+  reports = SportWeek.objects.filter(year=year, week=week, published=False).order_by('user__username')
+  reports = reports.filter(user__auto_send=True) # Auto send must be enabled per user
+  for r in reports:
+
+    # Skip empty report
+    agg = r.days.aggregate(nb=Count('sessions'))
+    if not agg['nb']:
+      print 'No active sessions for report %s' % r
+      continue
+
+    # Publish
+    for m in r.user.memberships.all():
+      r.publish(m, 'https://runreport.fr') # TODO : use a config
+    print 'Published %s' % r
+
+@shared_task
 def publish_report(report, membership, uri):
   '''
   Publish a report: build mail with XLS, send it.

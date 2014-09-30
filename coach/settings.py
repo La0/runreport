@@ -234,6 +234,10 @@ CELERY_TIMEZONE = 'UTC'
 from datetime import timedelta
 from celery.schedules import crontab
 CELERYBEAT_SCHEDULE = {
+  'auto-send-reports-on-sunday': {
+    'task': 'sport.tasks.auto_publish_reports',
+    'schedule': crontab(day_of_week='sunday', hour=23, minute=0),
+  },
   'garmin-import-10-min': {
     'task': 'sport.tasks.garmin_import',
     'schedule': timedelta(minutes=10),
