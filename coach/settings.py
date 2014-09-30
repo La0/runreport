@@ -267,6 +267,8 @@ CACHES = {
   }
 }
 
+# Test Engine
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 # Import local settings, if any
 try:
