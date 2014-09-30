@@ -38,7 +38,7 @@ $(function(){
     selector.find('input[type=hidden]').val(type);
     var btn = selector.find('button');
     btn.removeClass('rest').removeClass('training').removeClass('race');
-    var rc = $(this).parents('fieldset').find('div.race-category');
+    var rc = $(this).parents('form').find('div.race-category');
     if(type == 'race'){
 
       // Show race category
