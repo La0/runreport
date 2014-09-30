@@ -19,7 +19,6 @@ class GarminActivity(models.Model):
   sport = models.ForeignKey('Sport')
   user = models.ForeignKey(Athlete)
   name = models.CharField(max_length=255)
-  time_old = models.TimeField() # TRASHME
   time = IntervalField()
   distance = models.FloatField() # Kilometers
   speed = models.TimeField() # Time per kilometer
