@@ -138,7 +138,6 @@ INSTALLED_APPS = (
     'club',
     'page',
     'plan',
-    'south',
 )
 
 # For auto login on user create
