@@ -3,7 +3,7 @@ from django.db import models
 from .organisation import SportDay, SportWeek
 from .sport import SportSession, Sport
 from users.models import Athlete
-from datetime import datetime, time
+from datetime import datetime, time, timedelta
 import os
 import json
 import hashlib
@@ -141,12 +141,11 @@ class GarminActivity(models.Model):
     logger.debug('Date : %s' % self.date)
 
     # Time
-    if 'sumMovingDuration' in data:
-      t = float(data['sumMovingDuration']['value'])
-      self.time = datetime.utcfromtimestamp(t).time()
+    if False and 'sumMovingDuration' in data:
+      self.time = timedelta(seconds=float(data['sumMovingDuration']['value']))
     elif 'sumDuration' in data:
-      t = data['sumDuration']['display']
-      self.time = datetime.strptime(t, '%H:%M:%S').time()
+      t = data['sumDuration']['minutesSeconds'].split(':')
+      self.time = timedelta(minutes=float(t[0]), seconds=float(t[1]))
     else:
       raise Exception('No duration found.')
     logger.debug('Time : %s' % self.time)
