@@ -39,14 +39,16 @@ class SportWeek(models.Model):
 
   def get_days_per_date(self):
     sessions = OrderedDict()
+    days = self.days.prefetch_related('sessions').prefetch_related('sessions__comments')
+
+    # Empty days by default
     for d in self.get_dates():
-      try:
-        day = self.days.get(date=d)
-        day = day.prefetch_related('sessions')
-        day = day.prefetch_related('sessions__comments')
-        sessions[d] = day
-      except:
-        sessions[d] = None
+      sessions[d] = None
+
+    # Use fully loaded days
+    for d in days:
+      sessions[d.date] = d
+
     return sessions
 
   def get_date(self, day):

@@ -81,18 +81,50 @@
       </div>
     </div>
   </div>
+
+  {% if session.pk %}
+  <div class="comments">
+
+    <div class="row">
+      <div class="col-sm-10 col-sm-offset-2">
+      {% with session.comments.count() as nb %}
+        {% if nb > 0 %}
+        <h4>{{ nb }} commentaire{{ nb|pluralize() }}</h4>
+        {% else %}
+        <h4>Pas de commentaires</h4>
+        {% endif %}
+      {% endwith %}
+      </div>
+    </div>
+
+    {% with session.comments.order_by('created') as comments %}
+      {% for comment in comments %}
+      <div class="row">
+        <div class="col-sm-1 col-sm-offset-1">
+          <img class="img-responsive img-rounded" src="{{ comment.sender.avatar.url }}" alt="Avatar {{ comment.sender.username }}" />
+        </div>
+        <div class="col-sm-8">
+          <p>
+            <i class="icon-user"></i> <a href="{% url user-public-profile comment.sender.username %}">{{ comment.sender.first_name }} {{ comment.sender.last_name }}</a>
+            <i class="icon-calendar"></i> {{ comment.created|date('l d E Y - H:i') }}
+            {% if comment.revision > 1 %}
+            <i class="icon-right-open"></i> Edité {{ comment.revision }} fois.
+            {% endif %}
+          <P>
+          <blockquote>
+          {{ comment.message }}
+          </blockquote>
+        </div>
+      </div>
+      {% endfor %}
+    {% endwith %}
+
+    <div class="row">
+      <div class="col-sm-10 col-sm-offset-2">
+        <a href="{% url message-session-add session.id %}" class="btn btn-sm btn-info modal-action">Ajouter un commentaire</a>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
 </form>
-
-{% if session.pk %}
-<div class="row comments">
-  {# List comments #}
-  {% with session.comments.order_by('created') as comments %}
-    {% for comment in comments %}
-    {{ comment.sender.username }} : {{ comment.message }}
-    {% endfor %}
-  {% endwith %}
-
-  {# Add comment #}
-  <a href="{% url message-session-add session.id %}" class="btn btn-info modal-action">Ajouter un commentaire</a>
-</div>
-{% endif %}
