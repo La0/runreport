@@ -15,4 +15,4 @@ class Message(models.Model):
   revision = models.IntegerField(default=1)
 
   # Optional links to objects
-  session = models.ForeignKey(SportSession, null=True, blank=True)
+  session = models.ForeignKey(SportSession, null=True, blank=True, related_name='comments')

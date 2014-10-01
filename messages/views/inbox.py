@@ -5,4 +5,4 @@ class MessageInbox(ListView):
   context_object_name = 'messages'
 
   def get_queryset(self):
-    return self.request.user.messages_received.order_by('created')
+    return self.request.user.messages_received.order_by('-created')

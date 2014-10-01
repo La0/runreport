@@ -41,7 +41,10 @@ class SportWeek(models.Model):
     sessions = OrderedDict()
     for d in self.get_dates():
       try:
-        sessions[d] = self.days.get(date=d)
+        day = self.days.get(date=d)
+        day = day.prefetch_related('sessions')
+        day = day.prefetch_related('sessions__comments')
+        sessions[d] = day
       except:
         sessions[d] = None
     return sessions

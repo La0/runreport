@@ -94,6 +94,7 @@ def add_pages(request):
       'menu' : [],
       'icon' : 'icon-user',
     }
+    submenu['menu'].append(_p('message-inbox', u'Mes message'))
     submenu['menu'].append(_p('user-preferences', u'Mes préfèrences'))
     submenu['menu'].append(_p(('user-public-profile', request.user.username), 'Mon profil public'))
     submenu['menu'].append(_p('stats', 'Mes statistiques', lazy=True))

@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container">
-  <h1>Message Inbox</h1>
+  <h1>Messages reçus</h1>
   {% if messages %}
     {% for message in messages %}
     <div class="row message">
@@ -13,6 +13,8 @@
         <a href="{% url user-public-profile message.sender.username %}">
           {{ message.sender.first_name }} {{ message.sender.last_name }}
         </a>
+        <br />
+        Il y a {{ message.created|timesince() }}
       </div>
       <div class="col-sm-6 well">
         {{message.message}}

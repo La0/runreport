@@ -82,3 +82,17 @@
     </div>
   </div>
 </form>
+
+{% if session.pk %}
+<div class="row comments">
+  {# List comments #}
+  {% with session.comments.order_by('created') as comments %}
+    {% for comment in comments %}
+    {{ comment.sender.username }} : {{ comment.message }}
+    {% endfor %}
+  {% endwith %}
+
+  {# Add comment #}
+  <a href="{% url message-session-add session.id %}" class="btn btn-info modal-action">Ajouter un commentaire</a>
+</div>
+{% endif %}
