@@ -23,6 +23,7 @@ class Command(BaseCommand):
     if options['username']:
       users = users.filter(username=options['username'])
 
+    users = users.order_by('username')
 
     for user in users:
       print user
@@ -40,7 +41,7 @@ class Command(BaseCommand):
           # Skip unecessary months (no data)
           if (year, month) < (first.date.year, first.date.month) or (year, month) > (today.year, today.month):
             continue
-        
+
           # Build StatsMonth
           stats = StatsMonth(user, year, month)
           stats.build()
