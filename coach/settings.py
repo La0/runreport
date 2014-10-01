@@ -138,6 +138,7 @@ INSTALLED_APPS = (
     'club',
     'page',
     'plan',
+    'messages',
 )
 
 # For auto login on user create
@@ -233,6 +234,7 @@ CELERY_TIMEZONE = 'Europe/Paris'
 from datetime import timedelta
 from celery.schedules import crontab
 CELERYBEAT_SCHEDULE = {
+<<<<<<< HEAD
   'auto-send-reports-on-sunday': {
     'task': 'sport.tasks.auto_publish_reports',
     'schedule': crontab(day_of_week=0, hour=23, minute=0),
@@ -243,7 +245,7 @@ CELERYBEAT_SCHEDULE = {
   },
   'send-race-mail-every-day-at-9': {
     'task': 'sport.tasks.race_mail',
-    'schedule': crontab(hour=9, minute=0),
+    'schedule': timedelta(seconds=10),
   },
   'build-demos-every-day-at-1am': {
     'task': 'users.tasks.build_demos',

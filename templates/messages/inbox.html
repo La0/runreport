@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h1>Message Inbox</h1>
+  {% if messages %}
+    {% for message in messages %}
+    <div class="row message">
+      <div class="col-sm-1">
+        <img class="img-responsive img-rounded" src="{{message.sender.avatar.url}}" alt="Avatar {{message.sender.username}}" />
+      </div>
+      <div class="col-sm-3">
+        <a href="{% url user-public-profile message.sender.username %}">
+          {{ message.sender.first_name }} {{ message.sender.last_name }}
+        </a>
+      </div>
+      <div class="col-sm-6 well">
+        {{message.message}}
+      </div>
+      <div class="col-sm-2">
+        <a href="" class="btn btn-primary">Répondre</a>
+      </div>
+    </div>
+    {% endfor %}
+  {% else %}
+  <div class="alert alert-info">
+    <h4>Pas de messages</h4>
+    Vous n'avez pas reçu de messages.
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
