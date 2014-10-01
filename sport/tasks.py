@@ -51,7 +51,7 @@ def race_mail(*args, **kwargs):
   '''
   Send a mail to all users having a race today
   '''
-  from sport.models import SportDay
+  from sport.models import SportSession
   from datetime import date, timedelta
   from coach.mail import MailBuilder
 
@@ -60,11 +60,11 @@ def race_mail(*args, **kwargs):
 
   # Load tommorow's race
   tmrw = date.today() + timedelta(days=1)
-  races = SportDay.objects.filter(date=tmrw, type='race')
+  races = SportSession.objects.filter(day__date=tmrw, type='race')
 
   # Build and Send all mails
   for race in races:
-    user = race.week.user
+    user = race.day.week.user
     data = {
       'race' : race,
       'user' : user,
