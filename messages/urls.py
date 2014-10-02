@@ -4,6 +4,9 @@ from messages.views import *
 
 urlpatterns = patterns('',
 
+  # Edit message
+  url(r'^edit/(?P<message_id>\d+)', login_required(MessageEdit.as_view()), name="message-edit"),
+
   # Delete message
   url(r'^delete/(?P<message_id>\d+)', login_required(MessageDelete.as_view()), name="message-delete"),
 

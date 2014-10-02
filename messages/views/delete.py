@@ -1,15 +1,10 @@
 from django.views.generic import DeleteView
-from django.shortcuts import get_object_or_404
 from messages.models import Message
-from mixins import MessageSessionReload
+from mixins import MessageSessionReload, MessageOwned
 
-class MessageDelete(MessageSessionReload, DeleteView):
+class MessageDelete(MessageSessionReload, MessageOwned, DeleteView):
   model = Message
   template_name = 'messages/delete.html'
-
-  def get_object(self):
-    # Message must be owned by logged user
-    return get_object_or_404(Message, pk=self.kwargs['message_id'], sender=self.request.user)
 
   def delete(self, *args, **kwargs):
     # Delete message
