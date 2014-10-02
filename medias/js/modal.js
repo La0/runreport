@@ -78,6 +78,16 @@ $(function(){
     sessionStorage.setItem(tab_name, tab_href);
     console.info("Saved tab : "+tab_href);
   });
+
+  // Toggle messages actions on hover
+  $(document).on('mouseenter mouseleave', 'div.message', function(evt){
+    var actions = $(this).find('div.actions');
+    if(evt.type == 'mouseenter'){
+      actions.fadeIn();
+    }else{
+      actions.fadeOut('slow');
+    }
+  });
 });
 
 function submit_form(evt){

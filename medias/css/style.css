@@ -430,6 +430,10 @@ div.comments div.message blockquote {
   font-size: 1em;
 }
 
+div.comments div.message div.actions {
+  display: none;
+}
+
 div.add-comment textarea, div.edit-comment textarea {
   width: 100%;
 }

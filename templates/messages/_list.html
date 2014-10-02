@@ -16,7 +16,7 @@
     </blockquote>
   </div>
 
-  <div class="col-sm-3 text-right">
+  <div class="col-sm-3 text-right actions">
     {% if message.sender == user %}
     <a href="{% url message-delete message.pk %}" class="modal-action btn btn-sm btn-danger"><i class="icon-trash"></i> Supprimer</a>
     <a href="{% url message-edit message.pk %}" class="modal-action btn btn-sm btn-success">Editer <i class="icon-right-open"></i></a>
