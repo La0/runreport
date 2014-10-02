@@ -24,8 +24,12 @@ ul.nopill {
   padding-left: 5px;
 }
 
-.navbar-brand i {
-	color: orange;
+.navbar-brand {
+  padding: 5px 0 0 5px;
+}
+
+.nav li.debug a {
+  color: orange;
 }
 
 .navbar-fixed-top:hover .navbar-brand i::before {
