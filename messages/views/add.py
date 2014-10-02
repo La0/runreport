@@ -1,11 +1,10 @@
 from django.views.generic.edit import CreateView
-from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
 from messages.forms import MessageTextForm
 from sport.models import SportSession
-from coach.mixins import JsonResponseMixin, JSON_OPTION_CLOSE, JSON_OPTION_NO_HTML
+from mixins import MessageSessionReload
 
-class MessageSessionAdd(JsonResponseMixin, CreateView):
+class MessageSessionAdd(MessageSessionReload, CreateView):
   template_name = 'messages/add/session.html'
   form_class = MessageTextForm
 
@@ -29,10 +28,4 @@ class MessageSessionAdd(JsonResponseMixin, CreateView):
     message.recipient = self.session.day.week.user
     message.save()
 
-    # Reload boxes & close modal
-    self.json_options = [JSON_OPTION_CLOSE, JSON_OPTION_NO_HTML, ]
-    date = self.session.day.date
-    self.json_boxes = {
-      'session-%s-%d' % (date, self.session.pk) : reverse('sport-session-edit', args=(date.year, date.month, date.day, self.session.pk,)),
-    }
-    return self.render_to_response({})
+    return self.reload(self.session)

@@ -91,7 +91,6 @@ class JsonResponseMixin(object):
 
   def render_to_response(self, context):
     ajax = self.request.is_ajax()
-    print ajax
     context['ajax'] = ajax
 
     if JSON_OPTION_ONLY_AJAX in self.json_options:
@@ -102,8 +101,6 @@ class JsonResponseMixin(object):
       # Load valid template
       if hasattr(self, 'json_template_name'):
         self.template_name = self.json_template_name
-
-    print self.template_name
 
     # Render normally html, using parents code
     html = None

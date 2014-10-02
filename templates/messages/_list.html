@@ -3,7 +3,7 @@
   <div class="col-sm-1 col-sm-offset-1">
     <img class="img-responsive img-rounded" src="{{ message.sender.avatar.url }}" alt="Avatar {{ message.sender.username }}" />
   </div>
-  <div class="col-sm-8">
+  <div class="col-sm-7">
     <p>
       <i class="icon-user"></i> <a href="{% url user-public-profile message.sender.username %}">{{ message.sender.first_name }} {{ message.sender.last_name }}</a>
       <i class="icon-calendar"></i> {{ message.created|date('l d E Y - H:i') }}
@@ -14,6 +14,13 @@
     <blockquote>
     {{ message.message }}
     </blockquote>
+  </div>
+
+  <div class="col-sm-3 text-right">
+    {% if message.sender == user %}
+    <a href="{% url message-delete message.pk %}" class="modal-action btn btn-sm btn-danger"><i class="icon-trash"></i> Supprimer</a>
+    <a href="" class="modal-action btn btn-sm btn-success">Editer <i class="icon-right-open"></i></a>
+    {% endif %}
   </div>
 </div>
 {% endfor %}
