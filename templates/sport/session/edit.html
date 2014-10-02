@@ -97,26 +97,8 @@
       </div>
     </div>
 
-    {% with session.comments.order_by('created') as comments %}
-      {% for comment in comments %}
-      <div class="row">
-        <div class="col-sm-1 col-sm-offset-1">
-          <img class="img-responsive img-rounded" src="{{ comment.sender.avatar.url }}" alt="Avatar {{ comment.sender.username }}" />
-        </div>
-        <div class="col-sm-8">
-          <p>
-            <i class="icon-user"></i> <a href="{% url user-public-profile comment.sender.username %}">{{ comment.sender.first_name }} {{ comment.sender.last_name }}</a>
-            <i class="icon-calendar"></i> {{ comment.created|date('l d E Y - H:i') }}
-            {% if comment.revision > 1 %}
-            <i class="icon-right-open"></i> Edité {{ comment.revision }} fois.
-            {% endif %}
-          <P>
-          <blockquote>
-          {{ comment.message }}
-          </blockquote>
-        </div>
-      </div>
-      {% endfor %}
+    {% with session.comments.order_by('created') as messages %}
+      {% include 'messages/_list.html' %}
     {% endwith %}
 
     <div class="row">

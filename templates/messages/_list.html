@@ -1,0 +1,19 @@
+{% for message in messages %}
+<div class="row message">
+  <div class="col-sm-1 col-sm-offset-1">
+    <img class="img-responsive img-rounded" src="{{ message.sender.avatar.url }}" alt="Avatar {{ message.sender.username }}" />
+  </div>
+  <div class="col-sm-8">
+    <p>
+      <i class="icon-user"></i> <a href="{% url user-public-profile message.sender.username %}">{{ message.sender.first_name }} {{ message.sender.last_name }}</a>
+      <i class="icon-calendar"></i> {{ message.created|date('l d E Y - H:i') }}
+      {% if message.revision > 1 %}
+      <i class="icon-right-open"></i> Edité {{ message.revision }} fois.
+      {% endif %}
+    </p>
+    <blockquote>
+    {{ message.message }}
+    </blockquote>
+  </div>
+</div>
+{% endfor %}

@@ -423,3 +423,13 @@ div.profile img.avatar {
 div.list-title {
   font-weight: bold;
 }
+
+/* Comments */
+div.comments div.message blockquote {
+  margin-left: 8px;
+  font-size: 1em;
+}
+
+div.add-comment textarea {
+  width: 100%;
+}

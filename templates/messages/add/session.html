@@ -5,6 +5,7 @@
 {% set form_url = url('message-session-add', session.pk) %}
 
 {% block body %}
+<div class="add-comment">
   <h4>
     {% if session.type == 'training' %}
     <span class="label label-info">Entrainement</span>
@@ -34,7 +35,7 @@
     {{ form.message.errors|safe }}
   </div>
   {% endif %}
-
+</div>
 {% endblock %}
 
 {% block footer %}
