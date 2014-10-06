@@ -11,40 +11,35 @@
   </tr>
   <tr>
     <td>
-      <table style="width: 100%;" >
-        {% for day_date, day in days.items() %}
-        <tr class="session">
-          <td width="30%" style="text-align: right; color: #CCC; padding-right: 6px; ">
+      {% for day_date, day in days.items() %}
+      <div style="text-align: left; margin-bottom: 25px;">
+        <h4 style="color: #2c3e50;font-size: 18px; border-bottom: 1px solid #EEE; width: 580px; margin: 8px 0 15px 0;">
+          {{day_date|date('l d E')}}
+        </h4>
+        {% if day %}
+          {% for s in day.sessions.all().order_by('created') %}
+          <div id="session_{{s.id}}" style="margin: 2px 5px 10px 5px;">
+            <span style="color: #d2850b;"><strong>{{s.sport.name}}</strong> : {{s.name|default('Pas de nom')}}</span>
             <br />
-            {{day.date|date('l d E')}}
-          </td>
-          <td width="70%" style="text-align: left;">
-            <br />
-            {% if day %}
-            {% for s in day.sessions.all().order_by('created') %}
-            <div id="session_{{s.id}}">
-              <span style="color: orange;">{{s.sport.name}} : {{s.name}}</span>
-              <br />
-              {% if s.comment %}
-              <p>
-              {{s.comment|linebreaksbr}}
-              </p>
-              {% endif %}
-              {% if s.time %}
-              <span class="label">Temps</span> {{s.time|total_time()}}
-              {% endif %}
-              {% if s.distance %}
-              <span class="label">Distance</span> {{s.distance}} km
-              {% endif %}
-            </div>
-            {% endfor %}
-            {% else %}
-            <span style="font-style: italic; color: #EEE;">Pas de séance</span>
+            {% if s.comment %}
+            <p>
+            {{s.comment|linebreaksbr}}
+            </p>
             {% endif %}
-          </td>
-        </tr>
-        {% endfor %}
-      </table>
+            {% if s.time %}
+            <span class="label">Temps</span> {{s.time|total_time()}}
+            {% endif %}
+            {% if s.time and s.distance %}&bull;{% endif %}
+            {% if s.distance %}
+            <span class="label">Distance</span> {{s.distance|floatformat(2)}} km
+            {% endif %}
+          </div>
+          {% endfor %}
+        {% else %}
+        <span style="font-style: italic; color: #EEE;">Pas de séance</span>
+        {% endif %}
+      </div>
+      {% endfor %}
     </td>
   </tr>
   <tr>

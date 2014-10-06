@@ -1,83 +1,44 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <title>{% if title %}{{ title }} - {% endif %}Run Report</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
-<body class="body" style="padding: 0 !important;margin: 0 !important;display: block !important;background: #ffffff;-webkit-text-size-adjust: none;-webkit-font-smoothing: antialiased;width: 100%;height: 100%;color: #37302d;font-size: 16px;" bgcolor="#ffffff">
-<table align="center" cellpadding="0" cellspacing="0" class="force-full-width" height="100%" style="border-collapse: collapse !important;width: 100% !important;">
-  <tr>
-    <td align="center" valign="top" bgcolor="#ffffff" width="100%" style="font-family: 'Lato', 'Helvetica Neue', 'Arial', 'sans-serif' !important;font-weight: 400;text-align: center;">
-      <center>
-        <table style="margin: 0 auto;border-collapse: collapse !important;" cellpadding="0" cellspacing="0" width="600" class="w320">
-          <tr>
-            <td align="center" valign="top" style="font-family: 'Lato', 'Helvetica Neue', 'Arial', 'sans-serif' !important;font-weight: 400;text-align: center;">
+<body style="margin: 0; padding: 0;">
 
-                <table style="margin: 0 auto;border-collapse: collapse !important;width: 100% !important;" cellpadding="0" cellspacing="0" class="force-full-width">
-                  <tr>
-                    <td style="font-size: 30px;text-align: center;font-family: 'Lato', 'Helvetica Neue', 'Arial', 'sans-serif' !important;font-weight: 400;">
-                      <br>
-                        <a href="http://{{site.domain}}" target="_blank" style="color: #111;text-decoration: none;border: 0;outline: none;">Run Report</a>
-                        <br>
-                    <span style="color: #888; font-size:15px;">Carnet d'entraînement et gestion d'athlètes</span>
-                      <br>
-                      <br>
-                    </td>
-                  </tr>
-                </table>
-
-                <table style="margin: 0 auto;border-collapse: collapse !important;width: 100% !important;" cellpadding="0" cellspacing="0" class="force-full-width" bgcolor="#2c3e50">
-                  {% if title %}
-                  <tr>
-                    <td class="headline" style="font-family: 'Lato', 'Helvetica Neue', 'Arial', 'sans-serif' !important;font-weight: 400;text-align: center;color: rgb(255,165,0);font-size: 22px;">
-                      <br>
-                      {{ title }}
-                    </td>
-                  </tr>
-                  {% endif %}
-                  <tr>
-                    <td style="font-family: 'Lato', 'Helvetica Neue', 'Arial', 'sans-serif' !important;font-weight: 400;text-align: center;">
-
-                      <center>
-                        <table style="margin: 0 auto;color: white;border-collapse: collapse !important;" cellpadding="0" cellspacing="0" width="90%">
-                          <tr>
-                            <td class="content" style="font-family: 'Lato', 'Helvetica Neue', 'Arial', 'sans-serif' !important;font-weight: 400;text-align: center;">
-                            <br>
-                            {% block mail %}{% endblock %}
-                            <br>
-                            <br>
-                            </td>
-                          </tr>
-                        </table>
-                      </center>
-
-                    </td>
-                  </tr>
-                </table>
-
-
-
-                <table style="margin: 0 auto;border-collapse: collapse !important;width: 100% !important;" cellpadding="0" cellspacing="0" class="force-full-width" bgcolor="#414141">
-                  <tr>
-                    <td style="color: #bbbbbb;font-size: 12px;font-family: 'Lato', 'Helvetica Neue', 'Arial', 'sans-serif' !important;font-weight: 400;text-align: center;">
-                      <br>
-                      <a href="http://{{site.domain}}/club" target="_blank" style="text-decoration: none;border: 0;outline: none;color: #bbbbbb;">Créer un club</a> | <a href="http://{{site.domain}}/news" target="_blank" style="text-decoration: none;border: 0;outline: none;color: #bbbbbb;">News</a> | <a href="http://{{site.domain}}/contact" target="_blank" style="text-decoration: none;border: 0;outline: none;color: #bbbbbb;">Contact</a>
-                      <br><br>
-                    </td>
-                  </tr>
-                </table>
-
-
-
-
-
-            </td>
-          </tr>
-        </table>
-    </center>
+<!-- Header with logo -->
+<table width="100%" align="center" border="0" cellpadding="0" cellspacing="0" >
+  <tr style="background: #2c3e50; text-align: center; height: 80px;">
+    <td>
+      <a href="http://{{site.domain}}">
+        <img src="http://{{site.domain}}/medias/img/logo_ligne.png" alt="Run Report" />
+      </a>
     </td>
   </tr>
 </table>
+
+<table align="center" border="0" cellpadding="0" cellspacing="0" style="width: 600px; margin-top: 10px;">
+  {% if title %}
+  <tr style="height: 50px; line-height: 50px;font-family: 'Lato', 'Helvetica Neue', 'Arial', 'sans-serif' !important;font-weight: 400;text-align: center;">
+    <td style="color: #f39c12; font-size: 20px;">
+      {{ title }}
+    </td>
+  </tr>
+  {% endif %}
+  <tr>
+    <td style="margin-top: 30px; font-size: 14px;font-family: 'Lato', 'Helvetica Neue', 'Arial', 'sans-serif' !important;font-weight: 400;text-align: center;">
+      {% block mail %}{% endblock %}
+    </td>
+  </tr>
+  <tr>
+    <td style="color: #888;font-size: 14px;font-family: 'Lato', 'Helvetica Neue', 'Arial', 'sans-serif' !important;font-weight: 400;text-align: center;">
+      <br>
+      <a href="http://{{site.domain}}/club" target="_blank" style="text-decoration: none;border: 0;outline: none;color: #888;">Créer un club</a> | <a href="http://{{site.domain}}/news" target="_blank" style="text-decoration: none;border: 0;outline: none;color: #888;">News</a> | <a href="http://{{site.domain}}/contact" target="_blank" style="text-decoration: none;border: 0;outline: none;color: #888;">Contact</a>
+      <br><br>
+    </td>
+  </tr>
+</table>
+
 </body>
 </html>
