@@ -83,12 +83,23 @@
 	<footer>
 		<div class="container">
       Contstruit par <a href="http://nextcairn.com">Next Cairn</a>
-      &bull; <a href="{% url landing-team %}">L'équipe</a>
-			&bull; Code source sur <a href="http://github.com/La0/coach"><i class="icon-github"></i> Github</a>
-			&bull; {% include '_piwik.html' %}
-			<a href="{% url page-list 'news' %}"><i class="icon-mail-alt"></i> News</a>
+      <span class="text-muted">&bull;</span>
+
+      <a href="{% url landing-team %}"><i class="icon-club"></i> L'équipe</a>
+      <span class="text-muted">&bull;</span>
+
+			Code source sur <a href="http://github.com/La0/coach"><i class="icon-github"></i> Github</a>
+      <span class="text-muted">&bull;</span>
+
+			<a href="{% url page-list 'news' %}"><i class="icon-mail"></i> News</a>
+      <span class="text-muted">&bull;</span>
+
 			<a href="{% url page-list 'help' %}"><i class="icon-help-circled"></i> Aide</a>
-			<a href="/contact"><i class="icon-pencil"></i> Contact</a>
+      <span class="text-muted">&bull;</span>
+
+			<a href="/contact"><i class="icon-user"></i> Contact</a>
+
+			{% include '_piwik.html' %}
 		</div>
 	</footer>
 </body>
