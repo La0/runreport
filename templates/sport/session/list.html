@@ -63,6 +63,12 @@
   {% endif %}
   </div>
 
+  {% with session.comments.order_by('created') as messages %}
+  <div class="comments">
+    {% include 'messages/_list.html' %}
+  </div>
+  {% endwith %}
+  <a href="{% url message-session-add session.id %}" class="btn btn-sm btn-info modal-action">Ajouter un commentaire</a>
 </div>
 
 <div class="row visible-xs">
