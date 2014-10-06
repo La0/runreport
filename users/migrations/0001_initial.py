@@ -1,150 +1,97 @@
 # -*- coding: utf-8 -*-
-from south.utils import datetime_utils as datetime
-from south.db import db
-from south.v2 import SchemaMigration
-from django.db import models
+from __future__ import unicode_literals
+
+from django.db import models, migrations
+import django.utils.timezone
+import django.core.validators
+import users.models
 
 
-class Migration(SchemaMigration):
+class Migration(migrations.Migration):
 
-    depends_on = (
-      ("club", "0010_rename_m2m_column_membership"),
-      ("page", "0003_auto__chg_field_page_user"),
-      ("plan", "0007_auto__chg_field_planusage_user__chg_field_plan_creator"),
-      ("sport", "0015_auto__chg_field_runreport_user__chg_field_garminactivity_user"),
-    )
+    dependencies = [
+        ('sport', '0001_initial'),
+        ('auth', '0001_initial'),
+    ]
 
-    def forwards(self, orm):
-        # Adding model 'Athlete'
-        db.create_table(u'users_athlete', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('password', self.gf('django.db.models.fields.CharField')(max_length=128)),
-            ('last_login', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
-            ('is_superuser', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('username', self.gf('django.db.models.fields.CharField')(unique=True, max_length=30)),
-            ('first_name', self.gf('django.db.models.fields.CharField')(max_length=30, blank=True)),
-            ('last_name', self.gf('django.db.models.fields.CharField')(max_length=30, blank=True)),
-            ('email', self.gf('django.db.models.fields.EmailField')(max_length=75, blank=True)),
-            ('is_staff', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('is_active', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('date_joined', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
-            ('birthday', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
-            ('category', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['users.UserCategory'], null=True, blank=True)),
-            ('vma', self.gf('django.db.models.fields.FloatField')(null=True, blank=True)),
-            ('frequency', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('frequency_rest', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('height', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('weight', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('comment', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('nb_sessions', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('license', self.gf('django.db.models.fields.CharField')(max_length=12, null=True, blank=True)),
-            ('auto_send', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('garmin_login', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
-            ('garmin_password', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-        ))
-        db.send_create_signal(u'users', ['Athlete'])
-
-        # Adding M2M table for field groups on 'Athlete'
-        m2m_table_name = db.shorten_name(u'users_athlete_groups')
-        db.create_table(m2m_table_name, (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('athlete', models.ForeignKey(orm[u'users.athlete'], null=False)),
-            ('group', models.ForeignKey(orm[u'auth.group'], null=False))
-        ))
-        db.create_unique(m2m_table_name, ['athlete_id', 'group_id'])
-
-        # Adding M2M table for field user_permissions on 'Athlete'
-        m2m_table_name = db.shorten_name(u'users_athlete_user_permissions')
-        db.create_table(m2m_table_name, (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('athlete', models.ForeignKey(orm[u'users.athlete'], null=False)),
-            ('permission', models.ForeignKey(orm[u'auth.permission'], null=False))
-        ))
-        db.create_unique(m2m_table_name, ['athlete_id', 'permission_id'])
-
-        # Adding model 'UserCategory'
-        db.create_table(u'users_usercategory', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('code', self.gf('django.db.models.fields.CharField')(max_length=10)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=120)),
-            ('min_year', self.gf('django.db.models.fields.IntegerField')()),
-            ('max_year', self.gf('django.db.models.fields.IntegerField')()),
-        ))
-        db.send_create_signal(u'users', ['UserCategory'])
-
-
-    def backwards(self, orm):
-        # Deleting model 'Athlete'
-        db.delete_table(u'users_athlete')
-
-        # Removing M2M table for field groups on 'Athlete'
-        db.delete_table(db.shorten_name(u'users_athlete_groups'))
-
-        # Removing M2M table for field user_permissions on 'Athlete'
-        db.delete_table(db.shorten_name(u'users_athlete_user_permissions'))
-
-        # Deleting model 'UserCategory'
-        db.delete_table(u'users_usercategory')
-
-
-    models = {
-        u'auth.group': {
-            'Meta': {'object_name': 'Group'},
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '80'}),
-            'permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'})
-        },
-        u'auth.permission': {
-            'Meta': {'ordering': "(u'content_type__app_label', u'content_type__model', u'codename')", 'unique_together': "((u'content_type', u'codename'),)", 'object_name': 'Permission'},
-            'codename': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['contenttypes.ContentType']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
-        },
-        u'contenttypes.contenttype': {
-            'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
-            'app_label': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
-        },
-        u'users.athlete': {
-            'Meta': {'object_name': 'Athlete'},
-            'auto_send': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'birthday': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
-            'category': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['users.UserCategory']", 'null': 'True', 'blank': 'True'}),
-            'comment': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
-            'first_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
-            'frequency': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'frequency_rest': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'garmin_login': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
-            'garmin_password': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'groups': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "u'user_set'", 'blank': 'True', 'to': u"orm['auth.Group']"}),
-            'height': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'is_staff': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'is_superuser': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'last_login': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'last_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
-            'license': ('django.db.models.fields.CharField', [], {'max_length': '12', 'null': 'True', 'blank': 'True'}),
-            'nb_sessions': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'password': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
-            'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "u'user_set'", 'blank': 'True', 'to': u"orm['auth.Permission']"}),
-            'username': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'}),
-            'vma': ('django.db.models.fields.FloatField', [], {'null': 'True', 'blank': 'True'}),
-            'weight': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'})
-        },
-        u'users.usercategory': {
-            'Meta': {'object_name': 'UserCategory'},
-            'code': ('django.db.models.fields.CharField', [], {'max_length': '10'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'max_year': ('django.db.models.fields.IntegerField', [], {}),
-            'min_year': ('django.db.models.fields.IntegerField', [], {}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '120'})
-        }
-    }
-
-    complete_apps = ['users']
+    operations = [
+        migrations.CreateModel(
+            name='Athlete',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('password', models.CharField(max_length=128, verbose_name='password')),
+                ('last_login', models.DateTimeField(default=django.utils.timezone.now, verbose_name='last login')),
+                ('is_superuser', models.BooleanField(default=False, help_text='Designates that this user has all permissions without explicitly assigning them.', verbose_name='superuser status')),
+                ('username', models.CharField(help_text='Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only.', unique=True, max_length=30, verbose_name='username', validators=[django.core.validators.RegexValidator(b'^[\\w.@+-]+$', 'Enter a valid username.', b'invalid')])),
+                ('first_name', models.CharField(max_length=30, verbose_name='first name', blank=True)),
+                ('last_name', models.CharField(max_length=30, verbose_name='last name', blank=True)),
+                ('email', models.EmailField(unique=True, max_length=75, verbose_name='email address', blank=True)),
+                ('is_staff', models.BooleanField(default=False, help_text='Designates whether the user can log into this admin site.', verbose_name='staff status')),
+                ('is_active', models.BooleanField(default=True, help_text='Designates whether this user should be treated as active. Unselect this instead of deleting accounts.', verbose_name='active')),
+                ('date_joined', models.DateTimeField(default=django.utils.timezone.now, verbose_name='date joined')),
+                ('birthday', models.DateField(null=True, blank=True)),
+                ('vma', models.FloatField(blank=True, null=True, validators=[django.core.validators.MinValueValidator(0)])),
+                ('frequency', models.IntegerField(blank=True, null=True, validators=[django.core.validators.MinValueValidator(0)])),
+                ('frequency_rest', models.IntegerField(blank=True, null=True, validators=[django.core.validators.MinValueValidator(0)])),
+                ('height', models.IntegerField(blank=True, null=True, validators=[django.core.validators.MinValueValidator(0)])),
+                ('weight', models.IntegerField(blank=True, null=True, validators=[django.core.validators.MinValueValidator(0)])),
+                ('comment', models.TextField(null=True, blank=True)),
+                ('nb_sessions', models.IntegerField(blank=True, null=True, validators=[django.core.validators.MinValueValidator(0)])),
+                ('license', models.CharField(max_length=12, null=True, blank=True)),
+                ('auto_send', models.BooleanField(default=False)),
+                ('garmin_login', models.CharField(max_length=255, null=True, blank=True)),
+                ('garmin_password', models.TextField(null=True, blank=True)),
+                ('demo', models.BooleanField(default=False)),
+                ('avatar', models.ImageField(upload_to=users.models.build_avatar_path)),
+                ('privacy_profile', models.CharField(default=b'club', max_length=50, choices=[(b'public', 'Public'), (b'club', 'Club'), (b'private', 'Priv\xe9')])),
+                ('privacy_avatar', models.CharField(default=b'club', max_length=50, choices=[(b'public', 'Public'), (b'club', 'Club'), (b'private', 'Priv\xe9')])),
+                ('privacy_races', models.CharField(default=b'club', max_length=50, choices=[(b'public', 'Public'), (b'club', 'Club'), (b'private', 'Priv\xe9')])),
+                ('privacy_records', models.CharField(default=b'club', max_length=50, choices=[(b'public', 'Public'), (b'club', 'Club'), (b'private', 'Priv\xe9')])),
+                ('privacy_stats', models.CharField(default=b'club', max_length=50, choices=[(b'public', 'Public'), (b'club', 'Club'), (b'private', 'Priv\xe9')])),
+                ('privacy_calendar', models.CharField(default=b'private', max_length=50, choices=[(b'public', 'Public'), (b'club', 'Club'), (b'private', 'Priv\xe9')])),
+            ],
+            options={
+                'abstract': False,
+                'verbose_name': 'user',
+                'verbose_name_plural': 'users',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='UserCategory',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('code', models.CharField(max_length=10)),
+                ('name', models.CharField(max_length=120)),
+                ('min_year', models.IntegerField()),
+                ('max_year', models.IntegerField()),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.AddField(
+            model_name='athlete',
+            name='category',
+            field=models.ForeignKey(blank=True, to='users.UserCategory', null=True),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='athlete',
+            name='default_sport',
+            field=models.ForeignKey(default=3, to='sport.Sport'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='athlete',
+            name='groups',
+            field=models.ManyToManyField(related_query_name='user', related_name='user_set', to='auth.Group', blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of his/her group.', verbose_name='groups'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='athlete',
+            name='user_permissions',
+            field=models.ManyToManyField(related_query_name='user', related_name='user_set', to='auth.Permission', blank=True, help_text='Specific permissions for this user.', verbose_name='user permissions'),
+            preserve_default=True,
+        ),
+    ]

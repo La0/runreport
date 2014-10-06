@@ -138,7 +138,6 @@ INSTALLED_APPS = (
     'club',
     'page',
     'plan',
-    'south',
 )
 
 # For auto login on user create
@@ -268,6 +267,8 @@ CACHES = {
   }
 }
 
+# Test Engine
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 # Import local settings, if any
 try:

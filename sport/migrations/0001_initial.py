@@ -1,105 +1,107 @@
 # -*- coding: utf-8 -*-
-import datetime
-from south.db import db
-from south.v2 import SchemaMigration
-from django.db import models
+from __future__ import unicode_literals
+
+from django.db import models, migrations
+import interval.fields
 
 
-class Migration(SchemaMigration):
+class Migration(migrations.Migration):
 
-    def forwards(self, orm):
-        # Adding model 'RunReport'
-        db.create_table('run_runreport', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
-            ('year', self.gf('django.db.models.fields.IntegerField')(default=2013)),
-            ('week', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('published', self.gf('django.db.models.fields.BooleanField')(default=False)),
-        ))
-        db.send_create_signal('run', ['RunReport'])
+    dependencies = [
+        ('plan', '0001_initial'),
+    ]
 
-        # Adding unique constraint on 'RunReport', fields ['user', 'year', 'week']
-        db.create_unique('run_runreport', ['user_id', 'year', 'week'])
-
-        # Adding model 'RunSession'
-        db.create_table('run_runsession', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('report', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['run.RunReport'])),
-            ('day', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('comment', self.gf('django.db.models.fields.TextField')()),
-        ))
-        db.send_create_signal('run', ['RunSession'])
-
-        # Adding unique constraint on 'RunSession', fields ['report', 'day']
-        db.create_unique('run_runsession', ['report_id', 'day'])
-
-
-    def backwards(self, orm):
-        # Removing unique constraint on 'RunSession', fields ['report', 'day']
-        db.delete_unique('run_runsession', ['report_id', 'day'])
-
-        # Removing unique constraint on 'RunReport', fields ['user', 'year', 'week']
-        db.delete_unique('run_runreport', ['user_id', 'year', 'week'])
-
-        # Deleting model 'RunReport'
-        db.delete_table('run_runreport')
-
-        # Deleting model 'RunSession'
-        db.delete_table('run_runsession')
-
-
-    models = {
-        'auth.group': {
-            'Meta': {'object_name': 'Group'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '80'}),
-            'permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'})
-        },
-        'auth.permission': {
-            'Meta': {'ordering': "('content_type__app_label', 'content_type__model', 'codename')", 'unique_together': "(('content_type', 'codename'),)", 'object_name': 'Permission'},
-            'codename': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['contenttypes.ContentType']"}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
-        },
-        'auth.user': {
-            'Meta': {'object_name': 'User'},
-            'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
-            'first_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
-            'groups': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Group']", 'symmetrical': 'False', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'is_staff': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'is_superuser': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'last_login': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'last_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
-            'password': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
-            'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'}),
-            'username': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'})
-        },
-        'contenttypes.contenttype': {
-            'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
-            'app_label': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
-        },
-        'run.runreport': {
-            'Meta': {'unique_together': "(('user', 'year', 'week'),)", 'object_name': 'RunReport'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'published': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"}),
-            'week': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'year': ('django.db.models.fields.IntegerField', [], {'default': '2013'})
-        },
-        'run.runsession': {
-            'Meta': {'unique_together': "(('report', 'day'),)", 'object_name': 'RunSession'},
-            'comment': ('django.db.models.fields.TextField', [], {}),
-            'day': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'report': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['run.RunReport']"})
-        }
-    }
-
-    complete_apps = ['run']
+    operations = [
+        migrations.CreateModel(
+            name='GarminActivity',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('garmin_id', models.IntegerField(unique=True)),
+                ('name', models.CharField(max_length=255)),
+                ('time', interval.fields.IntervalField()),
+                ('distance', models.FloatField()),
+                ('speed', models.TimeField()),
+                ('md5_raw', models.CharField(max_length=32)),
+                ('md5_laps', models.CharField(max_length=32, null=True)),
+                ('md5_details', models.CharField(max_length=32, null=True)),
+                ('date', models.DateTimeField()),
+                ('created', models.DateTimeField(auto_now_add=True)),
+                ('updated', models.DateTimeField(auto_now=True)),
+            ],
+            options={
+                'db_table': 'garmin_activity',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='RaceCategory',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(max_length=250)),
+                ('distance', models.FloatField(null=True, blank=True)),
+            ],
+            options={
+                'db_table': 'sport_race_category',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Sport',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(max_length=250)),
+                ('slug', models.SlugField(unique=True)),
+                ('depth', models.IntegerField(default=0)),
+            ],
+            options={
+                'db_table': 'sport_list',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='SportDay',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('date', models.DateField()),
+            ],
+            options={
+                'db_table': 'sport_day',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='SportSession',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('time', interval.fields.IntervalField(null=True, blank=True)),
+                ('distance', models.FloatField(null=True, blank=True)),
+                ('name', models.CharField(max_length=255, null=True, blank=True)),
+                ('comment', models.TextField(null=True, blank=True)),
+                ('type', models.CharField(default=b'training', max_length=12, choices=[(b'training', b'Entrainement'), (b'race', b'Course'), (b'rest', b'Repos')])),
+                ('created', models.DateTimeField(auto_now_add=True)),
+                ('updated', models.DateTimeField(auto_now=True)),
+            ],
+            options={
+                'db_table': 'sport_session',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='SportWeek',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('year', models.IntegerField(default=2013)),
+                ('week', models.IntegerField(default=0)),
+                ('published', models.BooleanField(default=False)),
+                ('created', models.DateTimeField(auto_now_add=True)),
+                ('updated', models.DateTimeField(auto_now=True)),
+                ('comment', models.TextField(null=True, blank=True)),
+                ('task', models.CharField(max_length=36, null=True, blank=True)),
+                ('plan_week', models.ForeignKey(blank=True, to='plan.PlanWeek', null=True)),
+            ],
+            options={
+                'db_table': 'sport_week',
+            },
+            bases=(models.Model,),
+        ),
+    ]
