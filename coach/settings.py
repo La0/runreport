@@ -227,7 +227,7 @@ PIWIK_ID = False
 # Celery broker
 BROKER_URL = 'redis://'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
-CELERY_TIMEZONE = 'UTC'
+CELERY_TIMEZONE = 'Europe/Paris'
 
 # Celery Periodic tasks
 from datetime import timedelta
@@ -235,7 +235,7 @@ from celery.schedules import crontab
 CELERYBEAT_SCHEDULE = {
   'auto-send-reports-on-sunday': {
     'task': 'sport.tasks.auto_publish_reports',
-    'schedule': crontab(day_of_week='sunday', hour=23, minute=0),
+    'schedule': crontab(day_of_week=0, hour=23, minute=0),
   },
   'garmin-import-10-min': {
     'task': 'sport.tasks.garmin_import',

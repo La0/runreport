@@ -3,15 +3,16 @@ from __future__ import absolute_import
 from celery import shared_task
 
 @shared_task
-def auto_publish_reports():
+def auto_publish_reports(*args, **kwargs):
   '''
   Publish all reports for this week
   '''
-  from datetime import date
+  from datetime import date, timedelta
   from sport.models import SportWeek
   from django.db.models import Count
-  today = date.today()
-  year, week = today.year, int(today.strftime('%W'))
+  from helpers import date_to_week
+  today = date.today() - timedelta(days=1) # just to be sure we don't send the next week !
+  week, year = date_to_week(today)
   reports = SportWeek.objects.filter(year=year, week=week, published=False).order_by('user__username')
   reports = reports.filter(user__auto_send=True) # Auto send must be enabled per user
   for r in reports:
