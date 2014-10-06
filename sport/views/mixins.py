@@ -104,10 +104,12 @@ class CalendarDay(object):
   context_object_name = 'session'
 
   def get_object(self):
+
     # Load day, report and eventual session
     self.day = date(int(self.get_year()), int(self.get_month()), int(self.get_day()))
+    print ' IN USE >> %s' % self.day
     week, year = date_to_week(self.day)
-    self.week, _ = SportWeek.objects.get_or_create(user=self.request.user, year=year, week=week)
+    self.week, created = SportWeek.objects.get_or_create(user=self.request.user, year=year, week=week)
     try:
       self.object = SportDay.objects.get(week=self.week, date=self.day)
     except:

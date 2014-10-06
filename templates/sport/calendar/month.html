@@ -38,7 +38,7 @@
 		<tr>
 			{% for day in week %}
 			{% with sessions[day] as session %}
-			<td class="day modal-action" href="{{pageday|url(*pageargs + [day.year, day.month, day.day])}}">
+			<td class="day link" href="{{pageday|url(*pageargs + [day.year, day.month, day.day])}}">
 
 				<p class="date">
 					{% if day.day == 1 or (loop.first and day.month != months.1.month) %}

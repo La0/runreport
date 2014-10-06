@@ -3,6 +3,13 @@ $(function(){
   // Modals show
   $(document).on('click', '.modal-action', load_modal);
 
+  // Link on other elements
+  $(document).on('click', '.link', function(){
+    var url = this.getAttribute('href');
+    if(url)
+      window.location.href = url;
+  });
+
   // Form load
   $(document).on('submit', 'form.box', load_form);
 

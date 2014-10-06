@@ -84,6 +84,10 @@ div.week div.day.today {
   border-radius: 5px 5px;
 }
 
+div.day ul.nav {
+  margin-bottom: 20px;
+}
+
 form.report textarea {
   line-height: 15px;
   height: 100px;
@@ -165,6 +169,10 @@ table.calendar td p.date {
 
 div.modal.day div.modal-body input, div.modal.day div.modal-body textarea {
   max-height: 100px;
+}
+
+form.week-publish textarea {
+  width: 100%;
 }
 
 .modal {

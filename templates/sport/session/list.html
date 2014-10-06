@@ -18,9 +18,9 @@
 
     {% if session_links %}
       {% if member %}
-      <a href="{% url user-calendar-day member.username, session.day.date.year, session.day.date.month, session.day.date.day %}" class="modal-action">
+      <a href="{% url user-calendar-day member.username, session.day.date.year, session.day.date.month, session.day.date.day %}">
       {% else %}
-      <a href="{% url report-day session.day.date.year, session.day.date.month, session.day.date.day %}" class="modal-action">
+      <a href="{% url report-day session.day.date.year, session.day.date.month, session.day.date.day %}">
       {% endif %}
     {% endif %}
 

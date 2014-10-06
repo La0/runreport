@@ -31,7 +31,13 @@ class SportWeek(models.Model):
     app_label = 'sport'
 
   def __unicode__(self):
-    return u'%s : %d week=%d' % (self.user, self.year, self.week)
+    # Nice display name, used in templates too
+    st, end = self.get_date_start(), self.get_date_end()
+    if st.month == end.month:
+      return u'%d-%d %s' % (st.day, end.day, end.strftime('%B %Y'))
+
+    # Default to full description
+    return u'%s - %s' % (st.strftime('%d %B %Y'), end.strftime('%d %B %Y'))
 
   def get_dates(self):
     # Days from monday to sunday

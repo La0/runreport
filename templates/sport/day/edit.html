@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% set page_title = day|date('l d E Y')|title() %}
+
+{% block content %}
+<div class="container day">
+
+  <ul class="nav nav-tabs" role="tablist">
+    <li>
+      <a href="{% url report-day previous_day.year, previous_day.month, previous_day.day %}" role="tab">
+        <i class="icon-left-open"></i>
+      </a>
+    </li>
+    {% for d, sd in report.get_days_per_date().items() %}
+    <li class="{% if d == session.date %}active{% endif %}">
+      <a href="{% url report-day d.year, d.month, d.day %}" role="tab" >
+        {% if d == session.date  %}
+          {{ d|date('l d E Y')|title() }}
+        {% else %}
+          {{ d|date('l')|title() }}
+        {% endif %}
+        {% if sd %}
+          {% for sport, nb in sd.sports_count() %}
+            <i class="icon-sport-{{sport.slug}}"></i>{% if nb > 1 %} x {{ nb }}{% endif %}
+          {% endfor %}
+        {% endif %}
+      </a>
+    </li>
+    {% endfor %}
+    <li>
+      <a href="{% url report-day next_day.year, next_day.month, next_day.day %}" role="tab">
+        <i class="icon-right-open"></i>
+      </a>
+    </li>
+  </ul>
+
+  <div id="sessions-{{day}}">
+  {% with True as modal %}
+  {% for form in forms %}
+    {% with form.instance as session %}
+      {% include 'sport/session/edit.html' %}
+    {% endwith %}
+    <hr />
+  {% endfor %}
+  {% endwith %}
+  </div>
+
+	{% if report.task %}
+	<div class="alert alert-info">
+		<h4>Rapport en cours d'envoi</h4>
+		Ce rapport est en train d'être envoyé à votre entraineur.
+	</div>
+	{% endif %}
+
+	{% if previous_week %}
+	<div class="alert alert-danger">
+		<h4>Semaine précédente non envoyée !</h4>
+		Vos commentaires de la <a href="{% url report-week previous_week.year, previous_week.week %}">semaine précédente</a> n'ont pas été envoyés.
+	</div>
+	{% endif %}
+
+  <div class="actions well">
+    {% if session.pk %}
+    <a href="{% url report-day-delete day.year, day.month, day.day %}" class="pull-left modal-action btn btn-danger"><i class="icon-trash"></i> Supprimer la journée</a>
+    {% endif %}
+    <p class="text-right">
+      <a href="{% url sport-session-add day.year, day.month, day.day %}" class="modal-action btn btn-primary extra-sport-add" data-append="sessions-{{day}}">
+        <i class="icon-plus"></i> Ajouter une séance
+      </a>
+      {% if report.published or report.task %}
+      <a href="{% url report-week-publish report.year, report.week %}" class="modal-action btn btn-success">Semaine publiée</a>
+      {% else %}
+      <a href="{% url report-week-publish report.year, report.week %}" class="modal-action btn btn-info">Publier la semaine <i class="icon-right-open"></i></a>
+      {% endif %}
+    </p>
+  </div>
+
+</div>
+{% endblock %}

@@ -96,7 +96,7 @@ h2, h3 {
         {% endif %}
       </div>
 			<div class="col-sm-1">
-				<a class="modal-action btn btn-xs {% if loop.first %}btn-warning{% else %}btn-default{% endif %}" href="{{ raceurl|url(*raceargs + [race.date.year, race.date.month, race.date.day]) }}">Voir</a>
+				<a class="btn btn-xs {% if loop.first %}btn-warning{% else %}btn-default{% endif %}" href="{{ raceurl|url(*raceargs + [race.date.year, race.date.month, race.date.day]) }}">Voir</a>
 			</div>
 		</div>
 		{% endwith %}
