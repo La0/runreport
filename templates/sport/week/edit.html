@@ -4,7 +4,11 @@
 <div class="container week">
   <div class="row">
     <div class="col-sm-9 col-xs-12">
-      <h2>Semaine du {{ report }}</h2>
+      {% if member %}
+      <h3>{{ member.first_name }} {{ member.last_name }} : Semaine du {{ report }}</h3>
+      {% else %}
+      <h3>Votre semaine du {{ report }}</h3>
+      {% endif %}
     </div>
     <div class="actions col-sm-3 col-xs-12 text-right hidden-xs">
     {% if not member  %}
@@ -24,9 +28,9 @@
   {% endif %}
 
   {% for day_date, day in report.get_days_per_date().items() %}
-  <div class="row day actions-hover link" href="{% url report-day day_date.year, day_date.month, day_date.day %}">
+  <div class="row day actions-hover link" href="{{ pageday|url(*pageargs + [day_date.year, day_date.month, day_date.day]) }}">
     <h4>
-      <a href="{% url report-day day_date.year, day_date.month, day_date.day %}">
+      <a href="{{ pageday|url(*pageargs + [day_date.year, day_date.month, day_date.day]) }}">
         {{day_date|date('l d E')|title()}}
       </a>
     </h4>

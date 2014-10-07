@@ -77,6 +77,10 @@ class ProfilePrivacyMixin(object):
 
     return self.member
 
+  def get_user(self):
+    # Alias on get_member for sport mixins
+    return self.member or self.get_member()
+
   def dispatch(self, *args, **kwargs):
     # Check you have the rights
     self.get_member()

@@ -30,7 +30,7 @@ class CurrentWeekMixin(object):
     return int(self.kwargs.get('week', self._week))
 
   def get_object(self):
-    return get_object_or_404(SportWeek, year=self.get_year(), week=self.get_week(), user=self.request.user)
+    return get_object_or_404(SportWeek, year=self.get_year(), week=self.get_week(), user=self.get_user())
 
   def check_limits(self):
     # Load min & max date
@@ -44,6 +44,22 @@ class CurrentWeekMixin(object):
     if self.date > self._today:
       raise Http404('In the future.')
 
+  def get_user(self):
+    # By default, use connected user
+    return self.request.user
+
+  def get_links(self):
+    return {
+      'pageargs' : [],
+      'pagemonth' : 'report-month',
+      'pageweek' : 'report-week',
+      'pageday' : 'report-day',
+    }
+
+  def get_context_data(self, *args, **kwargs):
+    context = super(CurrentWeekMixin, self).get_context_data(*args, **kwargs)
+    context.update(self.get_links())
+    return context
 
 class WeekPaginator(object):
   '''
@@ -112,9 +128,8 @@ class CalendarDay(object):
 
     # Load day, report and eventual session
     self.day = date(int(self.get_year()), int(self.get_month()), int(self.get_day()))
-    print ' IN USE >> %s' % self.day
     week, year = date_to_week(self.day)
-    self.week, created = SportWeek.objects.get_or_create(user=self.request.user, year=year, week=week)
+    self.week, created = SportWeek.objects.get_or_create(user=self.get_user(), year=year, week=week)
     try:
       self.object = SportDay.objects.get(week=self.week, date=self.day)
     except:
@@ -123,11 +138,24 @@ class CalendarDay(object):
 
   def get_context_data(self, **kwargs):
     context = super(CalendarDay, self).get_context_data(**kwargs)
-    context['day'] = self.day
+    context['day_date'] = self.day
     context['report'] = self.week
     context['session_types'] = SESSION_TYPES
-    context['session'] = self.object
+    context['day'] = self.object
+    context.update(self.get_links())
     return context
+
+  def get_user(self):
+    # By default, use connected user
+    return self.request.user
+
+  def get_links(self):
+    return {
+      'pageargs' : [],
+      'pagemonth' : 'report-month',
+      'pageweek' : 'report-week',
+      'pageday' : 'report-day',
+    }
 
 class CalendarSession(CalendarDay):
 
@@ -161,6 +189,9 @@ class SportSessionForms(object):
     '''
     Build SportSessionForm instances for a day
     '''
+    if self.get_user() != self.request.user:
+      return []
+
     default_sport = self.request.user.default_sport
     post_data = None # No need for POST, as the action is on another url
 

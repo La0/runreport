@@ -1,12 +1,12 @@
 <ul class="nav nav-tabs" role="tablist">
   <li>
-    <a href="{% url report-day previous_day.year, previous_day.month, previous_day.day %}" role="tab">
+    <a href="{{ pageday|url(*pageargs + [previous_day.year, previous_day.month, previous_day.day]) }}" role="tab">
       <i class="icon-left-open"></i>
     </a>
   </li>
   {% for d, sd in report.get_days_per_date().items() %}
   <li class="{% if d == session.date %}active{% endif %}">
-    <a href="{% url report-day d.year, d.month, d.day %}" role="tab" >
+    <a href="{{ pageday|url(*pageargs + [d.year, d.month, d.day]) }}" role="tab" >
       {% if d == session.date  %}
         {{ d|date('l d E Y')|title() }}
       {% else %}
@@ -21,7 +21,7 @@
   </li>
   {% endfor %}
   <li>
-    <a href="{% url report-day next_day.year, next_day.month, next_day.day %}" role="tab">
+    <a href="{{ pageday|url(*pageargs + [next_day.year, next_day.month, next_day.day]) }}" role="tab">
       <i class="icon-right-open"></i>
     </a>
   </li>
