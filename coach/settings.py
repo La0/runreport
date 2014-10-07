@@ -33,6 +33,13 @@ HOME = os.path.realpath('.')
 # In a Windows environment this must be set to your system time zone.
 TIME_ZONE = 'Europe/Paris'
 
+# French locale
+try:
+  import locale
+  locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
+except:
+  print 'Failed to set French locale'
+
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'fr-fr'
