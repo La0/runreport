@@ -11,12 +11,6 @@
 		text-overflow: ellipsis;
 		overflow: hidden;
 	}
-
-	span.type {
-		display: inline-block;
-		width: 10px;
-		height: 10px;
-	}
 </style>
 {% endblock %}
 
@@ -48,7 +42,7 @@
                         </div>
                         {% for day_date in days %}
                         {% with object_list[day_date] as day %}
-                        <div class="day modal-action" href="{{ pageday|url(*pageargs + [day_date.year, day_date.month, day_date.day]) }}">
+                        <div class="day link" href="{{ pageday|url(*pageargs + [day_date.year, day_date.month, day_date.day]) }}">
                             <span class="date">{{ day_date.day }}</span>
                             {% if day %}
                     <span class="name {% if day %}session {{ day.best_type() }}{% endif %}">

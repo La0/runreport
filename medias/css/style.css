@@ -79,6 +79,11 @@ body > footer {
 div.week div.day {
   padding: 0 5px;
 }
+
+div.week div.day h4 a {
+  color: #2c3e50;
+}
+
 div.week div.day.today {
   background: rgb(245, 245, 245);
   border-radius: 5px 5px;
@@ -96,6 +101,10 @@ form.report textarea {
 form.report div.actions.row div {
   margin-bottom: 5px;
   text-align: center;
+}
+
+div.sport-session {
+  padding: 2px 0 10px 0;
 }
 
 form div.sport-session.extra {
@@ -281,6 +290,12 @@ img.sport {
   vertical-align: middle;
 }
 
+	span.type {
+		display: inline-block;
+		width: 10px;
+		height: 10px;
+	}
+
 .row-striped > * {
 	padding: 5px;
 	border-top: 1px solid #ddd;
@@ -307,6 +322,10 @@ a.btn {
 
 div.actions *.btn.pull-right {
   margin: 0 2px;
+}
+
+div.week div.actions .btn {
+  margin-top: 18px;
 }
 
 div.week div.day {
@@ -438,10 +457,27 @@ div.comments div.message blockquote {
   font-size: 1em;
 }
 
-div.comments div.message div.actions {
+div.actions-hover div.actions {
   display: none;
 }
 
 div.add-comment textarea, div.edit-comment textarea {
   width: 100%;
+}
+
+div.day div.title {
+  margin-bottom: 15px;
+}
+
+div.day div.title a.btn {
+  margin-top: 18px;
+}
+
+div.week div.day.link {
+  cursor: pointer;
+}
+
+div.week div.day.link:hover {
+  border-radius: 4px 4px;
+  background: #EEE;
 }

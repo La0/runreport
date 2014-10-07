@@ -1,11 +1,15 @@
-{% if sessions %}
-{% for session in sessions.order_by('created') %}
+{% if day %}
+{% for session in day.sessions.order_by('created') %}
 <div class="sport-session row hidden-xs">
   <div class="col-sm-6">
-    <i class="icon-sport-{{session.sport.slug}}"></i>
+    <i class="icon-sport-{{session.sport.slug}} do-tooltip" title="{{ session.sport.name }}"></i>
 
     {% if session.has_garmin() %}
     <i class="icon-location"></i>
+    {% endif %}
+
+    {% if session.comments.count() > 0 %}
+    <i class="icon-comment"></i>
     {% endif %}
 
     {% if session.type == 'training' %}
@@ -16,23 +20,19 @@
     <span class="label label-default">Repos</span>
     {% endif %}
 
-    {% if session_links %}
-      {% if member %}
-      <a href="{% url user-calendar-day member.username, session.day.date.year, session.day.date.month, session.day.date.day %}">
-      {% else %}
-      <a href="{% url report-day session.day.date.year, session.day.date.month, session.day.date.day %}">
-      {% endif %}
-    {% endif %}
-
     {% if session.name %}
     <strong>{{session.name}}</strong>
     {% else %}
     <i>Pas de nom</i>
     {% endif %}
+  </div>
 
-    {% if session_links %}
-      </a>
-    {% endif %}
+  <div class="col-sm-2">
+  {% if session.time %}
+    {{ session.time|total_time() }}
+  {% else %}
+    <span class="label label-warning">Pas de Temps</span>
+  {% endif %}
   </div>
 
   <div class="col-sm-2">
@@ -47,28 +47,20 @@
   {% endif %}
   </div>
 
-  <div class="{% if modal %}col-sm-2{% else %}col-sm-1{% endif %}">
-  {% if session.time %}
-    {{ session.time|total_time() }}
-  {% else %}
-    <span class="label label-warning">Pas de Temps</span>
-  {% endif %}
-  </div>
-
-  <div class="col-sm-12 comment">
   {% if session.comment%}
+  <div class="col-sm-12 comment">
     {{session.comment|linebreaksbr()}}
-  {% else %}
-    <i class="text-muted">Pas de commentaire</i>
-  {% endif %}
   </div>
+  {% endif %}
 
+{#
   {% with session.comments.order_by('created') as messages %}
   <div class="comments">
     {% include 'messages/_list.html' %}
   </div>
   {% endwith %}
   <a href="{% url message-session-add session.id %}" class="btn btn-sm btn-info modal-action">Ajouter un commentaire</a>
+#}
 </div>
 
 <div class="row visible-xs">
@@ -87,13 +79,14 @@
   <div class="col-xs-2">
     {% if session.time %}{{ session.time|total_time() }}{% else %}-{% endif %}
   </div>
-  {% if not member %}
-  <div class="col-xs-1">
-    <a class="modal-action btn btn-info btn-xs" href="{% url sport-session-edit day.year, day.month, day.day, session.pk %}">Editer</a>
-  </div>
-  {% endif %}
 </div>
 {% endfor %}
+{% elif not member %}
+<p>
+  <a href="{% url report-day day_date.year, day_date.month, day_date.day %}" class="btn btn-info btn-sm"><i class="icon-plus"></i> Ajouter une séance</a>
+</p>
 {% else %}
-<i class="text-muted">Pas de séances.</i>
+<p>
+  <i class="text-muted">Pas de séances</i>
+</p>
 {% endif %}

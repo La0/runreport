@@ -9,7 +9,6 @@ from django.views.generic.dates import WeekArchiveView
 from sport.views.mixins import CurrentWeekMixin, WeekPaginator
 from sport.models import SportDay
 from datetime import datetime, date
-from coach.mixins import JsonResponseMixin
 from sport.views import RunCalendarYear, RunCalendar
 from helpers import week_to_date
 
@@ -75,7 +74,7 @@ class AthleteCalendarWeek(CurrentWeekMixin, ProfilePrivacyMixin, WeekPaginator, 
 
     return (dates, sessions, context)
 
-class AthleteCalendarDay(ProfilePrivacyMixin, JsonResponseMixin, DateDetailView):
+class AthleteCalendarDay(ProfilePrivacyMixin, DateDetailView):
   rights_needed = ('profile', 'calendar')
   template_name = 'users/calendar/day.html'
   month_format = '%M'

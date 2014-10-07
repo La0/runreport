@@ -5,44 +5,25 @@
 {% block content %}
 <div class="container day">
 
-  <ul class="nav nav-tabs" role="tablist">
-    <li>
-      <a href="{% url report-day previous_day.year, previous_day.month, previous_day.day %}" role="tab">
-        <i class="icon-left-open"></i>
-      </a>
-    </li>
-    {% for d, sd in report.get_days_per_date().items() %}
-    <li class="{% if d == session.date %}active{% endif %}">
-      <a href="{% url report-day d.year, d.month, d.day %}" role="tab" >
-        {% if d == session.date  %}
-          {{ d|date('l d E Y')|title() }}
-        {% else %}
-          {{ d|date('l')|title() }}
-        {% endif %}
-        {% if sd %}
-          {% for sport, nb in sd.sports_count() %}
-            <i class="icon-sport-{{sport.slug}}"></i>{% if nb > 1 %} x {{ nb }}{% endif %}
-          {% endfor %}
-        {% endif %}
-      </a>
-    </li>
-    {% endfor %}
-    <li>
-      <a href="{% url report-day next_day.year, next_day.month, next_day.day %}" role="tab">
-        <i class="icon-right-open"></i>
-      </a>
-    </li>
-  </ul>
+  <div class="row title">
+    <div class="col-sm-8 col-xs-12">
+      <h3>Votre semaine du {{ report }}</h3>
+    </div>
+    <div class="col-sm-4 hidden-xs text-right">
+      <a href="{% url report-week report.year, report.week %}" class="btn btn-sm btn-info"><i class="icon-list"></i> Voir la semaine</a>
+      <a href="{% url report-month day.year, day.month %}" class="btn btn-sm btn-danger"><i class="icon-calendar"></i> Voir le mois</a>
+    </div>
+  </div>
+
+  {% include 'sport/day/_nav.html' %}
 
   <div id="sessions-{{day}}">
-  {% with True as modal %}
   {% for form in forms %}
     {% with form.instance as session %}
       {% include 'sport/session/edit.html' %}
     {% endwith %}
     <hr />
   {% endfor %}
-  {% endwith %}
   </div>
 
 	{% if report.task %}
@@ -59,7 +40,7 @@
 	</div>
 	{% endif %}
 
-  <div class="actions well">
+  <div class="actions">
     {% if session.pk %}
     <a href="{% url report-day-delete day.year, day.month, day.day %}" class="pull-left modal-action btn btn-danger"><i class="icon-trash"></i> Supprimer la journée</a>
     {% endif %}

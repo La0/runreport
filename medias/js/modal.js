@@ -87,7 +87,7 @@ $(function(){
   });
 
   // Toggle messages actions on hover
-  $(document).on('mouseenter mouseleave', 'div.message', function(evt){
+  $(document).on('mouseenter mouseleave', 'div.actions-hover', function(evt){
     var actions = $(this).find('div.actions');
     if(evt.type == 'mouseenter'){
       actions.fadeIn();

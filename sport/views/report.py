@@ -1,21 +1,16 @@
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, DetailView
 from helpers import week_to_date, check_task
 from sport.models import SportWeek
 from datetime import date
 from sport.forms import SportWeekForm
 from sport.tasks import publish_report
-from django.shortcuts import get_object_or_404
 from mixins import CurrentWeekMixin
 from day import RunCalendarDay
 from coach.mixins import JsonResponseMixin, JSON_OPTION_CLOSE, JSON_OPTION_NO_HTML, JSON_OPTION_BODY_RELOAD
 
 class WeekPublish(JsonResponseMixin, CurrentWeekMixin, UpdateView):
-  template_name = 'sport/week/edit.html'
-  context_object_name = 'report'
+  template_name = 'sport/week/publish.html'
   form_class = SportWeekForm
-
-  def get_object(self):
-    return get_object_or_404(SportWeek, year=self.get_year(), week=self.get_week(), user=self.request.user)
 
   def form_valid(self, form):
     # Checks
@@ -39,8 +34,8 @@ class WeekPublish(JsonResponseMixin, CurrentWeekMixin, UpdateView):
     self.json_options = [JSON_OPTION_CLOSE, JSON_OPTION_NO_HTML, JSON_OPTION_BODY_RELOAD]
     return self.render_to_response({})
 
-class WeeklyReport(RunCalendarDay):
-  _day = None
+class WeeklyReport(CurrentWeekMixin, DetailView):
+  template_name = 'sport/week/edit.html'
 
   def get(self, request, *args, **kwargs):
     # Render minimal response
@@ -50,21 +45,5 @@ class WeeklyReport(RunCalendarDay):
       self.template_name = "landing/index.html" # Use landing page
       return self.render_to_response({})
 
-    # By default, use current day
-    self._day = date.today()
-
-    # Use first day from week's url
-    if 'year' in self.kwargs and 'week' in self.kwargs:
-      self._day = week_to_date(self.kwargs['year'], self.kwargs['week'])
-
     return super(WeeklyReport, self).get(request, *args, **kwargs)
-
-  def get_year(self):
-    return self._day.year
-
-  def get_month(self):
-    return self._day.month
-
-  def get_day(self):
-    return self._day.day
 

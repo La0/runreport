@@ -1,21 +1,21 @@
-{% extends 'modal.html' %}
+{% extends 'base.html' %}
 
-{% set modal_title = '%s %s : %s' % (member.first_name, member.last_name, day|date('l d E Y')|title()) %}
-{% set modal_url = day|date('l d E Y')|title() %}
+{% set page_title = '%s %s : %s' % (member.first_name, member.last_name, day|date('l d E Y')|title()) %}
 
-{% block body %}
-{% if session %}
+{% block content%}
+<div class="container">
+  {% include 'sport/day/_nav.html' %}
 
-{% with session.sessions as sessions %}
-{% include 'sport/session/list.html' %}
-{% endwith %}
+  {% if session %}
 
-{% else %}
-<p class="alert alert-warning">Pas de séance</p>
-{% endif %}
-{% endblock %}
+    {% with session.sessions as sessions %}
+    {% include 'sport/session/list.html' %}
+    {% endwith %}
 
-{% block footer %}
-<button class="btn" data-dismiss="modal">Fermer</button>
-<a href="{{ url('user-calendar-week', report.user, report.year, report.week) }}" class="btn btn-success">Voir cette semaine</a>
+  {% else %}
+    <p class="alert alert-warning">Pas de séance</p>
+  {% endif %}
+
+  <a href="{{ url('user-calendar-week', report.user, report.year, report.week) }}" class="btn btn-success">Voir cette semaine</a>
+</div>
 {% endblock %}

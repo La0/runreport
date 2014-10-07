@@ -2,6 +2,7 @@ from datetime import datetime, timedelta, date
 from coach.settings import REPORT_START_DATE
 from coach.mixins import JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE
 from django.http import Http404
+from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
 from helpers import week_to_date, date_to_day, date_to_week
 from sport.models import SportWeek, SportDay, SportSession, SESSION_TYPES, RaceCategory
@@ -13,6 +14,7 @@ class CurrentWeekMixin(object):
   Gives the current year & week or
   uses the one from kwargs (url)
   '''
+  context_object_name = 'report'
   _today = None
   _week = None
   _year = None
@@ -26,6 +28,9 @@ class CurrentWeekMixin(object):
 
   def get_week(self):
     return int(self.kwargs.get('week', self._week))
+
+  def get_object(self):
+    return get_object_or_404(SportWeek, year=self.get_year(), week=self.get_week(), user=self.request.user)
 
   def check_limits(self):
     # Load min & max date
