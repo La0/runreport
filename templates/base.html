@@ -62,7 +62,7 @@
 						</ul>
 					</li>
           {% elif 'notifications' in p %}
-          <li>
+          <li class="notifications {% if p.notifications > 0 %}red{% endif %}">
             <a class="modal-action" href="{% url user-notifications %}" title="{{ p.notifications }} notifications">
               <span class="badge">{{ p.notifications }}</span>
             </a>

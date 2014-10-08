@@ -6,7 +6,15 @@
 
   {% for n in notifications %}
   <div>
+    {% if n.category == 'message' %}
+    <i class="icon-comment"></i>
+    {% endif %}
+
     {{ n.description }}
+
+    {% if n.link %}
+    <a class="pull-right btn btn-sm btn-info" href="{{ n.link }}">Voir <i class="icon-right-open"></i></a>
+    {% endif %}
   </div>
   {% else %}
   <div class="alert alert-info">

@@ -492,3 +492,13 @@ div.week div.day.link:hover {
   border-radius: 4px 4px;
   background: #F7F7F7;
 }
+
+/* Notifications */
+ul.nav li.notifications a {
+  padding-right: 0;
+  padding-left: 2px;
+}
+
+ul.nav li.notifications.red a span.badge {
+  background: #e74c3c;
+}

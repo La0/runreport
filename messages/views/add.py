@@ -23,8 +23,8 @@ class MessageSessionAdd(MessageSessionMixin, MessageSessionReload, CreateView):
 
     # Add a notification
     # For main recipient
-    from users.notification import UserNotifications, NOTIFICATION_MESSAGE
+    from users.notification import UserNotifications
     un = UserNotifications(message.recipient)
-    un.add(NOTIFICATION_MESSAGE, 'Hey !', 'http://plop.com')
+    un.add_message(message)
 
     return self.reload(self.session)

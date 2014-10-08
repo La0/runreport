@@ -1,4 +1,6 @@
+# coding:utf-8
 from django.core.cache import cache
+from django.core.urlresolvers import reverse
 from datetime import datetime
 import uuid
 
@@ -33,6 +35,21 @@ class UserNotifications(object):
     # Save it !
     self.store(notifications)
 
+  def add_message(self, message):
+    # Helper to add a message notification
+    msg = u'%s %s a laissé un commentaire' % (message.sender.first_name, message.sender.last_name)
+    if message.session:
+      msg += u' sur la session "%s"' % (message.session.name, )
+
+    # Build session link
+    link = None
+    if message.session:
+      day = message.session.day
+      link = reverse('user-calendar-day', args=(day.week.user.username, day.date.year, day.date.month, day.date.day))
+
+    # Add notification
+    self.add(NOTIFICATION_MESSAGE, msg, link)
+
   def total(self):
     return cache.get(self.key_total) or 0
 
@@ -41,6 +58,6 @@ class UserNotifications(object):
     return cache.get(self.key_data) or []
 
   def store(self, data):
-    # Save total & data
-    cache.set(self.key_total, len(data))
-    return cache.set(self.key_data, data)
+    # Save total & data, no expiry
+    cache.set(self.key_total, len(data), None)
+    return cache.set(self.key_data, data, None)
