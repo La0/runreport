@@ -1,6 +1,7 @@
 # coding=utf-8
 from django.core.urlresolvers import reverse
 from club.models import ClubMembership
+from users.notification import UserNotifications
 
 def add_pages(request):
   '''
@@ -87,6 +88,14 @@ def add_pages(request):
 
     # Help menu
     menu.append(_build_help())
+
+    # Show notifications count
+    un = UserNotifications(request.user)
+    nb_notif = un.total()
+    print nb_notif
+    menu.append({
+      'notifications' : nb_notif,
+    })
 
     # User menu
     submenu = {

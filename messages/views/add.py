@@ -21,4 +21,10 @@ class MessageSessionAdd(MessageSessionMixin, MessageSessionReload, CreateView):
     message.recipient = self.session.day.week.user
     message.save()
 
+    # Add a notification
+    # For main recipient
+    from users.notification import UserNotifications, NOTIFICATION_MESSAGE
+    un = UserNotifications(message.recipient)
+    un.add(NOTIFICATION_MESSAGE, 'Hey !', 'http://plop.com')
+
     return self.reload(self.session)

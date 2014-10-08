@@ -50,6 +50,9 @@ urlpatterns = patterns('',
     'template_name' : 'users/password_reset_done.html',
   }),
 
+  # Notifications
+  url(r'^notification/list/?$', login_required(UserNotificationsList.as_view()), name="user-notifications"),
+
   # Fallback to user public profile
   url(r'^(?P<username>[\w\_]+)/', include(user_patterns)),
 )

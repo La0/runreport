@@ -61,6 +61,12 @@
 							{% endfor %}
 						</ul>
 					</li>
+          {% elif 'notifications' in p %}
+          <li>
+            <a class="modal-action" href="{% url user-notifications %}" title="{{ p.notifications }} notifications">
+              <span class="badge">{{ p.notifications }}</span>
+            </a>
+          </li>
 					{% else %}
 					<li {% if p.active %}class="active"{% endif %}><a href="{{p.url}}">{% if p.icon %}<i class="{{ p.icon }}"></i> {% endif %}{{p.caption}}</a></li>
 					{% endif %}

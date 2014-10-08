@@ -1,0 +1,21 @@
+{% extends 'modal.html' %}
+
+{% set modal_title = '%d Notifications' % (total, ) %}
+
+{% block body %}
+
+  {% for n in notifications %}
+  <div>
+    {{ n.description }}
+  </div>
+  {% else %}
+  <div class="alert alert-info">
+    Vous n'avez pas de notifications.
+  </div>
+  {% endfor %}
+
+{% endblock %}
+
+{% block footer %}
+<button class="btn" data-dismiss="modal">Annuler</button>
+{% endblock %}
