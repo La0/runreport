@@ -173,6 +173,60 @@ class Athlete(AthleteBase):
     # Save the resulting image
     img.save(self.avatar.path, 'png')
 
+  def get_visitor_rights(self, visitor):
+    '''
+    Load the visitor rights for connected visitor
+    for this current user
+    '''
+
+    # All rights when visitor is member
+    if visitor == self:
+      return ('public', 'club', 'private')
+
+    # Club & public rights
+    # when visitor is in same club
+    # with an active profile
+    if visitor.is_authenticated():
+      member_clubs = set([m['club__id'] for m in self.memberships.exclude(role__in=('prospect', 'archive')).values('club__id')])
+      user_clubs = set([m['club__id'] for m in visitor.memberships.exclude(role__in=('prospect', 'archive')).values('club__id')])
+      if len(member_clubs & user_clubs) > 0:
+        return ('public', 'club')
+
+    # By default, public
+    return ('public', )
+
+  def get_privacy_rights(self, visitor):
+    '''
+    Load privacy rights for a visitor toward this user
+    '''
+    privacy = []
+    fields = [k[8:] for k in dir(self) if k.startswith('privacy')] # all the current privacy fields
+
+    # Super user views everything
+    if visitor.is_superuser:
+      privacy = fields # all access
+      privacy += ['admin', ] # and has admin right
+      return privacy
+
+    # A trainer sees evertything for his athletes
+    # The club manager see every athletes
+    trainers_roles = ['athlete', 'staff', 'trainer']
+    for m in self.memberships.all():
+      is_manager = m.club.manager == visitor
+      if visitor in m.trainers.all() or is_manager:
+        # Add archive roles for managers
+        trainers_roles += is_manager and ['archive', ] or []
+        if m.role in trainers_roles:
+          privacy = fields # all access
+          privacy += ['trainer', ] # and has trainer right
+          return privacy
+
+    # Load all member privacy settings
+    rights = self.get_visitor_rights(visitor)
+    privacy = [f for f in fields if getattr(self, 'privacy_%s' % f) in rights]
+
+    return privacy
+
 class UserCategory(models.Model):
   code = models.CharField(max_length=10)
   name = models.CharField(max_length=120)

@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
 from messages.models import Message
 from sport.models import SportSession
+from django.core.exceptions import PermissionDenied
 
 class MessageOwned(object):
   # Message must be owned by logged user
@@ -17,7 +18,9 @@ class MessageSessionMixin(object):
     self.session = get_object_or_404(SportSession, pk=self.kwargs['session_id'])
 
     # Check this session is visible by current user
-    # TODO
+    privacy = self.session.day.week.user.get_privacy_rights(self.request.user)
+    if 'calendar' not in privacy:
+      raise PermissionDenied
 
     return self.session
 
