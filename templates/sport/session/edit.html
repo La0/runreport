@@ -85,7 +85,7 @@
   {% if session.pk %}
   <div class="comments">
 
-    <div class="col-sm-10 col-sm-offset-2">
+    <div class="col-sm-10 col-sm-offset-2" id="messages-{{session.pk}}">
     {% with session.comments.order_by('created') as messages %}
       {% include 'messages/_list.html' %}
     {% endwith %}

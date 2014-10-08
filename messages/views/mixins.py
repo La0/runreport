@@ -34,16 +34,10 @@ class MessageSessionReload(JsonResponseMixin):
     if session:
       date = session.day.date
       session_user = session.day.week.user
-      if session_user != self.request.user:
-        # Reload only messages for member
-        name = 'messages-%d' % (session.pk, )
-        url = reverse('message-session-list', args=(session.pk,)),
-      else:
-        # Reload  full session for owner
-        name = 'session-%s-%d' % (date, session.pk)
-        url = reverse('sport-session-edit', args=(date.year, date.month, date.day, session.pk,)),
 
-      # Reload current box
+      # Always reload only messages for member
+      name = 'messages-%d' % (session.pk, )
+      url = reverse('message-session-list', args=(session.pk,)),
       self.json_boxes = {
         name : url,
       }
