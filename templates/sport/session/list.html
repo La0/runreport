@@ -75,7 +75,7 @@
 {% if member and show_comments %}
 <div class="row">
   {% with session.comments.order_by('created') as messages %}
-  <div class="comments">
+  <div class="comments" id="messages-{{session.pk}}">
     {% include 'messages/_list.html' %}
   </div>
   {% endwith %}

@@ -1,7 +1,7 @@
 from users.views.mixins import ProfilePrivacyMixin
-from sport.views import RunCalendarYear, RunCalendar, RunCalendarDay, WeeklyReport
+from sport.views import RunCalendarYear, RunCalendar, RunCalendarDay, WeeklyReport, SportSessionView
 
-class AthleteCalendarYear(ProfilePrivacyMixin, RunCalendarYear):
+class AthleteCalendarMixin(ProfilePrivacyMixin):
   rights_needed = ('profile', 'calendar')
 
   def get_links(self):
@@ -9,39 +9,18 @@ class AthleteCalendarYear(ProfilePrivacyMixin, RunCalendarYear):
       'pageargs' : [self.member.username, ],
       'pageyear' : 'user-calendar-year',
       'pagemonth' : 'user-calendar-month',
-      'pageday' : 'user-calendar-day',
-    }
-
-class AthleteCalendarMonth(ProfilePrivacyMixin, RunCalendar):
-  rights_needed = ('profile', 'calendar')
-
-  def get_links(self):
-    return {
-      'pageargs' : [self.member.username, ],
-      'pageyear' : 'user-calendar-year',
-      'pagemonth' : 'user-calendar-month',
-      'pageday' : 'user-calendar-day',
-    }
-
-
-class AthleteCalendarWeek(ProfilePrivacyMixin, WeeklyReport):
-  rights_needed = ('profile', 'calendar')
-
-  def get_links(self):
-    return {
-      'pageargs' : [self.member.username, ],
-      'pagemonth' : 'user-calendar-month',
       'pageweek' : 'user-calendar-week',
       'pageday' : 'user-calendar-day',
     }
 
-class AthleteCalendarDay(ProfilePrivacyMixin, RunCalendarDay):
-  rights_needed = ('profile', 'calendar')
+class AthleteCalendarYear(AthleteCalendarMixin, RunCalendarYear):
+  pass
 
-  def get_links(self):
-    return {
-      'pageargs' : [self.member.username, ],
-      'pagemonth' : 'user-calendar-month',
-      'pageweek' : 'user-calendar-week',
-      'pageday' : 'user-calendar-day',
-    }
+class AthleteCalendarMonth(AthleteCalendarMixin, RunCalendar):
+  pass
+
+class AthleteCalendarWeek(AthleteCalendarMixin, WeeklyReport):
+  pass
+
+class AthleteCalendarDay(AthleteCalendarMixin, RunCalendarDay):
+  pass

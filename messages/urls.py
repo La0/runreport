@@ -13,5 +13,8 @@ urlpatterns = patterns('',
   # Comment add on SportSession
   url(r'^add/session/(?P<session_id>\d+)', login_required(MessageSessionAdd.as_view()), name="message-session-add"),
 
+  # List messages from a SportSession
+  url(r'^list/session/(?P<session_id>\d+)', login_required(MessageSessionList.as_view()), name="message-session-list"),
+
   url(r'^/?$', login_required(MessageInbox.as_view()), name="message-inbox"),
 )
