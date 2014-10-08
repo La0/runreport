@@ -452,9 +452,20 @@ div.list-title {
 }
 
 /* Comments */
+div.message div.thumb {
+  padding-right: 0;
+}
+
+div.message div.thumb img {
+  max-width: 60px;
+  float: right;
+}
+
 div.comments div.message blockquote {
   margin-left: 8px;
   font-size: 1em;
+  border-left-width: 3px;
+  padding: 5px;
 }
 
 div.actions-hover div.actions {
