@@ -1,8 +1,9 @@
 from fabric.api import *
 from coach.settings import FABRIC_HOSTS, DATABASES # Mandatory
 try:
-  from coach.settings import FABRIC_ENV, FABRIC_BASE # Optional
+  from coach.settings import FABRIC_ENV, FABRIC_BASE, FABRIC_SUPERVISORS # Optional
 except Exception:
+  FABRIC_SUPERVISORS = []
   pass
 import os
 import shutil
@@ -12,14 +13,14 @@ from datetime import date
 
 def prod():
 
-  supervisor('stop', 'runreport')
-  supervisor('stop', 'runreport_celery')
-  supervisor('stop', 'runreport_garmin')
+  # Stop services
+  supervisors('stop')
 
   # Brutally kill celery workers as supervisor
   # doesn't do its job :(
-  with settings(warn_only=True):
-    run("ps auxww | grep 'celery -A coach worker' | awk '{print $2}' |xargs kill -9")
+  if 'runreport_celery' in FABRIC_SUPERVISORS:
+    with settings(warn_only=True):
+      run("ps auxww | grep 'celery -A coach worker' | awk '{print $2}' |xargs kill -9")
 
   with cd(FABRIC_BASE):
     pull()
@@ -29,9 +30,7 @@ def prod():
       migrate_db()
 
   # Start again
-  supervisor('start', 'runreport')
-  supervisor('start', 'runreport_celery')
-  supervisor('start', 'runreport_garmin')
+  supervisors('start')
 
 def syncdb(update=False):
 
@@ -112,13 +111,17 @@ def pull():
   '''
   Pull from github
   '''
-  run('git pull origin master')
+  run('git pull')
 
 def migrate_db():
   '''
   Update db using South migrations
   '''
   run('./manage.py migrate')
+
+def supervisors(cmd):
+  for s in FABRIC_SUPERVISORS:
+    supervisor(cmd, s)
 
 def supervisor(cmd, process):
   '''
