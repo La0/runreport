@@ -10,6 +10,9 @@ urlpatterns = patterns('',
   # Delete message
   url(r'^delete/(?P<message_id>\d+)', login_required(MessageDelete.as_view()), name="message-delete"),
 
+  # User message
+  url(r'^add/user/(?P<username>[\w_]+)', login_required(MessageUserAdd.as_view()), name="message-user-add"),
+
   # Comment add on SportSession
   url(r'^add/session/(?P<session_id>\d+)', login_required(MessageSessionAdd.as_view()), name="message-session-add"),
 

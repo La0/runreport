@@ -465,7 +465,7 @@ div.message div.thumb img {
   float: right;
 }
 
-div.message p.well {
+div.message div.well {
   margin-bottom: 2px;
 }
 

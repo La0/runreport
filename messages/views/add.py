@@ -1,8 +1,31 @@
 from django.views.generic.edit import CreateView
 from messages.forms import MessageTextForm
-from mixins import MessageSessionReload, MessageSessionMixin
+from mixins import MessageReloadMixin, MessageSessionMixin, MessageUserMixin
 
-class MessageSessionAdd(MessageSessionMixin, MessageSessionReload, CreateView):
+class MessageUserAdd(MessageUserMixin, MessageReloadMixin, CreateView):
+  template_name = 'messages/add/user.html'
+  form_class = MessageTextForm
+
+  def get_context_data(self, *args, **kwargs):
+    context = super(MessageUserAdd, self).get_context_data(*args, **kwargs)
+    context['member'] = self.get_member()
+    return context
+
+  def form_valid(self, form):
+    self.get_member()
+
+    # Save a new message for user
+    message = form.save(commit=False)
+    message.sender = self.request.user
+    message.recipient = self.member
+    message.save()
+
+    # Add notifications
+    message.notify()
+
+    return self.reload()
+
+class MessageSessionAdd(MessageSessionMixin, MessageReloadMixin, CreateView):
   template_name = 'messages/add/session.html'
   form_class = MessageTextForm
 
@@ -14,7 +37,7 @@ class MessageSessionAdd(MessageSessionMixin, MessageSessionReload, CreateView):
   def form_valid(self, form):
     self.get_session()
 
-    # Save a new message
+    # Save a new comment
     message = form.save(commit=False)
     message.session = self.session
     message.sender = self.request.user

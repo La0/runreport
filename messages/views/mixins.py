@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
 from messages.models import Message
 from sport.models import SportSession
+from users.models import Athlete
 from django.core.exceptions import PermissionDenied
 
 class MessageOwned(object):
@@ -10,6 +11,22 @@ class MessageOwned(object):
 
   def get_object(self):
     return get_object_or_404(Message, pk=self.kwargs['message_id'], sender=self.request.user)
+
+class MessageUserMixin(object):
+  def get_member(self):
+    # Load member
+    self.member = get_object_or_404(Athlete, username=self.kwargs['username'])
+
+    # Can't send yourself some messages
+    if self.member == self.request.user:
+      raise PermissionDenied
+
+    # Check this member is visible by current user
+    privacy = self.member.get_privacy_rights(self.request.user)
+    if 'calendar' not in privacy: #TODO: use another right 'message'
+      raise PermissionDenied
+
+    return self.member
 
 class MessageSessionMixin(object):
 
@@ -19,13 +36,13 @@ class MessageSessionMixin(object):
 
     # Check this session is visible by current user
     privacy = self.session.day.week.user.get_privacy_rights(self.request.user)
-    if 'calendar' not in privacy:
+    if 'calendar' not in privacy: #TODO: use another right 'message'
       raise PermissionDenied
 
     return self.session
 
 
-class MessageSessionReload(JsonResponseMixin):
+class MessageReloadMixin(JsonResponseMixin):
 
   def reload(self, session=None):
     # Reload boxes & close modal

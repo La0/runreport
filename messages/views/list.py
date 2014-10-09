@@ -1,6 +1,6 @@
 from django.views.generic import ListView
 from coach.mixins import JsonResponseMixin
-from mixins import MessageSessionReload, MessageSessionMixin
+from mixins import MessageSessionMixin
 
 class MessageSessionList(JsonResponseMixin, MessageSessionMixin, ListView):
   template_name = 'messages/_list.html'

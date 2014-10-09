@@ -47,6 +47,11 @@
     </div>
 
     <div class="col-sm-9 col-xs-9">
+      {% if user != member %}
+      <a href="{% url message-user-add member.username %}" class="modal-action btn btn-info pull-right">
+        <i class="icon-mail"></i> Envoyer un message
+      </a>
+      {% endif %}
 
       {% for m in member.memberships.exclude(role__in=('prospect', 'archive')) %}
       <h4>

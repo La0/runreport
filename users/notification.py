@@ -4,7 +4,8 @@ from django.core.urlresolvers import reverse
 from datetime import datetime
 import uuid
 
-NOTIFICATION_MESSAGE = 'message'
+NOTIFICATION_COMMENT = 'comment'
+NOTIFICATION_MAIL = 'mail'
 
 
 class UserNotifications(object):
@@ -42,8 +43,9 @@ class UserNotifications(object):
       return
 
     # Helper to add a message notification
-    msg = u'%s %s a laissé un commentaire' % (message.sender.first_name, message.sender.last_name)
     if message.session:
+      # Comment
+      msg = u'%s %s a laissé un commentaire' % (message.sender.first_name, message.sender.last_name)
       if message.recipient == message.sender:
         # its own session
         msg += u' sur sa séance "%s"' % (message.session.name,)
@@ -53,15 +55,21 @@ class UserNotifications(object):
       else:
         # anyone else session
         msg += u' sur la séance "%s" de %s %s' % (message.session.name, message.recipient.first_name, message.recipient.last_name )
+    else:
+      # Direct user message
+      msg = u'%s %s vous a envoyé un message' % (message.sender.first_name, message.sender.last_name)
 
-    # Build session link
-    link = None
     if message.session:
+      # Build session link
       day = message.session.day
       link = reverse('user-calendar-day', args=(day.week.user.username, day.date.year, day.date.month, day.date.day))
+    else:
+      # Direct to inbox
+      link = reverse('message-inbox')
 
     # Add notification
-    self.add(NOTIFICATION_MESSAGE, msg, link)
+    cat = message.session and NOTIFICATION_COMMENT or NOTIFICATION_MAIL
+    self.add(cat, msg, link)
 
   def total(self):
     return cache.get(self.key_total) or 0

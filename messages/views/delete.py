@@ -1,8 +1,8 @@
 from django.views.generic import DeleteView
 from messages.models import Message
-from mixins import MessageSessionReload, MessageOwned
+from mixins import MessageReloadMixin, MessageOwned
 
-class MessageDelete(MessageSessionReload, MessageOwned, DeleteView):
+class MessageDelete(MessageReloadMixin, MessageOwned, DeleteView):
   model = Message
   template_name = 'messages/delete.html'
 

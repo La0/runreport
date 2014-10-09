@@ -9,8 +9,10 @@
   {% for n in notifications %}
   <div class="row">
     <div class="col-sm-2 col-xs-3">
-      {% if n.category == 'message' %}
+      {% if n.category == 'comment' %}
       <i class="icon-comment"></i>
+      {% elif n.category == 'mail' %}
+      <i class="icon-mail"></i>
       {% endif %}
       {{ n.created|timesince() }}
     </div>

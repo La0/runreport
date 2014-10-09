@@ -1,8 +1,8 @@
 from django.views.generic import UpdateView
-from mixins import MessageSessionReload, MessageOwned
+from mixins import MessageReloadMixin, MessageOwned
 from messages.forms import MessageTextForm
 
-class MessageEdit(MessageSessionReload, MessageOwned, UpdateView):
+class MessageEdit(MessageReloadMixin, MessageOwned, UpdateView):
   template_name = 'messages/edit.html'
   form_class = MessageTextForm
 

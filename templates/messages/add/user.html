@@ -1,0 +1,27 @@
+{% extends 'modal.html' %}
+
+{% set modal_title = 'Ecrire à %s %s' % (member.first_name, member.last_name) %}
+
+{% set form_url = url('message-user-add', member.username) %}
+
+{% block body %}
+<div class="add-comment">
+
+  <i class="icon-user"></i>
+  <a href="{% url user-public-profile member.username %}">{{ member.first_name }} {{ member.last_name }}</a>
+
+  {% csrf_token %}
+
+  {{ form.message|safe }}
+  {% if form.message.errors %}
+  <div class="alert alert-danger">
+    {{ form.message.errors|safe }}
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block footer %}
+<button class="btn" data-dismiss="modal">Annuler</button>
+<button type="submit" class="btn btn-primary">Valider</button>
+{% endblock %}

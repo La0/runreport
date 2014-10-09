@@ -19,12 +19,14 @@
       <div class="visible-xs col-xs-3">
         {% if message.session %}
         <a href="{% url message-session-add message.session.pk %}" class="modal-action btn btn-primary">Répondre</a>
+        {% else %}
+        <a href="{% url message-user-add message.sender.username %}" class="modal-action btn btn-primary">Répondre</a>
         {% endif %}
       </div>
       <div class="col-sm-6 col-xs-12">
-        <p class="well">
-          {{message.message}}
-        </p>
+        <div class="well">
+          {{message.message|linebreaks()}}
+        </div>
         {% if message.session %}
         <p>
           <i class="icon-comment"></i>
@@ -36,11 +38,15 @@
           du {{ dt|date('l d E Y') }}
           {% endwith %}
         </p>
+        {% else %}
+        <i class="icon-mail"></i> Message privé
         {% endif %}
       </div>
       <div class="col-sm-2 hidden-xs">
         {% if message.session %}
         <a href="{% url message-session-add message.session.pk %}" class="modal-action btn btn-primary">Répondre</a>
+        {% else %}
+        <a href="{% url message-user-add message.sender.username %}" class="modal-action btn btn-primary">Répondre</a>
         {% endif %}
       </div>
     </div>
