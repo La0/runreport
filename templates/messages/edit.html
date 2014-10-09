@@ -12,6 +12,14 @@
     {{ form.message.errors|safe }}
   </div>
   {% endif %}
+
+  <p>
+    <i class="icon-lock"></i>
+    Commentaire privé : 
+    {{ form.private|safe }}
+    <br />
+    <span class="text-muted">Seul l'athlète de la séance verra un commentaire privé</span>
+  </p>
 </div>
 {% endblock %}
 

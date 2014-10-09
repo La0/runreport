@@ -8,6 +8,9 @@ class Message(models.Model):
   recipient = models.ForeignKey(Athlete, related_name='messages_received')
   message = models.TextField()
 
+  # Only recipient can see ?
+  private = models.BooleanField(default=False)
+
   # Dates
   created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)

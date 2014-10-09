@@ -17,6 +17,9 @@
   </div>
   <div class="col-sm-8">
     <p>
+      {% if message.private %}
+      <i class="icon-lock do-tooltip" title="Commentaire privé"></i>
+      {% endif %}
       <i class="icon-user"></i> <a href="{% url user-public-profile message.sender.username %}">{{ message.sender.first_name }} {{ message.sender.last_name }}</a>
       <i class="icon-calendar"></i> {{ message.created|date('l d E Y - H:i') }}
       {% if message.revision > 1 %}

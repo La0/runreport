@@ -173,6 +173,16 @@ class Athlete(AthleteBase):
     # Save the resulting image
     img.save(self.avatar.path, 'png')
 
+  def is_trainer(self, athlete):
+    '''
+    Simple check to see if this user
+    is the trainer of an athlete
+    '''
+    for m in athlete.memberships.all():
+      if self in m.trainers.all():
+        return True
+    return False
+
   def get_visitor_rights(self, visitor):
     '''
     Load the visitor rights for connected visitor

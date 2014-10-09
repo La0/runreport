@@ -1,5 +1,5 @@
 from django.views.generic.edit import CreateView
-from messages.forms import MessageTextForm
+from messages.forms import MessageTextForm, MessageForm
 from mixins import MessageReloadMixin, MessageSessionMixin, MessageUserMixin
 
 class MessageUserAdd(MessageUserMixin, MessageReloadMixin, CreateView):
@@ -18,6 +18,7 @@ class MessageUserAdd(MessageUserMixin, MessageReloadMixin, CreateView):
     message = form.save(commit=False)
     message.sender = self.request.user
     message.recipient = self.member
+    message.private = True # Always private
     message.save()
 
     # Add notifications
@@ -27,7 +28,17 @@ class MessageUserAdd(MessageUserMixin, MessageReloadMixin, CreateView):
 
 class MessageSessionAdd(MessageSessionMixin, MessageReloadMixin, CreateView):
   template_name = 'messages/add/session.html'
-  form_class = MessageTextForm
+  form_class = MessageForm
+
+  def get_initial(self, *args, **kwargs):
+    args = super(MessageSessionAdd, self).get_initial(*args, **kwargs)
+
+    # For trainer, the comment is private by default
+    self.get_session()
+    if self.request.user.is_trainer(self.session.day.week.user):
+      args['private'] = True
+
+    return args
 
   def get_context_data(self, *args, **kwargs):
     context = super(MessageSessionAdd, self).get_context_data(*args, **kwargs)

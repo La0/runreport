@@ -5,3 +5,8 @@ class MessageTextForm(forms.ModelForm):
   class Meta:
     model = Message
     fields = ('message', )
+
+class MessageForm(forms.ModelForm):
+  class Meta:
+    model = Message
+    fields = ('message', 'private', )
