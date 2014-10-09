@@ -502,3 +502,7 @@ ul.nav li.notifications a {
 ul.nav li.notifications.red a span.badge {
   background: #e74c3c;
 }
+
+div.notifications div.row {
+  margin-bottom: 8px;
+}

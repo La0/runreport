@@ -6,4 +6,4 @@ from profile import PublicProfile, OwnProfile
 from races import RacesView
 from calendar import AthleteCalendarWeek, AthleteCalendarMonth, AthleteCalendarDay, AthleteCalendarYear
 from stats import AthleteStats
-from notifications import UserNotificationsList
+from notifications import UserNotificationsList, UserNotificationsClear

@@ -66,3 +66,26 @@ class UserNotifications(object):
     # Save total & data, no expiry
     cache.set(self.key_total, len(data), None)
     return cache.set(self.key_data, data, None)
+
+  def get(self, notification_id):
+    # Search notification by its id
+    for n in self.fetch():
+      if n['id'] == notification_id:
+        return n
+    return None
+
+  def clear(self, notification_id):
+    n = self.get(notification_id)
+    if not n:
+      return None
+
+    # Delete one notification
+    notifications = self.fetch()
+    notifications.remove(n)
+    self.store(notifications)
+
+    return n
+
+  def clear_all(self):
+    # Delete all notifications
+    self.store([])
