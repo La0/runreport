@@ -2,9 +2,9 @@
   <div class="col-xs-12">
   {% with messages.count() as nb %}
     {% if nb > 0 %}
-    <h4>{{ nb }} commentaire{{ nb|pluralize() }}</h4>
+    <h5><i class="icon-comment"></i> {{ nb }} commentaire{{ nb|pluralize() }}</h5>
     {% else %}
-    <h4>Pas de commentaires</h4>
+    <h5><i class="icon-comment"></i> Pas de commentaires</h5>
     {% endif %}
   {% endwith %}
   </div>

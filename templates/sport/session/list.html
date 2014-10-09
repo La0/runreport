@@ -1,50 +1,67 @@
+{% set type_css = {
+  'training' : 'label-info',
+  'race' : 'label-success',
+  'rest' : 'label-danger',
+} %}
+{% set type_text = {
+  'training' : 'Entraînement',
+  'race' : 'Course',
+  'rest' : 'Repos',
+} %}
+
 {% if day and day.sessions.count() %}
 {% for session in day.sessions.order_by('created') %}
 <div class="sport-session row hidden-xs">
-  <div class="col-sm-6">
-    <i class="icon-sport-{{session.sport.slug}} do-tooltip" title="{{ session.sport.name }}"></i>
+  <div class="col-sm-8">
+    <h4>
+      <i class="icon-sport-{{session.sport.slug}} do-tooltip" title="{{ session.sport.name }}"></i>
 
-    {% if session.has_garmin() %}
-    <i class="icon-location"></i>
-    {% endif %}
+      {% if session.has_garmin() %}
+      <i class="icon-location do-tooltip" title="Données Garmin"></i>
+      {% endif %}
 
-    {% if session.comments.count() > 0 %}
-    <i class="icon-comment"></i>
-    {% endif %}
+      {% with session.comments.count() as nb_comments %}
+        {% if not show_comments and nb_comments > 0 %}
+        <i class="icon-comment do-tooltip" title="{{nb_comments }} Commentaires"></i>
+        {% endif %}
+      {% endwith %}
 
-    {% if session.type == 'training' %}
-    <span class="label label-info">Entrainement</span>
-    {% elif session.type == 'race' %}
-    <span class="label label-success">Course</span>
-    {% else %}
-    <span class="label label-default">Repos</span>
-    {% endif %}
+      <span class="text-muted">&bull;</span>
+      <span class="label {{type_css[session.type]}}">{{type_text[session.type]}}</span>
 
-    {% if session.name %}
-    <strong>{{session.name}}</strong>
-    {% else %}
-    <i>Pas de nom</i>
-    {% endif %}
+      <span class="text-muted">&bull;</span>
+      {% if session.name %}
+      <strong>{{session.name}}</strong>
+      {% else %}
+      <i>Pas de nom</i>
+      {% endif %}
+    </h4>
   </div>
 
   <div class="col-sm-2">
-  {% if session.time %}
-    {{ session.time|total_time() }}
-  {% else %}
-    <span class="label label-warning">Pas de Temps</span>
-  {% endif %}
+    <h4>
+    {% if session.time %}
+      <span class="label {{type_css[session.type]}}">Temps</span>
+      {{ session.time|total_time() }}
+    {% else %}
+      <span class="label label-warning">Pas de Temps</span>
+    {% endif %}
+    </h4>
   </div>
 
   <div class="col-sm-2">
-  {% if session.distance %}
-    {% if session.sport.get_category() == 'swimming' %}
-      {{ (session.distance * 1000)|floatformat(0) }} m
+    <h4>
+    {% if session.distance %}
+      <span class="label {{type_css[session.type]}}">Distance</span>
+      {% if session.sport.get_category() == 'swimming' %}
+        {{ (session.distance * 1000)|floatformat(0) }} m
+      {% else %}
+        {{ session.distance|floatformat(2) }} km
+      {% endif %}
     {% else %}
-      {{ session.distance|floatformat(2) }} km
+      <span class="label label-warning">Pas de Distance</span>
     {% endif %}
-  {% else %}
-    <span class="label label-warning">Pas de Distance</span>
-  {% endif %}
+    </h4>
   </div>
 
   {% if session.comment%}
@@ -64,18 +81,23 @@
     <i class="text-muted">Pas de nom</i>
     {% endif %}
   </div>
-  <div class="col-xs-3">
-    {{ session.distance|default(0)|floatformat(2) }} km
-  </div>
   <div class="col-xs-2">
     {% if session.time %}{{ session.time|total_time() }}{% else %}-{% endif %}
   </div>
+  <div class="col-xs-3">
+    {{ session.distance|default(0)|floatformat(2) }} km
+  </div>
+  {% if session.comment%}
+  <div class="col-xs-12 comment">
+    {{session.comment|linebreaksbr()}}
+  </div>
+  {% endif %}
 </div>
 
 {% if member and show_comments %}
 <div class="row">
   {% with session.comments.order_by('created') as messages %}
-  <div class="comments" id="messages-{{session.pk}}">
+  <div class="comments col-xs-12" id="messages-{{session.pk}}">
     {% include 'messages/_list.html' %}
   </div>
   {% endwith %}
