@@ -40,6 +40,15 @@ try:
 except:
   print 'Failed to set French locale'
 
+# Utf8 as default encoding
+# This is dirty as fuck
+try:
+  import sys
+  reload(sys)
+  sys.setdefaultencoding('utf8')
+except:
+  print 'Failed to set utf8 as default encoding'
+
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'fr-fr'
