@@ -36,10 +36,15 @@ class UserNotifications(object):
     self.store(notifications)
 
   def add_message(self, message):
+
+    # Check sender is not recipient : no notification
+    if message.sender == self.user:
+      return
+
     # Helper to add a message notification
     msg = u'%s %s a laissé un commentaire' % (message.sender.first_name, message.sender.last_name)
     if message.session:
-      msg += u' sur la session "%s"' % (message.session.name, )
+      msg += u' sur la séance "%s"' % (message.session.name, )
 
     # Build session link
     link = None

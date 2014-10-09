@@ -21,10 +21,7 @@ class MessageSessionAdd(MessageSessionMixin, MessageSessionReload, CreateView):
     message.recipient = self.session.day.week.user
     message.save()
 
-    # Add a notification
-    # For main recipient
-    from users.notification import UserNotifications
-    un = UserNotifications(message.recipient)
-    un.add_message(message)
+    # Add notifications
+    message.notify()
 
     return self.reload(self.session)
