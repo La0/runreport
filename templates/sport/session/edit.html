@@ -84,17 +84,8 @@
 
   {% if session.pk %}
   <div class="comments">
-
-    <div class="col-sm-10 col-sm-offset-2" id="messages-{{session.pk}}">
-    {% with session.comments.order_by('created') as messages %}
-      {% include 'messages/_list.html' %}
-    {% endwith %}
-    </div>
-
-    <div class="row">
-      <div class="col-sm-10 col-sm-offset-2">
-        <a href="{% url message-session-add session.id %}" class="btn btn-sm btn-info modal-action"><i class="icon-comment"></i> Ajouter un commentaire</a>
-      </div>
+    <div id="messages-{{session.pk}}" class="box col-sm-10 col-sm-offset-2" data-src="{% url message-session-list session.pk, 'private' %}" >
+      Chargement des commentaires...
     </div>
   </div>
   {% endif %}

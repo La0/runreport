@@ -36,13 +36,15 @@
   </div>
   {% endif %}
 
+  {% if form.private %}
   <p>
     <i class="icon-lock"></i>
     Commentaire privé : 
     {{ form.private|safe }}
     <br />
-    <span class="text-muted">Seul l'athlète de la séance verra un commentaire privé</span>
+    <span class="text-muted">Seul l'athlète de la séance et ses entraineurs verront un commentaire privé</span>
   </p>
+  {% endif %}
   
 </div>
 {% endblock %}

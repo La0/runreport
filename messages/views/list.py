@@ -11,7 +11,6 @@ class MessageSessionList(JsonResponseMixin, MessageSessionMixin, ListView):
     context = super(MessageSessionList, self).get_context_data()
     context['session'] = self.session
     context['list_type'] = self.list_type
-    print context
     return context
 
   def get_queryset(self):
@@ -22,7 +21,7 @@ class MessageSessionList(JsonResponseMixin, MessageSessionMixin, ListView):
     # or one of its trainer
     # can change the type
     if session_user == self.request.user or self.request.user.is_trainer(session_user):
-      self.list_type = self.kwargs.get('type', 'public')
+      self.list_type = self.kwargs.get('type', 'private')
       filters = {
         'all' : {},
         'private' : {

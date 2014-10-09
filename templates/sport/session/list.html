@@ -96,13 +96,8 @@
 
 {% if member and show_comments %}
 <div class="row">
-  {% with session.comments.order_by('created') as messages %}
-  <div class="comments col-xs-12" id="messages-{{session.pk}}">
-    {% include 'messages/_list.html' %}
-  </div>
-  {% endwith %}
-  <div class="col-xs-12">
-    <a href="{% url message-session-add session.id %}" class="btn btn-sm btn-info modal-action"><i class="icon-plus"></i> Ajouter un commentaire</a>
+  <div id="messages-{{session.pk}}" class="box comments col-xs-12" data-src="{% url message-session-list session.pk, 'private' %}" >
+    Chargement des commentaires...
   </div>
 </div>
 {% endif %}

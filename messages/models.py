@@ -29,5 +29,7 @@ class Message(models.Model):
     if self.session:
       # All members of discussion on session
       for c in self.session.comments.exclude(sender=self.recipient).distinct('sender'):
+        if self.private and not c.sender.is_trainer(self.recipient): # for private message, only forward to trainers
+          continue
         un = UserNotifications(c.sender)
         un.add_message(self)

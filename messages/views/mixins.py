@@ -54,7 +54,7 @@ class MessageReloadMixin(JsonResponseMixin):
 
       # Always reload only messages for member
       name = 'messages-%d' % (session.pk, )
-      url = reverse('message-session-list', args=(session.pk,)),
+      url = reverse('message-session-list', args=(session.pk,getattr(self, 'list_type', 'private'))),
       self.json_boxes = {
         name : url,
       }

@@ -1,5 +1,17 @@
 
 $(function(){
+  // Load a box, yks style !
+  $('.box').each(function(i, box){
+    if(!box.hasAttribute('data-src'))
+      return;
+
+    var src = box.getAttribute('data-src');
+    console.info("Loading box "+src);
+
+    load_box(src, 'GET', {}, $(box));
+    box.removeAttribute('data-src'); // cleanup
+  });
+
   // Modals show
   $(document).on('click', '.modal-action', load_modal);
 

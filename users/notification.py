@@ -48,10 +48,10 @@ class UserNotifications(object):
       msg = u'%s %s a laissé un commentaire' % (message.sender.first_name, message.sender.last_name)
       if message.recipient == message.sender:
         # its own session
-        msg += u' sur sa séance "%s"' % (message.session.name,)
+        msg += u'%s sur sa séance "%s"' % (message.private and u' privé' or '', message.session.name,)
       elif message.recipient == self.user:
         # your session
-        msg += u' sur votre séance "%s"' % (message.session.name,)
+        msg += u'%s sur votre séance "%s"' % (message.private and u' privé' or '', message.session.name,)
       else:
         # anyone else session
         msg += u' sur la séance "%s" de %s %s' % (message.session.name, message.recipient.first_name, message.recipient.last_name )

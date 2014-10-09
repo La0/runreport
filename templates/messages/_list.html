@@ -1,8 +1,9 @@
+{% if session %}
 <div class="row">
   <div class="col-xs-12">
 
+  {% if session.day.week.user == user or user.is_trainer(session.day.week.user) %}
   {% with session.comments.count() as nb %}
-  {% if session and session.day.week.user == user %}
   <h5 class="pull-left" style="margin-right: 15px;">
     <i class="icon-comment"></i> Commentaires
   </h5>
@@ -64,15 +65,17 @@
       {% endwith %}
       </ul>
     </div>
+  {% endwith %}
   {% else %}
+  {% with messages.count() as nb %}
     {% if nb > 0 %}
     <h5><i class="icon-comment"></i> {{ nb }} commentaire{{ nb|pluralize() }}</h5>
     {% else %}
     <h5><i class="icon-comment"></i> Pas de commentaires</h5>
     {% endif %}
+  {% endwith %}
   {% endif %}
   </div>
-  {% endwith %}
 </div>
 
 {% for message in messages %}
@@ -95,7 +98,6 @@
     {{ message.message|linebreaks }}
     </blockquote>
   </div>
-
   <div class="col-sm-3 text-right actions">
     {% if message.sender == user %}
     <a href="{% url message-delete message.pk %}" class="modal-action btn btn-sm btn-danger"><i class="icon-trash"></i> Supprimer</a>
@@ -103,4 +105,18 @@
     {% endif %}
   </div>
 </div>
+{% else %}
+<span class="text-info">
+  Pas de commentaires.
+</span>
 {% endfor %}
+
+<div class="row">
+  <div class="col-xs-12">
+    <a href="{% url message-session-add session.id %}" class="btn btn-sm {% if list_type == 'private' %}btn-warning{% else %}btn-info{% endif %} modal-action">
+      <i class="icon-plus"></i> Ajouter un commentaire
+      {% if list_type == 'private' %} privé{% endif %}
+    </a>
+  </div>
+</div>
+{% endif %}
