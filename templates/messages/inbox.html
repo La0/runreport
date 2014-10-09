@@ -2,25 +2,46 @@
 
 {% block content %}
 <div class="container">
-  <h1>Messages reçus</h1>
+  <h1>{% if messages %}{{ messages.count() }} {% endif %}Messages reçus</h1>
   {% if messages %}
     {% for message in messages %}
     <div class="row message">
-      <div class="col-sm-1">
+      <div class="col-sm-1 col-xs-2">
         <img class="img-responsive img-rounded" src="{{message.sender.avatar.url}}" alt="Avatar {{message.sender.username}}" />
       </div>
-      <div class="col-sm-3">
+      <div class="col-sm-3 col-xs-7">
         <a href="{% url user-public-profile message.sender.username %}">
           {{ message.sender.first_name }} {{ message.sender.last_name }}
         </a>
         <br />
         Il y a {{ message.created|timesince() }}
       </div>
-      <div class="col-sm-6 well">
-        {{message.message}}
+      <div class="visible-xs col-xs-3">
+        {% if message.session %}
+        <a href="{% url message-session-add message.session.pk %}" class="modal-action btn btn-primary">Répondre</a>
+        {% endif %}
       </div>
-      <div class="col-sm-2">
-        <a href="" class="btn btn-primary">Répondre</a>
+      <div class="col-sm-6 col-xs-12">
+        <p class="well">
+          {{message.message}}
+        </p>
+        {% if message.session %}
+        <p>
+          <i class="icon-comment"></i>
+          Sur votre séance <i class="icon-sport-{{message.session.sport.slug}}"></i>
+          {% with message.session.day.date as dt %}
+          <a href="{% url report-day dt.year, dt.month, dt.day %}">
+            {{ message.session.name }}
+          </a>
+          du {{ dt|date('l d E Y') }}
+          {% endwith %}
+        </p>
+        {% endif %}
+      </div>
+      <div class="col-sm-2 hidden-xs">
+        {% if message.session %}
+        <a href="{% url message-session-add message.session.pk %}" class="modal-action btn btn-primary">Répondre</a>
+        {% endif %}
       </div>
     </div>
     {% endfor %}

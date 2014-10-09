@@ -452,6 +452,10 @@ div.list-title {
 }
 
 /* Comments */
+div.message {
+  margin-bottom: 8px;
+}
+
 div.message div.thumb {
   padding-right: 0;
 }
@@ -459,6 +463,10 @@ div.message div.thumb {
 div.message div.thumb img {
   max-width: 60px;
   float: right;
+}
+
+div.message p.well {
+  margin-bottom: 2px;
 }
 
 div.comments div.message blockquote {
