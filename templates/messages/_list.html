@@ -7,6 +7,48 @@
     <h5><i class="icon-comment"></i> Pas de commentaires</h5>
     {% endif %}
   {% endwith %}
+
+  {% if session and session.day.week.user == user %}
+  <ul class="nav nav-pills">
+    <li>
+      <a href="{% url message-session-list session.pk, 'all' %}" class="modal-action" data-replaces="messages-{{session.pk}}">
+        Tous
+      </a>
+    </li>
+
+    {% with session.comments.filter(private=True).count() as nb_private %}
+      {% if nb_private > 0 %}
+      <li>
+        <a href="{% url message-session-list session.pk, 'private' %}" class="modal-action" data-replaces="messages-{{session.pk}}">
+          {{nb_private}} Commentaires privés
+        </a>
+      </li>
+      {% else %}
+      <li class="disabled">
+        <a>
+          Pas de commentaires privés
+        </a>
+      </li>
+      {% endif %}
+    {% endwith %}
+
+    {% with session.comments.filter(private=False).count() as nb_public %}
+      {% if nb_public > 0 %}
+      <li>
+        <a href="{% url message-session-list session.pk, 'public' %}" class="modal-action" data-replaces="messages-{{session.pk}}">
+          {{nb_public}} Commentaires publics
+        </a>
+      </li>
+      {% else %}
+      <li class="disabled">
+        <a>
+          Pas de commentaires publics
+        </a>
+      </li>
+      {% endif %}
+    {% endwith %}
+  </ul>
+  {% endif %}
   </div>
 </div>
 

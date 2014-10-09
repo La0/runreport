@@ -198,6 +198,12 @@ function load_modal(evt){
     target = $('<div/>', {'class': 'appended'});
     $('#' + this.getAttribute('data-append')).append(target)
   }
+
+  // Replace target ?
+  if(this.hasAttribute('data-replaces')){
+    target = $('#' + this.getAttribute('data-replaces'));
+  }
+
   load_box(url, method, data, target);
   return false;
 }
