@@ -44,7 +44,15 @@ class UserNotifications(object):
     # Helper to add a message notification
     msg = u'%s %s a laissé un commentaire' % (message.sender.first_name, message.sender.last_name)
     if message.session:
-      msg += u' sur la séance "%s"' % (message.session.name, )
+      if message.recipient == message.sender:
+        # its own session
+        msg += u' sur sa séance "%s"' % (message.session.name,)
+      elif message.recipient == self.user:
+        # your session
+        msg += u' sur votre séance "%s"' % (message.session.name,)
+      else:
+        # anyone else session
+        msg += u' sur la séance "%s" de %s %s' % (message.session.name, message.recipient.first_name, message.recipient.last_name )
 
     # Build session link
     link = None

@@ -35,5 +35,7 @@
 
 {% block footer %}
 <button class="btn" data-dismiss="modal">Annuler</button>
+{% if notifications %}
 <a href="{% url user-notifications-clear-all %}" class="modal-action btn btn-warning">Supprimer ces notifications</a>
+{% endif %}
 {% endblock %}
