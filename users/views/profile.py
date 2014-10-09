@@ -1,5 +1,6 @@
 from django.views.generic import DetailView, RedirectView
 from django.core.urlresolvers import reverse
+from django.db.models import Count
 from users.views.mixins import ProfilePrivacyMixin
 from sport.views.mixins import AthleteRaces
 from sport.views.stats import SportStatsMixin
@@ -30,13 +31,19 @@ class PublicProfile(ProfilePrivacyMixin, DetailView, SportStatsMixin, AthleteRac
 
     return context
 
-  def get_recent_stats(self):
+  def get_recent_stats(self, nb=3):
     # Load last sessions
     today = date.today()
-    sessions = SportSession.objects.filter(day__week__user=self.member, day__date__lte=today).order_by('-day__date')[:3]
+    last_sessions = SportSession.objects.filter(day__week__user=self.member, day__date__lte=today).order_by('-day__date')[:nb]
+
+    # Load most commented
+    commented_sessions = SportSession.objects.filter(day__week__user=self.member)
+    commented_sessions = commented_sessions.annotate(nb_comments=Count('comments')).order_by('-nb_comments')[:nb]
+
     return {
       'today' : today,
-      'last_sessions' : sessions,
+      'last_sessions' : last_sessions,
+      'commented_sessions' : commented_sessions,
     }
 
 class OwnProfile(RedirectView):
