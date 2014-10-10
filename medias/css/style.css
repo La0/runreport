@@ -469,6 +469,10 @@ div.message div.well {
   margin-bottom: 2px;
 }
 
+div.comments div.box {
+  margin-bottom: 10px;
+}
+
 div.comments div.message blockquote {
   margin-left: 8px;
   font-size: 1em;

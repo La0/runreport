@@ -27,9 +27,17 @@ class Message(models.Model):
     un.add_message(self)
 
     if self.session:
-      # All members of discussion on session
-      for c in self.session.comments.exclude(sender=self.recipient).distinct('sender'):
-        if self.private and not c.sender.is_trainer(self.recipient): # for private message, only forward to trainers
-          continue
-        un = UserNotifications(c.sender)
-        un.add_message(self)
+
+      # Private : Only send to trainers
+      if self.private:
+        for m in self.session.day.week.user.memberships.all():
+          for trainer in m.trainers.all():
+            if trainer != self.sender:
+              un = UserNotifications(trainer)
+              un.add_message(self)
+
+      else:
+        # Public : All members of public discussion on session
+        for c in self.session.comments.exclude(private=True, sender=self.recipient).distinct('sender'):
+          un = UserNotifications(c.sender)
+          un.add_message(self)

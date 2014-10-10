@@ -14,6 +14,7 @@ urlpatterns = patterns('',
   url(r'^add/user/(?P<username>[\w_]+)', login_required(MessageUserAdd.as_view()), name="message-user-add"),
 
   # Comment add on SportSession
+  url(r'^add/session/(?P<session_id>\d+)/(?P<type>\w+)', login_required(MessageSessionAdd.as_view()), name="message-session-add-type"),
   url(r'^add/session/(?P<session_id>\d+)', login_required(MessageSessionAdd.as_view()), name="message-session-add"),
 
   # List messages from a SportSession

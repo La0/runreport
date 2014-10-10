@@ -41,10 +41,25 @@ class MessageSessionMixin(object):
 
     return self.session
 
+  def is_trainer(self):
+    # User is trainer of session owner ?
+    session_user = self.session.day.week.user
+    return self.request.user.is_trainer(session_user)
+
+  def is_owner(self):
+    # User is session owner
+    session_user = self.session.day.week.user
+    return session_user == self.request.user
+
+  def has_private(self):
+    # Private is accessible only for:
+    # * session owner
+    # * its trainer
+    return self.is_trainer() or self.is_owner()
 
 class MessageReloadMixin(JsonResponseMixin):
 
-  def reload(self, session=None):
+  def reload(self, session=None, private=False):
     # Reload boxes & close modal
     self.json_options = [JSON_OPTION_CLOSE, JSON_OPTION_NO_HTML, ]
 
@@ -54,7 +69,8 @@ class MessageReloadMixin(JsonResponseMixin):
 
       # Always reload only messages for member
       name = 'messages-%d' % (session.pk, )
-      url = reverse('message-session-list', args=(session.pk,getattr(self, 'list_type', 'private'))),
+      list_type = private and 'private' or 'public'
+      url = reverse('message-session-list', args=(session.pk,getattr(self, 'list_type', list_type))),
       self.json_boxes = {
         name : url,
       }

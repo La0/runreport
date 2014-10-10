@@ -34,8 +34,9 @@ class MessageSessionAdd(MessageSessionMixin, MessageReloadMixin, CreateView):
     args = super(MessageSessionAdd, self).get_initial(*args, **kwargs)
 
     # For trainer, the comment is private by default
+    # or when asking in url
     self.get_session()
-    if self.request.user.is_trainer(self.session.day.week.user):
+    if self.is_trainer() or (self.is_owner() and self.kwargs.get('type', None) == 'private'):
       args['private'] = True
 
     return args
@@ -43,6 +44,7 @@ class MessageSessionAdd(MessageSessionMixin, MessageReloadMixin, CreateView):
   def get_context_data(self, *args, **kwargs):
     context = super(MessageSessionAdd, self).get_context_data(*args, **kwargs)
     context['session'] = self.get_session()
+    context['has_private'] = self.has_private()
     return context
 
   def form_valid(self, form):
@@ -53,9 +55,11 @@ class MessageSessionAdd(MessageSessionMixin, MessageReloadMixin, CreateView):
     message.session = self.session
     message.sender = self.request.user
     message.recipient = self.session.day.week.user
+    if not self.has_private():
+      message.private = False
     message.save()
 
     # Add notifications
     message.notify()
 
-    return self.reload(self.session)
+    return self.reload(self.session, message.private)

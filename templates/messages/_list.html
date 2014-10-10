@@ -4,6 +4,8 @@
 
   {% if session.day.week.user == user or user.is_trainer(session.day.week.user) %}
   {% with session.comments.count() as nb %}
+  {% with session.comments.filter(private=True).count() as nb_private %}
+  {% with session.comments.filter(private=False).count() as nb_public %}
   <h5 class="pull-left" style="margin-right: 15px;">
     <i class="icon-comment"></i> Commentaires
   </h5>
@@ -12,11 +14,11 @@
 
     <a id="messages-{{session.pk}}-privacy" role="button" data-toggle="dropdown" class="btn btn-sm btn-info">
       {% if list_type == 'public' %}
-      <i class="icon-club"></i> Commentaires publics
+      <i class="icon-club"></i> {{ nb_public }} Commentaires publics
       {% elif list_type == 'private' %}
-      <i class="icon-lock"></i> Commentaires privés
+      <i class="icon-lock"></i> {{ nb_private }} Commentaires privés
       {% else %}
-      <i class="icon-comment"></i> Tous
+      <i class="icon-comment"></i> {{ nb }} Commentaires
       {% endif %}
       <span class="caret"></span>
     </a>
@@ -30,41 +32,39 @@
         </a>
       </li>
 
-      {% with session.comments.filter(private=True).count() as nb_private %}
-        {% if nb_private > 0 %}
-        <li class="{% if list_type == 'private' %}active{% endif %}">
-          <a href="{% url message-session-list session.pk, 'private' %}" class="modal-action" data-replaces="messages-{{session.pk}}">
-            <i class="icon-lock"></i>
-            {{nb_private}} Commentaires privés
-          </a>
-        </li>
-        {% else %}
-        <li class="disabled">
-          <a>
-            Pas de commentaires privés
-          </a>
-        </li>
-        {% endif %}
-      {% endwith %}
+      {% if nb_private > 0 %}
+      <li class="{% if list_type == 'private' %}active{% endif %}">
+        <a href="{% url message-session-list session.pk, 'private' %}" class="modal-action" data-replaces="messages-{{session.pk}}">
+          <i class="icon-lock"></i>
+          {{nb_private}} Commentaires privés
+        </a>
+      </li>
+      {% else %}
+      <li class="disabled">
+        <a>
+          Pas de commentaires privés
+        </a>
+      </li>
+      {% endif %}
 
-      {% with session.comments.filter(private=False).count() as nb_public %}
-        {% if nb_public > 0 %}
-        <li class="{% if list_type == 'public' %}active{% endif %}">
-          <a href="{% url message-session-list session.pk, 'public' %}" class="modal-action" data-replaces="messages-{{session.pk}}">
-            <i class="icon-club"></i>
-            {{nb_public}} Commentaires publics
-          </a>
-        </li>
-        {% else %}
-        <li class="disabled">
-          <a>
-            Pas de commentaires publics
-          </a>
-        </li>
-        {% endif %}
-      {% endwith %}
-      </ul>
-    </div>
+      {% if nb_public > 0 %}
+      <li class="{% if list_type == 'public' %}active{% endif %}">
+        <a href="{% url message-session-list session.pk, 'public' %}" class="modal-action" data-replaces="messages-{{session.pk}}">
+          <i class="icon-club"></i>
+          {{nb_public}} Commentaires publics
+        </a>
+      </li>
+      {% else %}
+      <li class="disabled">
+        <a>
+          Pas de commentaires publics
+        </a>
+      </li>
+      {% endif %}
+    </ul>
+  </div>
+  {% endwith %}
+  {% endwith %}
   {% endwith %}
   {% else %}
   {% with messages.count() as nb %}
@@ -113,7 +113,7 @@
 
 <div class="row">
   <div class="col-xs-12">
-    <a href="{% url message-session-add session.id %}" class="btn btn-sm {% if list_type == 'private' %}btn-warning{% else %}btn-info{% endif %} modal-action">
+    <a href="{% url message-session-add-type session.id, list_type %}" class="btn btn-sm {% if list_type == 'private' %}btn-warning{% else %}btn-info{% endif %} modal-action">
       <i class="icon-plus"></i> Ajouter un commentaire
       {% if list_type == 'private' %} privé{% endif %}
     </a>
