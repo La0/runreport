@@ -249,7 +249,6 @@ CELERY_TIMEZONE = 'Europe/Paris'
 from datetime import timedelta
 from celery.schedules import crontab
 CELERYBEAT_SCHEDULE = {
-<<<<<<< HEAD
   'auto-send-reports-on-sunday': {
     'task': 'sport.tasks.auto_publish_reports',
     'schedule': crontab(day_of_week=0, hour=23, minute=0),
@@ -304,7 +303,16 @@ if DEBUG:
   except:
     print "Missing debug toolbar module"
 else:
+  # Add raven
   INSTALLED_APPS = INSTALLED_APPS + ('raven.contrib.django.raven_compat',)
+
+  # Use cached templates
+  TEMPLATE_LOADERS = (
+    ('django.template.loaders.cached.Loader', TEMPLATE_LOADERS,),
+  )
+  JINJA2_TEMPLATE_LOADERS = (
+    ('django.template.loaders.cached.Loader', JINJA2_TEMPLATE_LOADERS, ),
+  )
 
 # Load some settings constants in the templates
 def load_constants(request):
