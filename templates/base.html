@@ -7,23 +7,16 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 
+  {% load compress %}
+  {% compress css %}
 	<link href="/medias/css/bootswatch.flatly.min.css" rel="stylesheet">
 	<link href="/medias/css/bootstrap-modal-bs3patch.css" rel="stylesheet">
 	<link href="/medias/css/bootstrap-modal.css" rel="stylesheet">
 	<link href="/medias/css/datepicker.css" rel="stylesheet">
 	<link href="/medias/css/runreport-embedded.css" rel="stylesheet">
 	<link href="/medias/css/style.css" rel="stylesheet">
-
 	{% block style %}{% endblock %}
-
-	<script type="text/javascript" src="/medias/js/jquery-1.11.0.min.js"></script>
-	<script type="text/javascript" src="/medias/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="/medias/js/bootstrap-datepicker.js"></script>
-	<script type="text/javascript" src="/medias/js/csrf.js" ></script>
-	<script type="text/javascript" src="/medias/js/bootstrap-modalmanager.js" ></script>
-	<script type="text/javascript" src="/medias/js/bootstrap-modal.js" ></script>
-	<script type="text/javascript" src="/medias/js/modal.js" ></script>
-	{% block js %}{% endblock %}
+  {% endcompress %}
 </head>
 <body class="{% if user.demo %}demo{% endif %}">
 	<header class="navbar navbar-default navbar-fixed-top">
@@ -108,5 +101,16 @@
 			{% include '_piwik.html' %}
 		</div>
 	</footer>
+
+  {% compress js %}
+	<script type="text/javascript" src="/medias/js/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="/medias/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/medias/js/bootstrap-datepicker.js"></script>
+	<script type="text/javascript" src="/medias/js/csrf.js" ></script>
+	<script type="text/javascript" src="/medias/js/bootstrap-modalmanager.js" ></script>
+	<script type="text/javascript" src="/medias/js/bootstrap-modal.js" ></script>
+	<script type="text/javascript" src="/medias/js/modal.js" ></script>
+	{% block js %}{% endblock %}
+  {% endcompress %}
 </body>
 </html>

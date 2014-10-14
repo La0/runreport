@@ -10,3 +10,4 @@ db
 celerybeat-schedule
 cache
 medias/avatars
+medias/min

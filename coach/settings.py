@@ -97,7 +97,9 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+
+    # Compressor media finder
+    'compressor.finders.CompressorFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -113,6 +115,10 @@ JINJA2_TEMPLATE_LOADERS = (
   'django.template.loaders.filesystem.Loader',
   'django.template.loaders.app_directories.Loader',
 )
+
+JINJA2_EXTENSIONS = [
+  'compressor.contrib.jinja2ext.CompressorExtension',
+]
 
 TEMPLATE_CONTEXT_PROCESSORS = (
   'coach.menu.add_pages',
@@ -154,6 +160,7 @@ INSTALLED_APPS = (
     'page',
     'plan',
     'messages',
+    'compressor',
 )
 
 # For auto login on user create
@@ -272,6 +279,15 @@ CELERY_ROUTES = {
   },
 }
 
+# Js/Css Compressor
+COMPRESS_ROOT = MEDIA_ROOT
+COMPRESS_URL = MEDIA_URL
+COMPRESS_OUTPUT_DIR = '/min' # must be a relative dir to
+COMPRESS_CSS_FILTERS = [
+  'compressor.filters.css_default.CssAbsoluteFilter', # default: absolute url()
+  'compressor.filters.cssmin.CSSMinFilter', # css minifier
+]
+
 # Dev cache in files
 CACHES = {
   'default': {
@@ -313,6 +329,8 @@ else:
   JINJA2_TEMPLATE_LOADERS = (
     ('django.template.loaders.cached.Loader', JINJA2_TEMPLATE_LOADERS, ),
   )
+
+
 
 # Load some settings constants in the templates
 def load_constants(request):
