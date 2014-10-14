@@ -30,7 +30,17 @@ class CurrentWeekMixin(object):
     return int(self.kwargs.get('week', self._week))
 
   def get_object(self):
-    return get_object_or_404(SportWeek, year=self.get_year(), week=self.get_week(), user=self.get_user())
+    '''
+    Load existing week
+    or create a new week in limits
+    '''
+    self.date = week_to_date(self.get_year(), week=self.get_week())
+    try:
+      week = SportWeek.objects.get(year=self.get_year(), week=self.get_week(), user=self.get_user())
+    except SportWeek.DoesNotExist, e:
+      self.check_limits() # Don't allow any week creation
+      week = SportWeek.objects.create(year=self.get_year(), week=self.get_week(), user=self.get_user())
+    return week
 
   def check_limits(self):
     # Load min & max date
