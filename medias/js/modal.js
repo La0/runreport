@@ -2,14 +2,7 @@
 $(function(){
   // Load a box, yks style !
   $('.box').each(function(i, box){
-    if(!box.hasAttribute('data-src'))
-      return;
-
-    var src = box.getAttribute('data-src');
-    console.info("Loading box "+src);
-
-    load_box(src, 'GET', {}, $(box));
-    box.removeAttribute('data-src'); // cleanup
+    load_inline_box(box);
   });
 
   // Modals show
@@ -183,11 +176,33 @@ function load_box(url, method, data, output){
       setInterval(function(){
         dom.find('.hideme').fadeOut('slow');
       }, 3000);
+
+      // Load inline boxes
+      dom.find('.box').each(function(i, box){
+        load_inline_box(box);
+      });
     },
     error : function(xhr, st, err){
+      // Hide box on forbidden access errors
+      if((xhr && xhr.status == 403 || err == 'FORBIDDEN') && output instanceof jQuery){
+        output.hide();
+        return;
+      }
       console.error("Failed to load box from "+url+" : "+err);
     }
   });
+}
+
+// Load an inline box : yks style
+function load_inline_box(box){
+  if(!box.hasAttribute('data-src'))
+    return;
+
+  var src = box.getAttribute('data-src');
+  console.info("Loading box "+src);
+
+  load_box(src, 'GET', {}, $(box));
+  box.removeAttribute('data-src'); // cleanup
 }
 
 // Init a modal, used from click

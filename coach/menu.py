@@ -92,7 +92,6 @@ def add_pages(request):
     # Show notifications count
     un = UserNotifications(request.user)
     nb_notif = un.total()
-    print nb_notif
     menu.append({
       'notifications' : nb_notif,
     })

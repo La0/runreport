@@ -23,7 +23,7 @@ class MessageUserMixin(object):
 
     # Check this member is visible by current user
     privacy = self.member.get_privacy_rights(self.request.user)
-    if 'calendar' not in privacy: #TODO: use another right 'message'
+    if 'comments' not in privacy:
       raise PermissionDenied
 
     return self.member
@@ -36,7 +36,7 @@ class MessageSessionMixin(object):
 
     # Check this session is visible by current user
     privacy = self.session.day.week.user.get_privacy_rights(self.request.user)
-    if 'calendar' not in privacy: #TODO: use another right 'message'
+    if 'comments' not in privacy: #TODO: use another right 'message'
       raise PermissionDenied
 
     return self.session

@@ -1,8 +1,8 @@
-{% if session %}
+{% if session and 'comments' in privacy %}
 <div class="row">
   <div class="col-xs-12">
 
-  {% if session.day.week.user == user or user.is_trainer(session.day.week.user) %}
+  {% if user.is_authenticated() and (session.day.week.user == user or user.is_trainer(session.day.week.user)) %}
   {% with session.comments.count() as nb %}
   {% with session.comments.filter(private=True).count() as nb_private %}
   {% with session.comments.filter(private=False).count() as nb_public %}
@@ -105,18 +105,20 @@
     {% endif %}
   </div>
 </div>
-{% else %}
-<span class="text-info">
-  Pas de commentaires.
-</span>
 {% endfor %}
 
 <div class="row">
   <div class="col-xs-12">
+    {% if user.is_authenticated() %}
     <a href="{% url message-session-add-type session.id, list_type %}" class="btn btn-sm {% if list_type == 'private' %}btn-warning{% else %}btn-info{% endif %} modal-action">
       <i class="icon-plus"></i> Ajouter un commentaire
       {% if list_type == 'private' %} privé{% endif %}
     </a>
+    {% else %}
+    <span class="btn btn-sm btn-info disabled do-tooltip" title="Vous devez avoir un compte pour ajouter un commentaire">
+      <i class="icon-plus"></i> Ajouter un commentaire
+    </span>
+    {% endif %}
   </div>
 </div>
 {% endif %}
