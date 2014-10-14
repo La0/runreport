@@ -85,6 +85,7 @@
           <a class="btn btn-primary btn-sm" href="{% url user-calendar-month member.username, today.year, today.month %}">Voir le calendrier <i class="icon-calendar"></i></a>
         </div>
 
+        {% if 'comments' in privacy %}
         <div class="col-sm-6 col-xs-12">
           {% if commented_sessions %}
           <p>
@@ -99,6 +100,7 @@
           {% endfor %}
           {% endif %}
         </div>
+        {% endif %}
 
       </div>
       {% endif %}
