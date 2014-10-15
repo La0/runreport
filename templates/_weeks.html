@@ -3,28 +3,28 @@
 {% endif %}
 
 <div class="container text-center">
-	
+
 	<ul class="pagination">
 		{% if week_previous %}
-		<li><a href="{{pagename|url(*pageargs + [week_previous.year, week_previous.week,])}}">&laquo;</a></li>
+		<li><a href="{{pageweek|url(*pageargs + [week_previous.year, week_previous.week,])}}"><i class="icon-left-open"></i></a></li>
 		{% else %}
-		<li class="active"><span>&laquo;</span></li>
+		<li class="active"><span><i class="icon-left-open"></i></span></li>
 		{% endif %}
 		{% for w in weeks %}
 		{% if w.display == 'week' %}
 		{% if w.current %}
 		<li class="active"><span>{{w.start|date('d M')}}</span></li>
 		{% else %}
-		<li><a href="{{pagename|url(*pageargs + [w.year, w.week,])}}">{{w.start|date('d M')}}</a></li>
+		<li><a href="{{pageweek|url(*pageargs + [w.year, w.week,])}}">{{w.start|date('d M')}}</a></li>
 		{% endif %}
 		{% else %}
 		<li class="active"><span>...</span></li>
 		{% endif %}
 		{% endfor %}
 		{% if week_next %}
-		<li><a href="{{pagename|url(*pageargs + [week_next.year, week_next.week, ])}}">&raquo;</a></li>
+		<li><a href="{{pageweek|url(*pageargs + [week_next.year, week_next.week, ])}}"><i class="icon-right-open"></i></a></li>
 		{% else %}
-		<li class="active"><span>&raquo;</span></li>
+		<li class="active"><span><i class="icon-right-open"></i></span></li>
 		{% endif %}
 	</ul>
 

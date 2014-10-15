@@ -4,7 +4,7 @@ from sport.models import SportWeek
 from datetime import date
 from sport.forms import SportWeekForm
 from sport.tasks import publish_report
-from mixins import CurrentWeekMixin
+from mixins import CurrentWeekMixin, WeekPaginator
 from day import RunCalendarDay
 from coach.mixins import JsonResponseMixin, JSON_OPTION_CLOSE, JSON_OPTION_NO_HTML, JSON_OPTION_BODY_RELOAD
 
@@ -34,7 +34,7 @@ class WeekPublish(JsonResponseMixin, CurrentWeekMixin, UpdateView):
     self.json_options = [JSON_OPTION_CLOSE, JSON_OPTION_NO_HTML, JSON_OPTION_BODY_RELOAD]
     return self.render_to_response({})
 
-class WeeklyReport(CurrentWeekMixin, DetailView):
+class WeeklyReport(CurrentWeekMixin, WeekPaginator, DetailView):
   template_name = 'sport/week/edit.html'
 
   def get(self, request, *args, **kwargs):

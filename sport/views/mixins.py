@@ -37,16 +37,20 @@ class CurrentWeekMixin(object):
     self.date = week_to_date(self.get_year(), week=self.get_week())
     try:
       week = SportWeek.objects.get(year=self.get_year(), week=self.get_week(), user=self.get_user())
+      self.check_limits(False) # no checks for existing
     except SportWeek.DoesNotExist, e:
-      self.check_limits() # Don't allow any week creation
       week = SportWeek.objects.create(year=self.get_year(), week=self.get_week(), user=self.get_user())
+      self.check_limits(False) # don't create any future week
+
     return week
 
-  def check_limits(self):
+  def check_limits(self, check=True):
     # Load min & max date
     min_year, min_week = REPORT_START_DATE
     self.min_date = week_to_date(min_year, min_week)
     self.max_date = date_to_day(self._today)
+    if not check:
+      return
 
     # Check we are not in past or future
     if self.date < self.min_date:
@@ -78,8 +82,18 @@ class WeekPaginator(object):
   weeks = []
   weeks_around_nb = 2
 
+  def get_context_data(self, *args, **kwargs):
+    # Add pagination to context
+    context = super(WeekPaginator, self).get_context_data(*args, **kwargs)
+
+    # Pagination
+    context.update(self.paginate(self.date, self.min_date, self.max_date))
+
+    return context
+
+
   # Build self.weeks for pagination
-  def build_week(self, week_date, page_date):
+  def _build_week(self, week_date, page_date):
     return {
       'display'  : 'week',
       'start' : week_date,
@@ -92,7 +106,7 @@ class WeekPaginator(object):
   def paginate(self, page_date, min_date, max_date):
     self.weeks = []
     # Add first week
-    self.weeks.append(self.build_week(min_date, page_date))
+    self.weeks.append(self._build_week(min_date, page_date))
 
     # Add viewed week and X on each side
     weeks_around = range(-self.weeks_around_nb, self.weeks_around_nb+1)
@@ -102,12 +116,12 @@ class WeekPaginator(object):
         continue
       if i == min(weeks_around):
         self.weeks.append({'display' : 'spacer'})
-      self.weeks.append(self.build_week(dt, page_date))
+      self.weeks.append(self._build_week(dt, page_date))
       if i == max(weeks_around):
         self.weeks.append({'display' : 'spacer'})
 
     # Add current week (last)
-    self.weeks.append(self.build_week(max_date, page_date))
+    self.weeks.append(self._build_week(max_date, page_date))
 
     # Search current
     current_pos = 0
