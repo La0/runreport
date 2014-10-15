@@ -17,37 +17,38 @@
         Il y a {{ message.created|timesince() }}
       </div>
       <div class="visible-xs col-xs-3">
-        {% if message.session %}
-        <a href="{% url message-session-add message.session.pk %}" class="modal-action btn btn-primary">Répondre</a>
-        {% else %}
-        <a href="{% url message-user-add message.writer.username %}" class="modal-action btn btn-primary">Répondre</a>
-        {% endif %}
+        <a href="{% url conversation-add message.conversation.pk %}" class="modal-action btn btn-primary">Répondre</a>
       </div>
       <div class="col-sm-6 col-xs-12">
         <div class="well">
           {{message.message|linebreaks()}}
         </div>
-        {% if message.session %}
+        {% if message.conversation.type == 'mail' %}
+        <i class="icon-mail"></i> Message privé
+        {% else %}
         <p>
-          <i class="icon-comment"></i>
-          Sur votre séance <i class="icon-sport-{{message.session.sport.slug}}"></i>
-          {% with message.session.day.date as dt %}
-          <a href="{% url report-day dt.year, dt.month, dt.day %}">
-            {{ message.session.name }}
-          </a>
-          du {{ dt|date('l d E Y') }}
+          {% with message.conversation.get_session() as session %}
+            <i class="icon-comment"></i>
+            {% with session.day.week.user as session_user %}
+              {% if user == session_user %}
+              Sur votre séance
+              {% else %}
+              Sur la séance de <a href="{% url user-public-profile session_user.username %}">{{ session_user.first_name }} {{ session_user.last_name }}</a>
+              {% endif %}
+            {% endwith %}
+            <i class="icon-sport-{{session.sport.slug}}"></i>
+            {% with session.day.date as dt %}
+            <a href="{% url report-day dt.year, dt.month, dt.day %}">
+              {{ session.name }}
+            </a>
+            du {{ dt|date('l d E Y') }}
+            {% endwith %}
           {% endwith %}
         </p>
-        {% else %}
-        <i class="icon-mail"></i> Message privé
         {% endif %}
       </div>
       <div class="col-sm-2 hidden-xs">
-        {% if message.session %}
-        <a href="{% url message-session-add message.session.pk %}" class="modal-action btn btn-primary">Répondre</a>
-        {% else %}
-        <a href="{% url message-user-add message.writer.username %}" class="modal-action btn btn-primary">Répondre</a>
-        {% endif %}
+        <a href="{% url conversation-add message.conversation.pk %}" class="modal-action btn btn-primary">Répondre</a>
       </div>
     </div>
     {% endfor %}

@@ -16,7 +16,10 @@ class Conversation(models.Model):
 
   type = models.CharField(max_length=50, choices=CONVERSATION_TYPES)
   created = models.DateTimeField(auto_now_add=True)
+
+  # Users markers, for filter / inbox
   mail_recipient = models.ForeignKey(Athlete, null=True, blank=True, related_name='mail_conversations')
+  session_user = models.ForeignKey(Athlete, null=True, blank=True, related_name='session_conversations')
 
   def get_session(self):
     if self.type == TYPE_MAIL:

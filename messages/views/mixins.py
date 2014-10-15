@@ -1,7 +1,7 @@
 from coach.mixins import JsonResponseMixin, JSON_OPTION_CLOSE, JSON_OPTION_NO_HTML
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
-from messages.models import Message, Conversation, TYPE_COMMENTS_PRIVATE, TYPE_COMMENTS_PUBLIC
+from messages.models import Message, Conversation, TYPE_COMMENTS_PRIVATE, TYPE_COMMENTS_PUBLIC, TYPE_MAIL
 from sport.models import SportSession
 from users.models import Athlete
 from django.core.exceptions import PermissionDenied
@@ -16,10 +16,17 @@ class ConversationMixin(object):
     self.conversation = get_object_or_404(Conversation, pk=self.kwargs['conversation_id'])
 
     # Check this conversation is visible by current user
-    self.session = self.conversation.get_session()
-    self.privacy = self.session.day.week.user.get_privacy_rights(self.request.user)
-    if self.conversation.type not in self.privacy:
-      raise PermissionDenied
+    if self.conversation.type in (TYPE_COMMENTS_PRIVATE, TYPE_COMMENTS_PUBLIC):
+      # A comment conversation has rights
+      self.session = self.conversation.get_session()
+      self.privacy = self.session.day.week.user.get_privacy_rights(self.request.user)
+      if self.conversation.type not in self.privacy:
+        raise PermissionDenied
+
+    elif self.conversation.type == TYPE_MAIL:
+      # A mail has recipients
+      if self.request.user not in self.conversation.get_recipients():
+        raise PermissionDenied
 
     return self.conversation
 
