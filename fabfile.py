@@ -68,8 +68,7 @@ def createdb(use_fixtures=True):
   psql('create database %(NAME)s with owner = %(USER)s' % db, 'postgres')
 
   # Create structure
-  local('./manage.py syncdb --noinput --all')
-  local('./manage.py migrate --fake')
+  local('./manage.py migrate')
 
   if use_fixtures:
     # Load some basic fixtures
