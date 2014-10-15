@@ -38,7 +38,10 @@ class PublicProfile(ProfilePrivacyMixin, DetailView, SportStatsMixin, AthleteRac
 
     # Load most commented
     commented_sessions = SportSession.objects.filter(day__week__user=self.member)
-    commented_sessions = commented_sessions.filter(comments__private=False).annotate(nb_comments=Count('comments')).order_by('-nb_comments')[:nb]
+    commented_sessions = commented_sessions.exclude(comments_public__isnull=True)
+    commented_sessions = commented_sessions.annotate(nb_comments=Count('comments_public__messages')).order_by('-nb_comments')[:nb]
+    for c in commented_sessions:
+      print c, c.nb_comments
 
     return {
       'today' : today,

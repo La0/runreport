@@ -9,7 +9,7 @@ class MessageDelete(MessageReloadMixin, MessageOwned, DeleteView):
   def delete(self, *args, **kwargs):
     # Delete message
     message = self.get_object()
-    session = message.session
+    conversation = message.conversation
     message.delete()
 
-    return self.reload(session)
+    return self.reload(conversation)

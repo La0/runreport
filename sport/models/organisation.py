@@ -45,7 +45,7 @@ class SportWeek(models.Model):
 
   def get_days_per_date(self):
     sessions = OrderedDict()
-    days = self.days.prefetch_related('sessions').prefetch_related('sessions__comments')
+    days = self.days.prefetch_related('sessions').prefetch_related('sessions__comments_public', 'sessions__comments_private')
 
     # Empty days by default
     for d in self.get_dates():

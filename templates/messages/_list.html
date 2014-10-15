@@ -1,94 +1,60 @@
-{% if session and 'comments' in privacy %}
+{% if conversation and session %}
 <div class="row">
   <div class="col-xs-12">
-
-  {% if 'comments_private' in privacy %}
-  {% with session.comments.count() as nb %}
-  {% with session.comments.filter(private=True).count() as nb_private %}
-  {% with session.comments.filter(private=False).count() as nb_public %}
-  <h5 class="pull-left" style="margin-right: 15px;">
-    <i class="icon-comment"></i> Commentaires
-  </h5>
-
-  <div class="dropdown">
-
-    <a id="messages-{{session.pk}}-privacy" role="button" data-toggle="dropdown" class="btn btn-sm btn-info">
-      {% if list_type == 'public' %}
-      <i class="icon-club"></i> {{ nb_public }} Commentaires publics
-      {% elif list_type == 'private' %}
-      <i class="icon-lock"></i> {{ nb_private }} Commentaires privés
+    <h5 class="pull-left" style="margin-right: 15px;">
+      <i class="icon-comment"></i>
+      {% if conversations|length() > 1 %}
+      Commentaires
       {% else %}
-      <i class="icon-comment"></i> {{ nb }} Commentaires
+        {% with conversation.messages.count() as nb %}
+          {{ nb }} Commentaire{{ nb|pluralize() }}
+        {% endwith %}
       {% endif %}
-      <span class="caret"></span>
-    </a>
+    </h5>
+    {% if conversations|length() > 1 %}
+    <div class="dropdown">
+      <a id="conversation-{{conversation.pk}}-privacy" role="button" data-toggle="dropdown" class="btn btn-sm btn-info">
+        {% with conversation.messages.count() as nb %}
+          {% if conversation.type == 'comments_private' %}
+          <i class="icon-lock"></i> {{ nb }} Commentaire{{ nb|pluralize() }} privé{{ nb|pluralize() }}
+          {% else %}
+          <i class="icon-club"></i> {{ nb }} Commentaire{{ nb|pluralize() }} public{{ nb|pluralize() }}
+          {% endif %}
+        {% endwith %}
+        <span class="caret"></span>
+      </a>
 
-    <ul class="dropdown-menu" role="menu" aria-labelledby="messages-{{session.pk}}-privacy">
-
-      <li class="{% if not list_type or list_type == 'all' %}active{% endif %}">
-        <a href="{% url message-session-list session.pk, 'all' %}" class="modal-action" data-replaces="messages-{{session.pk}}">
-          <i class="icon-comment"></i>
-          {{ nb }} Commentaires
-        </a>
-      </li>
-
-      {% if nb_private > 0 %}
-      <li class="{% if list_type == 'private' %}active{% endif %}">
-        <a href="{% url message-session-list session.pk, 'private' %}" class="modal-action" data-replaces="messages-{{session.pk}}">
-          <i class="icon-lock"></i>
-          {{nb_private}} Commentaires privés
-        </a>
-      </li>
-      {% else %}
-      <li class="disabled">
-        <a>
-          Pas de commentaires privés
-        </a>
-      </li>
-      {% endif %}
-
-      {% if nb_public > 0 %}
-      <li class="{% if list_type == 'public' %}active{% endif %}">
-        <a href="{% url message-session-list session.pk, 'public' %}" class="modal-action" data-replaces="messages-{{session.pk}}">
-          <i class="icon-club"></i>
-          {{nb_public}} Commentaires publics
-        </a>
-      </li>
-      {% else %}
-      <li class="disabled">
-        <a>
-          Pas de commentaires publics
-        </a>
-      </li>
-      {% endif %}
-    </ul>
-  </div>
-  {% endwith %}
-  {% endwith %}
-  {% endwith %}
-  {% else %}
-  {% with messages.count() as nb %}
-    {% if nb > 0 %}
-    <h5><i class="icon-comment"></i> {{ nb }} commentaire{{ nb|pluralize() }}</h5>
-    {% else %}
-    <h5><i class="icon-comment"></i> Pas de commentaires</h5>
+      <ul class="dropdown-menu" role="menu" aria-labelledby="conversation-{{conversation.pk}}-privacy">
+      {% for c in conversations %}
+        {% with c.messages.count() as nb %}
+        <li class="{% if c == conversation %}active{% endif %}">
+          <a href="{% url conversation-list c.id %}" class="modal-action" data-replaces="messages-{{session.pk}}">
+            {% if c.type == 'comments_private' %}
+            <i class="icon-lock"></i> {{ nb }} Commentaire{{ nb|pluralize() }} privés
+            {% else %}
+            <i class="icon-club"></i> {{ nb }} Commentaire{{ nb|pluralize() }} publics
+            {% endif %}
+          </a>
+        </li>
+        {% endwith %}
+      {% endfor %}
+      </ul>
+    </div>
     {% endif %}
-  {% endwith %}
-  {% endif %}
   </div>
 </div>
 
 {% for message in messages %}
 <div class="row message actions-hover">
   <div class="col-xs-1 thumb">
-    <img class="img-responsive img-rounded" src="{{ message.sender.avatar.url }}" alt="Avatar {{ message.sender.username }}" />
+    <img class="img-responsive img-rounded" src="{{ message.writer.avatar.url }}" alt="Avatar {{ message.writer.username }}" />
   </div>
   <div class="col-sm-8">
     <p>
-      {% if message.private %}
+      {% if conversation.type == 'comments_private' %}
       <i class="icon-lock do-tooltip" title="Commentaire privé"></i>
       {% endif %}
-      <i class="icon-user"></i> <a href="{% url user-public-profile message.sender.username %}">{{ message.sender.first_name }} {{ message.sender.last_name }}</a>
+      <i class="icon-user"></i> <a href="{% url user-public-profile message.writer.username %}">{{ message.writer.first_name }} {{ message.writer.last_name }}</a>
       <i class="icon-calendar"></i> {{ message.created|date('l d E Y - H:i') }}
       {% if message.revision > 1 %}
       <i class="icon-right-open"></i> Edité {{ message.revision }} fois.
@@ -99,7 +65,7 @@
     </blockquote>
   </div>
   <div class="col-sm-3 text-right actions">
-    {% if message.sender == user %}
+    {% if message.writer == user %}
     <a href="{% url message-delete message.pk %}" class="modal-action btn btn-sm btn-danger"><i class="icon-trash"></i> Supprimer</a>
     <a href="{% url message-edit message.pk %}" class="modal-action btn btn-sm btn-success">Editer <i class="icon-right-open"></i></a>
     {% endif %}
@@ -108,12 +74,21 @@
 {% endfor %}
 
 <div class="row">
-  <div class="col-xs-12">
+  <div class="col-xs-12 actions">
     {% if user.is_authenticated() %}
-    <a href="{% url message-session-add-type session.id, list_type %}" class="btn btn-sm {% if list_type == 'private' %}btn-warning{% else %}btn-info{% endif %} modal-action">
-      <i class="icon-plus"></i> Ajouter un commentaire
-      {% if list_type == 'private' %} privé{% endif %}
-    </a>
+      <a href="{% url conversation-add conversation.pk %}" class="btn btn-sm {% if conversation.type == 'comments_private' %}btn-warning{% else %}btn-success{% endif %} modal-action">
+        <i class="icon-plus"></i> Ajouter un commentaire {% if conversation.type == 'comments_private' %}privé{% else %}public{% endif %}
+      </a>
+      {% if 'comments_public' in privacy and not session.comments_public %}
+      <a href="{% url message-session-add session.pk, 'public' %}" class="btn btn-sm btn-success modal-action">
+        Démarrer une conversation publique
+      </a>
+      {% endif %}
+      {% if 'comments_private' in privacy and not session.comments_private %}
+      <a href="{% url message-session-add session.pk, 'private' %}" class="btn btn-sm btn-warning modal-action">
+        Démarrer une conversation privée
+      </a>
+      {% endif %}
     {% else %}
     <span class="btn btn-sm btn-info disabled do-tooltip" title="Vous devez avoir un compte pour ajouter un commentaire">
       <i class="icon-plus"></i> Ajouter un commentaire

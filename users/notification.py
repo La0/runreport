@@ -37,38 +37,45 @@ class UserNotifications(object):
     self.store(notifications)
 
   def add_message(self, message):
+    from messages.models import TYPE_COMMENTS_PUBLIC, TYPE_COMMENTS_PRIVATE, TYPE_MAIL
 
-    # Check sender is not recipient : no notification
-    if message.sender == self.user:
+    # Check writer is not recipient : no notification
+    if message.writer == self.user:
       return
 
     # Helper to add a message notification
-    if message.session:
-      # Comment
-      msg = u'%s %s a laissé un commentaire' % (message.sender.first_name, message.sender.last_name)
-      if message.recipient == message.sender:
-        # its own session
-        msg += u'%s sur sa séance "%s"' % (message.private and u' privé' or '', message.session.name,)
-      elif message.recipient == self.user:
-        # your session
-        msg += u'%s sur votre séance "%s"' % (message.private and u' privé' or '', message.session.name,)
-      else:
-        # anyone else session
-        msg += u' sur la séance "%s" de %s %s' % (message.session.name, message.recipient.first_name, message.recipient.last_name )
-    else:
+    if message.conversation.type == TYPE_MAIL:
       # Direct user message
-      msg = u'%s %s vous a envoyé un message' % (message.sender.first_name, message.sender.last_name)
+      msg = u'%s %s vous a envoyé un message' % (message.writer.first_name, message.writer.last_name)
 
-    if message.session:
-      # Build session link
-      day = message.session.day
-      link = reverse('user-calendar-day', args=(day.week.user.username, day.date.year, day.date.month, day.date.day))
-    else:
       # Direct to inbox
       link = reverse('message-inbox')
 
+      # Category
+      cat = NOTIFICATION_MAIL
+    else:
+      # Comment
+      msg = u'%s %s a laissé un commentaire' % (message.writer.first_name, message.writer.last_name)
+      is_private = message.conversation.type == TYPE_COMMENTS_PRIVATE
+      session = message.conversation.get_session()
+      session_user = session.day.week.user
+      if session_user == message.writer:
+        # its own session
+        msg += u'%s sur sa séance "%s"' % (is_private and u' privé' or '', session.name,)
+      elif session_user == self.user:
+        # your session
+        msg += u'%s sur votre séance "%s"' % (is_private and u' privé' or '', session.name,)
+      else:
+        # anyone else session
+        msg += u' sur la séance "%s" de %s %s' % (session.name, session_user.first_name, session_user.last_name )
+
+      # Build session link
+      link = reverse('user-calendar-day', args=(session_user.username, session.day.date.year, session.day.date.month, session.day.date.day))
+
+      # Category
+      cat = NOTIFICATION_COMMENT
+
     # Add notification
-    cat = message.session and NOTIFICATION_COMMENT or NOTIFICATION_MAIL
     self.add(cat, msg, link)
 
   def total(self):

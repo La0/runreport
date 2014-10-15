@@ -38,6 +38,10 @@ class SportSession(models.Model):
   created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
 
+  # Comments
+  comments_public = models.ForeignKey('messages.Conversation', null=True, blank=True, related_name='session_public')
+  comments_private = models.ForeignKey('messages.Conversation', null=True, blank=True, related_name='session_private')
+
   class Meta:
     db_table = 'sport_session'
     app_label = 'sport'

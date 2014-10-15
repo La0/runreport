@@ -11,7 +11,8 @@
 
 {% if day and day.sessions.count() %}
 {% for session in day.sessions.order_by('created') %}
-<div class="sport-session row hidden-xs">
+<div class="sport-session">
+<div class="row hidden-xs">
   <div class="col-sm-8">
     <h4>
       <i class="icon-sport-{{session.sport.slug}} do-tooltip" title="{{ session.sport.name }}"></i>
@@ -20,11 +21,9 @@
       <i class="icon-location do-tooltip" title="Données Garmin"></i>
       {% endif %}
 
-      {% with session.comments.count() as nb_comments %}
-        {% if not show_comments and nb_comments > 0 %}
-        <i class="icon-comment do-tooltip" title="{{nb_comments }} Commentaires"></i>
-        {% endif %}
-      {% endwith %}
+      {% if not show_comments and (session.comments_public or session.comments_private) %}
+      <i class="icon-comment"></i>
+      {% endif %}
 
       <span class="text-muted">&bull;</span>
       <span class="label {{type_css[session.type]}}">{{type_text[session.type]}}</span>
@@ -96,12 +95,11 @@
 
 {% if member and show_comments %}
 <div class="row">
-  <div id="messages-{{session.pk}}" class="box comments col-xs-12" data-src="{% url message-session-list session.pk, 'private' %}" >
-    Chargement des commentaires...
-  </div>
+  {% include 'sport/session/_comments.html' %}
 </div>
 {% endif %}
 
+</div> {# End of sport-session #}
 {% endfor %}
 {% elif not member %}
 <p>

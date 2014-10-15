@@ -83,10 +83,13 @@
   </div>
 
   {% if session.pk %}
-  <div class="comments">
-    <div id="messages-{{session.pk}}" class="box col-sm-10 col-sm-offset-2" data-src="{% url message-session-list session.pk, 'private' %}" >
-      Chargement des commentaires...
+  <div class="row">
+    {% with ('comments_public', 'comments_private') as privacy %}
+    <label class="control-label col-sm-2 hidden-xs">Commentaires</label>
+    <div class="col-sm-10 col-xs-12">
+      {% include 'sport/session/_comments.html' %}
     </div>
+    {% endwith %}
   </div>
   {% endif %}
 

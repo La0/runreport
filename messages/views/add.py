@@ -1,6 +1,7 @@
 from django.views.generic.edit import CreateView
-from messages.forms import MessageTextForm, MessageForm
-from mixins import MessageReloadMixin, MessageSessionMixin, MessageUserMixin
+from messages.forms import MessageTextForm
+from mixins import MessageReloadMixin, MessageSessionMixin, MessageUserMixin, ConversationMixin
+from messages.models import Conversation, TYPE_MAIL
 
 class MessageUserAdd(MessageUserMixin, MessageReloadMixin, CreateView):
   template_name = 'messages/add/user.html'
@@ -14,52 +15,73 @@ class MessageUserAdd(MessageUserMixin, MessageReloadMixin, CreateView):
   def form_valid(self, form):
     self.get_member()
 
+    # Create a new conversation
+    conversation = Conversation.objects.create(type=TYPE_MAIL, mail_recipient=self.member)
+
     # Save a new message for user
     message = form.save(commit=False)
-    message.sender = self.request.user
-    message.recipient = self.member
-    message.private = True # Always private
+    message.conversation = conversation
+    message.writer = self.request.user
     message.save()
 
     # Add notifications
-    message.notify()
+    conversation.notify(message)
 
     return self.reload()
 
 class MessageSessionAdd(MessageSessionMixin, MessageReloadMixin, CreateView):
   template_name = 'messages/add/session.html'
-  form_class = MessageForm
-
-  def get_initial(self, *args, **kwargs):
-    args = super(MessageSessionAdd, self).get_initial(*args, **kwargs)
-
-    # For trainer, the comment is private by default
-    # or when asking in url
-    self.get_session()
-    if self.is_trainer() or (self.is_owner() and self.kwargs.get('type', None) == 'private'):
-      args['private'] = True
-
-    return args
+  form_class = MessageTextForm
 
   def get_context_data(self, *args, **kwargs):
     context = super(MessageSessionAdd, self).get_context_data(*args, **kwargs)
-    context['session'] = self.get_session()
-    context['privacy'] = self.privacy
+    context['type'] = self.kwargs['type']
     return context
 
   def form_valid(self, form):
     self.get_session()
 
+    # Init a conversation
+    type = self.kwargs['type']
+    types = {
+      'private' : self.session.comments_private,
+      'public' : self.session.comments_public,
+    }
+    conversation = types[type]
+
+    # Build a conversation when none exists
+    if not conversation:
+      name = 'comments_%s' % type
+      conversation = Conversation.objects.create(type=name)
+      setattr(self.session, name, conversation)
+      self.session.save()
+
     # Save a new comment
     message = form.save(commit=False)
-    message.session = self.session
-    message.sender = self.request.user
-    message.recipient = self.session.day.week.user
-    if 'comments_private' not in self.privacy:
-      message.private = False
+    message.writer = self.request.user
+    message.conversation = conversation
     message.save()
 
     # Add notifications
-    message.notify()
+    conversation.notify(message)
 
-    return self.reload(self.session, message.private)
+    return self.reload(conversation)
+
+class ConversationAdd(ConversationMixin, MessageReloadMixin, CreateView):
+  template_name = 'messages/add/conversation.html'
+  form_class = MessageTextForm
+
+  def form_valid(self, form):
+    self.get_conversation()
+
+    # Save a new comment
+    message = form.save(commit=False)
+    message.writer = self.request.user
+    message.conversation = self.conversation
+    message.save()
+
+    # Add notifications
+    self.conversation.notify(message)
+
+    return self.reload(self.conversation)
+

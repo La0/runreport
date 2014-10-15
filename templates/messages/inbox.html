@@ -7,11 +7,11 @@
     {% for message in messages %}
     <div class="row message">
       <div class="col-sm-1 col-xs-2">
-        <img class="img-responsive img-rounded" src="{{message.sender.avatar.url}}" alt="Avatar {{message.sender.username}}" />
+        <img class="img-responsive img-rounded" src="{{message.writer.avatar.url}}" alt="Avatar {{message.writer.username}}" />
       </div>
       <div class="col-sm-3 col-xs-7">
-        <a href="{% url user-public-profile message.sender.username %}">
-          {{ message.sender.first_name }} {{ message.sender.last_name }}
+        <a href="{% url user-public-profile message.writer.username %}">
+          {{ message.writer.first_name }} {{ message.writer.last_name }}
         </a>
         <br />
         Il y a {{ message.created|timesince() }}
@@ -20,7 +20,7 @@
         {% if message.session %}
         <a href="{% url message-session-add message.session.pk %}" class="modal-action btn btn-primary">Répondre</a>
         {% else %}
-        <a href="{% url message-user-add message.sender.username %}" class="modal-action btn btn-primary">Répondre</a>
+        <a href="{% url message-user-add message.writer.username %}" class="modal-action btn btn-primary">Répondre</a>
         {% endif %}
       </div>
       <div class="col-sm-6 col-xs-12">
@@ -46,7 +46,7 @@
         {% if message.session %}
         <a href="{% url message-session-add message.session.pk %}" class="modal-action btn btn-primary">Répondre</a>
         {% else %}
-        <a href="{% url message-user-add message.sender.username %}" class="modal-action btn btn-primary">Répondre</a>
+        <a href="{% url message-user-add message.writer.username %}" class="modal-action btn btn-primary">Répondre</a>
         {% endif %}
       </div>
     </div>

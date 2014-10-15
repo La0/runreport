@@ -10,15 +10,17 @@ urlpatterns = patterns('',
   # Delete message
   url(r'^delete/(?P<message_id>\d+)', login_required(MessageDelete.as_view()), name="message-delete"),
 
-  # User message
+  # Add messages
+  # From user profile
   url(r'^add/user/(?P<username>[\w_]+)', login_required(MessageUserAdd.as_view()), name="message-user-add"),
+  # From sport session
+  url(r'^add/session/(?P<session_id>\d+)/(?P<type>\w+)', login_required(MessageSessionAdd.as_view()), name="message-session-add"),
+  # From conversation
+  url(r'^add/conversation/(?P<conversation_id>\d+)', login_required(ConversationAdd.as_view()), name="conversation-add"),
 
-  # Comment add on SportSession
-  url(r'^add/session/(?P<session_id>\d+)/(?P<type>\w+)', login_required(MessageSessionAdd.as_view()), name="message-session-add-type"),
-  url(r'^add/session/(?P<session_id>\d+)', login_required(MessageSessionAdd.as_view()), name="message-session-add"),
+  # List messages from a Conversation
+  url(r'^list/(?P<conversation_id>\d+)/?', ConversationList.as_view(), name="conversation-list"),
 
-  # List messages from a SportSession
-  url(r'^list/session/(?P<session_id>\d+)/(?P<type>all|private|public)', MessageSessionList.as_view(), name="message-session-list"),
-
+  # User inbox
   url(r'^/?$', login_required(MessageInbox.as_view()), name="message-inbox"),
 )

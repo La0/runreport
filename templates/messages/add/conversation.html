@@ -2,10 +2,11 @@
 
 {% set modal_title = 'Ajouter un commentaire' %}
 
-{% set form_url = url('message-session-add', session.pk, type) %}
+{% set form_url = url('conversation-add', conversation.pk) %}
 
 {% block body %}
 <div class="add-comment">
+  {% if session %}
   <h4>
     {% if session.type == 'training' %}
     <span class="label label-info">Entrainement</span>
@@ -26,6 +27,7 @@
   <i class="icon-user"></i>
   <a href="{% url user-public-profile user.username %}">{{ user.first_name }} {{ user.last_name }}</a>
   {% endwith %}
+  {% endif %}
 
   {% csrf_token %}
 
@@ -36,12 +38,12 @@
   </div>
   {% endif %}
 
-  {% if type == 'private' %}
+  {% if conversation.type == 'comments_private' %}
   <p class="text-warning">
     <i class="icon-lock"></i>
     Ce commentaire sera <strong>privé</strong>, et donc visible uniquement par l'athlète et ses entraineurs.
   </p>
-  {% else %}
+  {% elif conversation.type == 'comments_public' %}
   <p class="text-success">
     <i class="icon-club"></i>
     Ce commentaire sera <strong>public</strong>, et donc visible par les membres autorisés de vos clubs.

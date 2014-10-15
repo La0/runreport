@@ -95,7 +95,7 @@
           <p>
             <i class="icon-sport-{{session.sport.slug }}"></i>
             <a href="{% url user-calendar-day member.username, session.day.date.year, session.day.date.month, session.day.date.day %}">{{ session.name|default('Séance')|truncate(40)}}</a>
-            , {{ session.comments.count() }} commentaires
+            , {{ session.nb_comments }} commentaire{{ session.nb_comments|pluralize() }}
           </p>
           {% endfor %}
           {% endif %}
