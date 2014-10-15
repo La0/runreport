@@ -44,7 +44,7 @@ class MessageSessionAdd(MessageSessionMixin, MessageReloadMixin, CreateView):
   def get_context_data(self, *args, **kwargs):
     context = super(MessageSessionAdd, self).get_context_data(*args, **kwargs)
     context['session'] = self.get_session()
-    context['has_private'] = self.has_private()
+    context['privacy'] = self.privacy
     return context
 
   def form_valid(self, form):
@@ -55,7 +55,7 @@ class MessageSessionAdd(MessageSessionMixin, MessageReloadMixin, CreateView):
     message.session = self.session
     message.sender = self.request.user
     message.recipient = self.session.day.week.user
-    if not self.has_private():
+    if 'comments_private' not in self.privacy:
       message.private = False
     message.save()
 

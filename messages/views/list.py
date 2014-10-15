@@ -11,7 +11,7 @@ class MessageSessionList(JsonResponseMixin, MessageSessionMixin, ListView):
     context = super(MessageSessionList, self).get_context_data()
     context['session'] = self.session
     context['list_type'] = self.list_type
-    context['privacy'] = self.session.day.week.user.get_privacy_rights(self.request.user)
+    context['privacy'] = self.privacy
     return context
 
   def get_queryset(self):
@@ -21,7 +21,7 @@ class MessageSessionList(JsonResponseMixin, MessageSessionMixin, ListView):
     # Only the session owner
     # or one of its trainer
     # can change the type
-    if self.request.user.is_authenticated() and (session_user == self.request.user or self.request.user.is_trainer(session_user)):
+    if 'comments_private' in self.privacy:
       self.list_type = self.kwargs.get('type', 'private')
       filters = {
         'all' : {},
@@ -32,6 +32,7 @@ class MessageSessionList(JsonResponseMixin, MessageSessionMixin, ListView):
           'private' : False,
         },
       }
+      print filters, self.list_type
       return session.comments.filter(**filters[self.list_type]).order_by('created')
 
     # By default, Just list public comments

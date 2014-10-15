@@ -2,7 +2,7 @@
 <div class="row">
   <div class="col-xs-12">
 
-  {% if user.is_authenticated() and (session.day.week.user == user or user.is_trainer(session.day.week.user)) %}
+  {% if 'comments_private' in privacy %}
   {% with session.comments.count() as nb %}
   {% with session.comments.filter(private=True).count() as nb_private %}
   {% with session.comments.filter(private=False).count() as nb_public %}

@@ -22,8 +22,8 @@ class MessageUserMixin(object):
       raise PermissionDenied
 
     # Check this member is visible by current user
-    privacy = self.member.get_privacy_rights(self.request.user)
-    if 'comments' not in privacy:
+    self.privacy = self.member.get_privacy_rights(self.request.user)
+    if 'comments' not in self.privacy:
       raise PermissionDenied
 
     return self.member
@@ -35,8 +35,8 @@ class MessageSessionMixin(object):
     self.session = get_object_or_404(SportSession, pk=self.kwargs['session_id'])
 
     # Check this session is visible by current user
-    privacy = self.session.day.week.user.get_privacy_rights(self.request.user)
-    if 'comments' not in privacy: #TODO: use another right 'message'
+    self.privacy = self.session.day.week.user.get_privacy_rights(self.request.user)
+    if 'comments' not in self.privacy:
       raise PermissionDenied
 
     return self.session
@@ -50,12 +50,6 @@ class MessageSessionMixin(object):
     # User is session owner
     session_user = self.session.day.week.user
     return session_user == self.request.user
-
-  def has_private(self):
-    # Private is accessible only for:
-    # * session owner
-    # * its trainer
-    return self.is_trainer() or self.is_owner()
 
 class MessageReloadMixin(JsonResponseMixin):
 

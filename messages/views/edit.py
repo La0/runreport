@@ -12,10 +12,8 @@ class MessageEdit(MessageSessionMixin, MessageReloadMixin, MessageOwned, UpdateV
     # We don't always have a session here
     try:
       self.session = message.session
-      context['has_private'] = self.has_private()
     except:
-      context['has_private'] = False
-
+      pass
     return context
 
   def form_valid(self, form):
@@ -26,7 +24,7 @@ class MessageEdit(MessageSessionMixin, MessageReloadMixin, MessageOwned, UpdateV
     # We don't always have a session here
     try:
       self.session = message.session
-      if not self.has_private():
+      if 'comments_private' not in self.privacy:
         message.private = False
     except Exception, e:
       message.private = False
