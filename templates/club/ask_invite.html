@@ -27,14 +27,15 @@
         <form action="{% url club-landing %}" method="post" role="form" class="form-inline">
           {% csrf_token %}
 
-          <div class="col-xs-6 {% if form.recipient.errors %}has-error{% endif %}">
+          <p class="col-sm-6 col-xs-12 {% if form.recipient.errors %}has-error{% endif %}">
             {{ form.recipient|addcss("form-control")|safe }}
             {% if form.recipient.errors %}
-            <div class="help-block">{{form.recipient.errors|safe}}</div>
+            <p class="help-block">{{form.recipient.errors|safe}}</p>
             {% endif %}
-          </div>
-
-          <button type="submit" class="btn btn-success">Demander une invitation</button>
+          </p>
+          <p class="col-sm-6 col-xs-12">
+            <button type="submit" class="btn btn-success">Demander une invitation</button>
+          </p>
         </form>
         {% endif %}
       </div>
