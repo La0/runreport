@@ -15,7 +15,7 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'runreport',
         'USER': 'runreport',
         'PASSWORD': 'runreport',
@@ -153,6 +153,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.staticfiles',
     'django.contrib.admin',
+    'django.contrib.gis',
     'interval',
     'sport',
     'users',
@@ -160,6 +161,7 @@ INSTALLED_APPS = (
     'page',
     'plan',
     'messages',
+    'tracks',
     'compressor',
 )
 

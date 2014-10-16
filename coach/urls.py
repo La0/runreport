@@ -1,6 +1,6 @@
 from coffin.conf.urls import *
 from coach.settings import MEDIA_ROOT, DEBUG, ADMIN_BASE_URL
-from django.contrib import admin
+from django.contrib.gis import admin
 from django.views.generic.base import RedirectView, TemplateView
 from club.views import ClubInviteCheck
 
@@ -12,6 +12,7 @@ urlpatterns = patterns('',
   url(r'^club/', include('club.urls')),
   url(r'^plan/', include('plan.urls')),
   url(r'^message/', include('messages.urls')),
+  url(r'^track/', include('tracks.urls')),
   url(r'^(?P<type>help|news)/', include('page.urls')),
 
   # Invite

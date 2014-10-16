@@ -123,6 +123,7 @@ class GarminActivity(models.Model):
     fd = open(self.get_data_path(name), 'r')
     data = fd.read()
     h_file = hashlib.md5(data).hexdigest()
+    print h_file, h_db
     fd.close()
     if h_file != h_db:
       raise Exception("Invalid data file %s" % path)
@@ -201,3 +202,48 @@ class GarminActivity(models.Model):
     return 3600.0 / (self.speed.hour * 3600 + self.speed.minute * 60 + self.speed.second)
 
 
+  def build_track(self):
+    '''
+    Build a geo track from saved lines
+    '''
+    # Check session
+    if not self.session:
+      raise Exception("A SportSession is needed to build a track")
+    if hasattr(self.session, 'track'):
+      raise Exception("The SportSession has already a track")
+
+    # Load metrics/measurements from file
+    data = self.get_data('details')
+    key = 'com.garmin.activity.details.json.ActivityDetails'
+    if key not in data:
+      raise Exception("Unsupported format")
+    base = data[key]
+    if 'measurements' not in base:
+      raise Exception("Missing measurements")
+    if 'metrics' not in base:
+      raise Exception("Missing metrics")
+
+    # Search latitude / longitude positions in measurements
+    measurements = dict([(m['key'], m['metricsIndex']) for m in base['measurements']])
+    if 'directLatitude' not in measurements or 'directLongitude' not in measurements:
+      raise Exception("Missing lat/lon measurements")
+
+    # Build linestring from metrics
+    coords = []
+    for m in base['metrics']:
+      if 'metrics' not in m:
+        continue
+      lat, lng = m['metrics'][measurements['directLatitude']], m['metrics'][measurements['directLongitude']]
+      if lat == 0.0 and lng == 0.0:
+        continue
+      coords.append((lat, lng))
+
+    from django.contrib.gis.geos import LineString
+    line = LineString(coords)
+
+
+    # Build Track
+    from tracks.models import Track
+    track = Track.objects.create(raw=line, session=self.session)
+
+    return track
