@@ -507,6 +507,10 @@ div.day div.title {
   margin-bottom: 15px;
 }
 
+div.day div.title h3 {
+  margin-top: 2px;
+}
+
 div.day div.title a.btn {
   margin-top: 18px;
 }
@@ -533,3 +537,25 @@ ul.nav li.notifications.red a span.badge {
 div.notifications div.row {
   margin-bottom: 8px;
 }
+
+/* Light buttons */
+.btn.btn-light {
+  background: none;
+  transition: background 0.5s, color 0.5s, border-color 0.5s;
+  border-color: transparent;
+}
+.btn.btn-light.btn-info       { color: #3498db; }
+.btn.btn-light.btn-danger     { color: #e74c3c; }
+.btn.btn-light.btn-primary    { color: #2c3e50; }
+.btn.btn-light.btn-success    { color: #18bc9c; }
+.btn.btn-light.btn-warning    { color: #f39c12; }
+
+.btn.btn-light:hover {
+  color: #FFF;
+  border-color: #CCC;
+}
+.btn.btn-light.btn-info:hover     { background: #3498db; border-color: #3498db; }
+.btn.btn-light.btn-danger:hover   { background: #e74c3c; border-color: #e74c3c; }
+.btn.btn-light.btn-primary:hover  { background: #2c3e50; border-color: #2c3e50; }
+.btn.btn-light.btn-success:hover  { background: #18bc9c; border-color: #18bc9c; }
+.btn.btn-light.btn-warning:hover  { background: #f39c12; border-color: #f39c12; }

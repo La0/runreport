@@ -94,7 +94,13 @@
 </div>
 
 {% if member and show_comments %}
-<div class="row">
+<div class="row" style="margin-top: 20px">
+  <div class="col-sm-12 hidden-xs">
+    <h5 class="pull-left" style="margin-right: 15px;">
+      <i class="icon-comment"></i>
+      Commentaires
+    </h5>
+  </div>
   {% include 'sport/session/_comments.html' %}
 </div>
 {% endif %}
@@ -103,7 +109,9 @@
 {% endfor %}
 {% elif not member %}
 <p>
-  <a href="{% url report-day day_date.year, day_date.month, day_date.day %}" class="btn btn-info btn-sm"><i class="icon-plus"></i> Ajouter une séance</a>
+  <span class="text-muted">
+    <i class="icon-plus"></i> Ajouter une séance
+  </span>
 </p>
 {% else %}
 <p>

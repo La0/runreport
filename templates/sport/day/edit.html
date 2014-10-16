@@ -10,16 +10,27 @@
 <div class="container day">
 
   <div class="row title">
-    <div class="col-sm-8 col-xs-12">
-      {% if member %}
-      <h3>{{ member.first_name }} {{ member.last_name }} : Semaine du {{ report }}</h3>
-      {% else %}
-      <h3>Votre semaine du {{ report }}</h3>
-      {% endif %}
+    {% if member %}
+    <div class="col-sm-1 col-xs-2">
+      <img class="img-responsive img-rounded" alt="Avatar" src="{{ member.avatar.url }}" />
     </div>
-    <div class="col-sm-4 hidden-xs text-right">
-      <a href="{{ pageweek|url(*pageargs + [report.year, report.week]) }}" class="btn btn-sm btn-info"><i class="icon-list"></i> Voir la semaine</a>
-      <a href="{{ pagemonth|url(*pageargs + [day_date.year, day_date.month]) }}" class="btn btn-sm btn-danger"><i class="icon-calendar"></i> Voir le mois</a>
+    <div class="col-sm-5 col-xs-10">
+      <h3>{{ member.first_name }} {{ member.last_name }}</h3>
+      <h4>Semaine du {{ report }}</h4>
+    </div>
+    {% else %}
+    <div class="col-sm-6 col-xs-12">
+      <h3>Votre semaine du {{ report }}</h3>
+    </div>
+    {% endif %}
+    <div class="col-sm-6 col-xs-12 text-right">
+      <a href="{{ pageweek|url(*pageargs + [report.year, report.week]) }}" class="btn btn-sm btn-info btn-light"><i class="icon-list"></i> Voir la semaine</a>
+      <a href="{{ pagemonth|url(*pageargs + [day_date.year, day_date.month]) }}" class="btn btn-sm btn-danger btn-light"><i class="icon-calendar"></i> Voir le mois</a>
+      {% if member %}
+      <a href="{% url user-public-profile member.username %}" class="btn btn-sm btn-primary btn-light">
+        <i class="icon-user"></i> Voir son profil
+     </a>
+      {% endif %}
     </div>
   </div>
 

@@ -1,19 +1,9 @@
 {% if conversation and session %}
 <div class="row">
   <div class="col-xs-12">
-    <h5 class="pull-left" style="margin-right: 15px;">
-      <i class="icon-comment"></i>
-      {% if conversations|length() > 1 %}
-      Commentaires
-      {% else %}
-        {% with conversation.messages.count() as nb %}
-          {{ nb }} Commentaire{{ nb|pluralize() }}
-        {% endwith %}
-      {% endif %}
-    </h5>
     {% if conversations|length() > 1 %}
     <div class="dropdown">
-      <a id="conversation-{{conversation.pk}}-privacy" role="button" data-toggle="dropdown" class="btn btn-sm btn-info">
+      <a id="conversation-{{conversation.pk}}-privacy" role="button" data-toggle="dropdown" class="btn btn-sm btn-info btn-light">
         {% with conversation.messages.count() as nb %}
           {% if conversation.type == 'comments_private' %}
           <i class="icon-lock"></i> {{ nb }} Commentaire{{ nb|pluralize() }} privé{{ nb|pluralize() }}
@@ -46,10 +36,10 @@
 
 {% for message in messages %}
 <div class="row message actions-hover">
-  <div class="col-xs-1 thumb">
+  <div class="col-sm-1 thumb hidden-xs">
     <img class="img-responsive img-rounded" src="{{ message.writer.avatar.url }}" alt="Avatar {{ message.writer.username }}" />
   </div>
-  <div class="col-sm-8">
+  <div class="col-sm-8 col-xs-12">
     <p>
       {% if conversation.type == 'comments_private' %}
       <i class="icon-lock do-tooltip" title="Commentaire privé"></i>
@@ -64,9 +54,9 @@
     {{ message.message|linebreaks }}
     </blockquote>
   </div>
-  <div class="col-sm-3 text-right actions">
+  <div class="col-sm-3 col-xs-12 text-right actions">
     {% if message.writer == user %}
-    <a href="{% url message-delete message.pk %}" class="modal-action btn btn-sm btn-danger"><i class="icon-trash"></i> Supprimer</a>
+    <a href="{% url message-delete message.pk %}" class="modal-action btn btn-sm btn-danger"><i class="icon-trash"></i><span class="hidden-xs"> Supprimer</span></a>
     <a href="{% url message-edit message.pk %}" class="modal-action btn btn-sm btn-success">Editer <i class="icon-right-open"></i></a>
     {% endif %}
   </div>
@@ -76,21 +66,21 @@
 <div class="row">
   <div class="col-xs-12 actions">
     {% if user.is_authenticated() %}
-      <a href="{% url conversation-add conversation.pk %}" class="btn btn-sm {% if conversation.type == 'comments_private' %}btn-warning{% else %}btn-success{% endif %} modal-action">
+      <a href="{% url conversation-add conversation.pk %}" class="btn btn-light btn-sm {% if conversation.type == 'comments_private' %}btn-warning{% else %}btn-success{% endif %} modal-action">
         <i class="icon-plus"></i> Ajouter un commentaire {% if conversation.type == 'comments_private' %}privé{% else %}public{% endif %}
       </a>
       {% if 'comments_public' in privacy and not session.comments_public %}
-      <a href="{% url message-session-add session.pk, 'public' %}" class="btn btn-sm btn-success modal-action">
-        Démarrer une conversation publique
+      <a href="{% url message-session-add session.pk, 'public' %}" class="btn btn-sm btn-success modal-action btn-light">
+        <i class="icon-comment"></i> Démarrer une conversation publique
       </a>
       {% endif %}
       {% if 'comments_private' in privacy and not session.comments_private %}
-      <a href="{% url message-session-add session.pk, 'private' %}" class="btn btn-sm btn-warning modal-action">
-        Démarrer une conversation privée
+      <a href="{% url message-session-add session.pk, 'private' %}" class="btn btn-sm btn-warning modal-action btn-light">
+        <i class="icon-comment"></i> Démarrer une conversation privée
       </a>
       {% endif %}
     {% else %}
-    <span class="btn btn-sm btn-info disabled do-tooltip" title="Vous devez avoir un compte pour ajouter un commentaire">
+    <span class="btn btn-sm btn-info disabled do-tooltip btn-light" title="Vous devez avoir un compte pour ajouter un commentaire">
       <i class="icon-plus"></i> Ajouter un commentaire
     </span>
     {% endif %}

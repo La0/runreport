@@ -1,10 +1,45 @@
-<ul class="nav nav-tabs" role="tablist">
+{% with report.get_days_per_date().items() as days %}
+<div class="row  visible-sm visible-xs">
+  <div class="col-xs-12">
+    <div class="dropdown">
+      <a data-toggle="dropdown" href="#" class="btn btn-sm btn-primary">
+         <i class="caret"></i> {{ session.date|date('l d E Y')|title() }}
+      </a>
+      <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+        <li>
+          <a href="{{ pageday|url(*pageargs + [previous_day.year, previous_day.month, previous_day.day]) }}" role="tab">
+            <i class="icon-left-open"></i>
+          </a>
+        </li>
+        {% for d, sd in days %}
+        <li class="{% if d == session.date %}active{% endif %}">
+          <a href="{{ pageday|url(*pageargs + [d.year, d.month, d.day]) }}" role="tab" >
+            {{ d|date('l d E Y')|title() }}
+            {% if sd %}
+              {% for sport, nb in sd.sports_count() %}
+                <i class="icon-sport-{{sport.slug}}"></i>{% if nb > 1 %} x {{ nb }}{% endif %}
+              {% endfor %}
+            {% endif %}
+          </a>
+        </li>
+        {% endfor %}
+        <li>
+          <a href="{{ pageday|url(*pageargs + [next_day.year, next_day.month, next_day.day]) }}" role="tab">
+            <i class="icon-right-open"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<ul class="nav nav-tabs hidden-sm hidden-xs" role="tablist">
   <li>
     <a href="{{ pageday|url(*pageargs + [previous_day.year, previous_day.month, previous_day.day]) }}" role="tab">
       <i class="icon-left-open"></i>
     </a>
   </li>
-  {% for d, sd in report.get_days_per_date().items() %}
+  {% for d, sd in days %}
   <li class="{% if d == session.date %}active{% endif %}">
     <a href="{{ pageday|url(*pageargs + [d.year, d.month, d.day]) }}" role="tab" >
       {% if d == session.date  %}
@@ -26,3 +61,4 @@
     </a>
   </li>
 </ul>
+{% endwith %}
