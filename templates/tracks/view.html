@@ -3,15 +3,14 @@
 {% block js %}
 <script type="text/javascript">
 $(function(){
+  // Init map
   var map = L.map('track_map');
-//.setView([51.505, -0.09], 13);
-
   L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-      maxZoom: 18
+    attribution: 'Proudly powered by <a href="http://openstreetmap.org">OpenStreetMap</a>',
   }).addTo(map);
 
-  var polygon = L.polyline([{% for lat, lng in track.raw.coords %}[{{ lat }}, {{ lng }}],{% endfor %}], {color: 'red', }).addTo(map);
+  // Add track using simple polyline
+  var polygon = L.polyline([{% for lat, lng in track.simple.coords %}[{{ lat }}, {{ lng }}],{% endfor %}], {color: 'red', }).addTo(map);
   map.fitBounds(polygon.getBounds());
 });
 </script>

@@ -245,5 +245,7 @@ class GarminActivity(models.Model):
     # Build Track
     from tracks.models import Track
     track = Track.objects.create(raw=line, session=self.session)
+    track.simplify()
+    track.save()
 
     return track
