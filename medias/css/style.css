@@ -441,6 +441,11 @@ div.member div {
   line-height: 60px !important;
 }
 
+tr.member ul.trainers {
+  list-style-type: none;
+  padding: 0;
+}
+
 img.avatar-upload {
   max-width: 200px;
 }

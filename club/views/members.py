@@ -22,7 +22,9 @@ class ClubMembers(ClubMixin, ListView):
     # Filter members
     default_type = 'athletes'
     filters = {
-      'all' : None,
+      'all' : {
+        'memberships__role__in' : ('athlete', 'trainer', 'staff'),
+      },
       'athletes' : {
         'memberships__role__in' : ('athlete', 'trainer'),
         'memberships__trainers' : self.request.user,
@@ -32,6 +34,10 @@ class ClubMembers(ClubMixin, ListView):
       },
       'prospects' : {
         'memberships__role' : 'prospect',
+      },
+      'trainer' : {
+        'memberships__role__in' : ('athlete', 'trainer'),
+        'memberships__trainers__username' : self.kwargs.get('username', None),
       },
       'archives' : {
         'memberships__role' : 'archive',
@@ -44,6 +50,7 @@ class ClubMembers(ClubMixin, ListView):
       del filters['staff']
       del filters['prospects']
       del filters['archives']
+      del filters['trainer']
 
     # Load members, sorted by name
     asked_type = self.kwargs.get('type', default_type)
@@ -53,7 +60,7 @@ class ClubMembers(ClubMixin, ListView):
       return self.load_simplified_members()
 
     f = filters[asked_type]
-    members = self.club.members.prefetch_related('memberships')
+    members = self.club.members.prefetch_related('memberships', 'memberships__trainers')
     if f: # Don't use ternary !
       f['memberships__club'] = self.club # to avoid listing other club memberships
       members = members.filter(**f)
@@ -96,6 +103,7 @@ class ClubMembers(ClubMixin, ListView):
     return {
       'type' : self.kwargs.get('type', default_type),
       'sort' : sort,
+      'trainers' : self.club.members.filter(memberships__role='trainer', memberships__club=self.club).order_by('first_name'),
       'members' : members,
     }
 

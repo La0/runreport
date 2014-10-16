@@ -2,6 +2,8 @@
 
 {% extends 'base.html' %}
 
+
+
 {% block content %}
 
 <div class="container">
@@ -16,6 +18,12 @@
 		<li><a href="{% url 'club-members-name' club.slug, 'staff', sort %}">Staff</a></li>
 		<li><a href="{% url 'club-members-name' club.slug, 'archives', sort %}">Archives</a></li>
 	</ul>
+	<ul class="breadcrumb">
+    <li class="active">Entraineurs</li>
+    {% for trainer in trainers %}
+		<li><a href="{% url 'club-trainer' club.slug, trainer.username %}">{{ trainer.first_name }}</a></li>
+    {% endfor %}
+  </ul>
 	{% endif %}
 
 	{% if members %}
@@ -25,6 +33,7 @@
 				<th colspan="2">{{ macros.sort_title('Athlète', 'name', 'club-members-name', (club.slug, type, ), sort) }}</th>
 				{% if request.user == club.manager or request.user.is_staff %}
 				<th>Rôle</th>
+				<th>Entraineurs</th>
 				{% endif %}
 				<th>Catégorie</th>
 				<th>Vma</th>
@@ -55,6 +64,19 @@
                         <a href="{% url club-member-role club.slug, member.username %}" class="modal-action btn btn-xs btn-success">Nouveau</a>
                     {% endif %}
                     {% endwith %}
+                </td>
+                <td>
+                  <ul class="trainers">
+                    {% for trainer in member.membership.trainers.all() %}
+                      <li>
+                        <a href="{% url club-trainer club.slug, trainer.username %}">
+                          {{ trainer.first_name }}
+                        </a>
+                      </li>
+                    {% else %}
+                      <li>-</li>
+                    {% endfor %}
+                  </ul>
                 </td>
                 {% endif %}
                 <td>{{ member.category.name|default('-') }}</td>
