@@ -579,3 +579,9 @@ div.comments ul.breadcrumb li.active {
 div.comments div.messages {
   margin-top: 10px;
 }
+
+/* Track Map */
+#track_map {
+  width: 100%;
+  height: 500px;
+}
