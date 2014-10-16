@@ -20,5 +20,11 @@
       <i class="icon-comment"></i> Démarrer une conversation publique
     </a>
     {% endif %}
+
+    {% if not user.is_authenticated() %}
+    <i class="text-muted">
+      Pas de commentaires pour le moment.
+    </i>
+    {% endif %}
   {% endif %}
 </div>
