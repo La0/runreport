@@ -18,15 +18,28 @@
 <div class="container" id="calendar">
 
 	<div class="row">
-		<h2 class="col-sm-6">
-      {% if member %}{{ member.first_name }} {{ member.last_name }} - {% endif %}Année {{ year }}
-		</h2>
+    {% if member %}
+    <div class="col-sm-1 col-xs-2">
+      <img class="img-responsive img-rounded" alt="Avatar" src="{{ member.avatar.url }}" />
+    </div>
+    <div class="col-sm-5 col-xs-10">
+      <h3>{{ member.first_name }} {{ member.last_name }}</h3>
+      <h4>Année {{ year }}</h4>
+    </div>
+    {% else %}
+		<div class="col-sm-6">
+      <h3>Année {{ year }}</h3>
+		</div>
+    {% endif %}
 
-		<div class="col-sm-2 col-sm-offset-4 buttons">
+		<div class="col-sm-6 text-right buttons">
 			{% if member %}
-			<a class="btn btn-success" href="{% url athlete-stats-year member.username, year %}"><i class="icon-plus"></i> Statistiques</a>
+			<a class="btn btn-success btn-light" href="{% url athlete-stats-year member.username, year %}"><i class="icon-plus"></i> Statistiques</a>
+      <a href="{% url user-public-profile member.username %}" class="btn btn-primary btn-light">
+        <i class="icon-user"></i> Voir son profil
+     </a>
       {% else %}
-			<a class="btn btn-success" href="{% url stats-year year %}"><i class="icon-plus"></i> Statistiques</a>
+			<a class="btn btn-success btn-light" href="{% url stats-year year %}"><i class="icon-plus"></i> Statistiques</a>
 			{% endif %}
 		</div>
 	</div>

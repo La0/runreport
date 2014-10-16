@@ -24,12 +24,12 @@
     </div>
     {% endif %}
     <div class="col-sm-6 col-xs-12 text-right">
-      <a href="{{ pageweek|url(*pageargs + [report.year, report.week]) }}" class="btn btn-sm btn-info btn-light"><i class="icon-list"></i> Voir la semaine</a>
-      <a href="{{ pagemonth|url(*pageargs + [day_date.year, day_date.month]) }}" class="btn btn-sm btn-danger btn-light"><i class="icon-calendar"></i> Voir le mois</a>
+      <a href="{{ pageweek|url(*pageargs + [report.year, report.week]) }}" class="btn btn-info btn-light"><i class="icon-list"></i> Voir la semaine</a>
+      <a href="{{ pagemonth|url(*pageargs + [day_date.year, day_date.month]) }}" class="btn btn-danger btn-light"><i class="icon-calendar"></i> Voir le mois</a>
       {% if member %}
-      <a href="{% url user-public-profile member.username %}" class="btn btn-sm btn-primary btn-light">
+      <a href="{% url user-public-profile member.username %}" class="btn btn-primary btn-light">
         <i class="icon-user"></i> Voir son profil
-     </a>
+      </a>
       {% endif %}
     </div>
   </div>

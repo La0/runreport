@@ -507,7 +507,7 @@ div.day div.title {
   margin-bottom: 15px;
 }
 
-div.day div.title h3 {
+div.day div.title h3, #calendar h3 {
   margin-top: 2px;
 }
 
