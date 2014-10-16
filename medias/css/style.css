@@ -245,30 +245,34 @@ div.year div.day span.date {
 	width: 16px;
 }
 
-div.year div.day span.name {
+div.year div.day p.name {
   color: #333;
-	display: inline-block;
 	height: 1.42857em;
-	float: left;
 	width: 39px;
 	margin: 0;
 	text-overflow: clipped;
 	padding: 0 3px;
+	display: inline-block;
+}
+
+div.year div.day p.name span.session {
+	float: left;
+  min-width: 16px;
 }
 
 @media (min-width: 979px) {
-	div.year div.day span.name {
+	div.year div.day p.name {
 		width: 58px;
 	}
 }
 
 @media (min-width: 1200px) {
-	div.year div.day span.name {
+	div.year div.day p.name {
 		width: 74px;
 	}
 }
 
-div.year div.day:hover span.name {
+div.year div.day:hover p.name {
 	position: absolute;
 	width: auto;
 }

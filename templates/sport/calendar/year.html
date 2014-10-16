@@ -37,61 +37,61 @@
 			<a class="btn btn-success btn-light" href="{% url athlete-stats-year member.username, year %}"><i class="icon-plus"></i> Statistiques</a>
       <a href="{% url user-public-profile member.username %}" class="btn btn-primary btn-light">
         <i class="icon-user"></i> Voir son profil
-     </a>
+      </a>
       {% else %}
 			<a class="btn btn-success btn-light" href="{% url stats-year year %}"><i class="icon-plus"></i> Statistiques</a>
 			{% endif %}
 		</div>
 	</div>
 
-	<table class="table  table-condensed calendar hidden-xs">
-		<tr>
-            <td>
-                <div class="year hidden-xs">
-                    {% for month, days in date_list.items() %}
-                    <div class="month">
-                        <div class="head">
-                            <a href="{{ pagemonth|url(*pageargs + [days[0].year, days[0].month]) }}" >{{ days[0]|date('F')|title() }}</a>
-                        </div>
-                        {% for day_date in days %}
-                        {% with object_list[day_date] as day %}
-                        <div class="day link" href="{{ pageday|url(*pageargs + [day_date.year, day_date.month, day_date.day]) }}">
-                            <span class="date">{{ day_date.day }}</span>
-                            {% if day %}
-                    <span class="name {% if day %}session {{ day.best_type() }}{% endif %}">
-                      {{ day.sessions.first().name|default('...') }}
-                      {% for sport, count in day.sports_count() %}
-                      <i class="icon-sport-{{sport.slug}}"></i>{% if count > 1 %}x {{ count }}{% endif %}
-                      {% endfor %}
-                    </span>
-                            {% endif %}
-                        </div>
-                        {% endwith %}
-                        {% endfor %}
-                    </div>
-                    {% endfor %}
-                </div>
-            </td>
-        </tr>
-    </table>
+  <table class="table  table-condensed calendar hidden-xs">
+    <tr>
+      <td>
+        <div class="year hidden-xs">
+          {% for month, days in date_list.items() %}
+          <div class="month">
+            <div class="head">
+              <a href="{{ pagemonth|url(*pageargs + [year, month.month]) }}" >{{ month|date('E')|title() }}</a>
+            </div>
+
+            {% for day_date, day in days.items() %}
+            <div class="day link" href="{{ pageday|url(*pageargs + [day_date.year, day_date.month, day_date.day]) }}">
+              <span class="date">{{ day_date.day }}</span>
+              {% if day %}
+                <p class="name">
+                {% for s in day.sessions.all() %}
+                  <span class="session {{ s.type }}">
+                    <i class="icon-sport-{{s.sport.slug}}"></i>
+                    {% if day.sessions.count() == 1 %}
+                      {{ s.name|default('...')|truncatechars(20) }}
+                    {% endif %}
+                  </span>
+                {% endfor %}
+                </p>
+              {% endif %}
+            </div>
+            {% endfor %}
+
+          </div>
+          {% endfor %}
+        </div>
+      </td>
+    </tr>
+  </table>
 
 	<div class="visible-xs">
     {% for month, days in date_list.items() %}
-    {% with days[0] as month_date %}
-    {% if month_date.month in months_active %}
+    {% if month.month in months_active %}
       <h3>
-        {{ month_date|date('E Y') }}
-        <a href="{% url report-month month_date.year, month_date.month %}" class="btn btn-sm btn-info pull-right">Voir ce mois</a>
+        {{ month|date('E Y')|title() }}
+        <a href="{% url report-month month.year, month.month %}" class="btn btn-sm btn-info pull-right">Voir ce mois</a>
       </h3>
 			<div class="row-striped">
-	      {% for day_date in days %}
-	      {% with object_list.get(day_date, None) as day %}
+	      {% for day_date,day in days.items() %}
         {% include 'sport/calendar/_day.xs.html' %}
-	      {% endwith %}
 	      {% endfor %}
 			</div>
     {% endif %}
-    {% endwith %}
     {% endfor %}
     </div>
 
