@@ -6,7 +6,20 @@
 <script type="text/javascript">
 // Enable buttons with radio state
 $(function(){
-  $('.btn').button()
+  $('.btn').button().on('click', function(evt){
+    var type = $(this).find('input').val();
+    
+    // Remove color classes to siblings
+    $(this).siblings().removeClass('btn-danger btn-success btn-warning');
+
+    // Add color class to current
+    var classes = {
+      'private' : 'btn-danger',
+      'club' : 'btn-warning',
+      'public' : 'btn-success',
+    };
+    $(this).addClass(classes[type]);
+  });
 });
 </script>
 {% endblock %}
