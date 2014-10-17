@@ -241,6 +241,11 @@ GPG_PASSPHRASE=''
 # Garmin user data (json)
 GARMIN_DIR=os.path.join(HOME, 'garmin_data')
 
+# Strava config
+STRAVA_ID = 0
+STRAVA_SECRET = ''
+
+
 # Club Invite sender username
 CLUB_INVITE_SENDER = 'sender'
 

@@ -88,6 +88,9 @@ class Athlete(AthleteBase):
   garmin_login = models.CharField(max_length=255, null=True, blank=True)
   garmin_password = models.TextField(null=True, blank=True)
 
+  # Strava
+  strava_token = models.CharField(max_length=255, null=True, blank=True)
+
   # Demo dummy account ?
   demo = models.BooleanField(default=False)
 
