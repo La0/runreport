@@ -40,6 +40,12 @@ class SignUpForm(forms.Form):
   password_check = forms.CharField(min_length=4, widget=forms.PasswordInput())
   email = forms.EmailField()
 
+  def clean_firstname(self):
+    return self.cleaned_data['firstname'].title()
+
+  def clean_lastname(self):
+    return self.cleaned_data['lastname'].title()
+
   def clean_email(self):
     '''
     Check email is unique
