@@ -84,7 +84,7 @@
 
   {% if session.pk %}
   <div class="row">
-    {% with ('comments_public', 'comments_private') as privacy %}
+    {% with ('comments', 'comments_public', 'comments_private') as privacy %}
     <label class="control-label col-sm-2 hidden-xs">Commentaires</label>
     <div class="col-sm-10 col-xs-12">
       {% include 'sport/session/_comments.html' %}

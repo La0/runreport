@@ -39,8 +39,8 @@ class SportSession(models.Model):
   updated = models.DateTimeField(auto_now=True)
 
   # Comments
-  comments_public = models.ForeignKey('messages.Conversation', null=True, blank=True, related_name='session_public')
-  comments_private = models.ForeignKey('messages.Conversation', null=True, blank=True, related_name='session_private')
+  comments_public = models.OneToOneField('messages.Conversation', null=True, blank=True, related_name='session_public')
+  comments_private = models.OneToOneField('messages.Conversation', null=True, blank=True, related_name='session_private')
 
   class Meta:
     db_table = 'sport_session'

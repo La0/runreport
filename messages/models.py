@@ -24,10 +24,13 @@ class Conversation(models.Model):
   def get_session(self):
     if self.type == TYPE_MAIL:
       raise Exception("No session on conversation typed : %s" % self.type)
-    f = {
-      self.type : self.pk,
-    }
-    return SportSession.objects.get(**f)
+
+    # Check the session is attached
+    name = self.type == TYPE_COMMENTS_PRIVATE and 'session_private' or 'session_public'
+    if not hasattr(self, name):
+      raise Exception('Missing session %s' % name)
+
+    return getattr(self, name)
 
   def get_recipients(self, exclude=None):
     '''
