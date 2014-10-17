@@ -27,4 +27,13 @@
     </i>
     {% endif %}
   {% endif %}
+
+  {# Add conversation urls for notifications links #}
+  {% if 'comments_private' in privacy and session.comments_private %}
+  <input type="hidden" name="conversation-{{ session.pk }}-private" value="{% url conversation-list session.comments_private.pk %}" />
+  {% endif %}
+  {% if 'comments_public' in privacy and session.comments_public %}
+  <input type="hidden" name="conversation-{{ session.pk }}-public" value="{% url conversation-list session.comments_public.pk %}" />
+  {% endif %}
+
 </div>

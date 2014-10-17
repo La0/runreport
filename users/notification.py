@@ -71,6 +71,7 @@ class UserNotifications(object):
 
       # Build session link
       link = reverse('user-calendar-day', args=(session_user.username, session.day.date.year, session.day.date.month, session.day.date.day))
+      link += '#conversation-%d-%s' % (session.pk, is_private and 'private' or 'public')
 
       # Category
       cat = NOTIFICATION_COMMENT

@@ -8,6 +8,16 @@ $(function(){
   // Modals show
   $(document).on('click', '.modal-action', load_modal);
 
+  // Load anchor urls if available
+  var hash = window.location.hash.substring(1);
+  if(hash){
+    console.info(" BOOM > "+hash);
+    var input = $('input[name="'+hash+'"]');
+    var url = input.val();
+    if(url)
+      load_box(url, 'GET', {}, input.parent());
+  }
+
   // Link on other elements
   $(document).on('click', '.link', function(){
     var url = this.getAttribute('href');
