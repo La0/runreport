@@ -34,7 +34,9 @@ class PublicProfile(ProfilePrivacyMixin, DetailView, SportStatsMixin, AthleteRac
   def get_recent_stats(self, nb=3):
     # Load last sessions
     today = date.today()
-    last_sessions = SportSession.objects.filter(day__week__user=self.member, day__date__lte=today).order_by('-day__date')[:nb]
+    last_sessions = SportSession.objects.filter(day__week__user=self.member, day__date__lte=today)
+    last_sessions = last_sessions.exclude(type='rest')
+    last_sessions = last_sessions.order_by('-day__date')[:nb]
 
     # Load most commented
     commented_sessions = SportSession.objects.filter(day__week__user=self.member)

@@ -28,7 +28,16 @@
       <a href="{{ pagemonth|url(*pageargs + [day_date.year, day_date.month]) }}" class="btn btn-danger btn-light"><i class="icon-calendar"></i> Voir le mois</a>
       {% if member %}
       <a href="{% url user-public-profile member.username %}" class="btn btn-primary btn-light">
-        <i class="icon-user"></i> Voir son profil
+        <i class="icon-user"></i> Voir {% if member == user %}votre{% else %}son{% endif %} profil
+      </a>
+        {% if member == user %}
+        <a href="{% url report-day day_date.year, day_date.month, day_date.day %}" class="btn btn-success btn-light">
+          <i class="icon-edit"></i> Editer
+        </a>
+        {% endif %}
+      {% else %}
+      <a href="{% url user-calendar-day user.username, day_date.year, day_date.month, day_date.day %}" class="btn btn-success btn-light">
+        <i class="icon-link"></i> Lien profil public
       </a>
       {% endif %}
     </div>

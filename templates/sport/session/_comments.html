@@ -21,8 +21,8 @@
     </a>
     {% endif %}
 
-    {% if not user.is_authenticated() %}
-    <i class="text-muted">
+    {% if not user.is_authenticated() or 'comments' not in privacy %}
+    <i class="text-muted do-tooltip" title="Vous n'avez pas le droit d'ajouter un commentaire ici.">
       Pas de commentaires pour le moment.
     </i>
     {% endif %}
