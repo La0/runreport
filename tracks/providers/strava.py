@@ -6,8 +6,11 @@ class StravaProvider(OauthProvider):
 
   auth_url = 'https://www.strava.com/oauth/authorize'
   token_url = 'https://www.strava.com/oauth/token'
+  activities_url = 'https://www.strava.com/api/v3/athlete/activities'
 
   def auth(self, user):
+    # Just build the auth url to redirect the user
+    # on Strava
     args = {
       'client_id' : self.STRAVA_ID,
       'redirect_uri' : self.build_redirect_url(),
@@ -34,6 +37,19 @@ class StravaProvider(OauthProvider):
     user.strava_token = data['access_token']
     user.save()
 
-
     # Give athlete informations
     return data['athlete']
+
+  def check_tracks(self, user, nb=10, page=1):
+    if not user.strava_token:
+      raise Exception('Missing Strava token for %s' % user.username)
+
+    args = {
+      'page' : page,
+      'per_page' : nb,
+    }
+    response = self.request(self.activities_url, data=args, bearer=user.strava_token)
+    if response.status_code != 200:
+      raise Exception("No activities")
+
+    print response.json()

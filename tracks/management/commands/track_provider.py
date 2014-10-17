@@ -42,8 +42,10 @@ class Command(BaseCommand):
     if not self.provider:
       raise CommandError("Invalid provider %s" % options['provider'])
 
-    # Run
+    # Display login url
     auth_url = self.provider.auth(self.user)
     print 'Login using : %s' % auth_url
 
+    # Check tracks
+    self.provider.check_tracks(self.user)
 

@@ -60,3 +60,10 @@ class OauthProvider(object):
       raise Exception("Invalid response from %s" % self.token_url)
 
     return response
+
+  def request(self, url, data=None, bearer=None):
+    # Helper to make simple authentified requests
+    headers = {}
+    if bearer:
+      headers['Authorization'] = 'Bearer %s' % bearer
+    return requests.get(url, data=None, headers=headers)
