@@ -563,3 +563,14 @@ div.notifications div.row {
 .btn.btn-light.btn-primary:hover  { background: #2c3e50; border-color: #2c3e50; }
 .btn.btn-light.btn-success:hover  { background: #18bc9c; border-color: #18bc9c; }
 .btn.btn-light.btn-warning:hover  { background: #f39c12; border-color: #f39c12; }
+
+/* Comments breadcrumb */
+div.comments ul.breadcrumb {
+  background: #FFF !important;
+  padding-left: 0;
+}
+
+div.comments ul.breadcrumb li.active {
+  font-weight: bold;
+  color: #888;
+}

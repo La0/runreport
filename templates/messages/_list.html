@@ -1,36 +1,25 @@
 {% if conversation and session %}
 <div class="row">
   <div class="col-xs-12">
-    {% if conversations|length() > 1 %}
-    <div class="dropdown">
-      <a id="conversation-{{conversation.pk}}-privacy" role="button" data-toggle="dropdown" class="btn btn-sm btn-info btn-light">
-        {% with conversation.messages.count() as nb %}
-          {% if conversation.type == 'comments_private' %}
-          <i class="icon-lock"></i> {{ nb }} Commentaire{{ nb|pluralize() }} privé{{ nb|pluralize() }}
-          {% else %}
-          <i class="icon-club"></i> {{ nb }} Commentaire{{ nb|pluralize() }} public{{ nb|pluralize() }}
-          {% endif %}
-        {% endwith %}
-        <span class="caret"></span>
-      </a>
-
-      <ul class="dropdown-menu" role="menu" aria-labelledby="conversation-{{conversation.pk}}-privacy">
+    <ul class="breadcrumb" role="menu">
       {% for c in conversations %}
         {% with c.messages.count() as nb %}
         <li class="{% if c == conversation %}active{% endif %}">
+          {% if c != conversation %}
           <a href="{% url conversation-list c.id %}" class="modal-action" data-replaces="messages-{{session.pk}}">
+          {% endif %}
             {% if c.type == 'comments_private' %}
-            <i class="icon-lock"></i> {{ nb }} Commentaire{{ nb|pluralize() }} privés
+            <i class="icon-lock"></i> {{ nb }} commentaire{{ nb|pluralize() }} privé{{ nb|pluralize() }}
             {% else %}
-            <i class="icon-club"></i> {{ nb }} Commentaire{{ nb|pluralize() }} publics
+            <i class="icon-club"></i> {{ nb }} commentaire{{ nb|pluralize() }} public{{ nb|pluralize() }}
             {% endif %}
+          {% if c != conversation %}
           </a>
+          {% endif %}
         </li>
         {% endwith %}
       {% endfor %}
-      </ul>
-    </div>
-    {% endif %}
+    </ul>
   </div>
 </div>
 
