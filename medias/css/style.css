@@ -567,10 +567,15 @@ div.notifications div.row {
 /* Comments breadcrumb */
 div.comments ul.breadcrumb {
   background: #FFF !important;
-  padding-left: 0;
+  padding-left: 8px;
+  margin-bottom: 0;
 }
 
 div.comments ul.breadcrumb li.active {
   font-weight: bold;
   color: #888;
+}
+
+div.comments div.messages {
+  margin-top: 10px;
 }

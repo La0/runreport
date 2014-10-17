@@ -19,7 +19,8 @@ urlpatterns = patterns('',
   url(r'^add/conversation/(?P<conversation_id>\d+)', login_required(ConversationAdd.as_view()), name="conversation-add"),
 
   # List messages from a Conversation
-  url(r'^list/(?P<conversation_id>\d+)/?', ConversationList.as_view(), name="conversation-list"),
+  url(r'^list/(?P<conversation_id>\d+)/full/?', ConversationList.as_view(), {'full' : True, },  name="conversation-list-full"),
+  url(r'^list/(?P<conversation_id>\d+)/?', ConversationList.as_view(), {'full' : False, }, name="conversation-list"),
 
   # User inbox
   url(r'^/?$', login_required(MessageInbox.as_view()), name="message-inbox"),

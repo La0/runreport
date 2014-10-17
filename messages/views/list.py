@@ -7,6 +7,9 @@ class ConversationList(JsonResponseMixin, ConversationMixin, ListView):
   context_object_name = 'messages'
   list_type = None
 
+  max_page = 6 # At first, only show 6 messages
+  full = True
+
   def get_context_data(self):
     context = super(ConversationList, self).get_context_data()
 
@@ -23,11 +26,25 @@ class ConversationList(JsonResponseMixin, ConversationMixin, ListView):
       conversations.append(self.session.comments_public)
     context['conversations'] = conversations
 
+    # Pagination
+    context['full'] = self.full
+    if not self.full:
+      context['remaining'] = self.total - self.max_page
+
     return context
 
   def get_queryset(self):
     # Load conversation
     self.get_conversation()
 
-    # List its messages
-    return self.conversation.messages.order_by('created')
+    # List all messages by creation date
+    messages = self.conversation.messages.order_by('created')
+    self.total = messages.count() # all messages in conversation
+
+    # By default, limit to nb_page (non full mode)
+    # Listing last comments
+    if self.total > self.max_page and not self.kwargs['full']:
+      self.full = False
+      messages = messages[self.total-self.max_page:]
+
+    return messages

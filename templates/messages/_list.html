@@ -23,34 +23,46 @@
   </div>
 </div>
 
-{% for message in messages %}
-<div class="row message actions-hover">
-  <div class="col-sm-1 thumb hidden-xs">
-    <img class="img-responsive img-rounded" src="{{ message.writer.avatar.url }}" alt="Avatar {{ message.writer.username }}" />
-  </div>
-  <div class="col-sm-8 col-xs-12">
-    <p>
-      {% if conversation.type == 'comments_private' %}
-      <i class="icon-lock do-tooltip" title="Commentaire privé"></i>
-      {% endif %}
-      <i class="icon-user"></i> <a href="{% url user-public-profile message.writer.username %}">{{ message.writer.first_name }} {{ message.writer.last_name }}</a>
-      <i class="icon-calendar"></i> {{ message.created|date('l d E Y - H:i') }}
-      {% if message.revision > 1 %}
-      <i class="icon-right-open"></i> Edité {{ message.revision }} fois.
-      {% endif %}
-    </p>
-    <blockquote>
-    {{ message.message|linebreaks }}
-    </blockquote>
-  </div>
-  <div class="col-sm-3 col-xs-12 text-right actions">
-    {% if message.writer == user %}
-    <a href="{% url message-delete message.pk %}" class="modal-action btn btn-sm btn-danger"><i class="icon-trash"></i><span class="hidden-xs"> Supprimer</span></a>
-    <a href="{% url message-edit message.pk %}" class="modal-action btn btn-sm btn-success">Editer <i class="icon-right-open"></i></a>
-    {% endif %}
+{% if not full %}
+<div class="row">
+  <div class="col-xs-12">
+    <a href="{% url conversation-list-full conversation.pk %}" data-replaces="messages-{{ session.pk }}" class="modal-action btn btn-light btn-info btn-sm">
+      <i class="icon-comment"></i> Voir le{{ remaining|pluralize() }} {% if remaining > 1 %}{{ remaining }}{% endif %} commentaire{{ remaining|pluralize() }} précèdent{{ remaining|pluralize() }}
+    </a>
   </div>
 </div>
-{% endfor %}
+{% endif %}
+
+<div class="messages">
+  {% for message in messages %}
+  <div class="row message actions-hover">
+    <div class="col-sm-1 thumb hidden-xs">
+      <img class="img-responsive img-rounded" src="{{ message.writer.avatar.url }}" alt="Avatar {{ message.writer.username }}" />
+    </div>
+    <div class="col-sm-8 col-xs-12">
+      <p>
+        {% if conversation.type == 'comments_private' %}
+        <i class="icon-lock do-tooltip" title="Commentaire privé"></i>
+        {% endif %}
+        <i class="icon-user"></i> <a href="{% url user-public-profile message.writer.username %}">{{ message.writer.first_name }} {{ message.writer.last_name }}</a>
+        <i class="icon-calendar"></i> {{ message.created|date('l d E Y - H:i') }}
+        {% if message.revision > 1 %}
+        <i class="icon-right-open"></i> Edité {{ message.revision }} fois.
+        {% endif %}
+      </p>
+      <blockquote>
+      {{ message.message|linebreaks }}
+      </blockquote>
+    </div>
+    <div class="col-sm-3 col-xs-12 text-right actions">
+      {% if message.writer == user %}
+      <a href="{% url message-delete message.pk %}" class="modal-action btn btn-sm btn-danger"><i class="icon-trash"></i><span class="hidden-xs"> Supprimer</span></a>
+      <a href="{% url message-edit message.pk %}" class="modal-action btn btn-sm btn-success">Editer <i class="icon-right-open"></i></a>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
 
 <div class="row">
   <div class="col-xs-12 actions">
