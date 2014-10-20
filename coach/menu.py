@@ -103,7 +103,7 @@ def add_pages(request):
       'icon' : 'icon-user',
     }
     submenu['menu'].append(_p('message-inbox', u'Mes messages'))
-    submenu['menu'].append(_p('user-preferences', u'Mes préfèrences'))
+    submenu['menu'].append(_p('user-preferences', u'Mes préférences'))
     submenu['menu'].append(_p(('user-public-profile', request.user.username), 'Mon profil public'))
     submenu['menu'].append(_p('stats', 'Mes statistiques', lazy=True))
     submenu['menu'].append(_p('vma', 'Mes allures'))
