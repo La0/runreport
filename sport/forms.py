@@ -36,7 +36,14 @@ class SportSessionForm(forms.ModelForm):
     if data['type'] == 'rest':
       return self.cleaned_data
 
-    if 'distance' in data and data['distance'] is None \
+    # Check we have time or distance for
+    # * all trainings
+    # * past sessions
+    if ( \
+        data['type'] == 'training' or \
+        ( data['type'] == 'race' and self.day_date <= date.today() ) \
+      ) \
+      and 'distance' in data and data['distance'] is None \
       and 'time' in data and data['time'] is None:
       raise forms.ValidationError(u'Spécifiez une distance ou un temps pour ajouter une séance.')
 
