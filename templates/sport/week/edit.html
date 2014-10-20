@@ -13,9 +13,13 @@
     <div class="actions col-sm-3 col-xs-12 text-right hidden-xs">
     {% if not member  %}
       {% if report.published or report.task %}
-      <a href="{% url report-week-publish report.year, report.week %}" class="modal-action btn btn-success">Semaine publiée</a>
+      <a href="{% url report-week-publish report.year, report.week %}" class="modal-action btn btn-success btn-light">
+        <i class="icon-list"></i> Semaine publiée
+      </a>
       {% else %}
-      <a href="{% url report-week-publish report.year, report.week %}" class="{% if not report.is_publiable() %}disabled{% endif %} modal-action btn btn-info">Publier la semaine <i class="icon-right-open"></i></a>
+      <a href="{% url report-week-publish report.year, report.week %}" class="{% if not report.is_publiable() %}disabled{% endif %} modal-action btn btn-info btn-light">
+        Publier la semaine <i class="icon-right-open"></i>
+      </a>
       {% endif %}
     {% endif %}
     </div>
@@ -29,12 +33,14 @@
 
   {% for day_date, day in report.get_days_per_date().items() %}
   <div class="row day actions-hover link" href="{{ pageday|url(*pageargs + [day_date.year, day_date.month, day_date.day]) }}">
-    <h4>
-      <a href="{{ pageday|url(*pageargs + [day_date.year, day_date.month, day_date.day]) }}">
-        {{day_date|date('l d E')|title()}}
-      </a>
-    </h4>
+    <div class="col-xs-12">
+      <h4>
+        <a href="{{ pageday|url(*pageargs + [day_date.year, day_date.month, day_date.day]) }}">
+          {{day_date|date('l d E')|title()}}
+        </a>
+      </h4>
       {% include 'sport/session/list.html' %}
+    </div>
   </div>
   {% endfor %}
 
@@ -45,9 +51,13 @@
     <div class="pull-right">
     {% if not member  %}
       {% if report.published or report.task %}
-      <a href="{% url report-week-publish report.year, report.week %}" class="modal-action btn btn-success">Semaine publiée</a>
+      <a href="{% url report-week-publish report.year, report.week %}" class="modal-action btn btn-success btn-light">
+        <i class="icon-list"></i> Semaine publiée
+      </a>
       {% else %}
-      <a href="{% url report-week-publish report.year, report.week %}" class="{% if not report.is_publiable() %}disabled{% endif %} modal-action btn btn-info">Publier la semaine <i class="icon-right-open"></i></a>
+      <a href="{% url report-week-publish report.year, report.week %}" class="{% if not report.is_publiable() %}disabled{% endif %} modal-action btn btn-info btn-light">
+        Publier la semaine <i class="icon-right-open"></i>
+      </a>
       {% endif %}
     {% endif %}
     </div>

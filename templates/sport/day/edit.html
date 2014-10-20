@@ -77,16 +77,20 @@
 
   <div class="actions">
     {% if session.pk %}
-    <a href="{% url report-day-delete day_date.year, day_date.month, day_date.day %}" class="pull-left modal-action btn btn-danger"><i class="icon-trash"></i> Supprimer la journée</a>
+    <a href="{% url report-day-delete day_date.year, day_date.month, day_date.day %}" class="pull-left modal-action btn btn-light btn-danger"><i class="icon-trash"></i> Supprimer la journée</a>
     {% endif %}
     <p class="text-right">
-      <a href="{% url sport-session-add day_date.year, day_date.month, day_date.day %}" class="modal-action btn btn-primary extra-sport-add" data-append="sessions-{{day_date}}">
+      <a href="{% url sport-session-add day_date.year, day_date.month, day_date.day %}" class="modal-action btn btn-light btn-primary extra-sport-add" data-append="sessions-{{day_date}}">
         <i class="icon-plus"></i> Ajouter une séance
       </a>
       {% if report.published or report.task %}
-      <a href="{% url report-week-publish report.year, report.week %}" class="modal-action btn btn-success">Semaine publiée</a>
+      <a href="{% url report-week-publish report.year, report.week %}" class="modal-action btn btn-light btn-success">
+        <i class="icon-list"></i> Semaine publiée
+      </a>
       {% else %}
-      <a href="{% url report-week-publish report.year, report.week %}" class="modal-action btn btn-info">Publier la semaine <i class="icon-right-open"></i></a>
+      <a href="{% url report-week-publish report.year, report.week %}" class="modal-action btn btn-light btn-info">
+        Publier la semaine <i class="icon-right-open"></i>
+      </a>
       {% endif %}
     </p>
   </div>

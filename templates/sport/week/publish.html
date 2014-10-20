@@ -6,18 +6,41 @@
 {% set form_class = 'week-publish' %}
 
 {% block body %}
+    <h4>Publication aux entraineurs</h4>
+  {% if report.published or report.task %}
+    <p class="text-info">
+      Vous avez déja publié cette semaine.
+    </p>
+	{% elif user.auto_send %}
+    {% if report.is_current() %}
+    <p class="text-info">
+      Tous les commentaires remplis seront envoyés automatiquement dans {{ report.get_send_date()|timeuntil }}.
+    </p>
+    {% else %}
+    <p class="text-warning">
+      L'envoi automatique des commentaires n'est actif que pour la <strong>semaine en cours</strong>.
+    </p>
+    {% endif %}
+	{% else %}
+	<div class="text-muted">
+		Pour activer l'envoi automatique, veuillez sélectionnez l'option dans <a href="{% url user-preferences %}">vos préfèrences</a>.
+	</div>
+	{% endif %}
+
   <h4>Bilan de la semaine</h4>
-  {% if report.is_publiable() %}
-    {% if report.published or report.task %}
+  {% if report.published or report.task %}
+    {% if report.comment %}
     <blockquote>{{report.comment}}</blockquote>
     {% else %}
+    <i class="text-muted">Pas de commentaire</i>
+    {% endif %}
+  {% elif report.is_publiable() %}
     <p class="text-muted">
       Vous pouvez indiquer votre ressenti sur cette semaine (facultatif).
     </p>
     {{ form.comment|safe }}
-    {% endif %}
   {% else %}
-  <p class="alert alert-info">Vous pourrez publier ce rapport en fin de semaine.</p>
+    <p class="alert alert-info">Vous pourrez publier ce rapport en fin de semaine.</p>
   {% endif %}
 {% endblock %}
 
@@ -34,25 +57,3 @@
   {% endfor %}
 {% endif %}
 {% endblock %}
-
-{#
-	{% if user.auto_send %}
-
-	{% if report.is_current() %}
-	<p class="alert alert-info">
-		Tous les commentaires remplis seront envoyés automatiquement dans {{ report.get_send_date()|timeuntil }}.
-	</p>
-	{% else %}
-	<p class="alert alert-warning">
-		L'envoi automatique des commentaires n'est actif que pour la <strong>semaine en cours</strong>.
-	</p>
-	{% endif %}
-
-	{% else %}
-	<div class="alert alert-warning">
-		<h4>Envoi automatique désactivé !</h4>
-		Pour activer l'envoi automatique, veuillez sélectionnez l'option dans <a href="{% url user-preferences %}">vos préfèrences</a>.
-	</div>
-	{% endif %}
-
-#}
