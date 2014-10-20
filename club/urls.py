@@ -24,6 +24,7 @@ club_patterns = patterns('',
 
   # Members
   url(r'^/(?P<type>[\w]+)-by-(?P<sort>[\w-]+)/?$', ClubMembers.as_view(), name="club-members-name"),
+  url(r'^/trainer/(?P<username>[\w_]+)/?$', ClubMembers.as_view(), {'type' : 'trainer', }, name="club-trainer", ),
   url(r'^/by-(?P<sort>[\w-]+)/?$', ClubMembers.as_view(), name="club-members-sort"),
   url(r'^/?$', ClubMembers.as_view(), name="club-members"),
 )

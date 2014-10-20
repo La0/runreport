@@ -1,10 +1,10 @@
 {% import '_macros.html' as macros %}
 
 {% if session.pk %}
-<form id="session-{{day}}-{{session.pk}}" method="post" action="{% url sport-session-edit day.year, day.month, day.day, session.pk %}" class="form-horizontal report box">
+<form id="session-{{day_date}}-{{session.pk}}" method="post" action="{% url sport-session-edit day_date.year, day_date.month, day_date.day, session.pk %}" class="form-horizontal report box">
   <input type="hidden" name="session" value="{{session.pk}}" />
 {% else %}
-<form id="session-{{day}}-add" method="post" action="{% url sport-session-add day.year, day.month, day.day %}" class="form-horizontal report box">
+<form id="session-{{day_date}}-add" method="post" action="{% url sport-session-add day_date.year, day_date.month, day_date.day %}" class="form-horizontal report box">
 {% endif %}
   {% csrf_token %}
   {% if modal %}
@@ -71,7 +71,7 @@
         <div class="col-sm-4 col-xs-12 actions">
           <button type="submit" class="pull-right btn btn-sm btn-primary" >Sauver<span class="hidden-xs"> {% if not modal %}la séance {% endif %}</span><i class="icon-right-open"></i></button>
           {% if session.pk %}
-          <a href="{% url sport-session-delete day.year, day.month, day.day, form.instance.pk %}" class="modal-action pull-right btn btn-sm btn-danger"><i class="icon-trash"></i><span class="hidden-xs">{% if not modal %}Supprimer{% endif %}</span></a>
+          <a href="{% url sport-session-delete day_date.year, day_date.month, day_date.day, form.instance.pk %}" class="modal-action pull-right btn btn-sm btn-danger"><i class="icon-trash"></i><span class="hidden-xs">{% if not modal %}Supprimer{% endif %}</span></a>
           {% endif %}
 
           <div class="visible-xs">
@@ -81,4 +81,16 @@
       </div>
     </div>
   </div>
+
+  {% if session.pk %}
+  <div class="row">
+    {% with ('comments', 'comments_public', 'comments_private') as privacy %}
+    <label class="control-label col-sm-2 hidden-xs">Commentaires</label>
+    <div class="col-sm-10 col-xs-12">
+      {% include 'sport/session/_comments.html' %}
+    </div>
+    {% endwith %}
+  </div>
+  {% endif %}
+
 </form>

@@ -11,6 +11,7 @@ urlpatterns = patterns('',
   url(r'^user/', include('users.urls')),
   url(r'^club/', include('club.urls')),
   url(r'^plan/', include('plan.urls')),
+  url(r'^message/', include('messages.urls')),
   url(r'^(?P<type>help|news)/', include('page.urls')),
 
   # Invite

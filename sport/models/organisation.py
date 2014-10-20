@@ -31,7 +31,13 @@ class SportWeek(models.Model):
     app_label = 'sport'
 
   def __unicode__(self):
-    return u'%s : %d week=%d' % (self.user, self.year, self.week)
+    # Nice display name, used in templates too
+    st, end = self.get_date_start(), self.get_date_end()
+    if st.month == end.month:
+      return u'%d-%d %s' % (st.day, end.day, end.strftime('%B %Y'))
+
+    # Default to full description
+    return u'%s - %s' % (st.strftime('%d %B %Y'), end.strftime('%d %B %Y'))
 
   def get_dates(self):
     # Days from monday to sunday
@@ -39,11 +45,16 @@ class SportWeek(models.Model):
 
   def get_days_per_date(self):
     sessions = OrderedDict()
+    days = self.days.prefetch_related('sessions').prefetch_related('sessions__comments_public', 'sessions__comments_private')
+
+    # Empty days by default
     for d in self.get_dates():
-      try:
-        sessions[d] = self.days.get(date=d)
-      except:
-        sessions[d] = None
+      sessions[d] = None
+
+    # Use fully loaded days
+    for d in days:
+      sessions[d.date] = d
+
     return sessions
 
   def get_date(self, day):

@@ -25,7 +25,11 @@ ul.nopill {
 }
 
 .navbar-brand {
-  padding: 5px 0 0 5px;
+  padding: 0 0 0 5px;
+}
+
+.navbar-brand img {
+  max-height: 60px;
 }
 
 .nav li.debug a {
@@ -79,9 +83,18 @@ body > footer {
 div.week div.day {
   padding: 0 5px;
 }
+
+div.week div.day h4 a {
+  color: #2c3e50;
+}
+
 div.week div.day.today {
   background: rgb(245, 245, 245);
   border-radius: 5px 5px;
+}
+
+div.day ul.nav {
+  margin-bottom: 20px;
 }
 
 form.report textarea {
@@ -92,6 +105,16 @@ form.report textarea {
 form.report div.actions.row div {
   margin-bottom: 5px;
   text-align: center;
+}
+
+div.sport-session {
+  padding: 2px 0 10px 0;
+  border-bottom: 1px solid #E9E9E9;
+  margin-bottom: 18px;
+}
+
+div.sport-session div.comments {
+  margin-top: 8px;
 }
 
 form div.sport-session.extra {
@@ -167,6 +190,10 @@ div.modal.day div.modal-body input, div.modal.day div.modal-body textarea {
   max-height: 100px;
 }
 
+form.week-publish textarea {
+  width: 100%;
+}
+
 .modal {
 	width: 700px;
 	margin-left: -350px;
@@ -218,30 +245,34 @@ div.year div.day span.date {
 	width: 16px;
 }
 
-div.year div.day span.name {
+div.year div.day p.name {
   color: #333;
-	display: inline-block;
 	height: 1.42857em;
-	float: left;
 	width: 39px;
 	margin: 0;
 	text-overflow: clipped;
 	padding: 0 3px;
+	display: inline-block;
+}
+
+div.year div.day p.name span.session {
+	float: left;
+  min-width: 16px;
 }
 
 @media (min-width: 979px) {
-	div.year div.day span.name {
+	div.year div.day p.name {
 		width: 58px;
 	}
 }
 
 @media (min-width: 1200px) {
-	div.year div.day span.name {
+	div.year div.day p.name {
 		width: 74px;
 	}
 }
 
-div.year div.day:hover span.name {
+div.year div.day:hover p.name {
 	position: absolute;
 	width: auto;
 }
@@ -273,6 +304,12 @@ img.sport {
   vertical-align: middle;
 }
 
+	span.type {
+		display: inline-block;
+		width: 10px;
+		height: 10px;
+	}
+
 .row-striped > * {
 	padding: 5px;
 	border-top: 1px solid #ddd;
@@ -299,6 +336,10 @@ a.btn {
 
 div.actions *.btn.pull-right {
   margin: 0 2px;
+}
+
+div.week div.actions .btn {
+  margin-top: 18px;
 }
 
 div.week div.day {
@@ -404,6 +445,11 @@ div.member div {
   line-height: 60px !important;
 }
 
+tr.member ul.trainers {
+  list-style-type: none;
+  padding: 0;
+}
+
 img.avatar-upload {
   max-width: 200px;
 }
@@ -422,4 +468,114 @@ div.profile img.avatar {
 
 div.list-title {
   font-weight: bold;
+}
+
+/* Comments */
+div.message {
+  margin-bottom: 8px;
+}
+
+div.message div.thumb {
+  padding-right: 0;
+}
+
+div.message div.thumb img {
+  max-width: 60px;
+  float: right;
+}
+
+div.message div.well {
+  margin-bottom: 2px;
+}
+
+div.comments div.box {
+  margin-bottom: 10px;
+}
+
+div.comments div.message blockquote {
+  margin-left: 8px;
+  font-size: 1em;
+  border-left-width: 3px;
+  padding: 5px;
+}
+
+div.actions-hover div.actions {
+  display: none;
+}
+
+div.add-comment textarea, div.edit-comment textarea {
+  width: 100%;
+}
+
+div.day div.title {
+  margin-bottom: 15px;
+}
+
+div.day div.title h3, #calendar h3 {
+  margin-top: 2px;
+}
+
+div.day div.title a.btn {
+  margin-top: 18px;
+}
+
+div.week div.day.link {
+  cursor: pointer;
+}
+
+div.week div.day.link:hover {
+  border-radius: 4px 4px;
+  background: #F7F7F7;
+}
+
+/* Notifications */
+ul.nav li.notifications a {
+  padding-right: 0;
+  padding-left: 2px;
+}
+
+ul.nav li.notifications.red a span.badge {
+  background: #e74c3c;
+}
+
+div.notifications div.row {
+  margin-bottom: 8px;
+}
+
+/* Light buttons */
+.btn.btn-light {
+  background: none;
+  transition: background 0.5s, color 0.5s, border-color 0.5s;
+  border-color: transparent;
+}
+.btn.btn-light.btn-info       { color: #3498db; }
+.btn.btn-light.btn-danger     { color: #e74c3c; }
+.btn.btn-light.btn-primary    { color: #2c3e50; }
+.btn.btn-light.btn-success    { color: #18bc9c; }
+.btn.btn-light.btn-warning    { color: #f39c12; }
+
+.btn.btn-light:hover {
+  color: #FFF;
+  border-color: #CCC;
+}
+.btn.btn-light.btn-info:hover     { background: #3498db; border-color: #3498db; }
+.btn.btn-light.btn-danger:hover   { background: #e74c3c; border-color: #e74c3c; }
+.btn.btn-light.btn-primary:hover  { background: #2c3e50; border-color: #2c3e50; }
+.btn.btn-light.btn-success:hover  { background: #18bc9c; border-color: #18bc9c; }
+.btn.btn-light.btn-warning:hover  { background: #f39c12; border-color: #f39c12; }
+
+/* Comments breadcrumb */
+div.comments ul.breadcrumb {
+  background: #FFF !important;
+  padding-left: 8px;
+  margin-bottom: 0;
+}
+
+div.comments ul.breadcrumb li.active {
+  font-weight: bold;
+  color: #888;
+}
+
+div.comments div.messages {
+  margin-top: 10px;
 }

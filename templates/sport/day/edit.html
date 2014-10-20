@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% if member %}
+{% set page_title = '%s %s : %s' % (member.first_name, member.last_name, day_date|date('l d E Y')|title()) %}
+{% else %}
+{% set page_title = day_date|date('l d E Y')|title() %}
+{% endif %}
+
+{% block content %}
+<div class="container day">
+
+  <div class="row title">
+    {% if member %}
+    <div class="col-sm-1 col-xs-2">
+      <img class="img-responsive img-rounded" alt="Avatar" src="{{ member.avatar.url }}" />
+    </div>
+    <div class="col-sm-5 col-xs-10">
+      <h3>{{ member.first_name }} {{ member.last_name }}</h3>
+      <h4>Semaine du {{ report }}</h4>
+    </div>
+    {% else %}
+    <div class="col-sm-6 col-xs-12">
+      <h3>Votre semaine du {{ report }}</h3>
+    </div>
+    {% endif %}
+    <div class="col-sm-6 col-xs-12 text-right">
+      <a href="{{ pageweek|url(*pageargs + [report.year, report.week]) }}" class="btn btn-info btn-light"><i class="icon-list"></i> Voir la semaine</a>
+      <a href="{{ pagemonth|url(*pageargs + [day_date.year, day_date.month]) }}" class="btn btn-danger btn-light"><i class="icon-calendar"></i> Voir le mois</a>
+      {% if member %}
+      <a href="{% url user-public-profile member.username %}" class="btn btn-primary btn-light">
+        <i class="icon-user"></i> Voir {% if member == user %}votre{% else %}son{% endif %} profil
+      </a>
+        {% if member == user %}
+        <a href="{% url report-day day_date.year, day_date.month, day_date.day %}" class="btn btn-success btn-light">
+          <i class="icon-edit"></i> Editer
+        </a>
+        {% endif %}
+      {% else %}
+      <a href="{% url user-calendar-day user.username, day_date.year, day_date.month, day_date.day %}" class="btn btn-success btn-light">
+        <i class="icon-link"></i> Lien profil public
+      </a>
+      {% endif %}
+    </div>
+  </div>
+
+  {% include 'sport/day/_nav.html' %}
+
+  <div id="sessions-{{day_date}}">
+  {% if member %}
+    {% with True as show_comments %}
+    {% include 'sport/session/list.html' %}
+    {% endwith %}
+  {% else %}
+    {% for form in forms %}
+      {% with form.instance as session %}
+        {% include 'sport/session/edit.html' %}
+      {% endwith %}
+      <hr />
+    {% endfor %}
+  {% endif %}
+  </div>
+
+  {% if not member %}
+    {% if report.task %}
+    <div class="alert alert-info">
+      <h4>Rapport en cours d'envoi</h4>
+      Ce rapport est en train d'être envoyé à votre entraineur.
+    </div>
+    {% endif %}
+
+    {% if previous_week %}
+    <div class="alert alert-danger">
+      <h4>Semaine précédente non envoyée !</h4>
+      Vos commentaires de la <a href="{% url report-week previous_week.year, previous_week.week %}">semaine précédente</a> n'ont pas été envoyés.
+    </div>
+    {% endif %}
+
+  <div class="actions">
+    {% if session.pk %}
+    <a href="{% url report-day-delete day_date.year, day_date.month, day_date.day %}" class="pull-left modal-action btn btn-light btn-danger"><i class="icon-trash"></i> Supprimer la journée</a>
+    {% endif %}
+    <p class="text-right">
+      <a href="{% url sport-session-add day_date.year, day_date.month, day_date.day %}" class="modal-action btn btn-light btn-primary extra-sport-add" data-append="sessions-{{day_date}}">
+        <i class="icon-plus"></i> Ajouter une séance
+      </a>
+      {% if report.published or report.task %}
+      <a href="{% url report-week-publish report.year, report.week %}" class="modal-action btn btn-light btn-success">
+        <i class="icon-list"></i> Semaine publiée
+      </a>
+      {% else %}
+      <a href="{% url report-week-publish report.year, report.week %}" class="modal-action btn btn-light btn-info">
+        Publier la semaine <i class="icon-right-open"></i>
+      </a>
+      {% endif %}
+    </p>
+  </div>
+  {% endif %}
+
+</div>
+{% endblock %}

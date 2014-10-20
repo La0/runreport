@@ -93,8 +93,8 @@ class ExportMonth(CsvResponseMixin, MonthMixin, YearMixin, View):
           data.append([
             day.strftime(day_format),
             session.type,
-            session.name.encode('utf-8'),
-            session.comment.encode('utf-8'),
+            session.name and session.name.encode('utf-8') or '',
+            session.comment and session.comment.encode('utf-8') or '',
             session.distance,
             session.time,
           ])

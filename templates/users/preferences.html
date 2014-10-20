@@ -6,7 +6,20 @@
 <script type="text/javascript">
 // Enable buttons with radio state
 $(function(){
-  $('.btn').button()
+  $('.btn').button().on('click', function(evt){
+    var type = $(this).find('input').val();
+    
+    // Remove color classes to siblings
+    $(this).siblings().removeClass('btn-danger btn-success btn-warning');
+
+    // Add color class to current
+    var classes = {
+      'private' : 'btn-danger',
+      'club' : 'btn-warning',
+      'public' : 'btn-success',
+    };
+    $(this).addClass(classes[type]);
+  });
 });
 </script>
 {% endblock %}
@@ -128,6 +141,7 @@ $(function(){
         {{ macros.input_choices(form.privacy_stats, 'Visibilité de vos statistiques', False, btn_classes) }}
         {{ macros.input_choices(form.privacy_records, 'Visibilité de vos records en course', False, btn_classes) }}
         {{ macros.input_choices(form.privacy_races, 'Visibilité de vos futures courses', False, btn_classes) }}
+        {{ macros.input_choices(form.privacy_comments, 'Visibilité des commentaires', False, btn_classes) }}
         {% endwith %}
         <div class="form-group">
           <div class="col-sm-offset-4 col-sm-8">

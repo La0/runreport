@@ -1,7 +1,29 @@
 
 $(function(){
+  // Load a box, yks style !
+  $('.box').each(function(i, box){
+    load_inline_box(box);
+  });
+
   // Modals show
   $(document).on('click', '.modal-action', load_modal);
+
+  // Load anchor urls if available
+  var hash = window.location.hash.substring(1);
+  if(hash){
+    console.info(" BOOM > "+hash);
+    var input = $('input[name="'+hash+'"]');
+    var url = input.val();
+    if(url)
+      load_box(url, 'GET', {}, input.parent());
+  }
+
+  // Link on other elements
+  $(document).on('click', '.link', function(){
+    var url = this.getAttribute('href');
+    if(url)
+      window.location.href = url;
+  });
 
   // Form load
   $(document).on('submit', 'form.box', load_form);
@@ -77,6 +99,16 @@ $(function(){
     tab_href = $(e.target).attr('href');
     sessionStorage.setItem(tab_name, tab_href);
     console.info("Saved tab : "+tab_href);
+  });
+
+  // Toggle messages actions on hover
+  $(document).on('mouseenter mouseleave', 'div.actions-hover', function(evt){
+    var actions = $(this).find('div.actions');
+    if(evt.type == 'mouseenter'){
+      actions.fadeIn();
+    }else{
+      actions.fadeOut('slow');
+    }
   });
 });
 
@@ -154,11 +186,33 @@ function load_box(url, method, data, output){
       setInterval(function(){
         dom.find('.hideme').fadeOut('slow');
       }, 3000);
+
+      // Load inline boxes
+      dom.find('.box').each(function(i, box){
+        load_inline_box(box);
+      });
     },
     error : function(xhr, st, err){
+      // Hide box on forbidden access errors
+      if((xhr && xhr.status == 403 || err == 'FORBIDDEN') && output instanceof jQuery){
+        output.hide();
+        return;
+      }
       console.error("Failed to load box from "+url+" : "+err);
     }
   });
+}
+
+// Load an inline box : yks style
+function load_inline_box(box){
+  if(!box.hasAttribute('data-src'))
+    return;
+
+  var src = box.getAttribute('data-src');
+  console.info("Loading box "+src);
+
+  load_box(src, 'GET', {}, $(box));
+  box.removeAttribute('data-src'); // cleanup
 }
 
 // Init a modal, used from click
@@ -181,6 +235,12 @@ function load_modal(evt){
     target = $('<div/>', {'class': 'appended'});
     $('#' + this.getAttribute('data-append')).append(target)
   }
+
+  // Replace target ?
+  if(this.hasAttribute('data-replaces')){
+    target = $('#' + this.getAttribute('data-replaces'));
+  }
+
   load_box(url, method, data, target);
   return false;
 }

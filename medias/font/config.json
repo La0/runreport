@@ -127,6 +127,18 @@
       "src": "typicons"
     },
     {
+      "uid": "7997220c4eb58edae98e04de570089c2",
+      "css": "lock",
+      "code": 59423,
+      "src": "mfglabs"
+    },
+    {
+      "uid": "51fb22f9ff9d7f60c95ef31e4c59502d",
+      "css": "comment",
+      "code": 59422,
+      "src": "mfglabs"
+    },
+    {
       "uid": "291e2e127efe7a6bc580af6d3ead3771",
       "css": "location",
       "code": 59415,
@@ -167,6 +179,12 @@
       "css": "sport-other",
       "code": 59398,
       "src": "maki"
+    },
+    {
+      "uid": "62b0580ee8edc3a3edfbf68a47c852d5",
+      "css": "edit",
+      "code": 59424,
+      "src": "elusive"
     },
     {
       "uid": "dc73bee1d58539abe8c96b958bf4c931",

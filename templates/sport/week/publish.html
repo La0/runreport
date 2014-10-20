@@ -1,0 +1,59 @@
+{% extends 'modal.html' %}
+
+{% set modal_title = 'Semaine du %s' % report %}
+
+{% set form_url = url('report-week-publish', report.year, report.week) %}
+{% set form_class = 'week-publish' %}
+
+{% block body %}
+    <h4>Publication aux entraineurs</h4>
+  {% if report.published or report.task %}
+    <p class="text-info">
+      Vous avez déja publié cette semaine.
+    </p>
+	{% elif user.auto_send %}
+    {% if report.is_current() %}
+    <p class="text-info">
+      Tous les commentaires remplis seront envoyés automatiquement dans {{ report.get_send_date()|timeuntil }}.
+    </p>
+    {% else %}
+    <p class="text-warning">
+      L'envoi automatique des commentaires n'est actif que pour la <strong>semaine en cours</strong>.
+    </p>
+    {% endif %}
+	{% else %}
+	<div class="text-muted">
+		Pour activer l'envoi automatique, veuillez sélectionnez l'option dans <a href="{% url user-preferences %}">vos préfèrences</a>.
+	</div>
+	{% endif %}
+
+  <h4>Bilan de la semaine</h4>
+  {% if report.published or report.task %}
+    {% if report.comment %}
+    <blockquote>{{report.comment}}</blockquote>
+    {% else %}
+    <i class="text-muted">Pas de commentaire</i>
+    {% endif %}
+  {% elif report.is_publiable() %}
+    <p class="text-muted">
+      Vous pouvez indiquer votre ressenti sur cette semaine (facultatif).
+    </p>
+    {{ form.comment|safe }}
+  {% else %}
+    <p class="alert alert-info">Vous pourrez publier ce rapport en fin de semaine.</p>
+  {% endif %}
+{% endblock %}
+
+{% block footer %}
+<button class="btn" data-dismiss="modal">Annuler</button>
+{% if not report.published and not report.task %}
+  {% for m in user.memberships.all() %}
+    <button {% if not report.is_publiable() or user.demo %}disabled="disabled"{% endif %} type="submit" name="publish" value="{{m.club.pk}}" class="btn btn-success">
+      Envoyer à
+      {% for t in m.trainers.all() %}
+      {{ t.first_name|default(t.username) }}{% if not loop.last %}, {% endif %}
+      {% endfor %}
+    </button>
+  {% endfor %}
+{% endif %}
+{% endblock %}

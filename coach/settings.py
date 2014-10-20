@@ -33,6 +33,22 @@ HOME = os.path.realpath('.')
 # In a Windows environment this must be set to your system time zone.
 TIME_ZONE = 'Europe/Paris'
 
+# French locale
+try:
+  import locale
+  locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
+except:
+  print 'Failed to set French locale'
+
+# Utf8 as default encoding
+# This is dirty as fuck
+try:
+  import sys
+  reload(sys)
+  sys.setdefaultencoding('utf8')
+except:
+  print 'Failed to set utf8 as default encoding'
+
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'fr-fr'
@@ -81,7 +97,9 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+
+    # Compressor media finder
+    'compressor.finders.CompressorFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -97,6 +115,10 @@ JINJA2_TEMPLATE_LOADERS = (
   'django.template.loaders.filesystem.Loader',
   'django.template.loaders.app_directories.Loader',
 )
+
+JINJA2_EXTENSIONS = [
+  'compressor.contrib.jinja2ext.CompressorExtension',
+]
 
 TEMPLATE_CONTEXT_PROCESSORS = (
   'coach.menu.add_pages',
@@ -129,7 +151,6 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
-    'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'interval',
@@ -138,6 +159,8 @@ INSTALLED_APPS = (
     'club',
     'page',
     'plan',
+    'messages',
+    'compressor',
 )
 
 # For auto login on user create
@@ -243,7 +266,7 @@ CELERYBEAT_SCHEDULE = {
   },
   'send-race-mail-every-day-at-9': {
     'task': 'sport.tasks.race_mail',
-    'schedule': crontab(hour=9, minute=0),
+    'schedule': timedelta(seconds=10),
   },
   'build-demos-every-day-at-1am': {
     'task': 'users.tasks.build_demos',
@@ -255,6 +278,15 @@ CELERY_ROUTES = {
     'queue' : 'garmin',
   },
 }
+
+# Js/Css Compressor
+COMPRESS_ROOT = MEDIA_ROOT
+COMPRESS_URL = MEDIA_URL
+COMPRESS_OUTPUT_DIR = '/min' # must be a relative dir to
+COMPRESS_CSS_FILTERS = [
+  'compressor.filters.css_default.CssAbsoluteFilter', # default: absolute url()
+  'compressor.filters.cssmin.CSSMinFilter', # css minifier
+]
 
 # Dev cache in files
 CACHES = {
@@ -287,7 +319,18 @@ if DEBUG:
   except:
     print "Missing debug toolbar module"
 else:
+  # Add raven
   INSTALLED_APPS = INSTALLED_APPS + ('raven.contrib.django.raven_compat',)
+
+  # Use cached templates
+  TEMPLATE_LOADERS = (
+    ('django.template.loaders.cached.Loader', TEMPLATE_LOADERS,),
+  )
+  JINJA2_TEMPLATE_LOADERS = (
+    ('django.template.loaders.cached.Loader', JINJA2_TEMPLATE_LOADERS, ),
+  )
+
+
 
 # Load some settings constants in the templates
 def load_constants(request):

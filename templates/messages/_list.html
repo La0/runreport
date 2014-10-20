@@ -1,0 +1,90 @@
+{% if conversation and session %}
+<div class="row">
+  <div class="col-xs-12">
+    <ul class="breadcrumb" role="menu">
+      {% for c in conversations %}
+        {% with c.messages.count() as nb %}
+        <li class="{% if c == conversation %}active{% endif %}">
+          {% if c != conversation %}
+          <a href="{% url conversation-list c.id %}" class="modal-action" data-replaces="messages-{{session.pk}}">
+          {% endif %}
+            {% if c.type == 'comments_private' %}
+            <i class="icon-lock"></i> {{ nb }} commentaire{{ nb|pluralize() }} privé{{ nb|pluralize() }}
+            {% else %}
+            <i class="icon-club"></i> {{ nb }} commentaire{{ nb|pluralize() }} public{{ nb|pluralize() }}
+            {% endif %}
+          {% if c != conversation %}
+          </a>
+          {% endif %}
+        </li>
+        {% endwith %}
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+{% if not full %}
+<div class="row">
+  <div class="col-xs-12">
+    <a href="{% url conversation-list-full conversation.pk %}" data-replaces="messages-{{ session.pk }}" class="modal-action btn btn-light btn-info btn-sm">
+      <i class="icon-comment"></i> Voir le{{ remaining|pluralize() }} {% if remaining > 1 %}{{ remaining }}{% endif %} commentaire{{ remaining|pluralize() }} précèdent{{ remaining|pluralize() }}
+    </a>
+  </div>
+</div>
+{% endif %}
+
+<div class="messages">
+  {% for message in messages %}
+  <div class="row message actions-hover">
+    <div class="col-sm-1 thumb hidden-xs">
+      <img class="img-responsive img-rounded" src="{{ message.writer.avatar.url }}" alt="Avatar {{ message.writer.username }}" />
+    </div>
+    <div class="col-sm-8 col-xs-12">
+      <p>
+        {% if conversation.type == 'comments_private' %}
+        <i class="icon-lock do-tooltip" title="Commentaire privé"></i>
+        {% endif %}
+        <i class="icon-user"></i> <a href="{% url user-public-profile message.writer.username %}">{{ message.writer.first_name }} {{ message.writer.last_name }}</a>
+        <i class="icon-calendar"></i> {{ message.created|date('l d E Y - H:i') }}
+        {% if message.revision > 1 %}
+        <i class="icon-right-open"></i> Edité {{ message.revision }} fois.
+        {% endif %}
+      </p>
+      <blockquote>
+      {{ message.message|linebreaks }}
+      </blockquote>
+    </div>
+    <div class="col-sm-3 col-xs-12 text-right actions">
+      {% if message.writer == user %}
+      <a href="{% url message-delete message.pk %}" class="modal-action btn btn-sm btn-danger"><i class="icon-trash"></i><span class="hidden-xs"> Supprimer</span></a>
+      <a href="{% url message-edit message.pk %}" class="modal-action btn btn-sm btn-success">Editer <i class="icon-right-open"></i></a>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="row">
+  <div class="col-xs-12 actions">
+    {% if user.is_authenticated() %}
+      <a href="{% url conversation-add conversation.pk %}" class="btn btn-light btn-sm {% if conversation.type == 'comments_private' %}btn-warning{% else %}btn-success{% endif %} modal-action">
+        <i class="icon-plus"></i> Ajouter un commentaire {% if conversation.type == 'comments_private' %}privé{% else %}public{% endif %}
+      </a>
+      {% if 'comments_public' in privacy and not session.comments_public %}
+      <a href="{% url message-session-add session.pk, 'public' %}" class="btn btn-sm btn-success modal-action btn-light">
+        <i class="icon-comment"></i> Démarrer une conversation publique
+      </a>
+      {% endif %}
+      {% if 'comments_private' in privacy and not session.comments_private %}
+      <a href="{% url message-session-add session.pk, 'private' %}" class="btn btn-sm btn-warning modal-action btn-light">
+        <i class="icon-comment"></i> Démarrer une conversation privée
+      </a>
+      {% endif %}
+    {% else %}
+    <span class="btn btn-sm btn-info disabled do-tooltip btn-light" title="Vous devez avoir un compte pour ajouter un commentaire">
+      <i class="icon-plus"></i> Ajouter un commentaire
+    </span>
+    {% endif %}
+  </div>
+</div>
+{% endif %}

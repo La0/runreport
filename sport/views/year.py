@@ -3,7 +3,8 @@ from django.views.generic.dates import YearArchiveView
 from sport.models import SportDay
 from datetime import date, timedelta
 from django.http import Http404
-import collections
+from collections import OrderedDict
+import calendar
 
 class RunCalendarYear(YearArchiveView):
   template_name = 'sport/calendar/year.html'
@@ -18,26 +19,30 @@ class RunCalendarYear(YearArchiveView):
       raise Http404('Too old');
 
     # Get all days as datetimes
-    # TODO: maybe a beter way through calendar ?
+    # an ordered dict of
+    # 12 months ordered dict
+    # of datetimes, None
+    cal = calendar.Calendar()
+    months = OrderedDict([(date(year, m, 1), OrderedDict([
+      (d, None) for d in cal.itermonthdates(year, m) if d.month == m
+    ])) for m in range(1, 13)]) # yup.
+
+    # Load SportDays + SportSession
     date_start = d = date(year, 1, 1)
     date_end = date(year, 12, 31)
-    months = {}
-    while d <= date_end:
-      if d.month not in months:
-        months[d.month] = []
-      months[d.month].append(d)
-      d += timedelta(days=1)
-
-    # Load days
     days_raw = SportDay.objects.filter(week__user=self.get_user(), date__gte=date_start, date__lte=date_end)
+    days_raw = days_raw.prefetch_related('sessions', 'sessions__sport')
+    days_raw = days_raw.order_by('date')
 
-    # Map days in dict
-    days = dict([(s.date, s) for s in days_raw])
-    days = collections.OrderedDict(sorted(days.items()))
+    # Map days in months
+    months_active = []
+    for d in days_raw:
+      months[date(year, d.date.month,1)][d.date] = d
 
-    # List only month with active days
-    # for small displays
-    months_active = set([d.date.month for d in days_raw])
+      # List only month with active days
+      # for small displays
+      if d.date.month not in months_active:
+        months_active.append(d.date.month)
 
     context = {
       'year' : year,
@@ -48,7 +53,7 @@ class RunCalendarYear(YearArchiveView):
     }
     context.update(self.get_links())
 
-    return (months, days, context)
+    return (months, days_raw, context)
 
   def get_user(self):
     return self.request.user

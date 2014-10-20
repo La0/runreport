@@ -7,15 +7,18 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 
+  {% load compress %}
+  {% compress css %}
 	<link href="/medias/css/bootswatch.flatly.min.css" rel="stylesheet">
 	<link href="/medias/css/bootstrap-modal-bs3patch.css" rel="stylesheet">
 	<link href="/medias/css/bootstrap-modal.css" rel="stylesheet">
 	<link href="/medias/css/datepicker.css" rel="stylesheet">
 	<link href="/medias/css/runreport-embedded.css" rel="stylesheet">
 	<link href="/medias/css/style.css" rel="stylesheet">
-
 	{% block style %}{% endblock %}
+  {% endcompress %}
 
+  {% compress js %}
 	<script type="text/javascript" src="/medias/js/jquery-1.11.0.min.js"></script>
 	<script type="text/javascript" src="/medias/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/medias/js/bootstrap-datepicker.js"></script>
@@ -24,13 +27,15 @@
 	<script type="text/javascript" src="/medias/js/bootstrap-modal.js" ></script>
 	<script type="text/javascript" src="/medias/js/modal.js" ></script>
 	{% block js %}{% endblock %}
+  {% endcompress %}
 </head>
 <body class="{% if user.demo %}demo{% endif %}">
 	<header class="navbar navbar-default navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
         <a href="/" class="navbar-brand">
-          <img class="img-responsive" src="/medias/img/logo_ligne.png" alt="Run Report" />
+          <img src="/medias/img/logo_ligne.svg" alt="Run Report" class="visible-lg"/>
+          <img src="/medias/img/logo_bloc.svg" alt="Run Report" class="hidden-lg"/>
         </a>
 				<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
 					<span class="icon-bar"></span>
@@ -43,7 +48,7 @@
         {% if DEBUG %}
         <li class="debug">
           <a href="#">
-            <i class="icon-fire"></i><span class="hidden-sm hidden-xs"> Version Dev</span>
+            <i class="icon-fire do-tooltip" title="Version en développement" data-placement="bottom"></i>
           </a>
         </li>
         {% endif %}
@@ -61,6 +66,12 @@
 							{% endfor %}
 						</ul>
 					</li>
+          {% elif 'notifications' in p %}
+          <li class="notifications {% if p.notifications > 0 %}red{% endif %}">
+            <a class="modal-action" href="{% url user-notifications %}" title="{{ p.notifications }} notifications">
+              <span class="badge">{{ p.notifications }}</span>
+            </a>
+          </li>
 					{% else %}
 					<li {% if p.active %}class="active"{% endif %}><a href="{{p.url}}">{% if p.icon %}<i class="{{ p.icon }}"></i> {% endif %}{{p.caption}}</a></li>
 					{% endif %}

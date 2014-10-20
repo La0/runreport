@@ -12,7 +12,7 @@
     </div>
     <div class="col-xs-6 visible-xs">
       {% if 'calendar' in privacy %}
-      <a href="{% url user-calendar-day member.username, record.date.year, record.date.month, record.date.day %}" class="do-tooltip modal-action btn btn-info btn-xs pull-right">
+      <a href="{% url user-calendar-day member.username, record.date.year, record.date.month, record.date.day %}" class="do-tooltip btn btn-info btn-xs pull-right">
         {{ record.date|date('d E Y') }} <i class="icon-right-open"></i>
       </a>
       {% else %}
@@ -59,7 +59,7 @@
     </div>
     <div class="col-sm-3 hidden-xs">
       {% if 'calendar' in privacy %}
-      <a href="{% url user-calendar-day member.username, record.date.year, record.date.month, record.date.day %}" class="do-tooltip modal-action btn btn-info btn-sm pull-right">
+      <a href="{% url user-calendar-day member.username, record.date.year, record.date.month, record.date.day %}" class="do-tooltip btn btn-info btn-sm pull-right">
         {{ record.date|date('d E Y') }} <i class="icon-right-open"></i>
       </a>
       {% else %}

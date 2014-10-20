@@ -1,0 +1,43 @@
+{% extends 'modal.html' %}
+
+{% set modal_title = '%d Notifications' % (total, ) %}
+
+{% set modal_width = 800 %}
+
+{% block body %}
+<div class="notifications">
+  {% for n in notifications %}
+  <div class="row">
+    <div class="col-sm-2 col-xs-3">
+      {% if n.category == 'comment' %}
+      <i class="icon-comment"></i>
+      {% elif n.category == 'mail' %}
+      <i class="icon-mail"></i>
+      {% endif %}
+      {{ n.created|timesince() }}
+    </div>
+
+    <div class="col-sm-8 col-xs-7">
+      {{ n.description }}
+    </div>
+
+    <div class="col-xs-2">
+      {% if n.link %}
+      <a class="pull-right btn btn-sm btn-info" href="{% url user-notifications-clear n.id %}">Voir <i class="icon-right-open"></i></a>
+      {% endif %}
+    </div>
+  </div>
+  {% else %}
+  <div class="alert alert-info">
+    Vous n'avez pas de notifications.
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
+
+{% block footer %}
+<button class="btn" data-dismiss="modal">Annuler</button>
+{% if notifications %}
+<a href="{% url user-notifications-clear-all %}" class="modal-action btn btn-warning">Supprimer ces notifications</a>
+{% endif %}
+{% endblock %}

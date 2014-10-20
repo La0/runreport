@@ -50,6 +50,11 @@ urlpatterns = patterns('',
     'template_name' : 'users/password_reset_done.html',
   }),
 
+  # Notifications
+  url(r'^notification/list/?$', login_required(UserNotificationsList.as_view()), name="user-notifications"),
+  url(r'^notification/clear/all/?$', login_required(UserNotificationsClear.as_view()), name="user-notifications-clear-all"),
+  url(r'^notification/clear/(?P<uuid>[a-z0-9]+)/?$', login_required(UserNotificationsClear.as_view()), name="user-notifications-clear"),
+
   # Fallback to user public profile
   url(r'^(?P<username>[\w\_]+)/', include(user_patterns)),
 )

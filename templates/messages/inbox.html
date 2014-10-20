@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h1>{% if messages %}{{ messages.count() }} {% endif %}Messages reçus</h1>
+  {% if messages %}
+    {% for message in messages %}
+    <div class="row message">
+      <div class="col-sm-1 col-xs-2">
+        <img class="img-responsive img-rounded" src="{{message.writer.avatar.url}}" alt="Avatar {{message.writer.username}}" />
+      </div>
+      <div class="col-sm-3 col-xs-7">
+        <a href="{% url user-public-profile message.writer.username %}">
+          {{ message.writer.first_name }} {{ message.writer.last_name }}
+        </a>
+        <br />
+        Il y a {{ message.created|timesince() }}
+      </div>
+      <div class="visible-xs col-xs-3">
+        <a href="{% url conversation-add message.conversation.pk %}" class="modal-action btn btn-primary">Répondre</a>
+      </div>
+      <div class="col-sm-6 col-xs-12">
+        <div class="well">
+          {{message.message|linebreaks()}}
+        </div>
+        {% if message.conversation.type == 'mail' %}
+        <i class="icon-mail"></i> Message privé
+        {% else %}
+        <p>
+          {% with message.conversation.get_session() as session %}
+            <i class="icon-comment"></i>
+            {% with session.day.week.user as session_user %}
+              {% if user == session_user %}
+              Sur votre séance
+              {% else %}
+              Sur la séance de <a href="{% url user-public-profile session_user.username %}">{{ session_user.first_name }} {{ session_user.last_name }}</a>
+              {% endif %}
+            {% endwith %}
+            <i class="icon-sport-{{session.sport.slug}}"></i>
+            {% with session.day.date as dt %}
+            <a href="{% url report-day dt.year, dt.month, dt.day %}">
+              {{ session.name }}
+            </a>
+            du {{ dt|date('l d E Y') }}
+            {% endwith %}
+          {% endwith %}
+        </p>
+        {% endif %}
+      </div>
+      <div class="col-sm-2 hidden-xs">
+        <a href="{% url conversation-add message.conversation.pk %}" class="modal-action btn btn-primary">Répondre</a>
+      </div>
+    </div>
+    {% endfor %}
+  {% else %}
+  <div class="alert alert-info">
+    <h4>Pas de messages</h4>
+    Vous n'avez pas reçu de messages.
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

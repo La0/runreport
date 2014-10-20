@@ -19,10 +19,10 @@
     {% for member in members %}
     <div class="row member">
       <div class="avatar col-sm-6 col-xs-9">
-        <a href="{% url user-public-profile member.username %}" target="_blank">
+        <a href="{% url user-public-profile member.username %}">
           <img class="small" src="{{ member.avatar.url }}" alt="{{ member.username }} avatar"/>
         </a>
-        <a href="{% url user-public-profile member.username %}" target="_blank">
+        <a href="{% url user-public-profile member.username %}">
           {{ member.first_name|lower|title }} {{ member.last_name|lower|title }}
         </a>
       </div>
@@ -41,7 +41,7 @@
         {{ member.category.name|default('-') }}
       </div>
       <div class="col-sm-2 hidden-xs">
-        <a class="btn btn-primary" href="{% url user-public-profile member.username %}" target="_blank">Voir profil</a>
+        <a class="btn btn-primary" href="{% url user-public-profile member.username %}">Voir profil</a>
       </div>
     </div>
     {% endfor %}

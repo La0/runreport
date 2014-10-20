@@ -19,8 +19,11 @@ day_patterns = patterns('',
 
 
 urlpatterns = patterns('',
+  # Week / Report
   url(r'^/?$', WeeklyReport.as_view(), name="report-current"),
+  url(r'^week/(?P<year>\d{4})/(?P<week>\d{1,2})/publish/?$', WeekPublish.as_view(), name="report-week-publish"),
   url(r'^week/(?P<year>\d{4})/(?P<week>\d{1,2})/?$', WeeklyReport.as_view(), name="report-week"),
+
 
   # Add a session
   url(r'^add/(?P<type>\w+)/?', login_required(SessionAdd.as_view()), name="session-add-type"),

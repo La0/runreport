@@ -42,33 +42,12 @@ class ProfilePrivacyMixin(object):
   def get_member(self):
     '''
     Load the requested athlete
-    with available privacy for connected visitor
+    Check privacy rights
     '''
-    fields = [k[12:-8] for k in Athlete.__dict__ if 'privacy' in k] # all the fields as 'get_privacy_%s_display'
     self.member = get_object_or_404(Athlete, username=self.kwargs['username'])
 
-    # Super user views everything
-    if self.request.user.is_superuser:
-      self.privacy = fields # all access
-      self.privacy += ['admin', ] # and has admin right
-      return self.member
-
-    # A trainer sees evertything for his athletes
-    # The club manager see every athletes
-    trainers_roles = ['athlete', 'staff', 'trainer']
-    for m in self.member.memberships.all():
-      is_manager = m.club.manager == self.request.user
-      if self.request.user in m.trainers.all() or is_manager:
-        # Add archive roles for managers
-        trainers_roles += is_manager and ['archive', ] or []
-        if m.role in trainers_roles:
-          self.privacy = fields # all access
-          self.privacy += ['trainer', ] # and has trainer right
-          return self.member
-
-    # Load all member privacy settings
-    rights = self.load_visitor_rights()
-    self.privacy = [f for f in fields if getattr(self.member, 'privacy_%s' % f) in rights]
+    # Load privacy rights
+    self.privacy = self.member.get_privacy_rights(self.request.user)
 
     # Check basic access
     for right in self.rights_needed:
@@ -76,6 +55,10 @@ class ProfilePrivacyMixin(object):
         raise PermissionDenied
 
     return self.member
+
+  def get_user(self):
+    # Alias on get_member for sport mixins
+    return self.member or self.get_member()
 
   def dispatch(self, *args, **kwargs):
     # Check you have the rights
@@ -90,24 +73,3 @@ class ProfilePrivacyMixin(object):
     context['levels'] = dict(PRIVACY_LEVELS)
     context['roles'] = dict(ROLES)
     return context
-
-  def load_visitor_rights(self):
-    '''
-    Load the visitor rights for connected visitor
-    '''
-
-    # All rights when visitor is member
-    if self.request.user == self.member:
-      return ('public', 'club', 'private')
-
-    # Club & public rights
-    # when visitor is in same club
-    # with an active profile
-    if self.request.user.is_authenticated():
-      member_clubs = set([m['club__id'] for m in self.member.memberships.exclude(role__in=('prospect', 'archive')).values('club__id')])
-      user_clubs = set([m['club__id'] for m in self.request.user.memberships.exclude(role__in=('prospect', 'archive')).values('club__id')])
-      if len(member_clubs & user_clubs) > 0:
-        return ('public', 'club')
-
-    # By default, public
-    return ('public', )
