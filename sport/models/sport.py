@@ -57,6 +57,3 @@ class SportSession(models.Model):
 
     super(SportSession, self).save(*args, **kwargs)
 
-  def has_garmin(self):
-    # Helper for templates (no hasattr)
-    return hasattr(self, 'garmin_activity')

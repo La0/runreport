@@ -106,6 +106,12 @@ class Track(models.Model):
       # Create new session
       self.session = SportSession.objects.create(sport=self.identity['sport'].get_parent(), day=day, time=self.identity['time'], distance=self.identity['distance'], name=self.identity['name'])
 
+  def get_url(self):
+    if self.provider == 'garmin':
+      return 'http://connect.garmin.com/modern/activity/%s' % self.provider_id
+
+    return None
+
 class TrackFile(models.Model):
   track = models.ForeignKey(Track, related_name='files')
   name = models.CharField(max_length=50, db_index=True, default='details')
