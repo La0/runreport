@@ -19,6 +19,12 @@ class Command(BaseCommand):
       default=False,
       help='Ran the import with this provider.',
     ),
+    make_option('--full',
+      action='store_true',
+      dest='full',
+      default=False,
+      help='Run a full import on user, don\'t skip any track.',
+    ),
   )
   user = None
   provider = None
@@ -38,14 +44,9 @@ class Command(BaseCommand):
       raise CommandError("Invalid user %s : %s" % (options['username'], str(e)))
 
     # Load provider
-    self.provider = get_provider(options['provider'])
+    self.provider = get_provider(options['provider'], self.user)
     if not self.provider:
       raise CommandError("Invalid provider %s" % options['provider'])
 
-    # Display login url
-    auth_url = self.provider.auth(self.user)
-    print 'Login using : %s' % auth_url
-
-    # Check tracks
-    self.provider.check_tracks(self.user)
-
+    # Run the import
+    self.provider.import_user(options['full'])

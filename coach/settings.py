@@ -241,6 +241,9 @@ GPG_PASSPHRASE=''
 # Garmin user data (json)
 GARMIN_DIR=os.path.join(HOME, 'garmin_data')
 
+# Tracks data
+TRACK_DATA=os.path.join(HOME, 'tracks_data')
+
 # Strava config
 STRAVA_ID = 0
 STRAVA_SECRET = ''

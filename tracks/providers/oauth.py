@@ -8,26 +8,15 @@ import base64
 from hashlib import md5
 
 class OauthProvider(object):
-  NAME = '' # used in urls slugs
-  settings = [] # Names of settings needed
-
-  # Urls
   auth_url = ''
   token_url = ''
 
-  def __init__(self):
-    # Check and copy app settings
-    for s in self.settings:
-      if not hasattr(settings, s):
-        raise Exception("Missing setting %s" % s)
-      setattr(self, s, getattr(settings, s))
-
-  def build_user_state(self, user, seed=None):
+  def build_user_state(self, seed=None):
     # Create a random hash token
     # so that access redirects are unique
     if not seed:
       seed = randint(1, 1000)
-    h = md5('%d:%d:%s' % (seed, user.pk, settings.SECRET_KEY))
+    h = md5('%d:%d:%s' % (seed, self.user.pk, settings.SECRET_KEY))
     return '%d.%s' % (seed, base64.b64encode(h.digest()))
 
   def build_redirect_url(self):

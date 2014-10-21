@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from coach.settings import GPG_HOME, GPG_KEY
 from helpers import nameize
 import gnupg
-from sport.garmin import GarminConnector, GarminAuthException
+from tracks.providers.garmin import GarminProvider, GarminAuthException
 
 class UserForm(forms.ModelForm):
   class Meta:
@@ -116,8 +116,8 @@ class GarminForm(forms.ModelForm):
   def clean(self):
     # Check login/password are valid
     try:
-      gc = GarminConnector(login=self.cleaned_data['garmin_login'], password=self.clear_password)
-      gc.login()
+      provider = GarminProvider()
+      provider.auth(None, force_login=self.cleaned_data['garmin_login'], force_password=self.clear_password)
     except GarminAuthException, e:
       print 'Garmin Auth failed : %s' % (str(e),)
       raise ValidationError("Authentification Garmin invalide")
