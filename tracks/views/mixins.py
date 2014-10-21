@@ -1,5 +1,6 @@
 from tracks.models import Track
 from django.shortcuts import get_object_or_404
+from django.core.exceptions import PermissionDenied
 
 class TrackMixin(object):
   '''
@@ -10,5 +11,12 @@ class TrackMixin(object):
   context_object_name = 'track'
 
   def get_object(self):
-    # TODO: use get_user & rights
-    return get_object_or_404(Track, pk=self.kwargs['track_id'], session__day__week__user=self.request.user)
+    # Load requested track
+    self.track = get_object_or_404(Track, pk=self.kwargs['track_id'])
+
+    # Check right access to tracks
+    track_user = self.track.session.day.week.user
+    if 'tracks' not in track_user.get_privacy_rights(self.request.user):
+      raise PermissionDenied
+
+    return self.track

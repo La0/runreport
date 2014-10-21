@@ -86,7 +86,9 @@
   <div class="row" style="margin-top: 20px">
     <label class="control-label col-sm-2 hidden-xs">Carte</label>
     <div class="col-sm-10 col-xs-12">
+    {% with ('tracks') as privacy %}
       {% include  'tracks/_session.html' %}
+    {% endwith %}
     </div>
   </div>
   {% endif %}

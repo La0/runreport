@@ -1,4 +1,4 @@
-{% if session.track %}
+{% if session.track and 'tracks' in privacy %}
 {% with session.track as track %}
 
 <div id="track_{{ track.id }}" class="track_map" data-src="{% url track-coords track.id %}">
