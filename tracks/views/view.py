@@ -1,10 +1,23 @@
-from django.views.generic import DetailView
-from tracks.models import Track
-from django.shortcuts import get_object_or_404
+from django.views.generic.detail import DetailView, BaseDetailView
+from mixins import TrackMixin
+from coach.mixins import JsonResponseMixin, JSON_OPTION_RAW
 
-class TrackView(DetailView):
+class TrackView(TrackMixin, DetailView):
   template_name = 'tracks/view.html'
-  context_object_name = 'track'
 
-  def get_object(self):
-    return get_object_or_404(Track, pk=self.kwargs['track_id'], session__day__week__user=self.request.user)
+class TrackCoordsView(TrackMixin, JsonResponseMixin, BaseDetailView):
+  json_options = [JSON_OPTION_RAW, ]
+
+  def get_context_data(self, *args, **kwargs):
+    track = self.object
+    return {
+      # Base informations
+      'id' : track.id,
+      'provider' : {
+        'name' : track.provider,
+        'id' : track.provider_id,
+      },
+
+      # Output the coordinates
+      'coordinates' : track.simple.coords,
+    }

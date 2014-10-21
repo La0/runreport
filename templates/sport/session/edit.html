@@ -82,6 +82,15 @@
     </div>
   </div>
 
+  {% if session.track %}
+  <div class="row" style="margin-top: 20px">
+    <label class="control-label col-sm-2 hidden-xs">Carte</label>
+    <div class="col-sm-10 col-xs-12">
+      {% include  'tracks/_session.html' %}
+    </div>
+  </div>
+  {% endif %}
+
   {% if session.pk %}
   <div class="row">
     {% with ('comments', 'comments_public', 'comments_private') as privacy %}

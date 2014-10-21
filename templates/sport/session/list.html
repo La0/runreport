@@ -93,6 +93,12 @@
   {% endif %}
 </div>
 
+{% if session.track %}
+<div class="row" style="margin-top: 20px">
+  {% include  'tracks/_session.html' %}
+</div>
+{% endif %}
+
 {% if member and show_comments %}
 <div class="row" style="margin-top: 20px">
   {% include 'sport/session/_comments.html' %}

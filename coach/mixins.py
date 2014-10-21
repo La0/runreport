@@ -80,6 +80,7 @@ JSON_OPTION_NO_HTML = 'nohtml' # No output
 JSON_OPTION_CLOSE = 'close' # Close modal
 JSON_OPTION_REDIRECT_SKIP = 'redirect_skip' # Skip http redirect
 JSON_OPTION_ONLY_AJAX = 'only_ajax' # Send json only to ajax
+JSON_OPTION_RAW = 'raw' # Send raw json, no control structure
 
 class JsonResponseMixin(object):
   """
@@ -89,7 +90,20 @@ class JsonResponseMixin(object):
   json_options = []
   json_boxes = {}
 
+  def jsonify(self, data):
+    # Helper to output
+    # * pretty json in debug
+    # * normal json in prod
+    if settings.DEBUG:
+      return json.dumps(data, sort_keys=True, indent=4, separators=(',', ': '))
+    return json.dumps(data)
+
+
   def render_to_response(self, context):
+    if JSON_OPTION_RAW in self.json_options:
+      # Just output context as json
+      return HttpResponse(self.jsonify(context), content_type='application/json')
+
     ajax = self.request.is_ajax()
     context['ajax'] = ajax
 
@@ -124,7 +138,7 @@ class JsonResponseMixin(object):
       data['html'] = html
     if message is not None:
       data['message'] = message
-    return HttpResponse(json.dumps(data), content_type='application/json')
+    return HttpResponse(self.jsonify(data), content_type='application/json')
 
   def dispatch(self, *args, **kwargs):
     # Catch all reponses

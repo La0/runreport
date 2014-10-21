@@ -1,23 +1,7 @@
 {% extends 'base.html' %}
 
-{% block js %}
-<script type="text/javascript">
-$(function(){
-  // Init map
-  var map = L.map('track_map');
-  L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: 'Proudly powered by <a href="http://openstreetmap.org">OpenStreetMap</a>',
-  }).addTo(map);
-
-  // Add track using simple polyline
-  var polygon = L.polyline([{% for lat, lng in track.simple.coords %}[{{ lat }}, {{ lng }}],{% endfor %}], {color: 'red', }).addTo(map);
-  map.fitBounds(polygon.getBounds());
-});
-</script>
-{% endblock %}
-
 {% block content %}
 <div class="container">
-  <div id="track_map"></div>
+  <div class="track_map" data-src="{% url track-coords track.id %}"></div>
 </div>
 {% endblock %}

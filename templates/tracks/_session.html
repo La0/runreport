@@ -1,0 +1,9 @@
+{% if session.track %}
+{% with session.track as track %}
+
+<div id="track_{{ track.id }}" class="track_map" data-src="{% url track-coords track.id %}">
+  Loading map...
+</div>
+
+{% endwith %}
+{% endif %}
