@@ -1,5 +1,4 @@
 from datetime import datetime, timedelta, date
-from coach.settings import REPORT_START_DATE
 from coach.mixins import JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE
 from django.http import Http404
 from django.shortcuts import get_object_or_404
@@ -45,16 +44,20 @@ class CurrentWeekMixin(object):
     return week
 
   def check_limits(self, check=True):
+    # Min date is oldest user sport week
+    # or first day of current year by default
+    oldest = SportDay.objects.filter(week__user=self.request.user).order_by('date').first()
+    if oldest:
+      self.min_date = oldest.week.get_date_start()
+    else:
+      self.min_date = date(self._today.year, 1, 1)
+
     # Load min & max date
-    min_year, min_week = REPORT_START_DATE
-    self.min_date = week_to_date(min_year, min_week)
     self.max_date = date_to_day(self._today)
     if not check:
       return
 
     # Check we are not in past or future
-    if self.date < self.min_date:
-      raise Http404('Too old.')
     if self.date > self._today:
       raise Http404('In the future.')
 

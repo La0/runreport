@@ -1,4 +1,3 @@
-from coach.settings  import REPORT_START_DATE
 from django.views.generic.dates import YearArchiveView
 from sport.models import SportDay
 from datetime import date, timedelta
@@ -12,11 +11,7 @@ class RunCalendarYear(YearArchiveView):
   model = SportDay
 
   def get_dated_items(self):
-    # Check year
-    year_min, _ = REPORT_START_DATE
     year = int(self.get_year())
-    if year < year_min:
-      raise Http404('Too old');
 
     # Get all days as datetimes
     # an ordered dict of
@@ -46,7 +41,7 @@ class RunCalendarYear(YearArchiveView):
 
     context = {
       'year' : year,
-      'previous_year' : year-1 >= year_min and year-1 or None,
+      'previous_year' : year-1,
       'next_year' : year+1,
       'member' : getattr(self, 'member', None),
       'months_active' : months_active,

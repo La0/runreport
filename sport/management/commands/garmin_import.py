@@ -22,6 +22,11 @@ class Command(BaseCommand):
       dest='offline',
       default=False,
       help='Use only data from local json files'),
+    make_option('--full',
+      action='store_true',
+      dest='full',
+      default=False,
+      help='Run a full import on user, don\'t skip any activity.'),
     )
 
   def handle(self, *args, **options):
@@ -33,7 +38,7 @@ class Command(BaseCommand):
       if options['offline']:
         self.update_user_offline(user)
       else:
-        GarminConnector.import_user(user)
+        GarminConnector.import_user(user, options['full'])
 
     # Browse all users
     else:
@@ -43,7 +48,7 @@ class Command(BaseCommand):
         if options['offline']:
           self.update_user_offline(user)
         else:
-          GarminConnector.import_user(user)
+          GarminConnector.import_user(user, options['full'])
 
   def update_user_offline(self, user):
     '''

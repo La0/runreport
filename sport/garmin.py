@@ -2,7 +2,7 @@
 import requests
 import gnupg
 from datetime import datetime, time
-from coach.settings import GPG_HOME, GPG_PASSPHRASE, REPORT_START_DATE
+from coach.settings import GPG_HOME, GPG_PASSPHRASE
 from sport.models import GarminActivity
 import logging
 import re
@@ -209,12 +209,10 @@ class GarminConnector:
     return True
 
   @staticmethod
-  def import_user(user):
+  def import_user(user, full=False):
     '''
     Do the import for an users
     '''
-    min_date = week_to_date(*REPORT_START_DATE)
-
     # Try to login
     gc = None
     try:
@@ -232,6 +230,9 @@ class GarminConnector:
         activities = gc.search(nb)
         nb += 1
       except GarminSkipUpdateException, e:
+        if full:
+          nb += 1
+          continue
         logger.info("Update not needed for %s" % (user,))
         break
       except Exception, e:
@@ -240,6 +241,4 @@ class GarminConnector:
 
       # End of loop ?
       if not len(activities):
-        break
-      if min([a.date for a in activities]).date() <= min_date:
         break
