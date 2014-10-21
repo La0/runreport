@@ -243,8 +243,6 @@ class GarminConnector:
           m = (a.date.year, a.date.month)
           if m not in months:
             months.append(m)
-          print m
-        print months
         nb += 1
       except GarminSkipUpdateException, e:
         if full:
