@@ -1,5 +1,6 @@
 # coding=utf-8
 from django.db import models
+from tracks.models import Track
 from .organisation import SportDay, SportWeek
 from .sport import SportSession, Sport
 from users.models import Athlete
@@ -12,6 +13,8 @@ import logging
 from django.utils.timezone import utc
 from helpers import date_to_week
 from interval.fields import IntervalField
+from django.conf import settings
+from tracks.providers import get_provider
 
 class GarminActivity(models.Model):
   garmin_id = models.IntegerField(unique=True)
@@ -33,22 +36,39 @@ class GarminActivity(models.Model):
     db_table = 'garmin_activity'
     app_label = 'sport'
 
-  def __unicode__(self):
-    return "%s: %s" % (self.garmin_id, self.name)
+  def get_path(self, name):
+    return os.path.join(settings.GARMIN_DIR, self.user.username, '%s_%s.json' % (self.garmin_id, name))
 
-  def save(self, force_session=False, *args, **kwargs):
-    # Search & Attach session
-    if not self.session_id or force_session:
-      self.attach_session()
+  def to_track(self):
+    '''
+    Export to track
+    '''
+    # Check session does not already have a track
+    if hasattr(self.session, 'track'):
+      raise Exception('Session already has a track')
 
-    # Update session name ?
-    if self.session_id and not self.session.name and self.name:
-      self.session.name = self.name
-      self.session.save()
+    # Load map data
+    src = self.get_path('details')
+    if not os.path.exists(src):
+      raise Exception('Invalid src %s' % src)
+    with open(src, 'r') as f:
+      map_data = json.loads(f.read())
 
-    super(GarminActivity, self).save(*args, **kwargs)
+    # Convert details to linestring
+    provider = get_provider('garmin', self.user)
+    provider.session = self.session
+    line = provider.build_line(map_data)
 
+    # Base track
+    track = Track.objects.create(session=self.session, provider='garmin', provider_id=self.garmin_id, raw=line)
+    track.simplify()
 
-  def get_url(self):
-    return 'http://connect.garmin.com/activity/%s' % (self.garmin_id)
+    # Add files
+    for name in ('laps', 'details', 'raw'):
+      path = self.get_path(name)
+      if not os.path.exists(path):
+        continue
+      track.add_file(name, open(path, 'r').read())
+
+    track.save()
 
