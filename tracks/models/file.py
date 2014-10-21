@@ -2,6 +2,7 @@ from django.db import models
 import os
 from django.conf import settings
 import hashlib
+import json
 
 class TrackFile(models.Model):
   track = models.ForeignKey('tracks.Track', related_name='files')
@@ -28,19 +29,24 @@ class TrackFile(models.Model):
     fd.write(data)
     fd.close()
 
-  def get_data(self, name):
-    path = self.get_data_path(name)
+  def get_data(self, format_json=True):
+    path = self.get_data_path()
     if not os.path.exists(path):
       return None
 
     # Check md5 before giving data
     if self.md5 is None:
       return None
-    fd = open(self.get_data_path(name), 'r')
-    data = fd.read()
+
+    with open(path, 'r') as fd:
+      data = fd.read()
+
     h = hashlib.md5(data).hexdigest()
-    fd.close()
     if h != self.md5:
       raise Exception("Invalid data file %s" % path)
+
+    if format_json:
+      return json.loads(data)
+
     return data
 
