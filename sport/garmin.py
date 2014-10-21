@@ -10,6 +10,7 @@ from helpers import week_to_date
 from django.db import transaction
 import hashlib
 import json
+from sport.stats import StatsMonth
 
 logger = logging.getLogger('coach.sport.garmin')
 
@@ -19,6 +20,12 @@ class GarminAuthException(Exception):
 class GarminSkipUpdateException(Exception):
   '''
   Used when an update for an user is not realy needed
+  '''
+  pass
+
+class GarminEndException(Exception):
+  '''
+  Used when there are no more activities to import
   '''
   pass
 
@@ -130,6 +137,9 @@ class GarminConnector:
 
     activities = []
     updated_nb = 0
+    if 'activities' not in data['results']:
+      raise GarminEndException()
+
     for activity in data['results']['activities']:
       try:
         activity = activity['activity']
@@ -224,10 +234,17 @@ class GarminConnector:
 
     # Import activities !
     nb = 0
+    months = [] # to build stats cache
     while True:
       activities = []
       try:
         activities = gc.search(nb)
+        for a in activities:
+          m = (a.date.year, a.date.month)
+          if m not in months:
+            months.append(m)
+          print m
+        print months
         nb += 1
       except GarminSkipUpdateException, e:
         if full:
@@ -235,6 +252,8 @@ class GarminConnector:
           continue
         logger.info("Update not needed for %s" % (user,))
         break
+      except GarminEndException, e:
+        logger.info("No more activities to import for %s" % (user,))
       except Exception, e:
         logger.error("Import failed for %s: %s" % (user, str(e)))
         break
@@ -242,3 +261,9 @@ class GarminConnector:
       # End of loop ?
       if not len(activities):
         break
+
+    # Refresh stats cache
+    for year,month in months:
+      logger.info("Refresh stats %d/%d for %s" % (month, year, user))
+      st = StatsMonth(user, year, month, preload=False)
+      st.build()
