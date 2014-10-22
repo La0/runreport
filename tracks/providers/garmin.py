@@ -1,13 +1,12 @@
-from base import TrackProvider, TrackSkipUpdateException, TrackEndImportException
+from base import TrackProvider
 import requests
 import gnupg
 import re
 import logging
-from django.db import transaction
-from tracks.models import GarminTrack
-from django.contrib.gis.geos import LineString
 import json
-import hashlib
+from datetime import datetime, timedelta, time
+from django.utils.timezone import utc
+from sport.models import Sport
 
 logger = logging.getLogger('coach.sport.garmin')
 
@@ -118,82 +117,26 @@ class GarminProvider(TrackProvider):
     resp = self.session.get(self.url_activity, params=params)
     data = resp.json()
 
-    activities = []
-    updated_nb = 0
-    if 'activities' not in data['results']:
-      raise TrackEndImportException()
-    for activity in data['results']['activities']:
-      try:
-        activity = activity['activity']
-        with transaction.atomic():
-          act, updated = self.build_track(activity)
-          if act:
-            activities.append(act)
-            if updated:
-              updated_nb += 1
-          else:
-            transaction.rollback()
-      except Exception, e:
-        logger.error('Activity import failed: %s' % (str(e),))
+    source = data['results'].get('activities', None)
+    if source:
+      source = [a['activity'] for a in source]
 
-    # When no update has been made, stop import
-    if updated_nb == 0:
-      raise TrackSkipUpdateException()
+    return self.import_activities(source)
 
-    return activities
+  def get_activity_id(self, activity):
+    return activity['activityId']
 
-  def build_track(self, activity):
-    # Load existing activity
-    #  or build a new one
-    created = False
-    activity_id = activity['activityId']
-    activity_raw = json.dumps(activity)
-    try:
-      track = GarminTrack.objects.get(provider=self.NAME, provider_id=activity_id)
+  def _load_extra_json(self, activity, data_type):
+    # check in local cache
+    f = self.get_file(activity, data_type)
+    if f:
+      return f
 
-      # Check the activity needs an update
-      # by comparing md5
-      track_file = track.get_file('raw')
-      if track_file.md5 == hashlib.md5(activity_raw).hexdigest():
-        logger.info("Existing activity %s did not change" % (activity_id))
-        return track, False
-
-      logger.info("Existing activity %s needs update" % (activity_id))
-    except GarminTrack.DoesNotExist, e:
-      track = GarminTrack(provider=self.NAME, provider_id=activity_id)
-      created = True
-      logger.info("Created activity %s" % (activity_id))
-    except Exception, e:
-      logger.error("Failed to import activity %s : %s" % (activity_id, str(e)))
-      return None, None
-
-    # Load map from details
-    if not track.raw:
-      details = self.load_extra_json(track, 'details')
-      track.raw = self.build_line(json.loads(details))
-      track.simplify() # Build simplified line too
-
-    # Update session
-    track.build_identity(activity)
-    track.attach_session(self.user)
-
-    # Save full track
-    track.save()
-
-    # Save files when we are sure to have a PK
-    track.add_file('raw', activity_raw)
-    if created:
-      track.add_file('details', details)
-      track.add_file('laps', self.load_extra_json(track, 'laps'))
-
-    return track, True
-
-
-  def load_extra_json(self, track, data_type):
     # Load external json page
+    activity_id = self.get_activity_id(activity)
     urls = {
-      'laps'    : self.url_laps % track.provider_id,
-      'details' : self.url_details % track.provider_id,
+      'laps'    : self.url_laps % activity_id,
+      'details' : self.url_details % activity_id,
     }
     if data_type not in urls:
       raise Exception("Invalid data type %s" % data_type)
@@ -201,19 +144,20 @@ class GarminProvider(TrackProvider):
     resp = self.session.get(urls[data_type])
     if resp.encoding is None:
       resp.encoding = 'utf-8'
-    return resp.content # raw data
 
+    # Store file locally
+    self.store_file(activity, data_type, resp.content)
 
+    return resp.content
 
-  def build_line(self, details):
+  def build_line_coords(self, activity):
     '''
-    Build a geo track from Garmin measurements
+    Extract coords from Garmin measurements
     '''
-    # Check session
-    if not self.session:
-      raise Exception("A SportSession is needed to build a track")
-    if hasattr(self.session, 'track'):
-      raise Exception("The SportSession has already a track")
+
+    # First, load details
+    details = self._load_extra_json(activity, 'details')
+    details = json.loads(details)
 
     # Load metrics/measurements from file
     key = 'com.garmin.activity.details.json.ActivityDetails'
@@ -240,4 +184,73 @@ class GarminProvider(TrackProvider):
         continue
       coords.append((lat, lng))
 
-    return LineString(coords)
+    return coords
+
+  def load_files(self, activity):
+    # Load laps
+    self._load_extra_json(activity, 'laps')
+
+    # Load details
+    self._load_extra_json(activity, 'laps')
+
+  def build_identity(self, activity):
+    '''
+    Extract Garmin data from raw activity
+    '''
+    identity = {}
+
+    # Type of sport
+    identity['sport'] = Sport.objects.get(slug=activity['activityType']['key'])
+    logger.debug('Sport: %s' % identity['sport'])
+
+    # Date
+    t = int(activity['beginTimestamp']['millis']) / 1000
+    identity['date'] = datetime.utcfromtimestamp(t).replace(tzinfo=utc)
+    logger.debug('Date : %s' % identity['date'])
+
+    # Time
+    if False and 'sumMovingDuration' in activity:
+      identity['time'] = timedelta(seconds=float(activity['sumMovingDuration']['value']))
+    elif 'sumDuration' in activity:
+      t = activity['sumDuration']['minutesSeconds'].split(':')
+      identity['time'] = timedelta(minutes=float(t[0]), seconds=float(t[1]))
+    else:
+      raise Exception('No duration found.')
+    logger.debug('Time : %s' % identity['time'])
+
+    # Distance in km
+    distance = activity['sumDistance']
+    if distance['unitAbbr'] == 'm':
+      identity['distance'] =  float(distance['value']) / 1000.0
+    else:
+      identity['distance'] =  float(distance['value'])
+    logger.debug('Distance : %s km' % identity['distance'])
+
+    # Speed
+    identity['speed'] = time(0,0,0)
+    if 'weightedMeanMovingSpeed' in activity:
+      speed = activity['weightedMeanMovingSpeed']
+
+      if speed['unitAbbr'] == 'km/h' or (speed['uom'] == 'kph' and identity['sport'].get_category() != 'running'):
+        # Transform km/h in min/km
+        s = float(speed['value'])
+        mpk = 60.0 / s
+        hour = int(mpk / 60.0)
+        minutes = int(mpk % 60.0)
+        seconds = int((mpk - minutes) * 60.0)
+        identity['speed'] = time(hour, minutes, seconds)
+      elif speed['unitAbbr'] == 'min/km':
+        try:
+          identity['speed'] = datetime.strptime(speed['display'], '%M:%S').time()
+        except:
+          s = float(speed['value'])
+          minutes = int(s)
+          identity['speed'] = time(0, minutes, int((s - minutes) * 60.0))
+    logger.debug('Speed : %s' % identity['speed'])
+
+    # update name
+    skip_titles = ('Sans titre', 'No title', )
+    name = activity['activityName']['value']
+    identity['name'] = name not in skip_titles and name or ''
+
+    return identity

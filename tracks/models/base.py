@@ -20,9 +20,6 @@ class Track(models.Model):
   created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
 
-  # Local identity used to attach a session
-  identity = {}
-
   class Meta:
     unique_together = (
       ('provider', 'provider_id'),
@@ -61,31 +58,31 @@ class Track(models.Model):
 
     return f
 
-  def attach_session(self, user):
+  def attach_session(self, user, identity):
     # Chekc field
     fields = ('name', 'date', 'distance', 'sport', 'time')
     for f in fields:
-      if f not in self.identity:
-        raise Exception("Missing identity field %s" % f)
+      if f not in identity:
+        raise Exception("Missing identity field : %s" % f)
 
     # Attach Activity to valid session
-    week, year = date_to_week(self.identity['date'])
+    week, year = date_to_week(identity['date'])
     sport_week,_ = SportWeek.objects.get_or_create(user=user, year=year, week=week)
-    day,_ = SportDay.objects.get_or_create(date=self.identity['date'], week=sport_week)
+    day,_ = SportDay.objects.get_or_create(date=identity['date'], week=sport_week)
 
     # Search an existing session
-    sessions = day.sessions.filter(sport=self.identity['sport'].get_parent(), track__isnull=True)
+    sessions = day.sessions.filter(sport=identity['sport'].get_parent(), track__isnull=True)
     min_ratio = None
     if sessions.count():
       # Sort by closest distance & time
       # using a rationalised diff for distance & time
       for s in sessions:
         ratio_time, ratio_distance = None, None
-        if s.time and self.identity['time']:
-          t = self.identity['time'].total_seconds()
+        if s.time and identity['time']:
+          t = identity['time'].total_seconds()
           ratio_time = abs(s.time.total_seconds() - t) / t
-        if s.distance and self.identity['distance']:
-          ratio_distance = abs(s.distance - self.identity['distance']) / self.identity['distance']
+        if s.distance and identity['distance']:
+          ratio_distance = abs(s.distance - identity['distance']) / identity['distance']
 
         # Sum ratios with compensation for empty values
         ratio = (ratio_time or 0) + (ratio_distance or 0)
@@ -98,12 +95,12 @@ class Track(models.Model):
           self.session = s
 
         # Update title
-        if self.identity['name'] and not self.session.name:
-          self.session.name = self.identity['name']
+        if identity['name'] and not self.session.name:
+          self.session.name = identity['name']
           self.session.save()
     else:
       # Create new session
-      self.session = SportSession.objects.create(sport=self.identity['sport'].get_parent(), day=day, time=self.identity['time'], distance=self.identity['distance'], name=self.identity['name'])
+      self.session = SportSession.objects.create(sport=identity['sport'].get_parent(), day=day, time=identity['time'], distance=identity['distance'], name=identity['name'])
 
   def get_url(self):
     if self.provider == 'garmin':
