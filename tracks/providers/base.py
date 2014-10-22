@@ -61,6 +61,12 @@ class TrackProvider:
     '''
     raise NotImplementedError('Please implement this method')
 
+  def build_stats(self, activity):
+    '''
+    Build stats for an activity
+    '''
+    raise NotImplementedError('Please implement this method')
+
   def store_file(self, activity, name, data):
     # Store locally a file awaiating save on a track
     activity_id = self.get_activity_id(activity)
@@ -212,5 +218,12 @@ class TrackProvider:
     for name, data in self.files[activity_id].items():
       track.add_file(name, data)
       logger.info("%s track #%d added file %s"% (self.NAME, track.pk, name))
+
+    # Add stats to track
+    track.stats.all().delete() # cleanup
+    for s in self.build_stats(activity):
+      s.track = track
+      s.save()
+      logger.debug("%s track #%d added stat %s"% (self.NAME, track.pk, s.name))
 
     return track, True

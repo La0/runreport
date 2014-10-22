@@ -1,8 +1,9 @@
 from base import TrackProvider
 from oauth import OauthProvider
-from helpers import gpolyline_decode
+from helpers import gpolyline_decode, nameize
 from datetime import datetime, timedelta
 from sport.models import Sport
+from tracks.models import TrackStat
 
 class StravaProvider(TrackProvider, OauthProvider):
   NAME = 'strava'
@@ -90,7 +91,7 @@ class StravaProvider(TrackProvider, OauthProvider):
       sport = Sport.objects.get(strava_name=name)
     except Sport.DoesNotExist, e:
       parent = Sport.objects.get(slug='all') # generic category
-      sport = Sport.objects.create(name=name, slug=slugify(name), strava_name=name, parent=parent, depth=1)
+      sport = Sport.objects.create(name=name, slug=nameize(name), strava_name=name, parent=parent, depth=1)
 
     # Build identity
     return {
@@ -100,3 +101,25 @@ class StravaProvider(TrackProvider, OauthProvider):
       'time' : timedelta(seconds=details['elapsed_time']),
       'sport' : sport,
     }
+
+  def build_stats(self, activity):
+
+    def _seconds(v):
+      import time
+      t = datetime.strptime(v, '%Y-%m-%dT%H:%M:%SZ')
+      return time.mktime(t.timetuple())
+
+    return [
+      # Times
+      TrackStat(name='time_start', value=_seconds(activity['start_date']), unit='second'),
+
+      # Speeds
+      TrackStat(name='speed_avg', value=activity['average_speed'], unit='m/s'),
+      TrackStat(name='speed_max', value=activity['max_speed'], unit='m/s'),
+
+      # Distance
+      TrackStat(name='distance', value=activity['distance'], unit='meter'),
+
+      # Duration
+      TrackStat(name='duration', value=activity['elapsed_time'], unit='second'),
+    ]

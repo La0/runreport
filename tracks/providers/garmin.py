@@ -7,6 +7,7 @@ import json
 from datetime import datetime, timedelta, time
 from django.utils.timezone import utc
 from sport.models import Sport
+from tracks.models import TrackStat
 
 logger = logging.getLogger('coach.sport.garmin')
 
@@ -254,3 +255,35 @@ class GarminProvider(TrackProvider):
     identity['name'] = name not in skip_titles and name or ''
 
     return identity
+
+  def build_stats(self, activity):
+    def _stat(source, rename, key=None, unit=None, unit_key=None):
+      if source not in activity:
+        return None
+      return TrackStat(name=rename, value=activity[source][key or 'value'], unit=unit or activity[source][unit_key or 'uom'])
+
+    return filter(None, [
+      # Speeds
+      _stat('minSpeed', 'speed_min', unit_key='unitAbbr'),
+      _stat('maxSpeed', 'speed_max', unit_key='unitAbbr'),
+      _stat('weightedMeanMovingSpeed', 'speed_avg', unit_key='unitAbbr'),
+
+      # Duration,
+      _stat('sumElapsedDuration', 'duration'),
+
+      # Energy,
+      _stat('sumEnergy', 'energy'),
+
+      # Distance,
+      _stat('sumDistance', 'distance'),
+
+      # Elevation,
+      _stat('minElevation', 'elevation_min'),
+      _stat('maxElevation', 'elevation_max'),
+      _stat('gainElevation', 'elevation_gain'),
+      _stat('lossElevation', 'elevation_loss'),
+
+      # Timestamps
+      _stat('beginTimestamp', 'time_start', key='millis', unit='ms'),
+      _stat('endTimestamp', 'time_end', key='millis', unit='ms'),
+    ])
