@@ -5,6 +5,7 @@ from .organisation import SportDay, SportWeek
 from .sport import SportSession, Sport
 from users.models import Athlete
 from datetime import datetime, time, timedelta
+from django.contrib.gis.geos import LineString
 import os
 import json
 import hashlib
@@ -39,6 +40,13 @@ class GarminActivity(models.Model):
   def get_path(self, name):
     return os.path.join(settings.GARMIN_DIR, self.user.username, '%s_%s.json' % (self.garmin_id, name))
 
+  def get_data(self, name):
+    src = self.get_path(name)
+    if not os.path.exists(src):
+      raise Exception('Invalid src %s' % src)
+    with open(src, 'r') as f:
+      return f.read()
+
   def to_track(self):
     '''
     Export to track
@@ -47,21 +55,18 @@ class GarminActivity(models.Model):
     if hasattr(self.session, 'track'):
       raise Exception('Session already has a track')
 
-    # Load map data
-    src = self.get_path('details')
-    if not os.path.exists(src):
-      raise Exception('Invalid src %s' % src)
-    with open(src, 'r') as f:
-      map_data = json.loads(f.read())
+    # Load raw activity
+    raw = json.loads(self.get_data('raw'))
 
     # Convert details to linestring
     provider = get_provider('garmin', self.user)
-    provider.session = self.session
-    line = provider.build_line(map_data)
+    provider.store_file(raw, 'details', self.get_data('details'))
+    line = LineString(provider.build_line_coords(raw))
 
     # Base track
     track = Track.objects.create(session=self.session, provider='garmin', provider_id=self.garmin_id, raw=line)
     track.simplify()
+    track.save()
 
     # Add files
     for name in ('laps', 'details', 'raw'):
@@ -70,5 +75,7 @@ class GarminActivity(models.Model):
         continue
       track.add_file(name, open(path, 'r').read())
 
-    track.save()
-
+    # Add stats
+    for s in provider.build_stats(raw):
+      s.track = track
+      s.save()
