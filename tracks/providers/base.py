@@ -5,6 +5,7 @@ from django.contrib.gis.geos import LineString
 from django.db import transaction
 import hashlib
 from tracks.models import Track
+from sport.stats import StatsMonth
 
 logger = logging.getLogger('coach.sport.garmin')
 

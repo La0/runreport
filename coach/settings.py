@@ -57,7 +57,7 @@ SITE_ID = 1
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
-USE_I18N = True
+USE_18N = True
 
 # If you set this to False, Django will not format dates, numbers and
 # calendars according to the current locale.
@@ -125,6 +125,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
   'coach.settings.load_constants',
   'django.contrib.auth.context_processors.auth',
   'django.core.context_processors.request',
+  'django.core.context_processors.i18n',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -154,6 +155,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.gis',
+    'transadmin',
     'interval',
     'sport',
     'users',
@@ -269,8 +271,8 @@ CELERYBEAT_SCHEDULE = {
     'task': 'sport.tasks.auto_publish_reports',
     'schedule': crontab(day_of_week=0, hour=23, minute=0),
   },
-  'garmin-import-10-min': {
-    'task': 'sport.tasks.garmin_import',
+  'tracks-import-10-min': {
+    'task': 'tracks.tasks.tracks_import',
     'schedule': timedelta(minutes=10),
   },
   'send-race-mail-every-day-at-9': {
@@ -283,8 +285,8 @@ CELERYBEAT_SCHEDULE = {
   },
 }
 CELERY_ROUTES = {
-  'sport.tasks.garmin_import' : {
-    'queue' : 'garmin',
+  'tracks.tasks.tracks_import' : {
+    'queue' : 'tracks',
   },
 }
 

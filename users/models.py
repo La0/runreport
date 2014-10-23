@@ -189,6 +189,20 @@ class Athlete(AthleteBase):
         return True
     return False
 
+  def get_track_providers(self):
+    '''
+    List all track providers
+    '''
+    from tracks.providers import get_provider
+    out = []
+    if self.garmin_login and self.garmin_password:
+      out.append(get_provider('garmin', self))
+
+    if self.strava_token:
+      out.append(get_provider('strava', self))
+
+    return out
+
   def get_visitor_rights(self, visitor):
     '''
     Load the visitor rights for connected visitor
