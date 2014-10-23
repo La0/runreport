@@ -15,7 +15,16 @@ class TrackFile(models.Model):
     )
 
   def get_data_path(self):
-    return os.path.join(settings.TRACK_DATA, self.track.provider, '%s_%s.json' % (self.track.id, self.name))
+    dt = self.track.session.day.date
+    parts = [
+      settings.TRACK_DATA,
+      self.track.provider,
+      str(dt.year),
+      str(dt.month),
+      str(dt.day),
+      '%s_%s.json' % (self.track.id, self.name),
+    ]
+    return os.path.join(*parts)
 
   def set_data(self, data):
     # Check dir
