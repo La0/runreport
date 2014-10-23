@@ -265,7 +265,7 @@ CELERYBEAT_SCHEDULE = {
   },
   'send-race-mail-every-day-at-9': {
     'task': 'sport.tasks.race_mail',
-    'schedule': timedelta(seconds=10),
+    'schedule': crontab(hour=9, minute=0),
   },
   'build-demos-every-day-at-1am': {
     'task': 'users.tasks.build_demos',
