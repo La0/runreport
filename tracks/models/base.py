@@ -105,5 +105,7 @@ class Track(models.Model):
   def get_url(self):
     if self.provider == 'garmin':
       return 'http://connect.garmin.com/modern/activity/%s' % self.provider_id
+    if self.provider == 'strava':
+      return 'http://www.strava.com/activities/%s' % self.provider_id
 
     return None

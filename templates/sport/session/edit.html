@@ -29,29 +29,6 @@
   {{ macros.input(form.comment, 'Commentaire') }}
   {{ macros.race_category(form) }}
 
-  {% if form.instance.track %}
-  {% with form.instance.track as track %}
-  <div class="form-group row">
-    <label class="control-label col-sm-2 hidden-xs"><i class="icon-location"></i> {{ track.provider|title() }}</label>
-    <div class="col-sm-3 col-xs-6">
-      <div class="input-group ">
-        <span class="input-group-addon input-sm">Temps</span>
-        <input class="form-control input-sm" disabled="disabled" value="{{ track.time }}" />
-      </div>
-    </div>
-    <div class="col-sm-3 col-xs-6">
-      <div class="input-group ">
-        <span class="input-group-addon input-sm">Distance</span>
-        <input class="form-control input-sm" disabled="disabled" value="{{ track.distance|default(0)|floatformat(2)}} km" />
-      </div>
-    </div>
-    <div class="col-sm-4 col-xs-12 actions">
-      <a href="{{ track.get_url() }}" target="_blank" class="pull-right btn btn-sm btn-success">Détails <i class="icon-right-open"></i></a>
-    </div>
-  </div>
-  {% endwith %}
-  {% endif %}
-
   <div class="form-group row">
     {% if modal %}
     <div class="col-xs-12">
@@ -84,7 +61,7 @@
 
   {% if session.track %}
   <div class="row" style="margin-top: 20px">
-    <label class="control-label col-sm-2 hidden-xs">Carte</label>
+    <label class="control-label col-sm-2 hidden-xs">Carte {{ session.track.provider|title() }}</label>
     <div class="col-sm-10 col-xs-12">
     {% with ('tracks') as privacy %}
       {% include  'tracks/_session.html' %}

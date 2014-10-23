@@ -74,7 +74,7 @@ def check_task(model):
 def time_to_seconds(t):
   return t.hour*3600 + t.minute*60 + t.second
 
-def seconds_humanize(t):
+def seconds_humanize(t, short=False):
   '''
   Format total seconds as HH:MM:SS
   Never display days (1 day 1h = 25h)
@@ -91,6 +91,8 @@ def seconds_humanize(t):
   minutes = int((t % 3600) / 60)
   seconds = t % 60
 
+  if short and not hours:
+    return '%02d:%02d' % (minutes, seconds)
   return '%d:%02d:%02d' % (hours, minutes, seconds)
 
 def gpolyline_decode(point_str):

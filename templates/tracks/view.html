@@ -3,5 +3,23 @@
 {% block content %}
 <div class="container">
   <div class="track_map" data-src="{% url track-coords track.id %}"></div>
+
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{{ LANGUAGE_CODE }}
+{{ gettext('duration') }}
+
+  <div class="col-xs-12">
+    {% for s in track.stats.all() %}
+    <p>
+      <span class="label label-info">{{ gettext(s.name) }}</span>
+      {{ s.display() | safe }}
+    </p>
+    {% else %}
+    <p class="alert alert-warning">
+      No stats for this track.
+    </p>
+    {% endfor %}
+  </div>
 </div>
 {% endblock %}
