@@ -62,12 +62,6 @@ class TrackProvider:
     '''
     raise NotImplementedError('Please implement this method')
 
-  def build_stats(self, activity):
-    '''
-    Build stats for an activity
-    '''
-    raise NotImplementedError('Please implement this method')
-
   def build_splits(self, activity):
     '''
     Build stats for an activity
@@ -240,12 +234,5 @@ class TrackProvider:
 
       s.save()
       logger.debug("%s split #%d added split %d"% (self.NAME, track.pk, s.position))
-
-    # Add stats to track
-    track.stats.all().delete() # cleanup
-    for s in self.build_stats(activity):
-      s.track = track
-      s.save()
-      logger.debug("%s track #%d added stat %s"% (self.NAME, track.pk, s.name))
 
     return track, True

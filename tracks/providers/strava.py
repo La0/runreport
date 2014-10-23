@@ -3,7 +3,7 @@ from oauth import OauthProvider
 from helpers import gpolyline_decode, nameize
 from datetime import datetime, timedelta
 from sport.models import Sport
-from tracks.models import TrackStat
+from tracks.models import TrackSplit
 
 class StravaProvider(TrackProvider, OauthProvider):
   NAME = 'strava'
@@ -102,24 +102,5 @@ class StravaProvider(TrackProvider, OauthProvider):
       'sport' : sport,
     }
 
-  def build_stats(self, activity):
-
-    def _seconds(v):
-      import time
-      t = datetime.strptime(v, '%Y-%m-%dT%H:%M:%SZ')
-      return time.mktime(t.timetuple())
-
-    return [
-      # Times
-      TrackStat(name='time_start', value=_seconds(activity['start_date']), unit='second'),
-
-      # Speeds
-      TrackStat(name='speed_avg', value=activity['average_speed'], unit='m/s'),
-      TrackStat(name='speed_max', value=activity['max_speed'], unit='m/s'),
-
-      # Distance
-      TrackStat(name='distance', value=activity['distance'], unit='meter'),
-
-      # Duration
-      TrackStat(name='duration', value=activity['elapsed_time'], unit='second'),
-    ]
+  def build_splits(self, activity):
+    return []

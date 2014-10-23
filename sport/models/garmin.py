@@ -61,6 +61,7 @@ class GarminActivity(models.Model):
     # Convert details to linestring
     provider = get_provider('garmin', self.user)
     provider.store_file(raw, 'details', self.get_data('details'))
+    provider.store_file(raw, 'laps', self.get_data('laps'))
     line = LineString(provider.build_line_coords(raw))
 
     # Base track
@@ -75,7 +76,17 @@ class GarminActivity(models.Model):
         continue
       track.add_file(name, open(path, 'r').read())
 
-    # Add stats
-    for s in provider.build_stats(raw):
+    # Add splits
+    distance_total, time_total = 0.0, 0.0
+    for s in provider.build_splits(raw):
       s.track = track
+
+      # Update totals
+      distance_total += s.distance
+      time_total += s.time
+      s.distance_total = distance_total
+      s.time_total = time_total
+
       s.save()
+
+    return track, True
