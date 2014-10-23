@@ -266,44 +266,61 @@ class GarminProvider(TrackProvider):
       return []
     laps = laps['activity']['totalLaps']['lapSummaryList']
 
-    def _convert_speed(s):
+    def _convert_speed(lap, name):
       # Convert a speed in m/s
+      if name not in lap:
+        return 0.0
+      s = lap[name]
       if s['uom'] == 'kph':
         return float(s['value']) / 3.6
       return float(s['value'])
 
-    def _convert_distance(d):
+    def _convert_distance(lap, name):
       # Convert a distance in meters
+      if name not in lap:
+        return 0.0
+      d = lap[name]
       if d['uom'] == 'kilometer':
         return float(d['value']) * 1000.0
       return float(d['value'])
 
-    def _convert_date(d):
+    def _convert_date(lap, name):
       # Convert a timestamp to a datetime
+      if name not in lap:
+        return 0.0
+      d = lap[name]
       tz = pytz.timezone(d['uom'])
       return make_aware(datetime.fromtimestamp(float(d['value']) / 1000.0), tz)
 
-    def _convert_point(lat, lng):
+    def _convert_point(lap, name_lat, name_lng):
       # Build a point from lat,lng
-      return Point(float(lat['value']), float(lng['value']))
+      if name_lat not in lap or name_lng not in lap:
+        return None
+      return Point(float(lap[name_lat]['value']), float(lap[name_lng]['value']))
+
+    def _convert_float(lap, name):
+      # Convert to float a value
+      if name not in lap:
+        return 0.0
+      return float(lap[name]['value'])
 
     # Build every split
     out = []
     for i, lap in enumerate(laps):
       split = TrackSplit(position=i+1)
-      split.elevation_min = float(lap['MinElevation']['value'])
-      split.elevation_max = float(lap['MaxElevation']['value'])
-      split.elevation_gain = float(lap['GainElevation']['value'])
-      split.elevation_loss = float(lap['LossElevation']['value'])
-      split.speed_max = _convert_speed(lap['MaxSpeed'])
-      split.speed = _convert_speed(lap['WeightedMeanSpeed'])
-      split.distance = _convert_distance(lap['SumDistance'])
-      split.time = float(lap['SumDuration']['value'])
-      split.energy = float(lap['SumEnergy']['value'])
-      split.date_start = _convert_date(lap['BeginTimestamp'])
-      split.date_end = _convert_date(lap['EndTimestamp'])
-      split.position_start = _convert_point(lap['BeginLatitude'], lap['BeginLongitude'])
-      split.position_end = _convert_point(lap['EndLatitude'], lap['EndLongitude'])
+      split.elevation_min = _convert_float(lap, 'MinElevation')
+      split.elevation_max = _convert_float(lap, 'MaxElevation')
+      split.elevation_gain = _convert_float(lap, 'GainElevation')
+      split.elevation_loss = _convert_float(lap, 'LossElevation')
+      split.speed_max = _convert_speed(lap, 'MaxSpeed')
+      split.speed = _convert_speed(lap, 'WeightedMeanSpeed')
+      split.distance = _convert_distance(lap, 'SumDistance')
+      split.time = _convert_float(lap, 'SumDuration')
+      split.energy = _convert_float(lap, 'SumEnergy')
+      split.date_start = _convert_date(lap, 'BeginTimestamp')
+      split.date_end = _convert_date(lap, 'EndTimestamp')
+      split.position_start = _convert_point(lap, 'BeginLatitude', 'BeginLongitude')
+      split.position_end = _convert_point(lap, 'EndLatitude', 'EndLongitude')
       out.append(split)
 
     return out
