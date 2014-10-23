@@ -68,6 +68,12 @@ class TrackProvider:
     '''
     raise NotImplementedError('Please implement this method')
 
+  def build_splits(self, activity):
+    '''
+    Build stats for an activity
+    '''
+    raise NotImplementedError('Please implement this method')
+
   def store_file(self, activity, name, data):
     # Store locally a file awaiating save on a track
     activity_id = self.get_activity_id(activity)
@@ -219,6 +225,21 @@ class TrackProvider:
     for name, data in self.files[activity_id].items():
       track.add_file(name, data)
       logger.info("%s track #%d added file %s"% (self.NAME, track.pk, name))
+
+    # Add splits to track
+    track.splits.all().delete() # cleanup
+    distance_total, time_total = 0.0, 0.0
+    for s in self.build_splits(activity):
+      s.track = track
+
+      # Update totals
+      distance_total += s.distance
+      time_total += s.time
+      s.distance_total = distance_total
+      s.time_total = time_total
+
+      s.save()
+      logger.debug("%s split #%d added split %d"% (self.NAME, track.pk, s.position))
 
     # Add stats to track
     track.stats.all().delete() # cleanup

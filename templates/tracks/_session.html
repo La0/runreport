@@ -43,7 +43,34 @@
     </div>
     <div id="splits_{{track.id}}" class="panel-collapse collapse">
       <div class="panel-body">
-        Splits
+        <table class="table table-responsive table-striped table-condensed">
+          <tr>
+            <th>#</th>
+            <th>Distance</th>
+            <th>Cumulé</th>
+            <th>Temps</th>
+            <th>Cumulé</th>
+            <th>Vitesse</th>
+            <th>Max</th>
+            <th>D. +</th>
+            <th>D. -</th>
+            <th>Energie</th>
+          <tr>
+          {% for s in track.splits.order_by('position') %}
+          <tr>
+            <td>{{ s.position }}</td>
+            <td>{{ s.distance|default(0)|total_distance() }}</td>
+            <td class="text-muted">{{ s.distance_total|default(0)|total_distance() }}</td>
+            <td>{{ s.time|default(0)|total_time(short=True) }}</td>
+            <td class="text-muted">{{ s.time_total|default(0)|total_time(short=True) }}</td>
+            <td>{{ s.speed|default(0)|convert_speed() }} min/km</td>
+            <td>{{ s.speed_max|default(0)|convert_speed() }} min/km</td>
+            <td>{{ s.elevation_gain|default(0)|floatformat(0) }} m</td>
+            <td>{{ s.elevation_loss|default(0)|floatformat(0) }} m</td>
+            <td>{{ s.energy|default(0)|floatformat(0) }} kcal</td>
+          </tr>
+          {% endfor %}
+        </table>
       </div>
     </div>
   </div>
