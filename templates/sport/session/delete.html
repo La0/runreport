@@ -1,13 +1,13 @@
 {% extends 'modal.html' %}
 
-{% set modal_title = '%s : Suppression de séance' % day|date('l d E Y')|title() %}
+{% set modal_title = '%s : Suppression de séance' % day_date|date('l d E Y')|title() %}
 
 {% block body %}
-Etes vous sûr de vouloir supprimer cette séance de <strong>{{ session.sport.name }}</strong> ?
+Etes vous sûr de vouloir supprimer cette séance de <strong>{{ session.sport.name }}</strong> : {{ session.name|default('Pas de nom') }} ?
 {% endblock %}
 
 {% block footer %}
 <button class="btn" data-dismiss="modal">Annuler</button>
-<a href="{% url sport-session-delete day.year, day.month, day.day, session.pk %}" class="btn btn-danger modal-action modal-post">Supprimer cette séance</a>
+<a href="{% url sport-session-delete day_date.year, day_date.month, day_date.day, session.pk %}" class="btn btn-danger modal-action modal-post">Supprimer cette séance</a>
 {% endblock %}
 
