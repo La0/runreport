@@ -4,6 +4,7 @@ from sport.stats import StatsMonth
 from calendar import monthrange
 from sport.models import Sport, SportDay
 from django.db.models import Min
+from django.http import Http404
 
 class SportStatsMixin(object):
 
@@ -31,6 +32,8 @@ class SportStatsMixin(object):
       start = date(year=year, month=1, day=1)
       end = start + year_delta
       date_range = 'year'
+      if year not in years or year < 1900: # strftime does not support below 1900
+        raise Http404('Invalid yead %d' % year)
 
     elif 'all' in args:
       # All the months !
