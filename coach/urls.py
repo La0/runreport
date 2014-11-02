@@ -25,6 +25,9 @@ urlpatterns = patterns('',
 
   # Contact Form
   url(r'^contact/', include('contact_form.urls')),
+
+  # Languages switch
+  url(r'^lang/', include('django.conf.urls.i18n')),
 )
 
 # Direct admin and static medias

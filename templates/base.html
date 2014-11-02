@@ -48,7 +48,7 @@
         {% if DEBUG %}
         <li class="debug">
           <a href="#">
-            <i class="icon-fire do-tooltip" title="Version en développement" data-placement="bottom"></i>
+            <i class="icon-fire do-tooltip" title="{{ _('Development Version') }}" data-placement="bottom"></i>
           </a>
         </li>
         {% endif %}
@@ -87,6 +87,25 @@
 	</header>
 
 	<div id="main" role="main">
+
+    <div class="well">
+      Using: {{ LANGUAGE_CODE }}
+
+      <form action="{% url set_language %}" method="post">
+        {% csrf_token %}
+        <input name="next" type="hidden" value="{{ redirect_to }}" />
+        <select name="language">
+          {% for lang_code, lang_name in LANGUAGES %}
+{{ language }}
+          <option value="{{ lang_code }}"{% if lang_code == LANGUAGE_CODE %} selected="selected"{% endif %}>
+          {{ lang_name }}
+          </option>
+          {% endfor %}
+        </select>
+        <input type="submit" value="Go" />
+      </form>
+    </div>
+
 		{% import '_macros.html' as macros %}
 		{% block content %}{% endblock %}
 	</div>
