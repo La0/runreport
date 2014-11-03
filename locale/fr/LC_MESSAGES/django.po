@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
-"Report-Msgid-Bugs-To: bastien@runreport.fr\n"
-"POT-Creation-Date: 2014-11-02 18:26+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-11-03 11:39+0100\n"
 "PO-Revision-Date: 2014-11-02 18:00+0100\n"
 "Last-Translator: Bastien Abadie <bastien@runreport.fr>\n"
 "Language: French\n"
@@ -17,6 +17,286 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+#: coach/settings.py:72
+msgid "French"
+msgstr "Français"
+
+#: coach/settings.py:73
+msgid "English"
+msgstr "Anglais"
+
 #: templates/base.html:51
 msgid "Development Version"
 msgstr "Version de Développement"
+
+#: templates/users/preferences.html:33
+msgid "My preferences"
+msgstr "Mes préfèrences"
+
+#: templates/users/preferences.html:37
+msgid "Personal Informations"
+msgstr "Informations personelles"
+
+#: templates/users/preferences.html:42
+msgid "Profile Picture"
+msgstr "Photo de profil"
+
+#: templates/users/preferences.html:47
+msgid "Profile Privacy"
+msgstr "Visibilité du profil"
+
+#: templates/users/preferences.html:52
+msgid "Mails"
+msgstr "Mails"
+
+#: templates/users/preferences.html:57
+msgid "Sports Informations"
+msgstr "Informations sportives"
+
+#: templates/users/preferences.html:63
+msgid "Password"
+msgstr "Mot de passe"
+
+#: templates/users/preferences.html:82
+msgid "Category"
+msgstr "Catégorie"
+
+#: templates/users/preferences.html:92 templates/users/preferences.html:151
+#: templates/users/preferences.html:161 templates/users/preferences.html:198
+msgid "Update"
+msgstr "Mettre à jour"
+
+#: templates/users/preferences.html:108
+msgid "You can use a JPEG or PNG image"
+msgstr "Vous pouvez utiliser une image au format JPEG ou PNG."
+
+#: templates/users/preferences.html:110
+msgid ""
+"Only the central part of the picture will be used to make a squared \"avatar"
+"\""
+msgstr ""
+"Seule la partie centrale de l'image sera utilisée pour faire un \"avatar\" "
+"carré"
+
+#: templates/users/preferences.html:117
+msgid "Use this picture"
+msgstr "Utiliser cette photo"
+
+#: templates/users/preferences.html:123
+msgid "Your current picture"
+msgstr "Votre photo actuelle"
+
+#: templates/users/preferences.html:132
+msgid "Choose a privacy level for differents sections or your public profile:"
+msgstr ""
+"Choisissez un niveau de visibilité pour les différentes parties de votre "
+"profil public:"
+
+#: templates/users/preferences.html:134 users/models.py:19
+msgid "Public"
+msgstr "Public"
+
+#: templates/users/preferences.html:134
+msgid ""
+"Anyone can use this section (including a visitor without a RunReport account)"
+msgstr ""
+"Tout le monde peut voir cette partie (y compris des personnes sans compte "
+"RunReport)"
+
+#: templates/users/preferences.html:135 users/models.py:20
+msgid "Club"
+msgstr "Club"
+
+#: templates/users/preferences.html:135
+msgid "Only users in your clubs can view this section."
+msgstr "Uniquement les personnes dans vos clubs peuvent voir cette partie."
+
+#: templates/users/preferences.html:136 users/models.py:21
+msgid "Private"
+msgstr "Privé"
+
+#: templates/users/preferences.html:136
+msgid "You are the only one seeig this section"
+msgstr "Vous êtes la seule personne qui peut voir cette partie."
+
+#: templates/users/preferences.html:152
+msgid "View your public profile"
+msgstr "Voir votre profil public"
+
+#: templates/users/preferences.html:170
+#, python-format
+msgid "%s trainer"
+msgstr "Entraîneur du %s"
+
+#: templates/users/preferences.html:205
+msgid "You can change your password using"
+msgstr "Vous pouvez changer votre mot de passe en utilisant"
+
+#: templates/users/preferences.html:206
+msgid "this page"
+msgstr "cette page"
+
+#: users/models.py:32
+msgid "username"
+msgstr "nom d'utilisateur"
+
+#: users/models.py:33
+msgid "Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."
+msgstr ""
+"Requis. 30 charactères ou moins. Lettres, chiffrs et @/./+/-/_ seulement."
+
+#: users/models.py:36
+msgid "Enter a valid username."
+msgstr "Donner un nom d'utlisateur valide."
+
+#: users/models.py:38
+msgid "first name"
+msgstr "Prénom"
+
+#: users/models.py:39
+msgid "last name"
+msgstr "Nom"
+
+#: users/models.py:40
+msgid "email address"
+msgstr "adresse email"
+
+#: users/models.py:41
+msgid "staff status"
+msgstr "status staff"
+
+#: users/models.py:42
+msgid "Designates whether the user can log into this admin site."
+msgstr "Indique si l'utilisateur peut se connecter à l'administration du site"
+
+#: users/models.py:44
+msgid "active"
+msgstr "actif"
+
+#: users/models.py:45
+msgid ""
+"Designates whether this user should be treated as active. Unselect this "
+"instead of deleting accounts."
+msgstr ""
+"Indique si cet utilisateur doit être considéré actif.Décochez cette option "
+"au lieu de supprimer des comptes."
+
+#: users/models.py:47
+msgid "date joined"
+msgstr "date d'inscription"
+
+#: users/models.py:59
+msgid "user"
+msgstr "utilisateur"
+
+#: users/models.py:60
+msgid "users"
+msgstr "utilisateurs"
+
+#: users/models.py:69
+msgid "birthday"
+msgstr "date de naissance"
+
+#: users/models.py:70
+msgid "category"
+msgstr "catégorie"
+
+#: users/models.py:71
+msgid "vma"
+msgstr "vma"
+
+#: users/models.py:71
+msgid "Ex: 12.5 km/h"
+msgstr ""
+
+#: users/models.py:72
+msgid "cardiac frequency"
+msgstr "fréquence cardiaque maximale"
+
+#: users/models.py:73
+msgid "cardiac frequency at rest"
+msgstr "fréquence cardiaque au repos"
+
+#: users/models.py:74
+msgid "height"
+msgstr "hauteur"
+
+#: users/models.py:74
+msgid "Unit: cm"
+msgstr "En centimètres"
+
+#: users/models.py:75
+msgid "weight"
+msgstr "poids"
+
+#: users/models.py:75
+msgid "Unit: kg"
+msgstr "En kg"
+
+#: users/models.py:76
+msgid "comment"
+msgstr "Renseignements divers"
+
+#: users/models.py:77
+msgid "number of sessions per week"
+msgstr "nb séances hebdomadaires"
+
+#: users/models.py:78
+msgid "license"
+msgstr "license FFA"
+
+#: users/models.py:81
+msgid "default sport"
+msgstr "Sport par défaut"
+
+#: users/models.py:84
+msgid "auto send emails"
+msgstr "envoi automatique des commentaires en fin de semaine"
+
+#: users/models.py:87
+msgid "garmin login"
+msgstr "login Garmin"
+
+#: users/models.py:88
+msgid "garmin password"
+msgstr "mot de passe garmin"
+
+#: users/models.py:91
+msgid "demo user"
+msgstr "utilisateur de démonstration"
+
+#: users/models.py:94
+msgid "profile picture"
+msgstr "Photo de profil"
+
+#: users/models.py:97
+msgid "profile visibility"
+msgstr "visibilité globale du profil"
+
+#: users/models.py:97
+msgid "Indicates if your public profile is visible, and by who."
+msgstr "Détermine si votre page de profil public est visible et par qui."
+
+#: users/models.py:98
+msgid "profile picture visibility"
+msgstr "visibilité de votre photo"
+
+#: users/models.py:99
+msgid "races visibility"
+msgstr "visibilité de vos courses"
+
+#: users/models.py:100
+msgid "records visibility"
+msgstr "visibilité de vos records"
+
+#: users/models.py:101
+msgid "stats visibility"
+msgstr "visibilité de vos statistiques"
+
+#: users/models.py:102
+msgid "calendar visibility"
+msgstr "visibilité de votre calendrier complet"
+
+#: users/models.py:103
+msgid "comments visibility"
+msgstr "visibilité des commentaires"
