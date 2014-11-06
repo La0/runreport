@@ -5,20 +5,20 @@
   <div class="row">
     <div class="col-sm-9 col-xs-12">
       {% if member %}
-      <h3>{{ member.first_name }} {{ member.last_name }} : Semaine du {{ report }}</h3>
+      <h3>{{ member.first_name }} {{ member.last_name }} : {{ _('Week %s') % report }}</h3>
       {% else %}
-      <h3>Votre semaine du {{ report }}</h3>
+      <h3>{{ _('Your week %s') % report }}</h3>
       {% endif %}
     </div>
     <div class="actions col-sm-3 col-xs-12 text-right hidden-xs">
     {% if not member  %}
       {% if report.published or report.task %}
       <a href="{% url report-week-publish report.year, report.week %}" class="modal-action btn btn-success btn-light">
-        <i class="icon-list"></i> Semaine publiée
+        <i class="icon-list"></i> {{ _('Week published') }}
       </a>
       {% else %}
       <a href="{% url report-week-publish report.year, report.week %}" class="{% if not report.is_publiable() %}disabled{% endif %} modal-action btn btn-info btn-light">
-        Publier la semaine <i class="icon-right-open"></i>
+        {{ _('Publish this week') }} <i class="icon-right-open"></i>
       </a>
       {% endif %}
     {% endif %}
@@ -27,7 +27,7 @@
 
   {% if trainer %}
   <p class="alert alert-success">
-    Ce rapport a bien été envoyé à {{trainer.first_name|default(trainer.username)}}
+    {{ _('This week report has been sent to %s') % trainer.first_name|default(trainer.username) }}
   </p>
   {% endif %}
 
@@ -47,16 +47,16 @@
   <hr />
 
   <div>
-    <h4>Bilan de la semaine</h4>
+    <h4>{{ _('This week summary') }}</h4>
     <div class="pull-right">
     {% if not member  %}
       {% if report.published or report.task %}
       <a href="{% url report-week-publish report.year, report.week %}" class="modal-action btn btn-success btn-light">
-        <i class="icon-list"></i> Semaine publiée
+        <i class="icon-list"></i> {{ _('Week published') }}
       </a>
       {% else %}
       <a href="{% url report-week-publish report.year, report.week %}" class="{% if not report.is_publiable() %}disabled{% endif %} modal-action btn btn-info btn-light">
-        Publier la semaine <i class="icon-right-open"></i>
+        {{ _('Publish this week') }} <i class="icon-right-open"></i>
       </a>
       {% endif %}
     {% endif %}
@@ -67,10 +67,10 @@
       {{ report.comment }}
     </blockquote>
     {% else %}
-    <i class="text-muted">Pas de commentaire général</i>
+    <i class="text-muted">{{ _('No general comment') }}</i>
     {% endif %}
 
-    <h4>Statistiques</h4>
+    <h4>{{ _('Stats') }}</h4>
     {% with report.get_sports_stats() as stats %}
       {% include 'sport/week/_stats.html' %}
     {% endwith %}
