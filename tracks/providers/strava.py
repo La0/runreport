@@ -11,9 +11,21 @@ class StravaProvider(TrackProvider, OauthProvider):
   settings = ['STRAVA_ID', 'STRAVA_SECRET', ]
 
   auth_url = 'https://www.strava.com/oauth/authorize'
+  deauth_url = 'https://www.strava.com/oauth/deauthorize'
   token_url = 'https://www.strava.com/oauth/token'
   activities_url = 'https://www.strava.com/api/v3/athlete/activities'
   activity_url = 'https://www.strava.com/api/v3/activities/%d'
+
+  def is_connected(self):
+    return self.user.strava_token is not None
+
+  def disconnect(self):
+    # Request to destroy token
+    self.request(self.deauth_url, bearer=self.user.strava_token, method='post')
+
+    # Just destroy credentials
+    self.user.strava_token = None
+    self.user.save()
 
   def auth(self):
     # Just build the auth url to redirect the user

@@ -94,6 +94,7 @@ class SignUpForm(forms.Form):
 
 class GarminForm(forms.ModelForm):
   clear_password = ''
+  user = None
 
   class Meta:
     model = Athlete
@@ -101,6 +102,10 @@ class GarminForm(forms.ModelForm):
     widgets = {
       'garmin_password' : forms.PasswordInput()
     }
+
+  def __init__(self, user, *args, **kwargs):
+    super(GarminForm, self).__init__(*args, **kwargs)
+    self.user = user
 
   def clean_garmin_password(self):
 
@@ -116,8 +121,8 @@ class GarminForm(forms.ModelForm):
   def clean(self):
     # Check login/password are valid
     try:
-      provider = GarminProvider()
-      provider.auth(None, force_login=self.cleaned_data['garmin_login'], force_password=self.clear_password)
+      provider = GarminProvider(self.user)
+      provider.auth(force_login=self.cleaned_data['garmin_login'], force_password=self.clear_password)
     except GarminAuthException, e:
       print 'Garmin Auth failed : %s' % (str(e),)
       raise ValidationError("Authentification Garmin invalide")

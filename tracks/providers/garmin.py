@@ -127,6 +127,15 @@ class GarminProvider(TrackProvider):
 
     return self.import_activities(source)
 
+  def is_connected(self):
+    return self.user.garmin_login and self.user.garmin_password
+
+  def disconnect(self):
+    # Just destroy credentials
+    self.user.garmin_login = None
+    self.user.garmin_password = None
+    self.user.save()
+
   def get_activity_id(self, activity):
     return activity['activityId']
 

@@ -50,9 +50,18 @@ class OauthProvider(object):
 
     return response
 
-  def request(self, url, data=None, bearer=None):
+  def request(self, url, data=None, bearer=None, method='get'):
+    # Support different methods
+    methods = {
+      'get' : requests.get,
+      'post' : requests.post,
+    }
+    if method not in methods:
+      raise Exception('Invalid request method %s' % method)
+
     # Helper to make simple authentified requests
     headers = {}
     if bearer:
       headers['Authorization'] = 'Bearer %s' % bearer
-    return requests.get(url, data=None, headers=headers)
+
+    return methods[method](url, data=data, headers=headers)

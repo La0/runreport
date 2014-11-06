@@ -4,6 +4,10 @@ from tracks.views import *
 
 urlpatterns = patterns('',
 
+  # Track providers user settings
+  url(r'^providers/?$', login_required(TrackProviders.as_view()), name="track-providers"),
+  url(r'^provider/(?P<name>\w+)/disconnect/?$', login_required(TrackProviderDisconnect.as_view()), name="track-provider-disconnect"),
+
   # Oauth redirection
   url(r'^oauth/(?P<provider>\w+)/?', login_required(TrackOauthRedirect.as_view()), name="track-oauth"),
 

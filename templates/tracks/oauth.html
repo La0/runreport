@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container">
-  <h1>Oauth Provider {{ provider }}</h1>
+  <h1>Connection à {{ provider|title() }}</h1>
 
   {% if response %}
     <div class="alert alert-success">
@@ -23,5 +23,9 @@
     Se connecter à {{ provider|title() }}
   </a>
   {% endif %}
+
+  <a class="btn btn-primary pull-right" href="{% url track-providers %}">
+    Retour aux fournisseurs de traces GPS
+  </a>
 </div>
 {% endblock %}

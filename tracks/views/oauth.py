@@ -15,7 +15,7 @@ class TrackOauthRedirect(TemplateView):
 
   def check_provider(self):
     # Load provider
-    provider = get_provider(self.kwargs['provider'])
+    provider = get_provider(self.kwargs['provider'], self.request.user)
     if not provider:
       raise PermissionDenied
 
@@ -28,7 +28,7 @@ class TrackOauthRedirect(TemplateView):
     if 'state' in args and len(args['state']) == 1:
       state = args['state'][0].replace(' ', '+') # removed by parse_qs :(
       seed, _ = state.split('.')
-      state_check = provider.build_user_state(self.request.user, int(seed))
+      state_check = provider.build_user_state(int(seed))
       if state != state_check:
         raise PermissionDenied
 
@@ -36,13 +36,13 @@ class TrackOauthRedirect(TemplateView):
     error = None
     response = None
     try:
-      response = provider.get_token(self.request.user, args['code'][0])
+      response = provider.get_token(args['code'][0])
     except Exception, e:
       error = e
 
     return {
       'provider' : provider.NAME,
-      'auth_url' : response is None and provider.auth(self.request.user) or None,
+      'auth_url' : response is None and provider.auth() or None,
       'response' : response,
       'error' : error,
     }

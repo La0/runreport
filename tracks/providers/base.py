@@ -3,6 +3,7 @@ import logging
 import json
 from django.contrib.gis.geos import LineString
 from django.db import transaction
+from django.db.models import Min, Max, Count
 import hashlib
 from tracks.models import Track, TrackSplit
 from sport.stats import StatsMonth
@@ -38,6 +39,19 @@ class TrackProvider:
       setattr(self, s, getattr(settings, s))
 
   # Abtract methods to implement
+  def is_connected(self):
+    '''
+    True if the current user is connected to the provider
+    '''
+    raise NotImplementedError('Please implement this method')
+
+  def disconnect(self):
+    '''
+    Disconnect current user from this provider
+    '''
+    raise NotImplementedError('Please implement this method')
+
+
   def get_activity_id(self, activity):
     '''
     Just give the id from an activity
@@ -82,6 +96,14 @@ class TrackProvider:
       out = self.files[activity_id][name]
       return format_json and json.loads(out) or out
     return None
+
+  def imported_stats(self):
+    '''
+    Gives simple stats about imported tracks
+    '''
+    tracks = Track.objects.filter(provider=self.NAME, session__day__week__user=self.user)
+    stats = tracks.aggregate(min_date=Min('session__day__date'), max_date=Max('session__day__date'), total=Count('id'))
+    return stats
 
   def import_user(self, full=False):
     '''
