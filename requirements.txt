@@ -27,3 +27,4 @@ django-debug-toolbar==1.2.1
 Pillow==2.5.3
 avatar-generator==0.0.13
 django-compressor==1.4
+python-dateutil==2.2

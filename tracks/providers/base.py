@@ -250,13 +250,14 @@ class TrackProvider:
     nb = len(splits)
     total.distance_total = total.distance
     total.time_total = total.time
-    total.speed = sum([s.speed for s in splits]) / nb
-    total.speed_max = min([s.speed_max for s in splits])
-    total.elevation_min = min([s.elevation_min for s in splits])
-    total.elevation_max = max([s.elevation_max for s in splits])
-    total.elevation_gain = sum([s.elevation_gain for s in splits])
-    total.elevation_loss = sum([s.elevation_loss for s in splits])
-    total.energy = sum([s.energy for s in splits])
+    if nb > 0:
+      total.speed = sum([s.speed for s in splits]) / nb
+      total.speed_max = min([s.speed_max for s in splits])
+      total.elevation_min = min([s.elevation_min for s in splits])
+      total.elevation_max = max([s.elevation_max for s in splits])
+      total.elevation_gain = sum([s.elevation_gain for s in splits])
+      total.elevation_loss = sum([s.elevation_loss for s in splits])
+      total.energy = sum([s.energy for s in splits])
 
     if nb >= 2:
       start = splits[0]

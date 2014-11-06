@@ -4,6 +4,7 @@ from helpers import gpolyline_decode, nameize
 from datetime import datetime, timedelta
 from sport.models import Sport
 from tracks.models import TrackSplit
+from dateutil.parser import parse
 
 class StravaProvider(TrackProvider, OauthProvider):
   NAME = 'strava'
@@ -97,10 +98,30 @@ class StravaProvider(TrackProvider, OauthProvider):
     return {
       'name' : details['name'],
       'distance' : details['distance'] / 1000.0,
-      'date' : datetime.strptime(details['start_date'], '%Y-%m-%dT%H:%M:%SZ').date(),
+      'date' : parse(details['start_date']).date(),
       'time' : timedelta(seconds=details['elapsed_time']),
       'sport' : sport,
     }
 
   def build_splits(self, activity):
-    return []
+    # Load details
+    details = self.get_file(activity, 'details', format_json=True)
+    if 'splits_metric' not in details:
+      return []
+
+    # Import every metric split
+    out = []
+    for s in details['splits_metric']:
+      split = TrackSplit(position=s['split'])
+      split.time = s['elapsed_time']
+      split.distance = s['distance']
+      if split.time > 0:
+        split.speed = split.distance / split.time
+      if s['elevation_difference'] > 0:
+        split.elevation_gain = s['elevation_difference']
+      else:
+        split.elevation_loss = abs(s['elevation_difference'])
+
+      out.append(split)
+
+    return out

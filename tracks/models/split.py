@@ -4,19 +4,19 @@ class TrackSplit(models.Model):
   track = models.ForeignKey('tracks.Track', related_name='splits')
   position = models.IntegerField()
 
-  distance = models.FloatField() # in m
-  time = models.FloatField() # in seconds
-  speed = models.FloatField() # in m/s
-  speed_max = models.FloatField() # in m/s
-  elevation_min = models.FloatField() # in m
-  elevation_max = models.FloatField() # in m
-  elevation_gain = models.FloatField() # in m
-  elevation_loss = models.FloatField() # in m
-  energy = models.FloatField() # in kcal
+  distance = models.FloatField(default=0) # in m
+  time = models.FloatField(default=0) # in seconds
+  speed = models.FloatField(default=0) # in m/s
+  speed_max = models.FloatField(default=0) # in m/s
+  elevation_min = models.FloatField(default=0) # in m
+  elevation_max = models.FloatField(default=0) # in m
+  elevation_gain = models.FloatField(default=0) # in m
+  elevation_loss = models.FloatField(default=0) # in m
+  energy = models.FloatField(default=0) # in kcal
 
   # Totals are values since the beginning
-  distance_total = models.FloatField()
-  time_total = models.FloatField()
+  distance_total = models.FloatField(default=0)
+  time_total = models.FloatField(default=0)
 
   # Dates
   date_start = models.DateTimeField(null=True, blank=True)

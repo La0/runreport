@@ -32,7 +32,7 @@ class Command(BaseCommand):
   def handle(self, *args, **options):
     # Check input
     if not options['username']:
-      raise CommandError("Missing usernam")
+      raise CommandError("Missing username")
     if not options['provider']:
       raise CommandError("Missing provider")
 
