@@ -2,6 +2,7 @@
 from django.db import models
 from . import SESSION_TYPES
 from interval.fields import IntervalField
+from django.utils.translation import ugettext_lazy as _
 
 class Sport(models.Model):
   name = models.CharField(max_length=250)
@@ -34,9 +35,9 @@ class SportSession(models.Model):
   time = IntervalField(format='DHMSX', null=True, blank=True)
   distance = models.FloatField(null=True, blank=True)
   name = models.CharField(max_length=255, null=True, blank=True)
-  comment = models.TextField(null=True, blank=True)
+  comment = models.TextField(_('session comment'), null=True, blank=True)
   type = models.CharField(max_length=12, default='training', choices=SESSION_TYPES)
-  race_category = models.ForeignKey('RaceCategory', null=True, blank=True)
+  race_category = models.ForeignKey('RaceCategory', verbose_name=_('Race category'), null=True, blank=True)
   created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
 

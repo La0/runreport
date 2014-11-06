@@ -8,13 +8,117 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-03 11:39+0100\n"
+"POT-Creation-Date: 2014-11-06 09:38+0100\n"
 "PO-Revision-Date: 2014-11-02 18:00+0100\n"
 "Last-Translator: Bastien Abadie <bastien@runreport.fr>\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: coach/menu.py:23
+msgid "Clubs"
+msgstr ""
+
+#: coach/menu.py:25
+msgid "View clubs"
+msgstr ""
+
+#: coach/menu.py:26
+msgid "Create a club"
+msgstr ""
+
+#: coach/menu.py:34 coach/menu.py:38 templates/base.html:130
+msgid "Help"
+msgstr ""
+
+#: coach/menu.py:39
+msgid "Glossary"
+msgstr ""
+
+#: coach/menu.py:40 templates/base.html:127
+msgid "News"
+msgstr ""
+
+#: coach/menu.py:41 templates/base.html:133
+msgid "Contact"
+msgstr ""
+
+#: coach/menu.py:46
+msgid "This Week"
+msgstr ""
+
+#: coach/menu.py:47
+msgid "Calendar"
+msgstr ""
+
+#: coach/menu.py:65
+msgid "Members"
+msgstr ""
+
+#: coach/menu.py:70
+msgid "My athletes"
+msgstr ""
+
+#: coach/menu.py:71
+msgid "Races"
+msgstr ""
+
+#: coach/menu.py:74
+msgid "All the club"
+msgstr ""
+
+#: coach/menu.py:78
+msgid "Newcomers"
+msgstr ""
+
+#: coach/menu.py:79
+msgid "Archives"
+msgstr ""
+
+#: coach/menu.py:80
+msgid "Manage"
+msgstr ""
+
+#: coach/menu.py:106
+msgid "My messages"
+msgstr ""
+
+#: coach/menu.py:107 templates/users/preferences.html:33
+msgid "My preferences"
+msgstr ""
+
+#: coach/menu.py:108
+msgid "My public profile"
+msgstr ""
+
+#: coach/menu.py:109
+msgid "My statistics"
+msgstr ""
+
+#: coach/menu.py:110
+msgid "My paces"
+msgstr ""
+
+#: coach/menu.py:111
+msgid "My records"
+msgstr ""
+
+#: coach/menu.py:112
+msgid "Garmin Sync"
+msgstr ""
+
+#: coach/menu.py:114
+msgid "Logout"
+msgstr ""
+
+#: coach/menu.py:117
+msgid "Create an account"
+msgstr ""
+
+#: coach/menu.py:120
+msgid "Login"
+msgstr ""
 
 #: coach/settings.py:72
 msgid "French"
@@ -24,12 +128,213 @@ msgstr ""
 msgid "English"
 msgstr ""
 
+#: sport/models/__init__.py:4
+msgid "training"
+msgstr ""
+
+#: sport/models/__init__.py:5
+msgid "race"
+msgstr ""
+
+#: sport/models/__init__.py:6
+msgid "rest"
+msgstr ""
+
+#: sport/models/sport.py:36
+msgid "session comment"
+msgstr ""
+
+#: sport/models/sport.py:38 templates/_macros.html:146
+msgid "Race category"
+msgstr ""
+
+#: templates/_macros.html:116
+msgid "Session"
+msgstr ""
+
 #: templates/base.html:51
 msgid "Development Version"
 msgstr "Development Version"
 
-#: templates/users/preferences.html:33
-msgid "My preferences"
+#: templates/base.html:115
+msgid "Built by"
+msgstr ""
+
+#: templates/base.html:118
+msgid "The team"
+msgstr ""
+
+#: templates/base.html:121
+msgid "Source code on"
+msgstr ""
+
+#: templates/base.html:121
+msgid "Github"
+msgstr ""
+
+#: templates/base.html:124
+msgid "Facebook"
+msgstr ""
+
+#: templates/sport/day/edit.html:19 templates/sport/week/edit.html:8
+#, python-format
+msgid "Week %s"
+msgstr ""
+
+#: templates/sport/day/edit.html:23 templates/sport/week/edit.html:10
+#, python-format
+msgid "Your week %s"
+msgstr ""
+
+#: templates/sport/day/edit.html:27
+msgid "View the week"
+msgstr ""
+
+#: templates/sport/day/edit.html:28
+msgid "View the month"
+msgstr ""
+
+#: templates/sport/day/edit.html:33
+msgid "View your profile"
+msgstr ""
+
+#: templates/sport/day/edit.html:35
+msgid "View this profile"
+msgstr ""
+
+#: templates/sport/day/edit.html:40
+msgid "Edit"
+msgstr ""
+
+#: templates/sport/day/edit.html:45
+msgid "Public profile link"
+msgstr ""
+
+#: templates/sport/day/edit.html:71
+msgid "Sending report"
+msgstr ""
+
+#: templates/sport/day/edit.html:72
+msgid "This week's report is being sent to your trainers"
+msgstr ""
+
+#: templates/sport/day/edit.html:78
+msgid "Last week's report not published !"
+msgstr ""
+
+#: templates/sport/day/edit.html:80
+msgid "Publish last week"
+msgstr ""
+
+#: templates/sport/day/edit.html:82
+msgid "Your comments from last week have not been published"
+msgstr ""
+
+#: templates/sport/day/edit.html:88
+msgid "Delete this session"
+msgstr ""
+
+#: templates/sport/day/edit.html:92 templates/sport/session/list.html:102
+msgid "Add a session"
+msgstr ""
+
+#: templates/sport/day/edit.html:96 templates/sport/week/edit.html:17
+#: templates/sport/week/edit.html.py:55
+msgid "Week published"
+msgstr ""
+
+#: templates/sport/day/edit.html:100 templates/sport/week/edit.html:21
+#: templates/sport/week/edit.html.py:59
+msgid "Publish this week"
+msgstr ""
+
+#: templates/sport/session/_comments.html:4
+msgid "Loading private comments..."
+msgstr ""
+
+#: templates/sport/session/_comments.html:8
+msgid "Loading comments..."
+msgstr ""
+
+#: templates/sport/session/_comments.html:14
+msgid "Start a private conversation"
+msgstr ""
+
+#: templates/sport/session/_comments.html:20
+msgid "Start a public conversation"
+msgstr ""
+
+#: templates/sport/session/_comments.html:26
+msgid "No comments"
+msgstr ""
+
+#: templates/sport/session/edit.html:16
+msgid "Saved session."
+msgstr ""
+
+#: templates/sport/session/edit.html:38 templates/sport/session/list.html:38
+msgid "Time"
+msgstr ""
+
+#: templates/sport/session/edit.html:44 templates/sport/session/list.html:49
+msgid "Distance"
+msgstr ""
+
+#: templates/sport/session/edit.html:49
+msgid "Garmin details"
+msgstr ""
+
+#: templates/sport/session/edit.html:59
+msgid "Sport"
+msgstr ""
+
+#: templates/sport/session/edit.html:72
+msgid "Save"
+msgstr ""
+
+#: templates/sport/session/edit.html:72
+msgid "this session"
+msgstr ""
+
+#: templates/sport/session/edit.html:74
+msgid "Delete"
+msgstr ""
+
+#: templates/sport/session/edit.html:88
+msgid "Comments"
+msgstr ""
+
+#: templates/sport/session/list.html:30 templates/sport/session/list.html:75
+msgid "No session name"
+msgstr ""
+
+#: templates/sport/session/list.html:41
+msgid "No time"
+msgstr ""
+
+#: templates/sport/session/list.html:56
+msgid "No Distance"
+msgstr ""
+
+#: templates/sport/session/list.html:107
+msgid "No sessions"
+msgstr ""
+
+#: templates/sport/week/edit.html:30
+#, python-format
+msgid "This week report has been sent to %s"
+msgstr ""
+
+#: templates/sport/week/edit.html:50
+msgid "This week summary"
+msgstr ""
+
+#: templates/sport/week/edit.html:70
+msgid "No general comment"
+msgstr ""
+
+#: templates/sport/week/edit.html:73
+msgid "Stats"
 msgstr ""
 
 #: templates/users/preferences.html:37

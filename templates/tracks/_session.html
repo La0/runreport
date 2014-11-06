@@ -6,7 +6,7 @@
   <div id="track_{{ track.id }}" class="track_map" data-src="{% url track-coords track.id %}">
     Loading map...
     <a target="_blank" href="{{ track.get_url() }}" class="btn btn-info btn-sm">
-      Voir sur {{ track.provider|title() }} <i class="icon-right-open"></i>
+      {{ _('View on') }} {{ track.provider|title() }} <i class="icon-right-open"></i>
     </a>
   </div>
 </div>
@@ -29,7 +29,7 @@
             {{ track.split_total.time|total_time() }}
           </h4>
           <span class="text-info">
-            Temps
+            {{ _('Time') }}
           </span>
         </div>
         <div class="col-sm-3 col-xs-6">
@@ -41,7 +41,7 @@
             {% endif %}
           </h4>
           <span class="text-info">
-            Distance
+            {{ _('Distance') }}
           </span>
         </div>
         <div class="col-sm-3 col-xs-6">
@@ -53,7 +53,7 @@
             {% endif %}
           </h4>
           <span class="text-info">
-            Vitesse moyenne
+            {{ _('Average speed')}}
           </span>
         </div>
         <div class="col-sm-3 col-xs-6">
@@ -62,14 +62,14 @@
             {{ track.split_total.energy|default(0)|floatformat(0) }} kcal
           </h4>
           <span class="text-info">
-            Calories
+            {{ _('Calories') }}
           </span>
           {% else %}
           <h4>
             + {{ track.split_total.elevation_gain|default(0)|floatformat() }} m
           </h4>
           <span class="text-info">
-            Dénivelé positif
+            {{ _('Elevation gain') }}
           </span>
           {% endif %}
         </div>
@@ -90,17 +90,17 @@
         <table class="table table-responsive table-striped table-condensed">
           <tr>
             <th>#</th>
-            <th>Distance</th>
-            <th>Cumulé</th>
-            <th>Temps</th>
-            <th>Cumulé</th>
-            <th>Vitesse</th>
-            <th>Max</th>
+            <th>{{ _('Distance') }}</th>
+            <th>{{ _('Sum') }}</th>
+            <th>{{ _('Time') }}</th>
+            <th>{{ _('Sum') }}</th>
+            <th>{{ _('Speed') }}</th>
+            <th>{{ _('Max') }}</th>
             {% if session.sport.slug not in ('swimming') %}
-              <th>D. +</th>
-              <th>D. -</th>
+              <th>{{ _('E. +') }}</th>
+              <th>{{ _('D. -') }}</th>
             {% endif %}
-            <th>Energie</th>
+            <th>{{ _('Energy') }}</th>
           <tr>
           {% for s in track.splits.exclude(position=0).order_by('position') %}
           <tr>
@@ -125,7 +125,7 @@
           {% endfor %}
           {% if track.split_total %}
           <tr class="total">
-            <td>Total</td>
+            <td>{{ _('Total') }}</td>
             <td>{{ track.split_total.distance|default(0)|total_distance() }}</td>
             <td>-</td>
             <td>{{ track.split_total.time|default(0)|total_time(short=True) }}</td>
