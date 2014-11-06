@@ -8,6 +8,9 @@ def tracks_import(*args, **kwargs):
   Import all new Tracks
   '''
   from users.models import Athlete
+  from tracks.providers import all_providers
+
   for user in Athlete.objects.all():
-    for provider in user.get_track_providers():
+    providers = [p for p in all_providers(user) if p.is_connected()]
+    for provider in providers:
       provider.import_user()
