@@ -593,3 +593,7 @@ div.comments div.messages {
   right: 4px;
   color: white;
 }
+
+.splits tr.total td {
+  font-weight: bold;
+}

@@ -20,6 +20,9 @@ class Track(models.Model):
   created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
 
+  # Total split, resumes all others splits
+  split_total = models.OneToOneField('tracks.TrackSplit', null=True, blank=True, related_name='direct_track')
+
   class Meta:
     unique_together = (
       ('provider', 'provider_id'),

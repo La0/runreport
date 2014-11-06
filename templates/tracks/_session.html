@@ -11,21 +11,54 @@
 </div>
 
 <div class="panel-group col-xs-12" id="accordion">
-  <div class="panel panel-default">
+  {% if track.split_total %}
+  <div class="panel panel-default total">
     <div class="panel-heading">
       <h4 class="panel-title">
         <a data-toggle="collapse" data-parent="#accordion" href="#stats_{{track.id}}">
-          Statistiques
+          Statistiques {{ track.provider|title() }}
         </a>
       </h4>
     </div>
-    <div id="stats_{{ track.id }}" class="panel-collapse collapse">
+    <div id="stats_{{ track.id }}" class="panel-collapse in">
       <div class="panel-body">
-        Yo stats
+        <div class="col-sm-3 col-xs-6">
+          <h4>
+            {{ track.split_total.time|total_time() }}
+          </h4>
+          <span class="text-info">
+            Temps
+          </span>
+        </div>
+        <div class="col-sm-3 col-xs-6">
+          <h4>
+            {{ track.split_total.distance|total_distance() }}
+          </h4>
+          <span class="text-info">
+            Distance
+          </span>
+        </div>
+        <div class="col-sm-3 col-xs-6">
+          <h4>
+            {{ track.split_total.speed|default(0)|convert_speed() }} min/km
+          </h4>
+          <span class="text-info">
+            Vitesse moyenne
+          </span>
+        </div>
+        <div class="col-sm-3 col-xs-6">
+          <h4>
+            + {{ track.split_total.elevation_gain|default(0)|floatformat() }} m
+          </h4>
+          <span class="text-info">
+            Dénivelé positif
+          </span>
+        </div>
       </div>
     </div>
   </div>
-  <div class="panel panel-default">
+  {% endif %}
+  <div class="panel panel-default splits">
     <div class="panel-heading">
       <h4 class="panel-title">
         <a data-toggle="collapse" data-parent="#accordion" href="#splits_{{track.id}}">
@@ -48,7 +81,7 @@
             <th>D. -</th>
             <th>Energie</th>
           <tr>
-          {% for s in track.splits.order_by('position') %}
+          {% for s in track.splits.exclude(position=0).order_by('position') %}
           <tr>
             <td>{{ s.position }}</td>
             <td>{{ s.distance|default(0)|total_distance() }}</td>
@@ -62,6 +95,20 @@
             <td>{{ s.energy|default(0)|floatformat(0) }} kcal</td>
           </tr>
           {% endfor %}
+          {% if track.split_total %}
+          <tr class="total">
+            <td>Total</td>
+            <td>{{ track.split_total.distance|default(0)|total_distance() }}</td>
+            <td>-</td>
+            <td>{{ track.split_total.time|default(0)|total_time(short=True) }}</td>
+            <td>-</td>
+            <td>{{ track.split_total.speed|default(0)|convert_speed() }} min/km</td>
+            <td>{{ track.split_total.speed_max|default(0)|convert_speed() }} min/km</td>
+            <td>{{ track.split_total.elevation_gain|default(0)|floatformat(0) }} m</td>
+            <td>{{ track.split_total.elevation_loss|default(0)|floatformat(0) }} m</td>
+            <td>{{ track.split_total.energy|default(0)|floatformat(0) }} kcal</td>
+          </tr>
+          {% endif %}
         </table>
       </div>
     </div>

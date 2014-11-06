@@ -4,7 +4,7 @@ import json
 from django.contrib.gis.geos import LineString
 from django.db import transaction
 import hashlib
-from tracks.models import Track
+from tracks.models import Track, TrackSplit
 from sport.stats import StatsMonth
 
 logger = logging.getLogger('coach.sport.garmin')
@@ -222,17 +222,53 @@ class TrackProvider:
 
     # Add splits to track
     track.splits.all().delete() # cleanup
-    distance_total, time_total = 0.0, 0.0
-    for s in self.build_splits(activity):
-      s.track = track
+    splits = self.build_splits(activity)
+    self.build_total(track, splits)
+
+    return track, True
+
+  def build_total(self, track, splits):
+    '''
+    Build a total TrackSplit from a list of splits
+    '''
+    total = TrackSplit(track=track, position=0)
+    total.distance = 0
+    total.time = 0
+    for s in splits:
 
       # Update totals
-      distance_total += s.distance
-      time_total += s.time
-      s.distance_total = distance_total
-      s.time_total = time_total
+      total.distance += s.distance
+      total.time += s.time
+      s.distance_total = total.distance
+      s.time_total = total.time
 
+      s.track = track
       s.save()
       logger.debug("%s split #%d added split %d"% (self.NAME, track.pk, s.position))
 
-    return track, True
+    # Save main split
+    nb = len(splits)
+    total.distance_total = total.distance
+    total.time_total = total.time
+    total.speed = sum([s.speed for s in splits]) / nb
+    total.speed_max = min([s.speed_max for s in splits])
+    total.elevation_min = min([s.elevation_min for s in splits])
+    total.elevation_max = max([s.elevation_max for s in splits])
+    total.elevation_gain = sum([s.elevation_gain for s in splits])
+    total.elevation_loss = sum([s.elevation_loss for s in splits])
+    total.energy = sum([s.energy for s in splits])
+
+    if nb >= 2:
+      start = splits[0]
+      total.date_start = start.date_start
+      total.position_start = start.position_start
+
+      end = splits[nb - 1]
+      total.date_end = end.date_end
+      total.position_end = end.position_end
+
+    total.save()
+    track.split_total = total
+    track.save()
+
+    return total

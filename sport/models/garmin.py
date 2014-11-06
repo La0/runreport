@@ -78,15 +78,7 @@ class GarminActivity(models.Model):
 
     # Add splits
     distance_total, time_total = 0.0, 0.0
-    for s in provider.build_splits(raw):
-      s.track = track
-
-      # Update totals
-      distance_total += s.distance
-      time_total += s.time
-      s.distance_total = distance_total
-      s.time_total = time_total
-
-      s.save()
+    splits = provider.build_splits(raw)
+    provider.build_total(track, splits)
 
     return track, True
