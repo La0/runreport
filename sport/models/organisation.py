@@ -80,7 +80,7 @@ class SportWeek(models.Model):
 
   def is_publiable(self):
     today = date.today()
-    return not self.published and today >= self.get_date(0)
+    return not self.published and today >= self.get_date_start()
 
   @models.permalink
   def get_absolute_url(self):
