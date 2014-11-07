@@ -20,7 +20,7 @@ def prod():
   # doesn't do its job :(
   if 'runreport_celery' in FABRIC_SUPERVISORS:
     with settings(warn_only=True):
-      run("ps auxww | grep 'celery -A coach worker' | awk '{print $2}' |xargs kill -9")
+      run("ps auxww | grep 'celery -A coach worker' | grep -v grep | awk '{print $2}' |xargs kill -9")
 
   with cd(FABRIC_BASE):
     pull()
