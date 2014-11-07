@@ -37,4 +37,7 @@ class CreateUser(UserInviteMixin, FormView):
     # Otherwise, display club list
     url_name = self.invite and 'club-create' or 'club-list'
 
+    # Subscribe user to mailing all
+    user.subscribe_mailing('all')
+
     return HttpResponseRedirect(reverse(url_name))

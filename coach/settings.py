@@ -301,6 +301,9 @@ CACHES = {
 # Test Engine
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
+# Mailman server (api url)
+MAILMAN_URL = ''
+
 # Import local settings, if any
 try:
   from coach.local_settings import *
