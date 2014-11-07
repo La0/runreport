@@ -28,7 +28,7 @@
 		{% endif %}
 		{% endfor %}
 
-		{% if membership.role == 'athlete' %}
+		{% if membership.role in ('athlete', 'trainer') %}
 		<hr />
 		<div class="trainers">
 			<h4>Choisir ses entraineurs</h4>
