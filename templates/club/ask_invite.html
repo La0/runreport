@@ -6,9 +6,10 @@
 <div class="container" id="landing-club">
 
   <header class="jumbotron hero-spacer">
-    <h1>Gérez tous vos athlètes</h1>
+    <h1>{{ _('Manage all your athletes') }}</h1>
     
-    <p>Qu'ils soient coureurs, triathlètes ou cyclistes, quelque soit leur niveau, vous pourrez gérer l'ensemble de vos athlètes de manière simple et efficace.</p>
+    <p>{{ _('Whether they are runners, triathletes or cyclists, whatever their level, you can manage all your athletes in a simple and efficient way.') }}
+        </p>
 
     <hr />
 
@@ -17,12 +18,12 @@
       <div class="col-sm-6 col-xs-12">
         {% if asked %}
         <p class="alert alert-success">
-          Votre demande de création de club a bien été enregistrée.
-          <br />Nous vous enverrons un mail d'invitation dans les plus brefs délais.
+          {{ _('Your club creation request has been registered.') }}
+          <br />{{ _('You will receive an invitation email in the shortest time.') }}
         </p>
         {% else %}
         <p class="text-muted">
-          Pour assurer un meilleur support, les créations de club sont pour l'instant limitées.
+          {{ _('To ensure a better support, clubs creation are currently limited.') }}
         </p>
         <form action="{% url club-landing %}" method="post" role="form" class="form-inline">
           {% csrf_token %}
@@ -34,7 +35,7 @@
             {% endif %}
           </p>
           <p class="col-sm-6 col-xs-12">
-            <button type="submit" class="btn btn-success">Demander une invitation</button>
+            <button type="submit" class="btn btn-success">{{ _('Ask an invitation') }}</button>
           </p>
         </form>
         {% endif %}
@@ -42,9 +43,9 @@
 
       <div class="col-sm-6 col-xs-12">
         <p class="text-muted">
-          Testez RunReport en utilisant le compte Entraineur !
+          {{ _('Test RunReport using the Trainer account!') }}
         </p>
-        <a class="btn btn-primary" href="{% url login %}">Essayer la démo</a>
+        <a class="btn btn-primary" href="{% url login %}">{{ _('Try the demo') }}</a>
       </div>
 
     </div>
@@ -55,37 +56,37 @@
 
     <div class="col-md-3 col-sm-6 hero-feature">
       <div class="thumbnail">
-        <h3>Calendriers</h3>
+        <h3>{{ _('Calendars') }}</h3>
         <img src="/medias/img/landing/calendar_2.png" alt="" />
         <div class="caption">
-          <p>Visualisez simplement le parcours sportif passé et à venir de tout votre club.</p>
+          <p>{{ _('Simply visualize the sporting past and yet to come of all your club.') }}</p>
         </div>
       </div>
     </div>
     <div class="col-md-3 col-sm-6 hero-feature">
       <div class="thumbnail">
-        <h3>Gestion club</h3>
+        <h3>{{ _('Managing a club') }}</h3>
         <img src="/medias/img/landing/list.png" alt="" />
         <div class="caption">
-          <p>Gérez toutes les personnes de votre club en fonction de leur rôles: Entraineurs, Athlètes, Staff, Anciens athlètes...p>
+          <p>{{ _('Administer everybody in your club depending on their role: trainers, athletes, staff, former athletes...') }}</p>
         </div>
       </div>
     </div>
     <div class="col-md-3 col-sm-6 hero-feature">
       <div class="thumbnail">
-        <h3>Progression Athlètes</h3>
+        <h3>{{ _('Athletes progression') }}</h3>
         <img src="/medias/img/landing/stats.png" alt="" />
         <div class="caption">
-          <p>Suivez la progression sportive de vos athlètes de manière graphique.</p>
+          <p>{{ _('Follow the sportive progression of your athletes using graphics.') }}</p>
         </div>
       </div>
     </div>
     <div class="col-md-3 col-sm-6 hero-feature">
       <div class="thumbnail">
-        <h3>Rapports par mail</h3>
+        <h3>{{ _('Weekly reports') }}</h3>
         <img src="/medias/img/landing/mail.png" alt="" />
         <div class="caption">
-          <p>Recevez directement sur votre boite mail les rapports hebdomadaires de vos athlètes.</p>
+          <p>{{ _('Directly receive in your mailbox your athletes weekly reports.') }}</p>
         </div>
       </div>
     </div>

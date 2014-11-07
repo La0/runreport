@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-06 09:38+0100\n"
+"POT-Creation-Date: 2014-11-07 00:30+0100\n"
 "PO-Revision-Date: 2014-11-02 18:00+0100\n"
 "Last-Translator: Bastien Abadie <bastien@runreport.fr>\n"
 "Language: French\n"
@@ -27,11 +27,12 @@ msgstr "Clubs"
 msgid "View clubs"
 msgstr "Voir les clubs"
 
-#: coach/menu.py:26
+#: coach/menu.py:26 templates/club/create.html:21
 msgid "Create a club"
 msgstr "Créer un club"
 
 #: coach/menu.py:34 coach/menu.py:38 templates/base.html:130
+#: templates/club/join.html:11
 msgid "Help"
 msgstr "Aide"
 
@@ -184,6 +185,137 @@ msgstr ""
 #: templates/base.html:124
 msgid "Facebook"
 msgstr ""
+
+#: templates/club/ask_invite.html:9
+msgid "Manage all your athletes"
+msgstr "Gérez tous vos athlètes"
+
+#: templates/club/ask_invite.html:11
+msgid ""
+"Whether they are runners, triathletes or cyclists, whatever their level, you "
+"can manage all your athletes in a simple and efficient way."
+msgstr ""
+"Qu'ils soient coureurs, triathlètes ou cyclistes, quelque soit leur niveau, "
+"vous pourrez gérer l'ensemble de vos athlètes de manière simple et efficace."
+
+#: templates/club/ask_invite.html:21
+msgid "Your club creation request has been registered."
+msgstr "Votre demande de création de club a bien été enregistrée."
+
+#: templates/club/ask_invite.html:22
+msgid "You will receive an invitation email in the shortest time."
+msgstr "Nous vous enverrons un mail d'invitation dans les plus brefs délais."
+
+#: templates/club/ask_invite.html:26
+msgid "To ensure a better support, clubs creation are currently limited."
+msgstr ""
+"Pour assurer un meilleur support, les créations de club sont pour l'instant "
+"limitées."
+
+#: templates/club/ask_invite.html:38
+msgid "Ask an invitation"
+msgstr "Demander une invitation"
+
+#: templates/club/ask_invite.html:46
+msgid "Test RunReport using the Trainer account!"
+msgstr "Testez RunReport en utilisant le compte Entraineur !"
+
+#: templates/club/ask_invite.html:48
+msgid "Try the demo"
+msgstr "Essayer la démo"
+
+#: templates/club/ask_invite.html:59
+#, fuzzy
+msgid "Calendars"
+msgstr "Calendriers"
+
+#: templates/club/ask_invite.html:62
+msgid "Simply visualize the sporting past and yet to come of all your club."
+msgstr ""
+"Visualisez simplement le parcours sportif passé et à venir de tout votre "
+"club."
+
+#: templates/club/ask_invite.html:68
+msgid "Managing a club"
+msgstr "Gestion de club"
+
+#: templates/club/ask_invite.html:71
+msgid ""
+"Administer everybody in your club depending on their role: trainers, "
+"athletes, staff, former athletes..."
+msgstr ""
+"Gérez toutes les personnes de votre club en fonction de leur rôles: "
+"Entraineurs, Athlètes, Staff, Anciens athlètes..."
+
+#: templates/club/ask_invite.html:77
+#, fuzzy
+#| msgid "Delete this session"
+msgid "Athletes progression"
+msgstr "Progression Athlètes"
+
+#: templates/club/ask_invite.html:80
+msgid "Follow the sportive progression of your athletes using graphics."
+msgstr "Suivez la progression sportive de vos athlètes de manière graphique."
+
+#: templates/club/ask_invite.html:86
+msgid "Weekly reports"
+msgstr "Rapports par mail"
+
+#: templates/club/ask_invite.html:89
+msgid "Directly receive in your mailbox your athletes weekly reports."
+msgstr ""
+"Recevez directement sur votre boite mail les rapports hebdomadaires de vos "
+"athlètes."
+
+#: templates/club/create.html:24
+#, fuzzy
+#| msgid "training"
+msgid "Warning"
+msgstr "Attention"
+
+#: templates/club/create.html:25
+msgid "You can create and administer only one club."
+msgstr "Vous ne pouvez créer et administrer qu'un club."
+
+#: templates/club/create.html:40
+#, fuzzy
+#| msgid "Create a club"
+msgid "Create the club"
+msgstr "Créer un club"
+
+#: templates/club/join.html:9
+#, fuzzy
+msgid "Join a club"
+msgstr "Rejoindre un club"
+
+#: templates/club/join.html:12
+msgid "You can join a club clicking on \"Join\"."
+msgstr "Vous pouvez rejoindre un club, en cliquant sur \"Rejoindre\"."
+
+#: templates/club/join.html:13
+msgid "Each request is then validated (or not) by the club's manager."
+msgstr "Chaque demande est alors validée (ou non) par le gérant du club."
+
+#: templates/club/join.html:23
+msgid "Private club"
+msgstr "Club privé"
+
+#: templates/club/join.html:34
+msgid "Manager"
+msgstr "Gérant"
+
+#: templates/club/join.html:42
+msgid "Refused"
+msgstr "Refusé"
+
+#: templates/club/join.html:44
+msgid "Waiting for approval"
+msgstr "Attente de validation"
+
+#: templates/club/join.html:46
+#, fuzzy
+msgid "Member"
+msgstr "Membre"
 
 #: templates/sport/day/edit.html:19 templates/sport/week/edit.html:8
 #, python-format

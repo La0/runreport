@@ -18,11 +18,11 @@ function slugify(str){
 
 <div class="container">
 
-	<h2>Créer un club</h2>
+	<h2>{{ _('Create a club') }}</h2>
 
 	<div class="alert alert-info">
-		<h4>Attention</h4>
-		Vous ne pouvez créer et gérer qu'un seul club.
+		<h4>{{ _('Warning') }}</h4>
+		{{ _('You can create and administer only one club.') }}
 	</div>
 
 	<form action="" method="POST" class="form form-horizontal">
@@ -37,7 +37,7 @@ function slugify(str){
 
 		<div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
-				<input type="submit" class="btn btn-primary" value="Créer le club" />
+				<input type="submit" class="btn btn-primary" value="{{ _('Create the club') }}" />
 			</div>
 		</div>
 	</form>
