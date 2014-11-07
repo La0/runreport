@@ -14,6 +14,7 @@ from hashlib import md5
 from datetime import datetime
 from PIL import Image
 from avatar_generator import Avatar
+from coach.mailman import MailMan
 
 PRIVACY_LEVELS = (
   ('public', u'Public'),
@@ -244,6 +245,26 @@ class Athlete(AthleteBase):
       privacy += visitor == self and ['comments_private', ] or []
 
     return privacy
+
+  def subscribe_mailing(self, mailing):
+    # Subscribe user to a mailing list
+    try:
+      mm = MailMan()
+      mm.subscribe(mailing, self.email, '%s %s' % (self.first_name, self.last_name))
+    except Exception, e:
+      print 'Failed to subscribe %s to %s : %s' % (self.username, mailing, str(e))
+      return False
+    return True
+
+  def unsubscribe_mailing(self, mailing):
+    # Unsubscribe user from a mailing list
+    try:
+      mm = MailMan()
+      mm.unsubscribe(mailing, self.email)
+    except Exception, e:
+      print 'Failed to unsubscribe %s from %s : %s' % (self.username, mailing, str(e))
+      return False
+    return True
 
 class UserCategory(models.Model):
   code = models.CharField(max_length=10)
