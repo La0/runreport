@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-06 09:38+0100\n"
+"POT-Creation-Date: 2014-11-07 00:30+0100\n"
 "PO-Revision-Date: 2014-11-02 18:00+0100\n"
 "Last-Translator: Bastien Abadie <bastien@runreport.fr>\n"
 "Language: English\n"
@@ -24,11 +24,12 @@ msgstr ""
 msgid "View clubs"
 msgstr ""
 
-#: coach/menu.py:26
+#: coach/menu.py:26 templates/club/create.html:21
 msgid "Create a club"
 msgstr ""
 
 #: coach/menu.py:34 coach/menu.py:38 templates/base.html:130
+#: templates/club/join.html:11
 msgid "Help"
 msgstr ""
 
@@ -174,6 +175,118 @@ msgstr ""
 
 #: templates/base.html:124
 msgid "Facebook"
+msgstr ""
+
+#: templates/club/ask_invite.html:9
+msgid "Manage all your athletes"
+msgstr ""
+
+#: templates/club/ask_invite.html:11
+msgid ""
+"Whether they are runners, triathletes or cyclists, whatever their level, you "
+"can manage all your athletes in a simple and efficient way."
+msgstr ""
+
+#: templates/club/ask_invite.html:21
+msgid "Your club creation request has been registered."
+msgstr ""
+
+#: templates/club/ask_invite.html:22
+msgid "You will receive an invitation email in the shortest time."
+msgstr ""
+
+#: templates/club/ask_invite.html:26
+msgid "To ensure a better support, clubs creation are currently limited."
+msgstr ""
+
+#: templates/club/ask_invite.html:38
+msgid "Ask an invitation"
+msgstr ""
+
+#: templates/club/ask_invite.html:46
+msgid "Test RunReport using the Trainer account!"
+msgstr ""
+
+#: templates/club/ask_invite.html:48
+msgid "Try the demo"
+msgstr ""
+
+#: templates/club/ask_invite.html:59
+msgid "Calendars"
+msgstr ""
+
+#: templates/club/ask_invite.html:62
+msgid "Simply visualize the sporting past and yet to come of all your club."
+msgstr ""
+
+#: templates/club/ask_invite.html:68
+msgid "Managing a club"
+msgstr ""
+
+#: templates/club/ask_invite.html:71
+msgid ""
+"Administer everybody in your club depending on their role: trainers, "
+"athletes, staff, former athletes..."
+msgstr ""
+
+#: templates/club/ask_invite.html:77
+msgid "Athletes progression"
+msgstr ""
+
+#: templates/club/ask_invite.html:80
+msgid "Follow the sportive progression of your athletes using graphics."
+msgstr ""
+
+#: templates/club/ask_invite.html:86
+msgid "Weekly reports"
+msgstr ""
+
+#: templates/club/ask_invite.html:89
+msgid "Directly receive in your mailbox your athletes weekly reports."
+msgstr ""
+
+#: templates/club/create.html:24
+msgid "Warning"
+msgstr ""
+
+#: templates/club/create.html:25
+msgid "You can create and administer only one club."
+msgstr ""
+
+#: templates/club/create.html:40
+msgid "Create the club"
+msgstr ""
+
+#: templates/club/join.html:9
+msgid "Join a club"
+msgstr ""
+
+#: templates/club/join.html:12
+msgid "You can join a club clicking on \"Join\"."
+msgstr ""
+
+#: templates/club/join.html:13
+msgid "Each request is then validated (or not) by the club's manager."
+msgstr ""
+
+#: templates/club/join.html:23
+msgid "Private club"
+msgstr ""
+
+#: templates/club/join.html:34
+msgid "Manager"
+msgstr ""
+
+#: templates/club/join.html:42
+msgid "Refused"
+msgstr ""
+
+#: templates/club/join.html:44
+msgid "Waiting for approval"
+msgstr ""
+
+#: templates/club/join.html:46
+msgid "Member"
 msgstr ""
 
 #: templates/sport/day/edit.html:19 templates/sport/week/edit.html:8
