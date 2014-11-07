@@ -246,11 +246,11 @@ class Athlete(AthleteBase):
 
     return privacy
 
-  def subscribe_mailing(self, mailing):
+  def subscribe_mailing(self, mailing, email=None):
     # Subscribe user to a mailing list
     try:
       mm = MailMan()
-      mm.subscribe(mailing, self.email, '%s %s' % (self.first_name, self.last_name))
+      mm.subscribe(mailing, email or self.email, '%s %s' % (self.first_name, self.last_name))
     except Exception, e:
       print 'Failed to subscribe %s to %s : %s' % (self.username, mailing, str(e))
       return False
