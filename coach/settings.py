@@ -66,6 +66,18 @@ USE_L10N = True
 # If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = True
 
+# Available languages for translations
+from django.utils.translation import ugettext_lazy as _
+LANGUAGES = (
+  ('fr', _('French')),
+  ('en', _('English')),
+)
+
+# Use our own locales
+LOCALE_PATHS = (
+  HOME + '/locale',
+)
+
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
 MEDIA_ROOT = HOME + '/medias'
@@ -125,6 +137,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
   'coach.settings.load_constants',
   'django.contrib.auth.context_processors.auth',
   'django.core.context_processors.request',
+  'django.core.context_processors.i18n',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -133,6 +146,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )

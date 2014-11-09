@@ -1,42 +1,46 @@
 
 
-{% macro input(field, label, help=False, colLabel=2, colField=10) -%}
+{% macro input(field, label=None, help=False, colLabel=2, colField=10) -%}
 {{ field.type}}
 
 <div class="form-group row {% if field.errors %}has-error{% endif %}">
-	<label class="col-sm-{{colLabel}} control-label" for="id_{{field.html_name}}">{{label}}</label>
+	<label class="col-sm-{{colLabel}} control-label" for="id_{{field.html_name}}">
+    {{ label or field.label }}
+  </label>
 	<div class="col-sm-{{colField}}">
 		{{field|addcss("form-control")|safe}}
 		{% if field.errors %}
 		<div class="help-block">{{field.errors|safe}}</div>
-		{% elif help %}
-		<div class="help-block">{{help}}</div>
+		{% elif help or field.help %}
+		<div class="help-block">{{help or field.help}}</div>
 		{% endif %}
 	</div>
 
 </div>
 {%- endmacro %}
 
-{% macro input_bool(field, label, help=False, colLabel=2, colField=10) -%}
+{% macro input_bool(field, label=None, help=False, colLabel=2, colField=10) -%}
 <div class="form-group {% if field.errors %}has-error{% endif %}">
-  <label class="col-sm-{{colLabel}} control-label">{{label}}</label>
+  <label class="col-sm-{{colLabel}} control-label">
+    {{ label or field.label }}
+  </label>
   <div class="col-sm-{{colField}}">
     <label class="checkbox-inline">
       {{ field|safe }}
     </label>
 		{% if field.errors %}
 		<div class="help-block">{{field.errors|safe}}</div>
-		{% elif help %}
-		<div class="help-block">{{help}}</div>
+		{% elif help or field.help %}
+		<div class="help-block">{{help or field.help}}</div>
 		{% endif %}
   </div>
 </div>
 {%- endmacro %}
 
-{% macro input_prepend(field, label, large=False) -%}
+{% macro input_prepend(field, label=None, large=False) -%}
 <div class="col-sm-3 col-xs-6 {% if field.errors %}has-error{% endif %}">
    <div class="input-group {% if field.errors %}has-error{% endif %}">
-     <span class="input-group-addon input-sm">{{ label }}</span>
+     <span class="input-group-addon input-sm">{{ label or field.label }}</span>
      {{ field|addcss("form-control input-sm")|safe }}
    </div>
 	{% if field.errors %}
@@ -45,9 +49,9 @@
 </div>
 {%- endmacro %}
 
-{% macro input_choices(field, label, help=None, field_classes=()) -%}
+{% macro input_choices(field, label=None, help=None, field_classes=()) -%}
 <div class="form-group row {% if field.errors %}has-error{% endif %}">
-	<label class="col-sm-4 control-label" for="id_{{field.html_name}}">{{label}}</label>
+	<label class="col-sm-4 control-label" for="id_{{field.html_name}}">{{ label or field.label }}</label>
 	<div class="col-sm-8">
 
     {% with field.field.choices as choices %}
@@ -66,8 +70,8 @@
 
     {% if field.errors %}
     <div class="help-block">{{field.errors|safe}}</div>
-    {% elif help %}
-    <div class="help-block">{{help}}</div>
+		{% elif help or field.help %}
+		<div class="help-block">{{help or field.help}}</div>
     {% endif %}
 	</div>
 </div>
@@ -109,26 +113,20 @@
 	{% if field.errors %}
 	<span class="help-inline">{{field.errors|safe}}</span>
 	{% endif %}
-	<label class="col-sm-2 control-label" for="id_{{field.name}}">Séance</label>
+	<label class="col-sm-2 control-label" for="id_{{field.name}}">{{ _('Session') }}</label>
 	<div class="col-sm-10 {{form.instance.sport|default('running')}}">
 		<div class="input-group">
 			<div class="input-group-btn">
 				<button class="btn dropdown-toggle {{ type }}" data-toggle="dropdown">
 					<span class="name">
-						{% if type == 'training' %}
-						Entraînement
-						{% elif type == 'race' %}
-						Course
-						{% else %}
-						Repos
-						{% endif %}
+            {{ _(type)|title() }}
 					</span>
 					<span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu types">
 					{% for k, name in types %}
 					<li{% if type == k %} class="active"{% endif %}>
-					<a href="#" value="{{k}}">{{name}}</a>
+					<a href="#" value="{{k}}">{{ _(name)|title() }}</a>
 				</li>
 				{% endfor %}
 			</ul>
@@ -145,7 +143,7 @@
 
 {% macro race_category(form) -%}
 <div class="form-group race-category row {% if form.instance.type == 'race' %}active{% endif %}">
-<label class="col-sm-2 control-label" for="id_{{form.race_category.html_name}}">Type de course</label>
+<label class="col-sm-2 control-label" for="id_{{form.race_category.html_name}}">{{ _('Race category') }}</label>
 <div class="col-sm-10 {{form.instance.sport|default('running')}}">
 	{{ form.race_category|addcss("form-control")|safe }}
 </div>

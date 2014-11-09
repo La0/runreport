@@ -1,29 +1,29 @@
 <div id="messages-{{session.pk}}" class="comments col-xs-12">
   {% if 'comments_private' in privacy and session.comments_private %}
   <div class="box" data-src="{% url conversation-list session.comments_private.pk %}" >
-    Chargement des commentaires privés...
+    {{ _('Loading private comments...') }}
   </div>
   {% elif 'comments_public' in privacy and session.comments_public %}
   <div class="box" data-src="{% url conversation-list session.comments_public.pk %}" >
-    Chargement des commentaires...
+    {{ _('Loading comments...') }}
   </div>
   {% else %}
 
     {% if 'comments_private' in privacy %}
     <a href="{% url message-session-add session.pk, 'private' %}" class="modal-action btn btn-sm btn-warning btn-light">
-      <i class="icon-comment"></i> Démarrer une conversation privée
+      <i class="icon-comment"></i> {{ _('Start a private conversation') }}
     </a>
     {% endif %}
 
     {% if 'comments_public' in privacy %}
     <a href="{% url message-session-add session.pk, 'public' %}" class="modal-action btn btn-sm btn-success btn-light">
-      <i class="icon-comment"></i> Démarrer une conversation publique
+      <i class="icon-comment"></i> {{ _('Start a public conversation') }}
     </a>
     {% endif %}
 
     {% if not user.is_authenticated() or 'comments' not in privacy %}
     <i class="text-muted do-tooltip" title="Vous n'avez pas le droit d'ajouter un commentaire ici.">
-      Pas de commentaires pour le moment.
+      {{ _('No comments') }}
     </i>
     {% endif %}
   {% endif %}

@@ -48,7 +48,7 @@
         {% if DEBUG %}
         <li class="debug">
           <a href="#">
-            <i class="icon-fire do-tooltip" title="Version en développement" data-placement="bottom"></i>
+            <i class="icon-fire do-tooltip" title="{{ _('Development Version') }}" data-placement="bottom"></i>
           </a>
         </li>
         {% endif %}
@@ -87,31 +87,50 @@
 	</header>
 
 	<div id="main" role="main">
+
+    <div class="well">
+      Using: {{ LANGUAGE_CODE }}
+
+      <form action="{% url set_language %}" method="post">
+        {% csrf_token %}
+        <input name="next" type="hidden" value="{{ redirect_to }}" />
+        <select name="language">
+          {% for lang_code, lang_name in LANGUAGES %}
+{{ language }}
+          <option value="{{ lang_code }}"{% if lang_code == LANGUAGE_CODE %} selected="selected"{% endif %}>
+          {{ lang_name }}
+          </option>
+          {% endfor %}
+        </select>
+        <input type="submit" value="Go" />
+      </form>
+    </div>
+
 		{% import '_macros.html' as macros %}
 		{% block content %}{% endblock %}
 	</div>
 
 	<footer>
 		<div class="container">
-      Contstruit par <a href="http://nextcairn.com">Next Cairn</a>
+      {{ _('Built by') }} <a href="http://nextcairn.com">Next Cairn</a>
       <span class="text-muted">&bull;</span>
 
-      <a href="{% url landing-team %}"><i class="icon-club"></i> L'équipe</a>
+      <a href="{% url landing-team %}"><i class="icon-club"></i> {{ _('The team') }}</a>
       <span class="text-muted">&bull;</span>
 
-			Code source sur <a href="http://github.com/La0/coach"><i class="icon-github"></i> Github</a>
+			{{ _('Source code on') }} <a href="http://github.com/La0/coach"><i class="icon-github"></i> {{ _('Github') }}</a>
       <span class="text-muted">&bull;</span>
 
-			<a href="http://facebook.com/runreport.fr"><i class="icon-facebook"></i> Facebook</a>
+			<a href="http://facebook.com/runreport.fr"><i class="icon-facebook"></i> {{_('Facebook') }}</a>
       <span class="text-muted">&bull;</span>
 
-			<a href="{% url page-list 'news' %}"><i class="icon-mail"></i> News</a>
+			<a href="{% url page-list 'news' %}"><i class="icon-mail"></i> {{ _('News') }}</a>
       <span class="text-muted">&bull;</span>
 
-			<a href="{% url page-list 'help' %}"><i class="icon-help-circled"></i> Aide</a>
+			<a href="{% url page-list 'help' %}"><i class="icon-help-circled"></i> {{ _('Help') }}</a>
       <span class="text-muted">&bull;</span>
 
-			<a href="/contact"><i class="icon-user"></i> Contact</a>
+			<a href="/contact"><i class="icon-user"></i> {{ _('Contact') }}</a>
 
 			{% include '_piwik.html' %}
 		</div>
