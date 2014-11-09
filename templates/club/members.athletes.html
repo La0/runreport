@@ -6,15 +6,15 @@
 
 <div class="container">
 
-	<h2>{{club.name}} : {{members|length()}} membres publics</h2>
+	<h2>{{club.name}} : {{members|length()}} {{ _('Public members') }}</h2>
 
 	{% if members %}
 	<div class="athletes">
     <div class="row hidden-xs list-title">
-      <div class="col-sm-6">Membre</div>
-      <div class="col-sm-2">Rôle</div>
-      <div class="col-sm-2">Catégorie</div>
-      <div class="col-sm-2">Actions</div>
+      <div class="col-sm-6">{{ _('Member') }}</div>
+      <div class="col-sm-2">{{ _('Role') }}</div>
+      <div class="col-sm-2">{{ _('Category') }}</div>
+      <div class="col-sm-2">{{ _('Actions') }}</div>
     </div>
     {% for member in members %}
     <div class="row member">
@@ -29,11 +29,11 @@
       <div class="col-sm-2 col-xs-3">
         {% with member.membership.role as role %}
         {% if role == 'trainer' %}
-        <span class="label label-info">Entraineur</span>
+        <span class="label label-info">{{ _('Trainer') }}</span>
         {% elif role == 'staff' %}
-        <span class="label label-primary">Staff</span>
+        <span class="label label-primary">{{ _('Staff') }}</span>
         {% else %}
-        <span class="label label-default">Athlète</span>
+        <span class="label label-default">{{ _('Athlete') }}</span>
         {% endif %}
         {% endwith %}
       </div>
@@ -44,22 +44,22 @@
         {% if member != user %}
           {% if member.pk in friends %}
           <button class="btn btn-success disabled">
-            <i class="icon-club"></i> Ami
+            <i class="icon-club"></i> {{ _('Friend') }}
           </button>
           {% elif member.pk in friend_requests %}
           <button class="btn btn-info disabled">
-            <i class="icon-club"></i> Demandé
+            <i class="icon-club"></i> {{ _('Requested') }}
           </button>
           {% elif user.is_authenticated() %}
           <span id="fr_{{ member.pk }}">
             <button data-replaces="fr_{{ member.pk }}" class="btn btn-info modal-action modal-post" href="{% url friend-add member.username %}">
-              <i class="icon-club"></i> Ajouter
+              <i class="icon-club"></i> {{ _('Add friend') }}
             </button>
           </span>
           {% endif %}
         {% endif %}
         <a class="btn btn-primary" href="{% url user-public-profile member.username %}">
-          Voir profil <i class="icon-right-open"></i>
+          {{ _('Check profile') }} <i class="icon-right-open"></i>
         </a>
       </div>
     </div>
@@ -67,7 +67,7 @@
   </div>
 	{% else %}
 	<div class="alert alert-warning">
-		<h4>Pas de membres</h4>
+		<h4>{{ _('No Members') }}</h4>
 		Aucun membre du club {{club.name}} trouvé pour cette liste.
 	</div>
 	{% endif %}

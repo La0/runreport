@@ -47,26 +47,25 @@
                   {% endif %}
 
                   {# View members when user is in club #}
-                  <a href="{% url club-members club.slug %}" class="btn btn-primary pull-right"><i class="icon-club"></i> Voir les membres</a>
+                  <a href="{% url club-members club.slug %}" class="btn btn-primary pull-right"><i class="icon-club"></i> {{ _('Check the members') }}</a>
 
                 {% endwith %}
               {% else %}
-                <a href="{% url club-join club.slug %}" class="btn btn-success modal-action pull-right"><i class="icon-plus"></i> Rejoindre</a>
+                <a href="{% url club-join club.slug %}" class="btn btn-success modal-action pull-right"><i class="icon-plus"></i> {{ _('Join') }}</a>
 
 
                 {# View members when club is public and user is connected #}
                 {% if not club.private %}
-                <a href="{% url club-members club.slug %}" class="btn btn-primary pull-right"><i class="icon-club"></i> Voir les membres</a>
+                <a href="{% url club-members club.slug %}" class="btn btn-primary pull-right"><i class="icon-club"></i> {{ _('Check the members') }}</a>
                 {% endif %}
               {% endif %}
 
             {% else %}
-
-              <p class="text-info text-right">Pour rejoindre ce club, <a href="{% url login %}">connectez vous</a> ou <a href="{% url user-create %}">créez un compte</a></p>
+              <p class="text-info text-right"> Pour rejoindre ce club, <a href="{% url login %}">connectez vous</a> ou <a href="{% url user-create %}">créez un compte</a></p>
 
               {# View members when club is public and user is not connected #}
               {% if not club.private %}
-              <a href="{% url club-members club.slug %}" class="btn btn-primary pull-right"><i class="icon-club"></i> Voir les membres</a>
+              <a href="{% url club-members club.slug %}" class="btn btn-primary pull-right"><i class="icon-club"></i> {{ _('Check the members') }}</a>
               {% endif %}
             {% endif %}
 

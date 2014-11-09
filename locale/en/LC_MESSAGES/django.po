@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-07 00:30+0100\n"
+"POT-Creation-Date: 2014-11-09 16:13+0100\n"
 "PO-Revision-Date: 2014-11-02 18:00+0100\n"
 "Last-Translator: Bastien Abadie <bastien@runreport.fr>\n"
 "Language: English\n"
@@ -29,7 +29,8 @@ msgid "Create a club"
 msgstr ""
 
 #: coach/menu.py:34 coach/menu.py:38 templates/base.html:130
-#: templates/club/join.html:11
+#: templates/club/join.html:11 templates/club/manage.html:13
+#: templates/club/manage.html.py:64
 msgid "Help"
 msgstr ""
 
@@ -57,7 +58,7 @@ msgstr ""
 msgid "Members"
 msgstr ""
 
-#: coach/menu.py:70
+#: coach/menu.py:70 templates/club/members.html:15
 msgid "My athletes"
 msgstr ""
 
@@ -65,7 +66,7 @@ msgstr ""
 msgid "Races"
 msgstr ""
 
-#: coach/menu.py:74
+#: coach/menu.py:74 templates/club/members.html:16
 msgid "All the club"
 msgstr ""
 
@@ -73,11 +74,11 @@ msgstr ""
 msgid "Newcomers"
 msgstr ""
 
-#: coach/menu.py:79
+#: coach/menu.py:79 templates/club/members.html:19
 msgid "Archives"
 msgstr ""
 
-#: coach/menu.py:80
+#: coach/menu.py:80 templates/club/manage.html:9
 msgid "Manage"
 msgstr ""
 
@@ -285,8 +286,248 @@ msgstr ""
 msgid "Waiting for approval"
 msgstr ""
 
-#: templates/club/join.html:46
+#: templates/club/join.html:46 templates/club/members.athletes.html:14
 msgid "Member"
+msgstr ""
+
+#: templates/club/join.html:50 templates/club/join.html.py:59
+#: templates/club/join.html:68
+msgid "Check the members"
+msgstr ""
+
+#: templates/club/join.html:54
+msgid "Join"
+msgstr ""
+
+#: templates/club/joined.html:8
+msgid "Join the club"
+msgstr ""
+
+#: templates/club/joined.html:13 templates/club/joined.modal.html:11
+msgid "Notification problem"
+msgstr ""
+
+#: templates/club/joined.html:14
+msgid "We could not notify the club of your request."
+msgstr ""
+
+#: templates/club/joined.html:15
+msgid "Please try again later."
+msgstr ""
+
+#: templates/club/joined.html:19 templates/club/joined.modal.html:17
+msgid "No account"
+msgstr ""
+
+#: templates/club/joined.html:20
+msgid "You are not currently logged with an user account."
+msgstr ""
+
+#: templates/club/joined.html:27 templates/club/joined.modal.html:25
+msgid "Already a member"
+msgstr ""
+
+#: templates/club/joined.html:28
+msgid "You are already in relation with this club."
+msgstr ""
+
+#: templates/club/joined.html:33 templates/club/joined.modal.html:31
+msgid "Request registered"
+msgstr ""
+
+#: templates/club/joined.html:34 templates/club/joined.modal.html:32
+msgid ""
+"Your request has been sent to the club, you will receive an answer as soon "
+"as the club\\s owner will consider it."
+msgstr ""
+
+#: templates/club/joined.html:38
+msgid "Return to the clubs"
+msgstr ""
+
+#: templates/club/joined.modal.html:12
+msgid "We could not notify the club of your request"
+msgstr ""
+
+#: templates/club/joined.modal.html:13
+msgid "Please try again later"
+msgstr ""
+
+#: templates/club/joined.modal.html:18
+msgid "You are not currently connected with an user account"
+msgstr ""
+
+#: templates/club/joined.modal.html:26
+msgid "You are already in relation with this club"
+msgstr ""
+
+#: templates/club/joined.modal.html:39
+msgid "Close"
+msgstr ""
+
+#: templates/club/manage.html:11
+msgid "Users"
+msgstr ""
+
+#: templates/club/manage.html:14
+msgid ""
+"You are limited in the number of accounts linked to the club, depending on "
+"the type of users"
+msgstr ""
+
+#: templates/club/manage.html:19
+msgid "Users type"
+msgstr ""
+
+#: templates/club/manage.html:20
+msgid "Maximum"
+msgstr ""
+
+#: templates/club/manage.html:21
+msgid "Used"
+msgstr ""
+
+#: templates/club/manage.html:22
+msgid "Available"
+msgstr ""
+
+#: templates/club/manage.html:45
+msgid "Subscriptions for a private club"
+msgstr ""
+
+#: templates/club/manage.html:52
+msgid "Subscription for a public club"
+msgstr ""
+
+#: templates/club/manage.html:62
+msgid "Public links"
+msgstr ""
+
+#: templates/club/manage.html:65
+msgid ""
+"Public links are shown in the Club menu, on top of the page, for all the "
+"users of the club."
+msgstr ""
+
+#: templates/club/manage.html:66
+msgid ""
+"They are useful to show external websites: Facebook groups, official website "
+"of the club, ..."
+msgstr ""
+
+#: templates/club/manage.html:72
+msgid "Name"
+msgstr ""
+
+#: templates/club/manage.html:73
+msgid "Url"
+msgstr ""
+
+#: templates/club/manage.html:74 templates/club/members.athletes.html:17
+#: templates/club/members.html:42
+msgid "Actions"
+msgstr ""
+
+#: templates/club/manage.html:81 templates/sport/session/edit.html:74
+msgid "Delete"
+msgstr ""
+
+#: templates/club/manage.html:89
+msgid "There are no public link for your club."
+msgstr ""
+
+#: templates/club/manage.html:92
+msgid "Add a link"
+msgstr ""
+
+#: templates/club/manage.html:109
+msgid "Demo account"
+msgstr ""
+
+#: templates/club/manage.html:110
+msgid "Edition is deactivated for the demo"
+msgstr ""
+
+#: templates/club/members.athletes.html:9
+msgid "Public members"
+msgstr ""
+
+#: templates/club/members.athletes.html:15 templates/club/members.html:35
+msgid "Role"
+msgstr ""
+
+#: templates/club/members.athletes.html:16 templates/club/members.html:38
+#: templates/users/preferences.html:82
+msgid "Category"
+msgstr ""
+
+#: templates/club/members.athletes.html:32 templates/club/members.html:58
+msgid "Trainer"
+msgstr ""
+
+#: templates/club/members.athletes.html:34 templates/club/members.html:18
+#: templates/club/members.html.py:60
+msgid "Staff"
+msgstr ""
+
+#: templates/club/members.athletes.html:36 templates/club/members.html:56
+msgid "Athlete"
+msgstr ""
+
+#: templates/club/members.athletes.html:44
+msgid "Check profile"
+msgstr ""
+
+#: templates/club/members.athletes.html:51
+msgid "No Members"
+msgstr ""
+
+#: templates/club/members.html:11
+msgid "members"
+msgstr ""
+
+#: templates/club/members.html:17
+msgid "New members"
+msgstr ""
+
+#: templates/club/members.html:22 templates/club/members.html.py:36
+msgid "Trainers"
+msgstr ""
+
+#: templates/club/members.html:39
+msgid "Mas"
+msgstr ""
+
+#: templates/club/members.html:40
+msgid "Sessions"
+msgstr ""
+
+#: templates/club/members.html:62
+msgid "Archived"
+msgstr ""
+
+#: templates/club/members.html:64
+msgid "New"
+msgstr ""
+
+#: templates/club/members.html:97
+msgid "Profile"
+msgstr ""
+
+#: templates/club/members.html:99
+msgid "Records"
+msgstr ""
+
+#: templates/club/members.html:100 templates/sport/week/edit.html:73
+msgid "Stats"
+msgstr ""
+
+#: templates/club/members.html:101
+msgid "Notebook"
+msgstr ""
+
+#: templates/club/members.html:110
+msgid "No members"
 msgstr ""
 
 #: templates/sport/day/edit.html:19 templates/sport/week/edit.html:8
@@ -409,10 +650,6 @@ msgstr ""
 msgid "this session"
 msgstr ""
 
-#: templates/sport/session/edit.html:74
-msgid "Delete"
-msgstr ""
-
 #: templates/sport/session/edit.html:88
 msgid "Comments"
 msgstr ""
@@ -446,10 +683,6 @@ msgstr ""
 msgid "No general comment"
 msgstr ""
 
-#: templates/sport/week/edit.html:73
-msgid "Stats"
-msgstr ""
-
 #: templates/users/preferences.html:37
 msgid "Personal Informations"
 msgstr ""
@@ -472,10 +705,6 @@ msgstr ""
 
 #: templates/users/preferences.html:63
 msgid "Password"
-msgstr ""
-
-#: templates/users/preferences.html:82
-msgid "Category"
 msgstr ""
 
 #: templates/users/preferences.html:92 templates/users/preferences.html:151
