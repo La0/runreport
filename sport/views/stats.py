@@ -37,8 +37,8 @@ class SportStatsMixin(object):
 
     elif 'all' in args:
       # All the months !
-      start = limits['min']
       end = today
+      start = limits['min'] or date(year=today.year, month=1, day=1)
       date_range = 'all'
 
     else:
