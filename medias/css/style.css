@@ -599,12 +599,10 @@ div.comments div.messages {
 }
 
 /* Conversations in inbox */
-.conversation a.recipient {
+a.recipient {
   width: 50px;
   display: block;
   float: left;
   margin-right: 6px;
   text-align: center;
-}
-.conversation img {
 }

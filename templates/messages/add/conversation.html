@@ -7,16 +7,14 @@
 {% block body %}
 <div class="add-comment">
   {% if conversation.type == 'mail' %}
-    <h4>Dans la conversation</h4>
-    <ul class="nav nav-pills">
-      {% for r in conversation.get_recipients(exclude=user) %}
-      <li>
-        <a href="{% url user-public-profile r.username %}">
-          {{ r.first_name }} {{ r.last_name }}
+    <p>
+      {% for r in conversation.get_recipients() %}
+      <a href="{% url user-public-profile r.username %}" class="recipient">
+        <img src="{{ r.avatar.url }}" class="img-responsive img-rounded"/>
+        {{ r.first_name }}
         </a>
-      </li>
       {% endfor %}
-    </ul>
+    </p>
   {% else %}
     {% with conversation.get_session() as session %}
       <h4>
@@ -68,5 +66,7 @@
 
 {% block footer %}
 <button class="btn" data-dismiss="modal">Annuler</button>
-<button type="submit" class="btn btn-primary">Commenter</button>
+<button type="submit" class="btn btn-primary">
+{% if conversation.type == 'mail' %}Répondre{% else %}Commenter{% endif %}
+</button>
 {% endblock %}
