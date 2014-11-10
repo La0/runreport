@@ -2,61 +2,103 @@
 
 {% block content %}
 <div class="container">
-  <h1>{% if messages %}{{ messages.count() }} {% endif %}Messages reçus</h1>
-  {% if messages %}
-    {% for message in messages %}
-    <div class="row message">
-      <div class="col-sm-1 col-xs-2">
-        <img class="img-responsive img-rounded" src="{{message.writer.avatar.url}}" alt="Avatar {{message.writer.username}}" />
-      </div>
-      <div class="col-sm-3 col-xs-7">
-        <a href="{% url user-public-profile message.writer.username %}">
-          {{ message.writer.first_name }} {{ message.writer.last_name }}
-        </a>
-        <br />
-        Il y a {{ message.created|timesince() }}
-      </div>
-      <div class="visible-xs col-xs-3">
-        <a href="{% url conversation-add message.conversation.pk %}" class="modal-action btn btn-primary">Répondre</a>
-      </div>
-      <div class="col-sm-6 col-xs-12">
-        <div class="well">
-          {{message.message|linebreaks()}}
-        </div>
-        {% if message.conversation.type == 'mail' %}
-        <i class="icon-mail"></i> Message privé
-        {% else %}
-        <p>
-          {% with message.conversation.get_session() as session %}
-            <i class="icon-comment"></i>
-            {% with session.day.week.user as session_user %}
-              {% if user == session_user %}
-              Sur votre séance
-              {% else %}
-              Sur la séance de <a href="{% url user-public-profile session_user.username %}">{{ session_user.first_name }} {{ session_user.last_name }}</a>
-              {% endif %}
-            {% endwith %}
-            <i class="icon-sport-{{session.sport.slug}}"></i>
-            {% with session.day.date as dt %}
-            <a href="{% url report-day dt.year, dt.month, dt.day %}">
-              {{ session.name }}
-            </a>
-            du {{ dt|date('l d E Y') }}
-            {% endwith %}
-          {% endwith %}
-        </p>
-        {% endif %}
-      </div>
-      <div class="col-sm-2 hidden-xs">
-        <a href="{% url conversation-add message.conversation.pk %}" class="modal-action btn btn-primary">Répondre</a>
-      </div>
+
+<h1>Vos conversations récentes</h1>
+
+{% if conversations %}
+  {% for conversation in conversations %}
+  <div class="row conversation">
+
+    <div class="col-sm-2 col-xs-4">
+      {% for r in conversation.get_recipients() %}
+      <a class="recipient" href="{% url user-public-profile r.username %}">
+        <img src="{{ r.avatar.url }}" class="img-responsive img-rounded do-tootip" title="{{ r.first_name }} {{ r.last_name }}" />
+        {{ r.first_name }}
+      </a>
+      {% endfor %}
     </div>
-    {% endfor %}
-  {% else %}
-  <div class="alert alert-info">
-    <h4>Pas de messages</h4>
-    Vous n'avez pas reçu de messages.
+    
+
+    <div class="col-sm-2 col-xs-4">
+      <span class="badge">
+        {{ conversation.messages.count() }}
+      </span>
+      messages
+      <br />
+      Il y'a {{ conversation.last_message|timesince() }}
+    </div>
+
+    <div class="col-sm-6 col-xs-12">
+      {% if conversation.type == 'mail' %}
+      <i class="icon-mail"></i> Message privé
+      {% else %}
+      <p>
+        {% with conversation.get_session() as session %}
+          <i class="icon-comment"></i>
+          {% with session.day.week.user as session_user %}
+            {% if user == session_user %}
+            Sur votre séance
+            {% else %}
+            Sur la séance de <a href="{% url user-public-profile session_user.username %}">{{ session_user.first_name }} {{ session_user.last_name }}</a>
+            {% endif %}
+          {% endwith %}
+          <i class="icon-sport-{{session.sport.slug}}"></i>
+          {% with session.day.date as dt %}
+          <a href="{% url report-day dt.year, dt.month, dt.day %}">
+            {{ session.name }}
+          </a>
+          du {{ dt|date('l d E Y') }}
+          {% endwith %}
+        {% endwith %}
+      </p>
+      {% endif %}
+    </div>
+
+    <div class="col-sm-2 text-right">
+      <a href="{% url conversation-add conversation.pk %}" class="modal-action btn btn-default btn-sm">
+        {% if conversation.type == 'mail' %}
+        Répondre
+        {% else %}
+        Commenter
+        {% endif %}
+      </a>
+
+      <a href="{{ conversation.get_absolute_url() }}" class="btn btn-primary btn-sm">
+        Voir <i class="icon-right-open"></i>
+      </a>
+    </div>
   </div>
-  {% endif %}
+  {% endfor %}
+
+
+  <nav>
+    <ul class="pager">
+      {% if conversations.has_previous() %}
+      <li class="previous">
+        <a href="{% url message-inbox-page conversations.previous_page_number() %}">
+          <i class="icon-left-open"></i> Conversations précèdentes
+        </a>
+      </li>
+      {% endif %}
+      <li>
+        Page {{ conversations.number }} / {{ conversations.paginator.num_pages }}
+      </li>
+      {% if conversations.has_next() %}
+      <li class="next">
+        <a href="{% url message-inbox-page conversations.next_page_number() %}">
+          Conversations suivantes <i class="icon-right-open"></i>
+        </a>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
+
+{% else %}
+<div class="alert alert-info">
+  <h4>Pas de conversations</h4>
+  Vous n'avez pas reçu ou envoyé de messages.
+</div>
+{% endif %}
+
 </div>
 {% endblock %}

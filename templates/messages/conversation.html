@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h1>
+    Conversation avec
+    {% for r in conversation.get_recipients(user) %}
+      {{ r.first_name }} {{ r.last_name }}
+      {% if not loop.last %} <span class="text-muted">&</span> {% endif %}
+    {% endfor %}
+  </h1>
+
+  <div class="messages">
+    {% for message in conversation.messages.order_by('created') %}
+    <div class="row message actions-hover">
+      <div class="col-sm-1 thumb hidden-xs">
+        <img class="img-responsive img-rounded" src="{{ message.writer.avatar.url }}" alt="Avatar {{ message.writer.username }}" />
+      </div>
+      <div class="col-sm-11 col-xs-12">
+        <p>
+          <i class="icon-user"></i> <a href="{% url user-public-profile message.writer.username %}">{{ message.writer.first_name }} {{ message.writer.last_name }}</a>
+          <i class="icon-calendar"></i> {{ message.created|date('l d E Y - H:i') }}
+          {% if message.revision > 1 %}
+          <i class="icon-right-open"></i> Edité {{ message.revision }} fois.
+          {% endif %}
+        </p>
+        <blockquote>
+        {{ message.message|linebreaks }}
+        </blockquote>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 text-right">
+      <a href="{% url message-inbox %}" class="btn btn-default">Retour aux conversations</a>
+      <a href="{% url conversation-add conversation.pk %}" class="modal-action btn btn-default btn-primary">
+        {% if conversation.type == 'mail' %}
+        Répondre
+        {% else %}
+        Commenter
+        {% endif %}
+      </a>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

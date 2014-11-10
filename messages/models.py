@@ -2,6 +2,7 @@ from django.db import models
 from users.models import Athlete
 from sport.models import SportSession
 from users.notification import UserNotifications
+from django.core.urlresolvers import reverse
 
 TYPE_MAIL = 'mail'
 TYPE_COMMENTS_PUBLIC = 'comments_public'
@@ -20,6 +21,15 @@ class Conversation(models.Model):
   # Users markers, for filter / inbox
   mail_recipient = models.ForeignKey(Athlete, null=True, blank=True, related_name='mail_conversations')
   session_user = models.ForeignKey(Athlete, null=True, blank=True, related_name='session_conversations')
+
+  def get_absolute_url(self):
+    if self.type == TYPE_MAIL:
+      return reverse('conversation-view', args=(self.pk, ))
+
+    # View session
+    session = self.get_session()
+    dt = session.day.date
+    return reverse('user-calendar-day', args=(session.day.week.user.username, dt.year, dt.month, dt.day))
 
   def get_session(self):
     if self.type == TYPE_MAIL:
