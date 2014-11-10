@@ -1,0 +1,41 @@
+{% extends "mail/base.html" %}
+
+{% set title = 'Nouveau message' %}
+
+{% block mail %}
+Bonjour {{ user.first_name }},
+<br />
+
+{% if message.conversation.type == 'mail' %}
+Vous venez de recevoir un nouveau message privé de <a href="http://{{site.domain}}{% url user-public-profile message.writer.username %}">{{ message.writer.first_name }} {{ message.writer.last_name }}</a>
+{% else %}
+  {% with message.conversation.get_session() as session %}
+  {% with session.day.week.user as session_user %}
+  {% with session.day.date as dt %}
+  Vous venez de recevoir un nouveau commentaire
+    {% if user == session_user %}
+    sur votre séance
+    {% else %}
+    sur la séance de <a href="http://{{site.domain}}{% url user-public-profile session_user.username %}">{{ session_user.first_name }} {{ session_user.last_name }}</a>
+    {% endif %}
+    <strong>{{ session.name }}</strong>
+    du {{ dt|date('l d E Y') }}
+  {% endwith %}
+  {% endwith %}
+  {% endwith %}
+{% endif %}
+
+<br />
+<blockquote style="border: 1px solid #EEE; padding: 15px;">
+  {{ message.message|linebreaksbr() }}
+</blockquote>
+
+<br />
+<br />
+
+Vous pouvez voir <a href="http://{{site.domain}}{{ message.conversation.get_absolute_url() }}">la conversation entière sur RunReport</a>.
+<br />
+<br />
+
+Sportivement,
+{% endblock %}
