@@ -1,6 +1,12 @@
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from coach.mixins import JsonResponseMixin
 from mixins import MessageSessionMixin, ConversationMixin
+
+class ConversationView(ConversationMixin, DetailView):
+  template_name = 'messages/conversation.html'
+
+  def get_object(self):
+    return self.get_conversation()
 
 class ConversationList(JsonResponseMixin, ConversationMixin, ListView):
   template_name = 'messages/_list.html'

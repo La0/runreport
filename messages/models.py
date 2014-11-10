@@ -2,6 +2,8 @@ from django.db import models
 from users.models import Athlete
 from sport.models import SportSession
 from users.notification import UserNotifications
+from django.core.urlresolvers import reverse
+from messages.tasks import notify_message
 
 TYPE_MAIL = 'mail'
 TYPE_COMMENTS_PUBLIC = 'comments_public'
@@ -20,6 +22,15 @@ class Conversation(models.Model):
   # Users markers, for filter / inbox
   mail_recipient = models.ForeignKey(Athlete, null=True, blank=True, related_name='mail_conversations')
   session_user = models.ForeignKey(Athlete, null=True, blank=True, related_name='session_conversations')
+
+  def get_absolute_url(self):
+    if self.type == TYPE_MAIL:
+      return reverse('conversation-view', args=(self.pk, ))
+
+    # View session
+    session = self.get_session()
+    dt = session.day.date
+    return reverse('user-calendar-day', args=(session.day.week.user.username, dt.year, dt.month, dt.day))
 
   def get_session(self):
     if self.type == TYPE_MAIL:
@@ -40,7 +51,7 @@ class Conversation(models.Model):
     writers = [m.writer for m in self.messages.exclude(writer=exclude).distinct('writer')]
     if self.type == TYPE_MAIL:
       # Send to all writers + mail recipient
-      if self.mail_recipient and self.mail_recipient not in writers:
+      if self.mail_recipient and self.mail_recipient != exclude and self.mail_recipient not in writers:
         writers += [ self.mail_recipient, ]
 
       return writers
@@ -77,10 +88,16 @@ class Conversation(models.Model):
     '''
     Notify all recipients, without writer
     '''
-    for r in self.get_recipients(message.writer):
-      print ' >> Nptify %s' % r.username
+    for r in self.get_recipients(exclude=message.writer):
+      print ' >> Notify %s' % r.username
+
+      # Direct notification
       un = UserNotifications(r)
       un.add_message(message)
+
+      # Async send an email too
+      notify_message.delay(message, r)
+
 
 class Message(models.Model):
   conversation = models.ForeignKey(Conversation, related_name='messages', default=None)

@@ -23,5 +23,7 @@ urlpatterns = patterns('',
   url(r'^list/(?P<conversation_id>\d+)/?', ConversationList.as_view(), {'full' : False, }, name="conversation-list"),
 
   # User inbox
+  url(r'^(?P<conversation_id>\d+)/?$', login_required(ConversationView.as_view()), name="conversation-view"),
+  url(r'^page/(?P<page>\d+)/?$', login_required(MessageInbox.as_view()), name="message-inbox-page"),
   url(r'^/?$', login_required(MessageInbox.as_view()), name="message-inbox"),
 )

@@ -1,10 +1,11 @@
-from coach.mixins import JsonResponseMixin, JSON_OPTION_CLOSE, JSON_OPTION_NO_HTML
+from coach.mixins import JsonResponseMixin, JSON_OPTION_CLOSE, JSON_OPTION_NO_HTML, JSON_OPTION_BODY_RELOAD
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
 from messages.models import Message, Conversation, TYPE_COMMENTS_PRIVATE, TYPE_COMMENTS_PUBLIC, TYPE_MAIL
 from sport.models import SportSession
 from users.models import Athlete
 from django.core.exceptions import PermissionDenied
+from urlparse import urlparse
 
 class MessageOwned(object):
   # Message must be owned by logged user
@@ -94,6 +95,11 @@ class MessageReloadMixin(JsonResponseMixin):
   def reload(self, conversation=None):
     # Reload boxes & close modal
     self.json_options = [JSON_OPTION_CLOSE, JSON_OPTION_NO_HTML, ]
+
+    # Body reload ?
+    parts = urlparse(self.request.META['HTTP_REFERER'])
+    if parts.path.startswith('/message/'):
+      self.json_options += [JSON_OPTION_BODY_RELOAD, ]
 
     # Reload conversation list for sessions
     if conversation and conversation.type in (TYPE_COMMENTS_PRIVATE, TYPE_COMMENTS_PUBLIC, ):
