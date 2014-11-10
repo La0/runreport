@@ -39,7 +39,7 @@ def syncdb(update=False):
   if update:
     print 'Try to update Database dump'
     prod_dump = '/tmp/runreport.json'
-    apps = ('sport', 'users', 'club', 'page')
+    apps = ('sport', 'users', 'club', 'page', 'messages')
     with cd(FABRIC_BASE):
       with virtualenv(FABRIC_ENV):
         run('./manage.py dumpdata --indent=4 -e sessions %s > %s' % (' '.join(apps), prod_dump))
@@ -67,6 +67,9 @@ def createdb(use_fixtures=True):
   # Create new database
   psql('create database %(NAME)s with owner = %(USER)s' % db, 'postgres')
 
+  # Init Postgis on database
+  psql('create extension postgis')
+
   # Create structure
   local('./manage.py migrate')
 
@@ -86,11 +89,13 @@ def psql(sql, dbname=None):
   Run a pgsql command through cli
   '''
   db = DATABASES['default']
-  if not db['ENGINE'].endswith('postgresql_psycopg2'):
-    raise Exception('Only Postgresql is supported')
+  print db
+  suffix = db['ENGINE'][db['ENGINE'].rindex('.') + 1:]
+  if suffix not in ('postgis',):
+    raise Exception('Only PostGis is supported')
 
   cmd = 'PGPASSWORD="%(PASSWORD)s" psql --username=%(USER)s --host=%(HOST)s' % db
-  cmd += ' --dbname=%s' % dbname or db['NAME']
+  cmd += ' --dbname=%s' % (dbname or db['NAME'])
   cmd += ' --command="%s"' % sql
   local(cmd)
 

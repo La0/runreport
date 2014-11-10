@@ -1,0 +1,14 @@
+{% extends 'modal.html' %}
+
+{% set modal_title = 'Déconnecter %s' % provider.NAME|title() %}
+
+{% set form_url = 'track-provider-disconnect'|url(provider.NAME) %}
+
+{% block body %}
+Êtes vous sûr de vouloir déconnecter le service de trace <strong>{{ provider.NAME|title() }}</strong> de votre compte ?
+{% endblock %}
+
+{% block footer %}
+  <button class="btn btn-default" data-dismiss="modal">Annuler</button>
+  <button type="submit" class="btn btn-danger"><i class="icon-trash"></i> Déconnecter</i></button>
+{% endblock %}

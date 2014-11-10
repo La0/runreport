@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% set page_title = 'Fournisseurs de traces GPS' %}
+
+{% block content %}
+<div class="container">
+  <h1>Fournisseurs de traces GPS</h1>
+  <p>
+    Vous pouvez utiliser différents fournisseurs de traces GPS pour synchroniser automatiquement vos séances depuis ces services.
+  </p>
+
+  {% for provider in providers %}
+  <div class="row">
+    {% with provider.imported_stats() as stats %}
+    {% with provider.is_connected() as connected %}
+    <h2>
+      {{ provider.NAME|title() }}
+    </h2>
+    <div class="col-sm-2 col-xs-4">
+      {% if connected  %}
+      <span class="label label-success">Connecté</span>
+      {% else %}
+      <span class="label label-danger">Déconnecté</span>
+      {% endif %}
+    </div>
+
+    <div class="col-sm-6 col-xs-8">
+      {% if stats.total %}
+      <span class="badge badge-info">{{ stats.total }}</span> traces importées du {{ stats.min_date|date('d/m/Y') }} au {{ stats.max_date|date('d/m/Y') }}
+      {% else %}
+      <span class="text-warning">Pas de traces importées</span>
+      {% endif %}
+    </div>
+
+    <div class="col-sm-4 col-xs-12 text-right">
+      {% if connected %}
+        <a href="{% url track-provider-disconnect provider.NAME %}" class="btn btn-danger modal-action">
+          <i class="icon-trash"></i> Déconnecter {{ provider.NAME|title() }}
+        </a>
+      {% else %}
+        {% if provider.NAME == 'garmin' %}
+        <a href="{% url user-garmin %}" class="btn btn-success">
+          Connecter {{ provider.NAME|title() }} <i class="icon-right-open"></i>
+        </a>
+        {% else %}
+        <a href="{{ provider.auth() }}" class="btn btn-success">
+          Connecter {{ provider.NAME|title() }} <i class="icon-right-open"></i>
+        </a>
+        {% endif %}
+      {% endif %}
+    </div>
+
+    {% endwith %}
+    {% endwith %}
+  </div>
+  {% endfor %}
+
+</div>
+{% endblock %}

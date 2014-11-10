@@ -2,6 +2,7 @@
 *.db*
 coach/local_settings.py
 garmin_data
+tracks_data
 mails_debug
 env
 logs

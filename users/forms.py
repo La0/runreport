@@ -4,12 +4,12 @@ from django.core.exceptions import ValidationError
 from coach.settings import GPG_HOME, GPG_KEY
 from helpers import nameize
 import gnupg
-from sport.garmin import GarminConnector, GarminAuthException
+from tracks.providers.garmin import GarminProvider, GarminAuthException
 
 class UserForm(forms.ModelForm):
   class Meta:
     model = Athlete
-    fields = ('first_name', 'last_name', 'email', 'birthday', 'vma', 'frequency', 'frequency_rest', 'height', 'weight', 'comment', 'license', 'auto_send', 'nb_sessions', 'default_sport', 'avatar', 'privacy_profile', 'privacy_avatar', 'privacy_records', 'privacy_races', 'privacy_stats', 'privacy_calendar', 'privacy_comments', )
+    fields = ('first_name', 'last_name', 'email', 'birthday', 'vma', 'frequency', 'frequency_rest', 'height', 'weight', 'comment', 'license', 'auto_send', 'nb_sessions', 'default_sport', 'avatar', 'privacy_profile', 'privacy_avatar', 'privacy_records', 'privacy_races', 'privacy_stats', 'privacy_calendar', 'privacy_comments', 'privacy_tracks' )
     widgets = {
       'nb_sessions' : forms.Select(choices=[(i,i) for i in range(0,21)]),
     }
@@ -94,6 +94,7 @@ class SignUpForm(forms.Form):
 
 class GarminForm(forms.ModelForm):
   clear_password = ''
+  user = None
 
   class Meta:
     model = Athlete
@@ -101,6 +102,10 @@ class GarminForm(forms.ModelForm):
     widgets = {
       'garmin_password' : forms.PasswordInput()
     }
+
+  def __init__(self, user, *args, **kwargs):
+    super(GarminForm, self).__init__(*args, **kwargs)
+    self.user = user
 
   def clean_garmin_password(self):
 
@@ -116,8 +121,8 @@ class GarminForm(forms.ModelForm):
   def clean(self):
     # Check login/password are valid
     try:
-      gc = GarminConnector(login=self.cleaned_data['garmin_login'], password=self.clear_password)
-      gc.login()
+      provider = GarminProvider(self.user)
+      provider.auth(force_login=self.cleaned_data['garmin_login'], force_password=self.clear_password)
     except GarminAuthException, e:
       print 'Garmin Auth failed : %s' % (str(e),)
       raise ValidationError("Authentification Garmin invalide")

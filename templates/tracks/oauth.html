@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h1>Connection à {{ provider|title() }}</h1>
+
+  {% if response %}
+    <div class="alert alert-success">
+      <h4>Authentification réussie</h4>
+      {% if provider == 'strava' %}
+      Vous utilisez le profil <strong>Strava</strong> : {{ response.firstname }} {{ response.lastname }} - {{ response.email }}
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {% if error %}
+  <div class="alert alert-danger">
+    <h4>Erreur lors de l'authentification</h4>
+    {{ error }}
+  </div>
+
+  <a href="{{ auth_url }}" class="btn btn-info">
+    Se connecter à {{ provider|title() }}
+  </a>
+  {% endif %}
+
+  <a class="btn btn-primary pull-right" href="{% url track-providers %}">
+    Retour aux fournisseurs de traces GPS
+  </a>
+</div>
+{% endblock %}

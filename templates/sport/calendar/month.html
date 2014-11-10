@@ -64,7 +64,7 @@
           {% for s in session.sessions.all() %}
           <p class="session {{ s.type }}">
             <i class="icon-sport-{{s.sport.slug}}"></i>
-            {% if s.has_garmin() %}
+            {% if s.track %}
             <i class="icon-location"></i>
             {% endif %}
             {{ s.name|default('...') }}

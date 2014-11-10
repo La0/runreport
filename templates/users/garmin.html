@@ -47,16 +47,6 @@
 		</div>
 	</form>
 
-	{% if activities_nb %}
-	<div class="alert alert-info">
-		{{ activities_nb }} activités importées
-		<br />
-		Dernière activité : {{ activities_dates.created|date('l d E Y H:i') }}
-		<br />
-		Dernière import: {{ activities_dates.updated|date('l d E Y H:i') }}
-	</div>
-	{% endif %}
-
 </div>
 
 {% endblock %}

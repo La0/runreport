@@ -17,8 +17,8 @@
     <h4>
       <i class="icon-sport-{{session.sport.slug}} do-tooltip" title="{{ session.sport.name }}"></i>
 
-      {% if session.has_garmin() %}
-      <i class="icon-location do-tooltip" title="Données Garmin"></i>
+      {% if session.track %}
+      <i class="icon-location do-tooltip" title="Données {{ session.track.provider|title() }}"></i>
       {% endif %}
 
       {% if not show_comments and (session.comments_public or session.comments_private) %}
@@ -92,6 +92,12 @@
   </div>
   {% endif %}
 </div>
+
+{% if session.track %}
+<div class="row" style="margin-top: 20px">
+  {% include  'tracks/_session.html' %}
+</div>
+{% endif %}
 
 {% if member and show_comments %}
 <div class="row" style="margin-top: 20px">

@@ -9,6 +9,8 @@ class Sport(models.Model):
   parent = models.ForeignKey('Sport', null=True)
   depth = models.IntegerField(default=0)
 
+  strava_name = models.CharField(max_length=250, null=True, blank=True)
+
   class Meta:
     db_table = 'sport_list'
     app_label = 'sport'
@@ -57,6 +59,3 @@ class SportSession(models.Model):
 
     super(SportSession, self).save(*args, **kwargs)
 
-  def has_garmin(self):
-    # Helper for templates (no hasattr)
-    return hasattr(self, 'garmin_activity')
