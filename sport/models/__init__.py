@@ -7,4 +7,3 @@ SESSION_TYPES = (
 
 from .organisation import SportWeek, SportDay, RaceCategory
 from .sport import Sport, SportSession
-from .garmin import GarminActivity

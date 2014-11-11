@@ -15,11 +15,6 @@ class SportWeekAdmin(admin.ModelAdmin):
   inlines = [SportDayAdmin, ]
 admin.site.register(SportWeek, SportWeekAdmin)
 
-class GarminActivityAdmin(admin.ModelAdmin):
-  list_display = ('name', 'user', 'date', 'sport', 'distance', 'time', 'speed')
-  list_filter = ('user', )
-admin.site.register(GarminActivity, GarminActivityAdmin)
-
 class SportAdmin(admin.ModelAdmin):
   model = Sport
   list_display = ('name', 'slug', 'parent')
