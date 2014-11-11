@@ -282,6 +282,8 @@ class GarminProvider(TrackProvider):
       s = lap[name]
       if s['uom'] == 'kph':
         return float(s['value']) / 3.6
+      if s['uom'] == 'hmph': # hetcometer per hour
+        return float(s['value']) / 36
       return float(s['value'])
 
     def _convert_distance(lap, name):

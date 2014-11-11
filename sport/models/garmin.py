@@ -62,11 +62,14 @@ class GarminActivity(models.Model):
     provider = get_provider('garmin', self.user)
     provider.store_file(raw, 'details', self.get_data('details'))
     provider.store_file(raw, 'laps', self.get_data('laps'))
-    line = LineString(provider.build_line_coords(raw))
 
     # Base track
-    track = Track.objects.create(session=self.session, provider='garmin', provider_id=self.garmin_id, raw=line)
-    track.simplify()
+    track = Track.objects.create(session=self.session, provider='garmin', provider_id=self.garmin_id)
+    try:
+      coords = provider.build_line_coords(raw)
+      track.simplify(coords)
+    except Exception, e:
+      print 'No polyline : %s' % str(e)
     track.save()
 
     # Add files

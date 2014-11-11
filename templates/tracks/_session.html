@@ -1,6 +1,7 @@
 {% if session.track and 'tracks' in privacy %}
 {% with session.track as track %}
 
+{% if track.simple %}
 <div class="col-xs-12">
   <div id="track_{{ track.id }}" class="track_map" data-src="{% url track-coords track.id %}">
     Loading map...
@@ -9,6 +10,7 @@
     </a>
   </div>
 </div>
+{% endif %}
 
 <div class="panel-group col-xs-12" id="accordion">
   {% if track.split_total %}
@@ -32,7 +34,11 @@
         </div>
         <div class="col-sm-3 col-xs-6">
           <h4>
-            {{ track.split_total.distance|total_distance() }}
+            {% if session.sport.slug == 'swimming' %}
+              {{ track.split_total.distance|default(0)|floatformat(0) }} m
+            {% else %}
+              {{ track.split_total.distance|total_distance() }}
+            {% endif %}
           </h4>
           <span class="text-info">
             Distance
@@ -40,19 +46,32 @@
         </div>
         <div class="col-sm-3 col-xs-6">
           <h4>
-            {{ track.split_total.speed|default(0)|convert_speed() }} min/km
+            {% if session.sport.slug in ('swimming', 'cycling') %}
+              {{ track.split_total.speed|default(0)|convert_speed_kmh()|floatformat(2) }} km/h
+            {% else %}
+              {{ track.split_total.speed|default(0)|convert_speed() }} min/km
+            {% endif %}
           </h4>
           <span class="text-info">
             Vitesse moyenne
           </span>
         </div>
         <div class="col-sm-3 col-xs-6">
+          {% if session.sport.slug == 'swimming' %}
+          <h4>
+            {{ track.split_total.energy|default(0)|floatformat(0) }} kcal
+          </h4>
+          <span class="text-info">
+            Calories
+          </span>
+          {% else %}
           <h4>
             + {{ track.split_total.elevation_gain|default(0)|floatformat() }} m
           </h4>
           <span class="text-info">
             Dénivelé positif
           </span>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -77,8 +96,10 @@
             <th>Cumulé</th>
             <th>Vitesse</th>
             <th>Max</th>
-            <th>D. +</th>
-            <th>D. -</th>
+            {% if session.sport.slug not in ('swimming') %}
+              <th>D. +</th>
+              <th>D. -</th>
+            {% endif %}
             <th>Energie</th>
           <tr>
           {% for s in track.splits.exclude(position=0).order_by('position') %}
@@ -88,10 +109,17 @@
             <td class="text-muted">{{ s.distance_total|default(0)|total_distance() }}</td>
             <td>{{ s.time|default(0)|total_time(short=True) }}</td>
             <td class="text-muted">{{ s.time_total|default(0)|total_time(short=True) }}</td>
-            <td>{{ s.speed|default(0)|convert_speed() }} min/km</td>
-            <td>{{ s.speed_max|default(0)|convert_speed() }} min/km</td>
-            <td>{{ s.elevation_gain|default(0)|floatformat(0) }} m</td>
-            <td>{{ s.elevation_loss|default(0)|floatformat(0) }} m</td>
+            {% if session.sport.slug in ('swimming', 'cycling') %}
+              <td>{{ s.speed|default(0)|convert_speed_kmh()|floatformat(2) }} km/h</td>
+              <td>{{ s.speed_max|default(0)|convert_speed_kmh()|floatformat(2) }} km/h</td>
+            {% else %}
+              <td>{{ s.speed|default(0)|convert_speed() }} min/km</td>
+              <td>{{ s.speed_max|default(0)|convert_speed() }} min/km</td>
+            {% endif %}
+            {% if session.sport.slug not in ('swimming') %}
+              <td>{{ s.elevation_gain|default(0)|floatformat(0) }} m</td>
+              <td>{{ s.elevation_loss|default(0)|floatformat(0) }} m</td>
+            {% endif %}
             <td>{{ s.energy|default(0)|floatformat(0) }} kcal</td>
           </tr>
           {% endfor %}
@@ -102,10 +130,17 @@
             <td>-</td>
             <td>{{ track.split_total.time|default(0)|total_time(short=True) }}</td>
             <td>-</td>
-            <td>{{ track.split_total.speed|default(0)|convert_speed() }} min/km</td>
-            <td>{{ track.split_total.speed_max|default(0)|convert_speed() }} min/km</td>
-            <td>{{ track.split_total.elevation_gain|default(0)|floatformat(0) }} m</td>
-            <td>{{ track.split_total.elevation_loss|default(0)|floatformat(0) }} m</td>
+            {% if session.sport.slug in ('swimming', 'cycling') %}
+              <td>{{ track.split_total.speed|default(0)|convert_speed_kmh()|floatformat(2) }} km/h</td>
+              <td>{{ track.split_total.speed_max|default(0)|convert_speed_kmh()|floatformat(2) }} km/h</td>
+            {% else %}
+              <td>{{ track.split_total.speed|default(0)|convert_speed() }} min/km</td>
+              <td>{{ track.split_total.speed_max|default(0)|convert_speed() }} min/km</td>
+            {% endif %}
+            {% if session.sport.slug not in ('swimming') %}
+              <td>{{ track.split_total.elevation_gain|default(0)|floatformat(0) }} m</td>
+              <td>{{ track.split_total.elevation_loss|default(0)|floatformat(0) }} m</td>
+            {% endif %}
             <td>{{ track.split_total.energy|default(0)|floatformat(0) }} kcal</td>
           </tr>
           {% endif %}

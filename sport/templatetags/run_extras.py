@@ -24,6 +24,14 @@ def convert_speed(s):
   return s > 0 and seconds_humanize(1000.0 / s, True) or 0
 
 @register.filter(is_safe=True)
+def convert_speed_kmh(s):
+  '''
+  Convert a speed in m/s
+  to a nicer time display in km/h
+  '''
+  return s > 0 and s*3.6 or 0
+
+@register.filter(is_safe=True)
 def total_distance(d):
   '''
   Simply display kilometers when > 1000m

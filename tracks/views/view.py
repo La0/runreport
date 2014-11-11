@@ -16,5 +16,5 @@ class TrackCoordsView(TrackMixin, JsonResponseMixin, BaseDetailView):
       },
 
       # Output the coordinates
-      'coordinates' : track.simple.coords,
+      'coordinates' : track.simple and track.simple.coords or [],
     }

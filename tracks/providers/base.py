@@ -1,7 +1,6 @@
 from django.conf import settings
 import logging
 import json
-from django.contrib.gis.geos import LineString
 from django.db import transaction
 from django.db.models import Min, Max, Count
 import hashlib
@@ -222,11 +221,13 @@ class TrackProvider:
     # Store raw activity
     self.store_file(activity, 'raw', activity_raw)
 
-    # Build map
-    if not track.raw:
-      coords = self.build_line_coords(activity)
-      track.raw = LineString(coords)
-      track.simplify() # Build simplified line too
+    # Build optional simplified polyline
+    if not track.simple:
+      try:
+        coords = self.build_line_coords(activity)
+        track.simplify(coords)
+      except Exception, e:
+        logger.warn('No polyline: %s' % (str(e), ))
 
     # Update session
     identity = self.build_identity(activity)

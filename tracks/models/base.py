@@ -3,6 +3,7 @@ from sport.models import SportSession, SportDay, SportWeek
 from .file import TrackFile
 from hashlib import md5
 from helpers import date_to_week
+from django.contrib.gis.geos import LineString
 
 class Track(models.Model):
   session = models.OneToOneField(SportSession, related_name='track')
@@ -11,8 +12,8 @@ class Track(models.Model):
   provider = models.CharField(max_length=50, default='manual')
   provider_id = models.CharField(max_length=50, null=True, blank=True)
 
-  # PolyLines
-  raw = models.LineStringField()
+  # PolyLine
+  # Don't store raw polyline, too heavyon db (and useless)
   simple = models.LineStringField(null=True, blank=True)
   objects = models.GeoManager()
 
@@ -28,11 +29,12 @@ class Track(models.Model):
       ('provider', 'provider_id'),
     )
 
-  def simplify(self, tolerance=0.0001):
+  def simplify(self, coords, tolerance=0.0001):
     '''
     Simplify the raw polyline
     '''
-    self.simple = self.raw.simplify(tolerance)
+    raw = LineString(coords) # don't store raw, too heavy
+    self.simple = raw.simplify(tolerance)
     return self.simple
 
   def get_file(self, name):
