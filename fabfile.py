@@ -39,7 +39,7 @@ def syncdb(update=False):
   if update:
     print 'Try to update Database dump'
     prod_dump = '/tmp/runreport.json'
-    apps = ('sport', 'users', 'club', 'page', 'messages')
+    apps = ('sport', 'users', 'club', 'page', 'messages', 'tracks')
     with cd(FABRIC_BASE):
       with virtualenv(FABRIC_ENV):
         run('./manage.py dumpdata --indent=4 -e sessions %s > %s' % (' '.join(apps), prod_dump))
