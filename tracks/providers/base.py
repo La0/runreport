@@ -205,7 +205,7 @@ class TrackProvider:
       # Check the activity needs an update
       # by comparing md5
       track_file = track.get_file('raw')
-      if track_file.md5 == hashlib.md5(activity_raw).hexdigest():
+      if track_file and track_file.md5 == hashlib.md5(activity_raw).hexdigest():
         logger.info("Existing %s activity %s did not change" % (self.NAME, activity_id))
         return track, False
 
@@ -229,9 +229,15 @@ class TrackProvider:
       except Exception, e:
         logger.warn('No polyline: %s' % (str(e), ))
 
-    # Update session
     identity = self.build_identity(activity)
-    track.attach_session(self.user, identity)
+    if not hasattr(track, 'session'):
+      # Attach to a session
+      track.attach_session(self.user, identity)
+
+    elif identity['name'] and not track.session.name:
+      # Update title
+      track.session.name = identity['name']
+      track.session.save()
 
     # Save full track
     track.save()
