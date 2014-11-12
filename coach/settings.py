@@ -163,6 +163,7 @@ INSTALLED_APPS = (
     'plan',
     'messages',
     'tracks',
+    'friends',
     'compressor',
 )
 

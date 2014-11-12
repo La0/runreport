@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% set page_title = 'Mes amis' %}
+
+{% block content %}
+<div class="container">
+
+  <h1>Amis</h1>
+  {% for friend in friends %}
+
+  {% else %}
+  <div class="alert alert-info">
+    <h4>Pas d'amis direct</h4>
+    Vous pouvez ajouter des amis de votre club par exemple.
+  </div>
+  {% endfor %}
+
+</div>
+{% endblock %}

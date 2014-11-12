@@ -18,7 +18,7 @@
     </div>
     {% for member in members %}
     <div class="row member">
-      <div class="avatar col-sm-6 col-xs-9">
+      <div class="avatar col-sm-5 col-xs-9">
         <a href="{% url user-public-profile member.username %}">
           <img class="small" src="{{ member.avatar.url }}" alt="{{ member.username }} avatar"/>
         </a>
@@ -40,8 +40,27 @@
       <div class="col-sm-2 hidden-xs">
         {{ member.category.name|default('-') }}
       </div>
-      <div class="col-sm-2 hidden-xs">
-        <a class="btn btn-primary" href="{% url user-public-profile member.username %}">Voir profil</a>
+      <div class="col-sm-3 text-right hidden-xs">
+        {% if member != user %}
+          {% if member.pk in friends %}
+          <button class="btn btn-success disabled">
+            <i class="icon-club"></i> Ami
+          </button>
+          {% elif member.pk in friend_requests %}
+          <button class="btn btn-info disabled">
+            <i class="icon-club"></i> Demandé
+          </button>
+          {% else %}
+          <span id="fr_{{ member.pk }}">
+            <button data-replaces="fr_{{ member.pk }}" class="btn btn-info modal-action modal-post" href="{% url friend-add member.username %}">
+              <i class="icon-club"></i> Ajouter
+            </button>
+          </span>
+          {% endif %}
+        {% endif %}
+        <a class="btn btn-primary" href="{% url user-public-profile member.username %}">
+          Voir profil <i class="icon-right-open"></i>
+        </a>
       </div>
     </div>
     {% endfor %}

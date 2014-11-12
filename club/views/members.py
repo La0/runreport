@@ -122,12 +122,15 @@ class ClubMembers(ClubMixin, ListView):
       memberships__club=self.club,
       memberships__role__in=('trainer', 'staff', 'athlete'),
       privacy_profile__in=members_roles,
-    ).prefetch_related('memberships').order_by('first_name', 'last_name')
+    ).order_by('first_name', 'last_name')
+    members = members.prefetch_related('memberships')
 
     for i, m in enumerate(members):
       m.membership = m.memberships.get(club=self.club)
 
     return {
+      'friends' : self.request.user.friends.values_list('pk', flat=True),
+      'friend_requests' : self.request.user.requests_sent.values_list('recipient', flat=True),
       'members' : members,
     }
 
