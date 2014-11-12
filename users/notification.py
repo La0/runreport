@@ -49,7 +49,7 @@ class UserNotifications(object):
       msg = u'%s %s vous a envoyé un message' % (message.writer.first_name, message.writer.last_name)
 
       # Direct to inbox
-      link = reverse('message-inbox')
+      link = reverse('conversation-view', args=(message.conversation.pk, ))
 
       # Category
       cat = NOTIFICATION_MAIL
