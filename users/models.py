@@ -107,6 +107,10 @@ class Athlete(AthleteBase):
   privacy_comments = models.CharField(max_length=50, choices=PRIVACY_LEVELS, default='club')
   privacy_tracks = models.CharField(max_length=50, choices=PRIVACY_LEVELS, default='club')
 
+  # Direct friendships
+  # It's automatically symmetrical
+  friends = models.ManyToManyField("self")
+
   def search_category(self):
     if not self.birthday:
       return None
