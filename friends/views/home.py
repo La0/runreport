@@ -9,3 +9,4 @@ class FriendsHome(ListView):
     friends = self.request.user.friends.all()
     friends = friends.order_by('friends__first_name', 'friends__last_name')
     return friends
+

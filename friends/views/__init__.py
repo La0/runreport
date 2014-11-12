@@ -1,2 +1,2 @@
 from .home import FriendsHome
-from .requests import FriendAdd
+from .requests import FriendAdd, FriendRequestChoice

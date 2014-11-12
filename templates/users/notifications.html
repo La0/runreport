@@ -13,6 +13,8 @@
       <i class="icon-comment"></i>
       {% elif n.category == 'mail' %}
       <i class="icon-mail"></i>
+      {% elif n.category == 'friend_request' %}
+      <i class="icon-club"></i>
       {% endif %}
       {{ n.created|timesince() }}
     </div>
