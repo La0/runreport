@@ -7,6 +7,6 @@ class FriendsHome(ListView):
 
   def get_queryset(self):
     friends = self.request.user.friends.all()
-    friends = friends.order_by('friends__first_name', 'friends__last_name')
+    friends = friends.order_by('first_name', 'last_name')
     return friends
 
