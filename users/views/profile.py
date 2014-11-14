@@ -29,6 +29,10 @@ class PublicProfile(ProfilePrivacyMixin, DetailView, SportStatsMixin, AthleteRac
     if 'stats' in self.privacy:
       context.update(self.get_stats_months())
 
+    # Add friend status
+    if self.request.user != self.member and self.request.user.is_authenticated():
+      context['friend_status'] = self.request.user.get_friend_status(self.member)
+
     return context
 
   def get_recent_stats(self, nb=3):

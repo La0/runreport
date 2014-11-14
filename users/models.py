@@ -15,6 +15,7 @@ from datetime import datetime
 from PIL import Image
 from avatar_generator import Avatar
 from coach.mailman import MailMan
+from friends.models import FriendRequest
 
 PRIVACY_LEVELS = (
   ('public', u'Public'),
@@ -273,6 +274,23 @@ class Athlete(AthleteBase):
       print 'Failed to unsubscribe %s from %s : %s' % (self.username, mailing, str(e))
       return False
     return True
+
+  def get_friend_status(self, friend):
+    '''
+    Can be 3 states:
+     * friend
+     * request
+     * stranger
+    '''
+    # Already friend ?
+    if self.friends.filter(pk=friend.pk).count() > 0:
+      return 'friend'
+
+    # Friend request ?
+    if FriendRequest.objects.filter(sender=self, recipient=friend).count() > 0:
+      return 'request'
+
+    return 'stranger'
 
 class UserCategory(models.Model):
   code = models.CharField(max_length=10)
