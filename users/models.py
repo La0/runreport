@@ -244,6 +244,12 @@ class Athlete(AthleteBase):
           privacy += ['trainer', ] # and has trainer right
           return privacy
 
+    # When visitor is a friend, he has almost full access
+    friend_status = self.get_friend_status(visitor)
+    if friend_status == 'friend':
+      return fields + ['comments_public', ]
+
+
     # Load all member privacy settings
     rights = self.get_visitor_rights(visitor)
     privacy = [f for f in fields if getattr(self, 'privacy_%s' % f) in rights]
