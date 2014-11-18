@@ -523,11 +523,11 @@ div.day div.title a.btn {
   margin-top: 18px;
 }
 
-div.week div.day.link {
+div.link {
   cursor: pointer;
 }
 
-div.week div.day.link:hover {
+div.link:hover {
   border-radius: 4px 4px;
   background: #F7F7F7;
 }
@@ -609,4 +609,19 @@ a.recipient {
   float: left;
   margin-right: 6px;
   text-align: center;
+}
+
+/* Friends activities */
+div#friends div.session {
+	border-radius: none;
+	margin: 0;
+  padding: 5px;
+	font-size: 1em;
+  height: 50px;
+}
+
+div#friends div.session img {
+  max-width: 40px;
+  float: left;
+  margin-right: 8px;
 }

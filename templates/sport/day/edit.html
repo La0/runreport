@@ -45,6 +45,37 @@
 
   {% include 'sport/day/_nav.html' %}
 
+  {% if not member and friends_sessions %}
+  <div id="friends">
+    <div class="form-group row">
+      <div class="col-xs-12">
+        <label class="control-label col-sm-2 hidden-xs text-right">Amis</label>
+        <div class="col-sm-10 col-xs-12">
+          {% for fs in friends_sessions %}
+            {% with fs.day.week.user as friend %}
+            {% with fs.day.date as dt %}
+            <div class="session col-md-4 col-sm-6 col-xs-12 link" href="{% url user-calendar-day friend.username, dt.year, dt.month, dt.day %}">
+              <img class="img-rounded img-responsive" src="{{ friend.avatar.url }}" alt="{{ friend.username }}" />
+              <strong>{{ friend.first_name }} {{ friend.last_name }}</strong>
+              <p>
+                <i class="icon-sport-{{ fs.sport.slug }} do-tooltip" title="{{ fs.sport.name }}"></i>
+                {% if fs.track %}
+                  <i class="icon-location"></i>
+                {% endif %}
+                <span class="text-muted">&bull;</span>
+                {{ fs.name|truncatechars(20)|default('Pas de nom') }}
+              </p>
+            </div>
+            {% endwith %}
+            {% endwith %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr />
+  {% endif %}
+
   <div id="sessions-{{day_date}}">
   {% if member %}
     {% with True as show_comments %}
