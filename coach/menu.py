@@ -108,6 +108,7 @@ def add_pages(request):
     submenu['menu'].append(_p('stats', 'Mes statistiques', lazy=True))
     submenu['menu'].append(_p('vma', 'Mes allures'))
     submenu['menu'].append(_p('user-races', 'Mes records'))
+    submenu['menu'].append(_p('friends', 'Mes amis'))
     submenu['menu'].append(_p('track-providers', u'Services GPS'))
     submenu['menu'].append('__SEPARATOR__')
     submenu['menu'].append(_p('logout', u'Se déconnecter'))
