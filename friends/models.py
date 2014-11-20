@@ -1,5 +1,6 @@
 from django.db import models
 from users.notification import UserNotifications
+from friends.tasks import notify_friend_request
 
 class FriendRequest(models.Model):
   sender = models.ForeignKey('users.Athlete', related_name='requests_sent')
@@ -22,7 +23,7 @@ class FriendRequest(models.Model):
     un.add_friend_request(self, accepted=True)
 
     # Send email
-    # TODO
+    notify_friend_request(self.sender, self.recipient, accepted=True)
 
     # Delete
     self.delete()
@@ -34,4 +35,4 @@ class FriendRequest(models.Model):
     un.add_friend_request(self)
 
     # Send email
-    # TODO
+    notify_friend_request(self.sender, self.recipient)
