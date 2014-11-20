@@ -4,6 +4,6 @@ cd $BASE
 source env/bin/activate
 
 DUMP_PATH="$BASE/db/$(date +%Y%m%d).json"
-APPS="sport users club page plan messages tracks"
+APPS="sport users club page plan messages tracks friends"
 
 ./manage.py dumpdata --indent=4 -e sessions $APPS > $DUMP_PATH
