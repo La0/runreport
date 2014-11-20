@@ -4,10 +4,15 @@ from coach.mixins import JsonResponseMixin, JSON_OPTION_BODY_RELOAD, JSON_OPTION
 from users.models import Athlete
 from django.shortcuts import get_object_or_404
 from django.http import Http404
+from django.views.decorators.csrf import csrf_exempt
 
 class FriendAdd(JsonResponseMixin, CreateView):
   model = FriendRequest
   template_name = 'friends/_add.btn.html'
+
+  @csrf_exempt # needed for prod :(
+  def dispatch(self, *args, **kwargs):
+    return super(FriendAdd, self).dispatch(*args, **kwargs)
 
   def form_valid(self, form):
     # Save friend request
