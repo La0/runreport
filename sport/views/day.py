@@ -1,5 +1,5 @@
 from sport.forms import SportSessionForm
-from sport.models import SportDay
+from sport.models import SportDay, SportSession
 from coach.mixins import JsonResponseMixin, JSON_OPTION_NO_HTML, JSON_OPTION_BODY_RELOAD
 from .mixins import SportSessionForms
 from django.views.generic import DateDetailView
@@ -31,6 +31,12 @@ class RunCalendarDay(SportSessionForms, CalendarDay, DateDetailView):
       context['previous_week'] = SportWeek.objects.filter(user=self.request.user, year=y, week=w, published=False)
     except:
       context['previous_week'] = None
+
+    # Add friends with activities on the same day
+    friends = SportSession.objects.filter(day__date=self.day, day__week__user__in=self.request.user.friends.all())
+    friends = friends.prefetch_related('day', 'day__week', 'sport', 'day__week__user')
+    friends = friends.order_by('day__week__user__first_name')
+    context['friends_sessions'] = friends
 
     # Check task on week
     check_task(week)

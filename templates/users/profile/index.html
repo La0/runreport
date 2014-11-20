@@ -47,10 +47,31 @@
     </div>
 
     <div class="col-sm-9 col-xs-9">
-      {% if user != member %}
-      <a href="{% url message-user-add member.username %}" class="modal-action btn btn-info pull-right">
-        <i class="icon-mail"></i> Envoyer un message
-      </a>
+      {% if user != member and user.is_authenticated() %}
+      <p class="pull-right text-right">
+
+        {# Friend ? #}
+        {% if friend_status == 'friend' %}
+        <button class="btn btn-success disabled">
+          <i class="icon-club"></i> Ami
+        </button>
+        {% elif friend_status == 'request' %}
+        <button class="btn btn-info disabled">
+          <i class="icon-club"></i> Demandé
+        </button>
+        {% else %}
+        <span id="fr_{{ member.pk }}">
+          <button data-replaces="fr_{{ member.pk }}" class="btn btn-info modal-action modal-post" href="{% url friend-add member.username %}">
+            <i class="icon-club"></i> Ajouter
+          </button>
+        </span>
+        {% endif %}
+
+        {# Send a message #}
+        <a href="{% url message-user-add member.username %}" class="modal-action btn btn-info">
+          <i class="icon-mail"></i> Envoyer un message
+        </a>
+      </p>
       {% endif %}
 
       {% for m in member.memberships.exclude(role__in=('prospect', 'archive')) %}

@@ -6,6 +6,7 @@ import uuid
 
 NOTIFICATION_COMMENT = 'comment'
 NOTIFICATION_MAIL = 'mail'
+NOTIFICATION_FRIEND_REQUEST = 'friend_request'
 
 
 class UserNotifications(object):
@@ -78,6 +79,17 @@ class UserNotifications(object):
 
     # Add notification
     self.add(cat, msg, link)
+
+  def add_friend_request(self, req, accepted=False):
+    # Add a friend request notification
+    if accepted:
+      msg = '%s %s est maintenant votre ami sur RunReport.' % (req.recipient.first_name, req.recipient.last_name)
+      link = reverse('user-public-profile', args=(req.recipient.username, ))
+    else:
+      msg = '%s %s souhaite vous ajouter en tant qu\'ami.' % (req.sender.first_name, req.sender.last_name)
+      link = reverse('friends')
+
+    self.add(NOTIFICATION_FRIEND_REQUEST, msg, link)
 
   def total(self):
     return cache.get(self.key_total) or 0

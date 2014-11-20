@@ -13,6 +13,7 @@ urlpatterns = patterns('',
   url(r'^plan/', include('plan.urls')),
   url(r'^message/', include('messages.urls')),
   url(r'^track/', include('tracks.urls')),
+  url(r'^friends/', include('friends.urls')),
   url(r'^(?P<type>help|news)/', include('page.urls')),
 
   # Invite

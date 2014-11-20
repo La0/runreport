@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% set page_title = 'Mes amis' %}
+
+{% block content %}
+<div class="container">
+
+  <h1>Amis</h1>
+  <div class="row">
+  {% for friend in friends %}
+  <div class="col-sm-6 col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="col-xs-2">
+          <img class="img-rounded img-responsive" src="{{ friend.avatar.url }}" alt="" />
+        </div>
+        <div class="col-xs-7">
+          <h4>
+            {{ friend.first_name }} {{ friend.last_name }}
+          </h4>
+        </div>
+        <div class="col-xs-3 text-right">
+          <a href="{% url user-public-profile friend.username %}" class="btn btn-primary btn-sm pull-right">
+            Voir son profil <i class="icon-right-open"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <div class="alert alert-info">
+    Vous pouvez ajouter des amis de votre club par exemple.
+  </div>
+  {% endfor %}
+  </div>
+
+  <h1>Demandes</h1>
+  {% for req in user.requests_received.order_by('created') %}
+  <div class="row">
+    <div class="col-xs-1">
+      <img class="img-rounded img-responsive" src="{{ req.sender.avatar.url }}" alt="" />
+    </div>
+    <div class="col-xs-7">
+      <a href="{% url user-public-profile req.sender.username %}">
+        {{ req.sender.first_name }} {{ req.sender.last_name }}
+      </a>
+    </div>
+    <div class="col-xs-4 text-right">
+      <a href="{% url friend-request req.sender.username, 'refuse' %}" class="btn btn-danger modal-action">
+        Refuser
+      </a>
+      <a href="{% url friend-request req.sender.username, 'accept' %}" class="btn btn-success modal-action">
+        Accepter
+      </a>
+    </div>
+  </div>
+  {% else %}
+  <div class="alert alert-info">
+    Vous n'avez pas de demandes d'amitié à valider.
+  </div>
+  {% endfor %}
+
+</div>
+{% endblock %}

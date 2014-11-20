@@ -15,6 +15,7 @@ from datetime import datetime
 from PIL import Image
 from avatar_generator import Avatar
 from coach.mailman import MailMan
+from friends.models import FriendRequest
 
 PRIVACY_LEVELS = (
   ('public', u'Public'),
@@ -106,6 +107,10 @@ class Athlete(AthleteBase):
   privacy_calendar = models.CharField(max_length=50, choices=PRIVACY_LEVELS, default='private')
   privacy_comments = models.CharField(max_length=50, choices=PRIVACY_LEVELS, default='club')
   privacy_tracks = models.CharField(max_length=50, choices=PRIVACY_LEVELS, default='club')
+
+  # Direct friendships
+  # It's automatically symmetrical
+  friends = models.ManyToManyField("self")
 
   def search_category(self):
     if not self.birthday:
@@ -239,6 +244,12 @@ class Athlete(AthleteBase):
           privacy += ['trainer', ] # and has trainer right
           return privacy
 
+    # When visitor is a friend, he has almost full access
+    friend_status = self.get_friend_status(visitor)
+    if friend_status == 'friend':
+      return fields + ['comments_public', ]
+
+
     # Load all member privacy settings
     rights = self.get_visitor_rights(visitor)
     privacy = [f for f in fields if getattr(self, 'privacy_%s' % f) in rights]
@@ -269,6 +280,23 @@ class Athlete(AthleteBase):
       print 'Failed to unsubscribe %s from %s : %s' % (self.username, mailing, str(e))
       return False
     return True
+
+  def get_friend_status(self, friend):
+    '''
+    Can be 3 states:
+     * friend
+     * request
+     * stranger
+    '''
+    # Already friend ?
+    if self.friends.filter(pk=friend.pk).count() > 0:
+      return 'friend'
+
+    # Friend request ?
+    if FriendRequest.objects.filter(sender=self, recipient=friend).count() > 0:
+      return 'request'
+
+    return 'stranger'
 
 class UserCategory(models.Model):
   code = models.CharField(max_length=10)

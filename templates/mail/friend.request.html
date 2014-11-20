@@ -1,0 +1,33 @@
+{% extends "mail/base.html" %}
+
+{% set title = 'Nouveau message' %}
+
+{% block mail %}
+
+{% if accepted %}
+  Bonjour {{ sender.first_name }},
+{% else %}
+  Bonjour {{ recipient.first_name }},
+{% endif %}
+
+<br />
+<br />
+
+{% if accepted %}
+  <a href="http://{{ site.domain }}{% url user-public-profile recipient.username %}">{{ recipient.first_name }} {{ recipient.last_name }}</a>
+   a accepté votre demande d'ajout à sa liste d'amis sur <a href="http://{{ site.domain }}">RunReport</a> !
+{% else %}
+  <a href="http://{{ site.domain }}{% url user-public-profile sender.username %}">{{ sender.first_name }} {{ sender.last_name }}</a>
+   souhaite vous ajouter à sa liste d'amis.
+  <br />
+  Si vous acceptez, vous pourrez voir l'intégralité de son calendrier sportif. De même il pourra voir le votre.
+  <br />
+  <br />
+  Vous pouvez <a href="http://{{ site.domain }}{% url friends %}">accepter ou refuser</a> sur RunReport.
+{% endif %}
+
+<br />
+<br />
+
+Sportivement,
+{% endblock %}
