@@ -288,6 +288,10 @@ class Athlete(AthleteBase):
      * request
      * stranger
     '''
+    # Connected ?
+    if not friend.is_authenticated():
+      return 'stranger'
+
     # Already friend ?
     if self.friends.filter(pk=friend.pk).count() > 0:
       return 'friend'
