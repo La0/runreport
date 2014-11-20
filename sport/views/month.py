@@ -2,6 +2,7 @@ from django.views.generic import MonthArchiveView, DateDetailView, View
 from django.views.generic.dates import MonthMixin, YearMixin
 from django.views.generic.edit import ModelFormMixin, ProcessFormView
 from django.http import Http404
+from django.db.models import Count
 from sport.models import SportSession, SportDay, SportWeek, SESSION_TYPES
 from datetime import datetime, date
 import calendar
@@ -52,14 +53,24 @@ class RunCalendar(MonthArchiveView):
       raise Http404(str(e))
 
     # Load all sessions for this month
-    sessions = SportDay.objects.filter(week__user=self.get_user(), date__in=self.days)
+    user = self.get_user()
+    sessions = SportDay.objects.filter(week__user=user, date__in=self.days)
+    sessions = sessions.prefetch_related('sessions', 'sessions__sport', 'sessions__track', 'week')
     sessions_per_days = dict((r.date, r) for r in sessions)
     sessions_per_days = collections.OrderedDict(sorted(sessions_per_days.items()))
+
+    # Loadd all friends sessions for this month
+    friends = None
+    if user == self.request.user:
+      friends = SportSession.objects.filter(day__week__user__in=user.friends.all(), day__date__in=self.days)
+      friends = friends.values('day__date').annotate(nb=Count('day__date'))
+      friends = dict((f['day__date'], f['nb']) for f in friends)
 
     context = {
       'months' : (self.get_previous_month(date), date, self.get_next_month(date)),
       'days' : self.days,
       'weeks' : self.weeks,
+      'friends_sessions' : friends,
     }
     context.update(self.get_links())
     return (self.days, sessions_per_days, context)

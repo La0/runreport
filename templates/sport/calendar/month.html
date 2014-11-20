@@ -70,11 +70,13 @@
             {{ s.name|default('...') }}
           </p>
           {% endfor %}
-				{% if session.plan_session %}
-				<p>
-					<i class="icon-tags"> </i> {{ session.plan_session.week.plan.name|truncate(10) }}
-				</p>
-				{% endif %}
+          {% with friends_sessions[day] as nb %}
+            {% if nb %}
+            <p class="session">
+              <i class="icon-club"> </i> {{ nb }} séances d'amis
+            </p>
+            {% endif %}
+          {% endwith %}
 				{% endif %}
 			</td>
 			{% endwith %}
