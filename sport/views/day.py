@@ -33,9 +33,12 @@ class RunCalendarDay(SportSessionForms, CalendarDay, DateDetailView):
       context['previous_week'] = None
 
     # Add friends with activities on the same day
-    friends = SportSession.objects.filter(day__date=self.day, day__week__user__in=self.request.user.friends.all())
-    friends = friends.prefetch_related('day', 'day__week', 'sport', 'day__week__user')
-    friends = friends.order_by('day__week__user__first_name')
+    friends = []
+    user = self.get_user()
+    if user == self.request.user:
+      friends = SportSession.objects.filter(day__date=self.day, day__week__user__in=user.friends.all())
+      friends = friends.prefetch_related('day', 'day__week', 'sport', 'day__week__user')
+      friends = friends.order_by('day__week__user__first_name')
     context['friends_sessions'] = friends
 
     # Check task on week
