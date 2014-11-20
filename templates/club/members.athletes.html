@@ -50,7 +50,7 @@
           <button class="btn btn-info disabled">
             <i class="icon-club"></i> Demandé
           </button>
-          {% else %}
+          {% elif user.is_authenticated() %}
           <span id="fr_{{ member.pk }}">
             <button data-replaces="fr_{{ member.pk }}" class="btn btn-info modal-action modal-post" href="{% url friend-add member.username %}">
               <i class="icon-club"></i> Ajouter
