@@ -129,8 +129,8 @@ class ClubMembers(ClubMixin, ListView):
       m.membership = m.memberships.get(club=self.club)
 
     return {
-      'friends' : self.request.user.friends.values_list('pk', flat=True),
-      'friend_requests' : self.request.user.requests_sent.values_list('recipient', flat=True),
+      'friends' : self.request.user.is_authenticated() and self.request.user.friends.values_list('pk', flat=True) or [],
+      'friend_requests' : self.request.user.is_authenticated() and self.request.user.requests_sent.values_list('recipient', flat=True) or [],
       'members' : members,
     }
 
