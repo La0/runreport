@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% set page_title = 'Calendrier %s' % (months.1|date('E Y'), ) %}
+{% set page_title = _('Calendrier %s') % (months.1|date('E Y'), ) %}
 
 {% block content %}
 
@@ -22,16 +22,16 @@
     {% endif %}
 
 		<div class="col-sm-6 col-xs-12 text-right buttons">
-			<a class="btn btn-primary btn-light" href="{{pageyear|url(*pageargs + [months.1.year ])}}"><i class="icon-list-alt"></i> Calendrier annuel</a>
+			<a class="btn btn-primary btn-light" href="{{pageyear|url(*pageargs + [months.1.year ])}}"><i class="icon-list-alt"></i> {{ _('Year\'s calendar') }}</a>
 			{% if member %}
-			<a class="btn btn-success btn-light" href="{% url athlete-stats-year member.username, months.1.year %}"><i class="icon-plus"></i> Statistiques</a>
+			<a class="btn btn-success btn-light" href="{% url athlete-stats-year member.username, months.1.year %}"><i class="icon-plus"></i> {{ _('Stats') }}</a>
 
       <a href="{% url user-public-profile member.username %}" class="btn btn-primary btn-light">
-        <i class="icon-user"></i> Voir son profil
+        <i class="icon-user"></i> {{ _('View his profile') }}
       </a>
       {% else %}
-			<a class="btn btn-success btn-light" href="{% url stats-year months.1.year %}"><i class="icon-plus"></i> Statistiques</a>
-			<a class="btn btn-info btn-light" href="{% url export-month months.1.year, months.1.month %}"><i class="icon-down-open"></i> Export CSV</a>
+			<a class="btn btn-success btn-light" href="{% url stats-year months.1.year %}"><i class="icon-plus"></i> {{ _('Stats') }}</a>
+			<a class="btn btn-info btn-light" href="{% url export-month months.1.year, months.1.month %}"><i class="icon-down-open"></i> {{ _('CSV Export') }}</a>
 			{% endif %}
 		</div>
 	
@@ -39,13 +39,13 @@
 
 	<table class="table table-bordered table-condensed calendar hidden-xs">
 		<tr>
-			<th>Lundi</th>
-			<th>Mardi</th>
-			<th>Mercredi</th>
-			<th>Jeudi</th>
-			<th>Vendredi</th>
-			<th>Samedi</th>
-			<th>Dimanche</th>
+			<th>{{ _('Monday') }}</th>
+			<th>{{ _('Tuesday') }}</th>
+			<th>{{ _('Wednesday') }}</th>
+			<th>{{ _('Thursday') }}</th>
+			<th>{{ _('Friday') }}</th>
+			<th>{{ _('Saturday') }}</th>
+			<th>{{ _('Sunday') }}</th>
 		</tr>
 		{% for week in weeks %}
 		<tr>
@@ -74,7 +74,7 @@
         {% with friends_sessions[day] as nb %}
           {% if nb %}
           <p class="session">
-            <i class="icon-club"> </i> {{ nb }} séances d'amis
+            <i class="icon-club"> </i> {{ nb }} {{ _('friends sessions') }}
           </p>
           {% endif %}
         {% endwith %}

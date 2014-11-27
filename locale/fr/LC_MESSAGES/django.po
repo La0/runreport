@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-27 18:03+0100\n"
-"PO-Revision-Date: 2014-11-27 18:04+0100\n"
+"POT-Creation-Date: 2014-11-27 18:10+0100\n"
+"PO-Revision-Date: 2014-11-27 18:11+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -147,20 +147,14 @@ msgid "rest"
 msgstr "repos"
 
 #: sport/models/sport.py:38
-#, fuzzy
-#| msgid "No comments"
 msgid "session comment"
 msgstr "Commentaire"
 
 #: sport/models/sport.py:40 templates/_macros.html:146
-#, fuzzy
-#| msgid "category"
 msgid "Race category"
 msgstr "Type de course"
 
 #: templates/_macros.html:116
-#, fuzzy
-#| msgid "No sessions"
 msgid "Session"
 msgstr "Séance"
 
@@ -254,8 +248,6 @@ msgstr ""
 "Entraineurs, Athlètes, Staff, Anciens athlètes..."
 
 #: templates/club/ask_invite.html:77
-#, fuzzy
-#| msgid "Delete this session"
 msgid "Athletes progression"
 msgstr "Progression Athlètes"
 
@@ -585,6 +577,64 @@ msgstr "formulaire de contact"
 msgid "Private"
 msgstr "Privé"
 
+#: templates/sport/calendar/month.html:3
+#, python-format
+msgid "Calendrier %s"
+msgstr "Calendrier %s"
+
+#: templates/sport/calendar/month.html:25
+#| msgid "My Calendar"
+msgid "Year's calendar"
+msgstr "Calendrier Annuel"
+
+#: templates/sport/calendar/month.html:27
+#: templates/sport/calendar/month.html:33 templates/sport/week/edit.html:73
+msgid "Stats"
+msgstr "Statistiques"
+
+#: templates/sport/calendar/month.html:30
+#| msgid "View this profile"
+msgid "View his profile"
+msgstr "Voir son profil"
+
+#: templates/sport/calendar/month.html:34
+#| msgid "Sport"
+msgid "CSV Export"
+msgstr "Export CSV"
+
+#: templates/sport/calendar/month.html:42
+msgid "Monday"
+msgstr "Lundi"
+
+#: templates/sport/calendar/month.html:43
+msgid "Tuesday"
+msgstr "Mardi"
+
+#: templates/sport/calendar/month.html:44
+msgid "Wednesday"
+msgstr "Mercredi"
+
+#: templates/sport/calendar/month.html:45
+msgid "Thursday"
+msgstr "Jeudi"
+
+#: templates/sport/calendar/month.html:46
+msgid "Friday"
+msgstr "Vendredi"
+
+#: templates/sport/calendar/month.html:47
+msgid "Saturday"
+msgstr "Samedi"
+
+#: templates/sport/calendar/month.html:48
+msgid "Sunday"
+msgstr "Dimanche"
+
+#: templates/sport/calendar/month.html:77
+#| msgid "this session"
+msgid "friends sessions"
+msgstr "séance d'amis"
+
 #: templates/sport/day/edit.html:19 templates/sport/week/edit.html:8
 #, python-format
 msgid "Week %s"
@@ -688,8 +738,6 @@ msgid "Sport"
 msgstr "Sport"
 
 #: templates/sport/session/edit.html:49
-#, fuzzy
-#| msgid "Delete this session"
 msgid "this session"
 msgstr "cette séance"
 
@@ -743,10 +791,6 @@ msgstr "Bilan de la semaine"
 #: templates/sport/week/edit.html:70
 msgid "No general comment"
 msgstr "Pas de commentaire général"
-
-#: templates/sport/week/edit.html:73
-msgid "Stats"
-msgstr "Statistiques"
 
 #: templates/tracks/_session.html:9
 msgid "View on"

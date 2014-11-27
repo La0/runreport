@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-27 18:03+0100\n"
+"POT-Creation-Date: 2014-11-27 18:10+0100\n"
 "PO-Revision-Date: 2014-11-02 18:00+0100\n"
 "Last-Translator: Bastien Abadie <bastien@runreport.fr>\n"
 "Language: English\n"
@@ -544,6 +544,60 @@ msgstr ""
 msgid "Private"
 msgstr ""
 
+#: templates/sport/calendar/month.html:3
+#, python-format
+msgid "Calendrier %s"
+msgstr ""
+
+#: templates/sport/calendar/month.html:25
+msgid "Year's calendar"
+msgstr ""
+
+#: templates/sport/calendar/month.html:27
+#: templates/sport/calendar/month.html:33 templates/sport/week/edit.html:73
+msgid "Stats"
+msgstr ""
+
+#: templates/sport/calendar/month.html:30
+msgid "View his profile"
+msgstr ""
+
+#: templates/sport/calendar/month.html:34
+msgid "CSV Export"
+msgstr ""
+
+#: templates/sport/calendar/month.html:42
+msgid "Monday"
+msgstr ""
+
+#: templates/sport/calendar/month.html:43
+msgid "Tuesday"
+msgstr ""
+
+#: templates/sport/calendar/month.html:44
+msgid "Wednesday"
+msgstr ""
+
+#: templates/sport/calendar/month.html:45
+msgid "Thursday"
+msgstr ""
+
+#: templates/sport/calendar/month.html:46
+msgid "Friday"
+msgstr ""
+
+#: templates/sport/calendar/month.html:47
+msgid "Saturday"
+msgstr ""
+
+#: templates/sport/calendar/month.html:48
+msgid "Sunday"
+msgstr ""
+
+#: templates/sport/calendar/month.html:77
+msgid "friends sessions"
+msgstr ""
+
 #: templates/sport/day/edit.html:19 templates/sport/week/edit.html:8
 #, python-format
 msgid "Week %s"
@@ -693,10 +747,6 @@ msgstr ""
 
 #: templates/sport/week/edit.html:70
 msgid "No general comment"
-msgstr ""
-
-#: templates/sport/week/edit.html:73
-msgid "Stats"
 msgstr ""
 
 #: templates/tracks/_session.html:9
