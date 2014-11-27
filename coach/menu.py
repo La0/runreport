@@ -42,8 +42,8 @@ def add_pages(request):
 
   menu = []
   if request.user.is_authenticated():
-    menu.append(_p('report-current', 'Semaine', 'icon-list'))
-    menu.append(_p('report-current-month', 'Calendrier', icon='icon-calendar', lazy=True))
+    menu.append(_p('report-current', 'Ma semaine', 'icon-list'))
+    menu.append(_p('report-current-month', 'Mon calendrier', icon='icon-calendar', lazy=True))
 
     # Load memberships
     members = request.user.memberships.exclude(role__in=('archive', 'prospect'))
