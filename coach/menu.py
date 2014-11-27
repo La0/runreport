@@ -103,16 +103,6 @@ def add_pages(request):
       'menu' : [],
       'icon' : 'icon-user',
     }
-<<<<<<< HEAD
-    submenu['menu'].append(_p('message-inbox', u'Mes messages'))
-    submenu['menu'].append(_p('user-preferences', u'Mes préférences'))
-    submenu['menu'].append(_p(('user-public-profile', request.user.username), 'Mon profil public'))
-    submenu['menu'].append(_p('stats', 'Mes statistiques', lazy=True))
-    submenu['menu'].append(_p('vma', 'Mes allures'))
-    submenu['menu'].append(_p('user-races', 'Mes records'))
-    submenu['menu'].append(_p('friends', 'Mes amis'))
-    submenu['menu'].append(_p('track-providers', u'Services GPS'))
-=======
     submenu['menu'].append(_p('message-inbox', _('My messages')))
     submenu['menu'].append(_p('user-preferences', _('My preferences')))
     submenu['menu'].append(_p(('user-public-profile', request.user.username), _('My public profile')))
@@ -120,7 +110,6 @@ def add_pages(request):
     submenu['menu'].append(_p('vma', _('My paces')))
     submenu['menu'].append(_p('user-races', _('My records')))
     submenu['menu'].append(_p('user-garmin', _('Garmin Sync')))
->>>>>>> Translate session edition & view.
     submenu['menu'].append('__SEPARATOR__')
     submenu['menu'].append(_p('logout', _('Logout')))
     menu.append(submenu)

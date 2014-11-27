@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-09 16:13+0100\n"
+"POT-Creation-Date: 2014-11-27 15:26+0100\n"
 "PO-Revision-Date: 2014-11-02 18:00+0100\n"
 "Last-Translator: Bastien Abadie <bastien@runreport.fr>\n"
 "Language: English\n"
@@ -28,7 +28,7 @@ msgstr ""
 msgid "Create a club"
 msgstr ""
 
-#: coach/menu.py:34 coach/menu.py:38 templates/base.html:130
+#: coach/menu.py:34 coach/menu.py:38 templates/base.html:133
 #: templates/club/join.html:11 templates/club/manage.html:13
 #: templates/club/manage.html.py:64
 msgid "Help"
@@ -38,27 +38,27 @@ msgstr ""
 msgid "Glossary"
 msgstr ""
 
-#: coach/menu.py:40 templates/base.html:127
+#: coach/menu.py:40 templates/base.html:130
 msgid "News"
 msgstr ""
 
-#: coach/menu.py:41 templates/base.html:133
+#: coach/menu.py:41 templates/base.html:136
 msgid "Contact"
 msgstr ""
 
 #: coach/menu.py:46
-msgid "This Week"
+msgid "My Week"
 msgstr ""
 
 #: coach/menu.py:47
-msgid "Calendar"
+msgid "My Calendar"
 msgstr ""
 
 #: coach/menu.py:65
 msgid "Members"
 msgstr ""
 
-#: coach/menu.py:70 templates/club/members.html:15
+#: coach/menu.py:70
 msgid "My athletes"
 msgstr ""
 
@@ -66,7 +66,7 @@ msgstr ""
 msgid "Races"
 msgstr ""
 
-#: coach/menu.py:74 templates/club/members.html:16
+#: coach/menu.py:74
 msgid "All the club"
 msgstr ""
 
@@ -74,7 +74,7 @@ msgstr ""
 msgid "Newcomers"
 msgstr ""
 
-#: coach/menu.py:79 templates/club/members.html:19
+#: coach/menu.py:79
 msgid "Archives"
 msgstr ""
 
@@ -142,11 +142,11 @@ msgstr ""
 msgid "rest"
 msgstr ""
 
-#: sport/models/sport.py:36
+#: sport/models/sport.py:38
 msgid "session comment"
 msgstr ""
 
-#: sport/models/sport.py:38 templates/_macros.html:146
+#: sport/models/sport.py:40 templates/_macros.html:146
 msgid "Race category"
 msgstr ""
 
@@ -154,27 +154,27 @@ msgstr ""
 msgid "Session"
 msgstr ""
 
-#: templates/base.html:51
+#: templates/base.html:54
 msgid "Development Version"
 msgstr "Development Version"
 
-#: templates/base.html:115
+#: templates/base.html:118
 msgid "Built by"
 msgstr ""
 
-#: templates/base.html:118
+#: templates/base.html:121
 msgid "The team"
 msgstr ""
 
-#: templates/base.html:121
+#: templates/base.html:124
 msgid "Source code on"
 msgstr ""
 
-#: templates/base.html:121
+#: templates/base.html:124
 msgid "Github"
 msgstr ""
 
-#: templates/base.html:124
+#: templates/base.html:127
 msgid "Facebook"
 msgstr ""
 
@@ -424,11 +424,10 @@ msgid "Url"
 msgstr ""
 
 #: templates/club/manage.html:74 templates/club/members.athletes.html:17
-#: templates/club/members.html:42
 msgid "Actions"
 msgstr ""
 
-#: templates/club/manage.html:81 templates/sport/session/edit.html:74
+#: templates/club/manage.html:81 templates/sport/session/edit.html:51
 msgid "Delete"
 msgstr ""
 
@@ -452,82 +451,44 @@ msgstr ""
 msgid "Public members"
 msgstr ""
 
-#: templates/club/members.athletes.html:15 templates/club/members.html:35
+#: templates/club/members.athletes.html:15
 msgid "Role"
 msgstr ""
 
-#: templates/club/members.athletes.html:16 templates/club/members.html:38
-#: templates/users/preferences.html:82
+#: templates/club/members.athletes.html:16 templates/users/preferences.html:82
 msgid "Category"
 msgstr ""
 
-#: templates/club/members.athletes.html:32 templates/club/members.html:58
+#: templates/club/members.athletes.html:32
 msgid "Trainer"
 msgstr ""
 
-#: templates/club/members.athletes.html:34 templates/club/members.html:18
-#: templates/club/members.html.py:60
+#: templates/club/members.athletes.html:34
 msgid "Staff"
 msgstr ""
 
-#: templates/club/members.athletes.html:36 templates/club/members.html:56
+#: templates/club/members.athletes.html:36
 msgid "Athlete"
 msgstr ""
 
-#: templates/club/members.athletes.html:44
-msgid "Check profile"
+#: templates/club/members.athletes.html:47
+msgid "Friend"
 msgstr ""
 
 #: templates/club/members.athletes.html:51
+msgid "Requested"
+msgstr ""
+
+#: templates/club/members.athletes.html:56
+msgid "Add friend"
+msgstr ""
+
+#: templates/club/members.athletes.html:62
+msgid "Check profile"
+msgstr ""
+
+#: templates/club/members.athletes.html:70
 msgid "No Members"
-msgstr ""
-
-#: templates/club/members.html:11
-msgid "members"
-msgstr ""
-
-#: templates/club/members.html:17
-msgid "New members"
-msgstr ""
-
-#: templates/club/members.html:22 templates/club/members.html.py:36
-msgid "Trainers"
-msgstr ""
-
-#: templates/club/members.html:39
-msgid "Mas"
-msgstr ""
-
-#: templates/club/members.html:40
-msgid "Sessions"
-msgstr ""
-
-#: templates/club/members.html:62
-msgid "Archived"
-msgstr ""
-
-#: templates/club/members.html:64
-msgid "New"
-msgstr ""
-
-#: templates/club/members.html:97
-msgid "Profile"
-msgstr ""
-
-#: templates/club/members.html:99
-msgid "Records"
-msgstr ""
-
-#: templates/club/members.html:100 templates/sport/week/edit.html:73
-msgid "Stats"
-msgstr ""
-
-#: templates/club/members.html:101
-msgid "Notebook"
-msgstr ""
-
-#: templates/club/members.html:110
-msgid "No members"
 msgstr ""
 
 #: templates/sport/day/edit.html:19 templates/sport/week/edit.html:8
@@ -564,40 +525,40 @@ msgstr ""
 msgid "Public profile link"
 msgstr ""
 
-#: templates/sport/day/edit.html:71
+#: templates/sport/day/edit.html:102
 msgid "Sending report"
 msgstr ""
 
-#: templates/sport/day/edit.html:72
+#: templates/sport/day/edit.html:103
 msgid "This week's report is being sent to your trainers"
 msgstr ""
 
-#: templates/sport/day/edit.html:78
+#: templates/sport/day/edit.html:109
 msgid "Last week's report not published !"
 msgstr ""
 
-#: templates/sport/day/edit.html:80
+#: templates/sport/day/edit.html:111
 msgid "Publish last week"
 msgstr ""
 
-#: templates/sport/day/edit.html:82
+#: templates/sport/day/edit.html:113
 msgid "Your comments from last week have not been published"
 msgstr ""
 
-#: templates/sport/day/edit.html:88
+#: templates/sport/day/edit.html:119
 msgid "Delete this session"
 msgstr ""
 
-#: templates/sport/day/edit.html:92 templates/sport/session/list.html:102
+#: templates/sport/day/edit.html:123 templates/sport/session/list.html:108
 msgid "Add a session"
 msgstr ""
 
-#: templates/sport/day/edit.html:96 templates/sport/week/edit.html:17
+#: templates/sport/day/edit.html:127 templates/sport/week/edit.html:17
 #: templates/sport/week/edit.html.py:55
 msgid "Week published"
 msgstr ""
 
-#: templates/sport/day/edit.html:100 templates/sport/week/edit.html:21
+#: templates/sport/day/edit.html:131 templates/sport/week/edit.html:21
 #: templates/sport/week/edit.html.py:59
 msgid "Publish this week"
 msgstr ""
@@ -626,31 +587,23 @@ msgstr ""
 msgid "Saved session."
 msgstr ""
 
-#: templates/sport/session/edit.html:38 templates/sport/session/list.html:38
-msgid "Time"
-msgstr ""
-
-#: templates/sport/session/edit.html:44 templates/sport/session/list.html:49
-msgid "Distance"
-msgstr ""
-
-#: templates/sport/session/edit.html:49
-msgid "Garmin details"
-msgstr ""
-
-#: templates/sport/session/edit.html:59
+#: templates/sport/session/edit.html:36
 msgid "Sport"
 msgstr ""
 
-#: templates/sport/session/edit.html:72
+#: templates/sport/session/edit.html:49
 msgid "Save"
 msgstr ""
 
-#: templates/sport/session/edit.html:72
+#: templates/sport/session/edit.html:49
 msgid "this session"
 msgstr ""
 
-#: templates/sport/session/edit.html:88
+#: templates/sport/session/edit.html:64
+msgid "Map"
+msgstr ""
+
+#: templates/sport/session/edit.html:76
 msgid "Comments"
 msgstr ""
 
@@ -658,15 +611,25 @@ msgstr ""
 msgid "No session name"
 msgstr ""
 
+#: templates/sport/session/list.html:38 templates/tracks/_session.html:32
+#: templates/tracks/_session.html.py:95
+msgid "Time"
+msgstr ""
+
 #: templates/sport/session/list.html:41
 msgid "No time"
+msgstr ""
+
+#: templates/sport/session/list.html:49 templates/tracks/_session.html:44
+#: templates/tracks/_session.html.py:93
+msgid "Distance"
 msgstr ""
 
 #: templates/sport/session/list.html:56
 msgid "No Distance"
 msgstr ""
 
-#: templates/sport/session/list.html:107
+#: templates/sport/session/list.html:113
 msgid "No sessions"
 msgstr ""
 
@@ -681,6 +644,54 @@ msgstr ""
 
 #: templates/sport/week/edit.html:70
 msgid "No general comment"
+msgstr ""
+
+#: templates/sport/week/edit.html:73
+msgid "Stats"
+msgstr ""
+
+#: templates/tracks/_session.html:9
+msgid "View on"
+msgstr ""
+
+#: templates/tracks/_session.html:56
+msgid "Average speed"
+msgstr ""
+
+#: templates/tracks/_session.html:65
+msgid "Calories"
+msgstr ""
+
+#: templates/tracks/_session.html:72
+msgid "Elevation gain"
+msgstr ""
+
+#: templates/tracks/_session.html:94 templates/tracks/_session.html.py:96
+msgid "Sum"
+msgstr ""
+
+#: templates/tracks/_session.html:97
+msgid "Speed"
+msgstr ""
+
+#: templates/tracks/_session.html:98
+msgid "Max"
+msgstr ""
+
+#: templates/tracks/_session.html:100
+msgid "E. +"
+msgstr ""
+
+#: templates/tracks/_session.html:101
+msgid "E. -"
+msgstr ""
+
+#: templates/tracks/_session.html:103
+msgid "Energy"
+msgstr ""
+
+#: templates/tracks/_session.html:128
+msgid "Total"
 msgstr ""
 
 #: templates/users/preferences.html:37
@@ -707,8 +718,8 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: templates/users/preferences.html:92 templates/users/preferences.html:151
-#: templates/users/preferences.html:161 templates/users/preferences.html:198
+#: templates/users/preferences.html:92 templates/users/preferences.html:152
+#: templates/users/preferences.html:162 templates/users/preferences.html:199
 msgid "Update"
 msgstr ""
 
@@ -734,7 +745,7 @@ msgstr ""
 msgid "Choose a privacy level for differents sections or your public profile:"
 msgstr ""
 
-#: templates/users/preferences.html:134 users/models.py:19
+#: templates/users/preferences.html:134 users/models.py:21
 msgid "Public"
 msgstr ""
 
@@ -743,7 +754,7 @@ msgid ""
 "Anyone can use this section (including a visitor without a RunReport account)"
 msgstr ""
 
-#: templates/users/preferences.html:135 users/models.py:20
+#: templates/users/preferences.html:135 users/models.py:22
 msgid "Club"
 msgstr ""
 
@@ -751,7 +762,7 @@ msgstr ""
 msgid "Only users in your clubs can view this section."
 msgstr ""
 
-#: templates/users/preferences.html:136 users/models.py:21
+#: templates/users/preferences.html:136 users/models.py:23
 msgid "Private"
 msgstr ""
 
@@ -759,181 +770,185 @@ msgstr ""
 msgid "You are the only one seeig this section"
 msgstr ""
 
-#: templates/users/preferences.html:152
+#: templates/users/preferences.html:153
 msgid "View your public profile"
 msgstr ""
 
-#: templates/users/preferences.html:170
+#: templates/users/preferences.html:171
 #, python-format
 msgid "%s trainer"
 msgstr ""
 
-#: templates/users/preferences.html:205
+#: templates/users/preferences.html:206
 msgid "You can change your password using"
 msgstr ""
 
-#: templates/users/preferences.html:206
+#: templates/users/preferences.html:207
 msgid "this page"
 msgstr ""
 
-#: users/models.py:32
+#: users/models.py:34
 msgid "username"
 msgstr ""
 
-#: users/models.py:33
+#: users/models.py:35
 msgid "Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."
 msgstr ""
 
-#: users/models.py:36
+#: users/models.py:38
 msgid "Enter a valid username."
 msgstr ""
 
-#: users/models.py:38
+#: users/models.py:40
 msgid "first name"
 msgstr ""
 
-#: users/models.py:39
+#: users/models.py:41
 msgid "last name"
 msgstr ""
 
-#: users/models.py:40
+#: users/models.py:42
 msgid "email address"
 msgstr ""
 
-#: users/models.py:41
+#: users/models.py:43
 msgid "staff status"
 msgstr ""
 
-#: users/models.py:42
+#: users/models.py:44
 msgid "Designates whether the user can log into this admin site."
 msgstr ""
 
-#: users/models.py:44
+#: users/models.py:46
 msgid "active"
 msgstr ""
 
-#: users/models.py:45
+#: users/models.py:47
 msgid ""
 "Designates whether this user should be treated as active. Unselect this "
 "instead of deleting accounts."
 msgstr ""
 
-#: users/models.py:47
+#: users/models.py:49
 msgid "date joined"
 msgstr ""
 
-#: users/models.py:59
+#: users/models.py:61
 msgid "user"
 msgstr ""
 
-#: users/models.py:60
+#: users/models.py:62
 msgid "users"
 msgstr ""
 
-#: users/models.py:69
+#: users/models.py:71
 msgid "birthday"
 msgstr ""
 
-#: users/models.py:70
+#: users/models.py:72
 msgid "category"
 msgstr ""
 
-#: users/models.py:71
+#: users/models.py:73
 msgid "vma"
 msgstr ""
 
-#: users/models.py:71
+#: users/models.py:73
 msgid "Ex: 12.5 km/h"
 msgstr ""
 
-#: users/models.py:72
+#: users/models.py:74
 msgid "cardiac frequency"
 msgstr ""
 
-#: users/models.py:73
+#: users/models.py:75
 msgid "cardiac frequency at rest"
 msgstr ""
 
-#: users/models.py:74
+#: users/models.py:76
 msgid "height"
 msgstr ""
 
-#: users/models.py:74
+#: users/models.py:76
 msgid "Unit: cm"
 msgstr ""
 
-#: users/models.py:75
+#: users/models.py:77
 msgid "weight"
 msgstr ""
 
-#: users/models.py:75
+#: users/models.py:77
 msgid "Unit: kg"
 msgstr ""
 
-#: users/models.py:76
+#: users/models.py:78
 msgid "comment"
 msgstr ""
 
-#: users/models.py:77
+#: users/models.py:79
 msgid "number of sessions per week"
 msgstr ""
 
-#: users/models.py:78
+#: users/models.py:80
 msgid "license"
 msgstr ""
 
-#: users/models.py:81
+#: users/models.py:83
 msgid "default sport"
 msgstr ""
 
-#: users/models.py:84
+#: users/models.py:86
 msgid "auto send emails"
 msgstr "automatically send reports to your trainers at the end of weeks"
 
-#: users/models.py:87
+#: users/models.py:89
 msgid "garmin login"
 msgstr ""
 
-#: users/models.py:88
+#: users/models.py:90
 msgid "garmin password"
 msgstr ""
 
-#: users/models.py:91
+#: users/models.py:96
 msgid "demo user"
 msgstr ""
 
-#: users/models.py:94
+#: users/models.py:99
 msgid "profile picture"
 msgstr ""
 
-#: users/models.py:97
+#: users/models.py:102
 msgid "profile visibility"
 msgstr ""
 
-#: users/models.py:97
+#: users/models.py:102
 msgid "Indicates if your public profile is visible, and by who."
 msgstr ""
 
-#: users/models.py:98
+#: users/models.py:103
 msgid "profile picture visibility"
 msgstr ""
 
-#: users/models.py:99
+#: users/models.py:104
 msgid "races visibility"
 msgstr ""
 
-#: users/models.py:100
+#: users/models.py:105
 msgid "records visibility"
 msgstr ""
 
-#: users/models.py:101
+#: users/models.py:106
 msgid "stats visibility"
 msgstr ""
 
-#: users/models.py:102
+#: users/models.py:107
 msgid "calendar visibility"
 msgstr ""
 
-#: users/models.py:103
+#: users/models.py:108
 msgid "comments visibility"
+msgstr ""
+
+#: users/models.py:109
+msgid "tracks visibility"
 msgstr ""
