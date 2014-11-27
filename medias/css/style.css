@@ -36,6 +36,11 @@ ul.nopill {
   color: orange;
 }
 
+.nav li.lang button {
+  padding-left: 5px;
+  padding-right: 2px;
+}
+
 .navbar-fixed-top:hover .navbar-brand i::before {
 	-webkit-animation: logoAnim 2s ease;
 	animation: logoAnim 2s ease;

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-27 15:26+0100\n"
+"POT-Creation-Date: 2014-11-27 17:11+0100\n"
 "PO-Revision-Date: 2014-11-02 18:00+0100\n"
 "Last-Translator: Bastien Abadie <bastien@runreport.fr>\n"
 "Language: English\n"
@@ -28,7 +28,7 @@ msgstr ""
 msgid "Create a club"
 msgstr ""
 
-#: coach/menu.py:34 coach/menu.py:38 templates/base.html:133
+#: coach/menu.py:34 coach/menu.py:38 templates/base.html:127
 #: templates/club/join.html:11 templates/club/manage.html:13
 #: templates/club/manage.html.py:64
 msgid "Help"
@@ -38,11 +38,11 @@ msgstr ""
 msgid "Glossary"
 msgstr ""
 
-#: coach/menu.py:40 templates/base.html:130
+#: coach/menu.py:40 templates/base.html:124
 msgid "News"
 msgstr ""
 
-#: coach/menu.py:41 templates/base.html:136
+#: coach/menu.py:41 templates/base.html:130
 msgid "Contact"
 msgstr ""
 
@@ -158,23 +158,27 @@ msgstr ""
 msgid "Development Version"
 msgstr "Development Version"
 
-#: templates/base.html:118
+#: templates/base.html:88
+msgid "Use RunReport in"
+msgstr ""
+
+#: templates/base.html:112
 msgid "Built by"
 msgstr ""
 
-#: templates/base.html:121
+#: templates/base.html:115
 msgid "The team"
 msgstr ""
 
-#: templates/base.html:124
+#: templates/base.html:118
 msgid "Source code on"
 msgstr ""
 
-#: templates/base.html:124
+#: templates/base.html:118
 msgid "Github"
 msgstr ""
 
-#: templates/base.html:127
+#: templates/base.html:121
 msgid "Facebook"
 msgstr ""
 
