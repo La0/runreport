@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-27 17:11+0100\n"
-"PO-Revision-Date: 2014-11-27 17:11+0100\n"
-"Last-Translator: Bastien Abadie <bastien@runreport.fr>\n"
+"POT-Creation-Date: 2014-11-27 18:03+0100\n"
+"PO-Revision-Date: 2014-11-27 18:04+0100\n"
+"Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
 "MIME-Version: 1.0\n"
@@ -111,8 +111,8 @@ msgid "My records"
 msgstr "Mes records"
 
 #: coach/menu.py:112
-msgid "Garmin Sync"
-msgstr "Données Garmin"
+msgid "My GPS services"
+msgstr "Mes services GPS"
 
 #: coach/menu.py:114
 msgid "Logout"
@@ -536,6 +536,55 @@ msgstr "Voir profil"
 msgid "No Members"
 msgstr "Pas de membres"
 
+#: templates/page/detail.html:12
+msgid "Written by"
+msgstr "Ecrit par"
+
+#: templates/page/detail.html:13
+msgid "on"
+msgstr "le"
+
+#: templates/page/detail.html:22
+msgid "View the others news"
+msgstr "Voir les autres news"
+
+#: templates/page/detail.html:24
+msgid "View the others help pages"
+msgstr "Voir les autres pages d'aide"
+
+#: templates/page/detail.html:35
+msgid "Published page, visible by everyone"
+msgstr "Page publiée, visible par tous"
+
+#: templates/page/detail.html:39
+msgid "Page not published"
+msgstr "Page non publiée"
+
+#: templates/page/detail.html:40
+msgid "Only visible by administrators."
+msgstr "Seulement visible par des administrateurs."
+
+#: templates/page/detail.html:52 templates/sport/session/edit.html:49
+msgid "Save"
+msgstr "Sauver"
+
+#: templates/page/list.html:12
+msgid "Any problem ? Found a bug ?"
+msgstr "Un problème ? Un bug sur une page ?"
+
+#: templates/page/list.html:13
+msgid "Do not hesitate to use the"
+msgstr "N'hésitez pas à utiliser le"
+
+#: templates/page/list.html:13
+msgid "contact form"
+msgstr "formulaire de contact"
+
+#: templates/page/list.html:28 templates/users/preferences.html:136
+#: users/models.py:23
+msgid "Private"
+msgstr "Privé"
+
 #: templates/sport/day/edit.html:19 templates/sport/week/edit.html:8
 #, python-format
 msgid "Week %s"
@@ -637,10 +686,6 @@ msgstr "Sauver la séance"
 #: templates/sport/session/edit.html:36
 msgid "Sport"
 msgstr "Sport"
-
-#: templates/sport/session/edit.html:49
-msgid "Save"
-msgstr "Sauver"
 
 #: templates/sport/session/edit.html:49
 #, fuzzy
@@ -747,6 +792,26 @@ msgstr "Energie"
 msgid "Total"
 msgstr "Total"
 
+#: templates/users/notifications.html:28
+#, fuzzy
+#| msgid "View on"
+msgid "View"
+msgstr "Voir sur"
+
+#: templates/users/notifications.html:34
+msgid "You don't have any notifications."
+msgstr "Vous n'avez aucune notifications."
+
+#: templates/users/notifications.html:41
+msgid "Cancel"
+msgstr "Annuler"
+
+#: templates/users/notifications.html:43
+#, fuzzy
+#| msgid "Delete this session"
+msgid "Delete these notifications"
+msgstr "Supprimer cette séance"
+
 #: templates/users/preferences.html:37
 msgid "Personal Informations"
 msgstr "Informations personelles"
@@ -820,10 +885,6 @@ msgstr "Club"
 #: templates/users/preferences.html:135
 msgid "Only users in your clubs can view this section."
 msgstr "Uniquement les personnes dans vos clubs peuvent voir cette partie."
-
-#: templates/users/preferences.html:136 users/models.py:23
-msgid "Private"
-msgstr "Privé"
 
 #: templates/users/preferences.html:136
 msgid "You are the only one seeig this section"
@@ -1016,3 +1077,55 @@ msgstr "visibilité des commentaires"
 #| msgid "races visibility"
 msgid "tracks visibility"
 msgstr "visibilités des traces GPS"
+
+#: users/notification.py:51
+#, python-format
+msgid "%(first_name)s %(last_name)s has sent you a message"
+msgstr "%(first_name)s %(last_name)s vous a envoyé un message"
+
+#: users/notification.py:63
+#, fuzzy, python-format
+#| msgid "No comments"
+msgid "%(first_name)s %(last_name)s has written a comment"
+msgstr "Commentaire"
+
+#: users/notification.py:72
+#, fuzzy, python-format
+#| msgid "Delete this session"
+msgid "%(type)s on his session \"%(name)s\""
+msgstr "cette séance"
+
+#: users/notification.py:73 users/notification.py:79
+#, fuzzy
+#| msgid "Private"
+msgid " private"
+msgstr "Privé"
+
+#: users/notification.py:78
+#, fuzzy, python-format
+#| msgid "Delete this session"
+msgid "%(type)s on your session \"%(name)s\""
+msgstr "cette séance"
+
+#: users/notification.py:84
+#, python-format
+msgid " on the session \"%(name)s\" of %(first_name)s %(last_name)s"
+msgstr " sur la séance \"%(name)s\" de %(first_name)s %(last_name)s"
+
+#: users/notification.py:103
+#, python-format
+msgid "%(first_name)s %(last_name)s is now your friend on RunReport"
+msgstr "%(first_name)s %(last_name)s est dorénavant votre ami sur RunReport"
+
+#: users/notification.py:109
+#, python-format
+msgid "%(first_name)s %(last_name)s wants to add you as a friend."
+msgstr "%(first_name)s %(last_name)s veut vous ajouter en tant qu'ami."
+
+#~ msgid "Do not hesitate to use the <a href=\"/contact\">contact form</a>."
+#~ msgstr ""
+#~ "N'hésitez pas à utiliser le <a href=\"/contact\">formulaire de contact</"
+#~ "a>."
+
+#~ msgid "Garmin Sync"
+#~ msgstr "Données Garmin"

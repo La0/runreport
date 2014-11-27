@@ -9,8 +9,8 @@
 	
 	{% if type == 'help' %}
 	<div class="alert alert-info">
-		<h4>Un problème ? Un bug ?</h4>
-		N'hésitez pas à utiliser le <a href="/contact">formulaire de contact</a> en cas de problème sur RunReport.
+		<h4>{{ _('Any problem ? Found a bug ?') }}</h4>
+    {{ _('Do not hesitate to use the') }} <a href="/contact">{{ _('contact form') }}</a>.
 	</div>
 	{% endif %}
 	
@@ -25,7 +25,7 @@
 			</div>
 			<div class="col-sm-4">
 				{% if edit and not page.published %}
-				<span class="label label-important">Privée</span>
+				<span class="label label-danger">{{ _('Private') }}</span>
 				{% endif %}
 				<span class="label label-default">{{ page.user.first_name }} {{ page.user.last_name|default(page.user) }}</span>
 				<span class="label label-info">{{ page.updated|date('d E Y')}}</span>

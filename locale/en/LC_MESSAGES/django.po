@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-27 17:11+0100\n"
+"POT-Creation-Date: 2014-11-27 18:03+0100\n"
 "PO-Revision-Date: 2014-11-02 18:00+0100\n"
 "Last-Translator: Bastien Abadie <bastien@runreport.fr>\n"
 "Language: English\n"
@@ -107,7 +107,7 @@ msgid "My records"
 msgstr ""
 
 #: coach/menu.py:112
-msgid "Garmin Sync"
+msgid "My GPS services"
 msgstr ""
 
 #: coach/menu.py:114
@@ -495,6 +495,55 @@ msgstr ""
 msgid "No Members"
 msgstr ""
 
+#: templates/page/detail.html:12
+msgid "Written by"
+msgstr ""
+
+#: templates/page/detail.html:13
+msgid "on"
+msgstr ""
+
+#: templates/page/detail.html:22
+msgid "View the others news"
+msgstr ""
+
+#: templates/page/detail.html:24
+msgid "View the others help pages"
+msgstr ""
+
+#: templates/page/detail.html:35
+msgid "Published page, visible by everyone"
+msgstr ""
+
+#: templates/page/detail.html:39
+msgid "Page not published"
+msgstr ""
+
+#: templates/page/detail.html:40
+msgid "Only visible by administrators."
+msgstr ""
+
+#: templates/page/detail.html:52 templates/sport/session/edit.html:49
+msgid "Save"
+msgstr ""
+
+#: templates/page/list.html:12
+msgid "Any problem ? Found a bug ?"
+msgstr ""
+
+#: templates/page/list.html:13
+msgid "Do not hesitate to use the"
+msgstr ""
+
+#: templates/page/list.html:13
+msgid "contact form"
+msgstr ""
+
+#: templates/page/list.html:28 templates/users/preferences.html:136
+#: users/models.py:23
+msgid "Private"
+msgstr ""
+
 #: templates/sport/day/edit.html:19 templates/sport/week/edit.html:8
 #, python-format
 msgid "Week %s"
@@ -596,10 +645,6 @@ msgid "Sport"
 msgstr ""
 
 #: templates/sport/session/edit.html:49
-msgid "Save"
-msgstr ""
-
-#: templates/sport/session/edit.html:49
 msgid "this session"
 msgstr ""
 
@@ -698,6 +743,22 @@ msgstr ""
 msgid "Total"
 msgstr ""
 
+#: templates/users/notifications.html:28
+msgid "View"
+msgstr ""
+
+#: templates/users/notifications.html:34
+msgid "You don't have any notifications."
+msgstr ""
+
+#: templates/users/notifications.html:41
+msgid "Cancel"
+msgstr ""
+
+#: templates/users/notifications.html:43
+msgid "Delete these notifications"
+msgstr ""
+
 #: templates/users/preferences.html:37
 msgid "Personal Informations"
 msgstr ""
@@ -764,10 +825,6 @@ msgstr ""
 
 #: templates/users/preferences.html:135
 msgid "Only users in your clubs can view this section."
-msgstr ""
-
-#: templates/users/preferences.html:136 users/models.py:23
-msgid "Private"
 msgstr ""
 
 #: templates/users/preferences.html:136
@@ -955,4 +1012,43 @@ msgstr ""
 
 #: users/models.py:109
 msgid "tracks visibility"
+msgstr ""
+
+#: users/notification.py:51
+#, python-format
+msgid "%(first_name)s %(last_name)s has sent you a message"
+msgstr ""
+
+#: users/notification.py:63
+#, python-format
+msgid "%(first_name)s %(last_name)s has written a comment"
+msgstr ""
+
+#: users/notification.py:72
+#, python-format
+msgid "%(type)s on his session \"%(name)s\""
+msgstr ""
+
+#: users/notification.py:73 users/notification.py:79
+msgid " private"
+msgstr ""
+
+#: users/notification.py:78
+#, python-format
+msgid "%(type)s on your session \"%(name)s\""
+msgstr ""
+
+#: users/notification.py:84
+#, python-format
+msgid " on the session \"%(name)s\" of %(first_name)s %(last_name)s"
+msgstr ""
+
+#: users/notification.py:103
+#, python-format
+msgid "%(first_name)s %(last_name)s is now your friend on RunReport"
+msgstr ""
+
+#: users/notification.py:109
+#, python-format
+msgid "%(first_name)s %(last_name)s wants to add you as a friend."
 msgstr ""
