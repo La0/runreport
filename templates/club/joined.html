@@ -20,7 +20,7 @@
       {{ _('You are not currently logged with an user account.') }}
     </div>
     <p>
-      Veuillez <a class="btn btn-sm btn-primary" href="{% url user-create %}">créer un compte</a> ou vous <a class="btn btn-sm btn-primary" href="{% url login %}">connecter avec votre compte</a>.
+      <a class="btn btn-sm btn-primary" href="{% url user-create %}">{{ _('Create an account') }}</a> {{ _('or') }} <a class="btn btn-sm btn-primary" href="{% url login %}">{{ _('sign in') }}</a>.
     </p>
     {% elif error == 'member' %}
     <div class="alert alert-info">

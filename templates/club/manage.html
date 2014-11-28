@@ -44,17 +44,20 @@
   <div class="alert alert-danger">
     <h4>{{ _('Subscriptions for a private club') }}</h4>
     <p>
-      Votre club étant <strong>privé</strong>, vous devez communiquer <a href="{% url club-join-private club.slug, club.get_private_hash() %}">ce lien</a> aux futurs membres.
+      {{ _('Your club is private, you must then this link to future members') }} :
+      <a href="{% url club-join-private club.slug, club.get_private_hash() %}">{{ _('Private access') }}</a>
     </p>
   </div>
   {% else %}
   <div class="alert alert-success">
     <h4>{{ _('Subscription for a public club') }}</h4>
     <p>
-      Votre club étant <strong>public</strong>, les utilisateurs voient votre club dans la <a href="{% url club-list %}">liste</a>
+      {{ _('Your club is public, any user or visitor can view your club in this list') }} : 
+      <a href="{% url club-list %}">{{ _('Public list') }}</a>
     </p>
     <p>
-      Vous pouvez cependant leur communiquer <a href="{% url club-join club.slug %}">ce lien</a> pour rejoindre directement votre club.
+      {{ _('You can send this to your athletes so they can join directly') }} :
+      <a href="{% url club-join club.slug %}">{{ _('Club link') }}</a>
     </p>
   </div>
   {% endif %}
@@ -110,7 +113,7 @@
           {{ _('Edition is deactivated for the demo') }}
         </div>
         {% else %}
-				<input type="submit" value="Editer" class="btn btn-primary" />
+				<input type="submit" value="{{ _('Edit') }}" class="btn btn-primary" />
         {% endif %}
 			</div>
 		</div>

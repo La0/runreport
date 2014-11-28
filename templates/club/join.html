@@ -61,7 +61,7 @@
               {% endif %}
 
             {% else %}
-              <p class="text-info text-right"> Pour rejoindre ce club, <a href="{% url login %}">connectez vous</a> ou <a href="{% url user-create %}">créez un compte</a></p>
+              <p class="text-info text-right"> {{ _('To join this club') }}, <a href="{% url login %}">{{ _('sign in') }}</a> {{ _('or') }}<a href="{% url user-create %}">{{ _('create an account') }}</a></p>
 
               {# View members when club is public and user is not connected #}
               {% if not club.private %}

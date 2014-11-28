@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-27 18:10+0100\n"
-"PO-Revision-Date: 2014-11-27 18:11+0100\n"
+"POT-Creation-Date: 2014-11-28 16:39+0100\n"
+"PO-Revision-Date: 2014-11-28 16:39+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -19,8 +19,6 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 
 #: coach/menu.py:23
-#, fuzzy
-#| msgid "Club"
 msgid "Clubs"
 msgstr "Clubs"
 
@@ -34,7 +32,7 @@ msgstr "Créer un club"
 
 #: coach/menu.py:34 coach/menu.py:38 templates/base.html:127
 #: templates/club/join.html:11 templates/club/manage.html:13
-#: templates/club/manage.html.py:64
+#: templates/club/manage.html.py:67
 msgid "Help"
 msgstr "Aide"
 
@@ -74,11 +72,11 @@ msgstr "Les Courses"
 msgid "All the club"
 msgstr "Tout le club"
 
-#: coach/menu.py:78
+#: coach/menu.py:78 templates/club/members.html:17
 msgid "Newcomers"
 msgstr "Nouveaux"
 
-#: coach/menu.py:79
+#: coach/menu.py:79 templates/club/members.html:19
 msgid "Archives"
 msgstr "Archives"
 
@@ -118,7 +116,8 @@ msgstr "Mes services GPS"
 msgid "Logout"
 msgstr "Se déconnecter"
 
-#: coach/menu.py:117
+#: coach/menu.py:117 templates/club/joined.html:23
+#: templates/club/joined.modal.html:21
 msgid "Create an account"
 msgstr "Créer un compte"
 
@@ -225,7 +224,6 @@ msgid "Try the demo"
 msgstr "Essayer la démo"
 
 #: templates/club/ask_invite.html:59
-#, fuzzy
 msgid "Calendars"
 msgstr "Calendriers"
 
@@ -266,8 +264,6 @@ msgstr ""
 "athlètes."
 
 #: templates/club/create.html:24
-#, fuzzy
-#| msgid "training"
 msgid "Warning"
 msgstr "Attention"
 
@@ -276,8 +272,6 @@ msgid "You can create and administer only one club."
 msgstr "Vous ne pouvez créer et administrer qu'un club."
 
 #: templates/club/create.html:40
-#, fuzzy
-#| msgid "Create a club"
 msgid "Create the club"
 msgstr "Créer un club"
 
@@ -322,6 +316,24 @@ msgstr "Voir les membres"
 msgid "Join"
 msgstr "Rejoindre"
 
+#: templates/club/join.html:64
+msgid "To join this club"
+msgstr "Rejoindre ce club"
+
+#: templates/club/join.html:64 templates/club/joined.html:23
+#: templates/club/joined.modal.html:21
+msgid "sign in"
+msgstr "connectez vous"
+
+#: templates/club/join.html:64 templates/club/joined.html:23
+#: templates/club/joined.modal.html:21
+msgid "or"
+msgstr "ou"
+
+#: templates/club/join.html:64
+msgid "create an account"
+msgstr "Créer un compte"
+
 #: templates/club/joined.html:8
 msgid "Join the club"
 msgstr "Rejoindre le club"
@@ -343,8 +355,6 @@ msgid "No account"
 msgstr "Pas de compte"
 
 #: templates/club/joined.html:20
-#, fuzzy
-#| msgid "You are not currently logged with an user account."
 msgid "You are not currently logged with an user account."
 msgstr "Vous n'êtes actuellement pas connecté avec un compte utilisateur"
 
@@ -381,14 +391,10 @@ msgid "Please try again later"
 msgstr "Veuillez ré-essayer plus tard."
 
 #: templates/club/joined.modal.html:18
-#, fuzzy
-#| msgid "You are not currently logged with an user account."
 msgid "You are not currently connected with an user account"
 msgstr "Vous n'êtes actuellement pas connecté avec un compte utilisateur"
 
 #: templates/club/joined.modal.html:26
-#, fuzzy
-#| msgid "You are already in relation with this club."
 msgid "You are already in relation with this club"
 msgstr "Vous êtes déjà en relation avec ce club"
 
@@ -428,15 +434,44 @@ msgstr "Disponibles"
 msgid "Subscriptions for a private club"
 msgstr "Inscriptions pour un club privé"
 
-#: templates/club/manage.html:52
+#: templates/club/manage.html:47
+msgid "Your club is private, you must then this link to future members"
+msgstr "Votre club est privé, voud devez envoyer ce lien aux futurs membres  "
+
+#: templates/club/manage.html:48
+msgid "Private access"
+msgstr "Accés privé"
+
+#: templates/club/manage.html:53
 msgid "Subscription for a public club"
 msgstr "Inscriptions pour un club public"
 
-#: templates/club/manage.html:62
+#: templates/club/manage.html:55
+msgid ""
+"Your club is public, any user or visitor can view your club in this list"
+msgstr ""
+"Votre club est public, n'importe quel utilisateur ou visiteur peut voir "
+"votre club dans celle liste"
+
+#: templates/club/manage.html:56
+msgid "Public list"
+msgstr "Liste publique"
+
+#: templates/club/manage.html:59
+msgid "You can send this to your athletes so they can join directly"
+msgstr ""
+"Vous pouvez envoyez ce lien à vos athlètes pour qu'ils rejoignent "
+"directement le club "
+
+#: templates/club/manage.html:60
+msgid "Club link"
+msgstr "Liens public"
+
+#: templates/club/manage.html:65
 msgid "Public links"
 msgstr "Liens publics"
 
-#: templates/club/manage.html:65
+#: templates/club/manage.html:68
 msgid ""
 "Public links are shown in the Club menu, on top of the page, for all the "
 "users of the club."
@@ -444,7 +479,7 @@ msgstr ""
 "Les liens publics sont affichés dans le menu Club, en haut de page, pour "
 "tous les utilisateurs du club."
 
-#: templates/club/manage.html:66
+#: templates/club/manage.html:69
 msgid ""
 "They are useful to show external websites: Facebook groups, official website "
 "of the club, ..."
@@ -452,59 +487,67 @@ msgstr ""
 "Ils sont utiles pour indiquer des sites externes: groupe Facebook, site "
 "officiel du club, ..."
 
-#: templates/club/manage.html:72
+#: templates/club/manage.html:75
 msgid "Name"
 msgstr "Nom"
 
-#: templates/club/manage.html:73
+#: templates/club/manage.html:76
 msgid "Url"
 msgstr "Url"
 
-#: templates/club/manage.html:74 templates/club/members.athletes.html:17
+#: templates/club/manage.html:77 templates/club/members.athletes.html:17
+#: templates/club/members.html:42 templates/club/races.html:22
 msgid "Actions"
 msgstr "Actions"
 
-#: templates/club/manage.html:81 templates/sport/session/edit.html:51
+#: templates/club/manage.html:84 templates/sport/session/edit.html:51
 msgid "Delete"
 msgstr "Supprimer"
 
-#: templates/club/manage.html:89
+#: templates/club/manage.html:92
 msgid "There are no public link for your club."
 msgstr "Aucun lien public pour votre club."
 
-#: templates/club/manage.html:92
+#: templates/club/manage.html:95
 msgid "Add a link"
 msgstr "Ajouter un lien"
 
-#: templates/club/manage.html:109
+#: templates/club/manage.html:112 templates/club/role.html:47
 msgid "Demo account"
 msgstr "Compte de Démo"
 
-#: templates/club/manage.html:110
+#: templates/club/manage.html:113
 msgid "Edition is deactivated for the demo"
 msgstr "L'édition est désactivée pour la démo."
+
+#: templates/club/manage.html:116 templates/sport/day/edit.html:40
+msgid "Edit"
+msgstr "Editer"
 
 #: templates/club/members.athletes.html:9
 msgid "Public members"
 msgstr "Membres publics"
 
-#: templates/club/members.athletes.html:15
+#: templates/club/members.athletes.html:15 templates/club/members.html:35
 msgid "Role"
 msgstr "Rôle"
 
-#: templates/club/members.athletes.html:16 templates/users/preferences.html:82
+#: templates/club/members.athletes.html:16 templates/club/members.html:38
+#: templates/users/preferences.html:82
 msgid "Category"
 msgstr "Catégorie"
 
-#: templates/club/members.athletes.html:32
+#: templates/club/members.athletes.html:32 templates/club/members.html:58
 msgid "Trainer"
 msgstr "Entraîneur"
 
-#: templates/club/members.athletes.html:34
+#: templates/club/members.athletes.html:34 templates/club/members.html:18
+#: templates/club/members.html.py:60
 msgid "Staff"
 msgstr "Staff"
 
-#: templates/club/members.athletes.html:36
+#: templates/club/members.athletes.html:36 templates/club/members.html:56
+#: templates/club/races.html:17
 msgid "Athlete"
 msgstr "Athlète"
 
@@ -527,6 +570,121 @@ msgstr "Voir profil"
 #: templates/club/members.athletes.html:70
 msgid "No Members"
 msgstr "Pas de membres"
+
+#: templates/club/members.athletes.html:71
+#, python-format
+msgid "No member from club %s found for this list."
+msgstr "Aucun membre du club %s trouvé pour cette liste."
+
+#: templates/club/members.html:15
+msgid "My Athletes"
+msgstr "Mes Athlètes"
+
+#: templates/club/members.html:16
+msgid "All members"
+msgstr "Tous les membres"
+
+#: templates/club/members.html:22 templates/club/members.html.py:36
+msgid "Trainers"
+msgstr "Entraîneurs"
+
+#: templates/club/members.html:39
+msgid "Top speed"
+msgstr "VMA"
+
+#: templates/club/members.html:40 templates/club/members.html.py:101
+msgid "Sessions"
+msgstr "Séances"
+
+#: templates/club/members.html:62
+msgid "Archived"
+msgstr "Archivé"
+
+#: templates/club/members.html:64
+msgid "Newcomer"
+msgstr "Nouveau"
+
+#: templates/club/members.html:97
+msgid "Profile"
+msgstr "Profil"
+
+#: templates/club/members.html:99
+msgid "Records"
+msgstr "Records"
+
+#: templates/club/members.html:100 templates/sport/calendar/month.html:27
+#: templates/sport/calendar/month.html:33 templates/sport/week/edit.html:73
+msgid "Stats"
+msgstr "Statistiques"
+
+#: templates/club/members.html:110
+msgid "No members"
+msgstr "Pas de membres"
+
+#: templates/club/members.html:111
+#, python-format
+msgid "No member from club %s found for this list"
+msgstr "Aucun membre du club %s trouvé pour cette liste."
+
+#: templates/club/races.html:10
+#, python-format
+msgid "Races of %s"
+msgstr "Courses de %s"
+
+#: templates/club/races.html:18
+msgid "Type"
+msgstr "Type"
+
+#: templates/club/races.html:19
+msgid "Race"
+msgstr "Course"
+
+#: templates/club/races.html:20
+msgid "Date"
+msgstr "Date"
+
+#: templates/club/races.html:21
+msgid "In"
+msgstr "Dans"
+
+#: templates/club/races.html:31 templates/users/notifications.html:28
+msgid "View"
+msgstr "Voir"
+
+#: templates/club/races.html:38
+msgid "No races for your athletes"
+msgstr "Pas de courses pour vos athlètes"
+
+#: templates/club/role.html:8
+#, python-format
+#| msgid "Join a club"
+msgid "is a %s in club"
+msgstr "est un %s dans le club"
+
+#: templates/club/role.html:17
+msgid "Become"
+msgstr "Devenir"
+
+#: templates/club/role.html:19
+msgid "Available places"
+msgstr "Places disponibles"
+
+#: templates/club/role.html:37 templates/page/detail.html:52
+#: templates/sport/session/edit.html:49
+msgid "Save"
+msgstr "Sauver"
+
+#: templates/club/role.html:41
+msgid "Danger zone"
+msgstr "Zone dangereuse"
+
+#: templates/club/role.html:42
+msgid "Archive this account"
+msgstr "Archiver ce compte"
+
+#: templates/club/role.html:48
+msgid "Edition is disabled for the demo."
+msgstr "L'édition est désactivée pour la démo."
 
 #: templates/page/detail.html:12
 msgid "Written by"
@@ -556,10 +714,6 @@ msgstr "Page non publiée"
 msgid "Only visible by administrators."
 msgstr "Seulement visible par des administrateurs."
 
-#: templates/page/detail.html:52 templates/sport/session/edit.html:49
-msgid "Save"
-msgstr "Sauver"
-
 #: templates/page/list.html:12
 msgid "Any problem ? Found a bug ?"
 msgstr "Un problème ? Un bug sur une page ?"
@@ -583,22 +737,14 @@ msgid "Calendrier %s"
 msgstr "Calendrier %s"
 
 #: templates/sport/calendar/month.html:25
-#| msgid "My Calendar"
 msgid "Year's calendar"
 msgstr "Calendrier Annuel"
 
-#: templates/sport/calendar/month.html:27
-#: templates/sport/calendar/month.html:33 templates/sport/week/edit.html:73
-msgid "Stats"
-msgstr "Statistiques"
-
 #: templates/sport/calendar/month.html:30
-#| msgid "View this profile"
 msgid "View his profile"
 msgstr "Voir son profil"
 
 #: templates/sport/calendar/month.html:34
-#| msgid "Sport"
 msgid "CSV Export"
 msgstr "Export CSV"
 
@@ -631,7 +777,6 @@ msgid "Sunday"
 msgstr "Dimanche"
 
 #: templates/sport/calendar/month.html:77
-#| msgid "this session"
 msgid "friends sessions"
 msgstr "séance d'amis"
 
@@ -654,18 +799,12 @@ msgid "View the month"
 msgstr "Voir le mois"
 
 #: templates/sport/day/edit.html:33
-#, fuzzy
-#| msgid "View your public profile"
 msgid "View your profile"
 msgstr "Voir votre profil public"
 
 #: templates/sport/day/edit.html:35
 msgid "View this profile"
 msgstr "Voir ce profil public"
-
-#: templates/sport/day/edit.html:40
-msgid "Edit"
-msgstr "Editer"
 
 #: templates/sport/day/edit.html:45
 msgid "Public profile link"
@@ -746,8 +885,6 @@ msgid "Map"
 msgstr "Carte"
 
 #: templates/sport/session/edit.html:76
-#, fuzzy
-#| msgid "comment"
 msgid "Comments"
 msgstr "Commentaires"
 
@@ -783,8 +920,6 @@ msgid "This week report has been sent to %s"
 msgstr "Ce rapport de semaine a bien été envoyé à %s"
 
 #: templates/sport/week/edit.html:50
-#, fuzzy
-#| msgid "This Week"
 msgid "This week summary"
 msgstr "Bilan de la semaine"
 
@@ -836,12 +971,6 @@ msgstr "Energie"
 msgid "Total"
 msgstr "Total"
 
-#: templates/users/notifications.html:28
-#, fuzzy
-#| msgid "View on"
-msgid "View"
-msgstr "Voir sur"
-
 #: templates/users/notifications.html:34
 msgid "You don't have any notifications."
 msgstr "Vous n'avez aucune notifications."
@@ -851,10 +980,8 @@ msgid "Cancel"
 msgstr "Annuler"
 
 #: templates/users/notifications.html:43
-#, fuzzy
-#| msgid "Delete this session"
 msgid "Delete these notifications"
-msgstr "Supprimer cette séance"
+msgstr "Supprimer ces notifications"
 
 #: templates/users/preferences.html:37
 msgid "Personal Informations"
@@ -1117,8 +1244,6 @@ msgid "comments visibility"
 msgstr "visibilité des commentaires"
 
 #: users/models.py:109
-#, fuzzy
-#| msgid "races visibility"
 msgid "tracks visibility"
 msgstr "visibilités des traces GPS"
 
@@ -1128,28 +1253,23 @@ msgid "%(first_name)s %(last_name)s has sent you a message"
 msgstr "%(first_name)s %(last_name)s vous a envoyé un message"
 
 #: users/notification.py:63
-#, fuzzy, python-format
-#| msgid "No comments"
+#, python-format
 msgid "%(first_name)s %(last_name)s has written a comment"
-msgstr "Commentaire"
+msgstr "%(first_name)s %(last_name)s a écrit un commentaire"
 
 #: users/notification.py:72
-#, fuzzy, python-format
-#| msgid "Delete this session"
+#, python-format
 msgid "%(type)s on his session \"%(name)s\""
-msgstr "cette séance"
+msgstr "%(type)s sur sa séance \"%(name)s\""
 
 #: users/notification.py:73 users/notification.py:79
-#, fuzzy
-#| msgid "Private"
 msgid " private"
-msgstr "Privé"
+msgstr "privé"
 
 #: users/notification.py:78
-#, fuzzy, python-format
-#| msgid "Delete this session"
+#, python-format
 msgid "%(type)s on your session \"%(name)s\""
-msgstr "cette séance"
+msgstr "%(type)s sur votre séance \"%(name)s\""
 
 #: users/notification.py:84
 #, python-format

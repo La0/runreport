@@ -7,19 +7,19 @@
 
 <div class="container">
 
-	<h2>Courses du {{ club.name }}</h2>
+	<h2>{{ _('Races of %s') % club.name }}</h2>
 
 	{% if races %}
 
 	<div class="table-responsive">
 		<table class="table table-striped">
 			<tr>
-				<th>Athlète</th>
-				<th>Type</th>
-				<th>Course</th>
-				<th>Date</th>
-				<th>Dans</th>
-				<th>Actions</th>
+				<th>{{ _('Athlete') }}</th>
+				<th>{{ _('Type') }}</th>
+				<th>{{ _('Race') }}</th>
+				<th>{{ _('Date') }}</th>
+				<th>{{ _('In') }}</th>
+				<th>{{ _('Actions') }}</th>
 			</tr>
 			{% for race in races %}
 			<tr>
@@ -28,14 +28,14 @@
 				<td>{{ race.name|truncatechars(30) }}</td>
 				<td>{{ race.day.date|date('d E Y') }}</td>
 				<td>{{ race.day.date|timeuntil() }}</td>
-				<td><a class="modal-action btn btn-info btn-xs" href="{% url user-calendar-day race.day.week.user.username, race.day.date.year, race.day.date.month, race.day.date.day %}">Voir</a></td>
+				<td><a class="modal-action btn btn-info btn-xs" href="{% url user-calendar-day race.day.week.user.username, race.day.date.year, race.day.date.month, race.day.date.day %}">{{ _('View') }}</a></td>
 			</tr>
 			{% endfor %}
 		</table>
 	</div>
 
 	{% else %}
-	<p class="alert alert-warning">Pas de courses prévues pour vos athlètes</p>
+	<p class="alert alert-warning">{{ _('No races for your athletes') }}</p>
 	{% endif %}
 
 </div>

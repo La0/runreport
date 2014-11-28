@@ -68,7 +68,7 @@
 	{% else %}
 	<div class="alert alert-warning">
 		<h4>{{ _('No Members') }}</h4>
-		Aucun membre du club {{club.name}} trouvé pour cette liste.
+    {{ _('No member from club %s found for this list.') % club.name }}
 	</div>
 	{% endif %}
 
