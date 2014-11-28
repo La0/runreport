@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-28 16:39+0100\n"
-"PO-Revision-Date: 2014-11-28 16:39+0100\n"
+"POT-Creation-Date: 2014-11-28 17:08+0100\n"
+"PO-Revision-Date: 2014-11-28 17:09+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -657,7 +657,6 @@ msgstr "Pas de courses pour vos athlètes"
 
 #: templates/club/role.html:8
 #, python-format
-#| msgid "Join a club"
 msgid "is a %s in club"
 msgstr "est un %s dans le club"
 
@@ -1247,44 +1246,60 @@ msgstr "visibilité des commentaires"
 msgid "tracks visibility"
 msgstr "visibilités des traces GPS"
 
-#: users/notification.py:51
+#: users/notification.py:52
 #, python-format
 msgid "%(first_name)s %(last_name)s has sent you a message"
 msgstr "%(first_name)s %(last_name)s vous a envoyé un message"
 
-#: users/notification.py:63
-#, python-format
-msgid "%(first_name)s %(last_name)s has written a comment"
-msgstr "%(first_name)s %(last_name)s a écrit un commentaire"
-
-#: users/notification.py:72
-#, python-format
-msgid "%(type)s on his session \"%(name)s\""
-msgstr "%(type)s sur sa séance \"%(name)s\""
-
-#: users/notification.py:73 users/notification.py:79
+#: users/notification.py:71
 msgid " private"
 msgstr "privé"
 
-#: users/notification.py:78
+#: users/notification.py:76
 #, python-format
-msgid "%(type)s on your session \"%(name)s\""
-msgstr "%(type)s sur votre séance \"%(name)s\""
+#| msgid "%(first_name)s %(last_name)s has written a comment"
+msgid ""
+"%(first_name)s %(last_name)s has written a comment %(type)s on his session "
+"\"%(name)s\""
+msgstr ""
+"%(first_name)s %(last_name)s a écrit un commentaire %(type)s sur sa séance "
+"\"%(name)s\""
 
-#: users/notification.py:84
+#: users/notification.py:79
 #, python-format
-msgid " on the session \"%(name)s\" of %(first_name)s %(last_name)s"
-msgstr " sur la séance \"%(name)s\" de %(first_name)s %(last_name)s"
+#| msgid "%(first_name)s %(last_name)s has written a comment"
+msgid ""
+"%(first_name)s %(last_name)s has written a comment %(type)s on your session "
+"\"%(name)s\""
+msgstr ""
+"%(first_name)s %(last_name)s a écrit un commentaire %(type)s sur votre "
+"séance \"%(name)s\""
 
-#: users/notification.py:103
+#: users/notification.py:82
+#, python-format
+#| msgid " on the session \"%(name)s\" of %(first_name)s %(last_name)s"
+msgid ""
+"%(first_name)s %(last_name)s has written a comment on the session \"%(name)s"
+"\" of %(first_name)s %(last_name)s"
+msgstr ""
+" %(first_name)s %(last_name)s a écrit un commentaire sur la séance \"%(name)s"
+"\" de %(first_name)s %(last_name)s"
+
+#: users/notification.py:105
 #, python-format
 msgid "%(first_name)s %(last_name)s is now your friend on RunReport"
 msgstr "%(first_name)s %(last_name)s est dorénavant votre ami sur RunReport"
 
-#: users/notification.py:109
+#: users/notification.py:108
 #, python-format
 msgid "%(first_name)s %(last_name)s wants to add you as a friend."
 msgstr "%(first_name)s %(last_name)s veut vous ajouter en tant qu'ami."
+
+#~ msgid "%(type)s on his session \"%(name)s\""
+#~ msgstr "%(type)s sur sa séance \"%(name)s\""
+
+#~ msgid "%(type)s on your session \"%(name)s\""
+#~ msgstr "%(type)s sur votre séance \"%(name)s\""
 
 #~ msgid "Do not hesitate to use the <a href=\"/contact\">contact form</a>."
 #~ msgstr ""

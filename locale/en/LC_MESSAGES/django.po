@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-28 16:39+0100\n"
+"POT-Creation-Date: 2014-11-28 17:08+0100\n"
 "PO-Revision-Date: 2014-11-02 18:00+0100\n"
 "Last-Translator: Bastien Abadie <bastien@runreport.fr>\n"
 "Language: English\n"
@@ -1213,41 +1213,42 @@ msgstr ""
 msgid "tracks visibility"
 msgstr ""
 
-#: users/notification.py:51
+#: users/notification.py:52
 #, python-format
 msgid "%(first_name)s %(last_name)s has sent you a message"
 msgstr ""
 
-#: users/notification.py:63
-#, python-format
-msgid "%(first_name)s %(last_name)s has written a comment"
-msgstr ""
-
-#: users/notification.py:72
-#, python-format
-msgid "%(type)s on his session \"%(name)s\""
-msgstr ""
-
-#: users/notification.py:73 users/notification.py:79
+#: users/notification.py:71
 msgid " private"
 msgstr ""
 
-#: users/notification.py:78
+#: users/notification.py:76
 #, python-format
-msgid "%(type)s on your session \"%(name)s\""
+msgid ""
+"%(first_name)s %(last_name)s has written a comment %(type)s on his session "
+"\"%(name)s\""
 msgstr ""
 
-#: users/notification.py:84
+#: users/notification.py:79
 #, python-format
-msgid " on the session \"%(name)s\" of %(first_name)s %(last_name)s"
+msgid ""
+"%(first_name)s %(last_name)s has written a comment %(type)s on your session "
+"\"%(name)s\""
 msgstr ""
 
-#: users/notification.py:103
+#: users/notification.py:82
+#, python-format
+msgid ""
+"%(first_name)s %(last_name)s has written a comment on the session \"%(name)s"
+"\" of %(first_name)s %(last_name)s"
+msgstr ""
+
+#: users/notification.py:105
 #, python-format
 msgid "%(first_name)s %(last_name)s is now your friend on RunReport"
 msgstr ""
 
-#: users/notification.py:109
+#: users/notification.py:108
 #, python-format
 msgid "%(first_name)s %(last_name)s wants to add you as a friend."
 msgstr ""

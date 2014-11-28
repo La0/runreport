@@ -21,11 +21,12 @@ class UserNotifications(object):
     self.key_data = self.key_data % (self.user.username, )
     self.key_total = self.key_total % (self.user.username, )
 
-  def add(self, category, description, link=None):
+  def add(self, category, message, context, link=None):
     # Build payload
     payload = {
       'category' : category,
-      'description' : description,
+      'message' : message,
+      'context' : context,
       'link' : link,
       'created' : datetime.now(),
       'id' : uuid.uuid1().hex, # Add a unique id for identification
@@ -39,7 +40,7 @@ class UserNotifications(object):
     self.store(notifications)
 
   def add_message(self, message):
-    from messages.models import TYPE_COMMENTS_PUBLIC, TYPE_COMMENTS_PRIVATE, TYPE_MAIL
+    from messages.models import TYPE_COMMENTS_PRIVATE, TYPE_MAIL
 
     # Check writer is not recipient : no notification
     if message.writer == self.user:
@@ -48,7 +49,8 @@ class UserNotifications(object):
     # Helper to add a message notification
     if message.conversation.type == TYPE_MAIL:
       # Direct user message
-      msg = _('%(first_name)s %(last_name)s has sent you a message') % {
+      msg = _('%(first_name)s %(last_name)s has sent you a message')
+      context = {
         'first_name' : message.writer.first_name,
         'last_name' : message.writer.last_name,
       }
@@ -60,32 +62,28 @@ class UserNotifications(object):
       cat = NOTIFICATION_MAIL
     else:
       # Comment
-      msg = _('%(first_name)s %(last_name)s has written a comment') % {
-        'first_name' : message.writer.first_name,
-        'last_name' : message.writer.last_name,
-      }
       is_private = message.conversation.type == TYPE_COMMENTS_PRIVATE
       session = message.conversation.get_session()
+      context = {
+        'first_name' : message.writer.first_name,
+        'last_name' : message.writer.last_name,
+        'name' : session.name,
+        'type' : is_private and _(' private') or '',
+      }
       session_user = session.day.week.user
       if session_user == message.writer:
         # its own session
-        msg += _('%(type)s on his session "%(name)s"') % {
-          'type' : is_private and _(' private') or '',
-          'name' : session.name,
-        }
+        msg = _('%(first_name)s %(last_name)s has written a comment %(type)s on his session "%(name)s"')
       elif session_user == self.user:
         # your session
-        msg += _('%(type)s on your session "%(name)s"') % {
-          'type' : is_private and _(' private') or '',
-          'name' : session.name,
-        }
+        msg = _('%(first_name)s %(last_name)s has written a comment %(type)s on your session "%(name)s"')
       else:
         # anyone else session
-        msg += _(' on the session "%(name)s" of %(first_name)s %(last_name)s') % {
-          'name' : session.name,
+        msg = _('%(first_name)s %(last_name)s has written a comment on the session "%(name)s" of %(first_name)s %(last_name)s')
+        context.update({
           'first_name' : session_user.first_name,
           'last_name' : session_user.last_name,
-        }
+        })
 
       # Build session link
       link = reverse('user-calendar-day', args=(session_user.username, session.day.date.year, session.day.date.month, session.day.date.day))
@@ -95,24 +93,22 @@ class UserNotifications(object):
       cat = NOTIFICATION_COMMENT
 
     # Add notification
-    self.add(cat, msg, link)
+    self.add(cat, msg, context, link)
 
   def add_friend_request(self, req, accepted=False):
     # Add a friend request notification
+    context = {
+      'first_name' : req.recipient.first_name,
+      'last_name' : req.recipient.last_name,
+    }
     if accepted:
-      msg = _('%(first_name)s %(last_name)s is now your friend on RunReport') % {
-        'first_name' : req.recipient.first_name,
-        'last_name' : req.recipient.last_name,
-      }
+      msg = _('%(first_name)s %(last_name)s is now your friend on RunReport')
       link = reverse('user-public-profile', args=(req.recipient.username, ))
     else:
-      msg = _('%(first_name)s %(last_name)s wants to add you as a friend.') % {
-        'first_name' : req.recipient.first_name,
-        'last_name' : req.recipient.last_name,
-      }
+      msg = _('%(first_name)s %(last_name)s wants to add you as a friend.')
       link = reverse('friends')
 
-    self.add(NOTIFICATION_FRIEND_REQUEST, msg, link)
+    self.add(NOTIFICATION_FRIEND_REQUEST, msg, context, link)
 
   def total(self):
     return cache.get(self.key_total) or 0
