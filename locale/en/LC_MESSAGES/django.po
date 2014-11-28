@@ -3,18 +3,19 @@
 # This file is distributed under the same license as the runreport package.
 # Bastien Abadie <bastien@runreport.fr>, 2014
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-28 17:08+0100\n"
-"PO-Revision-Date: 2014-11-02 18:00+0100\n"
-"Last-Translator: Bastien Abadie <bastien@runreport.fr>\n"
+"POT-Creation-Date: 2014-11-28 18:24+0100\n"
+"PO-Revision-Date: 2014-11-28 18:21+0100\n"
+"Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
+"Language-Team: \n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #: coach/menu.py:23
 msgid "Clubs"
@@ -34,7 +35,7 @@ msgstr ""
 msgid "Help"
 msgstr ""
 
-#: coach/menu.py:39
+#: coach/menu.py:39 templates/sport/glossary.html:37
 msgid "Glossary"
 msgstr ""
 
@@ -143,11 +144,11 @@ msgstr ""
 msgid "rest"
 msgstr ""
 
-#: sport/models/sport.py:38
+#: sport/models/sport.py:46
 msgid "session comment"
 msgstr ""
 
-#: sport/models/sport.py:40 templates/_macros.html:146
+#: sport/models/sport.py:48 templates/_macros.html:146
 msgid "Race category"
 msgstr ""
 
@@ -661,6 +662,24 @@ msgstr ""
 msgid "Edition is disabled for the demo."
 msgstr ""
 
+#: templates/contact_form/contact_form.html:6
+msgid "Contact form"
+msgstr ""
+
+#: templates/contact_form/contact_form.html:8
+msgid "Need help ?"
+msgstr ""
+
+#: templates/contact_form/contact_form.html:9
+msgid ""
+"Please, use this form if you have any problem while using RunReport, you "
+"will have a personal response as soon as possible"
+msgstr ""
+
+#: templates/contact_form/contact_form.html:19
+msgid "Send message"
+msgstr ""
+
 #: templates/page/detail.html:12
 msgid "Written by"
 msgstr ""
@@ -823,6 +842,10 @@ msgstr ""
 msgid "Publish this week"
 msgstr ""
 
+#: templates/sport/glossary.html:29
+msgid "Sport icons"
+msgstr ""
+
 #: templates/sport/session/_comments.html:4
 msgid "Loading private comments..."
 msgstr ""
@@ -906,6 +929,11 @@ msgstr ""
 msgid "View on"
 msgstr ""
 
+#: templates/tracks/_session.html:21
+#, python-format
+msgid "%s Stats"
+msgstr ""
+
 #: templates/tracks/_session.html:56
 msgid "Average speed"
 msgstr ""
@@ -916,6 +944,10 @@ msgstr ""
 
 #: templates/tracks/_session.html:72
 msgid "Elevation gain"
+msgstr ""
+
+#: templates/tracks/_session.html:84
+msgid "Splits"
 msgstr ""
 
 #: templates/tracks/_session.html:94 templates/tracks/_session.html.py:96
@@ -1252,3 +1284,222 @@ msgstr ""
 #, python-format
 msgid "%(first_name)s %(last_name)s wants to add you as a friend."
 msgstr ""
+
+#: Sport/name:1
+msgid "Any Activity Type"
+msgstr ""
+
+#: Sport/name:2
+msgid "Uncategorized"
+msgstr ""
+
+#: Sport/name:3
+msgid "Course à pied"
+msgstr "Running"
+
+#: Sport/name:4
+msgid "Street Running"
+msgstr ""
+
+#: Sport/name:5
+msgid "Track Running"
+msgstr ""
+
+#: Sport/name:6
+msgid "Trail Running"
+msgstr ""
+
+#: Sport/name:7
+msgid "Treadmill Running"
+msgstr ""
+
+#: Sport/name:8
+msgid "Vélo"
+msgstr "Cycling"
+
+#: Sport/name:9
+msgid "Cyclocross"
+msgstr ""
+
+#: Sport/name:10
+msgid "Downhill Biking"
+msgstr ""
+
+#: Sport/name:11
+msgid "Indoor Cycling"
+msgstr ""
+
+#: Sport/name:12
+msgid "Mountain Biking"
+msgstr ""
+
+#: Sport/name:13
+msgid "Recumbent Cycling"
+msgstr ""
+
+#: Sport/name:14
+msgid "Road Cycling"
+msgstr ""
+
+#: Sport/name:15
+msgid "Track Cycling"
+msgstr ""
+
+#: Sport/name:16
+msgid "Fitness"
+msgstr ""
+
+#: Sport/name:17
+msgid "Elliptical"
+msgstr ""
+
+#: Sport/name:18
+msgid "Indoor Cardio"
+msgstr ""
+
+#: Sport/name:19
+msgid "Indoor Rowing"
+msgstr ""
+
+#: Sport/name:20
+msgid "Stair Climbing"
+msgstr ""
+
+#: Sport/name:21
+msgid "Strength Training"
+msgstr ""
+
+#: Sport/name:22
+msgid "Randonnée"
+msgstr "hiking"
+
+#: Sport/name:23
+msgid "Natation"
+msgstr "Swimming"
+
+#: Sport/name:24
+msgid "Lap Swimming"
+msgstr ""
+
+#: Sport/name:25
+msgid "Open Water Swimming"
+msgstr ""
+
+#: Sport/name:26
+msgid "Marche"
+msgstr "Walking"
+
+#: Sport/name:27
+msgid "Casual Walking"
+msgstr ""
+
+#: Sport/name:28
+msgid "Speed Walking"
+msgstr ""
+
+#: Sport/name:29
+msgid "Transition"
+msgstr ""
+
+#: Sport/name:30
+msgid "Swim to Bike Transition"
+msgstr ""
+
+#: Sport/name:31
+msgid "Bike to Run Transition"
+msgstr ""
+
+#: Sport/name:32
+msgid "Run to Bike Transition"
+msgstr ""
+
+#: Sport/name:33
+msgid "Moto"
+msgstr "Motorbike"
+
+#: Sport/name:34
+msgid "Autre"
+msgstr "Other"
+
+#: Sport/name:35
+msgid "Backcountry Skiing/Snowboarding"
+msgstr ""
+
+#: Sport/name:36
+msgid "Boating"
+msgstr ""
+
+#: Sport/name:37
+msgid "Cross Country Skiing"
+msgstr ""
+
+#: Sport/name:38
+msgid "Driving"
+msgstr ""
+
+#: Sport/name:39
+msgid "Flying"
+msgstr ""
+
+#: Sport/name:40
+msgid "Golf"
+msgstr ""
+
+#: Sport/name:41
+msgid "Horseback Riding"
+msgstr ""
+
+#: Sport/name:42
+msgid "Inline Skating"
+msgstr ""
+
+#: Sport/name:43
+msgid "Mountaineering"
+msgstr ""
+
+#: Sport/name:44
+msgid "Paddling"
+msgstr ""
+
+#: Sport/name:45
+msgid "Resort Skiing/Snowboarding"
+msgstr ""
+
+#: Sport/name:46
+msgid "Rowing"
+msgstr ""
+
+#: Sport/name:47
+msgid "Sailing"
+msgstr ""
+
+#: Sport/name:48
+msgid "Skate Skiing"
+msgstr ""
+
+#: Sport/name:49
+msgid "Skating"
+msgstr ""
+
+#: Sport/name:50
+msgid "Snowmobiling"
+msgstr ""
+
+#: Sport/name:51
+msgid "Snowshoeing"
+msgstr ""
+
+#: Sport/name:52
+msgid "Stand Up Paddleboarding"
+msgstr ""
+
+#: Sport/name:53
+msgid "Whitewater Kayaking/Rafting"
+msgstr ""
+
+#: Sport/name:54
+msgid "Wind/Kite Surfing"
+msgstr ""
+
+#~ msgid "fitness_equipment"
+#~ msgstr "Fitness"

@@ -3,20 +3,20 @@
 {% block content %}
 <div class="container">
 
-<h2>Formulaire de contact</h2>
+<h2>{{ _('Contact form') }}</h2>
 <div class="alert alert-info">
-	<h4>Besoin d'aide ?</h4>
-	N'hésitez pas à utiliser ce formulaire de contact en cas de problème à l'utilisation de RunReport, vous aurez une réponse personelle le plus rapidement possible.
+	<h4>{{ _('Need help ?') }}</h4>
+  {{ _('Please, use this form if you have any problem while using RunReport, you will have a personal response as soon as possible') }}
 </div>
 
 <form action="" method="POST" class="form-horizontal contact">
 	{% csrf_token %}
-	{{ macros.input(form.name, 'Votre nom') }}
-	{{ macros.input(form.email, 'Votre adresse mail') }}
-	{{ macros.input(form.body, 'Votre message') }}
+	{{ macros.input(form.name) }}
+	{{ macros.input(form.email) }}
+	{{ macros.input(form.body) }}
 	<div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
-      <input type="submit" value="Envoyer le message" class="btn btn-primary" />
+      <input type="submit" value="{{ _('Send message') }}" class="btn btn-primary" />
     </div>
 	</div>
 </form>

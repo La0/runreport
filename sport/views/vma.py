@@ -1,6 +1,7 @@
 from django.views.generic import TemplateView
 import json
 from sport.vma import VmaCalc
+from sport.models import Sport
 
 class VmaPaces(TemplateView):
   template_name = 'sport/vma.html'
@@ -37,7 +38,7 @@ class VmaGlossary(TemplateView):
       glossary = json.loads(f.read())
       f.close()
     return {
-      'sports' : glossary['sports'],
+      'sports' : Sport.objects.filter(depth=1).order_by('slug'),
       'glossary' : glossary['text'],
       'sorted' : sorted(glossary['text']),
     }

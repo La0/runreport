@@ -177,6 +177,7 @@ INSTALLED_APPS = (
     'messages',
     'tracks',
     'friends',
+    'vinaigrette', # Model translations
     'compressor',
 )
 

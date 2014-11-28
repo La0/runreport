@@ -1,14 +1,4 @@
 {
-  "sports" : {
-    "sport-running" : "Course à pied",
-    "sport-cycling" : "Vélo",
-    "sport-fitness_equipment" : "Fitness",
-    "sport-hiking" : "Randonnée",
-    "sport-skiing" : "Ski",
-    "sport-swimming" : "Natation",
-    "sport-walking" : "Marche à pied",
-    "sport-other" : "Autre sports"
-  },
   "text" : {
     "/" : "contre effort",
     "A1" : "Allure 1, 60-65% de vma",

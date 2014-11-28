@@ -98,12 +98,12 @@
 	<h3>Edition</h3>
 	<form action="" method="POST" class="form form-horizontal">
 		{% csrf_token %}
-		{{ macros.input(form.name, 'Nom du club') }}
-		{{ macros.input(form.slug, 'Slug', 'Représente le nom du club dans les urls') }}
-		{{ macros.input_bool(form.private, 'Club Privé', 'Si le club est privé il n\'est accessible que par les membres du club') }}
-		{{ macros.input(form.address, 'Addresse') }}
-		{{ macros.input(form.zipcode, 'Code Postal') }}
-		{{ macros.input(form.city, 'Ville') }}
+		{{ macros.input(form.name, _('Club name')) }}
+		{{ macros.input(form.slug, _('Slug'), _('Represents the club\'s name in urls')) }}
+		{{ macros.input_bool(form.private, _('Private club'), _('When private, a club is only accessible y its members')) }}
+		{{ macros.input(form.address, _('Adress')) }}
+		{{ macros.input(form.zipcode, _('Zipcode')) }}
+		{{ macros.input(form.city, _('Town')) }}
 
 		<div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">

@@ -3,6 +3,7 @@ from django.db import models
 from . import SESSION_TYPES
 from interval.fields import IntervalField
 from django.utils.translation import ugettext_lazy as _
+import vinaigrette
 
 class Sport(models.Model):
   name = models.CharField(max_length=250)
@@ -28,6 +29,13 @@ class Sport(models.Model):
   def get_category(self):
     # Always give a valid parent category
     return self.get_parent().slug
+
+  @property
+  def icon(self):
+    return 'icon-sport-%s' % self.slug
+
+# i18n
+vinaigrette.register(Sport, ['name', ])
 
 class SportSession(models.Model):
   day = models.ForeignKey('SportDay', related_name="sessions")
