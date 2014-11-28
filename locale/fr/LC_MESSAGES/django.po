@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-28 18:24+0100\n"
-"PO-Revision-Date: 2014-11-28 18:25+0100\n"
+"POT-Creation-Date: 2014-11-28 19:04+0100\n"
+"PO-Revision-Date: 2014-11-28 19:05+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -500,7 +500,8 @@ msgstr "Url"
 msgid "Actions"
 msgstr "Actions"
 
-#: templates/club/manage.html:84 templates/sport/session/edit.html:51
+#: templates/club/manage.html:84 templates/messages/_list.html:62
+#: templates/sport/session/edit.html:51
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -520,7 +521,8 @@ msgstr "Compte de Démo"
 msgid "Edition is deactivated for the demo"
 msgstr "L'édition est désactivée pour la démo."
 
-#: templates/club/manage.html:116 templates/sport/day/edit.html:40
+#: templates/club/manage.html:116 templates/messages/_list.html:63
+#: templates/sport/day/edit.html:40
 msgid "Edit"
 msgstr "Editer"
 
@@ -647,7 +649,8 @@ msgstr "Date"
 msgid "In"
 msgstr "Dans"
 
-#: templates/club/races.html:31 templates/users/notifications.html:28
+#: templates/club/races.html:31 templates/messages/inbox.html:69
+#: templates/users/notifications.html:28
 msgid "View"
 msgstr "Voir"
 
@@ -706,13 +709,109 @@ msgstr ""
 msgid "Send message"
 msgstr "Envoyer message"
 
+#: templates/messages/_list.html:13
+#, python-format
+msgid "%d private comments"
+msgstr "%d commentaires privés"
+
+#: templates/messages/_list.html:16
+#, python-format
+msgid "%d public comments"
+msgstr "%d commentaires publics"
+
+#: templates/messages/_list.html:33
+msgid "View all previous comments"
+msgstr "Voir tous les commentaires précédents"
+
+#: templates/messages/_list.html:48
+msgid "Private comment"
+msgstr "Commentaire privé"
+
+#: templates/messages/_list.html:53
+#, python-format
+msgid "Edited %d times"
+msgstr "Edité %d fois"
+
+#: templates/messages/_list.html:76
+msgid "Add a private comment"
+msgstr "Ajouter un commentaire privé"
+
+#: templates/messages/_list.html:78
+msgid "Add a public comment"
+msgstr "Ajouter un commentaire public"
+
+#: templates/messages/_list.html:83 templates/sport/session/_comments.html:20
+msgid "Start a public conversation"
+msgstr "Démarrer une conversation publique"
+
+#: templates/messages/_list.html:88 templates/sport/session/_comments.html:14
+msgid "Start a private conversation"
+msgstr "Démarrer une conversation privée"
+
+#: templates/messages/_list.html:92
+msgid "You must be logged in to add a comment"
+msgstr "Vous devez être connecté pour ajouter un commentaire"
+
+#: templates/messages/_list.html:93
+msgid "Add a comment"
+msgstr "Ajouter un commentaire"
+
+#: templates/messages/inbox.html:8
+msgid "Your recent conversations"
+msgstr "Vos conversations récentes"
+
+#: templates/messages/inbox.html:30
+#, python-format
+msgid "%s ago"
+msgstr "Il y'a %s"
+
+#: templates/messages/inbox.html:35
+msgid "Private message"
+msgstr "Message privé"
+
+#: templates/messages/inbox.html:42
+msgid "On your session"
+msgstr "Sur votre séance"
+
+#: templates/messages/inbox.html:44
+msgid "On the session of"
+msgstr "Sur la séance de"
+
+#: templates/messages/inbox.html:52 templates/page/detail.html:13
+msgid "on"
+msgstr "le"
+
+#: templates/messages/inbox.html:62
+msgid "Reply"
+msgstr "Répondre"
+
+#: templates/messages/inbox.html:64
+msgid "Comment"
+msgstr "Commenter"
+
+#: templates/messages/inbox.html:81
+msgid "Previous conversations"
+msgstr "Conversation précèdentes"
+
+#: templates/messages/inbox.html:86
+msgid "Page"
+msgstr "Page"
+
+#: templates/messages/inbox.html:91
+msgid "Next conversations"
+msgstr "Conversation suivantes"
+
+#: templates/messages/inbox.html:100
+msgid "No conversations"
+msgstr "Pas de conversations"
+
+#: templates/messages/inbox.html:101
+msgid "You did not receive or send any message."
+msgstr "Vous n'avez reçu ou envoyé aucun message."
+
 #: templates/page/detail.html:12
 msgid "Written by"
 msgstr "Ecrit par"
-
-#: templates/page/detail.html:13
-msgid "on"
-msgstr "le"
 
 #: templates/page/detail.html:22
 msgid "View the others news"
@@ -880,14 +979,6 @@ msgstr "Chargement des commentaires privés..."
 msgid "Loading comments..."
 msgstr "Chargement des commentaires"
 
-#: templates/sport/session/_comments.html:14
-msgid "Start a private conversation"
-msgstr "Démarrer une conversation privée"
-
-#: templates/sport/session/_comments.html:20
-msgid "Start a public conversation"
-msgstr "Démarrer une conversation publique"
-
 #: templates/sport/session/_comments.html:26
 msgid "No comments"
 msgstr "Pas de commentaires pour le moment"
@@ -957,7 +1048,6 @@ msgstr "Voir sur"
 
 #: templates/tracks/_session.html:21
 #, python-format
-#| msgid "Stats"
 msgid "%s Stats"
 msgstr "Statistiques %s"
 
@@ -1329,7 +1419,7 @@ msgstr "%(first_name)s %(last_name)s veut vous ajouter en tant qu'ami."
 
 #: Sport/name:1
 msgid "Any Activity Type"
-msgstr ""
+msgstr "Tous sports"
 
 #: Sport/name:2
 msgid "Uncategorized"
@@ -1337,13 +1427,11 @@ msgstr "Sans Catégorie"
 
 #: Sport/name:3
 msgid "Course à pied"
-msgstr ""
+msgstr "Course à pied"
 
 #: Sport/name:4
-#, fuzzy
-#| msgid "running"
 msgid "Street Running"
-msgstr "Course à pied"
+msgstr "Course à pied sur route"
 
 #: Sport/name:5
 msgid "Track Running"
@@ -1359,23 +1447,23 @@ msgstr "Course sur tapis"
 
 #: Sport/name:8
 msgid "Vélo"
-msgstr ""
+msgstr "Vélo"
 
 #: Sport/name:9
 msgid "Cyclocross"
-msgstr ""
+msgstr "Cyclocross"
 
 #: Sport/name:10
 msgid "Downhill Biking"
-msgstr ""
+msgstr "Vélo de descente"
 
 #: Sport/name:11
 msgid "Indoor Cycling"
-msgstr ""
+msgstr "Vélo d'intérieur"
 
 #: Sport/name:12
 msgid "Mountain Biking"
-msgstr ""
+msgstr "Vélo en montagne"
 
 #: Sport/name:13
 msgid "Recumbent Cycling"
@@ -1386,14 +1474,12 @@ msgid "Road Cycling"
 msgstr "Cyclisme sur route"
 
 #: Sport/name:15
-#, fuzzy
-#| msgid "cycling"
 msgid "Track Cycling"
-msgstr "Cyclisme"
+msgstr "Cyclisme sur piste"
 
 #: Sport/name:16
 msgid "Fitness"
-msgstr ""
+msgstr "Fitness"
 
 #: Sport/name:17
 msgid "Elliptical"
@@ -1401,15 +1487,15 @@ msgstr ""
 
 #: Sport/name:18
 msgid "Indoor Cardio"
-msgstr ""
+msgstr "cardio"
 
 #: Sport/name:19
 msgid "Indoor Rowing"
-msgstr ""
+msgstr "rameur"
 
 #: Sport/name:20
 msgid "Stair Climbing"
-msgstr ""
+msgstr "Escaliers"
 
 #: Sport/name:21
 msgid "Strength Training"
@@ -1417,67 +1503,55 @@ msgstr "Entraînement de force"
 
 #: Sport/name:22
 msgid "Randonnée"
-msgstr ""
+msgstr "Randonnée"
 
 #: Sport/name:23
 msgid "Natation"
 msgstr "Natation"
 
 #: Sport/name:24
-#, fuzzy
-#| msgid "swimming"
 msgid "Lap Swimming"
 msgstr "Natation"
 
 #: Sport/name:25
 msgid "Open Water Swimming"
-msgstr ""
+msgstr "Natation en mer"
 
 #: Sport/name:26
 msgid "Marche"
-msgstr ""
+msgstr "Marche"
 
 #: Sport/name:27
 msgid "Casual Walking"
-msgstr ""
+msgstr "Marche normale"
 
 #: Sport/name:28
-#, fuzzy
-#| msgid "walking"
 msgid "Speed Walking"
-msgstr "Marche"
+msgstr "Marche rapide"
 
 #: Sport/name:29
-#, fuzzy
-#| msgid "transition"
 msgid "Transition"
 msgstr "Transition"
 
 #: Sport/name:30
-#, fuzzy
-#| msgid "transition"
 msgid "Swim to Bike Transition"
-msgstr "Transition"
+msgstr "Transition Natation Vélo"
 
 #: Sport/name:31
-#, fuzzy
-#| msgid "transition"
 msgid "Bike to Run Transition"
-msgstr "Transition"
+msgstr "Transition Vélo Course"
 
 #: Sport/name:32
-#, fuzzy
-#| msgid "transition"
 msgid "Run to Bike Transition"
-msgstr "Transition"
+msgstr "Transition Course Vélo"
 
 #: Sport/name:33
 msgid "Moto"
-msgstr ""
+msgstr "Moto"
 
 #: Sport/name:34
 msgid "Autre"
-msgstr ""
+msgstr "Autre"
 
 #: Sport/name:35
 msgid "Backcountry Skiing/Snowboarding"
@@ -1485,27 +1559,27 @@ msgstr ""
 
 #: Sport/name:36
 msgid "Boating"
-msgstr ""
+msgstr "Bateau"
 
 #: Sport/name:37
 msgid "Cross Country Skiing"
-msgstr ""
+msgstr "Ski Cross"
 
 #: Sport/name:38
 msgid "Driving"
-msgstr ""
+msgstr "Voiture"
 
 #: Sport/name:39
 msgid "Flying"
-msgstr ""
+msgstr "Vol"
 
 #: Sport/name:40
 msgid "Golf"
-msgstr ""
+msgstr "Golf"
 
 #: Sport/name:41
 msgid "Horseback Riding"
-msgstr ""
+msgstr "Poney"
 
 #: Sport/name:42
 msgid "Inline Skating"
@@ -1513,23 +1587,23 @@ msgstr ""
 
 #: Sport/name:43
 msgid "Mountaineering"
-msgstr ""
+msgstr "Alpinisme"
 
 #: Sport/name:44
 msgid "Paddling"
-msgstr ""
+msgstr "Pagai"
 
 #: Sport/name:45
 msgid "Resort Skiing/Snowboarding"
-msgstr ""
+msgstr "Ski de piste"
 
 #: Sport/name:46
 msgid "Rowing"
-msgstr ""
+msgstr "rameur"
 
 #: Sport/name:47
 msgid "Sailing"
-msgstr ""
+msgstr "Voile"
 
 #: Sport/name:48
 msgid "Skate Skiing"
@@ -1537,7 +1611,7 @@ msgstr ""
 
 #: Sport/name:49
 msgid "Skating"
-msgstr ""
+msgstr "Patinage"
 
 #: Sport/name:50
 msgid "Snowmobiling"
@@ -1545,11 +1619,11 @@ msgstr ""
 
 #: Sport/name:51
 msgid "Snowshoeing"
-msgstr ""
+msgstr "Raquettes"
 
 #: Sport/name:52
 msgid "Stand Up Paddleboarding"
-msgstr ""
+msgstr "PaddleBoard"
 
 #: Sport/name:53
 msgid "Whitewater Kayaking/Rafting"
@@ -1558,29 +1632,3 @@ msgstr ""
 #: Sport/name:54
 msgid "Wind/Kite Surfing"
 msgstr ""
-
-#~ msgid "all"
-#~ msgstr "Tous"
-
-#~ msgid "fitness_equipment"
-#~ msgstr "Fitness"
-
-#~ msgid "hiking"
-#~ msgstr "Randonnée"
-
-#~ msgid "other"
-#~ msgstr "Autre"
-
-#~ msgid "%(type)s on his session \"%(name)s\""
-#~ msgstr "%(type)s sur sa séance \"%(name)s\""
-
-#~ msgid "%(type)s on your session \"%(name)s\""
-#~ msgstr "%(type)s sur votre séance \"%(name)s\""
-
-#~ msgid "Do not hesitate to use the <a href=\"/contact\">contact form</a>."
-#~ msgstr ""
-#~ "N'hésitez pas à utiliser le <a href=\"/contact\">formulaire de contact</"
-#~ "a>."
-
-#~ msgid "Garmin Sync"
-#~ msgstr "Données Garmin"

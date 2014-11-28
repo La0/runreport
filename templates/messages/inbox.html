@@ -5,7 +5,7 @@
 {% block content %}
 <div class="container">
 
-<h1>Vos conversations récentes</h1>
+<h1>{{ _('Your recent conversations') }}</h1>
 
 {% if conversations %}
   {% for conversation in conversations %}
@@ -27,29 +27,29 @@
       </span>
       messages
       <br />
-      Il y'a {{ conversation.last_message|timesince() }}
+      {{ _('%s ago') % conversation.last_message|timesince() }}
     </div>
 
     <div class="col-sm-6 col-xs-12">
       {% if conversation.type == 'mail' %}
-      <i class="icon-mail"></i> Message privé
+      <i class="icon-mail"></i> {{ _('Private message') }}
       {% else %}
       <p>
         {% with conversation.get_session() as session %}
           <i class="icon-comment"></i>
           {% with session.day.week.user as session_user %}
             {% if user == session_user %}
-            Sur votre séance
+            {{ _('On your session') }}
             {% else %}
-            Sur la séance de <a href="{% url user-public-profile session_user.username %}">{{ session_user.first_name }} {{ session_user.last_name }}</a>
+            {{ _('On the session of') }} <a href="{% url user-public-profile session_user.username %}">{{ session_user.first_name }} {{ session_user.last_name }}</a>
             {% endif %}
           {% endwith %}
-          <i class="icon-sport-{{session.sport.slug}}"></i>
+          <i class="{{session.sport.icon}}"></i>
           {% with session.day.date as dt %}
           <a href="{% url report-day dt.year, dt.month, dt.day %}">
             {{ session.name }}
           </a>
-          du {{ dt|date('l d E Y') }}
+          {{ _('on') }} {{ dt|date('l d E Y') }}
           {% endwith %}
         {% endwith %}
       </p>
@@ -59,14 +59,14 @@
     <div class="col-sm-2 text-right">
       <a href="{% url conversation-add conversation.pk %}" class="modal-action btn btn-default btn-sm">
         {% if conversation.type == 'mail' %}
-        Répondre
+        {{ _('Reply') }}
         {% else %}
-        Commenter
+        {{ _('Comment') }}
         {% endif %}
       </a>
 
       <a href="{{ conversation.get_absolute_url() }}" class="btn btn-primary btn-sm">
-        Voir <i class="icon-right-open"></i>
+        {{ _('View') }} <i class="icon-right-open"></i>
       </a>
     </div>
   </div>
@@ -78,17 +78,17 @@
       {% if conversations.has_previous() %}
       <li class="previous">
         <a href="{% url message-inbox-page conversations.previous_page_number() %}">
-          <i class="icon-left-open"></i> Conversations précèdentes
+          <i class="icon-left-open"></i> {{ _('Previous conversations') }}
         </a>
       </li>
       {% endif %}
       <li>
-        Page {{ conversations.number }} / {{ conversations.paginator.num_pages }}
+        {{ _('Page') }} {{ conversations.number }} / {{ conversations.paginator.num_pages }}
       </li>
       {% if conversations.has_next() %}
       <li class="next">
         <a href="{% url message-inbox-page conversations.next_page_number() %}">
-          Conversations suivantes <i class="icon-right-open"></i>
+          {{ _('Next conversations') }} <i class="icon-right-open"></i>
         </a>
       </li>
       {% endif %}
@@ -97,8 +97,8 @@
 
 {% else %}
 <div class="alert alert-info">
-  <h4>Pas de conversations</h4>
-  Vous n'avez pas reçu ou envoyé de messages.
+  <h4>{{ _('No conversations') }}</h4>
+  {{ _('You did not receive or send any message.') }}
 </div>
 {% endif %}
 

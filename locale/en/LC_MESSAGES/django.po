@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-28 18:24+0100\n"
+"POT-Creation-Date: 2014-11-28 19:04+0100\n"
 "PO-Revision-Date: 2014-11-28 18:21+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
@@ -477,7 +477,8 @@ msgstr ""
 msgid "Actions"
 msgstr ""
 
-#: templates/club/manage.html:84 templates/sport/session/edit.html:51
+#: templates/club/manage.html:84 templates/messages/_list.html:62
+#: templates/sport/session/edit.html:51
 msgid "Delete"
 msgstr ""
 
@@ -497,7 +498,8 @@ msgstr ""
 msgid "Edition is deactivated for the demo"
 msgstr ""
 
-#: templates/club/manage.html:116 templates/sport/day/edit.html:40
+#: templates/club/manage.html:116 templates/messages/_list.html:63
+#: templates/sport/day/edit.html:40
 msgid "Edit"
 msgstr ""
 
@@ -624,7 +626,8 @@ msgstr ""
 msgid "In"
 msgstr ""
 
-#: templates/club/races.html:31 templates/users/notifications.html:28
+#: templates/club/races.html:31 templates/messages/inbox.html:69
+#: templates/users/notifications.html:28
 msgid "View"
 msgstr ""
 
@@ -680,12 +683,108 @@ msgstr ""
 msgid "Send message"
 msgstr ""
 
-#: templates/page/detail.html:12
-msgid "Written by"
+#: templates/messages/_list.html:13
+#, python-format
+msgid "%d private comments"
 msgstr ""
 
-#: templates/page/detail.html:13
+#: templates/messages/_list.html:16
+#, python-format
+msgid "%d public comments"
+msgstr ""
+
+#: templates/messages/_list.html:33
+msgid "View all previous comments"
+msgstr ""
+
+#: templates/messages/_list.html:48
+msgid "Private comment"
+msgstr ""
+
+#: templates/messages/_list.html:53
+#, python-format
+msgid "Edited %d times"
+msgstr ""
+
+#: templates/messages/_list.html:76
+msgid "Add a private comment"
+msgstr ""
+
+#: templates/messages/_list.html:78
+msgid "Add a public comment"
+msgstr ""
+
+#: templates/messages/_list.html:83 templates/sport/session/_comments.html:20
+msgid "Start a public conversation"
+msgstr ""
+
+#: templates/messages/_list.html:88 templates/sport/session/_comments.html:14
+msgid "Start a private conversation"
+msgstr ""
+
+#: templates/messages/_list.html:92
+msgid "You must be logged in to add a comment"
+msgstr ""
+
+#: templates/messages/_list.html:93
+msgid "Add a comment"
+msgstr ""
+
+#: templates/messages/inbox.html:8
+msgid "Your recent conversations"
+msgstr ""
+
+#: templates/messages/inbox.html:30
+#, python-format
+msgid "%s ago"
+msgstr ""
+
+#: templates/messages/inbox.html:35
+msgid "Private message"
+msgstr ""
+
+#: templates/messages/inbox.html:42
+msgid "On your session"
+msgstr ""
+
+#: templates/messages/inbox.html:44
+msgid "On the session of"
+msgstr ""
+
+#: templates/messages/inbox.html:52 templates/page/detail.html:13
 msgid "on"
+msgstr ""
+
+#: templates/messages/inbox.html:62
+msgid "Reply"
+msgstr ""
+
+#: templates/messages/inbox.html:64
+msgid "Comment"
+msgstr ""
+
+#: templates/messages/inbox.html:81
+msgid "Previous conversations"
+msgstr ""
+
+#: templates/messages/inbox.html:86
+msgid "Page"
+msgstr ""
+
+#: templates/messages/inbox.html:91
+msgid "Next conversations"
+msgstr ""
+
+#: templates/messages/inbox.html:100
+msgid "No conversations"
+msgstr ""
+
+#: templates/messages/inbox.html:101
+msgid "You did not receive or send any message."
+msgstr ""
+
+#: templates/page/detail.html:12
+msgid "Written by"
 msgstr ""
 
 #: templates/page/detail.html:22
@@ -852,14 +951,6 @@ msgstr ""
 
 #: templates/sport/session/_comments.html:8
 msgid "Loading comments..."
-msgstr ""
-
-#: templates/sport/session/_comments.html:14
-msgid "Start a private conversation"
-msgstr ""
-
-#: templates/sport/session/_comments.html:20
-msgid "Start a public conversation"
 msgstr ""
 
 #: templates/sport/session/_comments.html:26
