@@ -1,4 +1,4 @@
-<h3>Records</h3>
+<h3>{{ _('Records') }}</h3>
 
 {% if races %}
 
@@ -76,6 +76,6 @@
 
 {% else %}
 <div class="alert alert-info">
-  {{ member.first_name }} n'a pas de records.
+  {{ _('%s has no records.') % member.first_name }}
 </div>
 {% endif %}

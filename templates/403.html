@@ -3,11 +3,11 @@
 {% block content %}
 
 <div class="container">
-  <h1>Accès non autorisé</h1>
+  <h1>{{ _('Forbidden') }}</h1>
   <p class="alert alert-warning">
-    Vous n'avez pas accès à cette page.
+    {{ _('You do not have access to this page.') }}
   </p>
-    <a class="btn btn-danger pull-right" href="{% url report-current %}">Retour à l'accueil</a>
+  <a class="btn btn-danger pull-right" href="{% url report-current %}">{{ _('Back to homepage') }}</a>
 </div>
 
 {% endblock %}

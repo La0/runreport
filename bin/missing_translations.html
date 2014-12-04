@@ -1,0 +1,3 @@
+#!/bin/bash
+# Shows templates without any translation string
+comm -3  <(find templates/ -type f | sort ) <(git grep '_(' templates/ | cut -d : -f 1 | uniq |sort )

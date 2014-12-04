@@ -29,13 +29,13 @@
 
   {% if member == user %}
   <div class="alert {{ owner_css[user.privacy_profile] }}">
-    <h4>Votre profil {{ levels[user.privacy_profile] }} </h4>
+    <h4>{{ _('Your public profile') }} </h4>
     {% if user.privacy_profile == 'private' %}
-    Vous êtes le seul à pouvoir voir votre profil public.
+      {{ _('Only you, your friends & trainers can view your public profile') }}
     {% elif user.privacy_profile == 'club' %}
-    Tous les membres de vos clubs peuvent voir votre profil public.
+      {{ _('Every club member can view your public profile') }}
     {% else %}
-    Tout le monde peut voir votre profil public.
+      {{ _('Any visitor can view your public profile') }}
     {% endif %}
   </div>
   {% endif %}
@@ -53,34 +53,34 @@
         {# Friend ? #}
         {% if friend_status == 'friend' %}
         <button class="btn btn-success disabled">
-          <i class="icon-club"></i> Ami
+          <i class="icon-club"></i> {{ _('Friend') }}
         </button>
         {% elif friend_status == 'request' %}
         <button class="btn btn-info disabled">
-          <i class="icon-club"></i> Demandé
+          <i class="icon-club"></i> {{ _('Requested') }}
         </button>
         {% else %}
         <span id="fr_{{ member.pk }}">
           <button data-replaces="fr_{{ member.pk }}" class="btn btn-info modal-action modal-post" href="{% url friend-add member.username %}">
-            <i class="icon-club"></i> Ajouter
+            <i class="icon-club"></i> {{ _('Add friend') }}
           </button>
         </span>
         {% endif %}
 
         {# Send a message #}
         <a href="{% url message-user-add member.username %}" class="modal-action btn btn-info">
-          <i class="icon-mail"></i> Envoyer un message
+          <i class="icon-mail"></i> {{ _('Send a message') }}
         </a>
       </p>
       {% endif %}
 
       {% for m in member.memberships.exclude(role__in=('prospect', 'archive')) %}
       <h4>
-        <span class="label {{ role_css[m.role] }}">{{ roles[m.role] }}</span> au <a href="{% url club-members m.club.slug %}">{{ m.club.name }}</a>
+        <span class="label {{ role_css[m.role] }}">{{ _(m.role|title) }}</span> au <a href="{% url club-members m.club.slug %}">{{ m.club.name }}</a>
       </h4>
         {% with m.trainers.exclude(pk=member.pk) as trainers %}
           {% for trainer in trainers %}
-          <span class="label {{ role_css['trainer'] }}">Entrainé</span> par 
+          <span class="label {{ role_css['trainer'] }}">{{ _('Trained by') }}</span>
             <a href="{% url user-public-profile  trainer.username %}">{{ trainer.first_name }} {{ trainer.last_name }}</a>
           {% endfor %}
         {% endwith %}
@@ -93,30 +93,30 @@
         <div class="col-sm-6 col-xs-12">
           {% if last_sessions %}
           <p>
-            <span class="label label-danger">{{ last_sessions|length() }} dernières séances</span>
+            <span class="label label-danger">{{ _('%d last sessions') %  last_sessions|length() }}</span>
           </p>
           {% for session in last_sessions %}
           <p>
             <i class="icon-sport-{{session.sport.slug }}"></i>
-            <a href="{% url user-calendar-day member.username, session.day.date.year, session.day.date.month, session.day.date.day %}">{{ session.name|default('Séance')|truncate(40)}}</a>, il y a {{ session.day.date|timesince }}
+            <a href="{% url user-calendar-day member.username, session.day.date.year, session.day.date.month, session.day.date.day %}">{{ session.name|default('Séance')|truncate(40)}}</a>, {{ _('%s ago') % session.day.date|timesince }}
           </p>
           {% endfor %}
           {% endif %}
 
-          <a class="btn btn-primary btn-sm" href="{% url user-calendar-month member.username, today.year, today.month %}">Voir le calendrier <i class="icon-calendar"></i></a>
+          <a class="btn btn-primary btn-sm" href="{% url user-calendar-month member.username, today.year, today.month %}">{{ _('View calendar') }}<i class="icon-calendar"></i></a>
         </div>
 
         {% if 'comments' in privacy %}
         <div class="col-sm-6 col-xs-12">
           {% if commented_sessions %}
           <p>
-            <span class="label label-success">{{ commented_sessions|length() }} séances les plus commentées</span>
+            <span class="label label-success">{{ _('%d most commented sessions') % commented_sessions|length() }}</span>
           </p>
           {% for session in commented_sessions %}
           <p>
             <i class="icon-sport-{{session.sport.slug }}"></i>
             <a href="{% url user-calendar-day member.username, session.day.date.year, session.day.date.month, session.day.date.day %}">{{ session.name|default('Séance')|truncate(40)}}</a>
-            , {{ session.nb_comments }} commentaire{{ session.nb_comments|pluralize() }}
+            , {{ _('%d comments') % session.nb_comments }}
           </p>
           {% endfor %}
           {% endif %}
@@ -129,7 +129,7 @@
 
     {% if 'avatar' in privacy %}
     <div class="col-sm-3 col-xs-3">
-      <img class="img-responsive img-thumbnail avatar pull-right" src="{{ member.avatar.url }}" alt="Avatar de {{ member.first_name }} {{ member.last_name }}"/>
+      <img class="img-responsive img-thumbnail avatar pull-right" src="{{ member.avatar.url }}" alt="Avatar {{ member.first_name }} {{ member.last_name }}"/>
     </div>
     {% endif %}
   </div>

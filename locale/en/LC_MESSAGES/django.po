@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-28 19:04+0100\n"
+"POT-Creation-Date: 2014-12-04 17:07+0100\n"
 "PO-Revision-Date: 2014-11-28 18:21+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
@@ -150,6 +150,32 @@ msgstr ""
 
 #: sport/models/sport.py:48 templates/_macros.html:146
 msgid "Race category"
+msgstr ""
+
+#: templates/403.html:6
+msgid "Forbidden"
+msgstr ""
+
+#: templates/403.html:8
+msgid "You do not have access to this page."
+msgstr ""
+
+#: templates/403.html:10 templates/404.html:10
+msgid "Back to homepage"
+msgstr ""
+
+#: templates/404.html:7
+msgid "Page not found"
+msgstr ""
+
+#: templates/500.html:5
+msgid "Error on this page"
+msgstr ""
+
+#: templates/500.html:8
+msgid ""
+"A severe error has occured on this page, the administrator has been emailed "
+"about this issue."
 msgstr ""
 
 #: templates/_macros.html:116
@@ -517,6 +543,7 @@ msgid "Category"
 msgstr ""
 
 #: templates/club/members.athletes.html:32 templates/club/members.html:58
+#: templates/users/login.html:88
 msgid "Trainer"
 msgstr ""
 
@@ -526,19 +553,22 @@ msgid "Staff"
 msgstr ""
 
 #: templates/club/members.athletes.html:36 templates/club/members.html:56
-#: templates/club/races.html:17
+#: templates/club/races.html:17 templates/users/login.html:87
 msgid "Athlete"
 msgstr ""
 
 #: templates/club/members.athletes.html:47
+#: templates/users/profile/index.html:56
 msgid "Friend"
 msgstr ""
 
 #: templates/club/members.athletes.html:51
+#: templates/users/profile/index.html:60
 msgid "Requested"
 msgstr ""
 
 #: templates/club/members.athletes.html:56
+#: templates/users/profile/index.html:65
 msgid "Add friend"
 msgstr ""
 
@@ -587,7 +617,7 @@ msgstr ""
 msgid "Profile"
 msgstr ""
 
-#: templates/club/members.html:99
+#: templates/club/members.html:99 templates/users/profile/records.html:1
 msgid "Records"
 msgstr ""
 
@@ -627,7 +657,7 @@ msgid "In"
 msgstr ""
 
 #: templates/club/races.html:31 templates/messages/inbox.html:69
-#: templates/users/notifications.html:28
+#: templates/users/notifications.html:28 templates/users/races.html:99
 msgid "View"
 msgstr ""
 
@@ -734,7 +764,7 @@ msgstr ""
 msgid "Your recent conversations"
 msgstr ""
 
-#: templates/messages/inbox.html:30
+#: templates/messages/inbox.html:30 templates/users/profile/index.html:101
 #, python-format
 msgid "%s ago"
 msgstr ""
@@ -1069,16 +1099,107 @@ msgstr ""
 msgid "Total"
 msgstr ""
 
+#: templates/users/login.html:62 templates/users/login.html.py:79
+#: templates/users/password_reset_complete.html:10
+msgid "Sign in"
+msgstr ""
+
+#: templates/users/login.html:65
+msgid "Club invite"
+msgstr ""
+
+#: templates/users/login.html:66
+msgid "Please sign in before using the invite"
+msgstr ""
+
+#: templates/users/login.html:74
+msgid "Your email"
+msgstr ""
+
+#: templates/users/login.html:75
+msgid "Your password"
+msgstr ""
+
+#: templates/users/login.html:77
+msgid "Stay connected ?"
+msgstr ""
+
+#: templates/users/login.html:81
+msgid "Forgot password ?"
+msgstr ""
+
 #: templates/users/notifications.html:34
 msgid "You don't have any notifications."
 msgstr ""
 
-#: templates/users/notifications.html:41
+#: templates/users/notifications.html:41 templates/users/password.html:15
 msgid "Cancel"
 msgstr ""
 
 #: templates/users/notifications.html:43
 msgid "Delete these notifications"
+msgstr ""
+
+#: templates/users/password.html:6 templates/users/password_reset_form.html:17
+msgid "Change your password"
+msgstr ""
+
+#: templates/users/password.html:16
+msgid "Change password"
+msgstr ""
+
+#: templates/users/password.html:21
+msgid "You successfully changed your password."
+msgstr ""
+
+#: templates/users/password_reset_complete.html:6
+msgid "Password updated"
+msgstr ""
+
+#: templates/users/password_reset_complete.html:8
+msgid "Your password has been updated. You can now sign in normally."
+msgstr ""
+
+#: templates/users/password_reset_confirm.html:8
+msgid "New password"
+msgstr ""
+
+#: templates/users/password_reset_confirm.html:11
+msgid "Please enter and repeat your password."
+msgstr ""
+
+#: templates/users/password_reset_confirm.html:20
+msgid "Change my password"
+msgstr ""
+
+#: templates/users/password_reset_confirm.html:27
+msgid "Password updated failed"
+msgstr ""
+
+#: templates/users/password_reset_confirm.html:30
+msgid "This reset link is invalid; it may have already been used."
+msgstr ""
+
+#: templates/users/password_reset_confirm.html:32
+msgid "You can ask a new reset link"
+msgstr ""
+
+#: templates/users/password_reset_done.html:6
+msgid "Confirmation email sent"
+msgstr ""
+
+#: templates/users/password_reset_done.html:9
+msgid ""
+"You will receive shortly an email with instructions to reset your password."
+msgstr ""
+
+#: templates/users/password_reset_form.html:6
+msgid "Password forgotten"
+msgstr ""
+
+#: templates/users/password_reset_form.html:9
+msgid ""
+"Specify your email address below, and you'll receive a mail to change it."
 msgstr ""
 
 #: templates/users/preferences.html:37
@@ -1168,6 +1289,113 @@ msgstr ""
 
 #: templates/users/preferences.html:207
 msgid "this page"
+msgstr ""
+
+#: templates/users/profile/index.html:32
+msgid "Your public profile"
+msgstr ""
+
+#: templates/users/profile/index.html:34
+msgid "Only you, your friends & trainers can view your public profile"
+msgstr ""
+
+#: templates/users/profile/index.html:36
+msgid "Every club member can view your public profile"
+msgstr ""
+
+#: templates/users/profile/index.html:38
+msgid "Any visitor can view your public profile"
+msgstr ""
+
+#: templates/users/profile/index.html:72
+msgid "Send a message"
+msgstr ""
+
+#: templates/users/profile/index.html:83
+msgid "Trained by"
+msgstr ""
+
+#: templates/users/profile/index.html:96
+#, python-format
+msgid "%d last sessions"
+msgstr ""
+
+#: templates/users/profile/index.html:106
+msgid "View calendar"
+msgstr ""
+
+#: templates/users/profile/index.html:113
+#, python-format
+msgid "%d most commented sessions"
+msgstr ""
+
+#: templates/users/profile/index.html:119
+#, python-format
+msgid "%d comments"
+msgstr ""
+
+#: templates/users/profile/races.html:1 templates/users/races.html:111
+msgid "Future races"
+msgstr ""
+
+#: templates/users/profile/races.html:44
+#, python-format
+msgid "%s has no future races planned"
+msgstr ""
+
+#: templates/users/profile/records.html:79
+#, python-format
+msgid "%s has no records."
+msgstr ""
+
+#: templates/users/profile/stats.html:1
+msgid "Stats of the last 12 months"
+msgstr ""
+
+#: templates/users/profile/stats.html:6
+msgid "Year"
+msgstr ""
+
+#: templates/users/profile/stats.html:8
+msgid "All sessions"
+msgstr ""
+
+#: templates/users/profile/stats.html:32
+#, python-format
+msgid "Stats for %s are not available"
+msgstr ""
+
+#: templates/users/profile/trainer.html:4
+msgid "Infos for trainers"
+msgstr ""
+
+#: templates/users/races.html:33
+msgid "Records of"
+msgstr ""
+
+#: templates/users/races.html:35
+msgid "Back to club"
+msgstr ""
+
+#: templates/users/races.html:40
+msgid "Add a record"
+msgstr ""
+
+#: templates/users/races.html:58
+msgid "parts"
+msgstr ""
+
+#: templates/users/races.html:108
+msgid "No races"
+msgstr ""
+
+#: templates/users/races.html:118
+#, python-format
+msgid "In %s"
+msgstr ""
+
+#: templates/users/races.html:138
+msgid "No future races"
 msgstr ""
 
 #: users/models.py:34
@@ -1376,219 +1604,219 @@ msgstr ""
 msgid "%(first_name)s %(last_name)s wants to add you as a friend."
 msgstr ""
 
-#: Sport/name:1
+#: vinaigrette-deleteme.py:2
 msgid "Any Activity Type"
 msgstr ""
 
-#: Sport/name:2
+#: vinaigrette-deleteme.py:3
 msgid "Uncategorized"
 msgstr ""
 
-#: Sport/name:3
+#: vinaigrette-deleteme.py:4
 msgid "Course à pied"
 msgstr "Running"
 
-#: Sport/name:4
+#: vinaigrette-deleteme.py:5
 msgid "Street Running"
 msgstr ""
 
-#: Sport/name:5
+#: vinaigrette-deleteme.py:6
 msgid "Track Running"
 msgstr ""
 
-#: Sport/name:6
+#: vinaigrette-deleteme.py:7
 msgid "Trail Running"
 msgstr ""
 
-#: Sport/name:7
+#: vinaigrette-deleteme.py:8
 msgid "Treadmill Running"
 msgstr ""
 
-#: Sport/name:8
+#: vinaigrette-deleteme.py:9
 msgid "Vélo"
 msgstr "Cycling"
 
-#: Sport/name:9
+#: vinaigrette-deleteme.py:10
 msgid "Cyclocross"
 msgstr ""
 
-#: Sport/name:10
+#: vinaigrette-deleteme.py:11
 msgid "Downhill Biking"
 msgstr ""
 
-#: Sport/name:11
+#: vinaigrette-deleteme.py:12
 msgid "Indoor Cycling"
 msgstr ""
 
-#: Sport/name:12
+#: vinaigrette-deleteme.py:13
 msgid "Mountain Biking"
 msgstr ""
 
-#: Sport/name:13
+#: vinaigrette-deleteme.py:14
 msgid "Recumbent Cycling"
 msgstr ""
 
-#: Sport/name:14
+#: vinaigrette-deleteme.py:15
 msgid "Road Cycling"
 msgstr ""
 
-#: Sport/name:15
+#: vinaigrette-deleteme.py:16
 msgid "Track Cycling"
 msgstr ""
 
-#: Sport/name:16
+#: vinaigrette-deleteme.py:17
 msgid "Fitness"
 msgstr ""
 
-#: Sport/name:17
+#: vinaigrette-deleteme.py:18
 msgid "Elliptical"
 msgstr ""
 
-#: Sport/name:18
+#: vinaigrette-deleteme.py:19
 msgid "Indoor Cardio"
 msgstr ""
 
-#: Sport/name:19
+#: vinaigrette-deleteme.py:20
 msgid "Indoor Rowing"
 msgstr ""
 
-#: Sport/name:20
+#: vinaigrette-deleteme.py:21
 msgid "Stair Climbing"
 msgstr ""
 
-#: Sport/name:21
+#: vinaigrette-deleteme.py:22
 msgid "Strength Training"
 msgstr ""
 
-#: Sport/name:22
+#: vinaigrette-deleteme.py:23
 msgid "Randonnée"
 msgstr "hiking"
 
-#: Sport/name:23
+#: vinaigrette-deleteme.py:24
 msgid "Natation"
 msgstr "Swimming"
 
-#: Sport/name:24
+#: vinaigrette-deleteme.py:25
 msgid "Lap Swimming"
 msgstr ""
 
-#: Sport/name:25
+#: vinaigrette-deleteme.py:26
 msgid "Open Water Swimming"
 msgstr ""
 
-#: Sport/name:26
+#: vinaigrette-deleteme.py:27
 msgid "Marche"
 msgstr "Walking"
 
-#: Sport/name:27
+#: vinaigrette-deleteme.py:28
 msgid "Casual Walking"
 msgstr ""
 
-#: Sport/name:28
+#: vinaigrette-deleteme.py:29
 msgid "Speed Walking"
 msgstr ""
 
-#: Sport/name:29
+#: vinaigrette-deleteme.py:30
 msgid "Transition"
 msgstr ""
 
-#: Sport/name:30
+#: vinaigrette-deleteme.py:31
 msgid "Swim to Bike Transition"
 msgstr ""
 
-#: Sport/name:31
+#: vinaigrette-deleteme.py:32
 msgid "Bike to Run Transition"
 msgstr ""
 
-#: Sport/name:32
+#: vinaigrette-deleteme.py:33
 msgid "Run to Bike Transition"
 msgstr ""
 
-#: Sport/name:33
+#: vinaigrette-deleteme.py:34
 msgid "Moto"
 msgstr "Motorbike"
 
-#: Sport/name:34
+#: vinaigrette-deleteme.py:35
 msgid "Autre"
 msgstr "Other"
 
-#: Sport/name:35
+#: vinaigrette-deleteme.py:36
 msgid "Backcountry Skiing/Snowboarding"
 msgstr ""
 
-#: Sport/name:36
+#: vinaigrette-deleteme.py:37
 msgid "Boating"
 msgstr ""
 
-#: Sport/name:37
+#: vinaigrette-deleteme.py:38
 msgid "Cross Country Skiing"
 msgstr ""
 
-#: Sport/name:38
+#: vinaigrette-deleteme.py:39
 msgid "Driving"
 msgstr ""
 
-#: Sport/name:39
+#: vinaigrette-deleteme.py:40
 msgid "Flying"
 msgstr ""
 
-#: Sport/name:40
+#: vinaigrette-deleteme.py:41
 msgid "Golf"
 msgstr ""
 
-#: Sport/name:41
+#: vinaigrette-deleteme.py:42
 msgid "Horseback Riding"
 msgstr ""
 
-#: Sport/name:42
+#: vinaigrette-deleteme.py:43
 msgid "Inline Skating"
 msgstr ""
 
-#: Sport/name:43
+#: vinaigrette-deleteme.py:44
 msgid "Mountaineering"
 msgstr ""
 
-#: Sport/name:44
+#: vinaigrette-deleteme.py:45
 msgid "Paddling"
 msgstr ""
 
-#: Sport/name:45
+#: vinaigrette-deleteme.py:46
 msgid "Resort Skiing/Snowboarding"
 msgstr ""
 
-#: Sport/name:46
+#: vinaigrette-deleteme.py:47
 msgid "Rowing"
 msgstr ""
 
-#: Sport/name:47
+#: vinaigrette-deleteme.py:48
 msgid "Sailing"
 msgstr ""
 
-#: Sport/name:48
+#: vinaigrette-deleteme.py:49
 msgid "Skate Skiing"
 msgstr ""
 
-#: Sport/name:49
+#: vinaigrette-deleteme.py:50
 msgid "Skating"
 msgstr ""
 
-#: Sport/name:50
+#: vinaigrette-deleteme.py:51
 msgid "Snowmobiling"
 msgstr ""
 
-#: Sport/name:51
+#: vinaigrette-deleteme.py:52
 msgid "Snowshoeing"
 msgstr ""
 
-#: Sport/name:52
+#: vinaigrette-deleteme.py:53
 msgid "Stand Up Paddleboarding"
 msgstr ""
 
-#: Sport/name:53
+#: vinaigrette-deleteme.py:54
 msgid "Whitewater Kayaking/Rafting"
 msgstr ""
 
-#: Sport/name:54
+#: vinaigrette-deleteme.py:55
 msgid "Wind/Kite Surfing"
 msgstr ""
 
