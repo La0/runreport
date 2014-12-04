@@ -16,6 +16,9 @@ urlpatterns = patterns('',
   url(r'^friends/', include('friends.urls')),
   url(r'^(?P<type>help|news)/', include('page.urls')),
 
+  # Search through haystack
+  (r'^search/', include('haystack.urls')),
+
   # Invite
   url(r'^invite/(?P<slug>.*)', ClubInviteCheck.as_view(), name="club-invite"),
 

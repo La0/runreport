@@ -155,6 +155,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.gis',
+    'haystack',
     'interval',
     'sport',
     'users',
@@ -315,6 +316,14 @@ TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 # Mailman server (api url)
 MAILMAN_URL = ''
+
+# Setup search through Haystack
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': os.path.join(HOME, 'whoosh_index'),
+    },
+}
 
 # Import local settings, if any
 try:

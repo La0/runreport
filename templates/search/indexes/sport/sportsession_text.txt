@@ -1,0 +1,6 @@
+{{ object.name }}
+{{ object.comment }}
+{{ object.time }}
+{{ object.distance}}
+{{ object.day.date }}
+{{ object.day.week.user }}
