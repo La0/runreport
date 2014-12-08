@@ -1,6 +1,6 @@
 {% extends 'modal.html' %}
 
-{% set modal_title = 'Ajouter un commentaire' %}
+{% set modal_title = _('Add a comment') %}
 
 {% set form_url = url('message-session-add', session.pk, type) %}
 
@@ -8,11 +8,11 @@
 <div class="add-comment">
   <h4>
     {% if session.type == 'training' %}
-    <span class="label label-info">Entrainement</span>
+    <span class="label label-info">{{ _('Training') }}</span>
     {% elif session.type == 'race' %}
-    <span class="label label-success">Course</span>
+    <span class="label label-success">{{ _('Race') }}</span>
     {% elif session.type == 'rest' %}
-    <span class="label label-danger">Repos</span>
+    <span class="label label-danger">{{ _('Rest') }}</span>
     {% endif %}
     {{ session.name }}
   </h4>
@@ -39,12 +39,12 @@
   {% if type == 'private' %}
   <p class="text-warning">
     <i class="icon-lock"></i>
-    Ce commentaire sera <strong>privé</strong>, et donc visible uniquement par l'athlète et ses entraineurs.
+    {{ _('This comment will be private, only the athlete and his trainers will see it.') }}
   </p>
   {% else %}
   <p class="text-success">
     <i class="icon-club"></i>
-    Ce commentaire sera <strong>public</strong>, et donc visible par les membres autorisés de vos clubs.
+    {{ _('This comment will be public, anyone can see it.') }}
   </p>
   {% endif %}
 
@@ -52,6 +52,6 @@
 {% endblock %}
 
 {% block footer %}
-<button class="btn" data-dismiss="modal">Annuler</button>
-<button type="submit" class="btn btn-primary">Commenter</button>
+<button class="btn" data-dismiss="modal">{{ _('Cancel') }}</button>
+<button type="submit" class="btn btn-primary">{{ _('Comment') }}</button>
 {% endblock %}

@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 
-{% set page_title = 'Créer un compte' %}
+{% set page_title = _('Create my account') %}
 
 {% block content %}
 
 <div class="container">
-  <h2>Créer un compte</h2>
+  <h2>{{ _('Create my account') }}</h2>
   {% if invite and invite.type == 'create' %}
   <div class="alert alert-info">
-    <h4>Invitation de création de club</h4>
-    Bienvenue! Vous devez créer un compte personnel avant de pouvoir créer votre club.
+    <h4>{{ _('Club invite') }}</h4>
+    {{ _('Welcome ! You must create a personal account in order to create your club.') }}
   </div>
   {% endif %}
 	<form method="post" class="form-horizontal" role="form">
@@ -17,14 +17,14 @@
 		{% with form.non_field_errors() as err %}
 		{{ err|safe }}
 		{% endwith %}
-		{{ macros.input(form.firstname, 'Votre prénom') }}
-		{{ macros.input(form.lastname, 'Votre nom') }}
-		{{ macros.input(form.email, 'Votre email') }}
-		{{ macros.input(form.password, 'Mot de passe') }}
-		{{ macros.input(form.password_check, 'Vérifiez le mot de passe') }}
+		{{ macros.input(form.firstname) }}
+		{{ macros.input(form.lastname) }}
+		{{ macros.input(form.email) }}
+		{{ macros.input(form.password) }}
+		{{ macros.input(form.password_check) }}
 		<div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
-				<button type="submit" class="btn btn-primary">Créer mon compte</button>
+				<button type="submit" class="btn btn-primary">{{ _('Create my account') }}</button>
 			</div>
 		</div>
 	</form>

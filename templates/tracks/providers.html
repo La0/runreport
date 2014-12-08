@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
-{% set page_title = 'Fournisseurs de traces GPS' %}
+{% set page_title = _('GPS Services') %}
 
 {% block content %}
 <div class="container">
-  <h1>Fournisseurs de traces GPS</h1>
+  <h1>{{ _('GPS Services') }}</h1>
   <p>
-    Vous pouvez utiliser différents fournisseurs de traces GPS pour synchroniser automatiquement vos séances depuis ces services.
+    {{ _('You can use several GPS services to automatically import your sessions.') }}
   </p>
 
   {% for provider in providers %}
@@ -18,33 +18,34 @@
     </h2>
     <div class="col-sm-2 col-xs-4">
       {% if connected  %}
-      <span class="label label-success">Connecté</span>
+      <span class="label label-success">{{ _('Connected') }}</span>
       {% else %}
-      <span class="label label-danger">Déconnecté</span>
+      <span class="label label-danger">{{ _('Disconnected') }}</span>
       {% endif %}
     </div>
 
     <div class="col-sm-6 col-xs-8">
       {% if stats.total %}
-      <span class="badge badge-info">{{ stats.total }}</span> traces importées du {{ stats.min_date|date('d/m/Y') }} au {{ stats.max_date|date('d/m/Y') }}
+      <span class="badge badge-info">{{ stats.total }}</span>
+      {{ _('imported tracks from %(start)s to %(end)s') % {'start' : stats.min_date|date('d/m/Y'), 'end'   : stats.max_date|date('d/m/Y'),} }}
       {% else %}
-      <span class="text-warning">Pas de traces importées</span>
+      <span class="text-warning">{{ _('No tracks imported') }}</span>
       {% endif %}
     </div>
 
     <div class="col-sm-4 col-xs-12 text-right">
       {% if connected %}
         <a href="{% url track-provider-disconnect provider.NAME %}" class="btn btn-danger modal-action">
-          <i class="icon-trash"></i> Déconnecter {{ provider.NAME|title() }}
+          <i class="icon-trash"></i> {{ _('Disconnect %s') % provider.NAME|title() }}
         </a>
       {% else %}
         {% if provider.NAME == 'garmin' %}
         <a href="{% url user-garmin %}" class="btn btn-success">
-          Connecter {{ provider.NAME|title() }} <i class="icon-right-open"></i>
+          {{ _('Connect %s') % provider.NAME|title() }} <i class="icon-right-open"></i>
         </a>
         {% else %}
         <a href="{{ provider.auth() }}" class="btn btn-success">
-          Connecter {{ provider.NAME|title() }} <i class="icon-right-open"></i>
+          {{ _('Connect %s') % provider.NAME|title() }} <i class="icon-right-open"></i>
         </a>
         {% endif %}
       {% endif %}

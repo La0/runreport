@@ -5,6 +5,7 @@ from coach.settings import GPG_HOME, GPG_KEY
 from helpers import nameize
 import gnupg
 from tracks.providers.garmin import GarminProvider, GarminAuthException
+from django.utils.translation import ugettext_lazy as _
 
 class UserForm(forms.ModelForm):
   class Meta:
@@ -49,11 +50,11 @@ class UserPasswordForm(forms.Form):
     return self.cleaned_data
 
 class SignUpForm(forms.Form):
-  firstname = forms.CharField()
-  lastname = forms.CharField()
-  password = forms.CharField(min_length=4, widget=forms.PasswordInput())
-  password_check = forms.CharField(min_length=4, widget=forms.PasswordInput())
-  email = forms.EmailField()
+  firstname = forms.CharField(label=_('Firstname'))
+  lastname = forms.CharField(label=_('Lastname'))
+  password = forms.CharField(min_length=4, widget=forms.PasswordInput(), label=_('Password'))
+  password_check = forms.CharField(min_length=4, widget=forms.PasswordInput(), label=_('Repeat your password'))
+  email = forms.EmailField(label=_('Email'))
 
   def clean_firstname(self):
     return self.cleaned_data['firstname'].title()
@@ -67,7 +68,7 @@ class SignUpForm(forms.Form):
     '''
     users = Athlete.objects.filter(email=self.cleaned_data['email'])
     if len(users) > 0:
-      raise ValidationError('Un compte existe deja avec cet email.')
+      raise ValidationError(_('An account already uses this email.'))
     return self.cleaned_data['email']
 
   def clean(self):
@@ -76,7 +77,7 @@ class SignUpForm(forms.Form):
     '''
     if 'password' in self.cleaned_data and 'password_check' in self.cleaned_data:
       if self.cleaned_data['password'] != self.cleaned_data['password_check']:
-        raise ValidationError('Entrez deux fois le meme mot de passe.')
+        raise ValidationError(_('Please repeat the same password'))
 
     # Add unique username
     if 'firstname' in self.cleaned_data and 'lastname' in self.cleaned_data:
@@ -125,6 +126,6 @@ class GarminForm(forms.ModelForm):
       provider.auth(force_login=self.cleaned_data['garmin_login'], force_password=self.clear_password)
     except GarminAuthException, e:
       print 'Garmin Auth failed : %s' % (str(e),)
-      raise ValidationError("Authentification Garmin invalide")
+      raise ValidationError(_('Invalid Garmin authentification'))
 
     return self.cleaned_data

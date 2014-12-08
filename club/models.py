@@ -5,6 +5,7 @@ from coach.mail import MailBuilder
 from datetime import datetime
 from club import ROLES
 from django.conf import settings
+from django.utils.translation import ugettext_lazy as _
 
 class Club(models.Model):
   name = models.CharField(max_length=250)
@@ -103,8 +104,8 @@ class ClubMembership(models.Model):
 
 class ClubLink(models.Model):
   club = models.ForeignKey(Club, related_name="links")
-  name = models.CharField(max_length=250)
-  url = models.URLField(max_length=250)
+  name = models.CharField(_('Link name'), max_length=250)
+  url = models.URLField(_('Link address'), max_length=250)
   position = models.IntegerField()
 
 class ClubInvite(models.Model):

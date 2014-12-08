@@ -1,14 +1,14 @@
 {% extends 'modal.html' %}
 
-{% set modal_title = 'Déconnecter %s' % provider.NAME|title() %}
+{% set modal_title = _('Disconnect %s') % provider.NAME|title() %}
 
 {% set form_url = 'track-provider-disconnect'|url(provider.NAME) %}
 
 {% block body %}
-Êtes vous sûr de vouloir déconnecter le service de trace <strong>{{ provider.NAME|title() }}</strong> de votre compte ?
+{{ _('Are you sure to disconnect the GPS Service %s from your account ?') % provider.NAME|title() }}
 {% endblock %}
 
 {% block footer %}
-  <button class="btn btn-default" data-dismiss="modal">Annuler</button>
-  <button type="submit" class="btn btn-danger"><i class="icon-trash"></i> Déconnecter</i></button>
+  <button class="btn btn-default" data-dismiss="modal">{{ _('Cancel') }}</button>
+  <button type="submit" class="btn btn-danger"><i class="icon-trash"></i> {{ _('Disconnect') }}</i></button>
 {% endblock %}

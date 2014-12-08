@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-04 17:07+0100\n"
-"PO-Revision-Date: 2014-12-04 17:07+0100\n"
+"POT-Creation-Date: 2014-12-08 19:05+0100\n"
+"PO-Revision-Date: 2014-12-08 19:06+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -17,6 +17,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 1.5.4\n"
+
+#: club/models.py:107
+msgid "Link name"
+msgstr "Nom du lien"
+
+#: club/models.py:108
+msgid "Link address"
+msgstr "Adresse du lien"
 
 #: coach/menu.py:23
 msgid "Clubs"
@@ -430,6 +438,22 @@ msgstr "Vous êtes déjà en relation avec ce club"
 msgid "Close"
 msgstr "Fermer"
 
+#: templates/club/link/add.html:3 templates/club/manage.html:95
+msgid "Add a link"
+msgstr "Ajouter un lien"
+
+#: templates/club/link/add.html:13 templates/messages/add/conversation.html:69
+#: templates/messages/add/session.html:55 templates/messages/add/user.html:25
+#: templates/messages/delete.html:19 templates/messages/edit.html:19
+#: templates/tracks/disconnect.html:12 templates/users/notifications.html:41
+#: templates/users/password.html:15
+msgid "Cancel"
+msgstr "Annuler"
+
+#: templates/club/link/add.html:14
+msgid "Add"
+msgstr "Ajouter"
+
 #: templates/club/manage.html:11
 msgid "Users"
 msgstr "Utilisateurs"
@@ -529,17 +553,13 @@ msgid "Actions"
 msgstr "Actions"
 
 #: templates/club/manage.html:84 templates/messages/_list.html:62
-#: templates/sport/session/edit.html:51
+#: templates/messages/delete.html:20 templates/sport/session/edit.html:51
 msgid "Delete"
 msgstr "Supprimer"
 
 #: templates/club/manage.html:92
 msgid "There are no public link for your club."
 msgstr "Aucun lien public pour votre club."
-
-#: templates/club/manage.html:95
-msgid "Add a link"
-msgstr "Ajouter un lien"
 
 #: templates/club/manage.html:112 templates/club/role.html:47
 msgid "Demo account"
@@ -550,7 +570,7 @@ msgid "Edition is deactivated for the demo"
 msgstr "L'édition est désactivée pour la démo."
 
 #: templates/club/manage.html:116 templates/messages/_list.html:63
-#: templates/sport/day/edit.html:40
+#: templates/messages/edit.html:20 templates/sport/day/edit.html:40
 msgid "Edit"
 msgstr "Editer"
 
@@ -669,7 +689,8 @@ msgstr "Courses de %s"
 msgid "Type"
 msgstr "Type"
 
-#: templates/club/races.html:19
+#: templates/club/races.html:19 templates/messages/add/conversation.html:24
+#: templates/messages/add/session.html:13
 msgid "Race"
 msgstr "Course"
 
@@ -704,7 +725,7 @@ msgid "Available places"
 msgstr "Places disponibles"
 
 #: templates/club/role.html:37 templates/page/detail.html:52
-#: templates/sport/session/edit.html:49
+#: templates/sport/session/edit.html:49 templates/users/garmin.html:45
 msgid "Save"
 msgstr "Sauver"
 
@@ -741,6 +762,33 @@ msgstr ""
 msgid "Send message"
 msgstr "Envoyer message"
 
+#: templates/friends/home.html:3 templates/friends/home.html.py:8
+#| msgid "Add friend"
+msgid "My friends"
+msgstr "Mes amis"
+
+#: templates/friends/home.html:24 templates/sport/day/edit.html:35
+msgid "View this profile"
+msgstr "Voir ce profil public"
+
+#: templates/friends/home.html:32
+msgid "You can add friends from your club, for example."
+msgstr "Vous pouvez ajouter des amis de votre club, par exemple."
+
+#: templates/friends/home.html:50
+#| msgid "Refused"
+msgid "Refuse"
+msgstr "Refuser"
+
+#: templates/friends/home.html:53
+msgid "Accept"
+msgstr "Accepter"
+
+#: templates/friends/home.html:59
+#| msgid "You don't have any notifications."
+msgid "You don't have any friend request to validate."
+msgstr "Vous n'avez aucune demande d'amitié à valider."
+
 #: templates/messages/_list.html:13
 #, python-format
 msgid "%d private comments"
@@ -759,7 +807,7 @@ msgstr "Voir tous les commentaires précédents"
 msgid "Private comment"
 msgstr "Commentaire privé"
 
-#: templates/messages/_list.html:53
+#: templates/messages/_list.html:53 templates/messages/conversation.html:24
 #, python-format
 msgid "Edited %d times"
 msgstr "Edité %d fois"
@@ -784,11 +832,80 @@ msgstr "Démarrer une conversation privée"
 msgid "You must be logged in to add a comment"
 msgstr "Vous devez être connecté pour ajouter un commentaire"
 
-#: templates/messages/_list.html:93
+#: templates/messages/_list.html:93 templates/messages/add/conversation.html:3
+#: templates/messages/add/session.html:3
 msgid "Add a comment"
 msgstr "Ajouter un commentaire"
 
-#: templates/messages/inbox.html:8
+#: templates/messages/add/conversation.html:3
+msgid "Reply to message"
+msgstr "Répondre au message"
+
+#: templates/messages/add/conversation.html:22
+#: templates/messages/add/session.html:11
+msgid "Training"
+msgstr "Entraînement"
+
+#: templates/messages/add/conversation.html:26
+#: templates/messages/add/session.html:15
+msgid "Rest"
+msgstr "Repos"
+
+#: templates/messages/add/conversation.html:55
+#: templates/messages/add/session.html:42
+msgid ""
+"This comment will be private, only the athlete and his trainers will see it."
+msgstr ""
+"Ce commentaire sera privé, seul l'athlète et ses entraineurs pourront le "
+"voir."
+
+#: templates/messages/add/conversation.html:61
+#: templates/messages/add/session.html:47
+msgid "This comment will be public, anyone can see it."
+msgstr "Ce commentaire sera public, tous les visiteurs peuvent le voir."
+
+#: templates/messages/add/conversation.html:71
+#: templates/messages/conversation.html:40 templates/messages/inbox.html:62
+msgid "Reply"
+msgstr "Répondre"
+
+#: templates/messages/add/conversation.html:71
+#: templates/messages/add/session.html:56
+#: templates/messages/conversation.html:42 templates/messages/inbox.html:64
+msgid "Comment"
+msgstr "Commenter"
+
+#: templates/messages/add/user.html:3
+#, python-format
+msgid "Write to %(first)s %(last)s"
+msgstr "Ecrire à %(first)s  %(last)s"
+
+#: templates/messages/add/user.html:26
+msgid "Send"
+msgstr "Envoyer"
+
+#: templates/messages/conversation.html:6
+msgid "Conversation with"
+msgstr "Conversation avec"
+
+#: templates/messages/conversation.html:37
+msgid "Back to conversations"
+msgstr "Retour aux conversations"
+
+#: templates/messages/delete.html:3
+msgid "Delete a message"
+msgstr "Supprimer un message"
+
+#: templates/messages/delete.html:9
+#, python-format
+msgid "Are you sure to delete the message from %s ? "
+msgstr "Etes vous sûr de vouloir supprimer le message de %s ?"
+
+#: templates/messages/edit.html:3
+msgid "Edit a message"
+msgstr "Editer un message"
+
+#: templates/messages/inbox.html:3 templates/messages/inbox.html.py:8
 msgid "Your recent conversations"
 msgstr "Vos conversations récentes"
 
@@ -812,14 +929,6 @@ msgstr "Sur la séance de"
 #: templates/messages/inbox.html:52 templates/page/detail.html:13
 msgid "on"
 msgstr "le"
-
-#: templates/messages/inbox.html:62
-msgid "Reply"
-msgstr "Répondre"
-
-#: templates/messages/inbox.html:64
-msgid "Comment"
-msgstr "Commenter"
 
 #: templates/messages/inbox.html:81
 msgid "Previous conversations"
@@ -952,10 +1061,6 @@ msgstr "Voir le mois"
 #: templates/sport/day/edit.html:33
 msgid "View your profile"
 msgstr "Voir votre profil public"
-
-#: templates/sport/day/edit.html:35
-msgid "View this profile"
-msgstr "Voir ce profil public"
 
 #: templates/sport/day/edit.html:45
 msgid "Public profile link"
@@ -1127,14 +1232,135 @@ msgstr "Energie"
 msgid "Total"
 msgstr "Total"
 
+#: templates/tracks/disconnect.html:3 templates/tracks/providers.html:39
+#, python-format
+msgid "Disconnect %s"
+msgstr "Déconnecter %s"
+
+#: templates/tracks/disconnect.html:8
+#, python-format
+msgid "Are you sure to disconnect the GPS Service %s from your account ?"
+msgstr ""
+"Etes vous sûr de vouloir déconnecter le service GPS %s de votre compte ?"
+
+#: templates/tracks/disconnect.html:13
+msgid "Disconnect"
+msgstr "Déconnecter"
+
+#: templates/tracks/oauth.html:9
+msgid "Successfull Authentification"
+msgstr "Authentification réussie"
+
+#: templates/tracks/oauth.html:11
+msgid "You are using the Strava profile"
+msgstr "Vous utilisez le profil Strava"
+
+#: templates/tracks/oauth.html:18
+msgid "Authentification failure"
+msgstr "Echec de l'authentification"
+
+#: templates/tracks/oauth.html:23
+#, python-format
+msgid "Connection to %s"
+msgstr "Connecté à %s"
+
+#: templates/tracks/oauth.html:28
+msgid "Back to GPS services"
+msgstr "Retour aux services GPS"
+
+#: templates/tracks/providers.html:3 templates/tracks/providers.html.py:7
+msgid "GPS Services"
+msgstr "Services GPS"
+
+#: templates/tracks/providers.html:9
+msgid "You can use several GPS services to automatically import your sessions."
+msgstr ""
+"Vous pouvez utiliser différents services GPS pour impoter automatiquement "
+"vos séances."
+
+#: templates/tracks/providers.html:21
+msgid "Connected"
+msgstr "Connecté"
+
+#: templates/tracks/providers.html:23
+msgid "Disconnected"
+msgstr "Déconnecté"
+
+#: templates/tracks/providers.html:30
+#, python-format
+msgid "imported tracks from %(start)s to %(end)s"
+msgstr "traces importées du %(start)s au %(end)s"
+
+#: templates/tracks/providers.html:32
+msgid "No tracks imported"
+msgstr "Pas de traces importées"
+
+#: templates/tracks/providers.html:44 templates/tracks/providers.html.py:48
+#, python-format
+msgid "Connect %s"
+msgstr "Connecter %s"
+
+#: templates/users/create.html:3 templates/users/create.html.py:8
+#: templates/users/create.html:27
+msgid "Create my account"
+msgstr "Créer mon compte"
+
+#: templates/users/create.html:11 templates/users/login.html:65
+msgid "Club invite"
+msgstr "Invitation de club"
+
+#: templates/users/create.html:12
+msgid ""
+"Welcome ! You must create a personal account in order to create your club."
+msgstr ""
+"Bienvenue ! Vous devez créer un compte personel afin de créer votre club."
+
+#: templates/users/garmin.html:12
+msgid "Valid connection"
+msgstr "Connection validée"
+
+#: templates/users/garmin.html:13
+msgid "Your RunReport account is now connected to your Garmin account."
+msgstr "Votre compte RunReport est maintenant connecté à votre compte Garmin"
+
+#: templates/users/garmin.html:17
+msgid "Caution !"
+msgstr "Attention !"
+
+#: templates/users/garmin.html:18
+msgid ""
+"We are forced to ask your login & password to retrieve your Garmin Connect "
+"informations, as they do not provide any official API."
+msgstr ""
+"Nous sommes obligés de vous demander votre login & mot de passe pour "
+"récupérer vos informations depuis Garmin Connect, étant donné qu'ils ne "
+"proposent pas d'API officielle."
+
+#: templates/users/garmin.html:20
+msgid ""
+"Your password is encrypted then stored using professional tools, but they "
+"are stored nonetheless in the website database."
+msgstr ""
+"Votre mot de passe est chiffré, puis stocké en utilisant des outils "
+"professionels, mais ils restent stockés dans la base de donnée du site."
+
+#: templates/users/garmin.html:22
+msgid ""
+"For a maximum level of security, we strongly suggest that you use a unique "
+"password for Garmin Connect (that should not be used for any other account)"
+msgstr ""
+"Pour un niveau de sécurité maximum, nous vous recommandons d'utiliser un mot "
+"de passe unique pour Garmin Connect (qui ne serait pas utilisé pour un autre "
+"compte)"
+
+#: templates/users/garmin.html:32
+msgid "Error"
+msgstr "Erreur"
+
 #: templates/users/login.html:62 templates/users/login.html.py:79
 #: templates/users/password_reset_complete.html:10
 msgid "Sign in"
 msgstr "Se connecter"
-
-#: templates/users/login.html:65
-msgid "Club invite"
-msgstr "Invitation de club"
 
 #: templates/users/login.html:66
 msgid "Please sign in before using the invite"
@@ -1159,10 +1385,6 @@ msgstr "Mot de passe oublié ?"
 #: templates/users/notifications.html:34
 msgid "You don't have any notifications."
 msgstr "Vous n'avez aucune notifications."
-
-#: templates/users/notifications.html:41 templates/users/password.html:15
-msgid "Cancel"
-msgstr "Annuler"
 
 #: templates/users/notifications.html:43
 msgid "Delete these notifications"
@@ -1256,7 +1478,7 @@ msgstr "Mails"
 msgid "Sports Informations"
 msgstr "Informations sportives"
 
-#: templates/users/preferences.html:63
+#: templates/users/preferences.html:63 users/forms.py:55
 msgid "Password"
 msgstr "Mot de passe"
 
@@ -1437,6 +1659,34 @@ msgstr "Dans %s"
 #: templates/users/races.html:138
 msgid "No future races"
 msgstr "Pas de courses à venir"
+
+#: users/forms.py:53
+msgid "Firstname"
+msgstr "Prénom"
+
+#: users/forms.py:54
+msgid "Lastname"
+msgstr "Nom"
+
+#: users/forms.py:56
+msgid "Repeat your password"
+msgstr "Répétez votre mot de passe"
+
+#: users/forms.py:57
+msgid "Email"
+msgstr "Email"
+
+#: users/forms.py:71
+msgid "An account already uses this email."
+msgstr "Un compte utilise déjà cet email."
+
+#: users/forms.py:80
+msgid "Please repeat the same password"
+msgstr "Veuillez répéter le même mot de passe."
+
+#: users/forms.py:129
+msgid "Invalid Garmin authentification"
+msgstr "Authentification Garmin invalide"
 
 #: users/models.py:34
 msgid "username"
@@ -1653,218 +1903,218 @@ msgstr "%(first_name)s %(last_name)s est dorénavant votre ami sur RunReport"
 msgid "%(first_name)s %(last_name)s wants to add you as a friend."
 msgstr "%(first_name)s %(last_name)s veut vous ajouter en tant qu'ami."
 
-#: vinaigrette-deleteme.py:2
+#: Sport/name:1
 msgid "Any Activity Type"
 msgstr "Tous sports"
 
-#: vinaigrette-deleteme.py:3
+#: Sport/name:2
 msgid "Uncategorized"
 msgstr "Sans Catégorie"
 
-#: vinaigrette-deleteme.py:4
+#: Sport/name:3
 msgid "Course à pied"
 msgstr "Course à pied"
 
-#: vinaigrette-deleteme.py:5
+#: Sport/name:4
 msgid "Street Running"
 msgstr "Course à pied sur route"
 
-#: vinaigrette-deleteme.py:6
+#: Sport/name:5
 msgid "Track Running"
 msgstr "Course sur piste"
 
-#: vinaigrette-deleteme.py:7
+#: Sport/name:6
 msgid "Trail Running"
 msgstr "Trail"
 
-#: vinaigrette-deleteme.py:8
+#: Sport/name:7
 msgid "Treadmill Running"
 msgstr "Course sur tapis"
 
-#: vinaigrette-deleteme.py:9
+#: Sport/name:8
 msgid "Vélo"
 msgstr "Vélo"
 
-#: vinaigrette-deleteme.py:10
+#: Sport/name:9
 msgid "Cyclocross"
 msgstr "Cyclocross"
 
-#: vinaigrette-deleteme.py:11
+#: Sport/name:10
 msgid "Downhill Biking"
 msgstr "Vélo de descente"
 
-#: vinaigrette-deleteme.py:12
+#: Sport/name:11
 msgid "Indoor Cycling"
 msgstr "Vélo d'intérieur"
 
-#: vinaigrette-deleteme.py:13
+#: Sport/name:12
 msgid "Mountain Biking"
 msgstr "Vélo en montagne"
 
-#: vinaigrette-deleteme.py:14
+#: Sport/name:13
 msgid "Recumbent Cycling"
 msgstr ""
 
-#: vinaigrette-deleteme.py:15
+#: Sport/name:14
 msgid "Road Cycling"
 msgstr "Cyclisme sur route"
 
-#: vinaigrette-deleteme.py:16
+#: Sport/name:15
 msgid "Track Cycling"
 msgstr "Cyclisme sur piste"
 
-#: vinaigrette-deleteme.py:17
+#: Sport/name:16
 msgid "Fitness"
 msgstr "Fitness"
 
-#: vinaigrette-deleteme.py:18
+#: Sport/name:17
 msgid "Elliptical"
 msgstr ""
 
-#: vinaigrette-deleteme.py:19
+#: Sport/name:18
 msgid "Indoor Cardio"
 msgstr "cardio"
 
-#: vinaigrette-deleteme.py:20
+#: Sport/name:19
 msgid "Indoor Rowing"
 msgstr "rameur"
 
-#: vinaigrette-deleteme.py:21
+#: Sport/name:20
 msgid "Stair Climbing"
 msgstr "Escaliers"
 
-#: vinaigrette-deleteme.py:22
+#: Sport/name:21
 msgid "Strength Training"
 msgstr "Entraînement de force"
 
-#: vinaigrette-deleteme.py:23
+#: Sport/name:22
 msgid "Randonnée"
 msgstr "Randonnée"
 
-#: vinaigrette-deleteme.py:24
+#: Sport/name:23
 msgid "Natation"
 msgstr "Natation"
 
-#: vinaigrette-deleteme.py:25
+#: Sport/name:24
 msgid "Lap Swimming"
 msgstr "Natation"
 
-#: vinaigrette-deleteme.py:26
+#: Sport/name:25
 msgid "Open Water Swimming"
 msgstr "Natation en mer"
 
-#: vinaigrette-deleteme.py:27
+#: Sport/name:26
 msgid "Marche"
 msgstr "Marche"
 
-#: vinaigrette-deleteme.py:28
+#: Sport/name:27
 msgid "Casual Walking"
 msgstr "Marche normale"
 
-#: vinaigrette-deleteme.py:29
+#: Sport/name:28
 msgid "Speed Walking"
 msgstr "Marche rapide"
 
-#: vinaigrette-deleteme.py:30
+#: Sport/name:29
 msgid "Transition"
 msgstr "Transition"
 
-#: vinaigrette-deleteme.py:31
+#: Sport/name:30
 msgid "Swim to Bike Transition"
 msgstr "Transition Natation Vélo"
 
-#: vinaigrette-deleteme.py:32
+#: Sport/name:31
 msgid "Bike to Run Transition"
 msgstr "Transition Vélo Course"
 
-#: vinaigrette-deleteme.py:33
+#: Sport/name:32
 msgid "Run to Bike Transition"
 msgstr "Transition Course Vélo"
 
-#: vinaigrette-deleteme.py:34
+#: Sport/name:33
 msgid "Moto"
 msgstr "Moto"
 
-#: vinaigrette-deleteme.py:35
+#: Sport/name:34
 msgid "Autre"
 msgstr "Autre"
 
-#: vinaigrette-deleteme.py:36
+#: Sport/name:35
 msgid "Backcountry Skiing/Snowboarding"
 msgstr ""
 
-#: vinaigrette-deleteme.py:37
+#: Sport/name:36
 msgid "Boating"
 msgstr "Bateau"
 
-#: vinaigrette-deleteme.py:38
+#: Sport/name:37
 msgid "Cross Country Skiing"
 msgstr "Ski Cross"
 
-#: vinaigrette-deleteme.py:39
+#: Sport/name:38
 msgid "Driving"
 msgstr "Voiture"
 
-#: vinaigrette-deleteme.py:40
+#: Sport/name:39
 msgid "Flying"
 msgstr "Vol"
 
-#: vinaigrette-deleteme.py:41
+#: Sport/name:40
 msgid "Golf"
 msgstr "Golf"
 
-#: vinaigrette-deleteme.py:42
+#: Sport/name:41
 msgid "Horseback Riding"
 msgstr "Poney"
 
-#: vinaigrette-deleteme.py:43
+#: Sport/name:42
 msgid "Inline Skating"
 msgstr ""
 
-#: vinaigrette-deleteme.py:44
+#: Sport/name:43
 msgid "Mountaineering"
 msgstr "Alpinisme"
 
-#: vinaigrette-deleteme.py:45
+#: Sport/name:44
 msgid "Paddling"
 msgstr "Pagai"
 
-#: vinaigrette-deleteme.py:46
+#: Sport/name:45
 msgid "Resort Skiing/Snowboarding"
 msgstr "Ski de piste"
 
-#: vinaigrette-deleteme.py:47
+#: Sport/name:46
 msgid "Rowing"
 msgstr "rameur"
 
-#: vinaigrette-deleteme.py:48
+#: Sport/name:47
 msgid "Sailing"
 msgstr "Voile"
 
-#: vinaigrette-deleteme.py:49
+#: Sport/name:48
 msgid "Skate Skiing"
 msgstr ""
 
-#: vinaigrette-deleteme.py:50
+#: Sport/name:49
 msgid "Skating"
 msgstr "Patinage"
 
-#: vinaigrette-deleteme.py:51
+#: Sport/name:50
 msgid "Snowmobiling"
 msgstr ""
 
-#: vinaigrette-deleteme.py:52
+#: Sport/name:51
 msgid "Snowshoeing"
 msgstr "Raquettes"
 
-#: vinaigrette-deleteme.py:53
+#: Sport/name:52
 msgid "Stand Up Paddleboarding"
 msgstr "PaddleBoard"
 
-#: vinaigrette-deleteme.py:54
+#: Sport/name:53
 msgid "Whitewater Kayaking/Rafting"
 msgstr ""
 
-#: vinaigrette-deleteme.py:55
+#: Sport/name:54
 msgid "Wind/Kite Surfing"
 msgstr ""

@@ -2,30 +2,30 @@
 
 {% block content %}
 <div class="container">
-  <h1>Connection à {{ provider|title() }}</h1>
+  <h1>{{ _('Connection to %s' % provider|title() }}</h1>
 
   {% if response %}
     <div class="alert alert-success">
-      <h4>Authentification réussie</h4>
+      <h4>{{ _('Successfull Authentification') }}</h4>
       {% if provider == 'strava' %}
-      Vous utilisez le profil <strong>Strava</strong> : {{ response.firstname }} {{ response.lastname }} - {{ response.email }}
+      {{ _('You are using the Strava profile') }} : {{ response.firstname }} {{ response.lastname }} - {{ response.email }}
       {% endif %}
     </div>
   {% endif %}
 
   {% if error %}
   <div class="alert alert-danger">
-    <h4>Erreur lors de l'authentification</h4>
+    <h4>{{ _('Authentification failure') }}</h4>
     {{ error }}
   </div>
 
   <a href="{{ auth_url }}" class="btn btn-info">
-    Se connecter à {{ provider|title() }}
+    {{ _('Connection to %s') % provider|title() }}
   </a>
   {% endif %}
 
   <a class="btn btn-primary pull-right" href="{% url track-providers %}">
-    Retour aux fournisseurs de traces GPS
+    {{ _('Back to GPS services') }}
   </a>
 </div>
 {% endblock %}

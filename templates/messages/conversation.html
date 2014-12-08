@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container">
   <h1>
-    Conversation avec
+    {{ _('Conversation with') }}
     {% for r in conversation.get_recipients(user) %}
       {{ r.first_name }} {{ r.last_name }}
       {% if not loop.last %} <span class="text-muted">&</span> {% endif %}
@@ -21,7 +21,7 @@
           <i class="icon-user"></i> <a href="{% url user-public-profile message.writer.username %}">{{ message.writer.first_name }} {{ message.writer.last_name }}</a>
           <i class="icon-calendar"></i> {{ message.created|date('l d E Y - H:i') }}
           {% if message.revision > 1 %}
-          <i class="icon-right-open"></i> Edité {{ message.revision }} fois.
+          <i class="icon-right-open"></i> {{ _('Edited %d times') % message.revision }}
           {% endif %}
         </p>
         <blockquote>
@@ -34,12 +34,12 @@
 
   <div class="row">
     <div class="col-xs-12 text-right">
-      <a href="{% url message-inbox %}" class="btn btn-default">Retour aux conversations</a>
+      <a href="{% url message-inbox %}" class="btn btn-default">{{ _('Back to conversations') }}</a>
       <a href="{% url conversation-add conversation.pk %}" class="modal-action btn btn-default btn-primary">
         {% if conversation.type == 'mail' %}
-        Répondre
+          {{ _('Reply') }}
         {% else %}
-        Commenter
+          {{ _('Comment') }}
         {% endif %}
       </a>
     </div>
