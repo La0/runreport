@@ -11,8 +11,7 @@ $(function(){
         return;
 
       var url = '/calendar/' + ev.date.getFullYear() + '/' + (ev.date.getMonth() + 1) + '/' + ev.date.getDate();
-      load_box(url, 'get', {}, 'modal');
-      $('#add_record').datepicker('hide');
+      window.location = url;
     });
 });
 </script>
@@ -30,7 +29,7 @@ h2, h3 {
 <div class="container">
 	<h2>
     {% if member %}
-    {{ _('Records of') %} {{ member.first_name }} {{ member.last_name }}
+    {{ _('Records of') }} {{ member.first_name }} {{ member.last_name }}
     <p class="actions pull-right">
       <a class="btn btn-success" href="{% url club-members club.slug %}">{{ _('Back to club') }}</a>
     </p>

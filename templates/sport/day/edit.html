@@ -116,7 +116,7 @@
 
   <div class="actions">
     {% if session.pk %}
-    <a href="{% url report-day-delete day_date.year, day_date.month, day_date.day %}" class="pull-left modal-action btn btn-light btn-danger"><i class="icon-trash"></i> {{ _('Delete this session') }}</a>
+    <a href="{% url report-day-delete day_date.year, day_date.month, day_date.day %}" class="pull-left modal-action btn btn-light btn-danger"><i class="icon-trash"></i> {{ _('Delete this day') }}</a>
     {% endif %}
     <p class="text-right">
       <a href="{% url sport-session-add day_date.year, day_date.month, day_date.day %}" class="modal-action btn btn-light btn-primary extra-sport-add" data-append="sessions-{{day_date}}">

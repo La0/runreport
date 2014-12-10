@@ -33,10 +33,10 @@ table.table th, table.table td {
 
 	{% if user.vma and vma %}
 
-	<h2>Temps de passage</h2>
+	<h2>{{ _('Indicative times') }}</h2>
 
 	<p class="alert alert-success">
-		Votre vma actuelle est de {{user.vma}} km/h
+    {{ _('Your recorded top speed is %s km/h') % user.vma }}
 	</p>
 
 	<div class="table-responsive">
@@ -67,20 +67,20 @@ table.table th, table.table td {
 	</div>
 
 	<div class="alert alert-info" style="margin-top: 10px">
-		<h4>A l'aide !</h4>
-		Tous les termes sont expliqués dans le <a href="{% url vma-glossary %}">glossaire</a>.
+		<h4>{{ _('Help') }}</h4>
+    {{ _('All the terms are explained in the glossary') }} : <a href="{% url vma-glossary %}" class="btn btn-primary">{{ _('View') }}</a>.
 	</div>
 
-	<h2>Allures</h2>
+	<h2>{{ _('Paces') }}</h2>
 
 	<div class="table-responsive">
 		<table class="table table-bordered table-hover">
 			<tr>
-				<th>Allures </th>
-				<th title="{{ glossary['VMA'] }}">% VMA</th>
-				<th>Vitesse</th>
-				<th>Temps au km</th>
-				<th>Temps au 100m</th>
+				<th>{{ _('Paces') }}</th>
+				<th title="{{ glossary['VMA'] }}">{{ _('% top speed') }}</th>
+				<th>{{ _('Speed') }}</th>
+				<th>{{ _('Km time') }}</th>
+				<th>{{ _('100m time') }}</th>
 			</tr>
 			{% for pace in vma.get_paces() %}
 			<tr>
@@ -96,8 +96,8 @@ table.table th, table.table td {
 
 	{% else %}
 	<div class="alert alert-danger">
-		<h4>Pas de Vma !</h4>
-		Il faut renseigner ta VMA sur la <a href="{% url user-preferences %}#id_nb_sessions">page de profil</a> pour pouvoir afficher les tableaux.
+		<h4>{{ _('No top speed') }}</h4>
+    {{ _('You need to specify your top speed in your preferences to enable this data tables.') }} : <a href="{% url user-preferences %}#sport" class="btn btn-primary">{{ _('Preferences') }}</a>
 	</div>
 	{% endif %}
 

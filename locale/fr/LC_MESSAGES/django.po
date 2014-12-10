@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-10 19:27+0100\n"
-"PO-Revision-Date: 2014-12-10 19:27+0100\n"
+"POT-Creation-Date: 2014-12-10 20:24+0100\n"
+"PO-Revision-Date: 2014-12-10 20:26+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -41,7 +41,7 @@ msgstr "Créer un club"
 
 #: coach/menu.py:34 coach/menu.py:38 templates/base.html:127
 #: templates/club/join.html:11 templates/club/manage.html:13
-#: templates/club/manage.html.py:67
+#: templates/club/manage.html.py:67 templates/sport/vma.html:70
 msgid "Help"
 msgstr "Aide"
 
@@ -448,8 +448,9 @@ msgstr "Ajouter un lien"
 #: templates/club/link/add.html:13 templates/messages/add/conversation.html:69
 #: templates/messages/add/session.html:55 templates/messages/add/user.html:25
 #: templates/messages/delete.html:19 templates/messages/edit.html:19
-#: templates/tracks/disconnect.html:12 templates/users/notifications.html:41
-#: templates/users/password.html:15
+#: templates/sport/day/delete.html:15 templates/sport/session/delete.html:10
+#: templates/sport/week/publish.html:48 templates/tracks/disconnect.html:12
+#: templates/users/notifications.html:41 templates/users/password.html:15
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -670,7 +671,9 @@ msgid "Records"
 msgstr "Records"
 
 #: templates/club/members.html:100 templates/sport/calendar/month.html:27
-#: templates/sport/calendar/month.html:33 templates/sport/week/edit.html:73
+#: templates/sport/calendar/month.html:33
+#: templates/sport/calendar/year.html:37 templates/sport/calendar/year.html:42
+#: templates/sport/stats.html:3 templates/sport/week/edit.html:73
 msgid "Stats"
 msgstr "Statistiques"
 
@@ -706,7 +709,8 @@ msgid "In"
 msgstr "Dans"
 
 #: templates/club/races.html:31 templates/messages/inbox.html:69
-#: templates/users/notifications.html:28 templates/users/races.html:99
+#: templates/sport/vma.html:71 templates/users/notifications.html:28
+#: templates/users/races.html:98
 msgid "View"
 msgstr "Voir"
 
@@ -782,7 +786,8 @@ msgstr "Merci de nous avoir écrit !"
 msgid "My friends"
 msgstr "Mes amis"
 
-#: templates/friends/home.html:24 templates/sport/day/edit.html:35
+#: templates/friends/home.html:24 templates/sport/calendar/year.html:39
+#: templates/sport/day/edit.html:35
 msgid "View this profile"
 msgstr "Voir ce profil public"
 
@@ -886,7 +891,6 @@ msgstr ""
 "Strava, et les afficher à vos amis, entraineurs, ..."
 
 #: templates/landing/index.html:285
-#| msgid "Use RunReport in"
 msgid "Discover RunReport:"
 msgstr "Découvrir RunReport:"
 
@@ -1173,7 +1177,29 @@ msgstr "Dimanche"
 msgid "friends sessions"
 msgstr "séance d'amis"
 
+#: templates/sport/calendar/year.html:3 templates/sport/calendar/year.html:27
+#: templates/sport/calendar/year.html:31
+#: templates/sport/calendar/year.html:101
+#: templates/sport/calendar/year.html:106 templates/sport/stats.html:38
+#: templates/sport/stats.html.py:54 templates/sport/stats.html:56
+#, python-format
+msgid "Year %s"
+msgstr "Année %s"
+
+#: templates/sport/calendar/year.html:87
+msgid "View this month"
+msgstr "Voir ce mois"
+
+#: templates/sport/day/delete.html:6
+msgid "Are you sure to delete this day ?"
+msgstr "Etes vous sûr de vouloir supprimer cette journée ?"
+
+#: templates/sport/day/delete.html:16 templates/sport/day/edit.html:119
+msgid "Delete this day"
+msgstr "Supprimer cette journée"
+
 #: templates/sport/day/edit.html:19 templates/sport/week/edit.html:8
+#: templates/sport/week/publish.html:3
 #, python-format
 msgid "Week %s"
 msgstr "Semaine du %s"
@@ -1219,10 +1245,6 @@ msgstr "Publier la semaine précèdente"
 msgid "Your comments from last week have not been published"
 msgstr "Vos commentaires de la semaine précèdente n'ont pas été publié"
 
-#: templates/sport/day/edit.html:119
-msgid "Delete this session"
-msgstr "Supprimer cette séance"
-
 #: templates/sport/day/edit.html:123 templates/sport/session/list.html:108
 msgid "Add a session"
 msgstr "Ajouter une séance"
@@ -1250,14 +1272,30 @@ msgid "Loading comments..."
 msgstr "Chargement des commentaires"
 
 #: templates/sport/session/_comments.html:26
+#: templates/sport/week/publish.html:35
 msgid "No comments"
 msgstr "Pas de commentaires pour le moment"
+
+#: templates/sport/session/delete.html:3
+#, python-format
+msgid "%s : Delete session"
+msgstr "%s : Supprimer séance"
+
+#: templates/sport/session/delete.html:6
+#, python-format
+msgid "Are you sure to delete this session of %(sport)s : %(name)s"
+msgstr ""
+"Etes vous sûr de vouloir supprimer la session de %(sport)s : %(name)s ?"
+
+#: templates/sport/session/delete.html:11
+msgid "Delete this session"
+msgstr "Supprimer cette séance"
 
 #: templates/sport/session/edit.html:16
 msgid "Saved session."
 msgstr "Sauver la séance"
 
-#: templates/sport/session/edit.html:36
+#: templates/sport/session/edit.html:36 templates/sport/week/_stats.html:5
 msgid "Sport"
 msgstr "Sport"
 
@@ -1277,8 +1315,8 @@ msgstr "Commentaires"
 msgid "No session name"
 msgstr "Pas de nom de séance"
 
-#: templates/sport/session/list.html:38 templates/tracks/_session.html:32
-#: templates/tracks/_session.html.py:95
+#: templates/sport/session/list.html:38 templates/sport/week/_stats.html:6
+#: templates/tracks/_session.html:32 templates/tracks/_session.html.py:95
 msgid "Time"
 msgstr "Temps"
 
@@ -1286,8 +1324,8 @@ msgstr "Temps"
 msgid "No time"
 msgstr "Pas de temps"
 
-#: templates/sport/session/list.html:49 templates/tracks/_session.html:44
-#: templates/tracks/_session.html.py:93
+#: templates/sport/session/list.html:49 templates/sport/week/_stats.html:7
+#: templates/tracks/_session.html:44 templates/tracks/_session.html.py:93
 msgid "Distance"
 msgstr "Distance"
 
@@ -1298,6 +1336,77 @@ msgstr "Pas de distance"
 #: templates/sport/session/list.html:113
 msgid "No sessions"
 msgstr "Pas de séances"
+
+#: templates/sport/stats.html:40 templates/sport/stats.html.py:61
+#: templates/sport/stats.html:63
+msgid "Every session"
+msgstr "Toutes les séances"
+
+#: templates/sport/stats.html:42 templates/sport/stats.html.py:47
+#: templates/sport/stats.html:49
+msgid "Last 12 months"
+msgstr "Les 12 derniers mois"
+
+#: templates/sport/stats.html:68
+msgid "Hours & distances"
+msgstr "Heures & distances"
+
+#: templates/sport/stats.html:72
+msgid "Sessions by sports"
+msgstr "Séances par sports"
+
+#: templates/sport/vma.html:36
+msgid "Indicative times"
+msgstr "Temps de passage"
+
+#: templates/sport/vma.html:39
+#, python-format
+msgid "Your recorded top speed is %s km/h"
+msgstr "Votre VMA est de %s km/h"
+
+#: templates/sport/vma.html:71
+msgid "All the terms are explained in the glossary"
+msgstr "Tous les termes sont expliqués dans le glossaire"
+
+#: templates/sport/vma.html:74 templates/sport/vma.html.py:79
+msgid "Paces"
+msgstr "Allures"
+
+#: templates/sport/vma.html:80
+msgid "% top speed"
+msgstr "% VMA"
+
+#: templates/sport/vma.html:81 templates/tracks/_session.html:97
+msgid "Speed"
+msgstr "Vitesse"
+
+#: templates/sport/vma.html:82
+msgid "Km time"
+msgstr "Temps au km"
+
+#: templates/sport/vma.html:83
+msgid "100m time"
+msgstr "Temps au 100m"
+
+#: templates/sport/vma.html:99
+msgid "No top speed"
+msgstr "Pas de VMA"
+
+#: templates/sport/vma.html:100
+msgid ""
+"You need to specify your top speed in your preferences to enable this data "
+"tables."
+msgstr ""
+"Vous devez renseiger votre VMA dans vos préfèrences pour activer ces "
+"tableaux."
+
+#: templates/sport/vma.html:100
+msgid "Preferences"
+msgstr "Préférences"
+
+#: templates/sport/week/_stats.html:16 templates/tracks/_session.html:128
+msgid "Total"
+msgstr "Total"
 
 #: templates/sport/week/edit.html:30
 #, python-format
@@ -1311,6 +1420,49 @@ msgstr "Bilan de la semaine"
 #: templates/sport/week/edit.html:70
 msgid "No general comment"
 msgstr "Pas de commentaire général"
+
+#: templates/sport/week/publish.html:9
+#| msgid "Infos for trainers"
+msgid "Send to trainers"
+msgstr "Envoyer aux entraîneurs"
+
+#: templates/sport/week/publish.html:12
+#| msgid "You are already in relation with this club."
+msgid "You have already published this week."
+msgstr "Vous avez déja publié cette semaine."
+
+#: templates/sport/week/publish.html:17
+#, python-format
+msgid "All comments will be automatically sent in %s"
+msgstr "Tous les commentaires seront automatiquement envoyés dans %s"
+
+#: templates/sport/week/publish.html:21
+msgid "The automatic comments publication is only active for the current week."
+msgstr ""
+"L'envoi automatique de commentaire est actif pour la semaine courante "
+"seulement."
+
+#: templates/sport/week/publish.html:26
+msgid ""
+"To enable the automatic comments publication, please select the option in "
+"your preferences."
+msgstr ""
+"Pour activer l'envoi automatique de commentaire, veuillez sélectionner "
+"l'option dans vos préfèrences."
+
+#: templates/sport/week/publish.html:39
+msgid "You can indicate your feelins about this week (optional)."
+msgstr "Vous pouvez indiquer vos sensations pour cette semaine (optionel)."
+
+#: templates/sport/week/publish.html:43
+#| msgid "This reset link is invalid; it may have already been used."
+msgid "This week is not yet ready to be sent."
+msgstr "Cette semaine n'est pas encore disponible à la publication."
+
+#: templates/sport/week/publish.html:52
+#| msgid "Send"
+msgid "Send to"
+msgstr "Envoyer à "
 
 #: templates/tracks/_session.html:9
 msgid "View on"
@@ -1341,10 +1493,6 @@ msgstr "Circuits"
 msgid "Sum"
 msgstr "Cumulé"
 
-#: templates/tracks/_session.html:97
-msgid "Speed"
-msgstr "Vitesse"
-
 #: templates/tracks/_session.html:98
 msgid "Max"
 msgstr "Max"
@@ -1360,10 +1508,6 @@ msgstr "D. -"
 #: templates/tracks/_session.html:103
 msgid "Energy"
 msgstr "Energie"
-
-#: templates/tracks/_session.html:128
-msgid "Total"
-msgstr "Total"
 
 #: templates/tracks/disconnect.html:3 templates/tracks/providers.html:39
 #, python-format
@@ -1724,7 +1868,7 @@ msgstr "%d séances les plus commentées"
 msgid "%d comments"
 msgstr "%d commentaires"
 
-#: templates/users/profile/races.html:1 templates/users/races.html:111
+#: templates/users/profile/races.html:1 templates/users/races.html:110
 msgid "Future races"
 msgstr "Courses à venir"
 
@@ -1759,32 +1903,32 @@ msgstr "Les statistiques de %s ne sont pas disponible "
 msgid "Infos for trainers"
 msgstr "Informations pour entraîneur"
 
-#: templates/users/races.html:33
+#: templates/users/races.html:32
 msgid "Records of"
 msgstr "Records de"
 
-#: templates/users/races.html:35
+#: templates/users/races.html:34
 msgid "Back to club"
 msgstr "Retour au club"
 
-#: templates/users/races.html:40
+#: templates/users/races.html:39
 msgid "Add a record"
 msgstr "Ajouter un record"
 
-#: templates/users/races.html:58
+#: templates/users/races.html:57
 msgid "parts"
 msgstr "parties"
 
-#: templates/users/races.html:108
+#: templates/users/races.html:107
 msgid "No races"
 msgstr "Pas de course"
 
-#: templates/users/races.html:118
+#: templates/users/races.html:117
 #, python-format
 msgid "In %s"
 msgstr "Dans %s"
 
-#: templates/users/races.html:138
+#: templates/users/races.html:137
 msgid "No future races"
 msgstr "Pas de courses à venir"
 

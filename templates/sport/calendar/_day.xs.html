@@ -5,7 +5,7 @@
     {% for session in day.sessions.all() %}
     <div>
       <span class="type {{ session.type }}"></span>
-      <i class="icon-sport-{{session.sport.slug}}"></i>
+      <i class="icon-sport-{{session.sport.slug}} do-tooltib" title="{{ _(session.sport.name) }}" ></i>
       {{ session.name|default('...')}}
     </div>
     {% endfor %}
