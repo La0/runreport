@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-08 19:05+0100\n"
-"PO-Revision-Date: 2014-12-08 19:06+0100\n"
+"POT-Creation-Date: 2014-12-10 19:27+0100\n"
+"PO-Revision-Date: 2014-12-10 19:27+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -35,6 +35,7 @@ msgid "View clubs"
 msgstr "Voir les clubs"
 
 #: coach/menu.py:26 templates/club/create.html:21
+#: templates/landing/index.html:214
 msgid "Create a club"
 msgstr "Créer un club"
 
@@ -125,7 +126,8 @@ msgid "Logout"
 msgstr "Se déconnecter"
 
 #: coach/menu.py:117 templates/club/joined.html:23
-#: templates/club/joined.modal.html:21
+#: templates/club/joined.modal.html:21 templates/landing/index.html:160
+#: templates/landing/index.html.py:289
 msgid "Create an account"
 msgstr "Créer un compte"
 
@@ -205,7 +207,8 @@ msgstr "Utiliser RunReport en"
 msgid "Built by"
 msgstr "Construit par"
 
-#: templates/base.html:115
+#: templates/base.html:115 templates/landing/team.html:3
+#: templates/landing/team.html.py:7
 msgid "The team"
 msgstr "L'équipe"
 
@@ -255,7 +258,7 @@ msgstr "Demander une invitation"
 msgid "Test RunReport using the Trainer account!"
 msgstr "Testez RunReport en utilisant le compte Entraineur !"
 
-#: templates/club/ask_invite.html:48
+#: templates/club/ask_invite.html:48 templates/landing/index.html:164
 msgid "Try the demo"
 msgstr "Essayer la démo"
 
@@ -607,7 +610,7 @@ msgstr "Athlète"
 msgid "Friend"
 msgstr "Ami"
 
-#: templates/club/members.athletes.html:51
+#: templates/club/members.athletes.html:51 templates/friends/_add.btn.html:2
 #: templates/users/profile/index.html:60
 msgid "Requested"
 msgstr "Demandé"
@@ -742,6 +745,7 @@ msgid "Edition is disabled for the demo."
 msgstr "L'édition est désactivée pour la démo."
 
 #: templates/contact_form/contact_form.html:6
+#: templates/contact_form/contact_form_sent.html:4
 msgid "Contact form"
 msgstr "Formulaire de contact"
 
@@ -762,8 +766,19 @@ msgstr ""
 msgid "Send message"
 msgstr "Envoyer message"
 
+#: templates/contact_form/contact_form_sent.html:7
+msgid ""
+"Your message has been sent to the RunReport team, you will receive a reply "
+"as soon as possible."
+msgstr ""
+"Votre message a bien été envoyée à l'équipe RunReport, vous recevrez une "
+"réponse dès que possible."
+
+#: templates/contact_form/contact_form_sent.html:9
+msgid "Thank you for writing us !"
+msgstr "Merci de nous avoir écrit !"
+
 #: templates/friends/home.html:3 templates/friends/home.html.py:8
-#| msgid "Add friend"
 msgid "My friends"
 msgstr "Mes amis"
 
@@ -776,7 +791,6 @@ msgid "You can add friends from your club, for example."
 msgstr "Vous pouvez ajouter des amis de votre club, par exemple."
 
 #: templates/friends/home.html:50
-#| msgid "Refused"
 msgid "Refuse"
 msgstr "Refuser"
 
@@ -785,9 +799,128 @@ msgid "Accept"
 msgstr "Accepter"
 
 #: templates/friends/home.html:59
-#| msgid "You don't have any notifications."
 msgid "You don't have any friend request to validate."
 msgstr "Vous n'avez aucune demande d'amitié à valider."
+
+#: templates/landing/features.html:5
+msgid "Features"
+msgstr "Fonctionalités"
+
+#: templates/landing/index.html:157
+msgid "Training logbook & Athletes management"
+msgstr "Carnet d'entraînement & Gestion d'athlètes"
+
+#: templates/landing/index.html:161 templates/landing/index.html.py:290
+#: templates/users/login.html:62 templates/users/login.html.py:79
+#: templates/users/password_reset_complete.html:10
+msgid "Sign in"
+msgstr "Se connecter"
+
+#: templates/landing/index.html:183
+msgid "Sport logbook"
+msgstr "Carnet d'entraînement"
+
+#: templates/landing/index.html:184
+msgid ""
+"You can freely create your training logbook, manage your sports sesssions, "
+"and clearly view your evolution across several month or years."
+msgstr ""
+"Vous pouvez créer gratuitement votre carnet d'entrainement, gérer vos "
+"séances de sport, et visualiser clairement votre évolution au cours des mois "
+"& années."
+
+#: templates/landing/index.html:206
+msgid "Athlete management"
+msgstr "Gestion d'athlètes"
+
+#: templates/landing/index.html:207
+msgid "for a club or an enterprise"
+msgstr "pour un club ou une entreprise"
+
+#: templates/landing/index.html:210
+msgid ""
+"This website will allow you to easily manage all your athletes, using or one "
+"several trainers."
+msgstr ""
+"Ce site vous permet de gérer aisèment tous vos athlètes, répartis sur un ou "
+"plusieurs entraineurs."
+
+#: templates/landing/index.html:212
+msgid ""
+"Every trainer can view his athletes' sessions, create his training plans, "
+"and efficiently communicate with them."
+msgstr ""
+"Chaque entraineur peut voir les séances de ses athlètes, créer ses plans "
+"d'entrainement, et communiquer efficacement avec eux."
+
+#: templates/landing/index.html:236
+msgid "Phone display"
+msgstr "Affichage sur smartphones"
+
+#: templates/landing/index.html:238
+msgid "Apple, Android, ..."
+msgstr "Apple, Android, ..."
+
+#: templates/landing/index.html:240
+msgid ""
+"RunReport displays nicely on every smartphones & tablets, automatically "
+"adapting to your screen size."
+msgstr ""
+"RunReport s'affiche correctement sur tous les smartphones & tablettes du "
+"marché, en s'adaptant automatiquement à la taille de votre écran."
+
+#: templates/landing/index.html:261
+msgid "GPS Synchronisation"
+msgstr "Synchronisation GPS"
+
+#: templates/landing/index.html:263
+msgid "Garmin, Strava, ..."
+msgstr "Garmin, Strava, ..."
+
+#: templates/landing/index.html:266
+msgid ""
+"Run Report can automatically import your data from your Garmin Connect or "
+"Strava, and show them to your friends, trainers, ..."
+msgstr ""
+"RunReport peut automatiquement importer vos données depuis Garmin Connect ou "
+"Strava, et les afficher à vos amis, entraineurs, ..."
+
+#: templates/landing/index.html:285
+#| msgid "Use RunReport in"
+msgid "Discover RunReport:"
+msgstr "Découvrir RunReport:"
+
+#: templates/landing/team.html:16
+msgid ""
+"Developper, Entrepreneur and athlete, I have create in 2013 this website to "
+"fulfill my running club needs to enhance communication"
+msgstr ""
+"Développeur, Entrepreneur et athlète, j'ai crée en 2013 RunReport pour "
+"améliorer la communication au sein de mon club de course à pied."
+
+#: templates/landing/team.html:44
+msgid ""
+"Main trainer at the CS Ternes (running club), I bring my sport expertise to "
+"enhance this website."
+msgstr ""
+"Entraineur principal au CS Ternes (club de course à pied), j'apporte mon "
+"expertise sportive pour améliorer le site."
+
+#: templates/landing/team.html:67
+msgid ""
+"Triathlete, computer science coach and designer, I've made the current "
+"design of RunReport."
+msgstr ""
+"Triathlète, formateur informatique et designer, j'ai crée le design actuel "
+"de RunReport."
+
+#: templates/landing/team.html:93
+msgid ""
+"Really big into hiking and moutaineering, I continously test RunReport, "
+"looking around for its bugs & possible enhancements."
+msgstr ""
+"Grand randonneur et montagnard, je test en continu RunReport, à la recherche "
+"de bug ou d'améliorations potentielles."
 
 #: templates/messages/_list.html:13
 #, python-format
@@ -1356,11 +1489,6 @@ msgstr ""
 #: templates/users/garmin.html:32
 msgid "Error"
 msgstr "Erreur"
-
-#: templates/users/login.html:62 templates/users/login.html.py:79
-#: templates/users/password_reset_complete.html:10
-msgid "Sign in"
-msgstr "Se connecter"
 
 #: templates/users/login.html:66
 msgid "Please sign in before using the invite"

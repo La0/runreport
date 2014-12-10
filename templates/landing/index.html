@@ -154,14 +154,14 @@ body {
       <div class="col-lg-12">
         <div class="intro-message">
           <img src="/medias/img/logo_bloc.svg" alt="Run Report" />
-          <h3>Carnet d'entraînement et gestion d'athlètes</h3>
+          <h3>{{ _('Training logbook & Athletes management') }}</h3>
           <hr class="intro-divider">
           <ul class="list-inline intro-social-buttons">
-            <li><a href="{% url user-create %}" class="btn btn-primary btn-lg"><span class="icon-plus"></span> <span class="main-action">Créer un compte</span></a></li>
-            <li><a href="{% url login %}" class="btn btn-info btn-lg"><i class="icon-sport-running"></i> <span class="main-action">Se connecter</span></a></li>
+            <li><a href="{% url user-create %}" class="btn btn-primary btn-lg"><span class="icon-plus"></span> <span class="main-action">{{ _('Create an account') }}</span></a></li>
+            <li><a href="{% url login %}" class="btn btn-info btn-lg"><i class="icon-sport-running"></i> <span class="main-action">{{ _('Sign in') }}</span></a></li>
           </ul>
           <div class="col-sm-4 col-sm-offset-4 demo">
-            <a href="{% url login %}" class="btn btn-default"><i class="icon-fire"></i> <span class="">Essayer la démo</span></a>
+            <a href="{% url login %}" class="btn btn-default"><i class="icon-fire"></i> <span class="">{{ _('Try the demo') }}</span></a>
           </div>
         </div>
       </div>
@@ -180,8 +180,8 @@ body {
       <div class="col-lg-5 col-sm-6">
         <hr class="section-heading-spacer">
         <div class="clearfix"></div>
-        <h2 class="section-heading">Carnet d'entraînement</h2>
-        <p class="lead">Vous pouvez gratuitement constituer votre carnet d'entrainements, planifier vos séances, voir concrètement votre évolution sportive sur plusieurs mois ou années et communiquer avec votre entraîneur.</p>
+        <h2 class="section-heading">{{ _('Sport logbook') }}</h2>
+        <p class="lead">{{ _('You can freely create your training logbook, manage your sports sesssions, and clearly view your evolution across several month or years.') }}</p>
       </div>
       <div class="col-lg-5 col-lg-offset-2 col-sm-6">
         <img class="img-responsive" src="/medias/img/landing/calendar.png" alt="">
@@ -202,11 +202,16 @@ body {
       <div class="col-lg-5 col-lg-offset-1 col-sm-push-6 col-sm-6">
         <hr class="section-heading-spacer">
         <div class="clearfix"></div>
-        <h2 class="section-heading">Gestion d'athlètes
-          <br>pour un club ou une entreprise</h2>
-        <p class="lead">Ce site vous fournit un moyen simple et complet pour gérer vos athlètes, répartis sur plusieurs entraineurs.<br>
-Chaque entraineur peut consulter les séances de ses athlètes, créer des plans d'entrainements, et communiquer efficacement avec eux.</p>
-        <a href="{% url club-landing %}" class="btn btn-success btn-lg"><span class="icon-club"></span> Créer un club</a>
+        <h2 class="section-heading">
+          {{ _('Athlete management') }}
+          <br/>{{ _('for a club or an enterprise') }}
+        </h2>
+        <p class="lead">
+          {{ _('This website will allow you to easily manage all your athletes, using or one several trainers.') }}
+          <br/>
+          {{ _('Every trainer can view his athletes\' sessions, create his training plans, and efficiently communicate with them.') }}
+        </p>
+        <a href="{% url club-landing %}" class="btn btn-success btn-lg"><span class="icon-club"></span> {{ _('Create a club') }}</a>
       </div>
       <div class="col-lg-5 col-sm-pull-6  col-sm-6">
         <img class="img-responsive" src="/medias/img/landing/club.png" alt="">
@@ -227,9 +232,12 @@ Chaque entraineur peut consulter les séances de ses athlètes, créer des plans
       <div class="col-lg-5 col-sm-6">
         <hr class="section-heading-spacer">
         <div class="clearfix"></div>
-        <h2 class="section-heading">Affichage compatible mobiles
-          <br>Android, Apple, ...</h2>
-        <p class="lead">Tout le site supporte l'affichage sur smartphones et tablettes, s'adaptant automatiquement aux différents formats d'affichages.</p>
+        <h2 class="section-heading">
+          {{ _('Phone display') }}
+          <br />
+          {{ _('Apple, Android, ...') }}
+          </h2>
+        <p class="lead">{{ _('RunReport displays nicely on every smartphones & tablets, automatically adapting to your screen size.') }}</p>
       </div>
       <div class="col-lg-5 col-lg-offset-2 col-sm-6">
         <img class="img-responsive" src="/medias/img/landing/mobile.png" alt="">
@@ -249,8 +257,13 @@ Chaque entraineur peut consulter les séances de ses athlètes, créer des plans
       <div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
         <hr class="section-heading-spacer">
         <div class="clearfix"></div>
-        <h2 class="section-heading">Synchronisation<br>Montres Garmin</h2>
-        <p class="lead">Run Report peut utiliser automatiquement les données récoltées par votre <a target="_blank" href="https://buy.garmin.com/fr-FR/FR/cIntoSports-cRunning-p1.html">Montre Garmin</a> et les rendre disponible pour votre entraineur.</p>
+        <h2 class="section-heading">
+          {{ _('GPS Synchronisation') }}
+          <br/>
+          {{ _('Garmin, Strava, ...') }}
+        </h2>
+        <p class="lead">
+        {{ _('Run Report can automatically import your data from your Garmin Connect or Strava, and show them to your friends, trainers, ...') }}</p>
       </div>
       <div class="col-lg-5 col-sm-pull-6 col-sm-6">
         <img class="img-responsive" src="/medias/img/landing/garmin.jpg" alt="">
@@ -269,12 +282,12 @@ Chaque entraineur peut consulter les séances de ses athlètes, créer des plans
 
     <div class="row">
       <div class="col-lg-6">
-        <h2>Découvrir Run Report:</h2>
+        <h2>{{ _('Discover RunReport:') }}</h2>
       </div>
       <div class="col-lg-6">
         <ul class="list-inline banner-social-buttons">
-          <li><a href="{% url user-create %}" class="btn btn-primary btn-lg"><i class="icon-plus"></i> <span class="main-action">Créer un compte</span></a></li>
-          <li><a href="{% url login %}" class="btn btn-info btn-lg"><i class="icon-sport-running"></i> <span class="main-action">Se connecter</span></a></li>
+          <li><a href="{% url user-create %}" class="btn btn-primary btn-lg"><i class="icon-plus"></i> <span class="main-action">{{ _('Create an account') }}</span></a></li>
+          <li><a href="{% url login %}" class="btn btn-info btn-lg"><i class="icon-sport-running"></i> <span class="main-action">{{ _('Sign in') }}</span></a></li>
         </ul>
       </div>
     </div>

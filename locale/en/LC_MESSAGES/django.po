@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-08 19:05+0100\n"
+"POT-Creation-Date: 2014-12-10 19:27+0100\n"
 "PO-Revision-Date: 2014-11-28 18:21+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
@@ -34,6 +34,7 @@ msgid "View clubs"
 msgstr ""
 
 #: coach/menu.py:26 templates/club/create.html:21
+#: templates/landing/index.html:214
 msgid "Create a club"
 msgstr ""
 
@@ -124,7 +125,8 @@ msgid "Logout"
 msgstr ""
 
 #: coach/menu.py:117 templates/club/joined.html:23
-#: templates/club/joined.modal.html:21
+#: templates/club/joined.modal.html:21 templates/landing/index.html:160
+#: templates/landing/index.html.py:289
 msgid "Create an account"
 msgstr ""
 
@@ -202,7 +204,8 @@ msgstr ""
 msgid "Built by"
 msgstr ""
 
-#: templates/base.html:115
+#: templates/base.html:115 templates/landing/team.html:3
+#: templates/landing/team.html.py:7
 msgid "The team"
 msgstr ""
 
@@ -248,7 +251,7 @@ msgstr ""
 msgid "Test RunReport using the Trainer account!"
 msgstr ""
 
-#: templates/club/ask_invite.html:48
+#: templates/club/ask_invite.html:48 templates/landing/index.html:164
 msgid "Try the demo"
 msgstr ""
 
@@ -582,7 +585,7 @@ msgstr ""
 msgid "Friend"
 msgstr ""
 
-#: templates/club/members.athletes.html:51
+#: templates/club/members.athletes.html:51 templates/friends/_add.btn.html:2
 #: templates/users/profile/index.html:60
 msgid "Requested"
 msgstr ""
@@ -717,6 +720,7 @@ msgid "Edition is disabled for the demo."
 msgstr ""
 
 #: templates/contact_form/contact_form.html:6
+#: templates/contact_form/contact_form_sent.html:4
 msgid "Contact form"
 msgstr ""
 
@@ -732,6 +736,16 @@ msgstr ""
 
 #: templates/contact_form/contact_form.html:19
 msgid "Send message"
+msgstr ""
+
+#: templates/contact_form/contact_form_sent.html:7
+msgid ""
+"Your message has been sent to the RunReport team, you will receive a reply "
+"as soon as possible."
+msgstr ""
+
+#: templates/contact_form/contact_form_sent.html:9
+msgid "Thank you for writing us !"
 msgstr ""
 
 #: templates/friends/home.html:3 templates/friends/home.html.py:8
@@ -756,6 +770,106 @@ msgstr ""
 
 #: templates/friends/home.html:59
 msgid "You don't have any friend request to validate."
+msgstr ""
+
+#: templates/landing/features.html:5
+msgid "Features"
+msgstr ""
+
+#: templates/landing/index.html:157
+msgid "Training logbook & Athletes management"
+msgstr ""
+
+#: templates/landing/index.html:161 templates/landing/index.html.py:290
+#: templates/users/login.html:62 templates/users/login.html.py:79
+#: templates/users/password_reset_complete.html:10
+msgid "Sign in"
+msgstr ""
+
+#: templates/landing/index.html:183
+msgid "Sport logbook"
+msgstr ""
+
+#: templates/landing/index.html:184
+msgid ""
+"You can freely create your training logbook, manage your sports sesssions, "
+"and clearly view your evolution across several month or years."
+msgstr ""
+
+#: templates/landing/index.html:206
+msgid "Athlete management"
+msgstr ""
+
+#: templates/landing/index.html:207
+msgid "for a club or an enterprise"
+msgstr ""
+
+#: templates/landing/index.html:210
+msgid ""
+"This website will allow you to easily manage all your athletes, using or one "
+"several trainers."
+msgstr ""
+
+#: templates/landing/index.html:212
+msgid ""
+"Every trainer can view his athletes' sessions, create his training plans, "
+"and efficiently communicate with them."
+msgstr ""
+
+#: templates/landing/index.html:236
+msgid "Phone display"
+msgstr ""
+
+#: templates/landing/index.html:238
+msgid "Apple, Android, ..."
+msgstr ""
+
+#: templates/landing/index.html:240
+msgid ""
+"RunReport displays nicely on every smartphones & tablets, automatically "
+"adapting to your screen size."
+msgstr ""
+
+#: templates/landing/index.html:261
+msgid "GPS Synchronisation"
+msgstr ""
+
+#: templates/landing/index.html:263
+msgid "Garmin, Strava, ..."
+msgstr ""
+
+#: templates/landing/index.html:266
+msgid ""
+"Run Report can automatically import your data from your Garmin Connect or "
+"Strava, and show them to your friends, trainers, ..."
+msgstr ""
+
+#: templates/landing/index.html:285
+msgid "Discover RunReport:"
+msgstr ""
+
+#: templates/landing/team.html:16
+msgid ""
+"Developper, Entrepreneur and athlete, I have create in 2013 this website to "
+"fulfill my running club needs to enhance communication"
+msgstr ""
+
+#: templates/landing/team.html:44
+msgid ""
+"Main trainer at the CS Ternes (running club), I bring my sport expertise to "
+"enhance this website."
+msgstr ""
+
+#: templates/landing/team.html:67
+msgid ""
+"Triathlete, computer science coach and designer, I've made the current "
+"design of RunReport."
+msgstr ""
+
+#: templates/landing/team.html:93
+msgid ""
+"Really big into hiking and moutaineering, I continously test RunReport, "
+"looking around for its bugs & possible enhancements."
 msgstr ""
 
 #: templates/messages/_list.html:13
@@ -1310,11 +1424,6 @@ msgstr ""
 
 #: templates/users/garmin.html:32
 msgid "Error"
-msgstr ""
-
-#: templates/users/login.html:62 templates/users/login.html.py:79
-#: templates/users/password_reset_complete.html:10
-msgid "Sign in"
 msgstr ""
 
 #: templates/users/login.html:66

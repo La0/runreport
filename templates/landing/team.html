@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
-{% set page_title = "L'équipe" %}
+{% set page_title = _('The team') %}
 
 {% block content %}
 <div class="container" id="team">
-  <h2>L'équipe</h2>
+  <h2>{{ _('The team') }}</h2>
 
   <div class="row">
     <div class="col-sm-6 col-xs-12">
@@ -13,7 +13,7 @@
         <img class="img-responsive img-rounded" src="/medias/img/team/bastien.jpg" alt="Bastien" />
       </div>
       <div class="col-xs-8">
-        Développeur, <a href="http://www.nextcairn.com">entrepreneur</a> & athlète, j'ai créé en 2013 ce site pour répondre aux besoins de mon club d'athlétisme : le <a href="http://csternes.athle.org">Cs Ternes</a>.
+        {{ _('Developper, Entrepreneur and athlete, I have create in 2013 this website to fulfill my running club needs to enhance communication') }}
         <ul>
           <li>
             <i class="icon icon-mail"></i>
@@ -41,7 +41,7 @@
         <img class="img-responsive img-rounded" src="/medias/img/team/sylvain.jpg" alt="Sylvain" />
       </div>
       <div class="col-xs-8">
-        Entraîneur au <a href="http://csternes.athle.org">Cs Ternes</a>, j'apporte mon expertise sportive et d'encadrement pour améliorer constamment le site.
+        {{ _('Main trainer at the CS Ternes (running club), I bring my sport expertise to enhance this website.') }}
         <ul>
           <li>
             <i class="icon icon-mail"></i>
@@ -64,7 +64,7 @@
       </div>
       <div class="col-xs-8">
         <p>
-          Triathlète, formateur informatique & designer, j'ai apporté le look actuel à RunReport.
+          {{ _('Triathlete, computer science coach and designer, I\'ve made the current design of RunReport.') }}
         </p>
         <ul>
           <li>
@@ -90,7 +90,7 @@
       </div>
       <div class="col-xs-8">
         <p>
-          Grand randonneur, je teste en permanence le site à la recherche du moindre défaut & optimisation.
+          {{ _('Really big into hiking and moutaineering, I continously test RunReport, looking around for its bugs & possible enhancements.') }}
         </p>
         <ul>
           <li>
