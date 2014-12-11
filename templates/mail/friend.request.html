@@ -5,9 +5,9 @@
 {% block mail %}
 
 {% if accepted %}
-  Bonjour {{ sender.first_name }},
+  {{ _('Hello %s') % sender.first_name }},
 {% else %}
-  Bonjour {{ recipient.first_name }},
+  {{ _('Hello %s') % recipient.first_name }},
 {% endif %}
 
 <br />
@@ -15,19 +15,15 @@
 
 {% if accepted %}
   <a href="http://{{ site.domain }}{% url user-public-profile recipient.username %}">{{ recipient.first_name }} {{ recipient.last_name }}</a>
-   a accepté votre demande d'ajout à sa liste d'amis sur <a href="http://{{ site.domain }}">RunReport</a> !
+    {{ _('has accepted your friend request on RunReport !') }}
 {% else %}
   <a href="http://{{ site.domain }}{% url user-public-profile sender.username %}">{{ sender.first_name }} {{ sender.last_name }}</a>
-   souhaite vous ajouter à sa liste d'amis.
+    {{ _('would like to add you as a friend on RunReport') }}
   <br />
-  Si vous acceptez, vous pourrez voir l'intégralité de son calendrier sportif. De même il pourra voir le votre.
+  {{ _('If you accept, you will be able to see his whole calendar. He will be able to do the same.') }}
   <br />
   <br />
-  Vous pouvez <a href="http://{{ site.domain }}{% url friends %}">accepter ou refuser</a> sur RunReport.
+  <a href="http://{{ site.domain }}{% url friends %}">{{ _('You can accept or refuse on RunReport') }}</a>
 {% endif %}
 
-<br />
-<br />
-
-Sportivement,
 {% endblock %}

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-10 20:24+0100\n"
-"PO-Revision-Date: 2014-12-10 20:26+0100\n"
+"POT-Creation-Date: 2014-12-11 18:27+0100\n"
+"PO-Revision-Date: 2014-12-11 18:30+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -35,7 +35,7 @@ msgid "View clubs"
 msgstr "Voir les clubs"
 
 #: coach/menu.py:26 templates/club/create.html:21
-#: templates/landing/index.html:214
+#: templates/landing/index.html:214 templates/mail/base.html:37
 msgid "Create a club"
 msgstr "Créer un club"
 
@@ -49,11 +49,11 @@ msgstr "Aide"
 msgid "Glossary"
 msgstr "Glossaire"
 
-#: coach/menu.py:40 templates/base.html:124
+#: coach/menu.py:40 templates/base.html:124 templates/mail/base.html:37
 msgid "News"
 msgstr "News"
 
-#: coach/menu.py:41 templates/base.html:130
+#: coach/menu.py:41 templates/base.html:130 templates/mail/base.html:37
 msgid "Contact"
 msgstr "Contact"
 
@@ -220,7 +220,7 @@ msgstr "Code source sur"
 msgid "Github"
 msgstr "Github"
 
-#: templates/base.html:121
+#: templates/base.html:121 templates/mail/base.html:37
 msgid "Facebook"
 msgstr "Facebook"
 
@@ -926,6 +926,204 @@ msgstr ""
 "Grand randonneur et montagnard, je test en continu RunReport, à la recherche "
 "de bug ou d'améliorations potentielles."
 
+#: templates/mail/club_invite.html:9
+msgid "Hello"
+msgstr "Bonjour"
+
+#: templates/mail/club_invite.html:14
+msgid ""
+"You can now create your own club ou athletes group on RunReport, in order to "
+"follow their personal evolutions."
+msgstr ""
+"Vous pouvez créer votre propre club ou groupe d'athlètes sur RunReport, afin "
+"de suivre leur progression personelle."
+
+#: templates/mail/club_invite.html:18
+msgid "To create the club, use this unique invite:"
+msgstr "Pour créer le club, utilisez cette invitation unique:"
+
+#: templates/mail/club_invite_asked.html:6
+#: templates/mail/friend.request.html:8 templates/mail/friend.request.html:10
+#: templates/mail/message.html:6 templates/mail/race.html:6
+#: templates/mail/user_role.html:6
+#, python-format
+msgid "Hello %s"
+msgstr "Bonjour %s"
+
+#: templates/mail/club_invite_asked.html:16
+msgid "You can active it by using this link"
+msgstr "Vous pouvez l'activer en utiliser ce lien"
+
+#: templates/mail/club_prospect.html:9
+#, python-format
+msgid ""
+"A new member \"%(first)s %(last)s\" just subscribed to your club %(club)s"
+msgstr ""
+"Un nouveau membre \"%(first)s %(last)s\" vient de s'inscrire à votre club "
+"%(club)s"
+
+#: templates/mail/club_prospect.html:14
+msgid ""
+"You can validate this subscription in the Newcomers section, by clicking on "
+"the role button \"Newcomer\", and giving him the new role of \"Athlete\""
+msgstr ""
+"Vous pouvez valider cette isncription dans la section des Nouveaux, en "
+"cliquant sur le bouton de role \"Nouveau\", et en lui assignant le role "
+"\"Athlète\""
+
+#: templates/mail/club_prospect.html:16
+msgid "Newcomers list"
+msgstr "Liste des Nouveaux"
+
+#: templates/mail/club_prospect.html:20
+msgid "If you refuse this subscription, you can archive it on the same page."
+msgstr ""
+"Si vous refusez cette inscription, vous pouvez l'archiver sur la même page."
+
+#: templates/mail/club_prospect.html:24
+msgid "In both cases, an email will be sent to the subscriber."
+msgstr "Dans les deux cas, un email sera envoyé à l'athlète."
+
+#: templates/mail/friend.request.html:18
+msgid "has accepted your friend request on RunReport !"
+msgstr "a accepté votre demande d'ajout en tant qu'ami sur RunReport !"
+
+#: templates/mail/friend.request.html:21
+msgid "would like to add you as a friend on RunReport"
+msgstr "voudrait vous ajouter en tant qu'ami sur RunReport"
+
+#: templates/mail/friend.request.html:23
+msgid ""
+"If you accept, you will be able to see his whole calendar. He will be able "
+"to do the same."
+msgstr ""
+"Si vous acceptez, vous verrez tout son calendrier. Il aura accès également "
+"au votre."
+
+#: templates/mail/friend.request.html:26
+msgid "You can accept or refuse on RunReport"
+msgstr "Vous pouvez accepter ou refuser sur RunReport"
+
+#: templates/mail/message.html:10
+#| msgid "You did not receive or send any message."
+msgid "You just received a new private message from"
+msgstr " Vous venez de recevoir un nouveau message privé de"
+
+#: templates/mail/message.html:15
+#| msgid "You must be logged in to add a comment"
+msgid "You just received a new comment"
+msgstr "Vous venez de recevoir un nouveau commentaire"
+
+#: templates/mail/message.html:17
+#| msgid "On your session"
+msgid "on your session"
+msgstr "sur votre séance"
+
+#: templates/mail/message.html:19
+#| msgid "On the session of"
+msgid "on the session of"
+msgstr "sur la séance de"
+
+#: templates/mail/message.html:22
+#, python-format
+#| msgid "In %s"
+msgid "on %s"
+msgstr "du %s"
+
+#: templates/mail/message.html:37
+msgid "You can view the entire conversation on RunReport"
+msgstr "Vous pouvez voir la conversation entière sur RunReport"
+
+#: templates/mail/race.html:9
+#, python-format
+msgid "The RunReport team wish you a really good race for your %s tommorrow"
+msgstr ""
+"L'équipe RunReport vous souhaite une très bonne course pour votre %s demain"
+
+#: templates/mail/race.html:13
+msgid "Don't forget to fill in your session report after the race"
+msgstr "N'oubliez pas de renseigner votre séance après la course"
+
+#: templates/mail/race.html:17
+msgid "Enjoy your race !"
+msgstr "Bonne course !"
+
+#: templates/mail/report.html:9
+msgid "View week"
+msgstr "Voir semaine"
+
+#: templates/mail/report.html:30 templates/sport/session/list.html:38
+#: templates/sport/week/_stats.html:6 templates/tracks/_session.html:32
+#: templates/tracks/_session.html.py:95
+msgid "Time"
+msgstr "Temps"
+
+#: templates/mail/report.html:34 templates/sport/session/list.html:49
+#: templates/sport/week/_stats.html:7 templates/tracks/_session.html:44
+#: templates/tracks/_session.html.py:93
+msgid "Distance"
+msgstr "Distance"
+
+#: templates/mail/report.html:39
+msgid "No session"
+msgstr "Pas de séance"
+
+#: templates/mail/report.html:51 templates/sport/session/edit.html:36
+#: templates/sport/week/_stats.html:5
+msgid "Sport"
+msgstr "Sport"
+
+#: templates/mail/report.html:52
+msgid "Total time"
+msgstr "Temps total"
+
+#: templates/mail/report.html:53
+msgid "Total distance"
+msgstr "Distance totale"
+
+#: templates/mail/report.html:57 templates/sport/week/_stats.html:16
+#: templates/tracks/_session.html:128
+msgid "Total"
+msgstr "Total"
+
+#: templates/mail/report.html:69
+msgid "Week's summary"
+msgstr "Bilan de la semaine"
+
+#: templates/mail/user_role.html:12
+#, python-format
+msgid "Sorry, but your subscription to club %s has been refused"
+msgstr "Désolé, mais votre inscription au club %s a été refusée."
+
+#: templates/mail/user_role.html:14
+#, python-format
+msgid "Congrats, your subscription to club %s has been accepted !"
+msgstr "Félicitations, votre inscription au club %s a été acceptée !"
+
+#: templates/mail/user_role.html:18
+#, python-format
+msgid "Sorry, but you are no longer in the club %s"
+msgstr "Désolé, mais vous n'êtes plus dans le club %s"
+
+#: templates/mail/user_role.html:20
+#, python-format
+msgid "Your role in club %s has changed, you are now a trainer"
+msgstr ""
+"Votre rôle au sein du club %s a changé, vous êtes maintenant un entraineur."
+
+#: templates/mail/user_role.html:22
+#, python-format
+msgid "Your role in club %s has changed, you are now a staff member"
+msgstr ""
+"Votre rôle au sein du club %s a changé, vous êtes maintenant un membre du "
+"staff."
+
+#: templates/mail/user_role.html:24
+#, python-format
+msgid "Your role in club %s has changed, you are now an athlete "
+msgstr ""
+"Votre rôle au sein du club %s a changé, vous êtes maintenant un athlète."
+
 #: templates/messages/_list.html:13
 #, python-format
 msgid "%d private comments"
@@ -1124,7 +1322,7 @@ msgid "contact form"
 msgstr "formulaire de contact"
 
 #: templates/page/list.html:28 templates/users/preferences.html:136
-#: users/models.py:23
+#: users/models.py:22
 msgid "Private"
 msgstr "Privé"
 
@@ -1295,10 +1493,6 @@ msgstr "Supprimer cette séance"
 msgid "Saved session."
 msgstr "Sauver la séance"
 
-#: templates/sport/session/edit.html:36 templates/sport/week/_stats.html:5
-msgid "Sport"
-msgstr "Sport"
-
 #: templates/sport/session/edit.html:49
 msgid "this session"
 msgstr "cette séance"
@@ -1315,19 +1509,9 @@ msgstr "Commentaires"
 msgid "No session name"
 msgstr "Pas de nom de séance"
 
-#: templates/sport/session/list.html:38 templates/sport/week/_stats.html:6
-#: templates/tracks/_session.html:32 templates/tracks/_session.html.py:95
-msgid "Time"
-msgstr "Temps"
-
 #: templates/sport/session/list.html:41
 msgid "No time"
 msgstr "Pas de temps"
-
-#: templates/sport/session/list.html:49 templates/sport/week/_stats.html:7
-#: templates/tracks/_session.html:44 templates/tracks/_session.html.py:93
-msgid "Distance"
-msgstr "Distance"
 
 #: templates/sport/session/list.html:56
 msgid "No Distance"
@@ -1404,10 +1588,6 @@ msgstr ""
 msgid "Preferences"
 msgstr "Préférences"
 
-#: templates/sport/week/_stats.html:16 templates/tracks/_session.html:128
-msgid "Total"
-msgstr "Total"
-
 #: templates/sport/week/edit.html:30
 #, python-format
 msgid "This week report has been sent to %s"
@@ -1422,12 +1602,10 @@ msgid "No general comment"
 msgstr "Pas de commentaire général"
 
 #: templates/sport/week/publish.html:9
-#| msgid "Infos for trainers"
 msgid "Send to trainers"
 msgstr "Envoyer aux entraîneurs"
 
 #: templates/sport/week/publish.html:12
-#| msgid "You are already in relation with this club."
 msgid "You have already published this week."
 msgstr "Vous avez déja publié cette semaine."
 
@@ -1455,12 +1633,10 @@ msgid "You can indicate your feelins about this week (optional)."
 msgstr "Vous pouvez indiquer vos sensations pour cette semaine (optionel)."
 
 #: templates/sport/week/publish.html:43
-#| msgid "This reset link is invalid; it may have already been used."
 msgid "This week is not yet ready to be sent."
 msgstr "Cette semaine n'est pas encore disponible à la publication."
 
 #: templates/sport/week/publish.html:52
-#| msgid "Send"
 msgid "Send to"
 msgstr "Envoyer à "
 
@@ -1755,7 +1931,7 @@ msgid "Password"
 msgstr "Mot de passe"
 
 #: templates/users/preferences.html:92 templates/users/preferences.html:152
-#: templates/users/preferences.html:162 templates/users/preferences.html:199
+#: templates/users/preferences.html:163 templates/users/preferences.html:200
 msgid "Update"
 msgstr "Mettre à jour"
 
@@ -1785,7 +1961,7 @@ msgstr ""
 "Choisissez un niveau de visibilité pour les différentes parties de votre "
 "profil public:"
 
-#: templates/users/preferences.html:134 users/models.py:21
+#: templates/users/preferences.html:134 users/models.py:20
 msgid "Public"
 msgstr "Public"
 
@@ -1796,7 +1972,7 @@ msgstr ""
 "Tout le monde peut voir cette partie (y compris des personnes sans compte "
 "RunReport)"
 
-#: templates/users/preferences.html:135 users/models.py:22
+#: templates/users/preferences.html:135 users/models.py:21
 msgid "Club"
 msgstr "Club"
 
@@ -1812,16 +1988,16 @@ msgstr "Vous êtes la seule personne qui peut voir cette partie."
 msgid "View your public profile"
 msgstr "Voir votre profil public"
 
-#: templates/users/preferences.html:171
+#: templates/users/preferences.html:172
 #, python-format
 msgid "%s trainer"
 msgstr "Entraîneur du %s"
 
-#: templates/users/preferences.html:206
+#: templates/users/preferences.html:207
 msgid "You can change your password using"
 msgstr "Vous pouvez changer votre mot de passe en utilisant"
 
-#: templates/users/preferences.html:207
+#: templates/users/preferences.html:208
 msgid "this page"
 msgstr "cette page"
 
@@ -1960,44 +2136,44 @@ msgstr "Veuillez répéter le même mot de passe."
 msgid "Invalid Garmin authentification"
 msgstr "Authentification Garmin invalide"
 
-#: users/models.py:34
+#: users/models.py:33
 msgid "username"
 msgstr "nom d'utilisateur"
 
-#: users/models.py:35
+#: users/models.py:34
 msgid "Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."
 msgstr ""
 "Requis. 30 charactères ou moins. Lettres, chiffrs et @/./+/-/_ seulement."
 
-#: users/models.py:38
+#: users/models.py:37
 msgid "Enter a valid username."
 msgstr "Donner un nom d'utlisateur valide."
 
-#: users/models.py:40
+#: users/models.py:39
 msgid "first name"
 msgstr "Prénom"
 
-#: users/models.py:41
+#: users/models.py:40
 msgid "last name"
 msgstr "Nom"
 
-#: users/models.py:42
+#: users/models.py:41
 msgid "email address"
 msgstr "adresse email"
 
-#: users/models.py:43
+#: users/models.py:42
 msgid "staff status"
 msgstr "status staff"
 
-#: users/models.py:44
+#: users/models.py:43
 msgid "Designates whether the user can log into this admin site."
 msgstr "Indique si l'utilisateur peut se connecter à l'administration du site"
 
-#: users/models.py:46
+#: users/models.py:45
 msgid "active"
 msgstr "actif"
 
-#: users/models.py:47
+#: users/models.py:46
 msgid ""
 "Designates whether this user should be treated as active. Unselect this "
 "instead of deleting accounts."
@@ -2005,77 +2181,81 @@ msgstr ""
 "Indique si cet utilisateur doit être considéré actif.Décochez cette option "
 "au lieu de supprimer des comptes."
 
-#: users/models.py:49
+#: users/models.py:48
 msgid "date joined"
 msgstr "date d'inscription"
 
-#: users/models.py:61
+#: users/models.py:60
 msgid "user"
 msgstr "utilisateur"
 
-#: users/models.py:62
+#: users/models.py:61
 msgid "users"
 msgstr "utilisateurs"
 
-#: users/models.py:71
+#: users/models.py:70
 msgid "birthday"
 msgstr "date de naissance"
 
-#: users/models.py:72
+#: users/models.py:71
 msgid "category"
 msgstr "catégorie"
 
-#: users/models.py:73
+#: users/models.py:72
 msgid "vma"
 msgstr "vma"
 
-#: users/models.py:73
+#: users/models.py:72
 msgid "Ex: 12.5 km/h"
 msgstr "Ex: 12.5 km/h"
 
-#: users/models.py:74
+#: users/models.py:73
 msgid "cardiac frequency"
 msgstr "fréquence cardiaque maximale"
 
-#: users/models.py:75
+#: users/models.py:74
 msgid "cardiac frequency at rest"
 msgstr "fréquence cardiaque au repos"
 
-#: users/models.py:76
+#: users/models.py:75
 msgid "height"
 msgstr "hauteur"
 
-#: users/models.py:76
+#: users/models.py:75
 msgid "Unit: cm"
 msgstr "En centimètres"
 
-#: users/models.py:77
+#: users/models.py:76
 msgid "weight"
 msgstr "poids"
 
-#: users/models.py:77
+#: users/models.py:76
 msgid "Unit: kg"
 msgstr "En kg"
 
-#: users/models.py:78
+#: users/models.py:77
 msgid "comment"
 msgstr "Renseignements divers"
 
-#: users/models.py:79
+#: users/models.py:78
 msgid "number of sessions per week"
 msgstr "nb séances hebdomadaires"
 
-#: users/models.py:80
+#: users/models.py:79
 msgid "license"
 msgstr "license FFA"
 
-#: users/models.py:83
+#: users/models.py:82
 msgid "default sport"
 msgstr "Sport par défaut"
 
-#: users/models.py:86
+#: users/models.py:85
 msgid "auto send emails"
 msgstr "envoi automatique des commentaires en fin de semaine"
+
+#: users/models.py:86
+msgid "language used"
+msgstr "language utilisé"
 
 #: users/models.py:89
 msgid "garmin login"

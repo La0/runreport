@@ -157,7 +157,8 @@ $(function(){
 
       <div class="tab-pane" id="mails">
         {{ macros.input_bool(form.auto_send, None, None, 4, 8) }}
-         <div class="form-group">
+        {{ macros.input(form.language, None, None, 4, 8) }}
+        <div class="form-group">
           <div class="col-sm-offset-4 col-sm-8">
             <button type="submit" class="btn btn-primary" {% if user.demo %}disabled{% endif %}>{{ _('Update') }}</button>
           </div>

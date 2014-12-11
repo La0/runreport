@@ -5,10 +5,9 @@ import math
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import AbstractBaseUser, UserManager, PermissionsMixin
-from django.db.models.signals import post_save
 from django.core import validators
 from django.utils import timezone
-from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.validators import MinValueValidator
 from django.conf import settings
 from hashlib import md5
 from datetime import datetime
@@ -84,6 +83,7 @@ class Athlete(AthleteBase):
 
   # Mail
   auto_send = models.BooleanField(_('auto send emails'), default=False)
+  language = models.CharField(_('language used'), max_length=2, choices=settings.LANGUAGES, default='fr')
 
   # Garmin
   garmin_login = models.CharField(_('garmin login'), max_length=255, null=True, blank=True)

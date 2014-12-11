@@ -3,16 +3,16 @@
 {% set title = 'Bonne course !' %}
 
 {% block mail %}
-Bonjour {{ user.first_name }},
+{{ _('Hello %s') % user.first_name }},
 <br />
 
-L'équipe RunReport vous souhaite de réaliser une bonne course pour votre {{ race.race_category.name }} demain : <strong>{{ race.name }}</strong>.
-<br />
-<br />
-
-N'oubliez pas de remplir <a href="http://{{site.domain}}{{ race.day.week.get_absolute_url() }}">votre séance</a> à la suite de l'épreuve !
+{{ _('The RunReport team wish you a really good race for your %s tommorrow') % race.race_category.name }} : <strong>{{ race.name }}</strong>.
 <br />
 <br />
 
-Bonne course, et bonne récupération,
+{{ _('Don\'t forget to fill in your session report after the race') }} : http://{{site.domain}}{{ race.day.week.get_absolute_url() }}
+<br />
+<br />
+
+{{ _('Enjoy your race !') }}
 {% endblock %}
