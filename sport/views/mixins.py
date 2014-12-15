@@ -134,8 +134,9 @@ class WeekPaginator(object):
         current_pos = i
       i += 1
 
-    week_previous = current_pos - 1 > 0 and self.weeks[current_pos - 1] or None
-    week_next = current_pos + 1 < len(self.weeks) and self.weeks[current_pos + 1] or None
+    useful_weeks = [w for w in self.weeks if w['display'] == 'week']
+    week_previous = current_pos - 1 > 0 and useful_weeks[current_pos - 1] or None
+    week_next = current_pos + 1 < len(useful_weeks) and useful_weeks[current_pos + 1] or None
 
     # TODO: integrate to get_context_data
     return {
