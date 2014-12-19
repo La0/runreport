@@ -3,7 +3,7 @@
 {% set title = 'Nouveau membre' %}
 
 {% block mail %}
-{{ _('Hello %s' % manager.first_name }},
+{{ _('Hello %s') % manager.first_name }},
 <br />
 <br />
 {{ _('A new member "%(first)s %(last)s" just subscribed to your club %(club)s') % {'first': user.first_name, 'last': user.last_name, 'club': club.name} }}

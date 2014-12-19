@@ -81,7 +81,7 @@ class ClubMembership(models.Model):
       'club' : self.club,
       'user' : self.user,
     }
-    mb = MailBuilder('mail/club_prospect.html')
+    mb = MailBuilder('mail/club_prospect.html', self.club.manager.language)
     mb.to = [self.club.manager.email]
     mb.subject = 'Nouvelle inscription au club %s' % (self.club.name, )
     mail = mb.build(context)
@@ -96,7 +96,7 @@ class ClubMembership(models.Model):
       'old_role' : old_role,
       'new_role' : self.role,
     }
-    mb = MailBuilder('mail/user_role.html')
+    mb = MailBuilder('mail/user_role.html', self.user.language)
     mb.to = [self.user.email]
     mb.subject = 'Role dans le club %s' % (self.club.name, )
     mail = mb.build(context)
@@ -155,7 +155,7 @@ class ClubInvite(models.Model):
     context = {
       'invite' : self,
     }
-    mb = MailBuilder('mail/club_invite_asked.html')
+    mb = MailBuilder('mail/club_invite_asked.html', self.sender.language)
     mb.to = [self.sender.email]
     mb.subject = 'Demande Invitation RunReport.fr'
     mail = mb.build(context)
@@ -172,7 +172,7 @@ class ClubInvite(models.Model):
       'invite_url' : self.get_absolute_url(),
       'name' : self.name,
     }
-    mb = MailBuilder('mail/club_invite.html')
+    mb = MailBuilder('mail/club_invite.html', self.recipient.language)
     mb.to = [self.recipient]
     mb.subject = 'Invitation RunReport.fr'
     mail = mb.build(context)

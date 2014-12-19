@@ -58,6 +58,7 @@ def race_mail(*args, **kwargs):
       'race' : race,
       'user' : user,
     }
+    builder.language = user.language
     builder.subject = u'Votre course %s - RunReport' % (race.name,)
     builder.to = [user.email, ]
     mail = builder.build(data)

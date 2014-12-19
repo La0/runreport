@@ -4,6 +4,7 @@ from coffin.shortcuts import render_to_string
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 from hashlib import md5
+from django.utils import translation
 import os
 
 class MailBuilder:
@@ -11,11 +12,18 @@ class MailBuilder:
   subject = ''
   to = []
   cc = []
+  language = 'fr' # By default send email in French
 
-  def __init__(self, template):
+  def __init__(self, template, language=None):
     self.template = template
+    if language:
+        self.language = language
 
   def build(self, context, headers=None):
+
+    # Activate language
+    translation.activate(self.language)
+
     # Render template
     site = get_current_site(None)
     message = u'Envoyé via %s' % site
