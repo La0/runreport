@@ -166,6 +166,9 @@ class Athlete(AthleteBase):
       w = int(math.floor(w * ratio))
       h = int(math.floor(h * ratio))
       img = img.resize((w, h))
+    else:
+      # Use smallest side as crop
+      crop_size = small_size
 
     crop_box = None
     if w < h:

@@ -48,13 +48,6 @@
 			</div>
 			<div class="navbar-collapse collapse" id="navbar-main">
 				<ul class="nav navbar-nav navbar-right">
-        {% if DEBUG %}
-        <li class="debug">
-          <a href="#">
-            <i class="icon-fire do-tooltip" title="{{ _('Development Version') }}" data-placement="bottom"></i>
-          </a>
-        </li>
-        {% endif %}
 					{% for p in menu %}
 					{% if 'menu' in p %}
 					<li class="dropdown {% if p.active %}active{% endif %}">
