@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% set page_title = post and _('Edit %s') % post.title or _('Create a post') %}
+
+{% block content %}
+<div class="container">
+
+  {% if post %}
+  <h1>{{ _('Edit post : %s') % post.title }}</h1>
+  {% else %}
+  <h1>{{ _('Create a post') }}</h1>
+  {% endif %}
+
+  <form class="form-horizontal" method="post" action="">
+    {% csrf_token %}
+    {{ macros.input(form.title) }}
+    {{ macros.input(form.slug) }}
+    {{ macros.input(form.type) }}
+    {{ macros.input_bool(form.published) }}
+    {{ macros.input(form.html) }}
+    <button type="submit" class="btn btn-primary">{% if post %}{{ _('Edit the post') }}{% else %}{{ _('Create the post') }}{% endif %}</button>
+  </form>
+
+</div>
+{% endblock %}
