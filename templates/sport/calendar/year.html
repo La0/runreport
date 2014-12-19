@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% set page_title = 'Année %s' % year %}
+{% set page_title = _('Year %s') % year %}
 {% set page_size = 'fullscreen' %}
 
 {% block style %}
@@ -24,22 +24,22 @@
     </div>
     <div class="col-sm-5 col-xs-10">
       <h3>{{ member.first_name }} {{ member.last_name }}</h3>
-      <h4>Année {{ year }}</h4>
+      <h4>{{ _('Year %s') % year }}</h4>
     </div>
     {% else %}
 		<div class="col-sm-6">
-      <h3>Année {{ year }}</h3>
+      <h3>{{ _('Year %s') % year }}</h3>
 		</div>
     {% endif %}
 
 		<div class="col-sm-6 text-right buttons">
 			{% if member %}
-			<a class="btn btn-success btn-light" href="{% url athlete-stats-year member.username, year %}"><i class="icon-plus"></i> Statistiques</a>
+			<a class="btn btn-success btn-light" href="{% url athlete-stats-year member.username, year %}"><i class="icon-plus"></i> {{ _('Stats') }}</a>
       <a href="{% url user-public-profile member.username %}" class="btn btn-primary btn-light">
-        <i class="icon-user"></i> Voir son profil
+        <i class="icon-user"></i> {{ _('View this profile') }}
       </a>
       {% else %}
-			<a class="btn btn-success btn-light" href="{% url stats-year year %}"><i class="icon-plus"></i> Statistiques</a>
+			<a class="btn btn-success btn-light" href="{% url stats-year year %}"><i class="icon-plus"></i> {{ _('Stats') }}</a>
 			{% endif %}
 		</div>
 	</div>
@@ -84,7 +84,7 @@
     {% if month.month in months_active %}
       <h3>
         {{ month|date('E Y')|title() }}
-        <a href="{% url report-month month.year, month.month %}" class="btn btn-sm btn-info pull-right">Voir ce mois</a>
+        <a href="{% url report-month month.year, month.month %}" class="btn btn-sm btn-info pull-right">{{ _('View this month') }}</a>
       </h3>
 			<div class="row-striped">
 	      {% for day_date,day in days.items() %}
@@ -98,12 +98,12 @@
 	<ul class="pager">
 		{% if previous_year %}
 		<li class="previous">
-			<a href="{{ pageyear|url(*pageargs + [previous_year, ]) }}">&laquo; Année {{ previous_year }}</a>
+			<a href="{{ pageyear|url(*pageargs + [previous_year, ]) }}">&laquo; {{ _('Year %s') % previous_year }}</a>
 		</li>
 		{% endif %}
 		{% if next_year %}
 		<li class="next">
-			<a href="{{ pageyear|url(*pageargs + [next_year, ]) }}">Année {{ next_year }} &raquo;</a>
+			<a href="{{ pageyear|url(*pageargs + [next_year, ]) }}">{{ _('Year %s') % next_year }} &raquo;</a>
 		</li>
 		{% endif %}
 	</ul>

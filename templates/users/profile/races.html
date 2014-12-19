@@ -1,4 +1,4 @@
-<h3>Courses à venir</h3>
+<h3>{{ _('Future races') }}</h3>
 {% if future_races %}
 
 <div class="row-striped">
@@ -41,6 +41,6 @@
 
 {% else %}
 <div class="alert alert-info">
-  {{ member.first_name }} n'a pas de courses à venir.
+  {{ _('%s has no future races planned') % member.first_name }}
 </div>
 {% endif %}

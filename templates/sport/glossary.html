@@ -26,15 +26,15 @@ dd:last-of-type {
 
 {% block content %}
 <div class="container">
-  <h2>Icones de sports</h2>
+  <h2>{{ _('Sport icons') }}</h2>
 	<dl>
-    {% for name, text in sports.items() %}
-    <dt><i class="icon-{{ name }}"></i></dt>
-    <dd>{{ text }}</dd>
+    {% for sport in sports %}
+    <dt><i class="{{ sport.icon }}"></i></dt>
+    <dd>{{ _(sport.name) }}</dd>
     {% endfor %}
 	</dl>
 
-	<h2>Glossaire</h2>
+	<h2>{{ _('Glossary') }}</h2>
 	<dl>
 		{% for word in sorted %}
 		<dt>{{word}}</dt>

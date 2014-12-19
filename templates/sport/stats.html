@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% set page_title = 'Statistiques' %}
+{% set page_title = _('Stats') %}
 
 {% block js %}
 <script type="text/javascript" src="/medias/js/jquery.flot.js" ></script>
@@ -35,41 +35,41 @@ $(function(){
 {% block content %}
 <div class="container">
   {% if date_range == 'year' %}
-  <h1>{% if member %}{{ member.first_name }} {{ member.last_name }} : {% endif %}Année {{start.year}}</h1>
+  <h1>{% if member %}{{ member.first_name }} {{ member.last_name }} : {% endif %}{{ _('Year %s') % start.year}}</h1>
   {% elif date_range == 'all' %}
-  <h1>{% if member %}{{ member.first_name }} {{ member.last_name }} : {% endif %}Toutes les séances</h1>
+  <h1>{% if member %}{{ member.first_name }} {{ member.last_name }} : {% endif %}{{ _('Every session') }}</h1>
   {% else %}
-  <h1>{% if member %}{{ member.first_name }} {{ member.last_name }} : {% endif %}Les 12 derniers mois</h1>
+  <h1>{% if member %}{{ member.first_name }} {{ member.last_name }} : {% endif %}{{ _('Last 12 months') }}</h1>
   {% endif %}
 
   <ul class="breadcrumb">
     {% if date_range == 'last' %}
-    <li class="active">Les 12 derniers mois</li>
+    <li class="active">{{ _('Last 12 months') }}</li>
     {% else %}
-    <li><a href="{{ url_base|url(*url_args) }}">Les 12 derniers mois</a> <span class="divider"></span></li>
+    <li><a href="{{ url_base|url(*url_args) }}">{{ _('Last 12 months') }}</a> <span class="divider"></span></li>
     {% endif %}
 
     {% for year in years %}
       {% if date_range == 'year' and year == start.year %}
-      <li class="active">Année {{year}}</li>
+      <li class="active">{{ _('Year %s') % year}}</li>
       {% else %}
-      <li><a href="{{ (url_base + '-year')|url(*url_args + [year]) }}">Année {{year}}</a> <span class="divider"></span></li>
+      <li><a href="{{ (url_base + '-year')|url(*url_args + [year]) }}">{{ _('Year %s') % year}}</a> <span class="divider"></span></li>
       {% endif %}
     {% endfor %}
 
     {% if date_range == 'all' %}
-    <li class="active">Toutes les séances</li>
+    <li class="active">{{ _('Every session') }}</li>
     {% else %}
-    <li><a href="{{ (url_base + '-all')|url(*url_args) }}">Toutes les séances</a> <span class="divider"></span></li>
+    <li><a href="{{ (url_base + '-all')|url(*url_args) }}">{{ _('Every session') }}</a> <span class="divider"></span></li>
     {% endif %}
   </ul>
 
   <div id="stats">
-    <h3>Heures et distances</h3>
+    <h3>{{ _('Hours & distances') }}</h3>
     <div class="hours_distances"></div>
     <div class="tooltip"></div>
 
-    <h3>Séances de Sports</h3>
+    <h3>{{ _('Sessions by sports') }}</h3>
     <div class="sports"></div>
   </div>
   

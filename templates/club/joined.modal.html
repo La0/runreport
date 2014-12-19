@@ -8,33 +8,33 @@
 {% if error %}
   {% if error == 'mail' %}
   <div class="alert alert-danger">
-    <h4>Problème de notification</h4>
-    Nous n'avons pu notifier le club de votre demande.
-    <br />Veuillez ré-essayer plus tard.
+    <h4>{{ _('Notification problem') }}</h4>
+    {{ _('We could not notify the club of your request') }}
+    <br />{{ _('Please try again later') }}
   </div>
   {% elif error == 'logout' %}
   <div class="alert alert-warning">
-    <h4>Pas de compte</h4>
-    Vous n'êtes actuellement pas connecté avec un compte utilisateur.
+    <h4>{{ _('No account') }}</h4>
+    {{ _('You are not currently connected with an user account') }}
   </div>
   <p>
-    Veuillez <a class="btn btn-sm btn-primary" href="{% url user-create %}">créer un compte</a> ou vous <a class="btn btn-sm btn-primary" href="{% url login %}">connecter avec votre compte</a>.
+    <a class="btn btn-sm btn-primary" href="{% url user-create %}">{{ _('Create an account') }}</a> {{ _('or') }}<a class="btn btn-sm btn-primary" href="{% url login %}">{{ _('sign in') }}</a>.
   </p>
   {% elif error == 'member' %}
   <div class="alert alert-danger">
-    <h4>Déja membre</h4>
-    Vous êtes déja en relation avec ce club.
+    <h4>{{ _('Already a member') }}</h4>
+    {{ _('You are already in relation with this club') }}
   </div>
   {% endif %}
 {% else %}
 <div class="alert alert-success">
-  <h4>Demande enregistrée</h4>
-  Votre demande a bien été envoyé au club, vous recevrez une réponse dès qu'elle aura été traitée par le gérant du club.
+  <h4>{{ _('Request registered') }}</h4>
+  {{ _('Your request has been sent to the club, you will receive an answer as soon as the club\s owner will consider it.') }}
 </div>
 {% endif %}
 
 {% endblock %}
 
 {% block footer %}
-<button class="btn btn-default" data-dismiss="modal">Fermer</button>
+<button class="btn btn-default" data-dismiss="modal">{{ _('Close') }}</button>
 {% endblock %}

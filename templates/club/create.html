@@ -18,26 +18,26 @@ function slugify(str){
 
 <div class="container">
 
-	<h2>Créer un club</h2>
+	<h2>{{ _('Create a club') }}</h2>
 
 	<div class="alert alert-info">
-		<h4>Attention</h4>
-		Vous ne pouvez créer et gérer qu'un seul club.
+		<h4>{{ _('Warning') }}</h4>
+		{{ _('You can create and administer only one club.') }}
 	</div>
 
 	<form action="" method="POST" class="form form-horizontal">
 		{% csrf_token %}
 
-		{{ macros.input(form.name, 'Nom du club') }}
-		{{ macros.input(form.slug, 'Slug', 'Représente le nom du club dans les urls') }}
-		{{ macros.input_bool(form.private, 'Club Privé', 'Si le club est privé il n\'est accessible que par les membres du club') }}
-		{{ macros.input(form.address, 'Adresse') }}
-		{{ macros.input(form.zipcode, 'Code Postal') }}
-		{{ macros.input(form.city, 'Ville') }}
+		{{ macros.input(form.name, _('Club name')) }}
+		{{ macros.input(form.slug, _('Slug'), _('Represents the club\'s name in urls')) }}
+		{{ macros.input_bool(form.private, _('Private club'), _('When private, a club is only accessible y its members')) }}
+		{{ macros.input(form.address, _('Adress')) }}
+		{{ macros.input(form.zipcode, _('Zipcode')) }}
+		{{ macros.input(form.city, _('Town')) }}
 
 		<div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
-				<input type="submit" class="btn btn-primary" value="Créer le club" />
+				<input type="submit" class="btn btn-primary" value="{{ _('Create the club') }}" />
 			</div>
 		</div>
 	</form>

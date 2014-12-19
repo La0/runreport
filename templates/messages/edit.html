@@ -1,6 +1,6 @@
 {% extends 'modal.html' %}
 
-{% set modal_title = 'Editer un message' %}
+{% set modal_title = _('Edit a message') %}
 {% set form_url = url('message-edit', message.pk) %}
 
 {% block body %}
@@ -16,6 +16,6 @@
 {% endblock %}
 
 {% block footer %}
-<button class="btn" data-dismiss="modal">Annuler</button>
-<button type="submit" class="btn btn-success">Editer</button>
+<button class="btn" data-dismiss="modal">{{ _('Cancel') }}</button>
+<button type="submit" class="btn btn-success">{{ _('Edit') }}</button>
 {% endblock %}

@@ -11,8 +11,7 @@ $(function(){
         return;
 
       var url = '/calendar/' + ev.date.getFullYear() + '/' + (ev.date.getMonth() + 1) + '/' + ev.date.getDate();
-      load_box(url, 'get', {}, 'modal');
-      $('#add_record').datepicker('hide');
+      window.location = url;
     });
 });
 </script>
@@ -30,14 +29,14 @@ h2, h3 {
 <div class="container">
 	<h2>
     {% if member %}
-    Records de {{ member.first_name }} {{ member.last_name }}
+    {{ _('Records of') }} {{ member.first_name }} {{ member.last_name }}
     <p class="actions pull-right">
-      <a class="btn btn-success" href="{% url club-members club.slug %}">Retour au club</a>
+      <a class="btn btn-success" href="{% url club-members club.slug %}">{{ _('Back to club') }}</a>
     </p>
     {% else %}
     Mes records
     <button id="add_record" class="modal-action btn btn-primary pull-right" data-date-format="yyyy-mm-dd" data-date="{{ today }}">
-      <span class="icon icon-plus"></span> Ajouter un record
+      <span class="icon icon-plus"></span> {{ _('Add a record') }}
     </button>
     {% endif %}
   </h2>
@@ -55,12 +54,12 @@ h2, h3 {
 			<div class="col-sm-4">
         {% if race.nb_sessions > 1 %}
         <p>
-          <span class="badge">{{race.nb_sessions}}</span> parties
+          <span class="badge">{{race.nb_sessions}}</span> {{ _('parts') }}
         </p>
         {% endif %}
         {% for session in sessions %}
         <p>
-          <i class="icon-sport-{{ session.sport.slug }}" title="{{ session.sport.name }}"></i>
+          <i class="icon-sport-{{ session.sport.slug }}" title="{{ _(session.sport.name) }}"></i>
           {{ session.name }}
         </p>
         {% endfor %}
@@ -96,7 +95,7 @@ h2, h3 {
         {% endif %}
       </div>
 			<div class="col-sm-1">
-				<a class="btn btn-xs {% if loop.first %}btn-warning{% else %}btn-default{% endif %}" href="{{ raceurl|url(*raceargs + [race.date.year, race.date.month, race.date.day]) }}">Voir</a>
+				<a class="btn btn-xs {% if loop.first %}btn-warning{% else %}btn-default{% endif %}" href="{{ raceurl|url(*raceargs + [race.date.year, race.date.month, race.date.day]) }}">{{ _('View') }}</a>
 			</div>
 		</div>
 		{% endwith %}
@@ -105,17 +104,17 @@ h2, h3 {
 	{% endfor %}
 
 		{% else %}
-		<p class="alert alert-warning">Aucune course renseignée</p>
+		<p class="alert alert-warning">{{ _('No races') }}</p>
 		{% endif %}
 
-    <h2>Courses à venir</h2>
+    <h2>{{ _('Future races') }}</h2>
 
 		{% if future_races %}
 		<div class="row-striped">
 			{% for race in future_races %}
 			<div class="row">
 				<div class="col-sm-4">
-					<strong>Dans {{race.date|timeuntil()}}</strong>
+					<strong>{{ _('In %s') % race.date|timeuntil()}}</strong>
 				</div>
 				<div class="col-sm-7">
           {% for session in race.sessions.all() %}
@@ -135,7 +134,7 @@ h2, h3 {
 			{% endfor %}
 		</div>
 		{% else %}
-		<p class="alert alert-warning">Aucune future course renseignée</p>
+		<p class="alert alert-warning">{{ _('No future races') }}</p>
 		{% endif %}
 
 	</div>

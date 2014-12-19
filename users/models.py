@@ -5,10 +5,9 @@ import math
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import AbstractBaseUser, UserManager, PermissionsMixin
-from django.db.models.signals import post_save
 from django.core import validators
 from django.utils import timezone
-from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.validators import MinValueValidator
 from django.conf import settings
 from hashlib import md5
 from datetime import datetime
@@ -18,9 +17,9 @@ from coach.mailman import MailMan
 from friends.models import FriendRequest
 
 PRIVACY_LEVELS = (
-  ('public', u'Public'),
-  ('club', u'Club'),
-  ('private', u'Privé'),
+  ('public', _('Public')),
+  ('club', _('Club')),
+  ('private', _('Private')),
 )
 
 class AthleteBase(AbstractBaseUser, PermissionsMixin):
@@ -68,45 +67,46 @@ def build_avatar_path(instance, filename):
 
 class Athlete(AthleteBase):
   # Personal infos for trainer
-  birthday = models.DateField(null=True, blank=True)
-  category = models.ForeignKey('UserCategory', null=True, blank=True)
-  vma = models.FloatField(null=True, blank=True, validators=[MinValueValidator(0)])
-  frequency = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0)])
-  frequency_rest = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0)])
-  height = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0)])
-  weight = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0)])
-  comment = models.TextField(null=True, blank=True)
-  nb_sessions = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0)])
-  license = models.CharField(max_length=12, null=True, blank=True)
+  birthday = models.DateField(_('birthday'), null=True, blank=True)
+  category = models.ForeignKey('UserCategory', verbose_name=_('category'), null=True, blank=True)
+  vma = models.FloatField(_('vma'), null=True, blank=True, validators=[MinValueValidator(0)], help_text=_('Ex: 12.5 km/h'))
+  frequency = models.IntegerField(_('cardiac frequency'), null=True, blank=True, validators=[MinValueValidator(0)])
+  frequency_rest = models.IntegerField(_('cardiac frequency at rest'), null=True, blank=True, validators=[MinValueValidator(0)])
+  height = models.IntegerField(_('height'), null=True, blank=True, validators=[MinValueValidator(0)], help_text=_('Unit: cm'))
+  weight = models.IntegerField(_('weight'), null=True, blank=True, validators=[MinValueValidator(0)], help_text=_('Unit: kg'))
+  comment = models.TextField(_('comment'), null=True, blank=True)
+  nb_sessions = models.IntegerField(_('number of sessions per week'), null=True, blank=True, validators=[MinValueValidator(0)])
+  license = models.CharField(_('license'), max_length=12, null=True, blank=True)
 
   # Sport
-  default_sport = models.ForeignKey('sport.Sport', default=3, limit_choices_to={'depth': 1,}) # default to running
+  default_sport = models.ForeignKey('sport.Sport', verbose_name=_('default sport'), default=3, limit_choices_to={'depth': 1,}) # default to running
 
   # Mail
-  auto_send = models.BooleanField(default=False)
+  auto_send = models.BooleanField(_('auto send emails'), default=False)
+  language = models.CharField(_('language used'), max_length=2, choices=settings.LANGUAGES, default='fr')
 
   # Garmin
-  garmin_login = models.CharField(max_length=255, null=True, blank=True)
-  garmin_password = models.TextField(null=True, blank=True)
+  garmin_login = models.CharField(_('garmin login'), max_length=255, null=True, blank=True)
+  garmin_password = models.TextField(_('garmin password'), null=True, blank=True)
 
   # Strava
   strava_token = models.CharField(max_length=255, null=True, blank=True)
 
   # Demo dummy account ?
-  demo = models.BooleanField(default=False)
+  demo = models.BooleanField(_('demo user'), default=False)
 
   # Avatar image
-  avatar = models.ImageField(upload_to=build_avatar_path)
+  avatar = models.ImageField(_('profile picture'), upload_to=build_avatar_path)
 
   # Profile privacy
-  privacy_profile = models.CharField(max_length=50, choices=PRIVACY_LEVELS, default='club')
-  privacy_avatar = models.CharField(max_length=50, choices=PRIVACY_LEVELS, default='club')
-  privacy_races = models.CharField(max_length=50, choices=PRIVACY_LEVELS, default='club')
-  privacy_records = models.CharField(max_length=50, choices=PRIVACY_LEVELS, default='club')
-  privacy_stats = models.CharField(max_length=50, choices=PRIVACY_LEVELS, default='club')
-  privacy_calendar = models.CharField(max_length=50, choices=PRIVACY_LEVELS, default='private')
-  privacy_comments = models.CharField(max_length=50, choices=PRIVACY_LEVELS, default='club')
-  privacy_tracks = models.CharField(max_length=50, choices=PRIVACY_LEVELS, default='club')
+  privacy_profile = models.CharField(_('profile visibility'), max_length=50, choices=PRIVACY_LEVELS, default='club', help_text=_('Indicates if your public profile is visible, and by who.'))
+  privacy_avatar = models.CharField(_('profile picture visibility'), max_length=50, choices=PRIVACY_LEVELS, default='club')
+  privacy_races = models.CharField(_('races visibility'), max_length=50, choices=PRIVACY_LEVELS, default='club')
+  privacy_records = models.CharField(_('records visibility'), max_length=50, choices=PRIVACY_LEVELS, default='club')
+  privacy_stats = models.CharField(_('stats visibility'), max_length=50, choices=PRIVACY_LEVELS, default='club')
+  privacy_calendar = models.CharField(_('calendar visibility'), max_length=50, choices=PRIVACY_LEVELS, default='private')
+  privacy_comments = models.CharField(_('comments visibility'), max_length=50, choices=PRIVACY_LEVELS, default='club')
+  privacy_tracks = models.CharField(_('tracks visibility'), max_length=50, choices=PRIVACY_LEVELS, default='club')
 
   # Direct friendships
   # It's automatically symmetrical

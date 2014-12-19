@@ -3,23 +3,23 @@
 {% set title = 'Nouveau message' %}
 
 {% block mail %}
-Bonjour {{ user.first_name }},
+{{ _('Hello %s') % user.first_name }},
 <br />
 
 {% if message.conversation.type == 'mail' %}
-Vous venez de recevoir un nouveau message privé de <a href="http://{{site.domain}}{% url user-public-profile message.writer.username %}">{{ message.writer.first_name }} {{ message.writer.last_name }}</a>
+{{ _('You just received a new private message from') }} <a href="http://{{site.domain}}{% url user-public-profile message.writer.username %}">{{ message.writer.first_name }} {{ message.writer.last_name }}</a>
 {% else %}
   {% with message.conversation.get_session() as session %}
   {% with session.day.week.user as session_user %}
   {% with session.day.date as dt %}
-  Vous venez de recevoir un nouveau commentaire
+  {{ _('You just received a new comment') }}
     {% if user == session_user %}
-    sur votre séance
+    {{ _('on your session') }}
     {% else %}
-    sur la séance de <a href="http://{{site.domain}}{% url user-public-profile session_user.username %}">{{ session_user.first_name }} {{ session_user.last_name }}</a>
+    {{ _('on the session of') }} <a href="http://{{site.domain}}{% url user-public-profile session_user.username %}">{{ session_user.first_name }} {{ session_user.last_name }}</a>
     {% endif %}
     <strong>{{ session.name }}</strong>
-    du {{ dt|date('l d E Y') }}
+    {{ _('on %s') % dt|date('l d E Y') }}
   {% endwith %}
   {% endwith %}
   {% endwith %}
@@ -33,9 +33,6 @@ Vous venez de recevoir un nouveau message privé de <a href="http://{{site.domai
 <br />
 <br />
 
-Vous pouvez voir <a href="http://{{site.domain}}{{ message.conversation.get_absolute_url() }}">la conversation entière sur RunReport</a>.
-<br />
-<br />
 
-Sportivement,
+<a href="http://{{site.domain}}{{ message.conversation.get_absolute_url() }}">{{ _('You can view the entire conversation on RunReport') }}</a>.
 {% endblock %}

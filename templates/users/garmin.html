@@ -9,17 +9,17 @@
 
   {% if connected %}
   <div class="alert alert-success">
-    <h4>Connection validée</h4>
-    Votre compte RunReport est maintenant associé à votre compte Garmin.
+    <h4>{{ _('Valid connection') }}</h4>
+    {{ _('Your RunReport account is now connected to your Garmin account.') }}
   </div>
   {% else %}
 	<div class="alert alert-warning">
-		<h4>Attention !</h4>
-		Je suis obligé de vous demander votre login/mot de passe pour récupérer régulièrement vos informations sur <a href="http://connect.garmin.com" target="_blank"> Garmin Connect</a>, ne disposant pas d'API officielle.
+		<h4>{{ _('Caution !') }}</h4>
+    {{ _('We are forced to ask your login & password to retrieve your Garmin Connect informations, as they do not provide any official API.') }}
+    <br />
+    {{ _('Your password is encrypted then stored using professional tools, but they are stored nonetheless in the website database.') }}
 		<br />
-		Votre mot de passe est chiffré puis stocké en utilisant des <a href="http://gnupg.org" target="_blank">outils professionels</a>... Mais il reste stocké dans la base de données du site.
-		<br />
-		Pour un maximum de sécurité, je vous conseille de changer votre mot de passe Garmin Connect pour un mot de passe unique (qui ne serait pas réutilisé sur votre compte mail, ou autre...)
+    {{ _('For a maximum level of security, we strongly suggest that you use a unique password for Garmin Connect (that should not be used for any other account)') }}
 	</div>
   {% endif %}
 
@@ -29,20 +29,20 @@
 		{% with form.non_field_errors() as err %}
 		{% if err %}
 		<div class="alert alert-danger">
-			<h4>Erreur</h4>
+			<h4>{{ _('Error') }}</h4>
 			{{ err|safe }}
 		</div>
 		{% endif %}
 		{% endwith %}
 
 		<fieldset>
-			{{ macros.input(form.garmin_login, 'Login Garmin') }}
-			{{ macros.input(form.garmin_password, 'Mot de passe Garmin') }}
+			{{ macros.input(form.garmin_login) }}
+			{{ macros.input(form.garmin_password) }}
 		</fieldset>
 
 		<div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
-				<p><button type="submit" class="btn btn-primary">Sauver ces informations</button></p>
+				<p><button type="submit" class="btn btn-primary">{{ _('Save') }}</button></p>
 			</div>
 		</div>
 	</form>

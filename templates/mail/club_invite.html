@@ -4,16 +4,16 @@
 
 {% block mail %}
 {% if name %}
-Bonjour {{ name }},
+{{ _('Hello %s' % name }},
 {% else %}
-Bonjour,
+{{ _('Hello') }},
 {% endif %}
 <br />
 
 <p>
-Vous pouvez dès maintenant créer votre propre club ou groupe d'athlètes sur <a href="http://{{ site.domain }}">Run Report</a> afin de suivre leurs progressions personnelles.
+{{ _('You can now create your own club ou athletes group on RunReport, in order to follow their personal evolutions.') }}
 </p>
 <br />
 
-Pour créer le club, utilisez cette <a href="https://{{site.domain}}{{ invite_url }}">invitation unique</a>
+{{ _('To create the club, use this unique invite:') }} https://{{site.domain}}{{ invite_url }}
 {% endblock %}

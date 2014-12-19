@@ -2,6 +2,10 @@
 
 {% block content %}
 
-<h2>Erreur sur la page</h2>
+<h2>{{ _('Error on this page') }}</h2>
+
+<p class="alert alert-info">
+  {{ _('A severe error has occured on this page, the administrator has been emailed about this issue.')}}
+</p>
 
 {% endblock %}

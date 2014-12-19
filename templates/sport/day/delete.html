@@ -1,17 +1,17 @@
 {% extends 'modal.html' %}
 
-{% set modal_title = day|date('l d E Y')|title() %}
+{% set modal_title = day.date|date('l d E Y')|title() %}
 
 {% block body %}
-Etes vous sûr de vouloir supprimer cette journée ?
+{{ _('Are you sure to delete this day ?') }}
 <ul>
   {% for s in session.sessions.all() %}
-  <li><span class="icon-sport-{{s.sport.slug}}"></span> {{ s.name }}</li>
+  <li><span class="icon-sport-{{s.sport.slug}}"></span> {{ _(s.name) }}</li>
   {% endfor %}
 </ul>
 {% endblock %}
 
 {% block footer %}
-<button class="btn" data-dismiss="modal">Annuler</button>
-<a href="{% url report-day-delete day.year, day.month, day.day %}" class="btn btn-danger modal-action modal-post">Supprimer cette journée</a>
+<button class="btn" data-dismiss="modal">{{ _('Cancel') }}</button>
+<a href="{% url report-day-delete day.date.year, day.date.month, day.date.day %}" class="btn btn-danger modal-action modal-post">{{ _('Delete this day') }}</a>
 {% endblock %}

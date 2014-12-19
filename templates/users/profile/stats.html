@@ -1,11 +1,11 @@
-<h3>Statistiques des 12 derniers mois</h3>
+<h3>{{ _('Stats of the last 12 months') }}</h3>
 
 {% if months %}
 <ul class="breadcrumb">
   {% for year in years %}
-    <li><a href="{% url athlete-stats-year member.username, year %}">Année {{year}}</a> <span class="divider"></span></li>
+    <li><a href="{% url athlete-stats-year member.username, year %}">{{ _('Year') }} {{year}}</a> <span class="divider"></span></li>
   {% endfor %}
-  <li><a href="{% url athlete-stats-all member.username %}">Toutes les séances</a> <span class="divider"></span></li>
+  <li><a href="{% url athlete-stats-all member.username %}">{{ _('All sessions') }}</a> <span class="divider"></span></li>
 </ul>
 
 <script type="text/javascript">
@@ -29,6 +29,6 @@ $(function(){
 
 {% else %}
 <div class="alert alert-warning">
-  Les statistiques de {{ member.first_name }} ne sont pas disponibles.
+  {{ _('Stats for %s are not available') % member.first_name }}
 </div>
 {% endif %}

@@ -9,15 +9,21 @@
 	<h2>{{page.name}}</h2>
 
 	<ul class="breadcrumb">
-    <li>Ecrit par {{page.user.first_name}} {{page.user.last_name|default(page.user.username)}}</li>
-		<li>le {{ page.updated|date('d E Y')}}</li>
+    <li>{{ _('Written by') }} {{page.user.first_name}} {{page.user.last_name|default(page.user.username)}}</li>
+		<li>{{ _('on') }} {{ page.updated|date('d E Y')}}</li>
 	</ul>
 
 	<div class="page">
 		{{page.html|default('No content')|safe}}
     <hr />
     <div class="pull-right">
-      <a href="{% url 'page-list' type %}" class="btn btn-primary">Voir les autres {% if type == 'news' %}News{% else %}pages d'aide{% endif %}</a>
+      <a href="{% url 'page-list' type %}" class="btn btn-primary">
+      {% if type == 'news' %}
+        {{ _('View the others news') }}
+      {% else %}
+        {{ _('View the others help pages') }}
+      {% endif %}
+    </a>
     </div>
 	</div>
 
@@ -26,24 +32,24 @@
 
 	{% if page.published %}
 	<div class="alert alert-success">
-		Page publiée, et visible par tous.
+    {{ _('Published page, visible by everyone') }}
 	</div>
 	{% else %}
 	<div class="alert alert-info">
-		<h4>Page non publiée</h4>
-		Elle n'est visible que par les administrateurs.
+		<h4>{{ _('Page not published') }}</h4>
+    {{ _('Only visible by administrators.') }}
 	</div>
 	{% endif %}
 
 	<form action="" class="page form-horizontal" method="POST">
 		{% csrf_token %}
-		{{ macros.input(form.name, 'Nom') }}
-		{{ macros.input(form.slug, 'Slug') }}
-		{{ macros.input(form.type, 'Type') }}
-		{{ macros.input(form.published, 'Publiée') }}
-		{{ macros.input(form.markdown, 'Markdown') }}
+		{{ macros.input(form.name, _('Name')) }}
+		{{ macros.input(form.slug, _('Slug')) }}
+		{{ macros.input(form.type, _('Type')) }}
+		{{ macros.input(form.published, _('Published')) }}
+		{{ macros.input(form.markdown, _('Markdown')) }}
 		<p>
-			<input class="btn btn-primary" type="submit" name="save" value="Sauver les modifications" />
+			<input class="btn btn-primary" type="submit" name="save" value="{{ _('Save') }}" />
 		</p>
 	</form>
 	{% endif %}

@@ -3,15 +3,15 @@
 {% set title = 'Invitation crée' %}
 
 {% block mail %}
-Bonjour {{ invite.sender.first_name }},
+{{ _('Hello %s') % invite.sender.first_name }},
 <br />
 
-Une invitation pour créer un club vient d'être demandée:
+{{ _('An invite to create club has been asked:' ) }}
 <ul>
   <li>Mail: {{invite.recipient}}</li>
   <li>Slug: {{invite.slug}}</li>
 </ul>
 <br />
 
-Vous pouvez l'activer en utilisant ce <a href="http://{{site.domain}}{% url "admin:club-invite-send" invite.id %}">lien d'administration</a>
+{{ _('You can active it by using this link') }} : http://{{site.domain}}{% url "admin:club-invite-send" invite.id %}
 {% endblock %}

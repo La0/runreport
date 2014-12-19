@@ -10,7 +10,7 @@ def notify_message(message, user):
   '''
   from coach.mail import MailBuilder
 
-  builder = MailBuilder('mail/message.html')
+  builder = MailBuilder('mail/message.html', user.language)
 
   data = {
     'message' : message,

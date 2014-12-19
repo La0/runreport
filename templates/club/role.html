@@ -4,8 +4,8 @@
 {% block body %}
 <div class="roles">
 	<form method="POST" action="{% url club-member-role club.slug, member.username %}">
-		<p class="alert alert-info">
-			{{member.first_name}} {{member.last_name}} est actuellement <strong>{{membership.role|title()}}</strong> dans le club {{club.name}} 
+		<p class="text-info">
+      {{ member.first_name }} {{ member.last_name }} {{ _('is a %s in club') % _(membership.role|title()) }} : {{ club.name }}
 		</p>
 		{% csrf_token %}
 		<input class="role_value" type="hidden" name="role" value="{{membership.role}}"/>
@@ -14,9 +14,9 @@
 		{% if stat.type != membership.role %}
 		<div class="role">
 			<h4>{{roles[stat.type]}}</h4>
-			<button type="submit" name="role_local" value="{{stat.type}}" class="role btn pull-right {% if stat.diff <= 0 or user.demo %}disabled{% else %}btn-success{% endif %}">Devenir {{stat.type|title()}}</button>
+			<button type="submit" name="role_local" value="{{stat.type}}" class="role btn pull-right {% if stat.diff <= 0 or user.demo %}disabled{% else %}btn-success{% endif %}">{{ _('Become') }} {{ _(stat.type|title()) }}</button>
 
-			Places disponibles :
+			{{ _('Available places') }} :
 			{% if stat.percent >= 50 %}
 			<span class="badge badge-success">{{stat.diff}} / {{stat.max}}</span>
 			{% elif stat.percent >= 25 %}
@@ -34,18 +34,18 @@
 			<h4>Choisir ses entraineurs</h4>
 			{{form.trainers|safe}}
 		</div>
-		<button type="submit" class="btn btn-info pull-right" {% if user.demo %}disabled{% endif %}>Sauver</button>
+		<button type="submit" class="btn btn-info pull-right" {% if user.demo %}disabled{% endif %}>{{ _('Save') }}</button>
 		{% endif %}
 
 		<hr />
-		<h4>Zone dangereuse</h4>
-		<button type="submit" name="role_local" value="archive" class="role btn btn-danger pull-right {% if membership.role == "archive" or user.demo %}disabled{% endif %}">Archiver ce compte</button>
+		<h4>{{ _('Danger zone') }}</h4>
+		<button type="submit" name="role_local" value="archive" class="role btn btn-danger pull-right {% if membership.role == "archive" or user.demo %}disabled{% endif %}">{{ _('Archive this account') }}</button>
 	</form>
 </div>
 {% if user.demo %}
 <div class="alert alert-warning" style="margin: 60px 0 0 0">
-  <h4>Compte Démo</h4>
-  L'édition est désactivée pour la démo.
+  <h4>{{ _('Demo account') }}</h4>
+  {{ _('Edition is disabled for the demo.') }}
 </div>
 {% endif %}
 {% endblock %}

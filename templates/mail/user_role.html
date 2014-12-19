@@ -3,30 +3,26 @@
 {% set title = 'Inscription Club' %}
 
 {% block mail %}
-Bonjour {{ user.first_name }},
+{{ _('Hello %s') % user.first_name }},
 <br />
 <br />
 
 {% if old_role == 'prospect' %}
   {% if new_role == 'archive' %}
-  Désolé, mais votre candidature au club {{ club.name }} a été refusée.
+  {{ _('Sorry, but your subscription to club %s has been refused') % club.name }}
   {% else %}
-  Félicitations, votre candidature au club {{ club.name }} vient d'être acceptée.
+  {{ _('Congrats, your subscription to club %s has been accepted !') % club.name }}
   {% endif %}
 {% else %}
   {% if new_role == 'archive' %}
-  Désolé, mais vous ne faites plus partie du club {{ club.name }}.
+  {{ _('Sorry, but you are no longer in the club %s') % club.name }}
   {% elif new_role == 'trainer' %}
-  Votre rôle au sein du club {{ club.name }} a évolué, vous êtes maintenant un Entrâineur.
+  {{ _('Your role in club %s has changed, you are now a trainer') % club.name }}
   {% elif new_role == 'staff' %}
-  Votre rôle au sein du club {{ club.name }} a évolué, vous êtes maintenant un Membre du staff.
+  {{ _('Your role in club %s has changed, you are now a staff member') % club.name }}
   {% elif new_role == 'athlete' %}
-  Votre rôle au sein du club {{ club.name }} a évolué, vous êtes maintenant un Athlète.
+  {{ _('Your role in club %s has changed, you are now an athlete ') % club.name }}
   {% endif %}
 {% endif %}
-<br />
-<br />
-
-Bonne course !
 </div>
 {% endblock %}

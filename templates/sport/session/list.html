@@ -3,11 +3,6 @@
   'race' : 'label-success',
   'rest' : 'label-danger',
 } %}
-{% set type_text = {
-  'training' : 'Entraînement',
-  'race' : 'Course',
-  'rest' : 'Repos',
-} %}
 
 {% if day and day.sessions.count() %}
 {% for session in day.sessions.order_by('created') %}
@@ -26,13 +21,13 @@
       {% endif %}
 
       <span class="text-muted">&bull;</span>
-      <span class="label {{type_css[session.type]}}">{{type_text[session.type]}}</span>
+      <span class="label {{type_css[session.type]}}">{{_(session.type)|title()}}</span>
 
       <span class="text-muted">&bull;</span>
       {% if session.name %}
       <strong>{{session.name}}</strong>
       {% else %}
-      <i>Pas de nom</i>
+      <i>{{ _('No session name') }}</i>
       {% endif %}
     </h4>
   </div>
@@ -40,10 +35,10 @@
   <div class="col-sm-3 col-md-2">
     <h4>
     {% if session.time %}
-      <span class="label {{type_css[session.type]}}">Temps</span>
+      <span class="label {{type_css[session.type]}}">{{ _('Time') }}</span>
       {{ session.time|total_time() }}
     {% else %}
-      <span class="label label-warning">Pas de Temps</span>
+      <span class="label label-warning">{{ _('No time') }}</span>
     {% endif %}
     </h4>
   </div>
@@ -51,14 +46,14 @@
   <div class="col-sm-3 col-md-2">
     <h4>
     {% if session.distance %}
-      <span class="label {{type_css[session.type]}}">Distance</span>
+      <span class="label {{type_css[session.type]}}">{{ _('Distance') }}</span>
       {% if session.sport.get_category() == 'swimming' %}
         {{ (session.distance * 1000)|floatformat(0) }} m
       {% else %}
         {{ session.distance|floatformat(2) }} km
       {% endif %}
     {% else %}
-      <span class="label label-warning">Pas de Distance</span>
+      <span class="label label-warning">{{ _('No Distance') }}</span>
     {% endif %}
     </h4>
   </div>
@@ -77,7 +72,7 @@
     {% if session.name %}
     <strong>{{session.name}}</strong>
     {% else %}
-    <i class="text-muted">Pas de nom</i>
+    <i class="text-muted">{{ _('No session name') }}</i>
     {% endif %}
   </div>
   <div class="col-xs-2">
@@ -110,11 +105,11 @@
 {% elif not member %}
 <p>
   <span class="text-muted">
-    <i class="icon-plus"></i> Ajouter une séance
+    <i class="icon-plus"></i> {{ _('Add a session') }}
   </span>
 </p>
 {% else %}
 <p>
-  <i class="text-muted">Pas de séances</i>
+  <i class="text-muted">{{ _('No sessions') }}</i>
 </p>
 {% endif %}

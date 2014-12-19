@@ -2,6 +2,7 @@
 from django.core.urlresolvers import reverse
 from club.models import ClubMembership
 from users.notification import UserNotifications
+from django.utils.translation import ugettext_lazy as _
 
 def add_pages(request):
   '''
@@ -19,10 +20,10 @@ def add_pages(request):
 
   def _build_club_generic():
     return {
-      'caption' : 'Les clubs',
+      'caption' : _('Clubs'),
       'menu': [
-        _p('club-list', u'Voir les clubs'),
-        _p('club-landing', u'Créer un club'),
+        _p('club-list', _('View clubs')),
+        _p('club-landing', _('Create a club')),
       ],
       'icon' : 'icon-star',
     }
@@ -30,20 +31,20 @@ def add_pages(request):
   def _build_help():
     # Build help menu with contact & news
     submenu = {
-      'caption' : 'Aide',
+      'caption' : _('Help'),
       'menu' : [],
       'icon' : 'icon-help-circled',
     }
-    submenu['menu'].append(_p(('page-list', 'help'), 'Aide', lazy=True))
-    submenu['menu'].append(_p('vma-glossary', 'Glossaire'))
-    submenu['menu'].append(_p(('page-list', 'news'), 'News', lazy=True))
-    submenu['menu'].append(_p(('contact_form',), 'Contact', lazy=True))
+    submenu['menu'].append(_p(('page-list', 'help'), _('Help'), lazy=True))
+    submenu['menu'].append(_p('vma-glossary', _('Glossary')))
+    submenu['menu'].append(_p(('page-list', 'news'), _('News'), lazy=True))
+    submenu['menu'].append(_p(('contact_form',), _('Contact'), lazy=True))
     return submenu
 
   menu = []
   if request.user.is_authenticated():
-    menu.append(_p('report-current', 'Ma semaine', 'icon-list'))
-    menu.append(_p('report-current-month', 'Mon calendrier', icon='icon-calendar', lazy=True))
+    menu.append(_p('report-current', _('My Week'), 'icon-list'))
+    menu.append(_p('report-current-month', _('My Calendar'), icon='icon-calendar', lazy=True))
 
     # Load memberships
     members = request.user.memberships.exclude(role__in=('archive', 'prospect'))
@@ -61,22 +62,22 @@ def add_pages(request):
 
       # Add club list for athletes
       if m.role in ('athlete', ):
-        submenu['menu'].append(_p(('club-members', m.club.slug), u'Les membres'))
+        submenu['menu'].append(_p(('club-members', m.club.slug), _('Members')))
         submenu['menu'].append('__SEPARATOR__')
 
       # Add club admin links for trainers
       if m.role in ('trainer', 'staff') or request.user.is_superuser:
-        submenu['menu'].append(_p(('club-members-name', m.club.slug, 'athletes', 'name'), u'Mes Athlètes'))
-        submenu['menu'].append(_p(('club-races', m.club.slug, ), u'Les courses', lazy=True))
+        submenu['menu'].append(_p(('club-members-name', m.club.slug, 'athletes', 'name'), _('My athletes')))
+        submenu['menu'].append(_p(('club-races', m.club.slug, ), _('Races'), lazy=True))
         # Removed plans because non functional
         #submenu['menu'].append(_p(('plans', ), u'Mes plans', lazy=True))
-        submenu['menu'].append(_p(('club-members-name', m.club.slug, 'all', 'name'), u'Tout le club'))
+        submenu['menu'].append(_p(('club-members-name', m.club.slug, 'all', 'name'), _('All the club')))
 
         # Manage links
         if m.club.manager == request.user or request.user.is_superuser:
-          submenu['menu'].append(_p(('club-members-name', m.club.slug, 'prospects', 'name'), u'Nouveaux'))
-          submenu['menu'].append(_p(('club-members-name', m.club.slug, 'archives', 'name'), u'Archives'))
-          submenu['menu'].append(_p(('club-manage', m.club.slug), u'Administrer'))
+          submenu['menu'].append(_p(('club-members-name', m.club.slug, 'prospects', 'name'), _('Newcomers')))
+          submenu['menu'].append(_p(('club-members-name', m.club.slug, 'archives', 'name'), _('Archives')))
+          submenu['menu'].append(_p(('club-manage', m.club.slug), _('Manage')))
 
         submenu['menu'].append('__SEPARATOR__')
 
@@ -102,22 +103,21 @@ def add_pages(request):
       'menu' : [],
       'icon' : 'icon-user',
     }
-    submenu['menu'].append(_p('message-inbox', u'Mes messages'))
-    submenu['menu'].append(_p('user-preferences', u'Mes préférences'))
-    submenu['menu'].append(_p(('user-public-profile', request.user.username), 'Mon profil public'))
-    submenu['menu'].append(_p('stats', 'Mes statistiques', lazy=True))
-    submenu['menu'].append(_p('vma', 'Mes allures'))
-    submenu['menu'].append(_p('user-races', 'Mes records'))
-    submenu['menu'].append(_p('friends', 'Mes amis'))
-    submenu['menu'].append(_p('track-providers', u'Services GPS'))
+    submenu['menu'].append(_p('message-inbox', _('My messages')))
+    submenu['menu'].append(_p('user-preferences', _('My preferences')))
+    submenu['menu'].append(_p(('user-public-profile', request.user.username), _('My public profile')))
+    submenu['menu'].append(_p('stats', _('My statistics'), lazy=True))
+    submenu['menu'].append(_p('vma', _('My paces')))
+    submenu['menu'].append(_p('user-races', _('My records')))
+    submenu['menu'].append(_p('track-providers', _('My GPS services')))
     submenu['menu'].append('__SEPARATOR__')
-    submenu['menu'].append(_p('logout', u'Se déconnecter'))
+    submenu['menu'].append(_p('logout', _('Logout')))
     menu.append(submenu)
   else:
-    menu.append(_p('user-create', u'Créer un compte', 'icon-plus'))
+    menu.append(_p('user-create', _('Create an account'), 'icon-plus'))
     menu.append(_build_club_generic())
     menu.append(_build_help())
-    menu.append(_p('login', 'Se connecter', 'icon-user'))
+    menu.append(_p('login', _('Login'), 'icon-user'))
 
   # Search for active main menu
   # based on sub items

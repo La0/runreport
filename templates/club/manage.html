@@ -6,20 +6,20 @@
 
 <div class="container">
 
-	<h2>Administrer {{club.name}}</h2>
+	<h2>{{ _('Manage') }} {{club.name}}</h2>
 
-	<h3>Utilisateurs</h3>
+	<h3>{{ _('Users') }}</h3>
 	<div class="alert alert-info">
-		<h4>Aide</h4>
-		Vous êtes limités en nombre de compte liés au club, en fonction de chaque type d'utilisateur.
+		<h4>{{ _('Help') }}</h4>
+		{{ _('You are limited in the number of accounts linked to the club, depending on the type of users') }}
 	</div>
 	<div class="table-responsive">
 		<table class="table table-striped">
 			<tr>
-				<th>Type d'utilisateur</th>
-				<th>Maximum</th>
-				<th>Utilisés</th>
-				<th>Disponible</th>
+				<th>{{ _('Users type') }}</th>
+				<th>{{ _('Maximum') }}</th>
+				<th>{{ _('Used') }}</th>
+				<th>{{ _('Available') }}</th>
 			</tr>
 			{% for stat in stats %}
 			<tr>
@@ -42,43 +42,46 @@
 
   {% if club.private %}
   <div class="alert alert-danger">
-    <h4>Inscriptions pour un club privé</h4>
+    <h4>{{ _('Subscriptions for a private club') }}</h4>
     <p>
-      Votre club étant <strong>privé</strong>, vous devez communiquer <a href="{% url club-join-private club.slug, club.get_private_hash() %}">ce lien</a> aux futurs membres.
+      {{ _('Your club is private, you must then this link to future members') }} :
+      <a href="{% url club-join-private club.slug, club.get_private_hash() %}">{{ _('Private access') }}</a>
     </p>
   </div>
   {% else %}
   <div class="alert alert-success">
-    <h4>Inscriptions pour un club public</h4>
+    <h4>{{ _('Subscription for a public club') }}</h4>
     <p>
-      Votre club étant <strong>public</strong>, les utilisateurs voient votre club dans la <a href="{% url club-list %}">liste</a>
+      {{ _('Your club is public, any user or visitor can view your club in this list') }} : 
+      <a href="{% url club-list %}">{{ _('Public list') }}</a>
     </p>
     <p>
-      Vous pouvez cependant leur communiquer <a href="{% url club-join club.slug %}">ce lien</a> pour rejoindre directement votre club.
+      {{ _('You can send this to your athletes so they can join directly') }} :
+      <a href="{% url club-join club.slug %}">{{ _('Club link') }}</a>
     </p>
   </div>
   {% endif %}
 
-	<h3>Liens publics</h3>
+	<h3>{{ _('Public links') }}</h3>
 	<div class="alert alert-info">
-		<h4>Aide</h4>
-		Les liens publics sont affichés dans le menu Club, en haut de page, pour tous les utilisateurs du club.<br />
-		Ils sont utiles pour indiquer des sites externes: groupe Facebook, site officiel du club, ...
+		<h4>{{ _('Help') }}</h4>
+		{{ _('Public links are shown in the Club menu, on top of the page, for all the users of the club.') }}<br />
+		{{ _('They are useful to show external websites: Facebook groups, official website of the club, ...') }}
 	</div>
 	{% if links %}
 	<div class="table-responsive">
 		<table class="table table-striped">
 			<tr>
-				<th>Nom</th>
-				<th>Url</th>
-				<th>Actions</th>
+				<th>{{ _('Name') }}</th>
+				<th>{{ _('Url') }}</th>
+				<th>{{ _('Actions') }}</th>
 			</tr>
 			{% for link in links %}
 			<tr>
 				<td>{{link.name}}</td>
 				<td><a href="{{link.url}}" target="_blank">{{link.url}}</a></td>
 				<td>
-					<a href="{% url club-link-delete club.slug, link.id%}" class="modal-action modal-post btn btn-danger btn-xs">Supprimer</a>
+					<a href="{% url club-link-delete club.slug, link.id%}" class="modal-action modal-post btn btn-danger btn-xs">{{ _('Delete') }}</a>
 				</td>
 			</tr>
 			{% endfor %}
@@ -86,31 +89,31 @@
 	</div>
 	{% else %}
 	<p class="alert alert-warning">
-		Aucun lien public pour votre club.
+		{{ _('There are no public link for your club.') }}
 	</p>
 	{% endif %}
-	<a href="{% url club-link-add club.slug %}" class="modal-action btn btn-info pull-right">Ajouter un lien</a>
+	<a href="{% url club-link-add club.slug %}" class="modal-action btn btn-info pull-right">{{ _('Add a link') }}</a>
 	<div class="clearfix">&nbsp;</div>
 
 	<h3>Edition</h3>
 	<form action="" method="POST" class="form form-horizontal">
 		{% csrf_token %}
-		{{ macros.input(form.name, 'Nom du club') }}
-		{{ macros.input(form.slug, 'Slug', 'Représente le nom du club dans les urls') }}
-		{{ macros.input_bool(form.private, 'Club Privé', 'Si le club est privé il n\'est accessible que par les membres du club') }}
-		{{ macros.input(form.address, 'Addresse') }}
-		{{ macros.input(form.zipcode, 'Code Postal') }}
-		{{ macros.input(form.city, 'Ville') }}
+		{{ macros.input(form.name, _('Club name')) }}
+		{{ macros.input(form.slug, _('Slug'), _('Represents the club\'s name in urls')) }}
+		{{ macros.input_bool(form.private, _('Private club'), _('When private, a club is only accessible y its members')) }}
+		{{ macros.input(form.address, _('Adress')) }}
+		{{ macros.input(form.zipcode, _('Zipcode')) }}
+		{{ macros.input(form.city, _('Town')) }}
 
 		<div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
         {% if user.demo %}
         <div class="alert alert-warning">
-          <h4>Compte Démo</h4>
-          L'édition est désactivée pour la démo.
+          <h4>{{ _('Demo account') }}</h4>
+          {{ _('Edition is deactivated for the demo') }}
         </div>
         {% else %}
-				<input type="submit" value="Editer" class="btn btn-primary" />
+				<input type="submit" value="{{ _('Edit') }}" class="btn btn-primary" />
         {% endif %}
 			</div>
 		</div>

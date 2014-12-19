@@ -1,12 +1,12 @@
 {% extends 'modal.html' %}
 
-{% set modal_title = 'Supprimer un message' %}
+{% set modal_title = _('Delete a message') %}
 {% set form_url = url('message-delete', message.pk) %}
 
 {% block body %}
 
 <p class="text-danger">
-  Vous êtes sur le point de supprimer votre message du {{ message.created|date('l d E Y - H:i') }} :
+  {{ _('Are you sure to delete the message from %s ? ') % message.created|date('l d E Y - H:i') }} :
 </p>
 
 <blockquote>
@@ -16,6 +16,6 @@
 {% endblock %}
 
 {% block footer %}
-<button class="btn" data-dismiss="modal">Annuler</button>
-<button type="submit" class="btn btn-danger">Supprimer</button>
+<button class="btn" data-dismiss="modal">{{ _('Cancel') }}</button>
+<button type="submit" class="btn btn-danger">{{ _('Delete') }}</button>
 {% endblock %}

@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
-{% set page_title = 'Mes amis' %}
+{% set page_title = _('My friends') %}
 
 {% block content %}
 <div class="container">
 
-  <h1>Amis</h1>
+  <h1>{{ _('My friends') }}</h1>
   <div class="row">
   {% for friend in friends %}
   <div class="col-sm-6 col-xs-12">
@@ -21,7 +21,7 @@
         </div>
         <div class="col-xs-3 text-right">
           <a href="{% url user-public-profile friend.username %}" class="btn btn-primary btn-sm pull-right">
-            Voir son profil <i class="icon-right-open"></i>
+            {{ _('View this profile') }}<i class="icon-right-open"></i>
           </a>
         </div>
       </div>
@@ -29,7 +29,7 @@
   </div>
   {% else %}
   <div class="alert alert-info">
-    Vous pouvez ajouter des amis de votre club par exemple.
+    {{ _('You can add friends from your club, for example.') }}
   </div>
   {% endfor %}
   </div>
@@ -47,16 +47,16 @@
     </div>
     <div class="col-xs-4 text-right">
       <a href="{% url friend-request req.sender.username, 'refuse' %}" class="btn btn-danger modal-action">
-        Refuser
+        {{ _('Refuse') }}
       </a>
       <a href="{% url friend-request req.sender.username, 'accept' %}" class="btn btn-success modal-action">
-        Accepter
+        {{ _('Accept') }}
       </a>
     </div>
   </div>
   {% else %}
   <div class="alert alert-info">
-    Vous n'avez pas de demandes d'amitié à valider.
+    {{ _('You don\'t have any friend request to validate.') }}
   </div>
   {% endfor %}
 

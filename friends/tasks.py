@@ -19,9 +19,11 @@ def notify_friend_request(sender, recipient, accepted=False):
     'accepted' : accepted,
   }
   if accepted:
+    builder.language = sender.language
     builder.subject = u'[RunReport] Demande d\'ami acceptée'
     builder.to = [sender.email, ]
   else:
+    builder.language = recipient.language
     builder.subject = u'[RunReport] Nouvelle demande d\'ami'
     builder.to = [recipient.email, ]
 

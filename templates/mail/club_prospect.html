@@ -3,21 +3,23 @@
 {% set title = 'Nouveau membre' %}
 
 {% block mail %}
-Bonjour {{ manager.first_name }},
+{{ _('Hello %s') % manager.first_name }},
 <br />
 <br />
-Un nouveau membre "{{ user.first_name }} {{ user.last_name }}" vient de s'inscrire à votre club {{ club.name }} !
+{{ _('A new member "%(first)s %(last)s" just subscribed to your club %(club)s') % {'first': user.first_name, 'last': user.last_name, 'club': club.name} }}
 
 <br />
 <br />
 
-Vous pouvez valider sa candidature dans <a href="{{ site.domain }}{% url 'club-members-name' club.slug, 'prospects', 'name' %}">la liste des Nouveaux</a>, en cliquant sur le bouton de rôle "Nouveau", et en lui donnant le rôle d'Athlète.
+{{ _('You can validate this subscription in the Newcomers section, by clicking on the role button "Newcomer", and giving him the new role of "Athlete"') }}
+
+<a href="{{ site.domain }}{% url 'club-members-name' club.slug, 'prospects', 'name' %}">{{ _('Newcomers list') }}</a>
 
 <br />
 <br />
-Si vous n'acceptez pas ce membre, vous pouvez archiver cette candidature sur la même page.
+{{ _('If you refuse this subscription, you can archive it on the same page.') }}
 
 <br />
 <br />
-Dans les deux cas, un mail sera envoyé automatiquement à cette personne.
+{{ _('In both cases, an email will be sent to the subscriber.') }}
 {% endblock %}

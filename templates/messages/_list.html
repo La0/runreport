@@ -9,9 +9,11 @@
           <a href="{% url conversation-list c.id %}" class="modal-action" data-replaces="messages-{{session.pk}}">
           {% endif %}
             {% if c.type == 'comments_private' %}
-            <i class="icon-lock"></i> {{ nb }} commentaire{{ nb|pluralize() }} privé{{ nb|pluralize() }}
+            <i class="icon-lock"></i>
+            {{ _('%d private comments') % nb }}
             {% else %}
-            <i class="icon-club"></i> {{ nb }} commentaire{{ nb|pluralize() }} public{{ nb|pluralize() }}
+            <i class="icon-club"></i>
+            {{ _('%d public comments') % nb }}
             {% endif %}
           {% if c != conversation %}
           </a>
@@ -27,7 +29,8 @@
 <div class="row">
   <div class="col-xs-12">
     <a href="{% url conversation-list-full conversation.pk %}" data-replaces="messages-{{ session.pk }}" class="modal-action btn btn-light btn-info btn-sm">
-      <i class="icon-comment"></i> Voir le{{ remaining|pluralize() }} {% if remaining > 1 %}{{ remaining }}{% endif %} commentaire{{ remaining|pluralize() }} précèdent{{ remaining|pluralize() }}
+      <i class="icon-comment"></i>
+      {{ _('View all previous comments') }}
     </a>
   </div>
 </div>
@@ -42,12 +45,12 @@
     <div class="col-sm-8 col-xs-12">
       <p>
         {% if conversation.type == 'comments_private' %}
-        <i class="icon-lock do-tooltip" title="Commentaire privé"></i>
+        <i class="icon-lock do-tooltip" title="{{ _('Private comment') }}"></i>
         {% endif %}
         <i class="icon-user"></i> <a href="{% url user-public-profile message.writer.username %}">{{ message.writer.first_name }} {{ message.writer.last_name }}</a>
         <i class="icon-calendar"></i> {{ message.created|date('l d E Y - H:i') }}
         {% if message.revision > 1 %}
-        <i class="icon-right-open"></i> Edité {{ message.revision }} fois.
+        <i class="icon-right-open"></i> {{ _('Edited %d times') % message.revision }}
         {% endif %}
       </p>
       <blockquote>
@@ -56,8 +59,8 @@
     </div>
     <div class="col-sm-3 col-xs-12 text-right actions">
       {% if message.writer == user %}
-      <a href="{% url message-delete message.pk %}" class="modal-action btn btn-sm btn-danger"><i class="icon-trash"></i><span class="hidden-xs"> Supprimer</span></a>
-      <a href="{% url message-edit message.pk %}" class="modal-action btn btn-sm btn-success">Editer <i class="icon-right-open"></i></a>
+      <a href="{% url message-delete message.pk %}" class="modal-action btn btn-sm btn-danger"><i class="icon-trash"></i><span class="hidden-xs"> {{ _('Delete') }}</span></a>
+      <a href="{% url message-edit message.pk %}" class="modal-action btn btn-sm btn-success">{{ _('Edit') }}<i class="icon-right-open"></i></a>
       {% endif %}
     </div>
   </div>
@@ -68,21 +71,26 @@
   <div class="col-xs-12 actions">
     {% if user.is_authenticated() %}
       <a href="{% url conversation-add conversation.pk %}" class="btn btn-light btn-sm {% if conversation.type == 'comments_private' %}btn-warning{% else %}btn-success{% endif %} modal-action">
-        <i class="icon-plus"></i> Ajouter un commentaire {% if conversation.type == 'comments_private' %}privé{% else %}public{% endif %}
+        <i class="icon-plus"></i>
+        {% if conversation.type == 'comments_private' %}
+          {{ _('Add a private comment') }}
+        {% else %}
+          {{ _('Add a public comment') }}
+        {% endif %}
       </a>
       {% if 'comments_public' in privacy and not session.comments_public %}
       <a href="{% url message-session-add session.pk, 'public' %}" class="btn btn-sm btn-success modal-action btn-light">
-        <i class="icon-comment"></i> Démarrer une conversation publique
+        <i class="icon-comment"></i> {{ _('Start a public conversation') }}
       </a>
       {% endif %}
       {% if 'comments_private' in privacy and not session.comments_private %}
       <a href="{% url message-session-add session.pk, 'private' %}" class="btn btn-sm btn-warning modal-action btn-light">
-        <i class="icon-comment"></i> Démarrer une conversation privée
+        <i class="icon-comment"></i> {{ _('Start a private conversation') }}
       </a>
       {% endif %}
     {% else %}
-    <span class="btn btn-sm btn-info disabled do-tooltip btn-light" title="Vous devez avoir un compte pour ajouter un commentaire">
-      <i class="icon-plus"></i> Ajouter un commentaire
+    <span class="btn btn-sm btn-info disabled do-tooltip btn-light" title="{{ _('You must be logged in to add a comment') }}">
+      <i class="icon-plus"></i> {{ _('Add a comment') }}
     </span>
     {% endif %}
   </div>

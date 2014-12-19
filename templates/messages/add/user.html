@@ -1,6 +1,6 @@
 {% extends 'modal.html' %}
 
-{% set modal_title = 'Ecrire à %s %s' % (member.first_name, member.last_name) %}
+{% set modal_title = _('Write to %(first)s %(last)s') % {'first': member.first_name, 'last': member.last_name} %}
 
 {% set form_url = url('message-user-add', member.username) %}
 
@@ -22,6 +22,6 @@
 {% endblock %}
 
 {% block footer %}
-<button class="btn" data-dismiss="modal">Annuler</button>
-<button type="submit" class="btn btn-primary">Valider</button>
+<button class="btn" data-dismiss="modal">{{ _('Cancel') }}</button>
+<button type="submit" class="btn btn-primary">{{ _('Send') }}</button>
 {% endblock %}
