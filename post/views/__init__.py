@@ -1,1 +1,2 @@
-from .edit import PostCreateView, PostEditView
+from .edit import PostCreateView, PostEditView, PostListView
+from .view import PostView

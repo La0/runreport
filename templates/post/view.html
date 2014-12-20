@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% set page_title = post.title %}
+
+{% block content %}
+<div class="container">
+  <h1>{{ post.title }}</h1>
+
+  <div class="row">
+    <div class="col-xs-1">
+      <img class="img-responsive img-rounded" src="{{ post.writer.avatar.url }}" />
+    </div>
+    <div class="col-xs-10">
+      <span class="lead">
+        {{ _('Written by') }}
+        <a href="{% url user-public-profile post.writer.username %}">
+          {{ post.writer.first_name }} {{ post.writer.last_name }}
+        </a>
+        {% if not post.published %}
+          <span class="label label-danger">{{ _('Not published') }}</span>
+        {% endif %}
+      </span>
+      <p>
+        {{ _('on') }} {{ post.created|date('l d E Y') }}
+      </p>
+    </div>
+  </div>
+
+  <hr />
+
+  <div class="row">
+    <div class="col-xs-12">
+      {{ post.html|safe }}
+    </div>
+  </div>
+</div>
+{% endblock %}

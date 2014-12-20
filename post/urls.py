@@ -7,4 +7,7 @@ urlpatterns = patterns('',
   # Post edition
   url(r'^new/?', login_required(PostCreateView.as_view()), name="post-create"),
   url(r'^(?P<slug>[\w_]+)/edit/?', login_required(PostEditView.as_view()), name="post-edit"),
+
+  # List user's personal posts
+  url(r'^/?$', login_required(PostListView.as_view()), name="posts"),
 )

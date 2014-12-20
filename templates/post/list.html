@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% set page_title = _('My posts') %}
+
+{% block content %}
+<div class="container">
+
+  <h1>{{ _('My posts') }}</h1>
+
+  {% for post in posts %}
+  <div class="row">
+    <div class="col-xs-6">
+      <h4>{{ post.title }}</h4>
+      {{ post.html|truncatechars(100) }}
+    </div>
+    <div class="col-xs-2">
+      {% if post.published %}
+      <span class="label label-success">{{ _('Published') }}</span>
+      {% else %}
+      <span class="label label-danger">{{ _('Not published') }}</span>
+      {% endif %}
+    </div>
+    <div class="col-xs-2">
+      {{ post.created|date('l d E Y') }}
+    </div>
+    <div class="col-xs-2 test-right">
+      <a href="{% url 'post-edit' post.slug %}" class="btn btn-info">
+        {{ _('Edit') }}
+      </a>
+      <a href="{% url 'post' user.username, post.slug %}" class="btn btn-primary">
+        {{ _('View') }}
+      </a>
+    </div>
+  </div>
+  {% else %}
+  <div class="alert alert-info">
+    {{ _('You do not have written any post yet.') }}
+  </div>
+  {% endfor %}
+
+</div>
+{% endblock %}

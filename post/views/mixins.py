@@ -7,7 +7,7 @@ class PostWriterMixin(object):
   form_class = PostForm
 
   def get_queryset(self):
-    return Post.objects.filter(writer=self.request.user)
+    return Post.objects.filter(writer=self.request.user).order_by('-created')
 
   def form_valid(self, form):
     self.post = form.save(commit=False)
@@ -17,4 +17,4 @@ class PostWriterMixin(object):
     return super(PostWriterMixin, self).form_valid(form)
 
   def get_success_url(self):
-    return reverse('post-edit', args=(self.post.slug, ))
+    return reverse('posts')
