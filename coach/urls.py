@@ -1,5 +1,6 @@
-from coffin.conf.urls import *
-from coach.settings import MEDIA_ROOT, DEBUG, ADMIN_BASE_URL
+from coffin.conf.urls import include, patterns, url
+from django.conf.urls.static import static
+from django.conf import settings
 from django.contrib.gis import admin
 from django.views.generic.base import RedirectView, TemplateView
 from club.views import ClubInviteCheck
@@ -39,13 +40,17 @@ urlpatterns = patterns('',
 # Direct admin and static medias
 dev_urls = patterns('',
   url(r'^admin/', include(admin.site.urls)),
-  (r'^medias/(?P<path>.*)$', 'django.views.static.serve', {'document_root': MEDIA_ROOT}),
+  (r'^medias/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
 )
 
 # Hide a little admin
 prod_urls = patterns('',
-  url(r'^%s/' % ADMIN_BASE_URL, include(admin.site.urls)),
+  url(r'^%s/' % settings.ADMIN_BASE_URL, include(admin.site.urls)),
   url(r'^admin/', RedirectView.as_view(url='http://docs.djangoproject.com/en/dev/ref/contrib/admin/')),
 )
 
-urlpatterns += DEBUG and dev_urls or prod_urls
+urlpatterns += settings.DEBUG and dev_urls or prod_urls
+
+# Add static files in dev
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+

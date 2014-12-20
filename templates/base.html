@@ -8,28 +8,29 @@
 	<meta name="author" content="">
   <meta http-equiv="X-UA-Compatible" content="IE=9">
 
+  {% load staticfiles %}
   {% load compress %}
   {% compress css %}
-	<link href="/medias/css/bootswatch.flatly.min.css" rel="stylesheet">
-	<link href="/medias/css/bootstrap-modal-bs3patch.css" rel="stylesheet">
-	<link href="/medias/css/bootstrap-modal.css" rel="stylesheet">
-	<link href="/medias/css/datepicker.css" rel="stylesheet">
-	<link href="/medias/css/runreport-embedded.css" rel="stylesheet">
-	<link href="/medias/css/leaflet.css" rel="stylesheet">
-	<link href="/medias/css/style.css" rel="stylesheet">
+	<link href="{% static 'bootswatch-dist/css/bootstrap.css' %}" rel="stylesheet">
+	<link href="{% static 'bootstrap-modal/css/bootstrap-modal-bs3patch.css' %}" rel="stylesheet">
+	<link href="{% static 'bootstrap-modal/css/bootstrap-modal.css' %}" rel="stylesheet">
+	<link href="{% static 'leaflet/dist/leaflet.css' %}" rel="stylesheet">
+	<link href="{% static 'bootstrap-datepicker/css/datepicker3.css' %}" rel="stylesheet">
+	<link href="{% static 'css/runreport-embedded.css' %}" rel="stylesheet">
+	<link href="{% static 'css/style.css' %}" rel="stylesheet">
 	{% block style %}{% endblock %}
   {% endcompress %}
 
   {% compress js %}
-	<script type="text/javascript" src="/medias/js/jquery-1.11.0.min.js"></script>
-	<script type="text/javascript" src="/medias/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="/medias/js/bootstrap-datepicker.js"></script>
-	<script type="text/javascript" src="/medias/js/csrf.js" ></script>
-	<script type="text/javascript" src="/medias/js/bootstrap-modalmanager.js" ></script>
-	<script type="text/javascript" src="/medias/js/bootstrap-modal.js" ></script>
-	<script type="text/javascript" src="/medias/js/leaflet.js" ></script>
-	<script type="text/javascript" src="/medias/js/modal.js" ></script>
-	<script type="text/javascript" src="/medias/js/tracks.js" ></script>
+	<script type="text/javascript" src="{% static 'jquery/dist/jquery.js' %}"></script>
+	<script type="text/javascript" src="{% static 'bootswatch-dist/js/bootstrap.js' %}"></script>
+	<script type="text/javascript" src="{% static 'bootstrap-modal/js/bootstrap-modalmanager.js' %}"></script>
+	<script type="text/javascript" src="{% static 'bootstrap-modal/js/bootstrap-modal.js' %}"></script>
+	<script type="text/javascript" src="{% static 'leaflet/dist/leaflet.js' %}"></script>
+	<script type="text/javascript" src="{% static 'bootstrap-datepicker/js/bootstrap-datepicker.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/csrf.js' %}" ></script>
+	<script type="text/javascript" src="{% static 'js/modal.js' %}" ></script>
+	<script type="text/javascript" src="{% static 'js/tracks.js' %}" ></script>
 	{% block js %}{% endblock %}
   {% endcompress %}
 </head>
