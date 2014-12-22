@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-11 18:27+0100\n"
+"POT-Creation-Date: 2014-12-22 17:19+0100\n"
 "PO-Revision-Date: 2014-11-28 18:21+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
@@ -38,7 +38,7 @@ msgstr ""
 msgid "Create a club"
 msgstr ""
 
-#: coach/menu.py:34 coach/menu.py:38 templates/base.html:127
+#: coach/menu.py:34 coach/menu.py:38 templates/base.html:120
 #: templates/club/join.html:11 templates/club/manage.html:13
 #: templates/club/manage.html.py:67 templates/sport/vma.html:70
 msgid "Help"
@@ -48,11 +48,11 @@ msgstr ""
 msgid "Glossary"
 msgstr ""
 
-#: coach/menu.py:40 templates/base.html:124 templates/mail/base.html:37
+#: coach/menu.py:40 templates/base.html:117 templates/mail/base.html:37
 msgid "News"
 msgstr ""
 
-#: coach/menu.py:41 templates/base.html:130 templates/mail/base.html:37
+#: coach/menu.py:41 templates/base.html:123 templates/mail/base.html:37
 msgid "Contact"
 msgstr ""
 
@@ -100,37 +100,42 @@ msgstr ""
 msgid "My preferences"
 msgstr ""
 
-#: coach/menu.py:108
-msgid "My public profile"
+#: coach/menu.py:108 templates/friends/home.html:3
+#: templates/friends/home.html.py:8
+msgid "My friends"
 msgstr ""
 
 #: coach/menu.py:109
-msgid "My statistics"
+msgid "My public profile"
 msgstr ""
 
 #: coach/menu.py:110
-msgid "My paces"
+msgid "My statistics"
 msgstr ""
 
 #: coach/menu.py:111
-msgid "My records"
+msgid "My paces"
 msgstr ""
 
 #: coach/menu.py:112
+msgid "My records"
+msgstr ""
+
+#: coach/menu.py:113
 msgid "My GPS services"
 msgstr ""
 
-#: coach/menu.py:114
+#: coach/menu.py:115
 msgid "Logout"
 msgstr ""
 
-#: coach/menu.py:117 templates/club/joined.html:23
+#: coach/menu.py:118 templates/club/joined.html:23
 #: templates/club/joined.modal.html:21 templates/landing/index.html:160
 #: templates/landing/index.html.py:289
 msgid "Create an account"
 msgstr ""
 
-#: coach/menu.py:120
+#: coach/menu.py:121
 msgid "Login"
 msgstr ""
 
@@ -192,32 +197,32 @@ msgstr ""
 msgid "Session"
 msgstr ""
 
-#: templates/base.html:54
-msgid "Development Version"
-msgstr "Development Version"
-
-#: templates/base.html:88
+#: templates/base.html:81
 msgid "Use RunReport in"
 msgstr ""
 
-#: templates/base.html:112
+#: templates/base.html:93
+msgid "You are ussing a demo account, some features will not be available."
+msgstr ""
+
+#: templates/base.html:105
 msgid "Built by"
 msgstr ""
 
-#: templates/base.html:115 templates/landing/team.html:3
+#: templates/base.html:108 templates/landing/team.html:3
 #: templates/landing/team.html.py:7
 msgid "The team"
 msgstr ""
 
-#: templates/base.html:118
+#: templates/base.html:111
 msgid "Source code on"
 msgstr ""
 
-#: templates/base.html:118
+#: templates/base.html:111
 msgid "Github"
 msgstr ""
 
-#: templates/base.html:121 templates/mail/base.html:37
+#: templates/base.html:114 templates/mail/base.html:37
 msgid "Facebook"
 msgstr ""
 
@@ -752,10 +757,6 @@ msgstr ""
 msgid "Thank you for writing us !"
 msgstr ""
 
-#: templates/friends/home.html:3 templates/friends/home.html.py:8
-msgid "My friends"
-msgstr ""
-
 #: templates/friends/home.html:24 templates/sport/calendar/year.html:39
 #: templates/sport/day/edit.html:35
 msgid "View this profile"
@@ -891,7 +892,7 @@ msgstr ""
 msgid "To create the club, use this unique invite:"
 msgstr ""
 
-#: templates/mail/club_invite_asked.html:6
+#: templates/mail/club_invite_asked.html:6 templates/mail/club_prospect.html:6
 #: templates/mail/friend.request.html:8 templates/mail/friend.request.html:10
 #: templates/mail/message.html:6 templates/mail/race.html:6
 #: templates/mail/user_role.html:6
@@ -1740,6 +1741,10 @@ msgstr ""
 msgid "Forgot password ?"
 msgstr ""
 
+#: templates/users/login.html:86
+msgid "Demo accounts"
+msgstr ""
+
 #: templates/users/notifications.html:34
 msgid "You don't have any notifications."
 msgstr ""
@@ -2459,6 +2464,9 @@ msgstr ""
 #: Sport/name:54
 msgid "Wind/Kite Surfing"
 msgstr ""
+
+#~ msgid "Development Version"
+#~ msgstr "Development Version"
 
 #~ msgid "fitness_equipment"
 #~ msgstr "Fitness"

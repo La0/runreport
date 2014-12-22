@@ -76,7 +76,7 @@
 
       {% for m in member.memberships.exclude(role__in=('prospect', 'archive')) %}
       <h4>
-        <span class="label {{ role_css[m.role] }}">{{ _(m.role|title) }}</span> au <a href="{% url club-members m.club.slug %}">{{ m.club.name }}</a>
+        <span class="label {{ role_css[m.role] }}">{{ _(m.role|title) }}</span> <a href="{% url club-members m.club.slug %}">{{ m.club.name }}</a>
       </h4>
         {% with m.trainers.exclude(pk=member.pk) as trainers %}
           {% for trainer in trainers %}
