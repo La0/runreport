@@ -11,7 +11,7 @@
   <div class="row">
     <div class="col-xs-6">
       <h4>{{ post.title }}</h4>
-      {{ post.html|truncatechars(100) }}
+      {{ post.html|striptags|truncatechars(100) }}
     </div>
     <div class="col-xs-2">
       {% if post.published %}
