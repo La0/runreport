@@ -5,31 +5,29 @@
 {% block js %}
 <script type="text/javascript">
 $(function(){
-  // Setup editor
-  var editor = $('#text_editor').wysiwyg({
-    fileUploadError: function(reason, detail){
-      console.warn('Upload error', reason, detail);
-    },
-  });
 
-  // Hide upload field
-  $('[data-role=magic-overlay]').each(function () { 
-    var overlay = $(this), target = $(overlay.data('target')); 
-    overlay.css('opacity', 0).css('position', 'absolute').offset(target.offset()).width(target.outerWidth()).height(target.outerHeight());
+  // Setup quill editor
+  var editor = new Quill('#text_editor', {
+    formats: ['bold', 'italic', 'strike', 'underline', 'bullet', 'list', 'link'],
+    styles : false,
+    pollInterval : 50,
+    modules : {
+      'toolbar': { container: '#toolbar' },
+      'link-tooltip': true
+    }
   });
 
   // Submit with html content
-  $(document).on('submit', 'form#post_editor', function(evt){
-    evt.preventDefault();
+  $('button#edit').on('click', function(){
 
     // Load form data
     var data = {};
-    $($(this).serializeArray()).each(function(k, v){
+    $($('form#post_editor').serializeArray()).each(function(k, v){
       data[v.name] = v.value;
     });
 
     // Add editor html
-    data['html'] = editor.html();
+    data['html'] = $('#text_editor').html();
 
     // Submit form
     load_box(this.getAttribute('action'), 'POST', data, null);
@@ -53,45 +51,46 @@ $(function(){
     {{ macros.input(form.slug) }}
     {{ macros.input(form.type) }}
     {{ macros.input_bool(form.published) }}
+  </form>
 
-    <div class="form-group">
-
-      <div class="btn-toolbar" data-role="editor-toolbar" data-target="#text_editor">
-        <div class="btn-group">
-          <a class="do-tooltip btn btn-default" data-edit="bold" title="{{ _('Bold (Ctrl/Cmd+B)') }}"><i class="icon-bold"></i></a>
-          <a class="do-tooltip btn btn-default" data-edit="italic" title="{{ _('Italic (Ctrl/Cmd+I)') }}"><i class="icon-italic"></i></a>
-          <a class="do-tooltip btn btn-default" data-edit="strikethrough" title="{{ _('Strikethrough') }}"><i class="icon-strike"></i></a>
-          <a class="do-tooltip btn btn-default" data-edit="underline" title="{{ _('Underline (Ctrl/Cmd+U)') }}"><i class="icon-underline"></i></a>
-        </div>
-        <div class="btn-group">
-          <a class="do-tooltip btn btn-default" data-edit="insertunorderedlist" title="{{ _('Bullet list') }}"><i class="icon-list"></i></a>
-          <a class="do-tooltip btn btn-default" data-edit="insertorderedlist" title="{{ _('Number list') }}"><i class="icon-list-numbered"></i></a>
-          <a class="do-tooltip btn btn-default" data-edit="outdent" title="{{ _('Reduce indent (Shift+Tab)') }}"><i class="icon-indent-left"></i></a>
-          <a class="do-tooltip btn btn-default" data-edit="indent" title="{{ _('Indent (Tab)') }}"><i class="icon-indent-right"></i></a>
-        </div>
-        <a class="do-tooltip btn btn-default dropdown-toggle" data-toggle="dropdown" title="{{ _('Hyperlink') }}"><i class="icon-link"></i></a>
-        <div class="dropdown-menu input-append">
-          <input class="span2" placeholder="URL" type="text" data-edit="createLink"/>
-          <button class="do-tooltip btn btn-default" type="button">Add</button>
-        </div>
-        <a class="do-tooltip btn btn-default" data-edit="unlink" title="{{ _('Remove Hyperlink') }}"><i class="icon-scissors"></i></a>
-        <div class="btn-group">
-          <a class="do-tooltip btn btn-default" title="{{ _('Insert picture (or just drag & drop)') }}" id="pictureBtn"><i class="icon-picture"></i></a>
-          <input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage" />
-        </div>
-        <div class="btn-group">
-          <a class="do-tooltip btn btn-default" data-edit="undo" title="{{ _('Undo (Ctrl/Cmd+Z)') }}"><i class="icon-ccw"></i></a>
-          <a class="do-tooltip btn btn-default" data-edit="redo" title="{{ _('Redo (Ctrl/Cmd+Y)') }}"><i class="icon-cw"></i></a>
-        </div>
-        <div id="text_editor" class="col-xs-12">
-          {{ form.html.value()|safe }}
-        </div>
+  <div class="form-group">
+    <div id="toolbar">
+      <div class="btn-group">
+        <button class="ql-bold do-tooltip btn btn-default" title="{{ _('Bold (Ctrl+B)') }}">
+          <i class="icon-bold"></i>
+        </a>
+        <button class="ql-italic do-tooltip btn btn-default" title="{{ _('Italic (Ctrl+I)') }}">
+          <i class="icon-italic"></i>
+        </a>
+        <button class="ql-strike do-tooltip btn btn-default" title="{{ _('Strikethrough') }}">
+          <i class="icon-strike"></i>
+        </a>
+        <button class="ql-underline do-tooltip btn btn-default" title="{{ _('Underline (Ctrl+U)') }}">
+          <i class="icon-underline"></i>
+        </a>
       </div>
+
+      <div class="btn-group">
+        <button class="ql-bullet do-tooltip btn btn-default" title="{{ _('Bullet list') }}">
+          <i class="icon-list"></i>
+        </a>
+        <button class="ql-list do-tooltip btn btn-default" title="{{ _('Numbered list') }}">
+          <i class="icon-list-numbered"></i>
+        </a>
+      </div>
+
+      <button class="ql-link do-tooltip btn btn-default" title="{{ _('External link') }}">
+        <i class="icon-link"></i>
+      </a>
     </div>
 
-    <hr />
-    <button type="submit" class="btn btn-primary">{% if post %}{{ _('Edit the post') }}{% else %}{{ _('Create the post') }}{% endif %}</button>
-  </form>
+    <div id="text_editor" class="col-xs-12">
+      {{ form.html.value()|safe }}
+    </div>
+  </div>
+
+  <hr />
+  <button id="edit" type="submit" class="btn btn-primary">{% if post %}{{ _('Edit the post') }}{% else %}{{ _('Create the post') }}{% endif %}</button>
 
 </div>
 {% endblock %}

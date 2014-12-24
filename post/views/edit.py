@@ -1,5 +1,6 @@
 from django.views.generic import UpdateView, CreateView, ListView
 from .mixins import PostWriterMixin
+from coach.mixins import JsonResponseMixin, JSON_OPTION_ONLY_AJAX
 
 
 class PostListView(PostWriterMixin, ListView):
@@ -9,5 +10,5 @@ class PostListView(PostWriterMixin, ListView):
 class PostCreateView(PostWriterMixin, CreateView):
   pass
 
-class PostEditView(PostWriterMixin, UpdateView):
-  pass
+class PostEditView(PostWriterMixin, JsonResponseMixin, UpdateView):
+  json_options = [JSON_OPTION_ONLY_AJAX, ]

@@ -31,4 +31,4 @@ class Post(models.Model):
     unique_together = (('writer', 'slug'), )
 
   def __unicode__(self):
-    return self.name
+    return self.title

@@ -17,4 +17,4 @@ class PostWriterMixin(object):
     return super(PostWriterMixin, self).form_valid(form)
 
   def get_success_url(self):
-    return reverse('posts')
+    return reverse('post-edit', args=(self.post.slug, ))
