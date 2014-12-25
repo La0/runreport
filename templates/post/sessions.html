@@ -1,0 +1,76 @@
+{% macro session_inline(s) -%}
+<div class="row">
+  <div class="col-xs-3">
+    <i class="icon-sport-{{ s.sport.slug }}"></i>
+    {{ _(s.type|title()) }}
+  </div>
+  <div class="col-xs-4">
+    <a href="{% url 'report-day' s.day.date.year, s.day.date.month, s.day.date.day  %}">
+      {{ s.name|default('-') }}
+    </a>
+  </div>
+  <div class="col-xs-3">
+    {{ s.day.date|date('d E Y') }}
+  </div>
+  <div class="col-xs-2 text-right">
+    {% if s.pk in post_sessions %}
+    <button class="btn btn-danger btn-xs btn-light" type="submit" name="remove" value="{{ s.pk }}">
+      {{ _('Remove this session') }}
+    </button>
+    {% else %}
+    <button class="btn btn-info btn-xs btn-light" type="submit" name="add" value="{{ s.pk }}">
+      <i class="icon-plus"></i>
+      {{ _('Add this session') }}
+    </button>
+    {% endif %}
+  </div>
+</div>
+{%- endmacro %}
+
+<h2>{{ _('Attached sessions') }}</h2>
+
+<form class="box" action="{% url 'post-sessions' post.slug %}" method="post">
+  {% csrf_token %}
+
+  {# List post sessions #}
+  {% with post.sessions.all() as sessions %}
+  {% if sessions %}
+    {% for s in sessions %}
+      {{ session_inline(s) }}
+    {% endfor %}
+  {% else %}
+  <p class="alert alert-info">
+    {{ _('There are no sport sessions attached to this post.') }}
+  </p>
+  {% endif %}
+  {% endwith %}
+
+  {# List available sessions #}
+  <div class="row">
+    <div class="col-xs-6">
+      <h3>{{ _('Your sport sessions') }} {{ month }}/{{ year }}</h3>
+    </div>
+    <div class="col-xs-6 text-right">
+      <select name="month">
+
+      </select>
+      <select name="year">
+
+      </select>
+      <button type="submit" name="switch" class="btn btn-sm btn-success">
+        {{ _('View sessions') }}
+      </button>
+    </div>
+  </div>
+
+  {% if user_sessions %}
+    {% for s in user_sessions %}
+      {{ session_inline(s) }}
+    {% endfor %}
+  {% else %}
+  <p class="alert alert-warning">
+    {{ _('No sport session available.') }}
+  </p>
+  {% endif %}
+
+</form>

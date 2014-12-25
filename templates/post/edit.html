@@ -22,10 +22,6 @@ $(function(){
 
     // Load form data
     var data = {};
-    $($('form#post_editor').serializeArray()).each(function(k, v){
-      data[v.name] = v.value;
-    });
-
     // Add editor html
     data['html'] = $('#text_editor').html();
 
@@ -89,8 +85,10 @@ $(function(){
     </div>
   </div>
 
-  <hr />
   <button id="edit" type="submit" class="btn btn-primary">{% if post %}{{ _('Edit the post') }}{% else %}{{ _('Create the post') }}{% endif %}</button>
 
+  {% if post.pk %}
+  <div class="box" data-src="{% url 'post-sessions' post.slug %}">{{ _('Loading sessions...') }}</div>
+  {% endif %}
 </div>
 {% endblock %}
