@@ -2,7 +2,6 @@ from django.views.generic import UpdateView, CreateView, ListView, DetailView
 from .mixins import PostWriterMixin
 from coach.mixins import JsonResponseMixin, JSON_OPTION_ONLY_AJAX
 from sport.models import SportSession
-from django.utils import timezone
 from post.forms import YearMonthForm
 from datetime import date
 
@@ -10,8 +9,8 @@ class PostListView(PostWriterMixin, ListView):
   context_object_name = 'posts'
   template_name = 'post/list.html'
 
-class PostCreateView(PostWriterMixin, CreateView):
-  pass
+class PostCreateView(PostWriterMixin, JsonResponseMixin, CreateView):
+  json_options = [JSON_OPTION_ONLY_AJAX, ]
 
 class PostEditView(PostWriterMixin, JsonResponseMixin, UpdateView):
   json_options = [JSON_OPTION_ONLY_AJAX, ]

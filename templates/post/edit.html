@@ -16,14 +16,21 @@ $(function(){
       'link-tooltip': true
     }
   });
+  editor.setHTML('{{ form.html.value()|default('')|safe }}');
+  
+  // Focus on box click
+  $('#text_editor').on('click', function(){
+    editor.focus();
+  });
 
   // Submit with html content
-  $('button#edit').on('click', function(){
+  $('button#edit').on('click', function(evt){
 
     // Load form data
-    var data = {};
+    var data = serialize_form($('#post_editor'), evt);
+
     // Add editor html
-    data['html'] = $('#text_editor').html();
+    data['html'] = editor.getHTML();
 
     // Submit form
     load_box(this.getAttribute('action'), 'POST', data, null);
@@ -81,17 +88,18 @@ $(function(){
     </div>
 
     <div id="text_editor" class="col-xs-12">
-      {{ form.html.value()|safe }}
     </div>
   </div>
 
   <p>
     <a href="{% url 'posts' %}" class="btn btn-default">{{ _('Cancel') }}</a>
     <button id="edit" type="submit" class="btn btn-primary">{% if post %}{{ _('Edit the post') }}{% else %}{{ _('Create the post') }}{% endif %}</button>
+    {% if post %}
     <a href="{% url 'post' user.username, post.slug %}" class="btn btn-info">{{ _('View the post') }}</a>
+    {% endif %}
   </p>
 
-  {% if post.pk %}
+  {% if post %}
   <hr />
   <div class="box" data-src="{% url 'post-sessions' post.slug %}">{{ _('Loading sessions...') }}</div>
   {% endif %}
