@@ -766,3 +766,12 @@ div.plan-status div.details > p {
 div.plan-status label {
   padding-top: 2px !important;
 }
+
+/* Attached sessions in post editor */
+#attached_sessions div.date {
+  padding-top: 15px;
+}
+
+#attached_sessions #id_date_day {
+  display: none !important;
+}

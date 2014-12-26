@@ -29,7 +29,7 @@
 
 <h2>{{ _('Attached sessions') }}</h2>
 
-<form class="box" action="{% url 'post-sessions' post.slug %}" method="post">
+<form class="box" action="{% url 'post-sessions' post.slug %}" method="post" id="attached_sessions">
   {% csrf_token %}
 
   {# List post sessions #}
@@ -48,15 +48,10 @@
   {# List available sessions #}
   <div class="row">
     <div class="col-xs-6">
-      <h3>{{ _('Your sport sessions') }} {{ month }}/{{ year }}</h3>
+      <h3>{{ _('Your sport sessions') }} {{ date|date('E Y')}}</h3>
     </div>
-    <div class="col-xs-6 text-right">
-      <select name="month">
-
-      </select>
-      <select name="year">
-
-      </select>
+    <div class="col-xs-6 text-right date">
+      {{ date_form.date|safe }}
       <button type="submit" name="switch" class="btn btn-sm btn-success">
         {{ _('View sessions') }}
       </button>
