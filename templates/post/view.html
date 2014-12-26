@@ -1,23 +1,49 @@
 {% extends 'base.html' %}
 
 {% set page_title = post.title %}
+{% set base_url = request.META.HTTP_HOST %}
 
+{% if FACEBOOK_ID %}
+  {% block js %}
+  <script type="text/javascript">
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '{{ FACEBOOK_ID }}',
+        xfbml      : true,
+        version    : 'v2.1'
+      });
+    };
+
+    (function(d, s, id){
+       var js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement(s); js.id = id;
+       js.src = "//connect.facebook.net/fr_FR/sdk.js";
+       fjs.parentNode.insertBefore(js, fjs);
+     }(document, 'script', 'facebook-jssdk'));
+
+  </script>
+  {% endblock %}
+
+  {% block meta %}
+  <meta property="fb:app_id"  content="{{ FACEBOOK_ID }}" /> 
+  <meta property="og:site_name"    content="RunReport" /> 
+  <meta property="og:type"    content="website" /> 
+  <meta property="og:url"     content="https://{{ base_url }}{% url 'post' post.writer.username, post.slug %}" /> 
+  <meta property="og:title"   content="{{ post.title }}" /> 
+  <meta property="og:description"   content="{{ post.html|striptags|truncatechars(200) }}" /> 
+  <meta property="og:image"   content="https://{{ base_url }}{{ post.writer.avatar.url }}" /> 
+  {% endblock %}
+{% endif %}
 {% block content %}
 <div class="container">
   <h1>{{ post.title }}</h1>
 
   <div class="row">
-    {% if user == post.writer %}
-    <p class="pull-right">
-      <a href="{% url 'post-edit' post.slug %}" class="btn btn-info">
-        {{ _('Edit') }}
-      </a>
-    </p>
-    {% endif %}
     <div class="col-xs-1">
       <img class="img-responsive img-rounded" src="{{ post.writer.avatar.url }}" />
     </div>
-    <div class="col-xs-10">
+    <div class="col-xs-8">
       <span class="lead">
         {{ _('Written by') }}
         <a href="{% url user-public-profile post.writer.username %}">
@@ -30,6 +56,15 @@
       <p>
         {{ _('on') }} {{ post.created|date('l d E Y') }}
       </p>
+    </div>
+    <div class="col-xs-3 text-right">
+      <div class="fb-like" data-href="https://{{ base_url }}{% url 'post' post.writer.username, post.slug %}" data-width="200" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div>
+
+      {% if user == post.writer %}
+      <a href="{% url 'post-edit' post.slug %}" class="btn btn-info">
+        {{ _('Edit') }}
+      </a>
+      {% endif %}
     </div>
   </div>
 

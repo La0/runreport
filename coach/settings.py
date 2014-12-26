@@ -278,6 +278,10 @@ CLUB_INVITE_SENDER = 'sender'
 PIWIK_HOST = False
 PIWIK_ID = False
 
+# Facebook app credentials
+FACEBOOK_ID = None
+FACEBOOK_SECRET = None
+
 # Celery broker
 BROKER_URL = 'redis://'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
@@ -392,5 +396,5 @@ else:
 # Load some settings constants in the templates
 def load_constants(request):
   from django.conf import settings
-  keys = ['DEBUG', 'PIWIK_HOST', 'PIWIK_ID', ]
+  keys = ['DEBUG', 'PIWIK_HOST', 'PIWIK_ID', 'FACEBOOK_ID', ]
   return dict([(k, getattr(settings, k, None)) for k in keys])
