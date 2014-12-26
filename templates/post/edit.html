@@ -85,9 +85,14 @@ $(function(){
     </div>
   </div>
 
-  <button id="edit" type="submit" class="btn btn-primary">{% if post %}{{ _('Edit the post') }}{% else %}{{ _('Create the post') }}{% endif %}</button>
+  <p>
+    <a href="{% url 'posts' %}" class="btn btn-default">{{ _('Cancel') }}</a>
+    <button id="edit" type="submit" class="btn btn-primary">{% if post %}{{ _('Edit the post') }}{% else %}{{ _('Create the post') }}{% endif %}</button>
+    <a href="{% url 'post' user.username, post.slug %}" class="btn btn-info">{{ _('View the post') }}</a>
+  </p>
 
   {% if post.pk %}
+  <hr />
   <div class="box" data-src="{% url 'post-sessions' post.slug %}">{{ _('Loading sessions...') }}</div>
   {% endif %}
 </div>

@@ -7,6 +7,13 @@
   <h1>{{ post.title }}</h1>
 
   <div class="row">
+    {% if user == post.writer %}
+    <p class="pull-right">
+      <a href="{% url 'post-edit' post.slug %}" class="btn btn-info">
+        {{ _('Edit') }}
+      </a>
+    </p>
+    {% endif %}
     <div class="col-xs-1">
       <img class="img-responsive img-rounded" src="{{ post.writer.avatar.url }}" />
     </div>
@@ -29,9 +36,28 @@
   <hr />
 
   <div class="row">
-    <div class="col-xs-12">
-      {{ post.html|safe }}
-    </div>
+    {% with post.sessions.all() as sessions %}
+      <div class="{% if sessions %}col-sm-8{% else %}col-sm-12{% endif %} col-xs-12">
+        {{ post.html|safe }}
+      </div>
+      {% if sessions %}
+      <div class="col-sm-4 col-xs-12">
+        <h4>{{ _('%d sport sessions') % sessions.count() }}</h4>
+        {% for s in sessions %}
+        <p>
+          <span class="type {{ s.type }} do-tooltip" title="{{ _(s.type|title) }}"></span>
+          <i class="icon-sport-{{ s.sport.slug }} do-tooltip" title="{{ _(s.sport.name) }}"></i>
+          {% if s.track %}
+          <i class="icon-location do-tooltip" title="{{ s.track.provider|title }}"></i>
+          {% endif %}
+          <a href="{% url 'user-calendar-day' post.writer.username, s.day.date.year, s.day.date.month, s.day.date.day %}">
+            {{ s.name }}
+          </a>
+        </p>
+        {% endfor %}
+      </div>
+      {% endif %}
+    {% endwith %}
   </div>
 </div>
 {% endblock %}
