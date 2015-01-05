@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-22 17:19+0100\n"
-"PO-Revision-Date: 2014-12-22 17:20+0100\n"
+"POT-Creation-Date: 2015-01-05 18:26+0100\n"
+"PO-Revision-Date: 2015-01-05 18:27+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -946,8 +946,8 @@ msgstr "Pour créer le club, utilisez cette invitation unique:"
 
 #: templates/mail/club_invite_asked.html:6 templates/mail/club_prospect.html:6
 #: templates/mail/friend.request.html:8 templates/mail/friend.request.html:10
-#: templates/mail/message.html:6 templates/mail/race.html:6
-#: templates/mail/user_role.html:6
+#: templates/mail/message.html:6 templates/mail/new.year.html:6
+#: templates/mail/race.html:6 templates/mail/user_role.html:6
 #, python-format
 msgid "Hello %s"
 msgstr "Bonjour %s"
@@ -1030,6 +1030,49 @@ msgstr "du %s"
 #: templates/mail/message.html:37
 msgid "You can view the entire conversation on RunReport"
 msgstr "Vous pouvez voir la conversation entière sur RunReport"
+
+#: templates/mail/new.year.html:3 templates/mail/new.year.html.py:34
+msgid "Happy new year !"
+msgstr "Bonne année !"
+
+#: templates/mail/new.year.html:9
+msgid "The whole RunReport team wishes you an happy new year, full of sport !"
+msgstr ""
+"L'équipe RunReport vous souhaite une très bonne année, pleine de sport !"
+
+#: templates/mail/new.year.html:13
+msgid "Here are your stats for the past year"
+msgstr "Voici vos statistiques pour l'année passée"
+
+#: templates/mail/new.year.html:16
+#, python-format
+msgid "You have logged %(days)d days of sport covering a total distance of"
+msgstr ""
+"Vous avez renseigné %(days)d journées de sport, pour une distance totale de"
+
+#: templates/mail/new.year.html:16 templates/mail/new.year.html.py:18
+#: templates/mail/new.year.html:23
+msgid "km"
+msgstr "km"
+
+#: templates/mail/new.year.html:18
+#| msgid "You have logged %(days)d days of sport covering a total distance of"
+msgid "You have logged a total distance of"
+msgstr "Vous avez renseigné une distance totale de"
+
+#: templates/mail/new.year.html:23
+msgid "sessions of"
+msgstr "séances de"
+
+#: templates/mail/new.year.html:23
+msgid "hours"
+msgstr "heures"
+
+#: templates/mail/new.year.html:30
+#, python-format
+msgid "You can view you %d stats on RunReport and much more details"
+msgstr ""
+"Vous pouvez voir vos %d statistiques sur RunReport avec bien plus de détails"
 
 #: templates/mail/race.html:9
 #, python-format
@@ -1828,7 +1871,6 @@ msgid "Forgot password ?"
 msgstr "Mot de passe oublié ?"
 
 #: templates/users/login.html:86
-#| msgid "Demo account"
 msgid "Demo accounts"
 msgstr "Comptes Démos"
 

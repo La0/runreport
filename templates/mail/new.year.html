@@ -1,0 +1,36 @@
+{% extends "mail/base.html" %}
+
+{% set title = _('Happy new year !') %}
+
+{% block mail %}
+{{ _('Hello %s') % user.first_name }},
+<br />
+<br />
+{{ _('The whole RunReport team wishes you an happy new year, full of sport !') }}
+
+
+{% if stats %}
+<h4>{{ _('Here are your stats for the past year') }}</h4>
+<br />
+{% if stats.days %}
+{{ _('You have logged %(days)d days of sport covering a total distance of') % stats }} {{ stats.distance|default(0)|floatformat(0) }} {{ _('km') }}.
+{% else %}
+{{ _('You have logged a total distance of') }} {{ stats.distance|default(0)|floatformat(0) }} {{ _('km') }}.
+{% endif %}
+</p>
+<ul>
+  {% for i, s in stats.sports.items() %}
+  <li>{{ s.nb }} {{ _('sessions of') }} {{ _(s.sport.name) }} : {{ s.distance|default(0)|floatformat(0) }} {{ _('km') }} &bull; {{ s.hours|default(0)|floatformat(0) }} {{ _('hours') }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+<br />
+<br />
+<a href="https://{{site.domain}}{% url "stats-year" year %}">{{ _('You can view you %d stats on RunReport and much more details') % year }}</a>
+
+<br />
+<br />
+{{ _('Happy new year !') }}
+
+{% endblock %}
