@@ -172,7 +172,7 @@ class ClubInvite(models.Model):
       'invite_url' : self.get_absolute_url(),
       'name' : self.name,
     }
-    mb = MailBuilder('mail/club_invite.html', self.recipient.language)
+    mb = MailBuilder('mail/club_invite.html', 'fr') # Default to french
     mb.to = [self.recipient]
     mb.subject = 'Invitation RunReport.fr'
     mail = mb.build(context)
