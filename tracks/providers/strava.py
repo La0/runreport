@@ -64,7 +64,7 @@ class StravaProvider(TrackProvider, OauthProvider):
       raise Exception('Missing Strava token for %s' % self.user.username)
 
     args = {
-      'page' : page,
+      'page' : page + 1, # pages start at 1
       'per_page' : nb_tracks,
     }
     response = self.request(self.activities_url, data=args, bearer=self.user.strava_token)
