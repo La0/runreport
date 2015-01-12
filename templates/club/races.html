@@ -28,7 +28,7 @@
 				<td>{{ race.name|truncatechars(30) }}</td>
 				<td>{{ race.day.date|date('d E Y') }}</td>
 				<td>{{ race.day.date|timeuntil() }}</td>
-				<td><a class="modal-action btn btn-info btn-xs" href="{% url user-calendar-day race.day.week.user.username, race.day.date.year, race.day.date.month, race.day.date.day %}">{{ _('View') }}</a></td>
+				<td><a class="btn btn-info btn-xs" href="{% url user-calendar-day race.day.week.user.username, race.day.date.year, race.day.date.month, race.day.date.day %}">{{ _('View') }}</a></td>
 			</tr>
 			{% endfor %}
 		</table>
