@@ -1,10 +1,19 @@
 from django.db import models
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
+from hashlib import md5
+import os
+from PIL import Image
 
 POST_TYPES = (
   ('race', _('Race')),
   ('training', _('Training')),
   ('blog', _('Blog')),
+)
+
+POST_MEDIAS = (
+  ('image source', _('Source Image')),
+  ('image thumb', _('Thumbnail Image')),
 )
 
 class Post(models.Model):
@@ -33,3 +42,66 @@ class Post(models.Model):
   def __unicode__(self):
     return self.title
 
+class PostMedia(models.Model):
+  post = models.ForeignKey(Post, related_name='medias')
+  parent = models.ForeignKey('post.PostMedia', related_name='children', null=True)
+  type = models.CharField(max_length=25, choices=POST_MEDIAS)
+
+  # Metadata
+  size = models.IntegerField() # in bytes
+  width = models.IntegerField(null=True, blank=True)
+  height = models.IntegerField(null=True, blank=True)
+
+  # Dates
+  created = models.DateTimeField(auto_now_add=True)
+  updated = models.DateTimeField(auto_now=True)
+
+  @property
+  def path(self):
+    return self.build_path(absolute=True)
+
+  @property
+  def url(self):
+    return os.path.join(settings.MEDIA_URL, self.build_path(absolute=False))
+
+  def build_path(self, absolute=False):
+    '''
+    Generate a path for current media
+    '''
+    name_contents = '%s:%d:%d' % (settings.SECRET_KEY, self.post.pk, self.pk)
+    ext = 'jpg' # only image for the moment
+    name = '%s.%s' % (md5(name_contents).hexdigest(), ext)
+    path = absolute and settings.MEDIA_ROOT or ''
+    path = os.path.join(path, 'posts', str(self.post.pk), name)
+
+    return path
+
+  def write_upload(self, upload):
+    '''
+    Write an uploaded file on path
+    '''
+    post_dir = os.path.dirname(self.path)
+    if not os.path.exists(post_dir):
+      os.makedirs(post_dir)
+
+    with open(self.path, 'wb+') as fd:
+      for chunk in upload.chunks():
+        fd.write(chunk)
+
+  def build_thumbnail(self, size=(200,200)):
+    '''
+    For images, build thumbnail
+    '''
+    src = Image.open(self.path)
+    src.thumbnail(size)
+
+    # Save in new media
+    w,h = src.size
+    media = PostMedia.objects.create(post=self.post, type='image thumb', parent=self, width=w, height=h, size=0)
+    src.save(media.path, 'JPEG')
+
+    # Pillow does not provide file size :(
+    media.size = os.stat(media.path).st_size
+    media.save()
+
+    return media

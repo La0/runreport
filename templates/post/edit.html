@@ -35,6 +35,14 @@ $(function(){
     // Submit form
     load_box(this.getAttribute('action'), 'POST', data, null);
   });
+
+  // Image upload through DropZone
+  $("div#dropzone").dropzone({
+    url: "{% url 'post-upload' post.slug %}",
+    headers : {
+      'X-CSRFToken' : '{{ csrf_token }}',
+    },
+  });
 });
 </script>
 {% endblock %}
@@ -100,6 +108,12 @@ $(function(){
   </p>
 
   {% if post %}
+  <hr />
+  {% for thumb in post.medias.filter(type='image thumb') %}
+  <img src="{{ thumb.url }}" />
+  {% endfor %}
+  <div id="dropzone" class="dropzone"></div>
+
   <hr />
   <div class="box" data-src="{% url 'post-sessions' post.slug %}">{{ _('Loading sessions...') }}</div>
   {% endif %}
