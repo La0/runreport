@@ -630,3 +630,7 @@ div#friends div.session img {
   float: left;
   margin-right: 8px;
 }
+
+div#friendships div.actions .btn {
+  margin-top: 4px;
+}

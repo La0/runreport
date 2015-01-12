@@ -1,0 +1,12 @@
+{% extends 'modal.html' %}
+
+{% set modal_title = _('Delete friendship with %(first)s %(last)s') % { 'first' : friend.first_name, 'last' : friend.last_name, }%}
+
+{% block body %}
+{{ _('Are you sure to delete this friendship with %(first)s %(last)s ?') % { 'first' : friend.first_name, 'last' : friend.last_name, } }}
+{% endblock %}
+
+{% block footer %}
+<button class="btn" data-dismiss="modal">{{ _('Cancel') }}</button>
+<a href="{% url 'friend-delete' friend.username %}" class="btn btn-danger modal-action modal-post">{{ _('Delete this friendship') }}</a>
+{% endblock %}

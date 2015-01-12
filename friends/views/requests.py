@@ -1,6 +1,6 @@
-from django.views.generic import CreateView, DetailView
+from django.views.generic import CreateView, DetailView, DeleteView
 from friends.models import FriendRequest
-from coach.mixins import JsonResponseMixin, JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML
+from coach.mixins import JsonResponseMixin, JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE
 from users.models import Athlete
 from django.shortcuts import get_object_or_404
 from django.http import Http404
@@ -36,7 +36,7 @@ class FriendAdd(JsonResponseMixin, CreateView):
 
     # Check not already a friend
     if recipient in self.request.user.friends.all():
-      raise Httpt404('Already a friend')
+      raise Http404('Already a friend')
 
     return {
       'data' : {
@@ -44,6 +44,23 @@ class FriendAdd(JsonResponseMixin, CreateView):
         'recipient' : recipient.pk,
       },
     }
+
+class FriendDelete(JsonResponseMixin, DeleteView):
+  template_name = 'friends/delete.html'
+  context_object_name = 'friend'
+
+  def get_object(self):
+    return self.request.user.friends.get(username=self.kwargs['username'])
+
+  def delete(self, *args, **kwargs):
+    # Do not delete the user
+    # just remove the relation
+    friend = self.get_object()
+    self.request.user.friends.remove(friend)
+
+    # Close
+    self.json_options = [JSON_OPTION_CLOSE, JSON_OPTION_NO_HTML, JSON_OPTION_BODY_RELOAD, ]
+    return super(FriendDelete, self).render_to_response({})
 
 class FriendRequestChoice(JsonResponseMixin, DetailView):
   json_options = [JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML, ]

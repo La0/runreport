@@ -3,7 +3,7 @@
 {% set page_title = _('My friends') %}
 
 {% block content %}
-<div class="container">
+<div class="container" id="friendships">
 
   <h1>{{ _('My friends') }}</h1>
   <div class="row">
@@ -14,14 +14,17 @@
         <div class="col-xs-2">
           <img class="img-rounded img-responsive" src="{{ friend.avatar.url }}" alt="" />
         </div>
-        <div class="col-xs-7">
+        <div class="col-xs-6">
           <h4>
             {{ friend.first_name }} {{ friend.last_name }}
           </h4>
         </div>
-        <div class="col-xs-3 text-right">
+        <div class="col-xs-4 text-right actions">
           <a href="{% url user-public-profile friend.username %}" class="btn btn-primary btn-sm pull-right">
             {{ _('View this profile') }}<i class="icon-right-open"></i>
+          </a>
+          <a href="{% url 'friend-delete' friend.username %}" class="btn btn-danger btn-sm modal-action">
+            <i class="icon-trash"></i> {{ _('Delete') }}
           </a>
         </div>
       </div>
