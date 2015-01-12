@@ -59,7 +59,7 @@
           {% for fs in friends_sessions %}
             {% with fs.day.week.user as friend %}
             {% with fs.day.date as dt %}
-            <div class="session col-md-4 col-sm-6 col-xs-12 link" href="{% url user-calendar-day friend.username, dt.year, dt.month, dt.day %}">
+            <a class="session col-md-4 col-sm-6 col-xs-12 shortcut" href="{% url user-calendar-day friend.username, dt.year, dt.month, dt.day %}" target="_blank">
               <img class="img-rounded img-responsive" src="{{ friend.avatar.url }}" alt="{{ friend.username }}" />
               <strong>{{ friend.first_name }} {{ friend.last_name }}</strong>
               <p>
@@ -70,7 +70,7 @@
                 <span class="text-muted">&bull;</span>
                 {{ fs.name|truncatechars(20)|default('Pas de nom') }}
               </p>
-            </div>
+            </a>
             {% endwith %}
             {% endwith %}
           {% endfor %}

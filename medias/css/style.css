@@ -631,6 +631,27 @@ div#friends div.session img {
   margin-right: 8px;
 }
 
+div#friends a.shortcut {
+  border-radius: 4px 4px;
+  display: block;
+  color: black;
+}
+
+div#friends a.shortcut strong {
+  font-size: 14px;
+}
+
+div#friends a.shortcut:hover {
+  background: #F7F7F7;
+  text-decoration: none;
+}
+
+div#friends a.shortcut img {
+  max-width: 40px;
+  float: left;
+  margin-right: 4px;
+}
+
 div#friendships div.actions .btn {
   margin-top: 4px;
 }
