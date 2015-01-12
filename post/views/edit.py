@@ -5,6 +5,7 @@ from sport.models import SportSession
 from post.forms import YearMonthForm
 from post.models import PostMedia
 from datetime import date
+from django.http import HttpResponse
 
 class PostListView(PostWriterMixin, ListView):
   context_object_name = 'posts'
@@ -20,8 +21,17 @@ class PostUploadView(PostWriterMixin, JsonResponseMixin, DetailView):
   json_options = [JSON_OPTION_NO_HTML, ]
 
   def post(self, request, *args, **kwargs):
-    self.post = self.get_object() # load post first
+    try:
+      self.post = self.get_object() # load post first
+      self.handle_upload()
+      message = 'ok'
+      status = 200
+    except Exception, e:
+      message = 'Fail. %s' % (str(e), )
+      status = 500
+    return HttpResponse(message, status=status)
 
+  def handle_upload(self):
     # Load uploaded file
     upload = self.request.FILES['file']
     if not upload:
@@ -36,7 +46,7 @@ class PostUploadView(PostWriterMixin, JsonResponseMixin, DetailView):
     media.write_upload(upload)
     media.build_thumbnail()
 
-    return self.render_to_response({})
+    return media
 
 class PostSessionsView(PostWriterMixin, JsonResponseMixin, DetailView):
   template_name = 'post/sessions.html'
