@@ -1,7 +1,6 @@
 # coding=utf-8
 import glob
 import os
-import math
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import AbstractBaseUser, UserManager, PermissionsMixin
@@ -11,10 +10,10 @@ from django.core.validators import MinValueValidator
 from django.conf import settings
 from hashlib import md5
 from datetime import datetime
-from PIL import Image
 from avatar_generator import Avatar
 from coach.mailman import MailMan
 from friends.models import FriendRequest
+from helpers import crop_image
 
 PRIVACY_LEVELS = (
   ('public', _('Public')),
@@ -155,37 +154,8 @@ class Athlete(AthleteBase):
     if not os.path.exists(self.avatar.path):
       raise Exception('Missing avatar file :%s' % self.avatar.file)
 
-    # Load image
-    img = Image.open(self.avatar.file)
-    w,h = img.size
-    small_size = min(w,h)
-
-    # Resize before crop ?
-    if small_size > crop_size:
-      ratio = float(crop_size) / float(small_size)
-      w = int(math.floor(w * ratio))
-      h = int(math.floor(h * ratio))
-      img = img.resize((w, h))
-    else:
-      # Use smallest side as crop
-      crop_size = small_size
-
-    crop_box = None
-    if w < h:
-      # Vertical Crop
-      offset = int(math.floor((h - crop_size) / 2))
-      crop_box = (0, offset, w, h - offset)
-    elif w > h:
-      # Horizontal crop
-      offset = int(math.floor((w - crop_size) / 2))
-      crop_box = (offset, 0, w - offset, h)
-
     # Do the crop
-    if crop_box:
-      img = img.crop(crop_box)
-
-    # Save the resulting image
-    img.save(self.avatar.path, 'png')
+    crop_image(self.avatar.file, self.avatar.path, crop_size, 'png')
 
   def is_trainer_of(self, athlete):
     '''

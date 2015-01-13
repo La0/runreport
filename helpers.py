@@ -1,5 +1,7 @@
 from celery.result import AsyncResult
 from datetime import datetime, timedelta
+import math
+from PIL import Image
 
 def nameize(s, max = 40):
   import re, unicodedata
@@ -159,3 +161,40 @@ def gpolyline_decode(point_str):
     points.append((round(lat, 6), round(lng, 6)))
 
   return points
+
+
+def crop_image(source, destination, size=400, image_format='JPEG'):
+  '''
+  Crop an image using pillow
+  '''
+  # Load image
+  img = Image.open(source)
+  w,h = img.size
+  small_size = min(w,h)
+
+  # Resize before crop ?
+  if small_size > size:
+    ratio = float(size) / float(small_size)
+    w = int(math.floor(w * ratio))
+    h = int(math.floor(h * ratio))
+    img = img.resize((w, h))
+  else:
+    # Use smallest side as crop
+    size = small_size
+
+  crop_box = None
+  if w < h:
+    # Vertical Crop
+    offset = int(math.floor((h - size) / 2))
+    crop_box = (0, offset, w, h - offset)
+  elif w > h:
+    # Horizontal crop
+    offset = int(math.floor((w - size) / 2))
+    crop_box = (offset, 0, w - offset, h)
+
+  # Do the crop
+  if crop_box:
+    img = img.crop(crop_box)
+
+  # Save the resulting image
+  img.save(destination, image_format)

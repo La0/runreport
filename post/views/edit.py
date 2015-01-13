@@ -45,6 +45,7 @@ class PostUploadView(PostWriterMixin, JsonResponseMixin, DetailView):
     media = PostMedia.objects.create(post=self.post, type='image source', size=upload.size)
     media.write_upload(upload)
     media.build_thumbnail()
+    media.build_crop()
 
     return media
 

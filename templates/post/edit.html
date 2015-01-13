@@ -36,6 +36,7 @@ $(function(){
     load_box(this.getAttribute('action'), 'POST', data, null);
   });
 
+  {% if post %}
   // Image upload through DropZone
   $("div#dropzone").dropzone({
     url: "{% url 'post-upload' post.slug %}",
@@ -43,6 +44,7 @@ $(function(){
       'X-CSRFToken' : '{{ csrf_token }}',
     },
   });
+  {% endif %}
 });
 </script>
 {% endblock %}
@@ -109,9 +111,20 @@ $(function(){
 
   {% if post %}
   <hr />
-  {% for thumb in post.medias.filter(type='image thumb') %}
-  <img src="{{ thumb.url }}" />
-  {% endfor %}
+  
+  {% if images %}
+  <div class="row">
+    {% for thumb in images %}
+    <div class="col-sm-2 col-xs-6">
+      <img class="img-responsive img-thumbnail" src="{{ thumb.url }}" />
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="text-info">
+    {{ _('Use the zone below to add some pictures') }}
+  </p>
+  {% endif %}
   <div id="dropzone" class="dropzone"></div>
 
   <hr />

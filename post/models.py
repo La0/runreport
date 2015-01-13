@@ -3,6 +3,7 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from hashlib import md5
 import os
+from helpers import crop_image
 from PIL import Image
 
 POST_TYPES = (
@@ -14,6 +15,7 @@ POST_TYPES = (
 POST_MEDIAS = (
   ('image source', _('Source Image')),
   ('image thumb', _('Thumbnail Image')),
+  ('image crop', _('Cropped Image')),
 )
 
 class Post(models.Model):
@@ -88,11 +90,13 @@ class PostMedia(models.Model):
       for chunk in upload.chunks():
         fd.write(chunk)
 
-  def build_thumbnail(self, size=(200,200)):
+  def build_thumbnail(self, size=(300,300)):
     '''
     For images, build thumbnail
     '''
     src = Image.open(self.path)
+
+    # Build thumbnail
     src.thumbnail(size)
 
     # Save in new media
@@ -105,3 +109,21 @@ class PostMedia(models.Model):
     media.save()
 
     return media
+
+  def build_crop(self, size=400):
+    '''
+    For images, build crop
+    '''
+
+    # Create new media
+    media = PostMedia.objects.create(post=self.post, type='image crop', parent=self, width=size, height=size, size=0)
+
+    # Crop image
+    crop_image(self.path, media.path, size)
+
+    # Pillow does not provide file size :(
+    media.size = os.stat(media.path).st_size
+    media.save()
+
+    return media
+

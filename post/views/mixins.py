@@ -18,3 +18,11 @@ class PostWriterMixin(object):
 
   def get_success_url(self):
     return reverse('post-edit', args=(self.post.slug, ))
+
+  def get_context_data(self, *args, **kwargs):
+    context = super(PostWriterMixin, self).get_context_data(*args, **kwargs)
+
+    # Add crops
+    context['images'] = self.object.medias.filter(type='image crop')
+
+    return context
