@@ -24,7 +24,7 @@ class PostWriterMixin(object):
     context = super(PostWriterMixin, self).get_context_data(*args, **kwargs)
 
     # Add crops
-    if hasattr(self, 'object'):
+    if hasattr(self, 'object') and hasattr(self.object, 'medias'):
       context['images'] = self.object.medias.filter(type='image crop').prefetch_related('parent')
 
     return context

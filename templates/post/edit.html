@@ -58,88 +58,44 @@ $(function(){
   <h1>{{ _('Create a post') }}</h1>
   {% endif %}
 
-  <form class="form-horizontal" method="post" action="{% if post %}{% url 'post-edit' post.slug %}{% else %}{% url 'post-create' %}{% endif %}" id="post_editor">
-    {% csrf_token %}
-    {{ macros.input(form.title) }}
-    {{ macros.input(form.slug) }}
-    {{ macros.input(form.type) }}
-    {{ macros.input_bool(form.published) }}
-  </form>
-
-  <div class="form-group">
-    <div id="toolbar">
-      <div class="btn-group">
-        <button class="ql-bold do-tooltip btn btn-default" title="{{ _('Bold (Ctrl+B)') }}">
-          <i class="icon-bold"></i>
-        </a>
-        <button class="ql-italic do-tooltip btn btn-default" title="{{ _('Italic (Ctrl+I)') }}">
-          <i class="icon-italic"></i>
-        </a>
-        <button class="ql-strike do-tooltip btn btn-default" title="{{ _('Strikethrough') }}">
-          <i class="icon-strike"></i>
-        </a>
-        <button class="ql-underline do-tooltip btn btn-default" title="{{ _('Underline (Ctrl+U)') }}">
-          <i class="icon-underline"></i>
-        </a>
-      </div>
-
-      <div class="btn-group">
-        <button class="ql-bullet do-tooltip btn btn-default" title="{{ _('Bullet list') }}">
-          <i class="icon-list"></i>
-        </a>
-        <button class="ql-list do-tooltip btn btn-default" title="{{ _('Numbered list') }}">
-          <i class="icon-list-numbered"></i>
-        </a>
-      </div>
-
-      <button class="ql-link do-tooltip btn btn-default" title="{{ _('External link') }}">
-        <i class="icon-link"></i>
-      </a>
-    </div>
-
-    <div id="text_editor" class="col-xs-12">
-    </div>
-  </div>
-
-  <p>
-    <a href="{% url 'posts' %}" class="btn btn-default">{{ _('Cancel') }}</a>
-    <button id="edit" type="submit" class="btn btn-primary">{% if post %}{{ _('Edit the post') }}{% else %}{{ _('Create the post') }}{% endif %}</button>
+  <p class="pull-right">
+    <a href="{% url 'posts' %}" class="btn btn-primary btn-light">{{ _('All posts') }}</a>
     {% if post %}
-    <a href="{% url 'post' user.username, post.slug %}" class="btn btn-info">{{ _('View the post') }}</a>
+    <a href="{% url 'post' user.username, post.slug %}" class="btn btn-info btn-light">{{ _('View the post') }}</a>
     {% endif %}
   </p>
 
-  {% if post %}
-  <hr />
-  
-  {% if images %}
-  <div class="row" id="medias">
-    {% for thumb in images %}
-    <div class="col-sm-3 col-xs-6">
-      <div class="thumbnail">
-        <img class="img-responsive" src="{{ thumb.url }}" alt="{{ thumb.fullname }}" />
-        <div class="caption">
-          {% if thumb.fullname %}
-          <h4>{{ thumb.fullname }}</h4>
-          {% endif %}
-          <p class="text-right">
-            <a href="#" class="btn btn-primary btn-sm" role="button">{{ _('Edit') }}</a>
-            <a href="{% url 'post-media-delete' thumb.parent.pk %}" class="btn btn-danger btn-sm modal-action" role="button">{{ _('Delete') }}</a>
-          </p>
+  <div role="tabpanel">
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active">
+        <a href="#edit" aria-controls="edit" role="tab" data-toggle="tab">{{ _('Edit') }}</a>
+      </li>
+      {% if post %}
+      <li role="presentation">
+        <a href="#images" aria-controls="images" role="tab" data-toggle="tab">{{ _('Images') }}</a>
+      </li>
+      <li role="presentation">
+        <a href="#sessions" aria-controls="sessions" role="tab" data-toggle="tab">{{ _('Sessions') }}</a>
+      </li>
+      {% endif %}
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="edit">
+        {% include 'post/editor/text.html' %}
+      </div>
+      {% if post %}
+      <div role="tabpanel" class="tab-pane" id="images">
+        {% include 'post/editor/images.html' %}
+      </div>
+      <div role="tabpanel" class="tab-pane" id="sessions">
+        <div class="box" data-src="{% url 'post-sessions' post.slug %}">
+          {{ _('Loading sessions...') }}
         </div>
       </div>
+      {% endif %}
     </div>
-    {% endfor %}
   </div>
-  {% else %}
-  <p class="text-info">
-    {{ _('Use the zone below to add some pictures') }}
-  </p>
-  {% endif %}
-  <div id="dropzone" class="dropzone"></div>
-
-  <hr />
-  <div class="box" data-src="{% url 'post-sessions' post.slug %}">{{ _('Loading sessions...') }}</div>
-  {% endif %}
 </div>
 {% endblock %}

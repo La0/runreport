@@ -1,0 +1,50 @@
+{% import '_macros.html' as macros %}
+
+<form class="form-horizontal" method="post" action="{% if post %}{% url 'post-edit' post.slug %}{% else %}{% url 'post-create' %}{% endif %}" id="post_editor">
+  {% csrf_token %}
+  {{ macros.input(form.title) }}
+  {{ macros.input(form.slug) }}
+  {{ macros.input(form.type) }}
+  {{ macros.input_bool(form.published) }}
+</form>
+
+<div class="form-group">
+  <div id="toolbar">
+    <div class="btn-group">
+      <button class="ql-bold do-tooltip btn btn-default" title="{{ _('Bold (Ctrl+B)') }}">
+        <i class="icon-bold"></i>
+      </a>
+      <button class="ql-italic do-tooltip btn btn-default" title="{{ _('Italic (Ctrl+I)') }}">
+        <i class="icon-italic"></i>
+      </a>
+      <button class="ql-strike do-tooltip btn btn-default" title="{{ _('Strikethrough') }}">
+        <i class="icon-strike"></i>
+      </a>
+      <button class="ql-underline do-tooltip btn btn-default" title="{{ _('Underline (Ctrl+U)') }}">
+        <i class="icon-underline"></i>
+      </a>
+    </div>
+
+    <div class="btn-group">
+      <button class="ql-bullet do-tooltip btn btn-default" title="{{ _('Bullet list') }}">
+        <i class="icon-list"></i>
+      </a>
+      <button class="ql-list do-tooltip btn btn-default" title="{{ _('Numbered list') }}">
+        <i class="icon-list-numbered"></i>
+      </a>
+    </div>
+
+    <button class="ql-link do-tooltip btn btn-default" title="{{ _('External link') }}">
+      <i class="icon-link"></i>
+    </a>
+  </div>
+
+  <div id="text_editor" class="col-xs-12">
+  </div>
+</div>
+
+<p>
+  <button id="edit" type="submit" class="btn btn-primary">
+    {% if post %}{{ _('Edit the post') }}{% else %}{{ _('Create the post') }}{% endif %}
+  </button>
+</p>
