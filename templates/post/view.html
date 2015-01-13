@@ -3,29 +3,34 @@
 {% set page_title = post.title %}
 {% set base_url = request.META.HTTP_HOST %}
 
+{% block js %}
+<script type="text/javascript">
+
+  {% if FACEBOOK_ID %}
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '{{ FACEBOOK_ID }}',
+      xfbml      : true,
+      version    : 'v2.1'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/fr_FR/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+  {% endif %}
+
+  
+
+</script>
+{% endblock %}
+
+{% block meta %}
 {% if FACEBOOK_ID %}
-  {% block js %}
-  <script type="text/javascript">
-    window.fbAsyncInit = function() {
-      FB.init({
-        appId      : '{{ FACEBOOK_ID }}',
-        xfbml      : true,
-        version    : 'v2.1'
-      });
-    };
-
-    (function(d, s, id){
-       var js, fjs = d.getElementsByTagName(s)[0];
-       if (d.getElementById(id)) {return;}
-       js = d.createElement(s); js.id = id;
-       js.src = "//connect.facebook.net/fr_FR/sdk.js";
-       fjs.parentNode.insertBefore(js, fjs);
-     }(document, 'script', 'facebook-jssdk'));
-
-  </script>
-  {% endblock %}
-
-  {% block meta %}
   <meta property="fb:app_id"  content="{{ FACEBOOK_ID }}" /> 
   <meta property="og:site_name"    content="RunReport" /> 
   <meta property="og:type"    content="website" /> 
@@ -33,8 +38,9 @@
   <meta property="og:title"   content="{{ post.title }}" /> 
   <meta property="og:description"   content="{{ post.html|striptags|truncatechars(200) }}" /> 
   <meta property="og:image"   content="https://{{ base_url }}{{ post.writer.avatar.url }}" /> 
-  {% endblock %}
 {% endif %}
+{% endblock %}
+
 {% block content %}
 <div class="container">
   <h1>{{ post.title }}</h1>
@@ -71,28 +77,39 @@
   <hr />
 
   <div class="row">
-    {% with post.sessions.all() as sessions %}
       <div class="{% if sessions %}col-sm-8{% else %}col-sm-12{% endif %} col-xs-12">
         {{ post.html|safe }}
       </div>
-      {% if sessions %}
+      {% if sessions or medias %}
       <div class="col-sm-4 col-xs-12">
-        <h4>{{ _('%d sport sessions') % sessions.count() }}</h4>
-        {% for s in sessions %}
-        <p>
-          <span class="type {{ s.type }} do-tooltip" title="{{ _(s.type|title) }}"></span>
-          <i class="icon-sport-{{ s.sport.slug }} do-tooltip" title="{{ _(s.sport.name) }}"></i>
-          {% if s.track %}
-          <i class="icon-location do-tooltip" title="{{ s.track.provider|title }}"></i>
-          {% endif %}
-          <a href="{% url 'user-calendar-day' post.writer.username, s.day.date.year, s.day.date.month, s.day.date.day %}">
-            {{ s.name }}
+        {% if sessions %}
+          <h4>{{ _('%d sport sessions') % sessions.count() }}</h4>
+          {% for s in sessions %}
+          <p>
+            <span class="type {{ s.type }} do-tooltip" title="{{ _(s.type|title) }}"></span>
+            <i class="icon-sport-{{ s.sport.slug }} do-tooltip" title="{{ _(s.sport.name) }}"></i>
+            {% if s.track %}
+            <i class="icon-location do-tooltip" title="{{ s.track.provider|title }}"></i>
+            {% endif %}
+            <a href="{% url 'user-calendar-day' post.writer.username, s.day.date.year, s.day.date.month, s.day.date.day %}">
+              {{ s.name }}
+            </a>
+          </p>
+          {% endfor %}
+        {% endif %}
+
+        {% if medias %}
+        <h4>{{ _('Images') }}</h4>
+        {% for m in medias %}
+        <p class="col-sm-4 col-xs-6">
+          <a href="{{ m.parent.url }}" data-lightbox="post" data-title="{{ m.fullname }}">
+            <img src="{{ m.url }}" class="img-responsive" />
           </a>
         </p>
         {% endfor %}
+        {% endif %}
       </div>
       {% endif %}
-    {% endwith %}
   </div>
 </div>
 {% endblock %}

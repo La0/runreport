@@ -80,11 +80,11 @@ class PostMedia(models.Model):
     '''
     Generate a path for current media
     '''
-    name_contents = '%s:%d:%d' % (settings.SECRET_KEY, self.post.pk, self.pk)
+    name_contents = '%s:%d:%d' % (settings.SECRET_KEY, self.post_id, self.pk)
     ext = 'jpg' # only image for the moment
     name = '%s.%s' % (md5(name_contents).hexdigest(), ext)
     path = absolute and settings.MEDIA_ROOT or ''
-    path = os.path.join(path, 'posts', str(self.post.pk), name)
+    path = os.path.join(path, 'posts', str(self.post_id), name)
 
     return path
 
@@ -98,7 +98,6 @@ class PostMedia(models.Model):
 
     # Delete all children
     for c in self.children.all():
-      print c
       c.delete()
 
     # Base deletion

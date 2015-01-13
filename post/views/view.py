@@ -15,3 +15,14 @@ class PostView(DetailView):
       raise Http404()
 
     return post
+
+  def get_context_data(self, *args, **kwargs):
+    context = super(PostView, self).get_context_data(*args, **kwargs)
+
+    # Embed Medias
+    context['medias'] = self.object.medias.filter(type='image crop').prefetch_related('parent', 'post')
+
+    # Embed sessions
+    context['sessions'] = self.object.sessions.all().order_by('day__date').prefetch_related('track', 'sport', 'day')
+
+    return context
