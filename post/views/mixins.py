@@ -1,6 +1,7 @@
-from post.models import Post
+from post.models import Post, PostMedia
 from post.forms import PostForm
 from django.core.urlresolvers import reverse
+
 
 class PostWriterMixin(object):
   template_name = 'post/edit.html'
@@ -23,6 +24,17 @@ class PostWriterMixin(object):
     context = super(PostWriterMixin, self).get_context_data(*args, **kwargs)
 
     # Add crops
-    context['images'] = self.object.medias.filter(type='image crop')
+    if hasattr(self, 'object'):
+      context['images'] = self.object.medias.filter(type='image crop').prefetch_related('parent')
 
     return context
+
+class PostMediaMixin(object):
+  context_object_name = 'media'
+
+  def get_queryset(self):
+    # Limit to owned medias
+    return PostMedia.objects.filter(post__writer=self.request.user)
+
+  def get_success_url(self):
+    return reverse('post-edit', args=(self.object.post.slug, ))

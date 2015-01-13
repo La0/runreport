@@ -3,6 +3,7 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from hashlib import md5
 import os
+import re
 from helpers import crop_image
 from PIL import Image
 
@@ -50,6 +51,7 @@ class PostMedia(models.Model):
   type = models.CharField(max_length=25, choices=POST_MEDIAS)
 
   # Metadata
+  name = models.CharField(max_length=255, null=True, blank=True)
   size = models.IntegerField() # in bytes
   width = models.IntegerField(null=True, blank=True)
   height = models.IntegerField(null=True, blank=True)
@@ -57,6 +59,14 @@ class PostMedia(models.Model):
   # Dates
   created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
+
+  @property
+  def fullname(self):
+    if self.name:
+      return self.name
+    if self.parent:
+      return self.parent.fullname
+    return None
 
   @property
   def path(self):
@@ -77,6 +87,39 @@ class PostMedia(models.Model):
     path = os.path.join(path, 'posts', str(self.post.pk), name)
 
     return path
+
+  def delete(self):
+    '''
+    Delete all children and cleanup files
+    '''
+    # Cleanup
+    if os.path.exists(self.path):
+      os.remove(self.path)
+
+    # Delete all children
+    for c in self.children.all():
+      print c
+      c.delete()
+
+    # Base deletion
+    super(PostMedia, self).delete()
+
+  def use_filename(self, filename):
+    '''
+    Use filename to build clean name
+    '''
+
+    # Remove extension
+    if '.' in filename:
+      filename = filename[:filename.rindex('.')]
+
+    # Replace special chars by spaces
+    regex = r'([\-_\+\.]+)'
+    filename = re.sub(regex, ' ', filename)
+
+    # Use cleaned filename as name
+    self.name = filename
+    self.save()
 
   def write_upload(self, upload):
     '''

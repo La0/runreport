@@ -1,11 +1,9 @@
 from django.views.generic import UpdateView, CreateView, ListView, DetailView
 from .mixins import PostWriterMixin
-from coach.mixins import JsonResponseMixin, JSON_OPTION_ONLY_AJAX, JSON_OPTION_NO_HTML
+from coach.mixins import JsonResponseMixin, JSON_OPTION_ONLY_AJAX
 from sport.models import SportSession
 from post.forms import YearMonthForm
-from post.models import PostMedia
 from datetime import date
-from django.http import HttpResponse
 
 class PostListView(PostWriterMixin, ListView):
   context_object_name = 'posts'
@@ -16,38 +14,6 @@ class PostCreateView(PostWriterMixin, JsonResponseMixin, CreateView):
 
 class PostEditView(PostWriterMixin, JsonResponseMixin, UpdateView):
   json_options = [JSON_OPTION_ONLY_AJAX, ]
-
-class PostUploadView(PostWriterMixin, JsonResponseMixin, DetailView):
-  json_options = [JSON_OPTION_NO_HTML, ]
-
-  def post(self, request, *args, **kwargs):
-    try:
-      self.post = self.get_object() # load post first
-      self.handle_upload()
-      message = 'ok'
-      status = 200
-    except Exception, e:
-      message = 'Fail. %s' % (str(e), )
-      status = 500
-    return HttpResponse(message, status=status)
-
-  def handle_upload(self):
-    # Load uploaded file
-    upload = self.request.FILES['file']
-    if not upload:
-      raise Exception('Missing upload file')
-
-    # Only support image now
-    if not upload.content_type.startswith('image/'):
-      raise Exception('Only images')
-
-    # Build new media
-    media = PostMedia.objects.create(post=self.post, type='image source', size=upload.size)
-    media.write_upload(upload)
-    media.build_thumbnail()
-    media.build_crop()
-
-    return media
 
 class PostSessionsView(PostWriterMixin, JsonResponseMixin, DetailView):
   template_name = 'post/sessions.html'

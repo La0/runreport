@@ -1,0 +1,13 @@
+{% extends 'modal.html' %}
+
+{% set modal_title = _('Delete media') %}
+
+{% block body %}
+{{ _('Are you sure to delete this media %s ?') % media.name|default('') }}
+{% endblock %}
+
+{% block footer %}
+<button class="btn" data-dismiss="modal">{{ _('Cancel') }}</button>
+<a href="{% url 'post-media-delete' media.pk %}" class="btn btn-danger modal-action modal-post">{{ _('Delete this media') }}</a>
+{% endblock %}
+

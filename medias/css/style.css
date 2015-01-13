@@ -767,6 +767,10 @@ div.plan-status label {
   padding-top: 2px !important;
 }
 
+#medias .thumbnail {
+  min-height: 300px;
+}
+
 /* Attached sessions in post editor */
 #attached_sessions div.date {
   padding-top: 15px;

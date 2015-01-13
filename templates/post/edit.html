@@ -113,10 +113,21 @@ $(function(){
   <hr />
   
   {% if images %}
-  <div class="row">
+  <div class="row" id="medias">
     {% for thumb in images %}
-    <div class="col-sm-2 col-xs-6">
-      <img class="img-responsive img-thumbnail" src="{{ thumb.url }}" />
+    <div class="col-sm-3 col-xs-6">
+      <div class="thumbnail">
+        <img class="img-responsive" src="{{ thumb.url }}" alt="{{ thumb.fullname }}" />
+        <div class="caption">
+          {% if thumb.fullname %}
+          <h4>{{ thumb.fullname }}</h4>
+          {% endif %}
+          <p class="text-right">
+            <a href="#" class="btn btn-primary btn-sm" role="button">{{ _('Edit') }}</a>
+            <a href="{% url 'post-media-delete' thumb.parent.pk %}" class="btn btn-danger btn-sm modal-action" role="button">{{ _('Delete') }}</a>
+          </p>
+        </div>
+      </div>
     </div>
     {% endfor %}
   </div>
