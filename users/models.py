@@ -99,7 +99,6 @@ class Athlete(AthleteBase):
   avatar = models.ImageField(_('profile picture'), upload_to=build_avatar_path)
 
   # Profile privacy
-  privacy_profile = models.CharField(_('profile visibility'), max_length=50, choices=PRIVACY_LEVELS, default='club', help_text=_('Indicates if your public profile is visible, and by who.'))
   privacy_avatar = models.CharField(_('profile picture visibility'), max_length=50, choices=PRIVACY_LEVELS, default='club')
   privacy_races = models.CharField(_('races visibility'), max_length=50, choices=PRIVACY_LEVELS, default='club')
   privacy_records = models.CharField(_('records visibility'), max_length=50, choices=PRIVACY_LEVELS, default='club')

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-05 18:26+0100\n"
-"PO-Revision-Date: 2015-01-05 18:27+0100\n"
+"POT-Creation-Date: 2015-01-14 14:51+0100\n"
+"PO-Revision-Date: 2015-01-14 14:53+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -65,7 +65,7 @@ msgstr "Ma Semaine"
 msgid "My Calendar"
 msgstr "Mon Calendrier"
 
-#: coach/menu.py:65
+#: coach/menu.py:65 templates/club/members.athletes.html:9
 msgid "Members"
 msgstr "Membres"
 
@@ -451,7 +451,8 @@ msgstr "Fermer"
 msgid "Add a link"
 msgstr "Ajouter un lien"
 
-#: templates/club/link/add.html:13 templates/messages/add/conversation.html:69
+#: templates/club/link/add.html:13 templates/friends/delete.html:10
+#: templates/messages/add/conversation.html:69
 #: templates/messages/add/session.html:55 templates/messages/add/user.html:25
 #: templates/messages/delete.html:19 templates/messages/edit.html:19
 #: templates/sport/day/delete.html:15 templates/sport/session/delete.html:10
@@ -562,8 +563,9 @@ msgstr "Url"
 msgid "Actions"
 msgstr "Actions"
 
-#: templates/club/manage.html:84 templates/messages/_list.html:62
-#: templates/messages/delete.html:20 templates/sport/session/edit.html:51
+#: templates/club/manage.html:84 templates/friends/home.html:27
+#: templates/messages/_list.html:62 templates/messages/delete.html:20
+#: templates/sport/session/edit.html:51
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -583,10 +585,6 @@ msgstr "L'édition est désactivée pour la démo."
 #: templates/messages/edit.html:20 templates/sport/day/edit.html:40
 msgid "Edit"
 msgstr "Editer"
-
-#: templates/club/members.athletes.html:9
-msgid "Public members"
-msgstr "Membres publics"
 
 #: templates/club/members.athletes.html:15 templates/club/members.html:35
 msgid "Role"
@@ -613,17 +611,17 @@ msgid "Athlete"
 msgstr "Athlète"
 
 #: templates/club/members.athletes.html:47
-#: templates/users/profile/index.html:56
+#: templates/users/profile/index.html:38
 msgid "Friend"
 msgstr "Ami"
 
 #: templates/club/members.athletes.html:51 templates/friends/_add.btn.html:2
-#: templates/users/profile/index.html:60
+#: templates/users/profile/index.html:42
 msgid "Requested"
 msgstr "Demandé"
 
 #: templates/club/members.athletes.html:56
-#: templates/users/profile/index.html:65
+#: templates/users/profile/index.html:47
 msgid "Add friend"
 msgstr "Ajouter Ami"
 
@@ -788,24 +786,41 @@ msgstr ""
 msgid "Thank you for writing us !"
 msgstr "Merci de nous avoir écrit !"
 
+#: templates/friends/delete.html:3
+#, python-format
+#| msgid "Write to %(first)s %(last)s"
+msgid "Delete friendship with %(first)s %(last)s"
+msgstr "Supprimer la relation d'amitié avec %(first)s  %(last)s"
+
+#: templates/friends/delete.html:6
+#, python-format
+#| msgid "Are you sure to delete this session of %(sport)s : %(name)s"
+msgid "Are you sure to delete this friendship with %(first)s %(last)s ?"
+msgstr "Etes vous sûr de vouloir supprimer l'amitié de %(first)s : %(last)s ?"
+
+#: templates/friends/delete.html:11
+#| msgid "Delete this session"
+msgid "Delete this friendship"
+msgstr "Supprimer cette amitié"
+
 #: templates/friends/home.html:24 templates/sport/calendar/year.html:39
 #: templates/sport/day/edit.html:35
 msgid "View this profile"
 msgstr "Voir ce profil public"
 
-#: templates/friends/home.html:32
+#: templates/friends/home.html:35
 msgid "You can add friends from your club, for example."
 msgstr "Vous pouvez ajouter des amis de votre club, par exemple."
 
-#: templates/friends/home.html:50
+#: templates/friends/home.html:53
 msgid "Refuse"
 msgstr "Refuser"
 
-#: templates/friends/home.html:53
+#: templates/friends/home.html:56
 msgid "Accept"
 msgstr "Accepter"
 
-#: templates/friends/home.html:59
+#: templates/friends/home.html:62
 msgid "You don't have any friend request to validate."
 msgstr "Vous n'avez aucune demande d'amitié à valider."
 
@@ -928,6 +943,15 @@ msgstr ""
 "Grand randonneur et montagnard, je test en continu RunReport, à la recherche "
 "de bug ou d'améliorations potentielles."
 
+#: templates/mail/club_invite.html:7 templates/mail/club_invite_asked.html:6
+#: templates/mail/club_prospect.html:6 templates/mail/friend.request.html:8
+#: templates/mail/friend.request.html:10 templates/mail/message.html:6
+#: templates/mail/new.year.html:6 templates/mail/race.html:6
+#: templates/mail/user_role.html:6
+#, python-format
+msgid "Hello %s"
+msgstr "Bonjour %s"
+
 #: templates/mail/club_invite.html:9
 msgid "Hello"
 msgstr "Bonjour"
@@ -943,14 +967,6 @@ msgstr ""
 #: templates/mail/club_invite.html:18
 msgid "To create the club, use this unique invite:"
 msgstr "Pour créer le club, utilisez cette invitation unique:"
-
-#: templates/mail/club_invite_asked.html:6 templates/mail/club_prospect.html:6
-#: templates/mail/friend.request.html:8 templates/mail/friend.request.html:10
-#: templates/mail/message.html:6 templates/mail/new.year.html:6
-#: templates/mail/race.html:6 templates/mail/user_role.html:6
-#, python-format
-msgid "Hello %s"
-msgstr "Bonjour %s"
 
 #: templates/mail/club_invite_asked.html:16
 msgid "You can active it by using this link"
@@ -1056,7 +1072,6 @@ msgid "km"
 msgstr "km"
 
 #: templates/mail/new.year.html:18
-#| msgid "You have logged %(days)d days of sport covering a total distance of"
 msgid "You have logged a total distance of"
 msgstr "Vous avez renseigné une distance totale de"
 
@@ -1284,7 +1299,7 @@ msgstr "Editer un message"
 msgid "Your recent conversations"
 msgstr "Vos conversations récentes"
 
-#: templates/messages/inbox.html:30 templates/users/profile/index.html:101
+#: templates/messages/inbox.html:30 templates/users/profile/index.html:83
 #, python-format
 msgid "%s ago"
 msgstr "Il y'a %s"
@@ -1537,11 +1552,16 @@ msgstr "Sauver la séance"
 msgid "this session"
 msgstr "cette séance"
 
-#: templates/sport/session/edit.html:64
+#: templates/sport/session/edit.html:65
 msgid "Map"
 msgstr "Carte"
 
-#: templates/sport/session/edit.html:76
+#: templates/sport/session/edit.html:71
+#| msgid "Saved session."
+msgid "Change session"
+msgstr "Changer la séance"
+
+#: templates/sport/session/edit.html:99
 msgid "Comments"
 msgstr "Commentaires"
 
@@ -1740,6 +1760,11 @@ msgstr ""
 msgid "Disconnect"
 msgstr "Déconnecter"
 
+#: templates/tracks/oauth.html:5 templates/tracks/oauth.html.py:23
+#, python-format
+msgid "Connection to %s"
+msgstr "Connecté à %s"
+
 #: templates/tracks/oauth.html:9
 msgid "Successfull Authentification"
 msgstr "Authentification réussie"
@@ -1751,11 +1776,6 @@ msgstr "Vous utilisez le profil Strava"
 #: templates/tracks/oauth.html:18
 msgid "Authentification failure"
 msgstr "Echec de l'authentification"
-
-#: templates/tracks/oauth.html:23
-#, python-format
-msgid "Connection to %s"
-msgstr "Connecté à %s"
 
 #: templates/tracks/oauth.html:28
 msgid "Back to GPS services"
@@ -1974,8 +1994,8 @@ msgstr "Informations sportives"
 msgid "Password"
 msgstr "Mot de passe"
 
-#: templates/users/preferences.html:92 templates/users/preferences.html:152
-#: templates/users/preferences.html:163 templates/users/preferences.html:200
+#: templates/users/preferences.html:92 templates/users/preferences.html:151
+#: templates/users/preferences.html:162 templates/users/preferences.html:199
 msgid "Update"
 msgstr "Mettre à jour"
 
@@ -2028,62 +2048,46 @@ msgstr "Uniquement les personnes dans vos clubs peuvent voir cette partie."
 msgid "You are the only one seeig this section"
 msgstr "Vous êtes la seule personne qui peut voir cette partie."
 
-#: templates/users/preferences.html:153
+#: templates/users/preferences.html:152
 msgid "View your public profile"
 msgstr "Voir votre profil public"
 
-#: templates/users/preferences.html:172
+#: templates/users/preferences.html:171
 #, python-format
 msgid "%s trainer"
 msgstr "Entraîneur du %s"
 
-#: templates/users/preferences.html:207
+#: templates/users/preferences.html:206
 msgid "You can change your password using"
 msgstr "Vous pouvez changer votre mot de passe en utilisant"
 
-#: templates/users/preferences.html:208
+#: templates/users/preferences.html:207
 msgid "this page"
 msgstr "cette page"
 
-#: templates/users/profile/index.html:32
-msgid "Your public profile"
-msgstr "Votre profil public"
-
-#: templates/users/profile/index.html:34
-msgid "Only you, your friends & trainers can view your public profile"
-msgstr "Seul vous, vos amis & entraîneurs peuvent voir votre profil public."
-
-#: templates/users/profile/index.html:36
-msgid "Every club member can view your public profile"
-msgstr "Tous les membres de vos clubs peuvent voir votre profil public"
-
-#: templates/users/profile/index.html:38
-msgid "Any visitor can view your public profile"
-msgstr "Tous les visiteurs peuvent voir votre profil public"
-
-#: templates/users/profile/index.html:72
+#: templates/users/profile/index.html:54
 msgid "Send a message"
 msgstr "Envoyer un message"
 
-#: templates/users/profile/index.html:83
+#: templates/users/profile/index.html:65
 msgid "Trained by"
 msgstr "Entraîneé par"
 
-#: templates/users/profile/index.html:96
+#: templates/users/profile/index.html:78
 #, python-format
 msgid "%d last sessions"
 msgstr "%d dernières séance"
 
-#: templates/users/profile/index.html:106
+#: templates/users/profile/index.html:88
 msgid "View calendar"
 msgstr "Voir le calendrier"
 
-#: templates/users/profile/index.html:113
+#: templates/users/profile/index.html:95
 #, python-format
 msgid "%d most commented sessions"
 msgstr "%d séances les plus commentées"
 
-#: templates/users/profile/index.html:119
+#: templates/users/profile/index.html:101
 #, python-format
 msgid "%d comments"
 msgstr "%d commentaires"
@@ -2318,38 +2322,30 @@ msgid "profile picture"
 msgstr "Photo de profil"
 
 #: users/models.py:102
-msgid "profile visibility"
-msgstr "visibilité globale du profil"
-
-#: users/models.py:102
-msgid "Indicates if your public profile is visible, and by who."
-msgstr "Détermine si votre page de profil public est visible et par qui."
-
-#: users/models.py:103
 msgid "profile picture visibility"
 msgstr "visibilité de votre photo"
 
-#: users/models.py:104
+#: users/models.py:103
 msgid "races visibility"
 msgstr "visibilité de vos courses"
 
-#: users/models.py:105
+#: users/models.py:104
 msgid "records visibility"
 msgstr "visibilité de vos records"
 
-#: users/models.py:106
+#: users/models.py:105
 msgid "stats visibility"
 msgstr "visibilité de vos statistiques"
 
-#: users/models.py:107
+#: users/models.py:106
 msgid "calendar visibility"
 msgstr "visibilité de votre calendrier complet"
 
-#: users/models.py:108
+#: users/models.py:107
 msgid "comments visibility"
 msgstr "visibilité des commentaires"
 
-#: users/models.py:109
+#: users/models.py:108
 msgid "tracks visibility"
 msgstr "visibilités des traces GPS"
 
@@ -2408,8 +2404,10 @@ msgid "Uncategorized"
 msgstr "Sans Catégorie"
 
 #: Sport/name:3
-msgid "Course à pied"
-msgstr "Course à pied"
+#, fuzzy
+#| msgid "Track Running"
+msgid "Running"
+msgstr "Course sur piste"
 
 #: Sport/name:4
 msgid "Street Running"
@@ -2428,8 +2426,10 @@ msgid "Treadmill Running"
 msgstr "Course sur tapis"
 
 #: Sport/name:8
-msgid "Vélo"
-msgstr "Vélo"
+#, fuzzy
+#| msgid "Road Cycling"
+msgid "Cycling"
+msgstr "Cyclisme sur route"
 
 #: Sport/name:9
 msgid "Cyclocross"
@@ -2484,11 +2484,13 @@ msgid "Strength Training"
 msgstr "Entraînement de force"
 
 #: Sport/name:22
-msgid "Randonnée"
-msgstr "Randonnée"
+msgid "hiking"
+msgstr ""
 
 #: Sport/name:23
-msgid "Natation"
+#, fuzzy
+#| msgid "Lap Swimming"
+msgid "Swimming"
 msgstr "Natation"
 
 #: Sport/name:24
@@ -2500,8 +2502,10 @@ msgid "Open Water Swimming"
 msgstr "Natation en mer"
 
 #: Sport/name:26
-msgid "Marche"
-msgstr "Marche"
+#, fuzzy
+#| msgid "Speed Walking"
+msgid "Walking"
+msgstr "Marche rapide"
 
 #: Sport/name:27
 msgid "Casual Walking"
@@ -2528,12 +2532,14 @@ msgid "Run to Bike Transition"
 msgstr "Transition Course Vélo"
 
 #: Sport/name:33
-msgid "Moto"
+#, fuzzy
+#| msgid "Moto"
+msgid "Motorbike"
 msgstr "Moto"
 
 #: Sport/name:34
-msgid "Autre"
-msgstr "Autre"
+msgid "Other"
+msgstr ""
 
 #: Sport/name:35
 msgid "Backcountry Skiing/Snowboarding"
@@ -2614,6 +2620,69 @@ msgstr ""
 #: Sport/name:54
 msgid "Wind/Kite Surfing"
 msgstr ""
+
+#: Sport/name:55
+msgid "Ride"
+msgstr ""
+
+#: Sport/name:56
+msgid "Run"
+msgstr ""
+
+#: Sport/name:57
+msgid "Workout"
+msgstr ""
+
+#: Sport/name:58
+msgid "BackcountrySki"
+msgstr ""
+
+#: Sport/name:59
+msgid "Hike"
+msgstr ""
+
+#: Sport/name:60
+msgid "Swim"
+msgstr ""
+
+#~ msgid "Public members"
+#~ msgstr "Membres publics"
+
+#~ msgid "Your public profile"
+#~ msgstr "Votre profil public"
+
+#~ msgid "Only you, your friends & trainers can view your public profile"
+#~ msgstr "Seul vous, vos amis & entraîneurs peuvent voir votre profil public."
+
+#~ msgid "Every club member can view your public profile"
+#~ msgstr "Tous les membres de vos clubs peuvent voir votre profil public"
+
+#~ msgid "Any visitor can view your public profile"
+#~ msgstr "Tous les visiteurs peuvent voir votre profil public"
+
+#~ msgid "profile visibility"
+#~ msgstr "visibilité globale du profil"
+
+#~ msgid "Indicates if your public profile is visible, and by who."
+#~ msgstr "Détermine si votre page de profil public est visible et par qui."
+
+#~ msgid "Course à pied"
+#~ msgstr "Course à pied"
+
+#~ msgid "Vélo"
+#~ msgstr "Vélo"
+
+#~ msgid "Randonnée"
+#~ msgstr "Randonnée"
+
+#~ msgid "Natation"
+#~ msgstr "Natation"
+
+#~ msgid "Marche"
+#~ msgstr "Marche"
+
+#~ msgid "Autre"
+#~ msgstr "Autre"
 
 #~ msgid "Development Version"
 #~ msgstr "Version de Développement"

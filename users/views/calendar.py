@@ -2,7 +2,7 @@ from users.views.mixins import ProfilePrivacyMixin
 from sport.views import RunCalendarYear, RunCalendar, RunCalendarDay, WeeklyReport, SportSessionView
 
 class AthleteCalendarMixin(ProfilePrivacyMixin):
-  rights_needed = ('profile', 'calendar')
+  rights_needed = ('calendar', )
 
   def get_links(self):
     return {

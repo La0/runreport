@@ -13,11 +13,6 @@
 
 {% block content %}
 
-{% set owner_css = {
-  'public' : 'alert-success',
-  'club' : 'alert-warning',
-  'private' : 'alert-danger',
-} %}
 {% set role_css = {
   'athlete' : 'label-info',
   'trainer' : 'label-success',
@@ -26,19 +21,6 @@
 
 
 <div class="container profile">
-
-  {% if member == user %}
-  <div class="alert {{ owner_css[user.privacy_profile] }}">
-    <h4>{{ _('Your public profile') }} </h4>
-    {% if user.privacy_profile == 'private' %}
-      {{ _('Only you, your friends & trainers can view your public profile') }}
-    {% elif user.privacy_profile == 'club' %}
-      {{ _('Every club member can view your public profile') }}
-    {% else %}
-      {{ _('Any visitor can view your public profile') }}
-    {% endif %}
-  </div>
-  {% endif %}
 
   <div class="row">
     

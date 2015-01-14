@@ -37,7 +37,7 @@ class ProfilePrivacyMixin(object):
   '''
   member = None
   privacy = [] # Rights available to visitor
-  rights_needed = ('profile',) # Needed rights to access the page
+  rights_needed = () # Needed rights to access the page
 
   def get_member(self):
     '''

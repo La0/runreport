@@ -138,7 +138,6 @@ $(function(){
         </div>
 
         {% with ('btn-success', 'btn-warning', 'btn-danger', )  as btn_classes %}
-        {{ macros.input_choices(form.privacy_profile, None, False, btn_classes) }}
         {{ macros.input_choices(form.privacy_avatar, None, False, btn_classes) }}
         {{ macros.input_choices(form.privacy_calendar, None, False, btn_classes) }}
         {{ macros.input_choices(form.privacy_stats, None, False, btn_classes) }}
