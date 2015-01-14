@@ -60,8 +60,31 @@
   </div>
 
   {% if session.track %}
-  <div class="row" style="margin-top: 20px">
-    <label class="control-label col-sm-2 hidden-xs">{{_('Map') }} {{ session.track.provider|title() }}</label>
+  <div class="row track">
+    <div class="col-sm-2 hidden-xs labels">
+      <label class="control-label">{{_('Map') }} {{ session.track.provider|title() }}</label>
+
+      {% with session.day.sessions.all() as sessions %}
+      {% if sessions.count() > 1 %}
+      <div class="dropdown">
+        <button class="btn btn-primary btn-light btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+          {{ _('Change session') }}
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          {% for s in sessions %}
+          <li role="presentation" class="{% if session == s or s.track %}disabled{% endif %} modal-action modal-post" href="{% url 'track-session' session.track.pk %}" data-post-session="{{ s.pk }}">
+            <a role="menuitem" tabindex="-1" href="#">
+              <i class="icon-sport-{{ s.sport.slug }}"></i> {{ s.name|truncatechars(20) }}
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+      {% endwith %}
+    </div>
+
     <div class="col-sm-10 col-xs-12">
     {% with ('tracks') as privacy %}
       {% include  'tracks/_session.html' %}

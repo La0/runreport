@@ -10,12 +10,14 @@ class TrackMixin(object):
   model = Track
   context_object_name = 'track'
 
-  def get_object(self):
+  def get_object(self, check_ownership=False):
     # Load requested track
     self.track = get_object_or_404(Track, pk=self.kwargs['track_id'])
 
     # Check right access to tracks
     track_user = self.track.session.day.week.user
+    if check_ownership and track_user != self.request.user:
+      raise PermissionDenied
     if 'tracks' not in track_user.get_privacy_rights(self.request.user):
       raise PermissionDenied
 

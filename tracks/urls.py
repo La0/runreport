@@ -13,5 +13,8 @@ urlpatterns = patterns('',
 
   # Get track coordinates
   url(r'^coords/(?P<track_id>\d+).json$', TrackCoordsView.as_view(), name="track-coords"),
+
+  # Update session
+  url(r'^session/(?P<track_id>\d+)/?', TrackSessionView.as_view(), name="track-session"),
 )
 

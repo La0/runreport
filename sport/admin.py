@@ -18,5 +18,6 @@ admin.site.register(SportWeek, SportWeekAdmin)
 class SportAdmin(admin.ModelAdmin):
   model = Sport
   list_display = ('name', 'slug', 'parent')
+  list_filter = ('parent', )
 admin.site.register(Sport, SportAdmin)
 

@@ -603,6 +603,18 @@ div.comments div.messages {
   color: white;
 }
 
+.report .track {
+  margin-top: 20px;
+}
+
+.report .track .labels {
+  text-align: right;
+}
+
+.report .track .labels .dropdown ul {
+  text-align: left;
+}
+
 .splits tr.total td {
   font-weight: bold;
 }

@@ -225,9 +225,18 @@ function load_modal(evt){
   }
   evt.preventDefault();
   method = $(this).hasClass('modal-post') ? 'POST' : 'GET';
-  data = null;
+  data = {};
   if(this.hasAttribute('data-action'))
-    data = { 'action' : this.getAttribute('data-action')};
+    data['action'] = this.getAttribute('data-action');
+
+  // Append extra data (start with data-post-)
+  var filter = 'data-post-';
+  $.each(this.attributes, function(i, attr){
+    if(attr.name.substring(0, filter.length) != filter)
+      return;
+    console.info(attr);
+    data[attr.name.substring(filter.length)] = attr.value;
+  });
 
   // Append target ?
   target = 'modal';
