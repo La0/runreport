@@ -2,6 +2,8 @@ from club.models import Club, ClubMembership, ClubInvite
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import PermissionDenied
 from django.http import Http404
+from django.core.urlresolvers import reverse
+from club.forms import ClubGroupForm
 
 class ClubMixin(object):
   """
@@ -91,3 +93,53 @@ class ClubCreateMixin(object):
       raise Http404('Invalid or missing Beta invitation.')
 
     return super(ClubCreateMixin, self).dispatch(request, *args, **kwargs)
+
+class ClubGroupMixin(object):
+  form_class = ClubGroupForm
+  context_object_name = 'group'
+
+  def get_queryset(self):
+    return self.request.user.groups_owned.all()
+
+  def get_object(self):
+    return self.get_queryset().get(slug=self.kwargs['group_slug'])
+
+  def dispatch(self, request, *args, **kwargs):
+    '''
+    Check user is:
+     * logged in
+     * is staff or trainer of the club
+    '''
+    if not self.request.user.is_authenticated:
+      raise PermissionDenied
+
+    # Load club
+    self.club = Club.objects.get(slug=self.kwargs['slug'])
+
+    # Check user role in club
+    if not self.request.user.is_staff:
+      try:
+        self.club.clubmembership_set.get(user=self.request.user, role__in=('trainer', 'staff'))
+      except:
+        raise PermissionDenied
+
+    return super(ClubGroupMixin, self).dispatch(request, *args, **kwargs)
+
+  def get_context_data(self, *args, **kwargs):
+    context = super(ClubGroupMixin, self).get_context_data(*args, **kwargs)
+    context['club'] = self.club
+    return context
+
+  def get_success_url(self):
+    # go to edition
+    return reverse('club-group-edit', args=(self.club.slug, self.group.slug, ))
+
+  def form_valid(self, form):
+    # Setup owner & club
+    self.group = form.save(commit=False)
+    if not hasattr(self.group, 'creator'):
+      self.group.creator = self.request.user
+    self.group.club = self.club
+    self.group.save()
+
+    return super(ClubGroupMixin, self).form_valid(form)
