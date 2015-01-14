@@ -57,9 +57,18 @@ class Command(BaseCommand):
         track.session = target
         track.save()
 
+        # Update the target sport
+        target.sport = self.dest
+        target.save()
+
         # Cleanup session ?
         if not s.comment or s.comment == '':
           s.delete()
+
+      else:
+        # At least update the sport
+        s.sport = self.dest
+        s.save()
 
 
   def adopt_sport(self):
@@ -67,6 +76,6 @@ class Command(BaseCommand):
     Source adopts dest
     '''
     self.source.parent = self.dest
-    self.source.depth = 1
+    self.source.depth = 2
     self.source.save()
 
