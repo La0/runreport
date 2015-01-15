@@ -667,3 +667,46 @@ div#friends a.shortcut img {
 div#friendships div.actions .btn {
   margin-top: 4px;
 }
+
+/* Post editor */
+#text_editor {
+  overflow:scroll;
+  min-height:300px;
+  outline: none;
+  border: 1px solid rgb(204, 204, 204);
+  padding: 4px;
+  box-sizing: content-box;
+}
+
+#post_editor div[data-role="editor-toolbar"] {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#post_editor .dropdown-menu a {
+  cursor: pointer;
+}
+
+#medias .thumbnail {
+  min-height: 300px;
+}
+
+/* Attached sessions in post editor */
+#attached_sessions div.date {
+  padding-top: 15px;
+}
+
+#attached_sessions #id_date_day {
+  display: none !important;
+}
+
+/* group Members */
+#members .member {
+  margin-bottom: 10px;
+}
+
+#members .member.active {
+  background: #EEE;
+}

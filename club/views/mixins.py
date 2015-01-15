@@ -98,6 +98,11 @@ class ClubGroupMixin(object):
   form_class = ClubGroupForm
   context_object_name = 'group'
 
+  # Models instances
+  club = None
+  group = None
+
+
   def get_queryset(self):
     return self.request.user.groups_owned.all()
 
@@ -123,11 +128,16 @@ class ClubGroupMixin(object):
       except:
         raise PermissionDenied
 
+    # Load group
+    if 'group_slug' in self.kwargs:
+      self.group = self.club.groups.get(slug=self.kwargs['group_slug'])
+
     return super(ClubGroupMixin, self).dispatch(request, *args, **kwargs)
 
   def get_context_data(self, *args, **kwargs):
     context = super(ClubGroupMixin, self).get_context_data(*args, **kwargs)
     context['club'] = self.club
+    context['group'] = self.group
     return context
 
   def get_success_url(self):

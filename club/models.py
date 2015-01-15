@@ -202,7 +202,7 @@ class ClubGroup(models.Model):
 
   # Users
   creator = models.ForeignKey(Athlete, related_name='groups_owned')
-  members = models.ManyToManyField(Athlete, related_name='club_groups')
+  members = models.ManyToManyField(ClubMembership, related_name='groups')
 
   # Dates
   created = models.DateTimeField(auto_now_add=True)

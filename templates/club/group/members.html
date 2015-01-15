@@ -1,0 +1,27 @@
+<div id="members">
+  <h2>{{ group_members|count() }}/{{ memberships.count() }} {{ _('Members') }}</h2>
+  <div class="row">
+    {% for member in memberships %}
+    {% with member.pk in group_members as active %}
+    <div class="member col-sm-4 col-xs-12 {% if active %}active{% endif %}">
+      <strong>
+        {{ member.user.first_name }} {{ member.user.last_name }}
+      </strong>
+      <div class="pull-right">
+        {% if active %}
+        <button class="btn btn-sm btn-danger modal-action modal-post" href="{% url 'club-group-members' club.slug, group.slug %}" data-post-member="{{ member.pk }}" data-action="remove" data-replaces="members">
+          <i class="icon-trash"></i>
+          {{ _('Remove') }}
+        </button>
+        {% else %}
+        <button class="btn btn-sm btn-success modal-action modal-post" href="{% url 'club-group-members' club.slug, group.slug %}" data-post-member="{{ member.pk }}" data-action="add" data-replaces="members">
+          <i class="icon-plus"></i>
+          {{ _('Add') }}
+        </button>
+        {% endif %}
+      </div>
+    </div>
+    {% endwith %}
+    {% endfor %}
+  </div>
+</div>
