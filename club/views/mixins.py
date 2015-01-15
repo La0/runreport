@@ -97,6 +97,8 @@ class ClubCreateMixin(object):
 class ClubGroupMixin(object):
   form_class = ClubGroupForm
   context_object_name = 'group'
+  public = False # anyone can access ?
+  editable = True # editable version ?
 
   # Models instances
   club = None
@@ -104,7 +106,9 @@ class ClubGroupMixin(object):
 
 
   def get_queryset(self):
-    return self.request.user.groups_owned.all()
+    if self.editable:
+      return self.request.user.groups_owned.all()
+    return self.club.groups.all()
 
   def get_object(self):
     return self.get_queryset().get(slug=self.kwargs['group_slug'])
@@ -126,7 +130,10 @@ class ClubGroupMixin(object):
       try:
         self.club.clubmembership_set.get(user=self.request.user, role__in=('trainer', 'staff'))
       except:
-        raise PermissionDenied
+        if self.public:
+          self.editable = False
+        else:
+          raise PermissionDenied
 
     # Load group
     if 'group_slug' in self.kwargs:
@@ -138,6 +145,7 @@ class ClubGroupMixin(object):
     context = super(ClubGroupMixin, self).get_context_data(*args, **kwargs)
     context['club'] = self.club
     context['group'] = self.group
+    context['editable'] = self.editable
     return context
 
   def get_success_url(self):

@@ -4,19 +4,21 @@
 
 {% block content %}
 <div class="container">
+  {% if editable %}
   <div class="pull-right">
     <a href="{% url club-group-create club.slug %}" class="btn btn-success">
       <i class="icon-plus"></i>
       {{ _('Create user group') }}
     </a>
   </div>
+  {% endif %}
   <h1>{{ _('Groups of %s') % club.name }}</h1>
 
   {% if groups %}
     {% for group in groups %}
     <div class="row">
       <div class="col-xs-6">
-        <a class="lead" href="{% url 'club-group-edit' club.slug, group.slug %}">
+        <a class="lead" href="{% url 'club-group' club.slug, group.slug %}">
           {{ group.name }}
         </a>
         <blockquote>
@@ -27,8 +29,13 @@
         <span class="badge">{{ group.members.count() }}</span> {{ _('Members') }}
       </div>
       <div class="col-xs-3 text-right">
+        {% if editable %}
         <a href="{% url 'club-group-edit' club.slug, group.slug %}" class="btn btn-info">
           {{ _('Edit') }}
+        </a>
+        {% endif %}
+        <a href="{% url 'club-group' club.slug, group.slug %}" class="btn btn-primary">
+          {{ _('View') }}
         </a>
       </div>
     </div>

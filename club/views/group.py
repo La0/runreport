@@ -1,9 +1,10 @@
 from .mixins import ClubGroupMixin
-from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, DetailView
 from coach.mixins import JsonResponseMixin
 
 
 class ClubGroupList(ClubGroupMixin, ListView):
+  public = True
   context_object_name = 'groups'
   template_name = 'club/group/index.html'
 
@@ -12,6 +13,10 @@ class ClubGroupCreate(ClubGroupMixin, CreateView):
 
 class ClubGroupEdit(ClubGroupMixin, UpdateView):
   template_name = 'club/group/edit.html'
+
+class ClubGroupView(ClubGroupMixin, DetailView):
+  public = True
+  template_name = 'club/group/view.html'
 
 class ClubGroupMembers(ClubGroupMixin, JsonResponseMixin, ListView):
   template_name = 'club/group/members.html'

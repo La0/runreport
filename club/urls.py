@@ -32,7 +32,8 @@ club_patterns = patterns('',
   url(r'^/groups/?', ClubGroupList.as_view(), name="club-groups"),
   url(r'^/group/new/?', ClubGroupCreate.as_view(), name="club-group-create"),
   url(r'^/group/(?P<group_slug>[\w\-\_]+)/members/?', ClubGroupMembers.as_view(), name="club-group-members"),
-  url(r'^/group/(?P<group_slug>[\w\-\_]+)/?', ClubGroupEdit.as_view(), name="club-group-edit"),
+  url(r'^/group/(?P<group_slug>[\w\-\_]+)/edit/?', ClubGroupEdit.as_view(), name="club-group-edit"),
+  url(r'^/group/(?P<group_slug>[\w\-\_]+)/?', ClubGroupView.as_view(), name="club-group"),
 )
 
 urlpatterns = patterns('',

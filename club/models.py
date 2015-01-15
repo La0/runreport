@@ -213,3 +213,6 @@ class ClubGroup(models.Model):
 
   def __unicode__(self):
     return '%s : %s' % (self.club.name, self.name)
+
+  def get_members(self):
+    return self.members.all().order_by('user__first_name', 'user__last_name').prefetch_related('user')

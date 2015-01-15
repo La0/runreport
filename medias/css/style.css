@@ -450,6 +450,13 @@ img.avatar.small, .avatar img.small {
   vertical-align: middle;
 }
 
+img.avatar.tiny {
+  width: 40px;
+  height: 40px;
+  vertical-align: middle;
+  display: inline-block;
+}
+
 div.member div {
   line-height: 60px !important;
 }
