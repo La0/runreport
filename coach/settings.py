@@ -141,6 +141,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -178,6 +179,7 @@ INSTALLED_APPS = (
     'tracks',
     'friends',
     'api', # Api code
+    'corsheaders', # CORS for api
     'vinaigrette', # Model translations
     'rest_framework', # Api provider
     'compressor',
@@ -343,6 +345,12 @@ REST_FRAMEWORK = {
     'rest_framework.permissions.IsAuthenticated',
   ),
 }
+
+# Allow cors api server
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = (
+  'localhost:8100',
+)
 
 # Import local settings, if any
 try:

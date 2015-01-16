@@ -13,6 +13,7 @@ celery==3.1.10
 django-appconf==0.6
 django-compressor==1.4
 django-contact-form==1.0
+django-cors-headers==1.0.0
 django-debug-toolbar==1.2.1
 django-redis-sessions==0.4.0
 django-transadmin==0.2.7
