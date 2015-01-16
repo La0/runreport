@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-14 14:51+0100\n"
+"POT-Creation-Date: 2015-01-16 11:12+0100\n"
 "PO-Revision-Date: 2014-11-28 18:21+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
@@ -23,6 +23,18 @@ msgstr ""
 
 #: club/models.py:108
 msgid "Link address"
+msgstr ""
+
+#: club/models.py:199
+msgid "Group name"
+msgstr ""
+
+#: club/models.py:200
+msgid "Name in the url"
+msgstr ""
+
+#: club/models.py:201
+msgid "Description"
 msgstr ""
 
 #: coach/menu.py:23
@@ -64,15 +76,20 @@ msgstr ""
 msgid "My Calendar"
 msgstr ""
 
-#: coach/menu.py:65 templates/club/members.athletes.html:9
+#: coach/menu.py:65 templates/club/group/index.html:29
+#: templates/club/group/members.html:2 templates/club/members.athletes.html:9
 msgid "Members"
 msgstr ""
 
-#: coach/menu.py:70
-msgid "My athletes"
+#: coach/menu.py:66 coach/menu.py:73 templates/users/profile/index.html:72
+msgid "Groups"
 msgstr ""
 
 #: coach/menu.py:71
+msgid "My athletes"
+msgstr ""
+
+#: coach/menu.py:72
 msgid "Races"
 msgstr ""
 
@@ -306,6 +323,77 @@ msgstr ""
 msgid "Create the club"
 msgstr ""
 
+#: templates/club/group/edit.html:3 templates/club/group/edit.html.py:9
+#, python-format
+msgid "Edit group: %s"
+msgstr ""
+
+#: templates/club/group/edit.html:3 templates/club/group/edit.html.py:11
+msgid "Create a new group"
+msgstr ""
+
+#: templates/club/group/edit.html:23 templates/club/link/add.html:13
+#: templates/friends/delete.html:10
+#: templates/messages/add/conversation.html:69
+#: templates/messages/add/session.html:55 templates/messages/add/user.html:25
+#: templates/messages/delete.html:19 templates/messages/edit.html:19
+#: templates/sport/day/delete.html:15 templates/sport/session/delete.html:10
+#: templates/sport/week/publish.html:48 templates/tracks/disconnect.html:12
+#: templates/users/notifications.html:41 templates/users/password.html:15
+msgid "Cancel"
+msgstr ""
+
+#: templates/club/group/edit.html:27
+msgid "Edit the group"
+msgstr ""
+
+#: templates/club/group/edit.html:29
+msgid "Create the group"
+msgstr ""
+
+#: templates/club/group/index.html:3 templates/club/group/index.html.py:15
+#: templates/club/group/view.html:8
+#, python-format
+msgid "Groups of %s"
+msgstr ""
+
+#: templates/club/group/index.html:11
+msgid "Create user group"
+msgstr ""
+
+#: templates/club/group/index.html:34 templates/club/manage.html:116
+#: templates/messages/_list.html:63 templates/messages/edit.html:20
+#: templates/sport/day/edit.html:40
+msgid "Edit"
+msgstr ""
+
+#: templates/club/group/index.html:38 templates/club/races.html:31
+#: templates/messages/inbox.html:69 templates/sport/vma.html:71
+#: templates/users/notifications.html:28 templates/users/races.html:98
+msgid "View"
+msgstr ""
+
+#: templates/club/group/index.html:45
+msgid "You have not created any user groups."
+msgstr ""
+
+#: templates/club/group/members.html:14
+msgid "Remove"
+msgstr ""
+
+#: templates/club/group/members.html:19 templates/club/link/add.html:14
+msgid "Add"
+msgstr ""
+
+#: templates/club/group/view.html:3 templates/club/group/view.html.py:10
+#, python-format
+msgid "View group: %s"
+msgstr ""
+
+#: templates/club/group/view.html:12
+msgid "Created by"
+msgstr ""
+
 #: templates/club/join.html:9
 msgid "Join a club"
 msgstr ""
@@ -435,20 +523,6 @@ msgstr ""
 msgid "Add a link"
 msgstr ""
 
-#: templates/club/link/add.html:13 templates/friends/delete.html:10
-#: templates/messages/add/conversation.html:69
-#: templates/messages/add/session.html:55 templates/messages/add/user.html:25
-#: templates/messages/delete.html:19 templates/messages/edit.html:19
-#: templates/sport/day/delete.html:15 templates/sport/session/delete.html:10
-#: templates/sport/week/publish.html:48 templates/tracks/disconnect.html:12
-#: templates/users/notifications.html:41 templates/users/password.html:15
-msgid "Cancel"
-msgstr ""
-
-#: templates/club/link/add.html:14
-msgid "Add"
-msgstr ""
-
 #: templates/club/manage.html:11
 msgid "Users"
 msgstr ""
@@ -553,11 +627,6 @@ msgstr ""
 
 #: templates/club/manage.html:113
 msgid "Edition is deactivated for the demo"
-msgstr ""
-
-#: templates/club/manage.html:116 templates/messages/_list.html:63
-#: templates/messages/edit.html:20 templates/sport/day/edit.html:40
-msgid "Edit"
 msgstr ""
 
 #: templates/club/members.athletes.html:15 templates/club/members.html:35
@@ -684,12 +753,6 @@ msgstr ""
 
 #: templates/club/races.html:21
 msgid "In"
-msgstr ""
-
-#: templates/club/races.html:31 templates/messages/inbox.html:69
-#: templates/sport/vma.html:71 templates/users/notifications.html:28
-#: templates/users/races.html:98
-msgid "View"
 msgstr ""
 
 #: templates/club/races.html:38
@@ -1226,7 +1289,7 @@ msgstr ""
 msgid "Your recent conversations"
 msgstr ""
 
-#: templates/messages/inbox.html:30 templates/users/profile/index.html:83
+#: templates/messages/inbox.html:30 templates/users/profile/index.html:94
 #, python-format
 msgid "%s ago"
 msgstr ""
@@ -1968,21 +2031,21 @@ msgstr ""
 msgid "Trained by"
 msgstr ""
 
-#: templates/users/profile/index.html:78
+#: templates/users/profile/index.html:89
 #, python-format
 msgid "%d last sessions"
 msgstr ""
 
-#: templates/users/profile/index.html:88
+#: templates/users/profile/index.html:99
 msgid "View calendar"
 msgstr ""
 
-#: templates/users/profile/index.html:95
+#: templates/users/profile/index.html:106
 #, python-format
 msgid "%d most commented sessions"
 msgstr ""
 
-#: templates/users/profile/index.html:101
+#: templates/users/profile/index.html:112
 #, python-format
 msgid "%d comments"
 msgstr ""

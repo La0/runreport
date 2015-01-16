@@ -66,6 +66,17 @@
             <a href="{% url user-public-profile  trainer.username %}">{{ trainer.first_name }} {{ trainer.last_name }}</a>
           {% endfor %}
         {% endwith %}
+      {% with m.groups.all() as groups %}
+      {% if groups %}
+      <p>
+        <span class="label label-warning">{{ _('Groups') }}</span>
+        {% for group in groups %}
+          <a href="{% url 'club-group' m.club.slug, group.slug %}">{{ group.name }}</a>
+          {% if not loop.last %}&bull;{% endif %}
+        {% endfor %}
+      </p>
+      {% endif %}
+      {% endwith %}
       {% endfor %}
 
       {% if 'calendar' in privacy %}

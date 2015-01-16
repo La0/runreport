@@ -27,6 +27,13 @@ club_patterns = patterns('',
   url(r'^/trainer/(?P<username>[\w_]+)/?$', ClubMembers.as_view(), {'type' : 'trainer', }, name="club-trainer", ),
   url(r'^/by-(?P<sort>[\w-]+)/?$', ClubMembers.as_view(), name="club-members-sort"),
   url(r'^/?$', ClubMembers.as_view(), name="club-members"),
+
+  # Groups
+  url(r'^/groups/?', ClubGroupList.as_view(), name="club-groups"),
+  url(r'^/group/new/?', ClubGroupCreate.as_view(), name="club-group-create"),
+  url(r'^/group/(?P<group_slug>[\w\-\_]+)/members/?', ClubGroupMembers.as_view(), name="club-group-members"),
+  url(r'^/group/(?P<group_slug>[\w\-\_]+)/edit/?', ClubGroupEdit.as_view(), name="club-group-edit"),
+  url(r'^/group/(?P<group_slug>[\w\-\_]+)/?', ClubGroupView.as_view(), name="club-group"),
 )
 
 urlpatterns = patterns('',

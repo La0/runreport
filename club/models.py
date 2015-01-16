@@ -190,3 +190,29 @@ class ClubInvite(models.Model):
     self.used = datetime.now()
     self.club = club
     self.save()
+
+class ClubGroup(models.Model):
+  '''
+  Group club members for easier plan usage
+  '''
+  club = models.ForeignKey(Club, related_name='groups')
+  name = models.CharField(_('Group name'), max_length=255)
+  slug = models.SlugField(_('Name in the url'))
+  description = models.TextField(_('Description'), null=True, blank=True)
+
+  # Users
+  creator = models.ForeignKey(Athlete, related_name='groups_owned')
+  members = models.ManyToManyField(ClubMembership, related_name='groups')
+
+  # Dates
+  created = models.DateTimeField(auto_now_add=True)
+  updated = models.DateTimeField(auto_now=True)
+
+  class Meta:
+    unique_together = (('club', 'slug'), )
+
+  def __unicode__(self):
+    return '%s : %s' % (self.club.name, self.name)
+
+  def get_members(self):
+    return self.members.all().order_by('user__first_name', 'user__last_name').prefetch_related('user')

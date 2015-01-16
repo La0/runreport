@@ -4,6 +4,7 @@ from django import forms
 from users.models import Athlete
 from django.forms.models import modelformset_factory
 from django.core.exceptions import ValidationError
+from club.models import ClubGroup
 
 class ClubMembershipForm(forms.ModelForm):
   def __init__(self, *args, **kwargs):
@@ -77,3 +78,9 @@ class InviteAskForm(forms.ModelForm):
       raise forms.ValidationError(u'Invitation déja demandée')
 
     return recipient
+
+
+class ClubGroupForm(forms.ModelForm):
+  class Meta:
+    model = ClubGroup
+    fields = ('name', 'slug', 'description')

@@ -234,7 +234,6 @@ function load_modal(evt){
   $.each(this.attributes, function(i, attr){
     if(attr.name.substring(0, filter.length) != filter)
       return;
-    console.info(attr);
     data[attr.name.substring(filter.length)] = attr.value;
   });
 

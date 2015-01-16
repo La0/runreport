@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% set page_title = group and _('Edit group: %s') % group.name or _('Create a new group') %}
+
+{% block content %}
+<div class="container">
+  <h1>
+    {% if group %}
+      {{ _('Edit group: %s') % group.name }}
+    {% else %}
+      {{ _('Create a new group') }}
+    {% endif %}
+  </h1>
+
+  <form class="form-horizontal" method="post" action="">
+    {% csrf_token %}
+    {{ macros.input(form.name) }}
+    {{ macros.input(form.slug) }}
+    {{ macros.input(form.description) }}
+    <div class="form-group">
+      <div class="col-sm-10 col-sm-offset-2">
+        <a href="{% url 'club-groups' club.slug %}" class="btn btn-default">
+          {{ _('Cancel') }}
+        </a>
+        <button type="submit" class="btn btn-primary">
+          {% if group %}
+            {{ _('Edit the group') }}
+          {% else %}
+            {{ _('Create the group') }}
+          {% endif %}
+        </button>
+      </div>
+    </div>
+  </form>
+
+  {% if group %}
+  <div class="box" data-src="{% url 'club-group-members' club.slug, group.slug %}"></div>
+  {% endif %}
+
+</div>
+{% endblock %}
+
