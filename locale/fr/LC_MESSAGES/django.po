@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-14 14:51+0100\n"
-"PO-Revision-Date: 2015-01-14 14:53+0100\n"
+"POT-Creation-Date: 2015-01-16 11:12+0100\n"
+"PO-Revision-Date: 2015-01-16 11:16+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -25,6 +25,19 @@ msgstr "Nom du lien"
 #: club/models.py:108
 msgid "Link address"
 msgstr "Adresse du lien"
+
+#: club/models.py:199
+#| msgid "first name"
+msgid "Group name"
+msgstr "Nom du group"
+
+#: club/models.py:200
+msgid "Name in the url"
+msgstr "Nom dans l'url"
+
+#: club/models.py:201
+msgid "Description"
+msgstr "Description"
 
 #: coach/menu.py:23
 msgid "Clubs"
@@ -65,15 +78,20 @@ msgstr "Ma Semaine"
 msgid "My Calendar"
 msgstr "Mon Calendrier"
 
-#: coach/menu.py:65 templates/club/members.athletes.html:9
+#: coach/menu.py:65 templates/club/group/index.html:29
+#: templates/club/group/members.html:2 templates/club/members.athletes.html:9
 msgid "Members"
 msgstr "Membres"
 
-#: coach/menu.py:70
+#: coach/menu.py:66 coach/menu.py:73 templates/users/profile/index.html:72
+msgid "Groups"
+msgstr "Groupes"
+
+#: coach/menu.py:71
 msgid "My athletes"
 msgstr "Mes athlètes"
 
-#: coach/menu.py:71
+#: coach/menu.py:72
 msgid "Races"
 msgstr "Les Courses"
 
@@ -320,6 +338,83 @@ msgstr "Vous ne pouvez créer et administrer qu'un club."
 msgid "Create the club"
 msgstr "Créer un club"
 
+#: templates/club/group/edit.html:3 templates/club/group/edit.html.py:9
+#, python-format
+msgid "Edit group: %s"
+msgstr "Editer groupe: %s"
+
+#: templates/club/group/edit.html:3 templates/club/group/edit.html.py:11
+#| msgid "Create an account"
+msgid "Create a new group"
+msgstr "Créer un groupe"
+
+#: templates/club/group/edit.html:23 templates/club/link/add.html:13
+#: templates/friends/delete.html:10
+#: templates/messages/add/conversation.html:69
+#: templates/messages/add/session.html:55 templates/messages/add/user.html:25
+#: templates/messages/delete.html:19 templates/messages/edit.html:19
+#: templates/sport/day/delete.html:15 templates/sport/session/delete.html:10
+#: templates/sport/week/publish.html:48 templates/tracks/disconnect.html:12
+#: templates/users/notifications.html:41 templates/users/password.html:15
+msgid "Cancel"
+msgstr "Annuler"
+
+#: templates/club/group/edit.html:27
+msgid "Edit the group"
+msgstr "Editer le groupe"
+
+#: templates/club/group/edit.html:29
+#| msgid "Create the club"
+msgid "Create the group"
+msgstr "Créer le groupe"
+
+#: templates/club/group/index.html:3 templates/club/group/index.html.py:15
+#: templates/club/group/view.html:8
+#, python-format
+#| msgid "Races of %s"
+msgid "Groups of %s"
+msgstr "Groupes de %s"
+
+#: templates/club/group/index.html:11
+#| msgid "Create the club"
+msgid "Create user group"
+msgstr "Créer un groupe d'utilisateurs"
+
+#: templates/club/group/index.html:34 templates/club/manage.html:116
+#: templates/messages/_list.html:63 templates/messages/edit.html:20
+#: templates/sport/day/edit.html:40
+msgid "Edit"
+msgstr "Editer"
+
+#: templates/club/group/index.html:38 templates/club/races.html:31
+#: templates/messages/inbox.html:69 templates/sport/vma.html:71
+#: templates/users/notifications.html:28 templates/users/races.html:98
+msgid "View"
+msgstr "Voir"
+
+#: templates/club/group/index.html:45
+#| msgid "You are not currently logged with an user account."
+msgid "You have not created any user groups."
+msgstr "Vous n'avez crée aucun groupe utilisateurs"
+
+#: templates/club/group/members.html:14
+msgid "Remove"
+msgstr "Retirer"
+
+#: templates/club/group/members.html:19 templates/club/link/add.html:14
+msgid "Add"
+msgstr "Ajouter"
+
+#: templates/club/group/view.html:3 templates/club/group/view.html.py:10
+#, python-format
+msgid "View group: %s"
+msgstr "Voir groupe: %s"
+
+#: templates/club/group/view.html:12
+#| msgid "Trained by"
+msgid "Created by"
+msgstr "Crée par"
+
 #: templates/club/join.html:9
 msgid "Join a club"
 msgstr "Rejoindre un club"
@@ -451,20 +546,6 @@ msgstr "Fermer"
 msgid "Add a link"
 msgstr "Ajouter un lien"
 
-#: templates/club/link/add.html:13 templates/friends/delete.html:10
-#: templates/messages/add/conversation.html:69
-#: templates/messages/add/session.html:55 templates/messages/add/user.html:25
-#: templates/messages/delete.html:19 templates/messages/edit.html:19
-#: templates/sport/day/delete.html:15 templates/sport/session/delete.html:10
-#: templates/sport/week/publish.html:48 templates/tracks/disconnect.html:12
-#: templates/users/notifications.html:41 templates/users/password.html:15
-msgid "Cancel"
-msgstr "Annuler"
-
-#: templates/club/link/add.html:14
-msgid "Add"
-msgstr "Ajouter"
-
 #: templates/club/manage.html:11
 msgid "Users"
 msgstr "Utilisateurs"
@@ -580,11 +661,6 @@ msgstr "Compte de Démo"
 #: templates/club/manage.html:113
 msgid "Edition is deactivated for the demo"
 msgstr "L'édition est désactivée pour la démo."
-
-#: templates/club/manage.html:116 templates/messages/_list.html:63
-#: templates/messages/edit.html:20 templates/sport/day/edit.html:40
-msgid "Edit"
-msgstr "Editer"
 
 #: templates/club/members.athletes.html:15 templates/club/members.html:35
 msgid "Role"
@@ -712,12 +788,6 @@ msgstr "Date"
 msgid "In"
 msgstr "Dans"
 
-#: templates/club/races.html:31 templates/messages/inbox.html:69
-#: templates/sport/vma.html:71 templates/users/notifications.html:28
-#: templates/users/races.html:98
-msgid "View"
-msgstr "Voir"
-
 #: templates/club/races.html:38
 msgid "No races for your athletes"
 msgstr "Pas de courses pour vos athlètes"
@@ -788,18 +858,15 @@ msgstr "Merci de nous avoir écrit !"
 
 #: templates/friends/delete.html:3
 #, python-format
-#| msgid "Write to %(first)s %(last)s"
 msgid "Delete friendship with %(first)s %(last)s"
 msgstr "Supprimer la relation d'amitié avec %(first)s  %(last)s"
 
 #: templates/friends/delete.html:6
 #, python-format
-#| msgid "Are you sure to delete this session of %(sport)s : %(name)s"
 msgid "Are you sure to delete this friendship with %(first)s %(last)s ?"
 msgstr "Etes vous sûr de vouloir supprimer l'amitié de %(first)s : %(last)s ?"
 
 #: templates/friends/delete.html:11
-#| msgid "Delete this session"
 msgid "Delete this friendship"
 msgstr "Supprimer cette amitié"
 
@@ -1299,7 +1366,7 @@ msgstr "Editer un message"
 msgid "Your recent conversations"
 msgstr "Vos conversations récentes"
 
-#: templates/messages/inbox.html:30 templates/users/profile/index.html:83
+#: templates/messages/inbox.html:30 templates/users/profile/index.html:94
 #, python-format
 msgid "%s ago"
 msgstr "Il y'a %s"
@@ -1557,7 +1624,6 @@ msgid "Map"
 msgstr "Carte"
 
 #: templates/sport/session/edit.html:71
-#| msgid "Saved session."
 msgid "Change session"
 msgstr "Changer la séance"
 
@@ -2073,21 +2139,21 @@ msgstr "Envoyer un message"
 msgid "Trained by"
 msgstr "Entraîneé par"
 
-#: templates/users/profile/index.html:78
+#: templates/users/profile/index.html:89
 #, python-format
 msgid "%d last sessions"
 msgstr "%d dernières séance"
 
-#: templates/users/profile/index.html:88
+#: templates/users/profile/index.html:99
 msgid "View calendar"
 msgstr "Voir le calendrier"
 
-#: templates/users/profile/index.html:95
+#: templates/users/profile/index.html:106
 #, python-format
 msgid "%d most commented sessions"
 msgstr "%d séances les plus commentées"
 
-#: templates/users/profile/index.html:101
+#: templates/users/profile/index.html:112
 #, python-format
 msgid "%d comments"
 msgstr "%d commentaires"
