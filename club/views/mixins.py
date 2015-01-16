@@ -104,11 +104,8 @@ class ClubGroupMixin(object):
   club = None
   group = None
 
-
   def get_queryset(self):
-    if self.editable:
-      return self.request.user.groups_owned.all()
-    return self.club.groups.all()
+    return self.club.groups.all().order_by('name')
 
   def get_object(self):
     return self.get_queryset().get(slug=self.kwargs['group_slug'])
@@ -138,6 +135,8 @@ class ClubGroupMixin(object):
     # Load group
     if 'group_slug' in self.kwargs:
       self.group = self.club.groups.get(slug=self.kwargs['group_slug'])
+      if not self.public and self.group.creator != self.request.user:
+        raise PermissionDenied
 
     return super(ClubGroupMixin, self).dispatch(request, *args, **kwargs)
 

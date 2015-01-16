@@ -16,8 +16,9 @@
 
   {% if groups %}
     {% for group in groups %}
+    {% with group.creator == user as group_editable %}
     <div class="row">
-      <div class="col-xs-6">
+      <div class="col-sm-4 col-xs-12">
         <a class="lead" href="{% url 'club-group' club.slug, group.slug %}">
           {{ group.name }}
         </a>
@@ -25,11 +26,17 @@
           {{ group.description }}
         </blockquote>
       </div>
-      <div class="col-xs-3">
+      <div class="col-sm-2 col-xs-6">
         <span class="badge">{{ group.members.count() }}</span> {{ _('Members') }}
       </div>
-      <div class="col-xs-3 text-right">
-        {% if editable %}
+      <div class="col-sm-3 col-xs-6">
+        {{ _('Created by') }}
+        <a href="{% url 'user-public-profile' group.creator.username %}">
+          {{ group.creator.first_name }} {{ group.creator.last_name }}
+        </a>
+      </div>
+      <div class="col-sm-3 col-xs-12 text-right">
+        {% if editable and group_editable %}
         <a href="{% url 'club-group-edit' club.slug, group.slug %}" class="btn btn-info">
           {{ _('Edit') }}
         </a>
@@ -39,6 +46,7 @@
         </a>
       </div>
     </div>
+    {% endwith %}
     {% endfor %}
   {% else %}
   <p class="alert alert-info">
