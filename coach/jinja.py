@@ -16,7 +16,7 @@ class LoaderMixin(object):
     # Render packages apps with django system
     pos = template_name.find('/')
     folder = pos and template_name[0:pos] or None
-    if folder in ('admin', 'debug_toolbar',):
+    if folder in ('admin', 'debug_toolbar', 'rest_framework', ):
       return super(LoaderMixin, self).load_template(template_name, template_dirs)
 
     # Render through Jinja
