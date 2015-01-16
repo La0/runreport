@@ -23,7 +23,6 @@ class SportWeek(models.Model):
   updated = models.DateTimeField(auto_now=True)
   comment = models.TextField(null=True, blank=True)
   task = models.CharField(max_length=36, null=True, blank=True)
-  plan_week = models.ForeignKey('plan.PlanWeek', null=True, blank=True)
 
   class Meta:
     unique_together = (('user', 'year', 'week'),)
