@@ -13,6 +13,15 @@ class Plan(models.Model):
   def __unicode__(self):
     return u'Plan: "%s" from %s' % (self.name, self.creator.username)
 
+  def get_weeks_nb(self):
+    '''
+    Get current number of weeks in plan
+    '''
+    agg = self.sessions.aggregate(nb=models.Max('week'))
+    if agg['nb'] is None:
+      return 0
+    return agg['nb'] + 1
+
 class PlanSession(models.Model):
   # Organisation
   plan = models.ForeignKey(Plan, related_name='sessions')
