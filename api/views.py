@@ -1,4 +1,4 @@
-from api.serializers import AthleteSerializer, PlanSerializer
+from api.serializers import AthleteSerializer, PlanSerializer, PlanSessionSerializer
 from rest_framework import viewsets
 from rest_framework.generics import RetrieveAPIView
 
@@ -18,3 +18,13 @@ class PlanViewSet(viewsets.ModelViewSet):
 
   def get_queryset(self):
     return self.request.user.plans.all()
+
+
+class PlanSessionViewSet(viewsets.ModelViewSet):
+  serializer_class = PlanSessionSerializer
+
+  def get_plan(self):
+    return self.request.user.plans.get(pk=self.kwargs['plan_pk'])
+
+  def get_queryset(self):
+    return self.get_plan().sessions.all()

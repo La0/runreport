@@ -5,20 +5,26 @@ from plan.models import Plan, PlanSession
 class AthleteSerializer(serializers.ModelSerializer):
   class Meta:
     model = Athlete
-    fields = ('pk', 'first_name', 'last_name', )
+    fields = ('id', 'first_name', 'last_name', )
 
 class PlanSessionSerializer(serializers.ModelSerializer):
   class Meta:
     model = PlanSession
-    fields = ('pk', 'week', 'day', 'name', )
+    fields = ('id', 'week', 'day', 'name', )
+
+  def create(self, validated_data):
+    # Attach plan to created session
+    return PlanSession.objects.create(
+      plan=self.context['view'].get_plan(),
+      **validated_data
+    )
 
 class PlanSerializer(serializers.ModelSerializer):
-  sessions = PlanSessionSerializer(many=True)
   weeks_nb = serializers.IntegerField(source='get_weeks_nb', read_only=True)
 
   class Meta:
     model = Plan
-    fields = ('pk', 'name', 'sessions', 'weeks_nb', )
+    fields = ('id', 'name', 'weeks_nb', )
 
   def create(self, validated_data):
     # Attach current user to plan creation
