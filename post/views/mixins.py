@@ -4,8 +4,16 @@ from django.core.urlresolvers import reverse
 
 
 class PostWriterMixin(object):
-  template_name = 'post/edit.html'
   form_class = PostForm
+  template_name = 'post/edit.html'
+
+  def get_template_names(self):
+    '''
+    Only render sub part for ajax requests
+    '''
+    if self.request.is_ajax():
+      return ['post/editor/text.html', ]
+    return super(PostWriterMixin, self).get_template_names()
 
   def get_queryset(self):
     return Post.objects.filter(writer=self.request.user).order_by('-created')

@@ -134,7 +134,7 @@ function serialize_form(form, evt){
 
   // Add submit key/value
   if(evt && evt.originalEvent){
-    var target = evt.originalEvent.explicitOriginalTarget;
+    var target = evt.originalEvent.explicitOriginalTarget || evt.originalEvent.target;
     formData.push({ name: target.name, value: target.value });
   }
 
