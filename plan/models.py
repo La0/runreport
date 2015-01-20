@@ -22,6 +22,16 @@ class Plan(models.Model):
       return 0
     return agg['nb'] + 1
 
+  def update_weeks(self):
+    '''
+    Check the weeks described in sessions
+    are still consecutive, starting from 0
+    '''
+    weeks = self.sessions.order_by('week').values_list('week', flat=True).distinct()
+    for pos, week in enumerate(weeks):
+      if pos != week:
+        self.sessions.filter(week=week).update(week=pos)
+
 class PlanSession(models.Model):
   # Organisation
   plan = models.ForeignKey(Plan, related_name='sessions')
@@ -31,3 +41,9 @@ class PlanSession(models.Model):
   # Dummy data, should be later specified
   # using a collections of PlanPart
   name = models.CharField(max_length=250)
+
+  def delete(self, *args, **kwargs):
+    plan = self.plan # backup plan reference
+    out = super(PlanSession, self).delete(*args, **kwargs) # actually delete the session
+    plan.update_weeks() # Check weeks are still consecutive
+    return out
