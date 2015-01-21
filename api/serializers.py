@@ -32,7 +32,7 @@ class PlanSerializer(serializers.ModelSerializer):
 
   class Meta:
     model = Plan
-    fields = ('id', 'name', 'weeks_nb', 'updated', )
+    fields = ('id', 'name', 'weeks_nb', 'updated', 'start', )
 
   def create(self, validated_data):
     # Attach current user to plan creation

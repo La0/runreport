@@ -8,6 +8,7 @@ class Plan(models.Model):
   creator = models.ForeignKey(Athlete, related_name='plans')
 
   # Dates
+  start = models.DateField(null=True, blank=True) # A plan should start on monday
   created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
 
