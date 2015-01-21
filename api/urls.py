@@ -10,7 +10,10 @@ plan_router.register(r'plans', views.PlanViewSet, base_name='plan')
 sessions_router = routers.NestedSimpleRouter(plan_router, r'plans', lookup='plan')
 sessions_router.register(r'sessions', views.PlanSessionViewSet, base_name='session')
 
-urlpatterns = plan_router.urls + sessions_router.urls
+sports_router = routers.SimpleRouter()
+sports_router.register(r'sports', views.SportViewSet, base_name='sport')
+
+urlpatterns = plan_router.urls + sessions_router.urls + sports_router.urls
 
 # Add direct views
 urlpatterns += patterns('',

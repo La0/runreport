@@ -1,6 +1,7 @@
 # coding=utf-8
 from django.db import models
 from users.models import Athlete
+from sport.models import Sport, SESSION_TYPES
 
 class Plan(models.Model):
   name = models.CharField(max_length=250)
@@ -41,6 +42,14 @@ class PlanSession(models.Model):
   # Dummy data, should be later specified
   # using a collections of PlanPart
   name = models.CharField(max_length=250)
+
+  # Mappings to SportSession
+  sport = models.ForeignKey(Sport)
+  type = models.CharField(max_length=12, default='training', choices=SESSION_TYPES)
+
+  # Dates
+  created = models.DateTimeField(auto_now_add=True)
+  updated = models.DateTimeField(auto_now=True)
 
   def delete(self, *args, **kwargs):
     plan = self.plan # backup plan reference

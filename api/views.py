@@ -1,6 +1,7 @@
-from api.serializers import AthleteSerializer, PlanSerializer, PlanSessionSerializer
+from api.serializers import AthleteSerializer, PlanSerializer, PlanSessionSerializer, SportSerializer
 from rest_framework import viewsets
 from rest_framework.generics import RetrieveAPIView
+from sport.models import Sport
 
 
 class AthleteDetails(RetrieveAPIView):
@@ -11,6 +12,10 @@ class AthleteDetails(RetrieveAPIView):
     Always use current connected user
     '''
     return self.request.user
+
+class SportViewSet(viewsets.ReadOnlyModelViewSet):
+  serializer_class = SportSerializer
+  queryset = Sport.objects.filter(depth=1).order_by('name')
 
 
 class PlanViewSet(viewsets.ModelViewSet):
