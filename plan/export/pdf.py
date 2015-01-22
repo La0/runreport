@@ -13,7 +13,7 @@ class PlanPdfExporter(object):
   Export a plan as pdf
   '''
   plan = None
-  lines = []
+  lines = None
 
   # Styles
   tableStyle = [
@@ -23,7 +23,8 @@ class PlanPdfExporter(object):
 
   def __init__(self, plan):
     self.plan = plan
-    self.tableStyle
+    self.lines = []
+    self.setup_styles()
 
   def setup_styles(self):
     # Build style sheets
@@ -94,7 +95,6 @@ class PlanPdfExporter(object):
     Render the pdf with current lines & style
     '''
     # Build lines
-    self.setup_styles()
     self.add_days()
     self.build_lines()
 
