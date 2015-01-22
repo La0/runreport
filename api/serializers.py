@@ -4,9 +4,17 @@ from sport.models import Sport
 from plan.models import Plan, PlanSession
 
 class AthleteSerializer(serializers.ModelSerializer):
+  avatar = serializers.SerializerMethodField('get_avatar_url')
+
   class Meta:
     model = Athlete
-    fields = ('id', 'first_name', 'last_name', )
+    fields = ('id', 'first_name', 'last_name', 'avatar', )
+
+  def get_avatar_url(self, athlete):
+    '''
+    Build avatar's absolute url
+    '''
+    return self.context['request'].build_absolute_uri(athlete.avatar.url)
 
 class SportSerializer(serializers.ModelSerializer):
   class Meta:
