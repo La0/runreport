@@ -1,10 +1,13 @@
 from reportlab.pdfgen import canvas
-from reportlab.platypus import Table, Paragraph
+from reportlab.platypus import Table, Paragraph, Frame, Image
 from reportlab.lib import colors
+from reportlab.lib.units import inch
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.pagesizes import letter, landscape
 from reportlab.lib.enums import TA_CENTER
+from reportlab.rl_config import defaultPageSize
 from coffin.template.loader import render_to_string
+from django.contrib.sites.models import get_current_site
 from django.utils import formats
 from helpers import week_to_date
 
@@ -13,6 +16,7 @@ class PlanPdfExporter(object):
   Export a plan as pdf
   '''
   plan = None
+  site = None
   lines = None
 
   # Styles
@@ -20,16 +24,27 @@ class PlanPdfExporter(object):
     # Grid around the table
     ('GRID', (0,0), (-1,-1), 0.5, colors.black),
   ]
+  dateStyle = None
+  sessionStyle = None
+  titleStyle = None
+
+  # Pages size
+  width = 0
+  height = 0
 
   def __init__(self, plan):
+    self.site = get_current_site(None)
     self.plan = plan
     self.lines = []
     self.setup_styles()
+    self.width = defaultPageSize[0]
+    self.height = defaultPageSize[1]
 
   def setup_styles(self):
     # Build style sheets
-    s1, s2 = getSampleStyleSheet(), getSampleStyleSheet()
+    s1, s2, s3 = getSampleStyleSheet(), getSampleStyleSheet(), getSampleStyleSheet()
     self.sessionStyle, self.dateStyle = s1['Normal'], s2['Normal']
+    self.titleStyle = s3['Heading2']
     self.dateStyle.backColor = colors.grey
     self.dateStyle.textColor = colors.white
     self.dateStyle.alignment = TA_CENTER
@@ -82,7 +97,7 @@ class PlanPdfExporter(object):
           context = {
             'session' : session,
           }
-          sessions.append(Paragraph(render_to_string('plan/export.pdf.html', context), self.sessionStyle))
+          sessions.append(Paragraph(render_to_string('plan/export.pdf.session.html', context), self.sessionStyle))
 
         week.append(sessions or '')
       if dates:
@@ -100,11 +115,32 @@ class PlanPdfExporter(object):
 
     # Canvas is landscape oriented
     pdf = canvas.Canvas(stream, pagesize=landscape(letter))
+
+    # Table is in a frame
     table = Table(self.lines, style=self.tableStyle)
-    table.wrapOn(pdf, 600, 300)
-    table.drawOn(pdf, 10, 10)
+    tableFrame = Frame(inch / 2, inch / 2, 10*inch, 7*inch)
+    tableFrame.addFromList([ table, ], pdf)
+
+    # Plan infos are in a frame, in top left corner
+    infoFrame = Frame(inch / 2, 7.5 * inch, 7*inch, 0.6 * inch)
+    context = {
+      'site' : self.site,
+      'plan' : self.plan,
+    }
+    title = Paragraph(render_to_string('plan/export.pdf.title.html', context), self.titleStyle)
+    infoFrame.addFromList([ title, ], pdf)
+
+    # Logo is in a frame in top right corner
+    logoPos = (inch*7.5, 7.6 * inch, 3*inch, 0.6 * inch)
+    logoFrame = Frame(*logoPos)
+    logo = Image('./medias/img/logo_ligne.png')
+    logo.drawHeight = 2.2*inch*logo.drawHeight / logo.drawWidth
+    logo.drawWidth = 2.2*inch
+    logoFrame.addFromList([ logo, ], pdf)
+
+    # Logo is clickable
+    pdf.linkURL('http://%s' % self.site.domain, (logoPos[0], logoPos[1], logoPos[0]+logoPos[2], logoPos[1]+logoPos[3]))
 
     # Cleanly close pdf
     pdf.showPage()
     pdf.save()
-

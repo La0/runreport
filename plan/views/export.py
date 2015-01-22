@@ -13,7 +13,7 @@ class PlanPdfExport(DetailView):
 
     # Init response
     resp = HttpResponse(content_type='application/pdf')
-    #resp['Content-Disposition'] = 'attachment; filename="%s.pdf"' % plan.name
+    resp['Content-Disposition'] = 'attachment; filename="Plan %s - RunReport.pdf"' % plan.name
 
     # Build pdf directly into response stream
     export = PlanPdfExporter(plan)
