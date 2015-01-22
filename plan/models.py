@@ -2,6 +2,7 @@
 from django.db import models
 from users.models import Athlete
 from sport.models import Sport, SESSION_TYPES
+from datetime import timedelta
 
 class Plan(models.Model):
   name = models.CharField(max_length=250)
@@ -33,6 +34,15 @@ class Plan(models.Model):
     for pos, week in enumerate(weeks):
       if pos != week:
         self.sessions.filter(week=week).update(week=pos)
+
+  def calc_date(self, week, day):
+    '''
+    Calc the date of a day based on start date
+    '''
+    if not self.start:
+      return None
+    return self.start + timedelta(days=week*7+day)
+
 
 class PlanSession(models.Model):
   # Organisation
