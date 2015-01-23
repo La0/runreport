@@ -380,6 +380,8 @@ else:
     ('django.template.loaders.cached.Loader', JINJA2_TEMPLATE_LOADERS, ),
   )
 
+  # Disable admin interface
+  REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = ('rest_framework.renderers.JSONRenderer', )
 
 # Load some settings constants in the templates
 def load_constants(request):
