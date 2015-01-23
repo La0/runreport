@@ -141,6 +141,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -177,7 +178,10 @@ INSTALLED_APPS = (
     'messages',
     'tracks',
     'friends',
+    'api', # Api code
+    'corsheaders', # CORS for api
     'vinaigrette', # Model translations
+    'rest_framework', # Api provider
     'compressor',
 )
 
@@ -330,6 +334,24 @@ TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 # Mailman server (api url)
 MAILMAN_URL = ''
 
+# API Settings
+REST_FRAMEWORK = {
+  'DEFAULT_AUTHENTICATION_CLASSES': (
+    # Only auth using existing session
+    'rest_framework.authentication.SessionAuthentication',
+  ),
+  'DEFAULT_PERMISSION_CLASSES' : (
+    # Only authenticated users access the api
+    'rest_framework.permissions.IsAuthenticated',
+  ),
+}
+
+# Allow cors api server
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = (
+  'localhost:8100',
+)
+
 # Import local settings, if any
 try:
   from coach.local_settings import *
@@ -357,7 +379,6 @@ else:
   JINJA2_TEMPLATE_LOADERS = (
     ('django.template.loaders.cached.Loader', JINJA2_TEMPLATE_LOADERS, ),
   )
-
 
 
 # Load some settings constants in the templates
