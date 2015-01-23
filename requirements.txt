@@ -33,6 +33,7 @@ pytz==2014.4
 randomavatar==0.4.1
 raven==3.6.1
 redis==2.8.0
+reportlab==3.1.44
 requests==1.2.3
 simplejson==3.6.2
 six==1.8.0
