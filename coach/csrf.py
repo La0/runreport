@@ -35,8 +35,9 @@ class SubDomainCSRFMiddleware(CsrfViewMiddleware):
 
         # Wait until request.META["CSRF_COOKIE"] has been manipulated before
         # bailing out, so that get_token still works
-        if getattr(callback, 'csrf_exempt', False):
-            return None
+        # RunReport mod: No csrf_exempt needed (fails on DRF)
+        #if getattr(callback, 'csrf_exempt', False):
+        #    return None
 
         # Assume that anything not defined as 'safe' by RFC2616 needs protection
         if request.method not in ('GET', 'HEAD', 'OPTIONS', 'TRACE'):
