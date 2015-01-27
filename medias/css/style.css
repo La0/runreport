@@ -30,6 +30,15 @@ ul.nopill {
 
 .navbar-brand img {
   max-height: 60px;
+  width: 100%;
+}
+
+.navbar-brand img.visible-lg {
+  min-width: 309px;
+}
+
+.navbar-brand img.hidden-lg {
+  min-width: 70px;
 }
 
 .nav li.debug a {
