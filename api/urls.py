@@ -13,7 +13,10 @@ sessions_router.register(r'sessions', views.PlanSessionViewSet, base_name='sessi
 sports_router = routers.SimpleRouter()
 sports_router.register(r'sports', views.SportViewSet, base_name='sport')
 
-urlpatterns = plan_router.urls + sessions_router.urls + sports_router.urls
+clubs_router = routers.SimpleRouter()
+clubs_router.register(r'clubs', views.ClubMembershipViewSet, base_name='club')
+
+urlpatterns = plan_router.urls + sessions_router.urls + sports_router.urls + clubs_router.urls
 
 # Add direct views
 urlpatterns += patterns('',

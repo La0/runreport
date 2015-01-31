@@ -73,6 +73,22 @@ class ClubMembership(models.Model):
   class Meta:
     unique_together = (('user', 'club'),)
 
+  @property
+  def groups_owned(self):
+    # Helper for api
+    return self.user.groups_owned.filter(club=self.club)
+
+  @property
+  def athletes(self):
+    # Helper for api
+    athletes = self.club.clubmembership_set.filter(**{
+      'role__in' : ('athlete', 'trainer'),
+      'trainers' : self.user,
+    })
+    athletes = athletes.prefetch_related('user', 'groups')
+    athletes = athletes.order_by('user__first_name', 'user__last_name')
+    return athletes
+
   def mail_club(self):
     # Send mail to club manager
     # about a new prospect
@@ -216,3 +232,8 @@ class ClubGroup(models.Model):
 
   def get_members(self):
     return self.members.all().order_by('user__first_name', 'user__last_name').prefetch_related('user')
+
+  @property
+  def nb_members(self):
+    # Helper for api
+    return self.members.count()

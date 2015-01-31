@@ -1,4 +1,4 @@
-from api.serializers import AthleteSerializer, PlanSerializer, PlanSessionSerializer, SportSerializer
+from api.serializers import AthleteSerializer, PlanSerializer, PlanSessionSerializer, SportSerializer, ClubMembershipSerializer
 from rest_framework import viewsets
 from rest_framework.generics import RetrieveAPIView
 from sport.models import Sport
@@ -24,7 +24,6 @@ class PlanViewSet(viewsets.ModelViewSet):
   def get_queryset(self):
     return self.request.user.plans.all()
 
-
 class PlanSessionViewSet(viewsets.ModelViewSet):
   serializer_class = PlanSessionSerializer
 
@@ -33,3 +32,12 @@ class PlanSessionViewSet(viewsets.ModelViewSet):
 
   def get_queryset(self):
     return self.get_plan().sessions.all()
+
+class ClubMembershipViewSet(viewsets.ReadOnlyModelViewSet):
+  serializer_class = ClubMembershipSerializer
+
+  def get_queryset(self):
+    # List all memberships as a trainer
+    members = self.request.user.memberships.filter(role='trainer')
+    return members
+

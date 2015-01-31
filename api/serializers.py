@@ -2,6 +2,7 @@ from rest_framework import serializers
 from users.models import Athlete
 from sport.models import Sport
 from plan.models import Plan, PlanSession
+from club.models import ClubMembership, Club, ClubGroup
 
 class AthleteSerializer(serializers.ModelSerializer):
   avatar = serializers.SerializerMethodField('get_avatar_url')
@@ -51,3 +52,38 @@ class PlanSerializer(serializers.ModelSerializer):
     )
     plan.save()
     return plan
+
+class ClubSerializer(serializers.ModelSerializer):
+
+  class Meta:
+    model = Club
+    fields = ('id', 'name', 'slug')
+
+class ClubGroupSerializer(serializers.ModelSerializer):
+  members = serializers.IntegerField(source='nb_members')
+
+  class Meta:
+    model = ClubGroup
+    fields = ('id', 'name', 'slug', 'description', 'members', )
+
+class AthleteMembershipSerializer(serializers.ModelSerializer):
+  user = AthleteSerializer()
+
+  class Meta:
+    model = ClubMembership
+    fields = ('user', 'role', 'groups')
+
+class ClubMembershipSerializer(serializers.ModelSerializer):
+  '''
+  List all details about a trainer membership:
+   * the club
+   * the groups in the club
+   * his athletes
+  '''
+  club = ClubSerializer()
+  groups = ClubGroupSerializer(many=True, source='groups_owned')
+  athletes = AthleteMembershipSerializer(many=True)
+
+  class Meta:
+    model = ClubMembership
+    fields = ('id', 'role', 'created', 'club', 'groups', 'athletes', )
