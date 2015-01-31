@@ -23,5 +23,8 @@ urlpatterns += patterns('',
 
   # Connected user
   url(r'user/', views.AthleteDetails.as_view(), name='user'),
+
+  # Publish a plan to users
+  url(r'^plans/(?P<pk>[\d]+)/publish/', views.PlanPublishView.as_view(), name='plan-publish'),
 )
 

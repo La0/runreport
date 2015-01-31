@@ -206,7 +206,6 @@ class SportDay(models.Model):
   week = models.ForeignKey('SportWeek', related_name='days')
   date = models.DateField()
   sports = models.ManyToManyField('Sport', through='SportSession')
-  plan_session = models.ForeignKey('plan.PlanSession', null=True, blank=True)
 
   class Meta:
     unique_together = (('week', 'date'),)
