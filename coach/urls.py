@@ -32,7 +32,7 @@ urlpatterns = patterns('',
   url(r'^lang/', include('django.conf.urls.i18n')),
 
   # API
-  url(r'^api/v1/', include('api.urls')),
+  url(r'^api/v1/', include('api.urls', namespace='api')),
 )
 
 # Direct admin and static medias
