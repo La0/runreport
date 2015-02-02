@@ -37,6 +37,15 @@
   <meta property="og:url"     content="https://{{ base_url }}{% url 'post' post.writer.username, post.slug %}" /> 
   <meta property="og:title"   content="{{ post.title }}" /> 
   <meta property="og:description"   content="{{ post.html|striptags|truncatechars(200) }}" /> 
+  {% for m in medias %}
+    <meta property="og:image"   content="https://{{ base_url }}{{ m.url }}" />
+    {% if m.width %}
+      <meta property="og:image:width" content="{{ m.width }}" />
+    {% endif %}
+    {% if m.height %}
+      <meta property="og:image:height" content="{{ m.height }}" />
+    {% endif %}
+  {% endfor %}
   <meta property="og:image"   content="https://{{ base_url }}{{ post.writer.avatar.url }}" /> 
 {% endif %}
 {% endblock %}
