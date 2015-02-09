@@ -26,13 +26,8 @@ class Command(BaseCommand):
         Track.objects.get(pk=pk)
       except:
         print 'err : %s' % f
-
-        # Move in error dir
-        dest = os.path.join(error_dir, f.replace(settings.TRACK_DATA + '/', ''))
-        dest_dir = os.path.dirname(dest)
-        if not os.path.isdir(dest_dir):
-          os.makedirs(dest_dir)
-        shutil.move(f, dest)
+        # Delete file
+        os.unlink(f)
 
   def listdir(self, path):
     '''
