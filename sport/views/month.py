@@ -56,6 +56,7 @@ class RunCalendar(MonthArchiveView):
     user = self.get_user()
     sessions = SportDay.objects.filter(week__user=user, date__in=self.days)
     sessions = sessions.prefetch_related('sessions', 'sessions__sport', 'sessions__track', 'week')
+    sessions = sessions.prefetch_related('sessions__plan_session', 'sessions__plan_session__plan_session')
     sessions_per_days = dict((r.date, r) for r in sessions)
     sessions_per_days = collections.OrderedDict(sorted(sessions_per_days.items()))
 

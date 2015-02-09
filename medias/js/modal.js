@@ -11,7 +11,6 @@ $(function(){
   // Load anchor urls if available
   var hash = window.location.hash.substring(1);
   if(hash){
-    console.info(" BOOM > "+hash);
     var input = $('input[name="'+hash+'"]');
     var url = input.val();
     if(url)
@@ -37,48 +36,56 @@ $(function(){
     $(this).parents('div.roles').find('input.role_value').val($(this).val());
   });
 
-  // Sport choice
+  // Generic dropdown function
   // * update input value
   // * update selector
-  $(document).on('click', 'form ul.sports li a', function(){
-    var sport = $(this).attr('value');
+  var dropdown = function(){
+    var value = $(this).attr('value');
     $(this).parent().addClass('active').siblings('li.active').removeClass('active');
-    var selector = $(this).parents('div.sport-session');
-    selector.find('input[type=hidden]').val(sport);
+    var selector = $(this).parents('div.dropdown');
+    selector.find('input[type=hidden]').val(value);
     var btn = selector.find('button');
     btn.find('span.name').html($(this).html());
     selector.find('.btn-group').removeClass('open');
-  });
+    return {
+      btn : btn,
+      value : value,
+      selector : selector,
+    }
+  };
 
-  // Session types
-  // * update input value
-  // * update selector
+  // Sport choice dropdown
+  $(document).on('click', 'form ul.sports li a', dropdown);
+
+  // Plan Session status dropdown
+  $(document).on('click', 'form ul.plan-status li a', dropdown);
+
+  // Session types dropdown
   $(document).on('click', 'form ul.types li a', function(){
-    var type = $(this).attr('value');
-    $(this).parent().addClass('active').siblings('li.active').removeClass('active');
-    var selector = $(this).parents('div.types-name');
-    selector.find('input[type=hidden]').val(type);
-    var btn = selector.find('button');
-    btn.removeClass('rest').removeClass('training').removeClass('race');
+
+    // Apply dropdown
+    var dd = $.proxy(dropdown, this)();
+
+    // Cleanup button class
+    dd.btn.removeClass('rest').removeClass('training').removeClass('race');
+
     var rc = $(this).parents('form').find('div.race-category');
-    if(type == 'race'){
+    if(dd.value == 'race'){
 
       // Show race category
       rc.show();
 
       // Button styling
-      btn.addClass('race');
+      dd.btn.addClass('race');
     }else{
 
       // Hide race category
       rc.hide();
 
       // Button styling
-      btn.addClass(type);
+      dd.btn.addClass(dd.value);
 
     }
-    btn.find('span.name').html($(this).text());
-    selector.find('.btn-group').removeClass('open');
   });
 
   // Don't reload page when hitting a dropdown choice

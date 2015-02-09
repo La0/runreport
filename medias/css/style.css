@@ -726,3 +726,12 @@ div#friendships div.actions .btn {
 #members .member.active {
   background: #EEE;
 }
+
+/* Plan status */
+div.plan-status div.dropdown {
+  padding-top: 6px;
+}
+
+div.plan-status div.details > p {
+  margin: 0;
+}

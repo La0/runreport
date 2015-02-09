@@ -1,5 +1,6 @@
 # coding=utf-8
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
 from users.models import Athlete
 from sport.models import Sport, SportWeek, SportDay, SportSession, SESSION_TYPES
 from datetime import timedelta
@@ -107,12 +108,38 @@ class PlanSession(models.Model):
     day,_ = SportDay.objects.get_or_create(week=week, date=self.date)
 
     # Check a session does not already have this plan session
-    if day.sessions.filter(plan_session=self).count() > 0:
+    if PlanSessionApplied.objects.filter(plan_session=self, sport_session__day=day).count() > 0:
       raise Exception('Already applied')
 
     # Load session
-    session,_ = SportSession.objects.get_or_create(sport=self.sport, day=day, type=self.type, plan_session__isnull=True)
+    defaults = {
+        'name' : self.name,
+    }
+    session,_ = SportSession.objects.get_or_create(sport=self.sport, day=day, type=self.type, defaults=defaults)
 
     # Apply plan session
-    session.plan_session = self
-    session.save()
+    PlanSessionApplied.objects.create(plan_session=self, sport_session=session)
+
+
+PLAN_SESSION_APPLICATIONS = (
+  ('applied', _('Applied')), # Just applied by trainer
+  ('done', _('Done')), # Success
+  ('failed', _('Failed')), # Failed the plan
+)
+
+class PlanSessionApplied(models.Model):
+  '''
+  Links a PlanSession to a SportSession
+  '''
+  # Links
+  plan_session = models.ForeignKey(PlanSession, related_name='applications')
+  sport_session = models.OneToOneField('sport.SportSession', related_name='plan_session')
+
+  # Validation
+  status = models.CharField(max_length=20, choices=PLAN_SESSION_APPLICATIONS, default='applied')
+  validated = models.DateTimeField(null=True, blank=True)
+
+  # Dates
+  created = models.DateTimeField(auto_now_add=True)
+  updated = models.DateTimeField(auto_now=True)
+

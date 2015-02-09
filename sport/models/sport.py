@@ -48,7 +48,6 @@ class SportSession(models.Model):
   race_category = models.ForeignKey('RaceCategory', verbose_name=_('Race category'), null=True, blank=True)
   created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
-  plan_session = models.ForeignKey('plan.PlanSession', null=True, blank=True)
 
   # Comments
   comments_public = models.OneToOneField('messages.Conversation', null=True, blank=True, related_name='session_public')

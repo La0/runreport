@@ -79,7 +79,7 @@
 
 
 {% macro sport_session(form) -%}
-<div class="sport">
+<div class="sport dropdown">
   <button class="btn btn-sm btn-warning dropdown-toggle" data-toggle="dropdown">
     <span class="name">
       {% with form.instance.sport as sport %}
@@ -116,7 +116,7 @@
 	<label class="col-sm-2 control-label" for="id_{{field.name}}">{{ _('Session') }}</label>
 	<div class="col-sm-10 {{form.instance.sport|default('running')}}">
 		<div class="input-group">
-			<div class="input-group-btn">
+			<div class="input-group-btn dropdown">
 				<button class="btn dropdown-toggle {{ type }}" data-toggle="dropdown">
 					<span class="name">
             {{ _(type)|title() }}
@@ -130,8 +130,8 @@
 				</li>
 				{% endfor %}
 			</ul>
+      {{ form.type|safe }}
 		</div>
-		{{ form.type|addcss("form-control")|safe }}
 		{{ form.name|addcss("form-control")|safe }}
 	</div>
 </div>

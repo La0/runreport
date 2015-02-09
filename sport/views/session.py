@@ -41,9 +41,19 @@ class SportSessionView(CalendarSession, JsonResponseMixin, ModelFormMixin, Proce
     return context
 
   def form_valid(self, form):
+    session = form.save(commit=False)
+
+    # Check the plan session status
+    if hasattr(session, 'plan_session'):
+
+      # Apply changes
+      session.plan_session.status = form.cleaned_data['plan_status']
+      session.plan_session.save()
+
+    #and session.plan_session.status == 'applied':
+    #  print 'BOOM'
 
     # Save session, but create day before
-    session = form.save(commit=False)
     if not self.object.pk:
       self.object.save()
     session.day = self.object

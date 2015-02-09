@@ -25,6 +25,56 @@
   {% endif %}
   {% endwith %}
 
+  {% if session.plan_session %}
+  <div class="form-group row plan-status ">
+    <label class="control-label col-sm-2 hidden-xs">{{ _('Training plan') }}</label>
+    <div class="col-xs-4 col-sm-1">
+      {% with session.plan_session.status as status %}
+      <div class="dropdown">
+        <button class="btn btn-sm btn-primary dropdown-toggle {{ status }}" data-toggle="dropdown">
+          <span class="name">
+            {{ _(status)|title() }}
+          </span>
+          <span class="caret"></span>
+        </button>
+        {% with form.plan_status.field.choices as choices %}
+        <ul class="dropdown-menu plan-status">
+          {% for k, name in choices %}
+          <li{% if status == k %} class="active"{% endif %}>
+            <a href="#" value="{{k}}">{{ _(name) }}</a>
+          </li>
+          {% endfor %}
+          {{ form.plan_status|safe }}
+        </ul>
+        {% endwith %}
+      </div>
+      {% endwith %}
+    </div>
+    <div class="col-xs-8 col-sm-9 details">
+      {% with session.plan_session.plan_session as psess %}
+      <p>
+        <strong>{{ psess.name }}</strong>
+      </p>
+      <p>
+        <i class="icon-sport-{{ psess.sport.slug }}"></i>
+        {% with psess.plan.creator as trainer %}
+        <a href="{% url 'user-public-profile' trainer.username %}" target="_blank">
+          {{ trainer.first_name }} {{ trainer.last_name }}
+        </a>
+        {% endwith %}
+        {{ _('has planned a ') }} {{ _(psess.type|title) }}
+        {{ _(psess.sport.name) }}
+      </p>
+      {% endwith %}
+    </div>
+    {% if form.plan_status.errors %}
+    <div class="alert alert-danger col-sm-offset-2 col-xs-12 col-sm-10">
+      {{form.plan_status.errors|safe}}
+    </div>
+    {% endif %}
+  </div>
+  {% endif %}
+
   {{ macros.session_types_name(form, session_types) }}
   {{ macros.input(form.comment) }}
   {{ macros.race_category(form) }}
@@ -38,7 +88,7 @@
     {% endif %}
 
       <div class="form-group sport-session row">
-        <div class="col-sm-2 hidden-xs">
+        <div class="col-sm-2">
           {{ macros.sport_session(form) }}
         </div>
 
@@ -50,10 +100,6 @@
           {% if session.pk %}
           <a href="{% url sport-session-delete day_date.year, day_date.month, day_date.day, form.instance.pk %}" class="modal-action pull-right btn btn-sm btn-danger"><i class="icon-trash"></i><span class="hidden-xs">{% if not modal %}{{ _('Delete') }}{% endif %}</span></a>
           {% endif %}
-
-          <div class="visible-xs">
-            {{ macros.sport_session(form) }}
-          </div>
         </div>
       </div>
     </div>

@@ -2,12 +2,16 @@
 from models import Sport, SportWeek, SportDay, SportSession, SESSION_TYPES
 from datetime import date
 from django import forms
-from django.forms.models import BaseFormSet, inlineformset_factory
+from django.utils.translation import ugettext_lazy as _
 from sport.fields import IntervalWidget, IntervalFormField
+from plan.models import PLAN_SESSION_APPLICATIONS
 
 class SportSessionForm(forms.ModelForm):
   time = IntervalFormField(widget=IntervalWidget(attrs={'placeholder': 'hh:mm'}), required=False)
   distance = forms.FloatField(localize=True, widget=forms.TextInput(attrs={'placeholder': 'km'}), required=False)
+
+  # Plan Session status
+  plan_status = forms.ChoiceField(choices=PLAN_SESSION_APPLICATIONS, widget=forms.HiddenInput(), required=False)
 
   class Meta:
     model = SportSession
@@ -28,6 +32,24 @@ class SportSessionForm(forms.ModelForm):
     # Apply default sport to instance
     if not hasattr(self.instance, 'sport'):
       self.instance.sport = default_sport
+
+    # Apply initial value for PlanSession's status
+    if hasattr(self.instance, 'plan_session'):
+      self.fields['plan_status'].initial = self.instance.plan_session.status
+
+  def clean_plan_status(self):
+    status = self.cleaned_data.get('plan_status')
+
+    # Check the status is not applied for past sessions
+    if hasattr(self.instance, 'plan_session'):
+      if not status:
+        raise forms.ValidationError(_('You must select a status for your training plan.'))
+      today = date.today()
+      if today >= self.day_date and status == 'applied':
+        raise forms.ValidationError(_('You must validate your training plan (select Done or Missed).'))
+
+    return status
+
 
   def clean(self, *args, **kwargs):
     data = super(SportSessionForm, self).clean(*args, **kwargs)

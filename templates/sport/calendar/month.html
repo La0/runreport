@@ -63,12 +63,20 @@
 				{% if session %}
           {% for s in session.sessions.all() %}
           <p class="session {{ s.type }}">
-            <i class="icon-sport-{{s.sport.slug}}"></i>
+            <i class="icon-sport-{{s.sport.slug}} do-tooltip" title="{{ _(s.sport.name) }}"></i>
             {% if s.track %}
-            <i class="icon-location"></i>
+            <i class="icon-location do-tooltip"></i>
             {% endif %}
+            {% if s.plan_session %}
+            <i class="icon-plan-session do-tooltip" title="{{ _('Plan from trainer') }}"></i>
+            {% endif %}
+            {% if s.plan_session and not s.name %}
+            <em>{{ s.plan_session.plan_session.name }}</em>
+            {% else %}
             {{ s.name|default('...') }}
+            {% endif %}
           </p>
+
           {% endfor %}
 				{% endif %}
         {% with friends_sessions[day] as nb %}
