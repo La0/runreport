@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-16 11:12+0100\n"
-"PO-Revision-Date: 2014-11-28 18:21+0100\n"
+"POT-Creation-Date: 2015-02-09 17:38+0100\n"
+"PO-Revision-Date: 2015-02-09 17:42+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: English\n"
@@ -17,23 +17,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.4\n"
 
-#: club/models.py:107
+#: club/models.py:123
 msgid "Link name"
 msgstr ""
 
-#: club/models.py:108
+#: club/models.py:124
 msgid "Link address"
 msgstr ""
 
-#: club/models.py:199
+#: club/models.py:215
 msgid "Group name"
 msgstr ""
 
-#: club/models.py:200
+#: club/models.py:216
 msgid "Name in the url"
 msgstr ""
 
-#: club/models.py:201
+#: club/models.py:217
 msgid "Description"
 msgstr ""
 
@@ -46,11 +46,11 @@ msgid "View clubs"
 msgstr ""
 
 #: coach/menu.py:26 templates/club/create.html:21
-#: templates/landing/index.html:214 templates/mail/base.html:37
+#: templates/landing/index.html:217 templates/mail/base.html:37
 msgid "Create a club"
 msgstr ""
 
-#: coach/menu.py:34 coach/menu.py:38 templates/base.html:120
+#: coach/menu.py:34 coach/menu.py:38 templates/base.html:121
 #: templates/club/join.html:11 templates/club/manage.html:13
 #: templates/club/manage.html.py:67 templates/sport/vma.html:70
 msgid "Help"
@@ -60,11 +60,11 @@ msgstr ""
 msgid "Glossary"
 msgstr ""
 
-#: coach/menu.py:40 templates/base.html:117 templates/mail/base.html:37
+#: coach/menu.py:40 templates/base.html:118 templates/mail/base.html:37
 msgid "News"
 msgstr ""
 
-#: coach/menu.py:41 templates/base.html:123 templates/mail/base.html:37
+#: coach/menu.py:41 templates/base.html:124 templates/mail/base.html:37
 msgid "Contact"
 msgstr ""
 
@@ -76,7 +76,7 @@ msgstr ""
 msgid "My Calendar"
 msgstr ""
 
-#: coach/menu.py:65 templates/club/group/index.html:29
+#: coach/menu.py:65 templates/club/group/index.html:30
 #: templates/club/group/members.html:2 templates/club/members.athletes.html:9
 msgid "Members"
 msgstr ""
@@ -147,8 +147,8 @@ msgid "Logout"
 msgstr ""
 
 #: coach/menu.py:118 templates/club/joined.html:23
-#: templates/club/joined.modal.html:21 templates/landing/index.html:160
-#: templates/landing/index.html.py:289
+#: templates/club/joined.modal.html:21 templates/landing/index.html:163
+#: templates/landing/index.html.py:292
 msgid "Create an account"
 msgstr ""
 
@@ -162,6 +162,26 @@ msgstr ""
 
 #: coach/settings.py:73
 msgid "English"
+msgstr ""
+
+#: plan/models.py:125
+msgid "Applied"
+msgstr "To Do"
+
+#: plan/models.py:126
+msgid "Done"
+msgstr ""
+
+#: plan/models.py:127
+msgid "Failed"
+msgstr "Missed"
+
+#: sport/forms.py:46
+msgid "You must select a status for your training plan."
+msgstr ""
+
+#: sport/forms.py:49
+msgid "You must validate your training plan (select Done or Missed)."
 msgstr ""
 
 #: sport/models/__init__.py:4
@@ -214,32 +234,32 @@ msgstr ""
 msgid "Session"
 msgstr ""
 
-#: templates/base.html:81
+#: templates/base.html:82
 msgid "Use RunReport in"
 msgstr ""
 
-#: templates/base.html:93
+#: templates/base.html:94
 msgid "You are ussing a demo account, some features will not be available."
 msgstr ""
 
-#: templates/base.html:105
+#: templates/base.html:106
 msgid "Built by"
 msgstr ""
 
-#: templates/base.html:108 templates/landing/team.html:3
+#: templates/base.html:109 templates/landing/team.html:3
 #: templates/landing/team.html.py:7
 msgid "The team"
 msgstr ""
 
-#: templates/base.html:111
+#: templates/base.html:112
 msgid "Source code on"
 msgstr ""
 
-#: templates/base.html:111
+#: templates/base.html:112
 msgid "Github"
 msgstr ""
 
-#: templates/base.html:114 templates/mail/base.html:37
+#: templates/base.html:115 templates/mail/base.html:37
 msgid "Facebook"
 msgstr ""
 
@@ -273,7 +293,7 @@ msgstr ""
 msgid "Test RunReport using the Trainer account!"
 msgstr ""
 
-#: templates/club/ask_invite.html:48 templates/landing/index.html:164
+#: templates/club/ask_invite.html:48 templates/landing/index.html:167
 msgid "Try the demo"
 msgstr ""
 
@@ -361,19 +381,23 @@ msgstr ""
 msgid "Create user group"
 msgstr ""
 
-#: templates/club/group/index.html:34 templates/club/manage.html:116
+#: templates/club/group/index.html:33 templates/club/group/view.html:12
+msgid "Created by"
+msgstr ""
+
+#: templates/club/group/index.html:41 templates/club/manage.html:116
 #: templates/messages/_list.html:63 templates/messages/edit.html:20
 #: templates/sport/day/edit.html:40
 msgid "Edit"
 msgstr ""
 
-#: templates/club/group/index.html:38 templates/club/races.html:31
+#: templates/club/group/index.html:45 templates/club/races.html:31
 #: templates/messages/inbox.html:69 templates/sport/vma.html:71
 #: templates/users/notifications.html:28 templates/users/races.html:98
 msgid "View"
 msgstr ""
 
-#: templates/club/group/index.html:45
+#: templates/club/group/index.html:53
 msgid "You have not created any user groups."
 msgstr ""
 
@@ -388,10 +412,6 @@ msgstr ""
 #: templates/club/group/view.html:3 templates/club/group/view.html.py:10
 #, python-format
 msgid "View group: %s"
-msgstr ""
-
-#: templates/club/group/view.html:12
-msgid "Created by"
 msgstr ""
 
 #: templates/club/join.html:9
@@ -613,7 +633,7 @@ msgstr ""
 
 #: templates/club/manage.html:84 templates/friends/home.html:27
 #: templates/messages/_list.html:62 templates/messages/delete.html:20
-#: templates/sport/session/edit.html:51
+#: templates/sport/session/edit.html:101
 msgid "Delete"
 msgstr ""
 
@@ -773,7 +793,7 @@ msgid "Available places"
 msgstr ""
 
 #: templates/club/role.html:37 templates/page/detail.html:52
-#: templates/sport/session/edit.html:49 templates/users/garmin.html:45
+#: templates/sport/session/edit.html:99 templates/users/garmin.html:45
 msgid "Save"
 msgstr ""
 
@@ -857,75 +877,75 @@ msgstr ""
 msgid "Features"
 msgstr ""
 
-#: templates/landing/index.html:157
+#: templates/landing/index.html:160
 msgid "Training logbook & Athletes management"
 msgstr ""
 
-#: templates/landing/index.html:161 templates/landing/index.html.py:290
+#: templates/landing/index.html:164 templates/landing/index.html.py:293
 #: templates/users/login.html:62 templates/users/login.html.py:79
 #: templates/users/password_reset_complete.html:10
 msgid "Sign in"
 msgstr ""
 
-#: templates/landing/index.html:183
+#: templates/landing/index.html:186
 msgid "Sport logbook"
 msgstr ""
 
-#: templates/landing/index.html:184
+#: templates/landing/index.html:187
 msgid ""
 "You can freely create your training logbook, manage your sports sesssions, "
 "and clearly view your evolution across several month or years."
 msgstr ""
 
-#: templates/landing/index.html:206
+#: templates/landing/index.html:209
 msgid "Athlete management"
 msgstr ""
 
-#: templates/landing/index.html:207
+#: templates/landing/index.html:210
 msgid "for a club or an enterprise"
 msgstr ""
 
-#: templates/landing/index.html:210
+#: templates/landing/index.html:213
 msgid ""
 "This website will allow you to easily manage all your athletes, using or one "
 "several trainers."
 msgstr ""
 
-#: templates/landing/index.html:212
+#: templates/landing/index.html:215
 msgid ""
 "Every trainer can view his athletes' sessions, create his training plans, "
 "and efficiently communicate with them."
 msgstr ""
 
-#: templates/landing/index.html:236
+#: templates/landing/index.html:239
 msgid "Phone display"
 msgstr ""
 
-#: templates/landing/index.html:238
+#: templates/landing/index.html:241
 msgid "Apple, Android, ..."
 msgstr ""
 
-#: templates/landing/index.html:240
+#: templates/landing/index.html:243
 msgid ""
 "RunReport displays nicely on every smartphones & tablets, automatically "
 "adapting to your screen size."
 msgstr ""
 
-#: templates/landing/index.html:261
+#: templates/landing/index.html:264
 msgid "GPS Synchronisation"
 msgstr ""
 
-#: templates/landing/index.html:263
+#: templates/landing/index.html:266
 msgid "Garmin, Strava, ..."
 msgstr ""
 
-#: templates/landing/index.html:266
+#: templates/landing/index.html:269
 msgid ""
 "Run Report can automatically import your data from your Garmin Connect or "
 "Strava, and show them to your friends, trainers, ..."
 msgstr ""
 
-#: templates/landing/index.html:285
+#: templates/landing/index.html:288
 msgid "Discover RunReport:"
 msgstr ""
 
@@ -1119,7 +1139,7 @@ msgstr ""
 msgid "No session"
 msgstr ""
 
-#: templates/mail/report.html:51 templates/sport/session/edit.html:36
+#: templates/mail/report.html:51 templates/sport/session/edit.html:86
 #: templates/sport/week/_stats.html:5
 msgid "Sport"
 msgstr ""
@@ -1416,7 +1436,11 @@ msgstr ""
 msgid "Sunday"
 msgstr ""
 
-#: templates/sport/calendar/month.html:77
+#: templates/sport/calendar/month.html:71
+msgid "Plan from trainer"
+msgstr ""
+
+#: templates/sport/calendar/month.html:85
 msgid "friends sessions"
 msgstr ""
 
@@ -1537,19 +1561,27 @@ msgstr ""
 msgid "Saved session."
 msgstr ""
 
-#: templates/sport/session/edit.html:49
-msgid "this session"
+#: templates/sport/session/edit.html:30
+msgid "Training plan"
 msgstr ""
 
 #: templates/sport/session/edit.html:65
-msgid "Map"
-msgstr ""
-
-#: templates/sport/session/edit.html:71
-msgid "Change session"
+msgid "has planned a "
 msgstr ""
 
 #: templates/sport/session/edit.html:99
+msgid "this session"
+msgstr ""
+
+#: templates/sport/session/edit.html:111
+msgid "Map"
+msgstr ""
+
+#: templates/sport/session/edit.html:117
+msgid "Change session"
+msgstr ""
+
+#: templates/sport/session/edit.html:145
 msgid "Comments"
 msgstr ""
 
