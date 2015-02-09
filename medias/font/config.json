@@ -79,15 +79,81 @@
       "src": "fontawesome"
     },
     {
+      "uid": "bc71f4c6e53394d5ba46b063040014f1",
+      "css": "cw",
+      "code": 59438,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "f9c3205df26e7778abac86183aefdc99",
+      "css": "ccw",
+      "code": 59437,
+      "src": "fontawesome"
+    },
+    {
       "uid": "ab656e280958018a7859eba9a1eabbc7",
       "css": "award",
       "code": 59416,
       "src": "fontawesome"
     },
     {
+      "uid": "02cca871bb69da75e8ee286b7055832c",
+      "css": "bold",
+      "code": 59427,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "a8cb1c217f02b073db3670c061cc54d2",
+      "css": "italic",
+      "code": 59428,
+      "src": "fontawesome"
+    },
+    {
       "uid": "48b87105bd38c20315f1b705b8c7b38c",
       "css": "list",
       "code": 59403,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "594e9271c08ff732c04b3bf3117b9040",
+      "css": "indent-left",
+      "code": 59433,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "4d2dfc45d8176b1f26aed973fa84a91e",
+      "css": "indent-right",
+      "code": 59434,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "a2a74f5e7b7d9ba054897d8c795a326a",
+      "css": "list-bullet",
+      "code": 59431,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "f6766a8b042c2453a4e153af03294383",
+      "css": "list-numbered",
+      "code": 59432,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "61c242c9e2134d5864d7fdd57b3c9289",
+      "css": "strike",
+      "code": 59429,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "d4a4a38a40b728f46dad1de4ac950231",
+      "css": "underline",
+      "code": 59430,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "8772331a9fec983cdb5d72902a6f9e0e",
+      "css": "scissors",
+      "code": 59435,
       "src": "fontawesome"
     },
     {
@@ -103,6 +169,12 @@
       "src": "fontawesome"
     },
     {
+      "uid": "3def559c3c39b8500882e02892b7daa8",
+      "css": "picture",
+      "code": 59436,
+      "src": "entypo"
+    },
+    {
       "uid": "815503841e980c848f55e0271deacead",
       "css": "link",
       "code": 59421,
@@ -112,6 +184,12 @@
       "uid": "2626e3a1bbcd90e45849af3b58a1d594",
       "css": "trash",
       "code": 59409,
+      "src": "entypo"
+    },
+    {
+      "uid": "489090690d8bd1745e365485946e20a8",
+      "css": "plan-session",
+      "code": 59439,
       "src": "entypo"
     },
     {
@@ -148,6 +226,12 @@
       "uid": "291e2e127efe7a6bc580af6d3ead3771",
       "css": "location",
       "code": 59415,
+      "src": "mfglabs"
+    },
+    {
+      "uid": "53c977df16b09e3f7700a27ec90c43dc",
+      "css": "chrono",
+      "code": 59426,
       "src": "mfglabs"
     },
     {
