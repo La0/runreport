@@ -15,6 +15,8 @@
       <i class="icon-mail"></i>
       {% elif n.category == 'friend_request' %}
       <i class="icon-club"></i>
+      {% elif n.category == 'plan_session_applied' %}
+      <i class="icon-plan-session"></i>
       {% endif %}
       {{ n.created|timesince() }}
     </div>

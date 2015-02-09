@@ -2,9 +2,11 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from users.models import Athlete
+from users.notification import UserNotifications
 from sport.models import Sport, SportWeek, SportDay, SportSession, SESSION_TYPES
 from datetime import timedelta
 from helpers import date_to_week
+from django.utils import timezone
 
 class Plan(models.Model):
   name = models.CharField(max_length=250)
@@ -142,4 +144,19 @@ class PlanSessionApplied(models.Model):
   # Dates
   created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
+  trainer_notified = models.DateTimeField(null=True, blank=True)
 
+  def notify_trainer(self):
+    '''
+    Notify trainer of new validation from user
+    '''
+    if self.status == 'applied':
+      raise Exception('Invalid status')
+
+    # Send UserNotification
+    un = UserNotifications(self.plan_session.plan.creator)
+    un.add_plan_session_applied(self)
+
+    # Update notification date
+    self.trainer_notified = timezone.now()
+    self.save()

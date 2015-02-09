@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-09 17:38+0100\n"
+"POT-Creation-Date: 2015-02-09 18:18+0100\n"
 "PO-Revision-Date: 2015-02-09 17:42+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
@@ -164,15 +164,15 @@ msgstr ""
 msgid "English"
 msgstr ""
 
-#: plan/models.py:125
+#: plan/models.py:126
 msgid "Applied"
 msgstr "To Do"
 
-#: plan/models.py:126
+#: plan/models.py:127
 msgid "Done"
 msgstr ""
 
-#: plan/models.py:127
+#: plan/models.py:128
 msgid "Failed"
 msgstr "Missed"
 
@@ -359,7 +359,7 @@ msgstr ""
 #: templates/messages/delete.html:19 templates/messages/edit.html:19
 #: templates/sport/day/delete.html:15 templates/sport/session/delete.html:10
 #: templates/sport/week/publish.html:48 templates/tracks/disconnect.html:12
-#: templates/users/notifications.html:41 templates/users/password.html:15
+#: templates/users/notifications.html:43 templates/users/password.html:15
 msgid "Cancel"
 msgstr ""
 
@@ -393,7 +393,7 @@ msgstr ""
 
 #: templates/club/group/index.html:45 templates/club/races.html:31
 #: templates/messages/inbox.html:69 templates/sport/vma.html:71
-#: templates/users/notifications.html:28 templates/users/races.html:98
+#: templates/users/notifications.html:30 templates/users/races.html:98
 msgid "View"
 msgstr ""
 
@@ -1896,11 +1896,11 @@ msgstr ""
 msgid "Demo accounts"
 msgstr ""
 
-#: templates/users/notifications.html:34
+#: templates/users/notifications.html:36
 msgid "You don't have any notifications."
 msgstr ""
 
-#: templates/users/notifications.html:43
+#: templates/users/notifications.html:45
 msgid "Delete these notifications"
 msgstr ""
 
@@ -2374,6 +2374,16 @@ msgstr ""
 #: users/notification.py:108
 #, python-format
 msgid "%(first_name)s %(last_name)s wants to add you as a friend."
+msgstr ""
+
+#: users/notification.py:123
+#, python-format
+msgid "%(first_name)s %(last_name)s has done his training : %(session_name)s"
+msgstr ""
+
+#: users/notification.py:125
+#, python-format
+msgid "%(first_name)s %(last_name)s has missed his training : %(session_name)s"
 msgstr ""
 
 #: Sport/name:1

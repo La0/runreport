@@ -8,7 +8,7 @@ import uuid
 NOTIFICATION_COMMENT = 'comment'
 NOTIFICATION_MAIL = 'mail'
 NOTIFICATION_FRIEND_REQUEST = 'friend_request'
-
+NOTIFICATION_PLAN_SESSION_APPLIED = 'plan_session_applied'
 
 class UserNotifications(object):
   user = None
@@ -109,6 +109,23 @@ class UserNotifications(object):
       link = reverse('friends')
 
     self.add(NOTIFICATION_FRIEND_REQUEST, msg, context, link)
+
+  def add_plan_session_applied(self, psa):
+    # Add a PlanSession applied notification
+    day = psa.sport_session.day
+    athlete = day.week.user
+    context = {
+      'first_name' : athlete.first_name,
+      'last_name' : athlete.last_name,
+      'session_name' : psa.plan_session.name,
+    }
+    if psa.status == 'done':
+      msg = _('%(first_name)s %(last_name)s has done his training : %(session_name)s')
+    else:
+      msg = _('%(first_name)s %(last_name)s has missed his training : %(session_name)s')
+    link = reverse('user-calendar-day', args=(athlete.username, day.date.year, day.date.month, day.date.day))
+
+    self.add(NOTIFICATION_PLAN_SESSION_APPLIED, msg, context, link)
 
   def total(self):
     return cache.get(self.key_total) or 0

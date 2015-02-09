@@ -45,13 +45,13 @@ class SportSessionView(CalendarSession, JsonResponseMixin, ModelFormMixin, Proce
 
     # Check the plan session status
     if hasattr(session, 'plan_session'):
+      ps = session.plan_session # shortcut
+      ps.status = form.cleaned_data['plan_status']
+      ps.save()
 
-      # Apply changes
-      session.plan_session.status = form.cleaned_data['plan_status']
-      session.plan_session.save()
-
-    #and session.plan_session.status == 'applied':
-    #  print 'BOOM'
+      # Notify plan creator
+      if ps.status != 'applied' and ps.trainer_notified is None:
+        ps.notify_trainer()
 
     # Save session, but create day before
     if not self.object.pk:
