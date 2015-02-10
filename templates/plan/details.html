@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h1>{{ _('Training plan') }} : {{ plan.name }}</h1>
+
+  <div class="row">
+    <div class="col-xs-1">
+      <img src="{{ plan.creator.avatar.url }}" class="img-responsive img-rounded" />
+    </div>
+    <div class="col-xs-9">
+      <p>
+        {{ _('Created by') }}
+        <a href="{% url 'user-public-profile' plan.creator.username %}">
+          {{ plan.creator.first_name }} {{ plan.creator.last_name }}
+        </a>
+      </p>
+      <p>
+        {{ _('%s ago') % plan.created|timesince }}
+      </p>
+    </div>
+    <div class="col-xs-2 text-right">
+      <a href="{% url 'plan-export-pdf' plan.pk %}" class="btn btn-info">
+        <i class="icon-down-open"></i>
+        {{ _('Download PDF') }}
+      </a>
+    </div>
+  </div>
+
+  {% if weeks %}
+	<table class="table table-bordered table-condensed calendar">
+		<tr>
+			<th>{{ _('Monday') }}</th>
+			<th>{{ _('Tuesday') }}</th>
+			<th>{{ _('Wednesday') }}</th>
+			<th>{{ _('Thursday') }}</th>
+			<th>{{ _('Friday') }}</th>
+			<th>{{ _('Saturday') }}</th>
+			<th>{{ _('Sunday') }}</th>
+		</tr>
+
+    {% for week in weeks %}
+    {% with loop.index0 as week_idx %}
+    <tr>
+      {% for day in week %}
+      {% with loop.index0 as day_idx %}
+      {% with plan.calc_date(week_idx, day_idx) as day_date %}
+      <td class="day link" href="{% url 'report-day' day_date.year, day_date.month, day_date.day %}">
+				<p class="date">
+					{% if day_idx == 0 or day_date.day == 1 %}
+            {{day_date|date('d E Y')}}
+					{% else %}
+            {{day_date|date('d')}}
+          {% endif %}
+				</p>
+        {% for session in day %}
+        <p class="session {{ session.type }}">
+          <i class="icon-sport-{{ session.sport.slug }}"></i>
+          {{ session.name }}
+        </p>
+        {% endfor %}
+      </td>
+      {% endwith %}
+      {% endwith %}
+      {% endfor %}
+    </tr>
+    {% endwith %}
+    {% endfor %}
+  </table>
+  {% else %}
+  <div class="alert alert-warning">
+    {{ _('No weeks available for this plan.') }}
+  </div>
+  {% endif %}
+
+</div>
+{% endblock %}

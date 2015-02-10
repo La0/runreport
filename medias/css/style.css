@@ -735,3 +735,7 @@ div.plan-status div.dropdown {
 div.plan-status div.details > p {
   margin: 0;
 }
+
+div.plan-status label {
+  padding-top: 2px !important;
+}

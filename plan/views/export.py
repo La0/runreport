@@ -1,12 +1,9 @@
 from django.views.generic import DetailView
 from django.http import HttpResponse
 from plan.export import PlanPdfExporter
+from .mixins import PlanMixin
 
-class PlanPdfExport(DetailView):
-  def get_queryset(self):
-    # Allow only user's plans
-    return self.request.user.plans.all()
-
+class PlanPdfExport(PlanMixin, DetailView):
 
   def render_to_response(self, context, *args, **kwargs):
     plan = context['plan']

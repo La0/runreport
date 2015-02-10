@@ -26,8 +26,14 @@
   {% endwith %}
 
   {% if session.plan_session %}
+  {% with session.plan_session.plan_session as psess %}
   <div class="form-group row plan-status ">
-    <label class="control-label col-sm-2 hidden-xs">{{ _('Training plan') }}</label>
+    <label class="control-label col-sm-2 hidden-xs">
+      {{ _('Training plan') }}
+      <a href="{% url 'plan' psess.plan.pk %}">
+        {{ psess.plan.name }}
+      </a>
+    </label>
     <div class="col-xs-4 col-sm-1">
       {% with session.plan_session.status as status %}
       <div class="dropdown">
@@ -51,7 +57,6 @@
       {% endwith %}
     </div>
     <div class="col-xs-8 col-sm-9 details">
-      {% with session.plan_session.plan_session as psess %}
       <p>
         <strong>{{ psess.name }}</strong>
       </p>
@@ -65,7 +70,6 @@
         {{ _('has planned a ') }} {{ _(psess.type|title) }}
         {{ _(psess.sport.name) }}
       </p>
-      {% endwith %}
     </div>
     {% if form.plan_status.errors %}
     <div class="alert alert-danger col-sm-offset-2 col-xs-12 col-sm-10">
@@ -73,6 +77,7 @@
     </div>
     {% endif %}
   </div>
+  {% endwith %}
   {% endif %}
 
   {{ macros.session_types_name(form, session_types) }}
