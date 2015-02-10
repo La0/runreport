@@ -7,6 +7,8 @@ from sport.models import Sport, SportWeek, SportDay, SportSession, SESSION_TYPES
 from datetime import timedelta
 from helpers import date_to_week
 from django.utils import timezone
+from coach.mail import MailBuilder
+from plan.export import PlanPdfExporter
 
 class Plan(models.Model):
   name = models.CharField(max_length=250)
@@ -56,16 +58,45 @@ class Plan(models.Model):
     if not self.start:
       raise Exception("No start date on plan.")
 
+    # Build the pdf export
+    export = PlanPdfExporter(self)
+    pdf = export.render()
+
     for u in users.all():
       # Apply the sessions
+      nb_applied = 0
       for s in self.sessions.all():
         try:
           s.apply(u)
+          nb_applied += 1
         except Exception, e:
           print 'Failed to apply plan session #%d : %s' % (s.pk, e)
 
       # Send an email to each user
-      # TODO
+      if nb_applied > 0:
+        self.notify_athlete(u, pdf)
+
+  def notify_athlete(self, user, pdf):
+    '''
+    Send an email to athlete
+    with the plan attached
+    '''
+    # Context for html
+    context = {
+      'plan' : self,
+      'user' : user,
+    }
+
+    # Build mail
+    mb = MailBuilder('mail/plan.html', user.language)
+    mb.subject = _(u'Training plan : %s') % (self.name, )
+    mb.to = [user.email, ]
+    mail = mb.build(context)
+
+    # Attach Xls & send
+    pdf_name = _('Training plan - %s.pdf') % self.name
+    mail.attach(pdf_name, pdf, 'application/pdf')
+    mail.send()
 
 class PlanSession(models.Model):
   # Organisation

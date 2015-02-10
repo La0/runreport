@@ -10,6 +10,7 @@ from coffin.template.loader import render_to_string
 from django.contrib.sites.models import get_current_site
 from django.utils import formats
 from helpers import week_to_date
+from StringIO import StringIO
 
 class PlanPdfExporter(object):
   '''
@@ -105,10 +106,14 @@ class PlanPdfExporter(object):
       self.lines.append(week)
 
 
-  def render(self, stream):
+  def render(self, stream=None):
     '''
     Render the pdf with current lines & style
     '''
+    # Use a buffer when no stream is given
+    if stream is None:
+      stream = StringIO()
+
     # Build lines
     self.add_days()
     self.build_lines()
@@ -144,3 +149,10 @@ class PlanPdfExporter(object):
     # Cleanly close pdf
     pdf.showPage()
     pdf.save()
+
+    if isinstance(stream, StringIO):
+      output = stream.getvalue()
+      stream.close()
+      return output
+
+    return None

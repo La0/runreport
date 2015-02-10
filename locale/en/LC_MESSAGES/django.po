@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-09 18:18+0100\n"
+"POT-Creation-Date: 2015-02-10 17:39+0100\n"
 "PO-Revision-Date: 2015-02-09 17:42+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
@@ -164,15 +164,25 @@ msgstr ""
 msgid "English"
 msgstr ""
 
-#: plan/models.py:126
+#: plan/models.py:92
+#, python-format
+msgid "Training plan : %s"
+msgstr ""
+
+#: plan/models.py:97
+#, python-format
+msgid "Training plan - %s.pdf"
+msgstr ""
+
+#: plan/models.py:158
 msgid "Applied"
 msgstr "To Do"
 
-#: plan/models.py:127
+#: plan/models.py:159
 msgid "Done"
 msgstr ""
 
-#: plan/models.py:128
+#: plan/models.py:160
 msgid "Failed"
 msgstr "Missed"
 
@@ -382,6 +392,7 @@ msgid "Create user group"
 msgstr ""
 
 #: templates/club/group/index.html:33 templates/club/group/view.html:12
+#: templates/plan/details.html:13
 msgid "Created by"
 msgstr ""
 
@@ -633,7 +644,7 @@ msgstr ""
 
 #: templates/club/manage.html:84 templates/friends/home.html:27
 #: templates/messages/_list.html:62 templates/messages/delete.html:20
-#: templates/sport/session/edit.html:101
+#: templates/sport/session/edit.html:106
 msgid "Delete"
 msgstr ""
 
@@ -793,7 +804,7 @@ msgid "Available places"
 msgstr ""
 
 #: templates/club/role.html:37 templates/page/detail.html:52
-#: templates/sport/session/edit.html:99 templates/users/garmin.html:45
+#: templates/sport/session/edit.html:104 templates/users/garmin.html:45
 msgid "Save"
 msgstr ""
 
@@ -1106,6 +1117,31 @@ msgstr ""
 msgid "You can view you %d stats on RunReport and much more details"
 msgstr ""
 
+#: templates/mail/plan.html:3 templates/plan/details.html:5
+#: templates/sport/session/edit.html:32
+msgid "Training plan"
+msgstr ""
+
+#: templates/mail/plan.html:8
+#, python-format
+msgid "Hello %s,"
+msgstr ""
+
+#: templates/mail/plan.html:13
+msgid "Your trainer"
+msgstr ""
+
+#: templates/mail/plan.html:15
+#, python-format
+msgid "has sent you a training plan for %d weeks"
+msgstr ""
+
+#: templates/mail/plan.html:21
+msgid ""
+"You will find it attached to this email as a PDF file, and directly into "
+"your RunReport calendar."
+msgstr ""
+
 #: templates/mail/race.html:9
 #, python-format
 msgid "The RunReport team wish you a really good race for your %s tommorrow"
@@ -1139,7 +1175,7 @@ msgstr ""
 msgid "No session"
 msgstr ""
 
-#: templates/mail/report.html:51 templates/sport/session/edit.html:86
+#: templates/mail/report.html:51 templates/sport/session/edit.html:91
 #: templates/sport/week/_stats.html:5
 msgid "Sport"
 msgstr ""
@@ -1309,7 +1345,8 @@ msgstr ""
 msgid "Your recent conversations"
 msgstr ""
 
-#: templates/messages/inbox.html:30 templates/users/profile/index.html:94
+#: templates/messages/inbox.html:30 templates/plan/details.html:19
+#: templates/users/profile/index.html:94
 #, python-format
 msgid "%s ago"
 msgstr ""
@@ -1391,6 +1428,42 @@ msgstr ""
 msgid "Private"
 msgstr ""
 
+#: templates/plan/details.html:25
+msgid "Download PDF"
+msgstr ""
+
+#: templates/plan/details.html:33 templates/sport/calendar/month.html:42
+msgid "Monday"
+msgstr ""
+
+#: templates/plan/details.html:34 templates/sport/calendar/month.html:43
+msgid "Tuesday"
+msgstr ""
+
+#: templates/plan/details.html:35 templates/sport/calendar/month.html:44
+msgid "Wednesday"
+msgstr ""
+
+#: templates/plan/details.html:36 templates/sport/calendar/month.html:45
+msgid "Thursday"
+msgstr ""
+
+#: templates/plan/details.html:37 templates/sport/calendar/month.html:46
+msgid "Friday"
+msgstr ""
+
+#: templates/plan/details.html:38 templates/sport/calendar/month.html:47
+msgid "Saturday"
+msgstr ""
+
+#: templates/plan/details.html:39 templates/sport/calendar/month.html:48
+msgid "Sunday"
+msgstr ""
+
+#: templates/plan/details.html:72
+msgid "No weeks available for this plan."
+msgstr ""
+
 #: templates/sport/calendar/month.html:3
 #, python-format
 msgid "Calendrier %s"
@@ -1406,34 +1479,6 @@ msgstr ""
 
 #: templates/sport/calendar/month.html:34
 msgid "CSV Export"
-msgstr ""
-
-#: templates/sport/calendar/month.html:42
-msgid "Monday"
-msgstr ""
-
-#: templates/sport/calendar/month.html:43
-msgid "Tuesday"
-msgstr ""
-
-#: templates/sport/calendar/month.html:44
-msgid "Wednesday"
-msgstr ""
-
-#: templates/sport/calendar/month.html:45
-msgid "Thursday"
-msgstr ""
-
-#: templates/sport/calendar/month.html:46
-msgid "Friday"
-msgstr ""
-
-#: templates/sport/calendar/month.html:47
-msgid "Saturday"
-msgstr ""
-
-#: templates/sport/calendar/month.html:48
-msgid "Sunday"
 msgstr ""
 
 #: templates/sport/calendar/month.html:71
@@ -1561,27 +1606,23 @@ msgstr ""
 msgid "Saved session."
 msgstr ""
 
-#: templates/sport/session/edit.html:30
-msgid "Training plan"
-msgstr ""
-
-#: templates/sport/session/edit.html:65
+#: templates/sport/session/edit.html:70
 msgid "has planned a "
 msgstr ""
 
-#: templates/sport/session/edit.html:99
+#: templates/sport/session/edit.html:104
 msgid "this session"
 msgstr ""
 
-#: templates/sport/session/edit.html:111
+#: templates/sport/session/edit.html:116
 msgid "Map"
 msgstr ""
 
-#: templates/sport/session/edit.html:117
+#: templates/sport/session/edit.html:122
 msgid "Change session"
 msgstr ""
 
-#: templates/sport/session/edit.html:145
+#: templates/sport/session/edit.html:150
 msgid "Comments"
 msgstr ""
 
