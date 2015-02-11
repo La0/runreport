@@ -9,7 +9,7 @@ class AthleteSerializer(serializers.ModelSerializer):
 
   class Meta:
     model = Athlete
-    fields = ('id', 'first_name', 'last_name', 'avatar', )
+    fields = ('id', 'first_name', 'last_name', 'avatar', 'language',)
 
   def get_avatar_url(self, athlete):
     '''
