@@ -1,25 +1,10 @@
-from api.serializers import AthleteSerializer, PlanSerializer, PlanSessionSerializer, SportSerializer, ClubMembershipSerializer
+from __future__ import absolute_import
+from api.serializers import PlanSerializer, PlanSessionSerializer
 from rest_framework import viewsets, views, response
-from rest_framework.generics import RetrieveAPIView
-from sport.models import Sport
 from django.core.exceptions import PermissionDenied
 from users.models import Athlete
 from plan.tasks import publish_plan
-
-
-class AthleteDetails(RetrieveAPIView):
-  serializer_class = AthleteSerializer
-
-  def get_object(self, *args, **kwargs):
-    '''
-    Always use current connected user
-    '''
-    return self.request.user
-
-class SportViewSet(viewsets.ReadOnlyModelViewSet):
-  serializer_class = SportSerializer
-  queryset = Sport.objects.filter(depth=1).order_by('name')
-
+from .mixins import PlanMixin
 
 class PlanViewSet(viewsets.ModelViewSet):
   serializer_class = PlanSerializer
@@ -36,15 +21,13 @@ class PlanSessionViewSet(viewsets.ModelViewSet):
   def get_queryset(self):
     return self.get_plan().sessions.all()
 
-class PlanPublishView(views.APIView):
+class PlanPublishView(PlanMixin, views.APIView):
   '''
   Publish a plan to a list of users
   '''
-  def post(self, request, pk):
+  def post(self, request, *args, **kwargs):
+    self.load_plan()
     try:
-      # Load plan
-      plan = self.request.user.plans.get(pk=pk)
-
       # Load requested athletes, trained by current user
       users = Athlete.objects.filter(memberships__trainers=self.request.user, pk__in=self.request.data['users'])
       if not users:
@@ -53,15 +36,18 @@ class PlanPublishView(views.APIView):
       raise PermissionDenied
 
     # Start task to publish the plan
-    publish_plan.delay(plan, users)
+    publish_plan.delay(self.plan, users)
 
     # Return dummy status
     return response.Response({'published' : True})
 
-class ClubMembershipViewSet(viewsets.ReadOnlyModelViewSet):
-  serializer_class = ClubMembershipSerializer
+class PlanCopyView(PlanMixin, views.APIView):
+  '''
+  Copy a plan
+  '''
+  def post(self, request, *args, **kwargs):
+    self.load_plan()
+    self.plan.copy()
 
-  def get_queryset(self):
-    # List all memberships as a trainer
-    members = self.request.user.memberships.filter(role='trainer')
-    return members
+    # Return dummy status
+    return response.Response({'copied' : True})

@@ -98,6 +98,24 @@ class Plan(models.Model):
     mail.attach(pdf_name, pdf, 'application/pdf')
     mail.send()
 
+  def copy(self):
+    '''
+    Copy current plan & sessions
+    '''
+
+    # New plan, no start date
+    data = {
+      'name' : '%s - Copy' % (self.name, ),
+      'creator' : self.creator,
+    }
+    plan = Plan.objects.create(**data)
+
+    # Copy sessions
+    for s in self.sessions.all():
+      s.copy(plan)
+
+    return plan
+
 class PlanSession(models.Model):
   # Organisation
   plan = models.ForeignKey(Plan, related_name='sessions')
@@ -125,6 +143,19 @@ class PlanSession(models.Model):
     out = super(PlanSession, self).delete(*args, **kwargs) # actually delete the session
     plan.update_weeks() # Check weeks are still consecutive
     return out
+
+  def copy(self, plan):
+    '''
+    Copy this session and attach it to new plan
+    '''
+    data = {
+      'plan' : plan,
+    }
+    copy_fields = ('week', 'day', 'name', 'sport', 'type', )
+    for f in copy_fields:
+      data[f] = getattr(self, f)
+
+    return PlanSession.objects.create(**data)
 
   def apply(self, user):
     '''

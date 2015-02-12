@@ -26,5 +26,8 @@ urlpatterns += patterns('',
 
   # Publish a plan to users
   url(r'^plans/(?P<pk>[\d]+)/publish/', views.PlanPublishView.as_view(), name='plan-publish'),
+
+  # Copy a plan
+  url(r'^plans/(?P<pk>[\d]+)/copy/', views.PlanCopyView.as_view(), name='plan-copy'),
 )
 
