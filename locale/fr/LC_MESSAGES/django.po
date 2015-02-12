@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-12 15:30+0100\n"
-"PO-Revision-Date: 2015-02-12 15:31+0100\n"
+"POT-Creation-Date: 2015-02-13 00:18+0100\n"
+"PO-Revision-Date: 2015-02-13 00:19+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -1504,31 +1504,31 @@ msgstr "Privé"
 msgid "Download PDF"
 msgstr "Télécharger PDF"
 
-#: templates/plan/details.html:33 templates/sport/calendar/month.html:42
+#: templates/plan/details.html:33 templates/sport/calendar/month.html:55
 msgid "Monday"
 msgstr "Lundi"
 
-#: templates/plan/details.html:34 templates/sport/calendar/month.html:43
+#: templates/plan/details.html:34 templates/sport/calendar/month.html:56
 msgid "Tuesday"
 msgstr "Mardi"
 
-#: templates/plan/details.html:35 templates/sport/calendar/month.html:44
+#: templates/plan/details.html:35 templates/sport/calendar/month.html:57
 msgid "Wednesday"
 msgstr "Mercredi"
 
-#: templates/plan/details.html:36 templates/sport/calendar/month.html:45
+#: templates/plan/details.html:36 templates/sport/calendar/month.html:58
 msgid "Thursday"
 msgstr "Jeudi"
 
-#: templates/plan/details.html:37 templates/sport/calendar/month.html:46
+#: templates/plan/details.html:37 templates/sport/calendar/month.html:59
 msgid "Friday"
 msgstr "Vendredi"
 
-#: templates/plan/details.html:38 templates/sport/calendar/month.html:47
+#: templates/plan/details.html:38 templates/sport/calendar/month.html:60
 msgid "Saturday"
 msgstr "Samedi"
 
-#: templates/plan/details.html:39 templates/sport/calendar/month.html:48
+#: templates/plan/details.html:39 templates/sport/calendar/month.html:61
 msgid "Sunday"
 msgstr "Dimanche"
 
@@ -1553,11 +1553,21 @@ msgstr "Voir son profil"
 msgid "CSV Export"
 msgstr "Export CSV"
 
-#: templates/sport/calendar/month.html:71
+#: templates/sport/calendar/month.html:42
+#| msgid "My friends"
+msgid "Hide friends"
+msgstr "Cacher mes amis"
+
+#: templates/sport/calendar/month.html:46
+#| msgid "My friends"
+msgid "Show friends"
+msgstr "Voir mes amis"
+
+#: templates/sport/calendar/month.html:84
 msgid "Plan from trainer"
 msgstr "Plan de l'entraîneur"
 
-#: templates/sport/calendar/month.html:85
+#: templates/sport/calendar/month.html:98
 msgid "friends sessions"
 msgstr "séance d'amis"
 
@@ -1610,7 +1620,6 @@ msgid "Public profile link"
 msgstr "Lien profil public"
 
 #: templates/sport/day/edit.html:60
-#| msgid "friends sessions"
 msgid "Friends sessions"
 msgstr "Séances d'amis"
 
@@ -2553,7 +2562,7 @@ msgid "Uncategorized"
 msgstr "Sans Catégorie"
 
 #: Sport/name:3
-msgid "Running"
+msgid "Course à pied"
 msgstr "Course à pied"
 
 #: Sport/name:4
@@ -2573,8 +2582,8 @@ msgid "Treadmill Running"
 msgstr "Course sur tapis"
 
 #: Sport/name:8
-msgid "Cycling"
-msgstr "Cyclisme sur "
+msgid "Vélo"
+msgstr "Vélo"
 
 #: Sport/name:9
 msgid "Cyclocross"
@@ -2629,11 +2638,11 @@ msgid "Strength Training"
 msgstr "Entraînement de force"
 
 #: Sport/name:22
-msgid "hiking"
-msgstr "randonnée"
+msgid "Randonnée"
+msgstr "Randonnée"
 
 #: Sport/name:23
-msgid "Swimming"
+msgid "Natation"
 msgstr "Natation"
 
 #: Sport/name:24
@@ -2645,7 +2654,7 @@ msgid "Open Water Swimming"
 msgstr "Natation en mer"
 
 #: Sport/name:26
-msgid "Walking"
+msgid "Marche"
 msgstr "Marche"
 
 #: Sport/name:27
@@ -2673,12 +2682,14 @@ msgid "Run to Bike Transition"
 msgstr "Transition Course Vélo"
 
 #: Sport/name:33
-msgid "Motorbike"
+#, fuzzy
+#| msgid "Motorbike"
+msgid "Moto"
 msgstr "Moto"
 
 #: Sport/name:34
-msgid "Other"
-msgstr ""
+msgid "Autre"
+msgstr "Autre"
 
 #: Sport/name:35
 msgid "Backcountry Skiing/Snowboarding"
@@ -2784,6 +2795,24 @@ msgstr ""
 msgid "Swim"
 msgstr ""
 
+#: Sport/name:61
+#, fuzzy
+#| msgid "Walking"
+msgid "Walk"
+msgstr "Marche"
+
+#~ msgid "Running"
+#~ msgstr "Course à pied"
+
+#~ msgid "Cycling"
+#~ msgstr "Cyclisme sur "
+
+#~ msgid "hiking"
+#~ msgstr "randonnée"
+
+#~ msgid "Swimming"
+#~ msgstr "Natation"
+
 #~ msgid "Public members"
 #~ msgstr "Membres publics"
 
@@ -2804,24 +2833,6 @@ msgstr ""
 
 #~ msgid "Indicates if your public profile is visible, and by who."
 #~ msgstr "Détermine si votre page de profil public est visible et par qui."
-
-#~ msgid "Course à pied"
-#~ msgstr "Course à pied"
-
-#~ msgid "Vélo"
-#~ msgstr "Vélo"
-
-#~ msgid "Randonnée"
-#~ msgstr "Randonnée"
-
-#~ msgid "Natation"
-#~ msgstr "Natation"
-
-#~ msgid "Marche"
-#~ msgstr "Marche"
-
-#~ msgid "Autre"
-#~ msgstr "Autre"
 
 #~ msgid "Development Version"
 #~ msgstr "Version de Développement"

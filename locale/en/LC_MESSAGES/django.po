@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-12 15:30+0100\n"
+"POT-Creation-Date: 2015-02-13 00:18+0100\n"
 "PO-Revision-Date: 2015-02-09 17:42+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
@@ -1432,31 +1432,31 @@ msgstr ""
 msgid "Download PDF"
 msgstr ""
 
-#: templates/plan/details.html:33 templates/sport/calendar/month.html:42
+#: templates/plan/details.html:33 templates/sport/calendar/month.html:55
 msgid "Monday"
 msgstr ""
 
-#: templates/plan/details.html:34 templates/sport/calendar/month.html:43
+#: templates/plan/details.html:34 templates/sport/calendar/month.html:56
 msgid "Tuesday"
 msgstr ""
 
-#: templates/plan/details.html:35 templates/sport/calendar/month.html:44
+#: templates/plan/details.html:35 templates/sport/calendar/month.html:57
 msgid "Wednesday"
 msgstr ""
 
-#: templates/plan/details.html:36 templates/sport/calendar/month.html:45
+#: templates/plan/details.html:36 templates/sport/calendar/month.html:58
 msgid "Thursday"
 msgstr ""
 
-#: templates/plan/details.html:37 templates/sport/calendar/month.html:46
+#: templates/plan/details.html:37 templates/sport/calendar/month.html:59
 msgid "Friday"
 msgstr ""
 
-#: templates/plan/details.html:38 templates/sport/calendar/month.html:47
+#: templates/plan/details.html:38 templates/sport/calendar/month.html:60
 msgid "Saturday"
 msgstr ""
 
-#: templates/plan/details.html:39 templates/sport/calendar/month.html:48
+#: templates/plan/details.html:39 templates/sport/calendar/month.html:61
 msgid "Sunday"
 msgstr ""
 
@@ -1481,11 +1481,19 @@ msgstr ""
 msgid "CSV Export"
 msgstr ""
 
-#: templates/sport/calendar/month.html:71
+#: templates/sport/calendar/month.html:42
+msgid "Hide friends"
+msgstr ""
+
+#: templates/sport/calendar/month.html:46
+msgid "Show friends"
+msgstr ""
+
+#: templates/sport/calendar/month.html:84
 msgid "Plan from trainer"
 msgstr ""
 
-#: templates/sport/calendar/month.html:85
+#: templates/sport/calendar/month.html:98
 msgid "friends sessions"
 msgstr ""
 
@@ -2440,8 +2448,8 @@ msgid "Uncategorized"
 msgstr ""
 
 #: Sport/name:3
-msgid "Running"
-msgstr ""
+msgid "Course à pied"
+msgstr "Running"
 
 #: Sport/name:4
 msgid "Street Running"
@@ -2460,8 +2468,8 @@ msgid "Treadmill Running"
 msgstr ""
 
 #: Sport/name:8
-msgid "Cycling"
-msgstr ""
+msgid "Vélo"
+msgstr "Cycling"
 
 #: Sport/name:9
 msgid "Cyclocross"
@@ -2516,12 +2524,12 @@ msgid "Strength Training"
 msgstr ""
 
 #: Sport/name:22
-msgid "hiking"
-msgstr ""
+msgid "Randonnée"
+msgstr "hiking"
 
 #: Sport/name:23
-msgid "Swimming"
-msgstr ""
+msgid "Natation"
+msgstr "Swimming"
 
 #: Sport/name:24
 msgid "Lap Swimming"
@@ -2532,8 +2540,8 @@ msgid "Open Water Swimming"
 msgstr ""
 
 #: Sport/name:26
-msgid "Walking"
-msgstr ""
+msgid "Marche"
+msgstr "Walking"
 
 #: Sport/name:27
 msgid "Casual Walking"
@@ -2562,12 +2570,12 @@ msgstr ""
 #: Sport/name:33
 #, fuzzy
 #| msgid "Moto"
-msgid "Motorbike"
+msgid "Moto"
 msgstr "Motorbike"
 
 #: Sport/name:34
-msgid "Other"
-msgstr ""
+msgid "Autre"
+msgstr "Other"
 
 #: Sport/name:35
 msgid "Backcountry Skiing/Snowboarding"
@@ -2673,23 +2681,9 @@ msgstr ""
 msgid "Swim"
 msgstr ""
 
-#~ msgid "Course à pied"
-#~ msgstr "Running"
-
-#~ msgid "Vélo"
-#~ msgstr "Cycling"
-
-#~ msgid "Randonnée"
-#~ msgstr "hiking"
-
-#~ msgid "Natation"
-#~ msgstr "Swimming"
-
-#~ msgid "Marche"
-#~ msgstr "Walking"
-
-#~ msgid "Autre"
-#~ msgstr "Other"
+#: Sport/name:61
+msgid "Walk"
+msgstr ""
 
 #~ msgid "Development Version"
 #~ msgstr "Development Version"
