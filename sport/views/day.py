@@ -25,11 +25,12 @@ class RunCalendarDay(SportSessionForms, CalendarDay, DateDetailView):
     context['next_day'] = week.get_date_end() + diff
 
     # Add previous week, not published
-    try:
-      w, y = date_to_week(date.today() - timedelta(days=7))
-      context['previous_week'] = SportWeek.objects.get(user=self.request.user, year=y, week=w, published=False)
-    except SportWeek.DoesNotExist:
-      context['previous_week'] = None
+    if self.request.user.is_authenticated():
+      try:
+        w, y = date_to_week(date.today() - timedelta(days=7))
+        context['previous_week'] = SportWeek.objects.get(user=self.request.user, year=y, week=w, published=False)
+      except SportWeek.DoesNotExist:
+        context['previous_week'] = None
 
     # Add friends with activities on the same day
     friends = []
