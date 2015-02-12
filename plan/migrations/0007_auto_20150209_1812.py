@@ -22,4 +22,8 @@ class Migration(migrations.Migration):
             name='status',
             field=models.CharField(default=b'applied', max_length=20, choices=[(b'applied', 'To Do'), (b'done', 'Done'), (b'failed', 'Missed')]),
         ),
+        migrations.RemoveField(
+            model_name='plan',
+            name='slug',
+        ),
     ]
