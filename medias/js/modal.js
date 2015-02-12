@@ -117,6 +117,14 @@ $(function(){
       actions.fadeOut('slow');
     }
   });
+
+  // Toggle friends display on calendar
+  $('#toggle-friends button').on('click', function(evt){
+    $('p.session.friends').toggle();
+    var btn = $(evt.target);
+    btn.hide();
+    btn.siblings('button').show();
+  });
 });
 
 function submit_form(evt){

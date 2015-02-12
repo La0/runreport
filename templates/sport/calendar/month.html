@@ -33,6 +33,19 @@
 			<a class="btn btn-success btn-light" href="{% url stats-year months.1.year %}"><i class="icon-plus"></i> {{ _('Stats') }}</a>
 			<a class="btn btn-info btn-light" href="{% url export-month months.1.year, months.1.month %}"><i class="icon-down-open"></i> {{ _('CSV Export') }}</a>
 			{% endif %}
+    </div>
+
+		<div class="col-sm-6 col-sm-offset-6 col-xs-12 text-right buttons">
+      <div id="toggle-friends">
+        <button class="btn btn-sm btn-primary btn-light">
+          <i class="icon-club"></i>
+          {{ _('Hide friends') }}
+        </button>
+        <button class="btn btn-sm btn-primary btn-light" style="display: none">
+          <i class="icon-club"></i>
+          {{ _('Show friends') }}
+        </button>
+      </div>
 		</div>
 	
 	</div>
@@ -81,7 +94,7 @@
 				{% endif %}
         {% with friends_sessions[day] as nb %}
           {% if nb %}
-          <p class="session">
+          <p class="session friends">
             <i class="icon-club"> </i> {{ nb }} {{ _('friends sessions') }}
           </p>
           {% endif %}
