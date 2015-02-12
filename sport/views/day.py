@@ -1,11 +1,10 @@
-from sport.forms import SportSessionForm
-from sport.models import SportDay, SportSession
+from sport.models import SportSession, SportWeek
 from coach.mixins import JsonResponseMixin, JSON_OPTION_NO_HTML, JSON_OPTION_BODY_RELOAD
+from users.models import Athlete
 from .mixins import SportSessionForms
 from django.views.generic import DateDetailView
 from django.views.generic.edit import DeleteView
 from mixins import CalendarDay
-from django.core.urlresolvers import reverse
 from datetime import datetime, date, timedelta
 from helpers import date_to_week, check_task
 
@@ -28,8 +27,8 @@ class RunCalendarDay(SportSessionForms, CalendarDay, DateDetailView):
     # Add previous week, not published
     try:
       w, y = date_to_week(date.today() - timedelta(days=7))
-      context['previous_week'] = SportWeek.objects.filter(user=self.request.user, year=y, week=w, published=False)
-    except:
+      context['previous_week'] = SportWeek.objects.get(user=self.request.user, year=y, week=w, published=False)
+    except SportWeek.DoesNotExist:
       context['previous_week'] = None
 
     # Add friends with activities on the same day
@@ -37,9 +36,14 @@ class RunCalendarDay(SportSessionForms, CalendarDay, DateDetailView):
     user = self.get_user()
     if user == self.request.user:
       friends = SportSession.objects.filter(day__date=self.day, day__week__user__in=user.friends.all())
-      friends = friends.prefetch_related('day', 'day__week', 'sport', 'day__week__user')
+      friends = friends.prefetch_related('day', 'day__week', 'sport', 'day__week__user', 'track')
       friends = friends.order_by('day__week__user__first_name')
     context['friends_sessions'] = friends
+
+    # Friends short list
+    if friends:
+      friend_ids = set(friends.values_list('day__week__user', flat=True).order_by('-updated'))
+      context['friends_shortlist'] = Athlete.objects.filter(pk__in=friend_ids)
 
     # Check task on week
     check_task(week)

@@ -51,34 +51,45 @@
   {% include 'sport/day/_nav.html' %}
 
   {% if not member and friends_sessions %}
-  <div id="friends">
-    <div class="form-group row">
-      <div class="col-xs-12">
-        <label class="control-label col-sm-2 hidden-xs text-right">Amis</label>
-        <div class="col-sm-10 col-xs-12">
-          {% for fs in friends_sessions %}
-            {% with fs.day.week.user as friend %}
-            {% with fs.day.date as dt %}
-            <a class="session col-md-4 col-sm-6 col-xs-12 shortcut" href="{% url user-calendar-day friend.username, dt.year, dt.month, dt.day %}" target="_blank">
-              <img class="img-rounded img-responsive" src="{{ friend.avatar.url }}" alt="{{ friend.username }}" />
-              <strong>{{ friend.first_name }} {{ friend.last_name }}</strong>
-              <p>
-                <i class="icon-sport-{{ fs.sport.slug }} do-tooltip" title="{{ fs.sport.name }}"></i>
-                {% if fs.track %}
-                  <i class="icon-location"></i>
-                {% endif %}
-                <span class="text-muted">&bull;</span>
-                {{ fs.name|truncatechars(20)|default('Pas de nom') }}
-              </p>
-            </a>
-            {% endwith %}
-            {% endwith %}
+  <div class="panel-group" id="friends" role="tablist" aria-multiselectable="true">
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" href="#friends_sessions" aria-expanded="true" aria-controls="collapseOne">
+            <i class="icon-down-open"></i>
+            {{ friends_sessions|count }} {{ _('Friends sessions') }}
+          </a>
+          <div class="images hidden-xs">
+          {% for friend in friends_shortlist %}
+            <img src="{{ friend.avatar.url }}" class="img-rounded do-tooltip" title="{{ friend.first_name }} {{ friend.last_name }}" />
           {% endfor %}
+          </div>
+        </h4>
+      </div>
+      <div id="friends_sessions" class="panel-collapse collapse" role="tabpanel">
+        <div class="panel-body">
+        {% for fs in friends_sessions %}
+          {% with fs.day.week.user as friend %}
+          {% with fs.day.date as dt %}
+          <a class="session col-md-4 col-sm-6 col-xs-12 shortcut" href="{% url user-calendar-day friend.username, dt.year, dt.month, dt.day %}" target="_blank">
+            <img class="img-rounded img-responsive" src="{{ friend.avatar.url }}" alt="{{ friend.username }}" />
+            <strong>{{ friend.first_name }} {{ friend.last_name }}</strong>
+            <p>
+              <i class="icon-sport-{{ fs.sport.slug }} do-tooltip" title="{{ fs.sport.name }}"></i>
+              {% if fs.track %}
+                <i class="icon-location"></i>
+              {% endif %}
+              <span class="text-muted">&bull;</span>
+              {{ fs.name|truncatechars(20)|default('Pas de nom') }}
+            </p>
+          </a>
+          {% endwith %}
+          {% endwith %}
+        {% endfor %}
         </div>
       </div>
     </div>
   </div>
-  <hr />
   {% endif %}
 
   <div id="sessions-{{day_date}}">
@@ -104,16 +115,6 @@
     </div>
     {% endif %}
 
-    {% if previous_week %}
-    <div class="alert alert-danger">
-      <h4>{{ _('Last week\'s report not published !') }}</h4>
-      <a class="btn btn-warning pull-right" href="{% url report-week previous_week.year, previous_week.week %}">
-        {{ _('Publish last week') }}
-      </a>
-      {{ _('Your comments from last week have not been published') }}
-    </div>
-    {% endif %}
-
   <div class="actions">
     {% if session.pk %}
     <a href="{% url report-day-delete day_date.year, day_date.month, day_date.day %}" class="pull-left modal-action btn btn-light btn-danger"><i class="icon-trash"></i> {{ _('Delete this day') }}</a>
@@ -133,6 +134,17 @@
       {% endif %}
     </p>
   </div>
+
+    {% if previous_week %}
+    <div class="alert alert-danger">
+      <a class="btn btn-danger pull-right" href="{% url 'report-week' previous_week.year, previous_week.week %}">
+        {{ _('Publish last week') }}
+      </a>
+      <h4>{{ _('Last week\'s report not published !') }}</h4>
+      {{ _('Your comments from last week have not been published') }}
+    </div>
+    {% endif %}
+
   {% endif %}
 
 </div>

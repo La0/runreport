@@ -645,6 +645,29 @@ a.recipient {
 }
 
 /* Friends activities */
+div#friends div.panel {
+  box-shadow: none;
+  border-color: #FAFAFA;
+}
+
+div#friends div.panel-heading {
+  padding: 4px 8px;
+  background: #FAFAFA;
+  height: 40px;
+}
+
+div#friends div.panel-heading h4 {
+  line-height: 32px;
+}
+
+div#friends div.panel-heading div.images {
+  float: right;
+}
+
+div#friends div.panel-heading div.images img {
+  width: 30px;
+}
+
 div#friends div.session {
 	border-radius: none;
 	margin: 0;
