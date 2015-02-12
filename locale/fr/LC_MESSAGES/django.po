@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-10 17:39+0100\n"
-"PO-Revision-Date: 2015-02-10 17:46+0100\n"
+"POT-Creation-Date: 2015-02-12 15:30+0100\n"
+"PO-Revision-Date: 2015-02-12 15:31+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -167,25 +167,23 @@ msgstr "Anglais"
 
 #: plan/models.py:92
 #, python-format
-#| msgid "Training plan"
 msgid "Training plan : %s"
 msgstr "Plan d'entraînement : %s"
 
 #: plan/models.py:97
 #, python-format
-#| msgid "Training plan"
 msgid "Training plan - %s.pdf"
 msgstr "Plan d'entraînement - %s.pdf"
 
-#: plan/models.py:158
+#: plan/models.py:189
 msgid "Applied"
 msgstr "A faire"
 
-#: plan/models.py:159
+#: plan/models.py:190
 msgid "Done"
 msgstr "Fait"
 
-#: plan/models.py:160
+#: plan/models.py:191
 msgid "Failed"
 msgstr "Manqué"
 
@@ -1189,12 +1187,10 @@ msgstr "Plan d'entraînement"
 
 #: templates/mail/plan.html:8
 #, python-format
-#| msgid "Hello %s"
 msgid "Hello %s,"
 msgstr "Bonjour %s,"
 
 #: templates/mail/plan.html:13
-#| msgid "%s trainer"
 msgid "Your trainer"
 msgstr "Votre entraîneur"
 
@@ -1582,7 +1578,7 @@ msgstr "Voir ce mois"
 msgid "Are you sure to delete this day ?"
 msgstr "Etes vous sûr de vouloir supprimer cette journée ?"
 
-#: templates/sport/day/delete.html:16 templates/sport/day/edit.html:119
+#: templates/sport/day/delete.html:16 templates/sport/day/edit.html:120
 msgid "Delete this day"
 msgstr "Supprimer cette journée"
 
@@ -1613,39 +1609,44 @@ msgstr "Voir votre profil public"
 msgid "Public profile link"
 msgstr "Lien profil public"
 
-#: templates/sport/day/edit.html:102
+#: templates/sport/day/edit.html:60
+#| msgid "friends sessions"
+msgid "Friends sessions"
+msgstr "Séances d'amis"
+
+#: templates/sport/day/edit.html:113
 msgid "Sending report"
 msgstr "Rapport en cours d'envoi"
 
-#: templates/sport/day/edit.html:103
+#: templates/sport/day/edit.html:114
 msgid "This week's report is being sent to your trainers"
 msgstr "Ce rapport de semaine est en train d'être envoyé à vos entraineurs"
 
-#: templates/sport/day/edit.html:109
-msgid "Last week's report not published !"
-msgstr "Semaine précèdente pas publiée !"
-
-#: templates/sport/day/edit.html:111
-msgid "Publish last week"
-msgstr "Publier la semaine précèdente"
-
-#: templates/sport/day/edit.html:113
-msgid "Your comments from last week have not been published"
-msgstr "Vos commentaires de la semaine précèdente n'ont pas été publié"
-
-#: templates/sport/day/edit.html:123 templates/sport/session/list.html:108
+#: templates/sport/day/edit.html:124 templates/sport/session/list.html:108
 msgid "Add a session"
 msgstr "Ajouter une séance"
 
-#: templates/sport/day/edit.html:127 templates/sport/week/edit.html:17
+#: templates/sport/day/edit.html:128 templates/sport/week/edit.html:17
 #: templates/sport/week/edit.html.py:55
 msgid "Week published"
 msgstr "Semaine publiée"
 
-#: templates/sport/day/edit.html:131 templates/sport/week/edit.html:21
+#: templates/sport/day/edit.html:132 templates/sport/week/edit.html:21
 #: templates/sport/week/edit.html.py:59
 msgid "Publish this week"
 msgstr "Publier cette semaine"
+
+#: templates/sport/day/edit.html:141
+msgid "Publish last week"
+msgstr "Publier la semaine précèdente"
+
+#: templates/sport/day/edit.html:143
+msgid "Last week's report not published !"
+msgstr "Semaine précèdente pas publiée !"
+
+#: templates/sport/day/edit.html:144
+msgid "Your comments from last week have not been published"
+msgstr "Vos commentaires de la semaine précèdente n'ont pas été publié"
 
 #: templates/sport/glossary.html:29
 msgid "Sport icons"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-10 17:39+0100\n"
+"POT-Creation-Date: 2015-02-12 15:30+0100\n"
 "PO-Revision-Date: 2015-02-09 17:42+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
@@ -174,15 +174,15 @@ msgstr ""
 msgid "Training plan - %s.pdf"
 msgstr ""
 
-#: plan/models.py:158
+#: plan/models.py:189
 msgid "Applied"
 msgstr "To Do"
 
-#: plan/models.py:159
+#: plan/models.py:190
 msgid "Done"
 msgstr ""
 
-#: plan/models.py:160
+#: plan/models.py:191
 msgid "Failed"
 msgstr "Missed"
 
@@ -1506,7 +1506,7 @@ msgstr ""
 msgid "Are you sure to delete this day ?"
 msgstr ""
 
-#: templates/sport/day/delete.html:16 templates/sport/day/edit.html:119
+#: templates/sport/day/delete.html:16 templates/sport/day/edit.html:120
 msgid "Delete this day"
 msgstr ""
 
@@ -1537,38 +1537,42 @@ msgstr ""
 msgid "Public profile link"
 msgstr ""
 
-#: templates/sport/day/edit.html:102
-msgid "Sending report"
-msgstr ""
-
-#: templates/sport/day/edit.html:103
-msgid "This week's report is being sent to your trainers"
-msgstr ""
-
-#: templates/sport/day/edit.html:109
-msgid "Last week's report not published !"
-msgstr ""
-
-#: templates/sport/day/edit.html:111
-msgid "Publish last week"
+#: templates/sport/day/edit.html:60
+msgid "Friends sessions"
 msgstr ""
 
 #: templates/sport/day/edit.html:113
-msgid "Your comments from last week have not been published"
+msgid "Sending report"
 msgstr ""
 
-#: templates/sport/day/edit.html:123 templates/sport/session/list.html:108
+#: templates/sport/day/edit.html:114
+msgid "This week's report is being sent to your trainers"
+msgstr ""
+
+#: templates/sport/day/edit.html:124 templates/sport/session/list.html:108
 msgid "Add a session"
 msgstr ""
 
-#: templates/sport/day/edit.html:127 templates/sport/week/edit.html:17
+#: templates/sport/day/edit.html:128 templates/sport/week/edit.html:17
 #: templates/sport/week/edit.html.py:55
 msgid "Week published"
 msgstr ""
 
-#: templates/sport/day/edit.html:131 templates/sport/week/edit.html:21
+#: templates/sport/day/edit.html:132 templates/sport/week/edit.html:21
 #: templates/sport/week/edit.html.py:59
 msgid "Publish this week"
+msgstr ""
+
+#: templates/sport/day/edit.html:141
+msgid "Publish last week"
+msgstr ""
+
+#: templates/sport/day/edit.html:143
+msgid "Last week's report not published !"
+msgstr ""
+
+#: templates/sport/day/edit.html:144
+msgid "Your comments from last week have not been published"
 msgstr ""
 
 #: templates/sport/glossary.html:29
