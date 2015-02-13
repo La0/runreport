@@ -9,6 +9,7 @@ from helpers import date_to_week
 from django.utils import timezone
 from coach.mail import MailBuilder
 from plan.export import PlanPdfExporter
+from interval.fields import IntervalField
 
 class Plan(models.Model):
   name = models.CharField(max_length=250)
@@ -125,6 +126,8 @@ class PlanSession(models.Model):
   # Dummy data, should be later specified
   # using a collections of PlanPart
   name = models.CharField(max_length=250)
+  time = IntervalField(format='DHMSX', null=True, blank=True)
+  distance = models.FloatField(null=True, blank=True)
 
   # Mappings to SportSession
   sport = models.ForeignKey(Sport)
@@ -178,6 +181,8 @@ class PlanSession(models.Model):
     # Load session
     defaults = {
         'name' : self.name,
+        'distance' : self.distance,
+        'time' : self.time,
     }
     session,_ = SportSession.objects.get_or_create(sport=self.sport, day=day, type=self.type, defaults=defaults)
 

@@ -69,6 +69,16 @@
         {% endwith %}
         {{ _('has planned a ') }} {{ _(psess.type|title) }}
         {{ _(psess.sport.name) }}
+
+        {% if psess.time and psess.time != session.time %}
+        <span class="text-muted">&bull;</span>
+        {{ psess.time }}
+        {% endif %}
+
+        {% if psess.distance and psess.distance != session.distance %}
+        <span class="text-muted">&bull;</span>
+        {{ psess.distance }} km
+        {% endif %}
       </p>
     </div>
     {% if form.plan_status.errors %}

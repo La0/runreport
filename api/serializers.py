@@ -27,7 +27,7 @@ class PlanSessionSerializer(serializers.ModelSerializer):
 
   class Meta:
     model = PlanSession
-    fields = ('id', 'week', 'day', 'name', 'sport', 'type')
+    fields = ('id', 'week', 'day', 'name', 'sport', 'type', 'distance', 'time', )
 
   def create(self, validated_data):
     # Attach plan to created session
