@@ -173,11 +173,28 @@ msgid "English"
 msgstr ""
 
 #: plan/models.py:96
+#: events/models.py:8 templates/club/manage.html:75
+msgid "Name"
+msgstr ""
+
+#: events/models.py:13
+msgid "Address"
+msgstr ""
+
+#: events/models.py:14
+msgid "Zip Code"
+msgstr ""
+
+#: events/models.py:15
+msgid "City"
+msgstr ""
+
+#: plan/models.py:93
 #, python-format
 msgid "Training plan : %s"
 msgstr ""
 
-#: plan/models.py:101
+#: plan/models.py:98
 #, python-format
 msgid "Training plan - %s.pdf"
 msgstr ""
@@ -412,9 +429,9 @@ msgstr ""
 msgid "Created by"
 msgstr ""
 
-#: templates/club/group/index.html:41 templates/club/manage.html:121
-#: templates/messages/_list.html:66 templates/messages/edit.html:20
-#: templates/sport/day/edit.html:40
+#: templates/club/group/index.html:41 templates/club/manage.html:116
+#: templates/events/places/index.html:32 templates/messages/_list.html:63
+#: templates/messages/edit.html:20 templates/sport/day/edit.html:40
 msgid "Edit"
 msgstr ""
 
@@ -653,11 +670,8 @@ msgid ""
 "of the club, ..."
 msgstr ""
 
-#: templates/club/manage.html:80
-msgid "Name"
-msgstr ""
-
 #: templates/club/manage.html:81
+#: templates/club/manage.html:76
 msgid "Url"
 msgstr ""
 
@@ -666,9 +680,9 @@ msgstr ""
 msgid "Actions"
 msgstr ""
 
-#: templates/club/manage.html:89 templates/friends/home.html:27
-#: templates/messages/_list.html:65 templates/messages/delete.html:20
-#: templates/sport/session/edit.html:55
+#: templates/club/manage.html:84 templates/friends/home.html:27
+#: templates/messages/_list.html:62 templates/messages/delete.html:20
+#: templates/sport/session/edit.html:116
 msgid "Delete"
 msgstr ""
 
@@ -828,7 +842,7 @@ msgid "Available places"
 msgstr ""
 
 #: templates/club/role.html:37 templates/page/detail.html:52
-#: templates/sport/session/edit.html:53 templates/users/garmin.html:45
+#: templates/sport/session/edit.html:114 templates/users/garmin.html:45
 msgid "Save"
 msgstr ""
 
@@ -925,6 +939,33 @@ msgstr ""
 
 #: templates/contact_form/contact_form_sent.html:9
 msgid "Thank you for writing us !"
+msgstr ""
+
+#: templates/events/places/edit.html:7
+#, python-format
+msgid "Edit place : %s"
+msgstr ""
+
+#: templates/events/places/edit.html:9 templates/events/places/index.html:10
+msgid "Add a place"
+msgstr ""
+
+#: templates/events/places/edit.html:28
+msgid "Edit place"
+msgstr ""
+
+#: templates/events/places/edit.html:33
+msgid "Create place"
+msgstr ""
+
+#: templates/events/places/index.html:3 templates/events/places/index.html:13
+#, python-format
+msgid "Places of %s"
+msgstr ""
+
+#: templates/events/places/index.html:38
+#, python-format
+msgid "No places created for club %s"
 msgstr ""
 
 #: templates/friends/delete.html:3
@@ -1275,7 +1316,7 @@ msgstr ""
 msgid "No session"
 msgstr ""
 
-#: templates/mail/report.html:70 templates/sport/session/edit.html:40
+#: templates/mail/report.html:51 templates/sport/session/edit.html:101
 #: templates/sport/week/_stats.html:5
 msgid "Sport"
 msgstr ""
@@ -1780,19 +1821,23 @@ msgstr ""
 msgid "Saved session."
 msgstr ""
 
-#: templates/sport/session/edit.html:53
+#: templates/sport/session/edit.html:70
+msgid "has planned a "
+msgstr ""
+
+#: templates/sport/session/edit.html:114
 msgid "this session"
 msgstr ""
 
-#: templates/sport/session/edit.html:65
+#: templates/sport/session/edit.html:126
 msgid "Map"
 msgstr ""
 
-#: templates/sport/session/edit.html:71
+#: templates/sport/session/edit.html:132
 msgid "Change session"
 msgstr ""
 
-#: templates/sport/session/edit.html:99
+#: templates/sport/session/edit.html:160
 msgid "Comments"
 msgstr ""
 
@@ -1814,10 +1859,6 @@ msgstr ""
 
 #: templates/sport/session/list.html:136
 msgid "No sessions"
-msgstr ""
-
-#: templates/sport/session/plan.html:61
-msgid "has planned a "
 msgstr ""
 
 #: templates/sport/session/plan.html:78

@@ -7,6 +7,9 @@ user_patterns = patterns('',
 )
 
 club_patterns = patterns('',
+  # Places, from events
+  url(r'^/places/', include('events.urls')),
+
   # Manager
   url(r'^/races/?$', ClubRaces.as_view(), name="club-races"),
   url(r'^/manage/?$', ClubManage.as_view(), name="club-manage"),
