@@ -1,5 +1,7 @@
+import requests
 from django.contrib.gis.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.gis.geos import Point
 
 class Place(models.Model):
   '''
@@ -20,3 +22,28 @@ class Place(models.Model):
   # Dates
   created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
+
+
+  def geocode(self):
+    '''
+    Use OSM Geocoding to fetch GPS position
+    '''
+    url = 'http://nominatim.openstreetmap.org/search/'
+    params = {
+      'format' : 'json',
+      'q' : '%s %s %s' % (self.address, self.zipcode, self.city),
+    }
+    res = requests.get(url, params=params)
+    if res.status_code != 200:
+      raise Exception('Invalid OSM response')
+
+    results = res.json()
+    if not results:
+      raise Exception('No geocoding results')
+
+    # Use first result
+    result = results[0]
+
+    self.point = Point(float(result['lat']), float(result['lon']))
+
+    return self.point

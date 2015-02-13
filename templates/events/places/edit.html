@@ -9,6 +9,11 @@
   <h1>{{ _('Add a place') }}</h1>
   {% endif %}
 
+  {% if place and place.point %}
+  <div class="point_map" data-lat="{{ place.point.coords.0 }}" data-lon="{{ place.point.coords.1 }}">
+    Loading map...
+  </div>
+  {% endif %}
 
   <form action="" method="post">
     {% csrf_token %}

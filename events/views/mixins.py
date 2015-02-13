@@ -15,6 +15,14 @@ class PlaceClubMixin(ClubMixin):
     place = form.save(commit=False)
     place.creator = self.request.user
     place.club = self.club
+
+    # Try to geocode
+    try:
+      place.geocode()
+    except Exception, e:
+      print 'Geocoding place #%d failed : %s' % (place.pk, e.message)
+
+    # Finally save
     place.save()
 
     return super(PlaceClubMixin, self).form_valid(form)
