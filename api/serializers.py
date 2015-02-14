@@ -4,6 +4,7 @@ from sport.models import Sport
 from plan.models import Plan, PlanSession, PlanApplied
 from club.models import ClubMembership, Club, ClubGroup
 from messages.models import Message
+from events.models import Place
 
 class AthleteSerializer(serializers.ModelSerializer):
   avatar = serializers.SerializerMethodField('get_avatar_url')
@@ -97,17 +98,28 @@ class AthleteMembershipSerializer(serializers.ModelSerializer):
     model = ClubMembership
     fields = ('user', 'role', 'groups')
 
+class PlaceSerializer(serializers.ModelSerializer):
+  '''
+  List all places in a club
+  '''
+  class Meta:
+    model = Place
+    fields = ('id', 'name', 'address', 'zipcode', 'city')
+
 class ClubMembershipSerializer(serializers.ModelSerializer):
   '''
   List all details about a trainer membership:
    * the club
    * the groups in the club
    * his athletes
+   * his places
   '''
   club = ClubSerializer()
   groups = ClubGroupSerializer(many=True, source='groups_owned')
   athletes = AthleteMembershipSerializer(many=True)
+  places = PlaceSerializer(source='club.places', many=True)
 
   class Meta:
     model = ClubMembership
-    fields = ('id', 'role', 'created', 'club', 'groups', 'athletes', )
+    fields = ('id', 'role', 'created', 'club', 'groups', 'athletes', 'places', )
+
