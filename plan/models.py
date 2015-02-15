@@ -139,6 +139,10 @@ class PlanSession(models.Model):
   # Conversation
   comments = models.OneToOneField('messages.Conversation', null=True, blank=True, related_name='plan_session')
 
+  # Event
+  place = models.ForeignKey('events.Place', null=True, blank=True, related_name='plan_sessions')
+  hour = models.TimeField(null=True, blank=True)
+
   # Dates
   created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
