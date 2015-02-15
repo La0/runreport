@@ -1,14 +1,12 @@
-from django.views.generic import MonthArchiveView, DateDetailView, View
+from django.views.generic import MonthArchiveView, View
 from django.views.generic.dates import MonthMixin, YearMixin
-from django.views.generic.edit import ModelFormMixin, ProcessFormView
 from django.http import Http404
 from django.db.models import Count
-from sport.models import SportSession, SportDay, SportWeek, SESSION_TYPES
+from sport.models import SportSession, SportDay
 from datetime import datetime, date
 import calendar
 import collections
-from coach.mixins import JsonResponseMixin, JSON_STATUS_ERROR, CsvResponseMixin
-from helpers import date_to_week
+from coach.mixins import CsvResponseMixin
 
 class RunCalendar(MonthArchiveView):
   template_name = 'sport/calendar/month.html'
@@ -46,7 +44,7 @@ class RunCalendar(MonthArchiveView):
   def get_dated_items(self):
     year = self.get_year()
     month = self.get_month()
-    date = datetime.strptime('%s %s 1' % (year, month), '%Y %m %d')
+    start_date = datetime.strptime('%s %s 1' % (year, month), '%Y %m %d')
     try:
       self.load_calendar(year, month)
     except Exception, e:
@@ -68,7 +66,8 @@ class RunCalendar(MonthArchiveView):
       friends = dict((f['day__date'], f['nb']) for f in friends)
 
     context = {
-      'months' : (self.get_previous_month(date), date, self.get_next_month(date)),
+      'today' : date.today(),
+      'months' : (self.get_previous_month(start_date), start_date, self.get_next_month(start_date)),
       'days' : self.days,
       'weeks' : self.weeks,
       'friends_sessions' : friends,

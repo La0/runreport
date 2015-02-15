@@ -184,6 +184,14 @@ button.training, button.race, button.rest {
   background: #cee0f1;
 }
 
+.session.plan-applied {
+  background: #DDD;
+}
+
+.session.plan-failed {
+  background: #FF3385;
+}
+
 .session.race {
   background: #d9ebcc;
 }
@@ -192,8 +200,13 @@ button.training, button.race, button.rest {
   background: #fddbcc;
 }
 
+
 table.calendar td p {
   padding: 0 3px;
+}
+
+table.calendar td.today {
+  background: #F4F4F4;
 }
 
 table.calendar td p.date {

@@ -35,7 +35,8 @@
 			{% endif %}
     </div>
 
-		<div class="col-sm-6 col-sm-offset-6 col-xs-12 text-right buttons">
+    {% if not member %}
+		<div class="hidden-xs col-sm-6 col-sm-offset-6 col-xs-12 text-right buttons">
       <div id="toggle-friends">
         <button class="btn btn-sm btn-primary btn-light">
           <i class="icon-club"></i>
@@ -47,6 +48,7 @@
         </button>
       </div>
 		</div>
+    {% endif %}
 	
 	</div>
 
@@ -64,9 +66,12 @@
 		<tr>
 			{% for day in week %}
 			{% with sessions[day] as session %}
-			<td class="day link" href="{{pageday|url(*pageargs + [day.year, day.month, day.day])}}">
+			<td class="day link {% if day == today %}today{% endif %}" href="{{pageday|url(*pageargs + [day.year, day.month, day.day])}}">
 
 				<p class="date">
+          {% if day == today %}
+          {{ _('Today') }} &bull;
+          {% endif %}
 					{% if day.day == 1 or (loop.first and day.month != months.1.month) %}
 					{{day|date('d E')}}
 					{% else %}
@@ -75,7 +80,7 @@
 				</p>
 				{% if session %}
           {% for s in session.sessions.all() %}
-          <p class="session {{ s.type }}">
+          <p class="session {{ s.type }} {% if s.plan_session %}plan-{{ s.plan_session.status }}{% endif %}">
             <i class="icon-sport-{{s.sport.slug}} do-tooltip" title="{{ _(s.sport.name) }}"></i>
             {% if s.track %}
             <i class="icon-location do-tooltip"></i>
