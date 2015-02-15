@@ -61,10 +61,12 @@ class SportSessionForm(forms.ModelForm):
     # Check we have time or distance for
     # * all trainings
     # * past sessions
+    # * skip failed plans
     if ( \
         data['type'] == 'training' or \
         ( data['type'] == 'race' and self.day_date <= date.today() ) \
       ) \
+      and data.get('plan_status') != 'failed' \
       and 'distance' in data and data['distance'] is None \
       and 'time' in data and data['time'] is None:
       raise forms.ValidationError(u'Spécifiez une distance ou un temps pour ajouter une séance.')
