@@ -23,10 +23,7 @@ class PlanPdfExporter(object):
   row_heights = []
 
   # Styles
-  tableStyle = [
-    # Grid around the table
-    ('GRID', (0,0), (-1,-1), 0.5, colors.black),
-  ]
+  tableStyle = []
   dateStyle = None
   sessionStyle = None
   titleStyle = None
@@ -53,6 +50,12 @@ class PlanPdfExporter(object):
     self.dateStyle.backColor = colors.grey
     self.dateStyle.textColor = colors.white
     self.dateStyle.alignment = TA_CENTER
+
+    # Base table style
+    self.tableStyle = [
+      # Grid around the table
+      ('GRID', (0,0), (-1,-1), 0.5, colors.black),
+    ]
 
   def add_days(self):
     '''
