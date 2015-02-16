@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from users.models import Athlete
 from sport.models import Sport
-from plan.models import Plan, PlanSession
+from plan.models import Plan, PlanSession, PlanApplied
 from club.models import ClubMembership, Club, ClubGroup
 
 class AthleteSerializer(serializers.ModelSerializer):
@@ -22,6 +22,12 @@ class SportSerializer(serializers.ModelSerializer):
     model = Sport
     fields = ('id', 'name', 'slug')
 
+class PlanAppliedSerializer(serializers.ModelSerializer):
+
+  class Meta:
+    model = PlanApplied
+    fields = ('user', 'status')
+
 class PlanSessionSerializer(serializers.ModelSerializer):
   sport = serializers.PrimaryKeyRelatedField(queryset=Sport.objects.filter(depth=1))
 
@@ -39,10 +45,11 @@ class PlanSessionSerializer(serializers.ModelSerializer):
 class PlanSerializer(serializers.ModelSerializer):
   weeks_nb = serializers.IntegerField(source='get_weeks_nb', read_only=True)
   export_pdf = serializers.HyperlinkedIdentityField(view_name='plan-export-pdf')
+  applications = PlanAppliedSerializer(many=True, read_only=True)
 
   class Meta:
     model = Plan
-    fields = ('id', 'name', 'weeks_nb', 'updated', 'start', 'export_pdf', )
+    fields = ('id', 'name', 'weeks_nb', 'updated', 'start', 'export_pdf', 'applications', )
 
   def create(self, validated_data):
     # Attach current user to plan creation

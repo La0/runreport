@@ -64,11 +64,14 @@ class Plan(models.Model):
     pdf = export.render()
 
     for u in users.all():
+      # Save plan application
+      pa, _ = PlanApplied.objects.get_or_create(user=u, plan=self)
+
       # Apply the sessions
       nb_applied = 0
       for s in self.sessions.all():
         try:
-          s.apply(u)
+          s.apply(pa)
           nb_applied += 1
         except Exception, e:
           print 'Failed to apply plan session #%d : %s' % (s.pk, e)
@@ -160,7 +163,7 @@ class PlanSession(models.Model):
 
     return PlanSession.objects.create(**data)
 
-  def apply(self, user):
+  def apply(self, application):
     '''
     Apply this plan session to a user
     '''
@@ -169,7 +172,7 @@ class PlanSession(models.Model):
 
     # Load week
     w, year = date_to_week(self.date)
-    week,_ = SportWeek.objects.get_or_create(year=year, week=w, user=user)
+    week,_ = SportWeek.objects.get_or_create(year=year, week=w, user=application.user)
 
     # Load day
     day,_ = SportDay.objects.get_or_create(week=week, date=self.date)
@@ -187,7 +190,7 @@ class PlanSession(models.Model):
     session,_ = SportSession.objects.get_or_create(sport=self.sport, day=day, type=self.type, defaults=defaults)
 
     # Apply plan session
-    PlanSessionApplied.objects.create(plan_session=self, sport_session=session)
+    PlanSessionApplied.objects.create(plan_session=self, sport_session=session, application=application)
 
 
 PLAN_SESSION_APPLICATIONS = (
@@ -196,11 +199,38 @@ PLAN_SESSION_APPLICATIONS = (
   ('failed', _('Failed')), # Failed the plan
 )
 
+class PlanApplied(models.Model):
+  '''
+  Links a Plan to a User
+  Shows global status of a plan application
+  '''
+  plan = models.ForeignKey(Plan, related_name='applications')
+  user = models.ForeignKey('users.Athlete', related_name='plans_applied')
+
+  # Dates
+  created = models.DateTimeField(auto_now_add=True)
+  updated = models.DateTimeField(auto_now=True)
+
+  class Meta:
+    unique_together = (('user', 'plan'), )
+
+  @property
+  def status(self):
+    '''
+    Calc stats about sessions & theirs status
+    '''
+    out = {}
+    for s, _name in PLAN_SESSION_APPLICATIONS:
+      out[s] = self.sessions.filter(status=s).count()
+    return out
+
+
 class PlanSessionApplied(models.Model):
   '''
   Links a PlanSession to a SportSession
   '''
   # Links
+  application = models.ForeignKey(PlanApplied, related_name='sessions')
   plan_session = models.ForeignKey(PlanSession, related_name='applications')
   sport_session = models.OneToOneField('sport.SportSession', related_name='plan_session')
 
