@@ -1,5 +1,4 @@
-from reportlab.pdfgen import canvas
-from reportlab.platypus import Table, Paragraph, Frame, Image
+from reportlab.platypus import Table, Paragraph, Frame, Image, PageTemplate, SimpleDocTemplate, Spacer
 from reportlab.lib import colors
 from reportlab.lib.units import inch
 from reportlab.lib.styles import getSampleStyleSheet
@@ -19,6 +18,9 @@ class PlanPdfExporter(object):
   plan = None
   site = None
   lines = None
+
+  # Table line dimensions
+  row_heights = []
 
   # Styles
   tableStyle = [
@@ -46,6 +48,7 @@ class PlanPdfExporter(object):
     s1, s2, s3 = getSampleStyleSheet(), getSampleStyleSheet(), getSampleStyleSheet()
     self.sessionStyle, self.dateStyle = s1['Normal'], s2['Normal']
     self.titleStyle = s3['Heading2']
+    self.titleStyle.alignment = TA_CENTER
     self.dateStyle.backColor = colors.grey
     self.dateStyle.textColor = colors.white
     self.dateStyle.alignment = TA_CENTER
@@ -60,6 +63,7 @@ class PlanPdfExporter(object):
       days.append(Paragraph(date.strftime('%A').title(), self.dateStyle))
     self.remove_padding(len(self.lines))
     self.lines.append(days)
+    self.row_heights.append(.2*inch)
 
   def remove_padding(self, line):
     # Remove padding on a line
@@ -95,15 +99,16 @@ class PlanPdfExporter(object):
 
         # Render sessions using html template
         for session in self.plan.sessions.filter(week=week_pos, day=day_pos):
-          context = {
-            'session' : session,
-          }
-          sessions.append(Paragraph(render_to_string('plan/export.pdf.session.html', context), self.sessionStyle))
+          para = Paragraph(session.name, self.sessionStyle)
+          sessions.append(para)
 
         week.append(sessions or '')
+
       if dates:
         self.lines.append(dates)
+        self.row_heights.append(0.2*inch)
       self.lines.append(week)
+      self.row_heights.append(1.1*inch)
 
 
   def render(self, stream=None):
@@ -119,36 +124,36 @@ class PlanPdfExporter(object):
     self.build_lines()
 
     # Canvas is landscape oriented
-    pdf = canvas.Canvas(stream, pagesize=landscape(letter))
+    pdf = SimpleDocTemplate(stream, pagesize=landscape(letter))
 
     # Table is in a frame
-    table = Table(self.lines, style=self.tableStyle)
+    table = Table(self.lines, [1.5* inch ] * 7, self.row_heights, style=self.tableStyle, repeatRows=1)
+    table.wrap(0,0) # important hacky way to span on full width
     tableFrame = Frame(inch / 2, inch / 2, 10*inch, 7*inch)
-    tableFrame.addFromList([ table, ], pdf)
+
+    # RunReport logo
+    logo = Image('./medias/img/logo_ligne.png')
+    logo.drawHeight = 2.2*inch*logo.drawHeight / logo.drawWidth
+    logo.drawWidth = 2.2*inch
 
     # Plan infos are in a frame, in top left corner
-    infoFrame = Frame(inch / 2, 7.5 * inch, 7*inch, 0.6 * inch)
     context = {
       'site' : self.site,
       'plan' : self.plan,
     }
     title = Paragraph(render_to_string('plan/export.pdf.title.html', context), self.titleStyle)
-    infoFrame.addFromList([ title, ], pdf)
 
-    # Logo is in a frame in top right corner
-    logoPos = (inch*7.5, 7.6 * inch, 3*inch, 0.6 * inch)
-    logoFrame = Frame(*logoPos)
-    logo = Image('./medias/img/logo_ligne.png')
-    logo.drawHeight = 2.2*inch*logo.drawHeight / logo.drawWidth
-    logo.drawWidth = 2.2*inch
-    logoFrame.addFromList([ logo, ], pdf)
-
-    # Logo is clickable
-    pdf.linkURL('http://%s' % self.site.domain, (logoPos[0], logoPos[1], logoPos[0]+logoPos[2], logoPos[1]+logoPos[3]))
-
-    # Cleanly close pdf
-    pdf.showPage()
-    pdf.save()
+    # Add table elements
+    pdf.addPageTemplates([
+      PageTemplate(id='table', frames=[tableFrame]),
+    ])
+    story = [
+      logo,
+      title,
+      Spacer(1, 0.4*inch), # make room for header
+      table, # the plan
+    ]
+    pdf.build(story)
 
     if isinstance(stream, StringIO):
       output = stream.getvalue()
