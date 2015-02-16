@@ -42,6 +42,7 @@ class PlanPdfExporter(object):
     self.setup_styles()
     self.width = defaultPageSize[0]
     self.height = defaultPageSize[1]
+    self.row_heights = [] # reset for celery workers
 
   def setup_styles(self):
     # Build style sheets
