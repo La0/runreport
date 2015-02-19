@@ -1,3 +1,3 @@
 from .user import AthleteDetails, ClubMembershipViewSet
 from .sport import SportViewSet
-from .plan import PlanViewSet, PlanSessionViewSet, PlanPublishView, PlanCopyView
+from .plan import PlanViewSet, PlanSessionViewSet, PlanPublishView, PlanCopyView, PlanAppliedViewSet

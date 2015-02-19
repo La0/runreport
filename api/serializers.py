@@ -26,7 +26,7 @@ class PlanAppliedSerializer(serializers.ModelSerializer):
 
   class Meta:
     model = PlanApplied
-    fields = ('user', 'status')
+    fields = ('id', 'user', 'status')
 
 class PlanSessionSerializer(serializers.ModelSerializer):
   sport = serializers.PrimaryKeyRelatedField(queryset=Sport.objects.filter(depth=1))
@@ -46,11 +46,10 @@ class PlanSerializer(serializers.ModelSerializer):
   weeks_nb = serializers.IntegerField(source='get_weeks_nb', read_only=True)
   sessions_nb = serializers.IntegerField(source='sessions.count', read_only=True)
   export_pdf = serializers.HyperlinkedIdentityField(view_name='plan-export-pdf')
-  applications = PlanAppliedSerializer(many=True, read_only=True)
 
   class Meta:
     model = Plan
-    fields = ('id', 'name', 'weeks_nb', 'sessions_nb', 'updated', 'start', 'export_pdf', 'applications', )
+    fields = ('id', 'name', 'weeks_nb', 'sessions_nb', 'updated', 'start', 'export_pdf', )
 
   def create(self, validated_data):
     # Attach current user to plan creation

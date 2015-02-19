@@ -9,8 +9,10 @@ class PlanMixin:
   def load_plan(self):
     try:
       # Load plan
-      self.plan = self.request.user.plans.get(pk=self.kwargs['pk'])
-    except:
+      pk = self.kwargs.get('plan_pk', self.kwargs.get('pk'))
+      self.plan = self.request.user.plans.get(pk=pk)
+    except Exception, e:
+      print e.message
       raise PermissionDenied
 
     return self.plan

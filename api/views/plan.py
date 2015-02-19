@@ -1,5 +1,5 @@
 from __future__ import absolute_import
-from api.serializers import PlanSerializer, PlanSessionSerializer
+from api.serializers import PlanSerializer, PlanSessionSerializer, PlanAppliedSerializer
 from rest_framework import viewsets, views, response
 from django.core.exceptions import PermissionDenied
 from users.models import Athlete
@@ -51,3 +51,15 @@ class PlanCopyView(PlanMixin, views.APIView):
 
     # Return dummy status
     return response.Response({'copied' : True})
+
+class PlanAppliedViewSet(PlanMixin, viewsets.ModelViewSet):
+  '''
+  Delete a plan application
+  '''
+  serializer_class = PlanAppliedSerializer
+
+  def get_queryset(self):
+    print 'boom queryset'
+    self.load_plan()
+    print 'loaded plan', self.plan
+    return self.plan.applications.all()
