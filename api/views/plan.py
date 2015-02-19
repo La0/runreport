@@ -59,7 +59,5 @@ class PlanAppliedViewSet(PlanMixin, viewsets.ModelViewSet):
   serializer_class = PlanAppliedSerializer
 
   def get_queryset(self):
-    print 'boom queryset'
     self.load_plan()
-    print 'loaded plan', self.plan
     return self.plan.applications.all()
