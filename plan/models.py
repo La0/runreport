@@ -136,6 +136,9 @@ class PlanSession(models.Model):
   sport = models.ForeignKey(Sport)
   type = models.CharField(max_length=12, default='training', choices=SESSION_TYPES)
 
+  # Conversation
+  comments = models.OneToOneField('messages.Conversation', null=True, blank=True, related_name='plan_session')
+
   # Dates
   created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)

@@ -3,6 +3,7 @@ from users.models import Athlete
 from sport.models import Sport
 from plan.models import Plan, PlanSession, PlanApplied
 from club.models import ClubMembership, Club, ClubGroup
+from messages.models import Message
 
 class AthleteSerializer(serializers.ModelSerializer):
   avatar = serializers.SerializerMethodField('get_avatar_url')
@@ -21,6 +22,22 @@ class SportSerializer(serializers.ModelSerializer):
   class Meta:
     model = Sport
     fields = ('id', 'name', 'slug')
+
+class MessageSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = Message
+    fields = ('id', 'message')
+
+  def create(self, validated_data, *args, **kwargs):
+    '''
+    Create a new directly attached Message
+    '''
+    session = self.context['view'].load_session()
+    validated_data.update({
+      'conversation' : session.comments,
+      'writer' : self.context['request'].user,
+    })
+    return Message.objects.create(**validated_data)
 
 class PlanAppliedSerializer(serializers.ModelSerializer):
 

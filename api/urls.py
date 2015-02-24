@@ -10,6 +10,9 @@ plan_router.register(r'plans', views.PlanViewSet, base_name='plan')
 plan_applications_router = routers.SimpleRouter()
 plan_applications_router.register(r'^plans/(?P<plan_pk>[\d]+)/applications', views.PlanAppliedViewSet, base_name='planapp')
 
+plan_messages_router = routers.SimpleRouter()
+plan_messages_router.register(r'^plans/(?P<plan_pk>[\d]+)/(?P<session_pk>[\d]+)/messages', views.PlanMessagesViewSet, base_name='planmessage')
+
 sessions_router = routers.NestedSimpleRouter(plan_router, r'plans', lookup='plan')
 sessions_router.register(r'sessions', views.PlanSessionViewSet, base_name='session')
 
@@ -19,7 +22,7 @@ sports_router.register(r'sports', views.SportViewSet, base_name='sport')
 clubs_router = routers.SimpleRouter()
 clubs_router.register(r'clubs', views.ClubMembershipViewSet, base_name='club')
 
-urlpatterns = plan_router.urls + sessions_router.urls + sports_router.urls + clubs_router.urls + plan_applications_router.urls
+urlpatterns = plan_router.urls + sessions_router.urls + sports_router.urls + clubs_router.urls + plan_applications_router.urls + plan_messages_router.urls
 
 # Add direct views
 urlpatterns += patterns('',

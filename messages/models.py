@@ -1,6 +1,5 @@
 from django.db import models
 from users.models import Athlete
-from sport.models import SportSession
 from users.notification import UserNotifications
 from django.core.urlresolvers import reverse
 from messages.tasks import notify_message
@@ -8,12 +7,14 @@ from messages.tasks import notify_message
 TYPE_MAIL = 'mail'
 TYPE_COMMENTS_PUBLIC = 'comments_public'
 TYPE_COMMENTS_PRIVATE = 'comments_private'
+TYPE_PLAN_SESSION = 'plan_session'
 
 class Conversation(models.Model):
   CONVERSATION_TYPES = (
     (TYPE_MAIL, 'Mail'),
     (TYPE_COMMENTS_PUBLIC, 'Public comments'),
     (TYPE_COMMENTS_PRIVATE, 'Private comments'),
+    (TYPE_PLAN_SESSION, 'Plan session'),
   )
 
   type = models.CharField(max_length=50, choices=CONVERSATION_TYPES)

@@ -1,10 +1,11 @@
 from __future__ import absolute_import
-from api.serializers import PlanSerializer, PlanSessionSerializer, PlanAppliedSerializer
+from api.serializers import PlanSerializer, PlanSessionSerializer, PlanAppliedSerializer, MessageSerializer
 from rest_framework import viewsets, views, response
 from django.core.exceptions import PermissionDenied
 from users.models import Athlete
 from plan.tasks import publish_plan
-from .mixins import PlanMixin
+from .mixins import PlanMixin, PlanSessionMixin
+from messages.models import Conversation, TYPE_PLAN_SESSION, Message
 
 class PlanViewSet(viewsets.ModelViewSet):
   serializer_class = PlanSerializer
@@ -61,3 +62,26 @@ class PlanAppliedViewSet(PlanMixin, viewsets.ModelViewSet):
   def get_queryset(self):
     self.load_plan()
     return self.plan.applications.all()
+
+
+class PlanMessagesViewSet(PlanSessionMixin, viewsets.ModelViewSet):
+  '''
+  Manages messages in a plan (future private comments)
+  '''
+  serializer_class = MessageSerializer
+
+  def get_queryset(self):
+    self.load_session()
+    if self.session.comments is None:
+      return []
+    return self.session.comments.messages.all()
+
+  def create(self, request, *args, **kwargs):
+    # Create conversation if it does not exists
+    self.load_session()
+    if self.session.comments is None:
+      self.session.comments = Conversation.objects.create(type=TYPE_PLAN_SESSION, )
+      self.session.save()
+
+    # Continue normal creation
+    return super(PlanMessagesViewSet, self).create(request, *args, **kwargs)
