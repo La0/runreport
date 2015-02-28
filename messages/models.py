@@ -111,3 +111,24 @@ class Message(models.Model):
 
   # Simple incremental revision on edits
   revision = models.IntegerField(default=1)
+
+  def copy(self, conversation):
+    '''
+    Copy a message to another conversation
+    Do not add if same message alredy exists
+    '''
+
+    msg, _ = conversation.messages.get_or_create(writer=self.writer, message=self.message)
+
+    return msg
+
+    # Check there is not already the same message
+    if conversation.messages.filter(writer=self.writer, message=self.message).count() > 0:
+      return False
+
+    # Copy the message
+    data = {
+      'writer' : self.writer,
+      'message' : self.message,
+    }
+    conversation.messages.create(**data)

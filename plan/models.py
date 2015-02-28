@@ -181,19 +181,35 @@ class PlanSession(models.Model):
     day,_ = SportDay.objects.get_or_create(week=week, date=self.date)
 
     # Check a session does not already have this plan session
-    if PlanSessionApplied.objects.filter(plan_session=self, sport_session__day=day).count() > 0:
-      raise Exception('Already applied')
+    try:
+      psa = PlanSessionApplied.objects.get(plan_session=self, sport_session__day=day)
+    except PlanSessionApplied.DoesNotExist:
+      psa = None
 
-    # Load session
-    defaults = {
-        'name' : self.name,
-        'distance' : self.distance,
-        'time' : self.time,
-    }
-    session,_ = SportSession.objects.get_or_create(sport=self.sport, day=day, type=self.type, defaults=defaults)
+    if psa:
+      # retrieve sport session
+      session = psa.sport_session
+    else:
+      # Load session
+      defaults = {
+          'name' : self.name,
+          'distance' : self.distance,
+          'time' : self.time,
+      }
+      session,_ = SportSession.objects.get_or_create(sport=self.sport, day=day, type=self.type, defaults=defaults)
 
-    # Apply plan session
-    PlanSessionApplied.objects.create(plan_session=self, sport_session=session, application=application)
+      # Apply plan session
+      PlanSessionApplied.objects.create(plan_session=self, sport_session=session, application=application)
+
+    # Copy all comments
+    if self.comments:
+
+      # Build conversation if needed
+      if not session.comments_private:
+        session.build_conversation('private')
+
+      for c in self.comments.messages.all():
+        c.copy(session.comments_private)
 
 
 PLAN_SESSION_APPLICATIONS = (

@@ -4,6 +4,7 @@ from . import SESSION_TYPES
 from interval.fields import IntervalField
 from django.utils.translation import ugettext_lazy as _
 import vinaigrette
+from messages.models import Conversation
 
 class Sport(models.Model):
   name = models.CharField(max_length=250)
@@ -68,3 +69,19 @@ class SportSession(models.Model):
 
     super(SportSession, self).save(*args, **kwargs)
 
+  def build_conversation(self, type):
+    '''
+    Init a conversation private|public
+    '''
+    if type not in ('public', 'private'):
+      raise Exception('Invalid conversation name')
+
+    name = 'comments_%s' % type
+    if getattr(self, name, None):
+      raise Exception('Conversation already exists')
+
+    conversation = Conversation.objects.create(type=name, session_user=self.day.week.user)
+    setattr(self, name, conversation)
+    self.save()
+
+    return conversation

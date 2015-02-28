@@ -51,10 +51,7 @@ class MessageSessionAdd(MessageSessionMixin, MessageReloadMixin, CreateView):
 
     # Build a conversation when none exists
     if not conversation:
-      name = 'comments_%s' % type
-      conversation = Conversation.objects.create(type=name, session_user=self.session.day.week.user)
-      setattr(self.session, name, conversation)
-      self.session.save()
+      conversation = self.session.build_conversation(type)
 
     # Save a new comment
     message = form.save(commit=False)
