@@ -31,13 +31,13 @@ class PlanIcsExporter(object):
           e = Event()
           e.name = session.name
 
-          e.description = session.sport.name + " - " + session.type
+          e.description = session.sport.name + " - " + session.type + "\n"
           # [TODO] check hour planned for training
           e.begin = datetime.combine(date,datetime.min.time()) + timedelta(hours=19)
           if session.distance is not None:
-            e.description += " \n " + session.distance
+            e.description += "Distance: %f \n " % session.distance
           if session.time is not None:
-            e.description += " \n " + session.time
+            e.description += "Duration: %s \n " % session.time
             e.duration = session.time
           else:
             e.duration = timedelta(hours=2)
