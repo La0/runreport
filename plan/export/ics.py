@@ -1,9 +1,6 @@
 from __future__ import absolute_import
 from django.contrib.sites.models import get_current_site
-from django.utils import formats
-from helpers import week_to_date
 from ics import Calendar, Event
-from StringIO import StringIO
 from datetime import datetime, timedelta
 
 
@@ -15,7 +12,7 @@ class PlanIcsExporter(object):
 
   def build_calendar(self, stream=None):
     '''
-    Build lines content from sessions
+    Build calendar from sessions
     '''
 
     cal = Calendar()
@@ -27,11 +24,7 @@ class PlanIcsExporter(object):
       for day_pos in range(0, 7):
         sessions = []
 
-        # Render date
         date = self.plan.calc_date(week_pos, day_pos)
-#        if date:
-#          date_fmt = formats.date_format(date, "SHORT_DATE_FORMAT")
-#          dates.append(Paragraph(date_fmt, self.dateStyle))
 
         # Render sessions using html template
         for session in self.plan.sessions.filter(week=week_pos, day=day_pos):
@@ -49,15 +42,8 @@ class PlanIcsExporter(object):
           else:
             e.duration = timedelta(hours=2)
 
-
           cal.events.append(e)
 
         week.append(sessions or '')
 
-
     stream.write(str(cal))
-
-     # if isinstance(stream, StringIO):
-      #  output = stream.getvalue()
-       # stream.close()
-        #return output

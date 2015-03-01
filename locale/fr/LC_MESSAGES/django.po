@@ -1510,7 +1510,7 @@ msgstr "Format pour applications de type calendrier"
 
 #: templates/plan/details.html:27
 msgid "Download ICS"
-msgstr "Télécharger PDF"
+msgstr "Télécharger ICS"
 
 #: templates/plan/details.html:33 templates/sport/calendar/month.html:55
 msgid "Monday"
