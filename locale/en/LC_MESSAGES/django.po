@@ -1432,6 +1432,14 @@ msgstr ""
 msgid "Download PDF"
 msgstr ""
 
+#: templates/plan/details.html:27
+msgid "calendar applications format"
+msgstr ""
+
+#: templates/plan/details.html:27
+msgid "Download ICS"
+msgstr ""
+
 #: templates/plan/details.html:33 templates/sport/calendar/month.html:55
 msgid "Monday"
 msgstr ""
