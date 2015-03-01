@@ -1,7 +1,5 @@
 from django.conf.urls import patterns, url, include
-from django.contrib.auth.decorators import login_required
 from club.views import *
-from django.views.generic.base import TemplateView
 
 user_patterns = patterns('',
   url(r'^role/?', ClubMemberRole.as_view(), name="club-member-role"),
@@ -27,6 +25,10 @@ club_patterns = patterns('',
   url(r'^/trainer/(?P<username>[\w_]+)/?$', ClubMembers.as_view(), {'type' : 'trainer', }, name="club-trainer", ),
   url(r'^/by-(?P<sort>[\w-]+)/?$', ClubMembers.as_view(), name="club-members-sort"),
   url(r'^/?$', ClubMembers.as_view(), name="club-members"),
+
+  # Subscriptions
+  url(r'^/subscriptions/upload/?$', ClubSubscriptionsUpload.as_view(), name="club-subscriptions-upload"),
+  url(r'^/subscriptions/(?P<csv_name>[\w]+)/?$', ClubSubscriptionsEditor.as_view(), name="club-subscriptions-editor"),
 
   # Groups
   url(r'^/groups/?', ClubGroupList.as_view(), name="club-groups"),

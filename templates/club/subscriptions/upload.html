@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h1>{{ _('Fast club subscriptions') }}</h1>
+
+  <h2>{{ _('Upload') }}</h2>
+  <div class="text-info">
+    {{ _('You can upload a CSV file with three columns separated by ; to quickly invite members to your club') }}
+    <ul>
+      <li>{{ _('Email') }}</li>
+      <li>{{ _('First name') }}</li>
+      <li>{{ _('Last name') }}</li>
+    </ul>
+  </div>
+
+  <form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ macros.input(form.csv) }}
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">
+        {{ _('Send') }}
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}

@@ -5,6 +5,7 @@ from users.models import Athlete
 from django.forms.models import modelformset_factory
 from django.core.exceptions import ValidationError
 from club.models import ClubGroup
+from django.utils.translation import ugettext_lazy as _
 
 class ClubMembershipForm(forms.ModelForm):
   def __init__(self, *args, **kwargs):
@@ -84,3 +85,20 @@ class ClubGroupForm(forms.ModelForm):
   class Meta:
     model = ClubGroup
     fields = ('name', 'slug', 'description')
+
+
+class CSVSubscriptionsForm(forms.Form):
+  csv = forms.FileField()
+
+  def clean_csv(self):
+    '''
+    Check the csv has 3 columns
+    '''
+    import csv
+    csv_source = self.cleaned_data['csv']
+    reader = csv.reader(csv_source, delimiter=';')
+    for line in reader:
+      if len(line) != 3:
+        raise forms.ValidationError(_('The CSV file has not 3 columns.'))
+
+    return csv_source

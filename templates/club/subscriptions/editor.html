@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h1>{{ _('Send invites to your athletes') }}</h1>
+
+  <table class="table table-striped">
+    <tr>
+      <th>{{ _('Email') }}</th>
+      <th>{{ _('First Name') }}</th>
+      <th>{{ _('Last Name') }}</th>
+    </tr>
+    {% for user in users %}
+    <tr>
+      <td>{{ user.email }}</td>
+      <td>{{ user.first_name }}</td>
+      <td>{{ user.last_name }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}
