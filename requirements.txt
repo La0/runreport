@@ -39,3 +39,4 @@ simplejson==3.6.2
 six==1.8.0
 sqlparse==0.1.11
 xlwt==0.7.5
+ics==0.3

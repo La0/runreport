@@ -8,7 +8,7 @@
     <div class="col-xs-1">
       <img src="{{ plan.creator.avatar.url }}" class="img-responsive img-rounded" />
     </div>
-    <div class="col-xs-9">
+    <div class="col-xs-6">
       <p>
         {{ _('Created by') }}
         <a href="{% url 'user-public-profile' plan.creator.username %}">
@@ -19,10 +19,15 @@
         {{ _('%s ago') % plan.created|timesince }}
       </p>
     </div>
-    <div class="col-xs-2 text-right">
+    <div class="col-xs-5 text-right">
       <a href="{% url 'plan-export-pdf' plan.pk %}" class="btn btn-info">
         <i class="icon-down-open"></i>
         {{ _('Download PDF') }}
+      </a>
+      <a href="{% url 'plan-export-ics' plan.pk %}" class="btn btn-info" title="{{ _('calendar applications format') }}">
+        <i class="icon-down-open"></i>
+        {{ _('Download ICS') }}
+        <i class="icon-calendar"></i>
       </a>
     </div>
   </div>
