@@ -201,6 +201,12 @@ class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, Proces
 
   def get_object(self):
     self.stats = self.club.load_stats()
+
+    # Do not allow role change to athlete
+    # for the manager
+    if self.request.user == self.club.manager:
+      self.stats = [s for s in self.stats if s['type'] != 'athlete']
+
     self.object = self.membership # needed for inherited classes
     return self.object
 

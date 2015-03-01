@@ -17,7 +17,7 @@ class ClubCreate(ClubCreateMixin, CreateView):
     club.save()
 
     # Setup user as staff member
-    ClubMembership.objects.create(club=club, user=self.request.user, role="staff")
+    ClubMembership.objects.create(club=club, user=self.request.user, role="trainer")
 
     # Use invite
     self.invite.use(club)

@@ -37,9 +37,11 @@
 		<button type="submit" class="btn btn-info pull-right" {% if user.demo %}disabled{% endif %}>{{ _('Save') }}</button>
 		{% endif %}
 
+    {% if user != club.manager %}
 		<hr />
 		<h4>{{ _('Danger zone') }}</h4>
 		<button type="submit" name="role_local" value="archive" class="role btn btn-danger pull-right {% if membership.role == "archive" or user.demo %}disabled{% endif %}">{{ _('Archive this account') }}</button>
+    {% endif %}
 	</form>
 </div>
 {% if user.demo %}
