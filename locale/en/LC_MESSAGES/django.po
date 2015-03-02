@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-02 22:22+0100\n"
+"POT-Creation-Date: 2015-03-02 23:07+0100\n"
 "PO-Revision-Date: 2015-02-09 17:42+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
@@ -185,6 +185,10 @@ msgstr ""
 #: plan/models.py:218
 msgid "Failed"
 msgstr "Missed"
+
+#: plan/tasks.py:35 templates/mail/sessions.html:3
+msgid "Your athlete's sessions today"
+msgstr ""
 
 #: sport/forms.py:46
 msgid "You must select a status for your training plan."
@@ -1122,7 +1126,7 @@ msgstr ""
 msgid "Training plan"
 msgstr ""
 
-#: templates/mail/plan.html:8
+#: templates/mail/plan.html:8 templates/mail/sessions.html:8
 #, python-format
 msgid "Hello %s,"
 msgstr ""

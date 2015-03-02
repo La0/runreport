@@ -302,6 +302,10 @@ CELERYBEAT_SCHEDULE = {
     'task': 'users.tasks.build_demos',
     'schedule': crontab(hour=1, minute=0),
   },
+  'send-sessions-report-every-morning': {
+    'task': 'plan.tasks.athletes_daily_sessions',
+    'schedule': crontab(hour=7, minute=30),
+  },
 }
 CELERY_ROUTES = {
   'tracks.tasks.tracks_import' : {
