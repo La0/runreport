@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% set page_title = member and 'Records de %s %s' % (member.first_name, member.last_name) or 'Mes Records' %}
+{% set page_title = member and _('Results of %(first)s %(last)s') % { 'first' : member.first_name, 'last' : member.last_name } or _('My Records') %}
 
 {% block js %}
 <script type="text/javascript">
@@ -29,14 +29,14 @@ h2, h3 {
 <div class="container">
 	<h2>
     {% if member %}
-    {{ _('Records of') }} {{ member.first_name }} {{ member.last_name }}
+    {{ _('Results of') }} {{ member.first_name }} {{ member.last_name }}
     <p class="actions pull-right">
       <a class="btn btn-success" href="{% url club-members club.slug %}">{{ _('Back to club') }}</a>
     </p>
     {% else %}
-    Mes records
+    {{ _('My results') }}
     <button id="add_record" class="modal-action btn btn-primary pull-right" data-date-format="yyyy-mm-dd" data-date="{{ today }}">
-      <span class="icon icon-plus"></span> {{ _('Add a record') }}
+      <span class="icon icon-plus"></span> {{ _('Add a result') }}
     </button>
     {% endif %}
   </h2>

@@ -109,7 +109,7 @@ def add_pages(request):
     submenu['menu'].append(_p(('user-public-profile', request.user.username), _('My public profile')))
     submenu['menu'].append(_p('stats', _('My statistics'), lazy=True))
     submenu['menu'].append(_p('vma', _('My paces')))
-    submenu['menu'].append(_p('user-races', _('My records')))
+    submenu['menu'].append(_p('user-races', _('My races')))
     submenu['menu'].append(_p('track-providers', _('My GPS services')))
     submenu['menu'].append('__SEPARATOR__')
     submenu['menu'].append(_p('logout', _('Logout')))

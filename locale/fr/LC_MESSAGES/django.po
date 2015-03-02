@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-13 00:18+0100\n"
-"PO-Revision-Date: 2015-02-13 00:19+0100\n"
+"POT-Creation-Date: 2015-03-02 18:36+0100\n"
+"PO-Revision-Date: 2015-03-02 18:39+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -136,8 +136,9 @@ msgid "My paces"
 msgstr "Mes allures"
 
 #: coach/menu.py:112
-msgid "My records"
-msgstr "Mes records"
+#| msgid "My paces"
+msgid "My races"
+msgstr "Mes résultats"
 
 #: coach/menu.py:113
 msgid "My GPS services"
@@ -165,25 +166,25 @@ msgstr "Français"
 msgid "English"
 msgstr "Anglais"
 
-#: plan/models.py:92
+#: plan/models.py:96
 #, python-format
 msgid "Training plan : %s"
 msgstr "Plan d'entraînement : %s"
 
-#: plan/models.py:97
+#: plan/models.py:101
 #, python-format
 msgid "Training plan - %s.pdf"
 msgstr "Plan d'entraînement - %s.pdf"
 
-#: plan/models.py:189
+#: plan/models.py:216
 msgid "Applied"
 msgstr "A faire"
 
-#: plan/models.py:190
+#: plan/models.py:217
 msgid "Done"
 msgstr "Fait"
 
-#: plan/models.py:191
+#: plan/models.py:218
 msgid "Failed"
 msgstr "Manqué"
 
@@ -207,11 +208,11 @@ msgstr "course"
 msgid "rest"
 msgstr "repos"
 
-#: sport/models/sport.py:46
+#: sport/models/sport.py:47
 msgid "session comment"
 msgstr "Commentaire"
 
-#: sport/models/sport.py:48 templates/_macros.html:146
+#: sport/models/sport.py:49 templates/_macros.html:146
 msgid "Race category"
 msgstr "Type de course"
 
@@ -670,7 +671,7 @@ msgstr "Actions"
 
 #: templates/club/manage.html:84 templates/friends/home.html:27
 #: templates/messages/_list.html:62 templates/messages/delete.html:20
-#: templates/sport/session/edit.html:106
+#: templates/sport/session/edit.html:116
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -678,7 +679,7 @@ msgstr "Supprimer"
 msgid "There are no public link for your club."
 msgstr "Aucun lien public pour votre club."
 
-#: templates/club/manage.html:112 templates/club/role.html:47
+#: templates/club/manage.html:112 templates/club/role.html:49
 msgid "Demo account"
 msgstr "Compte de Démo"
 
@@ -830,19 +831,19 @@ msgid "Available places"
 msgstr "Places disponibles"
 
 #: templates/club/role.html:37 templates/page/detail.html:52
-#: templates/sport/session/edit.html:104 templates/users/garmin.html:45
+#: templates/sport/session/edit.html:114 templates/users/garmin.html:45
 msgid "Save"
 msgstr "Sauver"
 
-#: templates/club/role.html:41
+#: templates/club/role.html:42
 msgid "Danger zone"
 msgstr "Zone dangereuse"
 
-#: templates/club/role.html:42
+#: templates/club/role.html:43
 msgid "Archive this account"
 msgstr "Archiver ce compte"
 
-#: templates/club/role.html:48
+#: templates/club/role.html:50
 msgid "Edition is disabled for the demo."
 msgstr "L'édition est désactivée pour la démo."
 
@@ -1241,7 +1242,7 @@ msgstr "Distance"
 msgid "No session"
 msgstr "Pas de séance"
 
-#: templates/mail/report.html:51 templates/sport/session/edit.html:91
+#: templates/mail/report.html:51 templates/sport/session/edit.html:101
 #: templates/sport/week/_stats.html:5
 msgid "Sport"
 msgstr "Sport"
@@ -1508,41 +1509,51 @@ msgstr "Télécharger PDF"
 msgid "calendar applications format"
 msgstr "Format pour applications de type calendrier"
 
-#: templates/plan/details.html:27
+#: templates/plan/details.html:29
 msgid "Download ICS"
 msgstr "Télécharger ICS"
 
-#: templates/plan/details.html:33 templates/sport/calendar/month.html:55
+#: templates/plan/details.html:38 templates/sport/calendar/month.html:57
 msgid "Monday"
 msgstr "Lundi"
 
-#: templates/plan/details.html:34 templates/sport/calendar/month.html:56
+#: templates/plan/details.html:39 templates/sport/calendar/month.html:58
 msgid "Tuesday"
 msgstr "Mardi"
 
-#: templates/plan/details.html:35 templates/sport/calendar/month.html:57
+#: templates/plan/details.html:40 templates/sport/calendar/month.html:59
 msgid "Wednesday"
 msgstr "Mercredi"
 
-#: templates/plan/details.html:36 templates/sport/calendar/month.html:58
+#: templates/plan/details.html:41 templates/sport/calendar/month.html:60
 msgid "Thursday"
 msgstr "Jeudi"
 
-#: templates/plan/details.html:37 templates/sport/calendar/month.html:59
+#: templates/plan/details.html:42 templates/sport/calendar/month.html:61
 msgid "Friday"
 msgstr "Vendredi"
 
-#: templates/plan/details.html:38 templates/sport/calendar/month.html:60
+#: templates/plan/details.html:43 templates/sport/calendar/month.html:62
 msgid "Saturday"
 msgstr "Samedi"
 
-#: templates/plan/details.html:39 templates/sport/calendar/month.html:61
+#: templates/plan/details.html:44 templates/sport/calendar/month.html:63
 msgid "Sunday"
 msgstr "Dimanche"
 
-#: templates/plan/details.html:72
+#: templates/plan/details.html:77
 msgid "No weeks available for this plan."
 msgstr "Pas de semaines disponibles pour ce plan."
+
+#: templates/sport/calendar/_day.xs.html:4
+#: templates/sport/calendar/month.html:73
+msgid "Today"
+msgstr "Aujourd'hui"
+
+#: templates/sport/calendar/_day.xs.html:9
+#: templates/sport/calendar/month.html:89
+msgid "Plan from trainer"
+msgstr "Plan de l'entraîneur"
 
 #: templates/sport/calendar/month.html:3
 #, python-format
@@ -1561,21 +1572,15 @@ msgstr "Voir son profil"
 msgid "CSV Export"
 msgstr "Export CSV"
 
-#: templates/sport/calendar/month.html:42
-#| msgid "My friends"
+#: templates/sport/calendar/month.html:43
 msgid "Hide friends"
 msgstr "Cacher mes amis"
 
-#: templates/sport/calendar/month.html:46
-#| msgid "My friends"
+#: templates/sport/calendar/month.html:47
 msgid "Show friends"
 msgstr "Voir mes amis"
 
-#: templates/sport/calendar/month.html:84
-msgid "Plan from trainer"
-msgstr "Plan de l'entraîneur"
-
-#: templates/sport/calendar/month.html:98
+#: templates/sport/calendar/month.html:103
 msgid "friends sessions"
 msgstr "séance d'amis"
 
@@ -1705,19 +1710,19 @@ msgstr "Séance sauvegardée."
 msgid "has planned a "
 msgstr "a prévu"
 
-#: templates/sport/session/edit.html:104
+#: templates/sport/session/edit.html:114
 msgid "this session"
 msgstr "cette séance"
 
-#: templates/sport/session/edit.html:116
+#: templates/sport/session/edit.html:126
 msgid "Map"
 msgstr "Carte"
 
-#: templates/sport/session/edit.html:122
+#: templates/sport/session/edit.html:132
 msgid "Change session"
 msgstr "Changer la séance"
 
-#: templates/sport/session/edit.html:150
+#: templates/sport/session/edit.html:160
 msgid "Comments"
 msgstr "Commentaires"
 
@@ -2283,17 +2288,35 @@ msgstr "Les statistiques de %s ne sont pas disponible "
 msgid "Infos for trainers"
 msgstr "Informations pour entraîneur"
 
+#: templates/users/races.html:3
+#, python-format
+#| msgid "Write to %(first)s %(last)s"
+msgid "Results of %(first)s %(last)s"
+msgstr "Résultats de %(first)s  %(last)s"
+
+#: templates/users/races.html:3
+#| msgid "My records"
+msgid "My Records"
+msgstr "Mes résultats"
+
 #: templates/users/races.html:32
-msgid "Records of"
-msgstr "Records de"
+#| msgid "Records of"
+msgid "Results of"
+msgstr "Resultats de"
 
 #: templates/users/races.html:34
 msgid "Back to club"
 msgstr "Retour au club"
 
+#: templates/users/races.html:37
+#| msgid "My records"
+msgid "My results"
+msgstr "Mes résultats"
+
 #: templates/users/races.html:39
-msgid "Add a record"
-msgstr "Ajouter un record"
+#| msgid "Add a record"
+msgid "Add a result"
+msgstr "Ajouter un résultat"
 
 #: templates/users/races.html:57
 msgid "parts"
@@ -2570,7 +2593,7 @@ msgid "Uncategorized"
 msgstr "Sans Catégorie"
 
 #: Sport/name:3
-msgid "Course à pied"
+msgid "Running"
 msgstr "Course à pied"
 
 #: Sport/name:4
@@ -2590,8 +2613,8 @@ msgid "Treadmill Running"
 msgstr "Course sur tapis"
 
 #: Sport/name:8
-msgid "Vélo"
-msgstr "Vélo"
+msgid "Cycling"
+msgstr "Cyclisme sur "
 
 #: Sport/name:9
 msgid "Cyclocross"
@@ -2646,11 +2669,11 @@ msgid "Strength Training"
 msgstr "Entraînement de force"
 
 #: Sport/name:22
-msgid "Randonnée"
-msgstr "Randonnée"
+msgid "hiking"
+msgstr "randonnée"
 
 #: Sport/name:23
-msgid "Natation"
+msgid "Swimming"
 msgstr "Natation"
 
 #: Sport/name:24
@@ -2662,7 +2685,9 @@ msgid "Open Water Swimming"
 msgstr "Natation en mer"
 
 #: Sport/name:26
-msgid "Marche"
+#, fuzzy
+#| msgid "Walking"
+msgid "Walking"
 msgstr "Marche"
 
 #: Sport/name:27
@@ -2696,8 +2721,8 @@ msgid "Moto"
 msgstr "Moto"
 
 #: Sport/name:34
-msgid "Autre"
-msgstr "Autre"
+msgid "Other"
+msgstr ""
 
 #: Sport/name:35
 msgid "Backcountry Skiing/Snowboarding"
@@ -2808,39 +2833,3 @@ msgstr ""
 #| msgid "Walking"
 msgid "Walk"
 msgstr "Marche"
-
-#~ msgid "Running"
-#~ msgstr "Course à pied"
-
-#~ msgid "Cycling"
-#~ msgstr "Cyclisme sur "
-
-#~ msgid "hiking"
-#~ msgstr "randonnée"
-
-#~ msgid "Swimming"
-#~ msgstr "Natation"
-
-#~ msgid "Public members"
-#~ msgstr "Membres publics"
-
-#~ msgid "Your public profile"
-#~ msgstr "Votre profil public"
-
-#~ msgid "Only you, your friends & trainers can view your public profile"
-#~ msgstr "Seul vous, vos amis & entraîneurs peuvent voir votre profil public."
-
-#~ msgid "Every club member can view your public profile"
-#~ msgstr "Tous les membres de vos clubs peuvent voir votre profil public"
-
-#~ msgid "Any visitor can view your public profile"
-#~ msgstr "Tous les visiteurs peuvent voir votre profil public"
-
-#~ msgid "profile visibility"
-#~ msgstr "visibilité globale du profil"
-
-#~ msgid "Indicates if your public profile is visible, and by who."
-#~ msgstr "Détermine si votre page de profil public est visible et par qui."
-
-#~ msgid "Development Version"
-#~ msgstr "Version de Développement"
