@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-02 18:36+0100\n"
+"POT-Creation-Date: 2015-03-02 22:22+0100\n"
 "PO-Revision-Date: 2015-02-09 17:42+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
@@ -1159,13 +1159,13 @@ msgstr ""
 msgid "View week"
 msgstr ""
 
-#: templates/mail/report.html:30 templates/sport/session/list.html:38
+#: templates/mail/report.html:30 templates/sport/session/list.html:52
 #: templates/sport/week/_stats.html:6 templates/tracks/_session.html:32
 #: templates/tracks/_session.html.py:95
 msgid "Time"
 msgstr ""
 
-#: templates/mail/report.html:34 templates/sport/session/list.html:49
+#: templates/mail/report.html:34 templates/sport/session/list.html:63
 #: templates/sport/week/_stats.html:7 templates/tracks/_session.html:44
 #: templates/tracks/_session.html.py:93
 msgid "Distance"
@@ -1571,7 +1571,7 @@ msgstr ""
 msgid "This week's report is being sent to your trainers"
 msgstr ""
 
-#: templates/sport/day/edit.html:124 templates/sport/session/list.html:108
+#: templates/sport/day/edit.html:124 templates/sport/session/list.html:122
 msgid "Add a session"
 msgstr ""
 
@@ -1652,19 +1652,27 @@ msgstr ""
 msgid "Comments"
 msgstr ""
 
-#: templates/sport/session/list.html:30 templates/sport/session/list.html:75
+#: templates/sport/session/list.html:30 templates/sport/session/list.html:89
 msgid "No session name"
 msgstr ""
 
-#: templates/sport/session/list.html:41
+#: templates/sport/session/list.html:38
+msgid "Plan"
+msgstr ""
+
+#: templates/sport/session/list.html:40
+msgid "created by"
+msgstr ""
+
+#: templates/sport/session/list.html:55
 msgid "No time"
 msgstr ""
 
-#: templates/sport/session/list.html:56
+#: templates/sport/session/list.html:70
 msgid "No Distance"
 msgstr ""
 
-#: templates/sport/session/list.html:113
+#: templates/sport/session/list.html:127
 msgid "No sessions"
 msgstr ""
 

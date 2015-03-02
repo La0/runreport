@@ -30,6 +30,20 @@
       <i>{{ _('No session name') }}</i>
       {% endif %}
     </h4>
+
+    {% with session.plan_session as psa %}
+    {% if psa %}
+    <div class="plan_session">
+      <i class="icon-plan-session"></i>
+      {{ _('Plan') }}
+      <a href="{% url 'plan' psa.plan_session.plan.pk %}">{{ psa.plan_session.plan.name }}</a>
+      {{ _('created by') }}
+      {% with psa.plan_session.plan.creator as creator %}
+      <a href="{% url 'user-public-profile' creator.username %}">{{ creator.first_name }} {{ creator.last_name }}</a>
+      {% endwith %}
+    </div>
+    {% endif %}
+    {% endwith %}
   </div>
 
   <div class="col-sm-3 col-md-2">

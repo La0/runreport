@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-02 18:36+0100\n"
-"PO-Revision-Date: 2015-03-02 18:39+0100\n"
+"POT-Creation-Date: 2015-03-02 22:22+0100\n"
+"PO-Revision-Date: 2015-03-02 22:23+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -136,7 +136,6 @@ msgid "My paces"
 msgstr "Mes allures"
 
 #: coach/menu.py:112
-#| msgid "My paces"
 msgid "My races"
 msgstr "Mes résultats"
 
@@ -1226,13 +1225,13 @@ msgstr "Bonne course !"
 msgid "View week"
 msgstr "Voir semaine"
 
-#: templates/mail/report.html:30 templates/sport/session/list.html:38
+#: templates/mail/report.html:30 templates/sport/session/list.html:52
 #: templates/sport/week/_stats.html:6 templates/tracks/_session.html:32
 #: templates/tracks/_session.html.py:95
 msgid "Time"
 msgstr "Temps"
 
-#: templates/mail/report.html:34 templates/sport/session/list.html:49
+#: templates/mail/report.html:34 templates/sport/session/list.html:63
 #: templates/sport/week/_stats.html:7 templates/tracks/_session.html:44
 #: templates/tracks/_session.html.py:93
 msgid "Distance"
@@ -1644,7 +1643,7 @@ msgstr "Rapport en cours d'envoi"
 msgid "This week's report is being sent to your trainers"
 msgstr "Ce rapport de semaine est en train d'être envoyé à vos entraineurs"
 
-#: templates/sport/day/edit.html:124 templates/sport/session/list.html:108
+#: templates/sport/day/edit.html:124 templates/sport/session/list.html:122
 msgid "Add a session"
 msgstr "Ajouter une séance"
 
@@ -1726,19 +1725,28 @@ msgstr "Changer la séance"
 msgid "Comments"
 msgstr "Commentaires"
 
-#: templates/sport/session/list.html:30 templates/sport/session/list.html:75
+#: templates/sport/session/list.html:30 templates/sport/session/list.html:89
 msgid "No session name"
 msgstr "Pas de nom de séance"
 
-#: templates/sport/session/list.html:41
+#: templates/sport/session/list.html:38
+msgid "Plan"
+msgstr "Plan"
+
+#: templates/sport/session/list.html:40
+#| msgid "Created by"
+msgid "created by"
+msgstr "crée par"
+
+#: templates/sport/session/list.html:55
 msgid "No time"
 msgstr "Pas de temps"
 
-#: templates/sport/session/list.html:56
+#: templates/sport/session/list.html:70
 msgid "No Distance"
 msgstr "Pas de distance"
 
-#: templates/sport/session/list.html:113
+#: templates/sport/session/list.html:127
 msgid "No sessions"
 msgstr "Pas de séances"
 
@@ -2290,17 +2298,14 @@ msgstr "Informations pour entraîneur"
 
 #: templates/users/races.html:3
 #, python-format
-#| msgid "Write to %(first)s %(last)s"
 msgid "Results of %(first)s %(last)s"
 msgstr "Résultats de %(first)s  %(last)s"
 
 #: templates/users/races.html:3
-#| msgid "My records"
 msgid "My Records"
 msgstr "Mes résultats"
 
 #: templates/users/races.html:32
-#| msgid "Records of"
 msgid "Results of"
 msgstr "Resultats de"
 
@@ -2309,12 +2314,10 @@ msgid "Back to club"
 msgstr "Retour au club"
 
 #: templates/users/races.html:37
-#| msgid "My records"
 msgid "My results"
 msgstr "Mes résultats"
 
 #: templates/users/races.html:39
-#| msgid "Add a record"
 msgid "Add a result"
 msgstr "Ajouter un résultat"
 

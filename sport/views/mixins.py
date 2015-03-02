@@ -226,6 +226,7 @@ class SportSessionForms(object):
     # Load existing sessions
     if day and day.sessions.count() > 0:
       sessions = day.sessions.all().order_by('created')
+      sessions = sessions.prefetch_related('sport', 'track', 'plan_session', 'plan_session__plan_session__plan')
       return [SportSessionForm(default_sport, date, post_data, instance=s) for s in sessions]
 
     # At least one empty form
