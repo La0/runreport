@@ -25,7 +25,8 @@ def athletes_daily_sessions():
   memberships = ClubMembership.objects.filter(role='trainer')
   for m in memberships:
     # List athletes sessions for today
-    sessions = SportSession.objects.filter(day__date=today, day__week__user=m.athletes)
+    users = [cm.user for cm in m.athletes]
+    sessions = SportSession.objects.filter(day__date=today, day__week__user__in=users)
     if not sessions:
       continue
 
