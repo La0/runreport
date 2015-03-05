@@ -189,6 +189,13 @@ class PlanSession(models.Model):
     if psa:
       # retrieve sport session
       session = psa.sport_session
+
+      # Update applied session
+      if psa.status == 'applied':
+        psa.sport_session.name = self.name
+        psa.sport_session.distance = self.distance
+        psa.sport_session.time = self.time
+        psa.sport_session.save()
     else:
       # Load session
       defaults = {
