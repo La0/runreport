@@ -83,6 +83,7 @@ class Athlete(AthleteBase):
 
   # Mail
   auto_send = models.BooleanField(_('auto send emails'), default=False)
+  daily_trainer_mail = models.BooleanField(_('Daily trainer mail'), default=True)
   language = models.CharField(_('language used'), max_length=2, choices=settings.LANGUAGES, default='fr')
 
   # Garmin
@@ -186,7 +187,7 @@ class Athlete(AthleteBase):
     # Save the resulting image
     img.save(self.avatar.path, 'png')
 
-  def is_trainer(self, athlete):
+  def is_trainer_of(self, athlete):
     '''
     Simple check to see if this user
     is the trainer of an athlete
@@ -195,6 +196,11 @@ class Athlete(AthleteBase):
       if self in m.trainers.all():
         return True
     return False
+
+  @property
+  def is_trainer(self):
+    # Current user is a trainer in any club ?
+    return self.memberships.filter(role='trainer').count() > 0
 
   def get_visitor_rights(self, visitor):
     '''

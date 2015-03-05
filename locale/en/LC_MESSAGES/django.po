@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-02 23:07+0100\n"
+"POT-Creation-Date: 2015-03-05 22:29+0100\n"
 "PO-Revision-Date: 2015-02-09 17:42+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
@@ -186,7 +186,7 @@ msgstr ""
 msgid "Failed"
 msgstr "Missed"
 
-#: plan/tasks.py:35 templates/mail/sessions.html:3
+#: plan/tasks.py:36 templates/mail/sessions.html:3
 msgid "Your athlete's sessions today"
 msgstr ""
 
@@ -2070,7 +2070,7 @@ msgid "Password"
 msgstr ""
 
 #: templates/users/preferences.html:92 templates/users/preferences.html:151
-#: templates/users/preferences.html:162 templates/users/preferences.html:199
+#: templates/users/preferences.html:165 templates/users/preferences.html:202
 msgid "Update"
 msgstr ""
 
@@ -2121,16 +2121,16 @@ msgstr ""
 msgid "View your public profile"
 msgstr ""
 
-#: templates/users/preferences.html:171
+#: templates/users/preferences.html:174
 #, python-format
 msgid "%s trainer"
 msgstr ""
 
-#: templates/users/preferences.html:206
+#: templates/users/preferences.html:209
 msgid "You can change your password using"
 msgstr ""
 
-#: templates/users/preferences.html:207
+#: templates/users/preferences.html:210
 msgid "this page"
 msgstr ""
 
@@ -2381,50 +2381,54 @@ msgid "auto send emails"
 msgstr "automatically send reports to your trainers at the end of weeks"
 
 #: users/models.py:86
+msgid "Daily trainer mail"
+msgstr ""
+
+#: users/models.py:87
 msgid "language used"
 msgstr ""
 
-#: users/models.py:89
+#: users/models.py:90
 msgid "garmin login"
 msgstr ""
 
-#: users/models.py:90
+#: users/models.py:91
 msgid "garmin password"
 msgstr ""
 
-#: users/models.py:96
+#: users/models.py:97
 msgid "demo user"
 msgstr ""
 
-#: users/models.py:99
+#: users/models.py:100
 msgid "profile picture"
 msgstr ""
 
-#: users/models.py:102
+#: users/models.py:103
 msgid "profile picture visibility"
 msgstr ""
 
-#: users/models.py:103
+#: users/models.py:104
 msgid "races visibility"
 msgstr ""
 
-#: users/models.py:104
+#: users/models.py:105
 msgid "records visibility"
 msgstr ""
 
-#: users/models.py:105
+#: users/models.py:106
 msgid "stats visibility"
 msgstr ""
 
-#: users/models.py:106
+#: users/models.py:107
 msgid "calendar visibility"
 msgstr ""
 
-#: users/models.py:107
+#: users/models.py:108
 msgid "comments visibility"
 msgstr ""
 
-#: users/models.py:108
+#: users/models.py:109
 msgid "tracks visibility"
 msgstr ""
 

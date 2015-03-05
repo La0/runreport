@@ -156,6 +156,9 @@ $(function(){
 
       <div class="tab-pane" id="mails">
         {{ macros.input_bool(form.auto_send, None, None, 4, 8) }}
+        {% if user.is_trainer %}
+          {{ macros.input_bool(form.daily_trainer_mail, None, None, 4, 8) }}
+        {% endif %}
         {{ macros.input(form.language, None, None, 4, 8) }}
         <div class="form-group">
           <div class="col-sm-offset-4 col-sm-8">

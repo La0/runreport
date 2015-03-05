@@ -22,7 +22,7 @@ def athletes_daily_sessions():
   from datetime import date
 
   today = date.today()
-  memberships = ClubMembership.objects.filter(role='trainer')
+  memberships = ClubMembership.objects.filter(role='trainer', user__daily_trainer_mail=True)
   for m in memberships:
     # List athletes sessions for today
     users = [cm.user for cm in m.athletes]

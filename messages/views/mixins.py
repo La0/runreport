@@ -77,7 +77,7 @@ class MessageSessionMixin(object):
   def is_trainer(self):
     # User is trainer of session owner ?
     session_user = self.session.day.week.user
-    return self.request.user.is_trainer(session_user)
+    return self.request.user.is_trainer_of(session_user)
 
   def is_owner(self):
     # User is session owner
