@@ -33,11 +33,11 @@ ul.nopill {
   width: 100%;
 }
 
-.navbar-brand img.visible-lg {
+.navbar-brand img.line {
   min-width: 309px;
 }
 
-.navbar-brand img.hidden-lg {
+.navbar-brand img.block {
   min-width: 70px;
 }
 

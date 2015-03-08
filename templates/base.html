@@ -38,8 +38,12 @@
 		<div class="container">
 			<div class="navbar-header">
         <a href="/" class="navbar-brand">
-          <img src="/medias/img/logo_ligne.svg" alt="Run Report" class="visible-lg"/>
-          <img src="/medias/img/logo_bloc.svg" alt="Run Report" class="hidden-lg"/>
+          {% if user.is_authenticated() %}
+          <img src="/medias/img/logo_bloc.svg" alt="Run Report" class="block" />
+          {% else %}
+          <img src="/medias/img/logo_ligne.svg" alt="Run Report" class="line visible-lg"/>
+          <img src="/medias/img/logo_bloc.svg" alt="Run Report" class="block hidden-lg"/>
+          {% endif %}
         </a>
 				<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
 					<span class="icon-bar"></span>
