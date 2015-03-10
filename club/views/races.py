@@ -13,7 +13,9 @@ class ClubRaces(ClubMixin, ListView):
   def get_queryset(self):
     # Fetch my athletes
     # TODO: put in query manager
-    users = [m.user for m in ClubMembership.objects.filter(club=self.club, trainers=self.request.user, role='athlete')]
+    members = ClubMembership.objects.filter(club=self.club, trainers=self.request.user)
+    members = members.exclude(role__in=('archive', 'prospect'))
+    users = [m.user for m in members]
 
     # Add myself to view my races
     users.append(self.request.user)
