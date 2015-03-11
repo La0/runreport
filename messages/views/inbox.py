@@ -1,6 +1,6 @@
 from django.views.generic import ListView
 from django.db.models import Q, Max
-from messages.models import Conversation
+from messages.models import Conversation, TYPE_PLAN_SESSION
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
@@ -15,6 +15,7 @@ class MessageInbox(ListView):
       Q(session_user=self.request.user) | \
       Q(messages__writer=self.request.user) \
     )
+    conversations = conversations.exclude(type=TYPE_PLAN_SESSION)
     conversations = conversations.prefetch_related('messages', 'messages__writer')
     # Annotate with last message date
     conversations = conversations.annotate(last_message=Max('messages__created'))

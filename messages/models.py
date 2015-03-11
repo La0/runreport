@@ -34,7 +34,7 @@ class Conversation(models.Model):
     return reverse('user-calendar-day', args=(session.day.week.user.username, dt.year, dt.month, dt.day))
 
   def get_session(self):
-    if self.type == TYPE_MAIL:
+    if self.type in (TYPE_MAIL, TYPE_PLAN_SESSION):
       raise Exception("No session on conversation typed : %s" % self.type)
 
     # Check the session is attached
