@@ -1,9 +1,10 @@
-from django.views.generic import FormView, TemplateView
+from django.views.generic import FormView
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from .mixins import ClubMixin
-from club.forms import CSVSubscriptionsForm
+from club.forms import CSVSubscriptionsForm, CSVAthleteFormset
+from club.tasks import subscribe_athlete
 import tempfile
 import csv
 import os
@@ -37,22 +38,26 @@ class ClubSubscriptionsUpload(ClubMixin, FormView):
   def get_success_url(self):
     return reverse('club-subscriptions-editor', args=(self.club.slug, self.name, ))
 
-class ClubSubscriptionsEditor(ClubMixin, TemplateView):
+class ClubSubscriptionsEditor(ClubMixin, FormView):
   template_name = 'club/subscriptions/editor.html'
+  form_class = CSVAthleteFormset
 
-  def load_csv(self):
+  def get_success_url(self):
+    return reverse('club-manage', args=(self.club.slug, ))
+
+  def get_initial(self):
     '''
     Load CSV file specified in kwargs
     '''
     # Check file
     name = '%d.%s%s' % (self.request.user.pk, self.kwargs['csv_name'], CSV_SUFFIX)
-    path = os.path.join(CSV_DIR, name)
-    if not os.path.exists(path):
+    self.path = os.path.join(CSV_DIR, name)
+    if not os.path.exists(self.path):
       raise PermissionDenied
 
     # Read file
     users = []
-    with open(path, 'r') as csv_source:
+    with open(self.path, 'r') as csv_source:
       reader = csv.reader(csv_source, delimiter=';')
       for line in reader:
         users.append({
@@ -61,11 +66,18 @@ class ClubSubscriptionsEditor(ClubMixin, TemplateView):
           'last_name' : line[2],
         })
 
-    return {
-      'users' : users,
-    }
+    return users
 
-  def get_context_data(self, *args, **kwargs):
-    context = super(ClubSubscriptionsEditor, self).get_context_data(*args, **kwargs)
-    context.update(self.load_csv())
-    return context
+  def form_valid(self, formset):
+    for user in formset:
+      data = user.cleaned_data
+      if 'email' not in data:
+        continue # Skip extras
+
+      # Start subscriptions tasks
+      subscribe_athlete.delay(self.club, **data)
+
+    # Remove csv file
+    os.remove(self.path)
+
+    return super(ClubSubscriptionsEditor, self).form_valid(formset)
