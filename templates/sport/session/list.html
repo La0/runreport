@@ -35,6 +35,15 @@
     {% if psa %}
     <div class="plan_session">
       <i class="icon-plan-session"></i>
+
+      {% if psa.status == 'applied' %}
+      <span class="label label-info">{{ _('Applied') }}</span>
+      {% elif psa.status == 'done' %}
+      <span class="label label-success">{{ _('Done') }}</span>
+      {% elif psa.status == 'failed' %}
+      <span class="label label-danger">{{ _('Failed') }}</span>
+      {% endif %}
+
       {{ _('Plan') }}
       <a href="{% url 'plan' psa.plan_session.plan.pk %}">{{ psa.plan_session.plan.name }}</a>
       {{ _('created by') }}

@@ -33,6 +33,25 @@
             {% if s.distance %}
             <span class="label">{{ _('Distance') }}</span> {{s.distance|floatformat(2)}} km
             {% endif %}
+
+            {% with s.plan_session as psa %}
+            {% if psa %}
+            <p>
+              {{ _('Plan') }}
+
+              {% if psa.status == 'applied' %}
+              <strong>{{ _('Applied') }}</strong>
+              {% elif psa.status == 'done' %}
+              <strong>{{ _('Done') }}</strong>
+              {% elif psa.status == 'failed' %}
+              <strong>{{ _('Failed') }}</strong>
+              {% endif %}
+
+              <a href="https://{{ site.domain }}{% url 'plan' psa.plan_session.plan.pk %}">{{ psa.plan_session.plan.name }}</a>
+            </p>
+            {% endif %}
+            {% endwith %}
+
           </div>
           {% endfor %}
         {% else %}
