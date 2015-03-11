@@ -166,6 +166,19 @@ class PlanSession(models.Model):
 
     return PlanSession.objects.create(**data)
 
+  def _build_day(self, user, date):
+    # Internal used to create week & day hierarchy
+    # Used on PSA move too (so date need to be specified)
+
+    # Load week
+    w, year = date_to_week(date)
+    week,_ = SportWeek.objects.get_or_create(year=year, week=w, user=user)
+
+    # Load day
+    day,_ = SportDay.objects.get_or_create(week=week, date=date)
+
+    return day
+
   def apply(self, application):
     '''
     Apply this plan session to a user
@@ -173,12 +186,7 @@ class PlanSession(models.Model):
     if not self.date:
       raise Exception('No date to apply this session')
 
-    # Load week
-    w, year = date_to_week(self.date)
-    week,_ = SportWeek.objects.get_or_create(year=year, week=w, user=application.user)
-
-    # Load day
-    day,_ = SportDay.objects.get_or_create(week=week, date=self.date)
+    day = self._build_day(application.user, self.date)
 
     # Check a session does not already have this plan session
     try:
@@ -268,6 +276,27 @@ class PlanSessionApplied(models.Model):
   created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
   trainer_notified = models.DateTimeField(null=True, blank=True)
+
+  def move(self, date):
+    '''
+    Move to another day the plan session application
+    '''
+    # Retrieve new day
+    day = self.plan_session._build_day(self.application.user, date)
+
+    # Build session
+    defaults = {
+      'name' : self.plan_session.name,
+      'distance' : self.plan_session.distance,
+      'time' : self.plan_session.time,
+    }
+    session,_ = SportSession.objects.exclude(plan_session__isnull=False).get_or_create(sport=self.plan_session.sport, day=day, type=self.plan_session.type, defaults=defaults)
+
+    # Update session attached
+    self.sport_session = session
+    self.save()
+
+    return session
 
   def notify_trainer(self):
     '''

@@ -10,6 +10,8 @@ urlpatterns = patterns('',
   # Export plan as ics calendar file
   url(r'^(?P<pk>\d+)/export/ics/?', PlanIcsExport.as_view(), name="plan-export-ics"),
 
+  # Move a plan session
+  url(r'^move/session/?', MovePlanSession.as_view(), name='plan-session-move'),
 
   # View plan (read only for athletes)
   url(r'^(?P<pk>\d+)/?', PlanDetails.as_view(), name="plan"),
