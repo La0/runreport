@@ -11,6 +11,18 @@ body {
 	font-weight: 400;
 }
 
+.jump {
+  font-size: 3em;
+}
+
+.jump a {
+  color: white;
+}
+
+.jump a:hover {
+  text-shadow: 0 0 10px #CCC;
+}
+
 .intro-header {
 	padding-bottom: 50px;
 	color: #f8f8f8;
@@ -166,6 +178,12 @@ body {
           <div class="col-sm-4 col-sm-offset-4 demo">
             <a href="{% url login %}" class="btn btn-default"><i class="icon-fire"></i> <span class="">{{ _('Try the demo') }}</span></a>
           </div>
+
+          <div class="col-xs-12 text-center jump">
+            <a href="#marketing" class="do-tooltip" title="{{ _('More information') }}">
+              <i class="icon-down-open"></i>
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -176,10 +194,10 @@ body {
 <!-- /.intro-header -->
 
 <div class="content-section-a">
-
+  <a name="marketing"></a>
   <div class="container">
 
-    <div class="row">
+    <div class="row" >
       <div class="col-lg-5 col-sm-6">
         <hr class="section-heading-spacer">
         <div class="clearfix"></div>

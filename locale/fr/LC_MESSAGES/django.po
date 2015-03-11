@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-05 22:29+0100\n"
-"PO-Revision-Date: 2015-03-05 22:30+0100\n"
+"POT-Creation-Date: 2015-03-11 12:10+0100\n"
+"PO-Revision-Date: 2015-03-11 12:11+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -47,11 +47,11 @@ msgid "View clubs"
 msgstr "Voir les clubs"
 
 #: coach/menu.py:26 templates/club/create.html:21
-#: templates/landing/index.html:217 templates/mail/base.html:37
+#: templates/landing/index.html:235 templates/mail/base.html:37
 msgid "Create a club"
 msgstr "Créer un club"
 
-#: coach/menu.py:34 coach/menu.py:38 templates/base.html:121
+#: coach/menu.py:34 coach/menu.py:38 templates/base.html:125
 #: templates/club/join.html:11 templates/club/manage.html:13
 #: templates/club/manage.html.py:67 templates/sport/vma.html:70
 msgid "Help"
@@ -61,11 +61,11 @@ msgstr "Aide"
 msgid "Glossary"
 msgstr "Glossaire"
 
-#: coach/menu.py:40 templates/base.html:118 templates/mail/base.html:37
+#: coach/menu.py:40 templates/base.html:122 templates/mail/base.html:37
 msgid "News"
 msgstr "News"
 
-#: coach/menu.py:41 templates/base.html:124 templates/mail/base.html:37
+#: coach/menu.py:41 templates/base.html:128 templates/mail/base.html:37
 msgid "Contact"
 msgstr "Contact"
 
@@ -148,8 +148,8 @@ msgid "Logout"
 msgstr "Se déconnecter"
 
 #: coach/menu.py:118 templates/club/joined.html:23
-#: templates/club/joined.modal.html:21 templates/landing/index.html:163
-#: templates/landing/index.html.py:292
+#: templates/club/joined.modal.html:21 templates/landing/index.html:175
+#: templates/landing/index.html.py:310
 msgid "Create an account"
 msgstr "Créer un compte"
 
@@ -175,15 +175,15 @@ msgstr "Plan d'entraînement : %s"
 msgid "Training plan - %s.pdf"
 msgstr "Plan d'entraînement - %s.pdf"
 
-#: plan/models.py:216
+#: plan/models.py:223
 msgid "Applied"
 msgstr "A faire"
 
-#: plan/models.py:217
+#: plan/models.py:224
 msgid "Done"
 msgstr "Fait"
 
-#: plan/models.py:218
+#: plan/models.py:225
 msgid "Failed"
 msgstr "Manqué"
 
@@ -251,33 +251,33 @@ msgstr ""
 msgid "Session"
 msgstr "Séance"
 
-#: templates/base.html:82
+#: templates/base.html:86
 msgid "Use RunReport in"
 msgstr "Utiliser RunReport en"
 
-#: templates/base.html:94
+#: templates/base.html:98
 msgid "You are ussing a demo account, some features will not be available."
 msgstr ""
 "Vous utilisez un compte démo, certaines fonctionalistés seront désactivées."
 
-#: templates/base.html:106
+#: templates/base.html:110
 msgid "Built by"
 msgstr "Construit par"
 
-#: templates/base.html:109 templates/landing/team.html:3
+#: templates/base.html:113 templates/landing/team.html:3
 #: templates/landing/team.html.py:7
 msgid "The team"
 msgstr "L'équipe"
 
-#: templates/base.html:112
+#: templates/base.html:116
 msgid "Source code on"
 msgstr "Code source sur"
 
-#: templates/base.html:112
+#: templates/base.html:116
 msgid "Github"
 msgstr "Github"
 
-#: templates/base.html:115 templates/mail/base.html:37
+#: templates/base.html:119 templates/mail/base.html:37
 msgid "Facebook"
 msgstr "Facebook"
 
@@ -315,7 +315,7 @@ msgstr "Demander une invitation"
 msgid "Test RunReport using the Trainer account!"
 msgstr "Testez RunReport en utilisant le compte Entraineur !"
 
-#: templates/club/ask_invite.html:48 templates/landing/index.html:167
+#: templates/club/ask_invite.html:48 templates/landing/index.html:179
 msgid "Try the demo"
 msgstr "Essayer la démo"
 
@@ -674,7 +674,7 @@ msgstr "Actions"
 
 #: templates/club/manage.html:84 templates/friends/home.html:27
 #: templates/messages/_list.html:62 templates/messages/delete.html:20
-#: templates/sport/session/edit.html:116
+#: templates/sport/session/edit.html:55
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -834,7 +834,7 @@ msgid "Available places"
 msgstr "Places disponibles"
 
 #: templates/club/role.html:37 templates/page/detail.html:52
-#: templates/sport/session/edit.html:114 templates/users/garmin.html:45
+#: templates/sport/session/edit.html:53 templates/users/garmin.html:45
 msgid "Save"
 msgstr "Sauver"
 
@@ -923,21 +923,26 @@ msgstr "Vous n'avez aucune demande d'amitié à valider."
 msgid "Features"
 msgstr "Fonctionalités"
 
-#: templates/landing/index.html:160
+#: templates/landing/index.html:172
 msgid "Training logbook & Athletes management"
 msgstr "Carnet d'entraînement & Gestion d'athlètes"
 
-#: templates/landing/index.html:164 templates/landing/index.html.py:293
+#: templates/landing/index.html:176 templates/landing/index.html.py:311
 #: templates/users/login.html:62 templates/users/login.html.py:79
 #: templates/users/password_reset_complete.html:10
 msgid "Sign in"
 msgstr "Se connecter"
 
-#: templates/landing/index.html:186
+#: templates/landing/index.html:183
+#| msgid "Sports Informations"
+msgid "More information"
+msgstr "Plus d'informations"
+
+#: templates/landing/index.html:204
 msgid "Sport logbook"
 msgstr "Carnet d'entraînement"
 
-#: templates/landing/index.html:187
+#: templates/landing/index.html:205
 msgid ""
 "You can freely create your training logbook, manage your sports sesssions, "
 "and clearly view your evolution across several month or years."
@@ -946,15 +951,15 @@ msgstr ""
 "séances de sport, et visualiser clairement votre évolution au cours des mois "
 "& années."
 
-#: templates/landing/index.html:209
+#: templates/landing/index.html:227
 msgid "Athlete management"
 msgstr "Gestion d'athlètes"
 
-#: templates/landing/index.html:210
+#: templates/landing/index.html:228
 msgid "for a club or an enterprise"
 msgstr "pour un club ou une entreprise"
 
-#: templates/landing/index.html:213
+#: templates/landing/index.html:231
 msgid ""
 "This website will allow you to easily manage all your athletes, using or one "
 "several trainers."
@@ -962,7 +967,7 @@ msgstr ""
 "Ce site vous permet de gérer aisèment tous vos athlètes, répartis sur un ou "
 "plusieurs entraineurs."
 
-#: templates/landing/index.html:215
+#: templates/landing/index.html:233
 msgid ""
 "Every trainer can view his athletes' sessions, create his training plans, "
 "and efficiently communicate with them."
@@ -970,15 +975,15 @@ msgstr ""
 "Chaque entraineur peut voir les séances de ses athlètes, créer ses plans "
 "d'entrainement, et communiquer efficacement avec eux."
 
-#: templates/landing/index.html:239
+#: templates/landing/index.html:257
 msgid "Phone display"
 msgstr "Affichage sur smartphones"
 
-#: templates/landing/index.html:241
+#: templates/landing/index.html:259
 msgid "Apple, Android, ..."
 msgstr "Apple, Android, ..."
 
-#: templates/landing/index.html:243
+#: templates/landing/index.html:261
 msgid ""
 "RunReport displays nicely on every smartphones & tablets, automatically "
 "adapting to your screen size."
@@ -986,15 +991,15 @@ msgstr ""
 "RunReport s'affiche correctement sur tous les smartphones & tablettes du "
 "marché, en s'adaptant automatiquement à la taille de votre écran."
 
-#: templates/landing/index.html:264
+#: templates/landing/index.html:282
 msgid "GPS Synchronisation"
 msgstr "Synchronisation GPS"
 
-#: templates/landing/index.html:266
+#: templates/landing/index.html:284
 msgid "Garmin, Strava, ..."
 msgstr "Garmin, Strava, ..."
 
-#: templates/landing/index.html:269
+#: templates/landing/index.html:287
 msgid ""
 "Run Report can automatically import your data from your Garmin Connect or "
 "Strava, and show them to your friends, trainers, ..."
@@ -1002,7 +1007,7 @@ msgstr ""
 "RunReport peut automatiquement importer vos données depuis Garmin Connect ou "
 "Strava, et les afficher à vos amis, entraineurs, ..."
 
-#: templates/landing/index.html:288
+#: templates/landing/index.html:306
 msgid "Discover RunReport:"
 msgstr "Découvrir RunReport:"
 
@@ -1185,7 +1190,7 @@ msgstr ""
 "Vous pouvez voir vos %d statistiques sur RunReport avec bien plus de détails"
 
 #: templates/mail/plan.html:3 templates/plan/details.html:5
-#: templates/sport/session/edit.html:32
+#: templates/sport/session/plan.html:4
 msgid "Training plan"
 msgstr "Plan d'entraînement"
 
@@ -1245,7 +1250,7 @@ msgstr "Distance"
 msgid "No session"
 msgstr "Pas de séance"
 
-#: templates/mail/report.html:51 templates/sport/session/edit.html:101
+#: templates/mail/report.html:51 templates/sport/session/edit.html:40
 #: templates/sport/week/_stats.html:5
 msgid "Sport"
 msgstr "Sport"
@@ -1709,23 +1714,19 @@ msgstr "Supprimer cette séance"
 msgid "Saved session."
 msgstr "Séance sauvegardée."
 
-#: templates/sport/session/edit.html:70
-msgid "has planned a "
-msgstr "a prévu"
-
-#: templates/sport/session/edit.html:114
+#: templates/sport/session/edit.html:53
 msgid "this session"
 msgstr "cette séance"
 
-#: templates/sport/session/edit.html:126
+#: templates/sport/session/edit.html:65
 msgid "Map"
 msgstr "Carte"
 
-#: templates/sport/session/edit.html:132
+#: templates/sport/session/edit.html:71
 msgid "Change session"
 msgstr "Changer la séance"
 
-#: templates/sport/session/edit.html:160
+#: templates/sport/session/edit.html:99
 msgid "Comments"
 msgstr "Commentaires"
 
@@ -1752,6 +1753,15 @@ msgstr "Pas de distance"
 #: templates/sport/session/list.html:127
 msgid "No sessions"
 msgstr "Pas de séances"
+
+#: templates/sport/session/plan.html:42
+msgid "has planned a "
+msgstr "a prévu"
+
+#: templates/sport/session/plan.html:59
+#| msgid "Change session"
+msgid "Change date"
+msgstr "Changer la date"
 
 #: templates/sport/stats.html:40 templates/sport/stats.html.py:61
 #: templates/sport/stats.html:63
@@ -2603,8 +2613,8 @@ msgid "Uncategorized"
 msgstr "Sans Catégorie"
 
 #: Sport/name:3
-msgid "Running"
-msgstr "Course à pied"
+msgid "Course à pied"
+msgstr ""
 
 #: Sport/name:4
 msgid "Street Running"
@@ -2623,8 +2633,8 @@ msgid "Treadmill Running"
 msgstr "Course sur tapis"
 
 #: Sport/name:8
-msgid "Cycling"
-msgstr "Cyclisme sur "
+msgid "Vélo"
+msgstr ""
 
 #: Sport/name:9
 msgid "Cyclocross"
@@ -2679,12 +2689,12 @@ msgid "Strength Training"
 msgstr "Entraînement de force"
 
 #: Sport/name:22
-msgid "hiking"
-msgstr "randonnée"
+msgid "Randonnée"
+msgstr ""
 
 #: Sport/name:23
-msgid "Swimming"
-msgstr "Natation"
+msgid "Natation"
+msgstr ""
 
 #: Sport/name:24
 msgid "Lap Swimming"
@@ -2695,10 +2705,8 @@ msgid "Open Water Swimming"
 msgstr "Natation en mer"
 
 #: Sport/name:26
-#, fuzzy
-#| msgid "Walking"
-msgid "Walking"
-msgstr "Marche"
+msgid "Marche"
+msgstr ""
 
 #: Sport/name:27
 msgid "Casual Walking"
@@ -2731,7 +2739,7 @@ msgid "Moto"
 msgstr "Moto"
 
 #: Sport/name:34
-msgid "Other"
+msgid "Autre"
 msgstr ""
 
 #: Sport/name:35
@@ -2843,3 +2851,15 @@ msgstr ""
 #| msgid "Walking"
 msgid "Walk"
 msgstr "Marche"
+
+#~ msgid "Running"
+#~ msgstr "Course à pied"
+
+#~ msgid "Cycling"
+#~ msgstr "Cyclisme sur "
+
+#~ msgid "hiking"
+#~ msgstr "randonnée"
+
+#~ msgid "Swimming"
+#~ msgstr "Natation"
