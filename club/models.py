@@ -127,9 +127,11 @@ class ClubLink(models.Model):
 class ClubInvite(models.Model):
   INVITE_TYPES = (
     ('create', 'Create a club (Beta)'),
+    ('join', 'Join a club'),
   )
   sender = models.ForeignKey(Athlete, related_name="inviter", limit_choices_to={'is_staff':True})
   recipient = models.EmailField()
+  user = models.ForeignKey('users.Athlete', null=True, blank=True) # a recipient user can already exist
   name = models.CharField(max_length=250, null=True, blank=True)
   club = models.ForeignKey(Club, null=True, blank=True, related_name="invites")
   type = models.CharField(max_length=15, choices=INVITE_TYPES)
@@ -172,7 +174,7 @@ class ClubInvite(models.Model):
       'invite' : self,
     }
     mb = MailBuilder('mail/club_invite_asked.html', self.sender.language)
-    mb.to = [self.sender.email]
+    mb.to = [self.sender.email, ]
     mb.subject = 'Demande Invitation RunReport.fr'
     mail = mb.build(context)
     mail.send()
@@ -187,10 +189,17 @@ class ClubInvite(models.Model):
     context = {
       'invite_url' : self.get_absolute_url(),
       'name' : self.name,
+      'club' : self.club,
+      'user' : self.user,
     }
-    mb = MailBuilder('mail/club_invite.html', 'fr') # Default to french
-    mb.to = [self.recipient]
-    mb.subject = 'Invitation RunReport.fr'
+    templates = {
+      'create' : 'mail/club_invite.html',
+      'join' : 'mail/subscription.html',
+    }
+    lang = self.user and self.user.language or 'fr' # Default to french
+    mb = MailBuilder(templates[self.type], lang)
+    mb.to = [self.recipient, ]
+    mb.subject = _('RunReport Invite')
     mail = mb.build(context)
     mail.send()
 
@@ -198,13 +207,14 @@ class ClubInvite(models.Model):
     self.sent = datetime.now()
     self.save()
 
-  def use(self, club):
+  def use(self, club=None):
     '''
     Mark the invite as used
     '''
     # Set used
     self.used = datetime.now()
-    self.club = club
+    if club:
+      self.club = club
     self.save()
 
 class ClubGroup(models.Model):

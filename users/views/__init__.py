@@ -1,4 +1,4 @@
-from create import CreateUser
+from create import CreateUser, ActivateUser
 from login import LoginUser, LogoutUser
 from garmin import GarminLogin
 from preferences import Preferences, UpdatePassword

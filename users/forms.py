@@ -56,6 +56,10 @@ class SignUpForm(forms.Form):
   password_check = forms.CharField(min_length=4, widget=forms.PasswordInput(), label=_('Repeat your password'))
   email = forms.EmailField(label=_('Email'))
 
+  def __init__(self, invite=None, *args, **kwargs):
+    self.invite = invite
+    return super(SignUpForm, self).__init__(*args, **kwargs)
+
   def clean_firstname(self):
     return self.cleaned_data['firstname'].title()
 
@@ -66,6 +70,10 @@ class SignUpForm(forms.Form):
     '''
     Check email is unique
     '''
+    # Skip on join invite
+    if self.invite and self.invite.type == 'join':
+      return self.cleaned_data['email']
+
     users = Athlete.objects.filter(email=self.cleaned_data['email'])
     if len(users) > 0:
       raise ValidationError(_('An account already uses this email.'))
@@ -78,6 +86,10 @@ class SignUpForm(forms.Form):
     if 'password' in self.cleaned_data and 'password_check' in self.cleaned_data:
       if self.cleaned_data['password'] != self.cleaned_data['password_check']:
         raise ValidationError(_('Please repeat the same password'))
+
+    # Skip on join invite
+    if self.invite and self.invite.type == 'join':
+      return self.cleaned_data
 
     # Add unique username
     if 'firstname' in self.cleaned_data and 'lastname' in self.cleaned_data:

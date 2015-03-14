@@ -1,0 +1,15 @@
+{% extends 'mail/base.html' %}
+
+{% set title = _('Activate your account') %}
+
+{% block mail %}
+{{ _('Hello %s') % user.first_name}},
+<br />
+
+<p>
+{{ _('You have been registered as an athlete of the club %s') % club.name }}
+</p>
+<br />
+
+{{ _('Please activate your account with this unique invite:') }} https://{{site.domain}}{{ invite_url }}
+{% endblock %}
