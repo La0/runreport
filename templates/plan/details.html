@@ -20,11 +20,11 @@
       </p>
     </div>
     <div class="col-xs-5 text-right">
-      <a href="{% url 'plan-export-pdf' plan.pk %}" class="btn btn-info">
+      <a href="{% url 'plan-export-pdf' plan.pk %}" class="btn btn-info btn-light">
         <i class="icon-down-open"></i>
         {{ _('Download PDF') }}
       </a>
-      <a href="{% url 'plan-export-ics' plan.pk %}" class="btn btn-info" title="{{ _('calendar applications format') }}">
+      <a href="{% url 'plan-export-ics' plan.pk %}" class="btn btn-info btn-light" title="{{ _('calendar applications format') }}">
         <i class="icon-down-open"></i>
         {{ _('Download ICS') }}
         <i class="icon-calendar"></i>
@@ -77,6 +77,15 @@
     {{ _('No weeks available for this plan.') }}
   </div>
   {% endif %}
+
+  <div class="text-right">
+    {% if application %}
+    <a href="{% url plan-application-delete plan.pk %}" class="modal-action btn btn-danger">
+      <i class="icon-trash"></i>
+      {{ _('Remove from my calendar') }}
+    </a>
+    {% endif %}
+  </div>
 
 </div>
 {% endblock %}

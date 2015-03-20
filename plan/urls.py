@@ -13,6 +13,9 @@ urlpatterns = patterns('',
   # Move a plan session
   url(r'^move/session/?', MovePlanSession.as_view(), name='plan-session-move'),
 
+  # Delete a plan application
+  url(r'^(?P<pk>\d+)/remove/?', PlanApplicationDelete.as_view(), name='plan-application-delete'),
+
   # View plan (read only for athletes)
   url(r'^(?P<pk>\d+)/?', PlanDetails.as_view(), name="plan"),
 

@@ -1,0 +1,12 @@
+{% extends 'modal.html' %}
+
+{% set modal_title = _('Remove plan %s') % plan.name %}
+
+{% block body %}
+{{ _('Are you sure to remove this plan from your calendar ?') }}
+{% endblock %}
+
+{% block footer %}
+<button class="btn" data-dismiss="modal">{{ _('Cancel') }}</button>
+<a href="{% url plan-application-delete plan.id %}" class="btn btn-danger modal-action modal-post">{{ _('Remove this plan') }}</a>
+{% endblock %}
