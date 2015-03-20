@@ -9,6 +9,7 @@ NOTIFICATION_COMMENT = 'comment'
 NOTIFICATION_MAIL = 'mail'
 NOTIFICATION_FRIEND_REQUEST = 'friend_request'
 NOTIFICATION_PLAN_SESSION_APPLIED = 'plan_session_applied'
+NOTIFICATION_PLAN_APP_REMOVED = 'plan_app_removed'
 
 class UserNotifications(object):
   user = None
@@ -126,6 +127,19 @@ class UserNotifications(object):
     link = reverse('user-calendar-day', args=(athlete.username, day.date.year, day.date.month, day.date.day))
 
     self.add(NOTIFICATION_PLAN_SESSION_APPLIED, msg, context, link)
+
+  def add_plan_application_removed(self, app):
+    # Notify when an athlete removes a plan
+    athlete = app.user
+    context = {
+      'first_name' : athlete.first_name,
+      'last_name' : athlete.last_name,
+      'plan_name' : app.plan.name,
+    }
+    print context
+    msg = _('%(first_name)s %(last_name)s has removed your plan %(plan_name)s from his calendar')
+
+    self.add(NOTIFICATION_PLAN_SESSION_APPLIED, msg, context)
 
   def total(self):
     return cache.get(self.key_total) or 0
