@@ -28,6 +28,7 @@ urlpatterns = patterns('',
   url(r'^my-profile/?$', login_required(OwnProfile.as_view()), name='user-own-profile'),
   url(r'^garmin/?$', login_required(GarminLogin.as_view()), name='user-garmin'),
   url(r'^create/?$', CreateUser.as_view(), name='user-create'),
+  url(r'^activate/?$', ActivateUser.as_view(), name='user-activate'),
   url(r'^logout/?$', LogoutUser.as_view(), name='logout'),
 
   # Races

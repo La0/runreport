@@ -19,13 +19,21 @@ class ClubInviteCheck(RedirectView, DetailView):
     # Save invite in session
     self.request.session['invite'] = self.invite.slug
 
+    if self.invite.type == 'join':
+      return reverse('user-activate')
+    elif self.invite.type == 'create':
+      return self.redirect_club_invite()
+    else:
+      raise Http404('Unknown invite type')
+
+  def redirect_club_invite(self):
     # If user is not connected
     if not self.request.user.is_authenticated():
       try:
         # Redirect to login if account exists
         Athlete.objects.get(email=self.invite.recipient)
         return reverse('login')
-      except Athlete.DoesNotExist, e:
+      except Athlete.DoesNotExist:
         # Redirect to account creation
         return reverse('user-create')
 

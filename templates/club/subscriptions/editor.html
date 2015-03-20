@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% load addcss %}
+
+{% block content %}
+<div class="container">
+  <h1>{{ _('Send invites to your athletes') }}</h1>
+
+  <form action="" method="post">
+    {% csrf_token %}
+    {{ form.management_form|safe }}
+    <table class="table table-striped">
+      <tr>
+        <th>{{ _('Email') }}</th>
+        <th>{{ _('First Name') }}</th>
+        <th>{{ _('Last Name') }}</th>
+      </tr>
+      {% for user in form %}
+      <tr>
+        <td>{{ user.email|addcss('form-control')|safe }}</td>
+        <td>{{ user.first_name|addcss('form-control')|safe }}</td>
+        <td>{{ user.last_name|addcss('form-control')|safe }}</td>
+      </tr>
+      {% endfor %}  
+    </table>
+    <div class="text-right">
+      <p class="text-warning">
+        {{ _('An email will be sent to every athlete in this list, with a direct access to RunReport') }}
+      </p>
+      <button type="submit" class="btn btn-primary">
+        {{ _('Subscribe athletes') }}
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-11 12:10+0100\n"
-"PO-Revision-Date: 2015-03-11 12:11+0100\n"
+"POT-Creation-Date: 2015-03-20 08:46+0100\n"
+"PO-Revision-Date: 2015-03-20 08:50+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -18,6 +18,10 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 1.5.4\n"
 
+#: club/forms.py:103
+msgid "The CSV file has not 3 columns."
+msgstr "Le fichier CSV n'a pas 3 colonnes."
+
 #: club/models.py:123
 msgid "Link name"
 msgstr "Nom du lien"
@@ -26,15 +30,20 @@ msgstr "Nom du lien"
 msgid "Link address"
 msgstr "Adresse du lien"
 
-#: club/models.py:215
+#: club/models.py:202
+#| msgid "Use RunReport in"
+msgid "RunReport Invite"
+msgstr "Invitation RunReport"
+
+#: club/models.py:225
 msgid "Group name"
 msgstr "Nom du group"
 
-#: club/models.py:216
+#: club/models.py:226
 msgid "Name in the url"
 msgstr "Nom dans l'url"
 
-#: club/models.py:217
+#: club/models.py:227
 msgid "Description"
 msgstr "Description"
 
@@ -53,7 +62,7 @@ msgstr "Créer un club"
 
 #: coach/menu.py:34 coach/menu.py:38 templates/base.html:125
 #: templates/club/join.html:11 templates/club/manage.html:13
-#: templates/club/manage.html.py:67 templates/sport/vma.html:70
+#: templates/club/manage.html.py:72 templates/sport/vma.html:70
 msgid "Help"
 msgstr "Aide"
 
@@ -175,15 +184,18 @@ msgstr "Plan d'entraînement : %s"
 msgid "Training plan - %s.pdf"
 msgstr "Plan d'entraînement - %s.pdf"
 
-#: plan/models.py:223
+#: plan/models.py:231 templates/mail/report.html:43
+#: templates/sport/session/list.html:40
 msgid "Applied"
 msgstr "A faire"
 
-#: plan/models.py:224
+#: plan/models.py:232 templates/mail/report.html:45
+#: templates/sport/session/list.html:42
 msgid "Done"
 msgstr "Fait"
 
-#: plan/models.py:225
+#: plan/models.py:233 templates/mail/report.html:47
+#: templates/sport/session/list.html:44
 msgid "Failed"
 msgstr "Manqué"
 
@@ -414,7 +426,7 @@ msgstr "Créer un groupe d'utilisateurs"
 msgid "Created by"
 msgstr "Crée par"
 
-#: templates/club/group/index.html:41 templates/club/manage.html:116
+#: templates/club/group/index.html:41 templates/club/manage.html:121
 #: templates/messages/_list.html:63 templates/messages/edit.html:20
 #: templates/sport/day/edit.html:40
 msgid "Edit"
@@ -570,7 +582,7 @@ msgstr "Vous êtes déjà en relation avec ce club"
 msgid "Close"
 msgstr "Fermer"
 
-#: templates/club/link/add.html:3 templates/club/manage.html:95
+#: templates/club/link/add.html:3 templates/club/manage.html:100
 msgid "Add a link"
 msgstr "Ajouter un lien"
 
@@ -640,10 +652,19 @@ msgid "Club link"
 msgstr "Liens public"
 
 #: templates/club/manage.html:65
+msgid "You can register athletes by sending us a CSV file"
+msgstr "Vous pouvez ajouter des athlètes en nous fournissant un fichier CSV"
+
+#: templates/club/manage.html:66 templates/club/subscriptions/editor.html:31
+#| msgid "My athletes"
+msgid "Subscribe athletes"
+msgstr "Inscription d'athlètes"
+
+#: templates/club/manage.html:70
 msgid "Public links"
 msgstr "Liens publics"
 
-#: templates/club/manage.html:68
+#: templates/club/manage.html:73
 msgid ""
 "Public links are shown in the Club menu, on top of the page, for all the "
 "users of the club."
@@ -651,7 +672,7 @@ msgstr ""
 "Les liens publics sont affichés dans le menu Club, en haut de page, pour "
 "tous les utilisateurs du club."
 
-#: templates/club/manage.html:69
+#: templates/club/manage.html:74
 msgid ""
 "They are useful to show external websites: Facebook groups, official website "
 "of the club, ..."
@@ -659,34 +680,34 @@ msgstr ""
 "Ils sont utiles pour indiquer des sites externes: groupe Facebook, site "
 "officiel du club, ..."
 
-#: templates/club/manage.html:75
+#: templates/club/manage.html:80
 msgid "Name"
 msgstr "Nom"
 
-#: templates/club/manage.html:76
+#: templates/club/manage.html:81
 msgid "Url"
 msgstr "Url"
 
-#: templates/club/manage.html:77 templates/club/members.athletes.html:17
+#: templates/club/manage.html:82 templates/club/members.athletes.html:17
 #: templates/club/members.html:42 templates/club/races.html:22
 msgid "Actions"
 msgstr "Actions"
 
-#: templates/club/manage.html:84 templates/friends/home.html:27
+#: templates/club/manage.html:89 templates/friends/home.html:27
 #: templates/messages/_list.html:62 templates/messages/delete.html:20
 #: templates/sport/session/edit.html:55
 msgid "Delete"
 msgstr "Supprimer"
 
-#: templates/club/manage.html:92
+#: templates/club/manage.html:97
 msgid "There are no public link for your club."
 msgstr "Aucun lien public pour votre club."
 
-#: templates/club/manage.html:112 templates/club/role.html:49
+#: templates/club/manage.html:117 templates/club/role.html:49
 msgid "Demo account"
 msgstr "Compte de Démo"
 
-#: templates/club/manage.html:113
+#: templates/club/manage.html:118
 msgid "Edition is deactivated for the demo"
 msgstr "L'édition est désactivée pour la démo."
 
@@ -850,6 +871,69 @@ msgstr "Archiver ce compte"
 msgid "Edition is disabled for the demo."
 msgstr "L'édition est désactivée pour la démo."
 
+#: templates/club/subscriptions/editor.html:7
+#| msgid "No races for your athletes"
+msgid "Send invites to your athletes"
+msgstr "Envoyez des invitations à vos athlètes"
+
+#: templates/club/subscriptions/editor.html:14
+#: templates/club/subscriptions/upload.html:11 users/forms.py:57
+msgid "Email"
+msgstr "Email"
+
+#: templates/club/subscriptions/editor.html:15
+#| msgid "Firstname"
+msgid "First Name"
+msgstr "Prénom"
+
+#: templates/club/subscriptions/editor.html:16
+#| msgid "Lastname"
+msgid "Last Name"
+msgstr "Nom"
+
+#: templates/club/subscriptions/editor.html:28
+msgid ""
+"An email will be sent to every athlete in this list, with a direct access to "
+"RunReport"
+msgstr ""
+"Un email sera envoyé à chaque athlète dans cette liste, avec un accès direct "
+"à RunReport et votre club."
+
+#: templates/club/subscriptions/upload.html:5
+msgid "Fast club subscriptions"
+msgstr "Inscription d'athlètes rapide"
+
+#: templates/club/subscriptions/upload.html:7
+msgid "Upload"
+msgstr "Mettre en ligne"
+
+#: templates/club/subscriptions/upload.html:9
+msgid ""
+"You can upload a CSV file with three columns separated by ; to quickly "
+"invite members to your club"
+msgstr ""
+"Vous pouvez mettre en ligne un fichier CSV avec 3 colonnes séparé par un "
+"point-virgule (;) pour rapidement inviter des athlètes dans votre club."
+
+#: templates/club/subscriptions/upload.html:12
+#| msgid "Firstname"
+msgid "First name"
+msgstr "Prénom"
+
+#: templates/club/subscriptions/upload.html:13
+#| msgid "Lastname"
+msgid "Last name"
+msgstr "Nom"
+
+#: templates/club/subscriptions/upload.html:22
+#: templates/messages/add/user.html:26
+msgid "Send"
+msgstr "Envoyer"
+
+#: templates/club/subscriptions/upload.html:27
+msgid "Example file"
+msgstr "Fichier exemple"
+
 #: templates/contact_form/contact_form.html:6
 #: templates/contact_form/contact_form_sent.html:4
 msgid "Contact form"
@@ -934,7 +1018,6 @@ msgid "Sign in"
 msgstr "Se connecter"
 
 #: templates/landing/index.html:183
-#| msgid "Sports Informations"
 msgid "More information"
 msgstr "Plus d'informations"
 
@@ -1047,7 +1130,7 @@ msgstr ""
 #: templates/mail/club_prospect.html:6 templates/mail/friend.request.html:8
 #: templates/mail/friend.request.html:10 templates/mail/message.html:6
 #: templates/mail/new.year.html:6 templates/mail/race.html:6
-#: templates/mail/user_role.html:6
+#: templates/mail/subscription.html:6 templates/mail/user_role.html:6
 #, python-format
 msgid "Hello %s"
 msgstr "Bonjour %s"
@@ -1190,7 +1273,7 @@ msgstr ""
 "Vous pouvez voir vos %d statistiques sur RunReport avec bien plus de détails"
 
 #: templates/mail/plan.html:3 templates/plan/details.html:5
-#: templates/sport/session/plan.html:4
+#: templates/sport/session/plan.html:23
 msgid "Training plan"
 msgstr "Plan d'entraînement"
 
@@ -1234,43 +1317,62 @@ msgstr "Bonne course !"
 msgid "View week"
 msgstr "Voir semaine"
 
-#: templates/mail/report.html:30 templates/sport/session/list.html:52
+#: templates/mail/report.html:30 templates/sport/session/list.html:61
 #: templates/sport/week/_stats.html:6 templates/tracks/_session.html:32
 #: templates/tracks/_session.html.py:95
 msgid "Time"
 msgstr "Temps"
 
-#: templates/mail/report.html:34 templates/sport/session/list.html:63
+#: templates/mail/report.html:34 templates/sport/session/list.html:72
 #: templates/sport/week/_stats.html:7 templates/tracks/_session.html:44
 #: templates/tracks/_session.html.py:93
 msgid "Distance"
 msgstr "Distance"
 
-#: templates/mail/report.html:39
+#: templates/mail/report.html:40 templates/sport/session/list.html:47
+msgid "Plan"
+msgstr "Plan"
+
+#: templates/mail/report.html:58
 msgid "No session"
 msgstr "Pas de séance"
 
-#: templates/mail/report.html:51 templates/sport/session/edit.html:40
+#: templates/mail/report.html:70 templates/sport/session/edit.html:40
 #: templates/sport/week/_stats.html:5
 msgid "Sport"
 msgstr "Sport"
 
-#: templates/mail/report.html:52
+#: templates/mail/report.html:71
 msgid "Total time"
 msgstr "Temps total"
 
-#: templates/mail/report.html:53
+#: templates/mail/report.html:72
 msgid "Total distance"
 msgstr "Distance totale"
 
-#: templates/mail/report.html:57 templates/sport/week/_stats.html:16
+#: templates/mail/report.html:76 templates/sport/week/_stats.html:16
 #: templates/tracks/_session.html:128
 msgid "Total"
 msgstr "Total"
 
-#: templates/mail/report.html:69
+#: templates/mail/report.html:88
 msgid "Week's summary"
 msgstr "Bilan de la semaine"
+
+#: templates/mail/subscription.html:3
+#| msgid "create an account"
+msgid "Activate your account"
+msgstr "Activer votre compte"
+
+#: templates/mail/subscription.html:10
+#, python-format
+msgid "You have been registered as an athlete of the club %s"
+msgstr "Vous avez été inscrit au club %s en tant qu'athlète."
+
+#: templates/mail/subscription.html:14
+#| msgid "To create the club, use this unique invite:"
+msgid "Please activate your account with this unique invite:"
+msgstr "Veuillez activer votre compte avec cette invitation unique"
 
 #: templates/mail/user_role.html:12
 #, python-format
@@ -1396,10 +1498,6 @@ msgstr "Commenter"
 #, python-format
 msgid "Write to %(first)s %(last)s"
 msgstr "Ecrire à %(first)s  %(last)s"
-
-#: templates/messages/add/user.html:26
-msgid "Send"
-msgstr "Envoyer"
 
 #: templates/messages/conversation.html:6
 msgid "Conversation with"
@@ -1652,7 +1750,7 @@ msgstr "Rapport en cours d'envoi"
 msgid "This week's report is being sent to your trainers"
 msgstr "Ce rapport de semaine est en train d'être envoyé à vos entraineurs"
 
-#: templates/sport/day/edit.html:124 templates/sport/session/list.html:122
+#: templates/sport/day/edit.html:124 templates/sport/session/list.html:131
 msgid "Add a session"
 msgstr "Ajouter une séance"
 
@@ -1730,36 +1828,31 @@ msgstr "Changer la séance"
 msgid "Comments"
 msgstr "Commentaires"
 
-#: templates/sport/session/list.html:30 templates/sport/session/list.html:89
+#: templates/sport/session/list.html:30 templates/sport/session/list.html:98
 msgid "No session name"
 msgstr "Pas de nom de séance"
 
-#: templates/sport/session/list.html:38
-msgid "Plan"
-msgstr "Plan"
-
-#: templates/sport/session/list.html:40
+#: templates/sport/session/list.html:49
 msgid "created by"
 msgstr "crée par"
 
-#: templates/sport/session/list.html:55
+#: templates/sport/session/list.html:64
 msgid "No time"
 msgstr "Pas de temps"
 
-#: templates/sport/session/list.html:70
+#: templates/sport/session/list.html:79
 msgid "No Distance"
 msgstr "Pas de distance"
 
-#: templates/sport/session/list.html:127
+#: templates/sport/session/list.html:136
 msgid "No sessions"
 msgstr "Pas de séances"
 
-#: templates/sport/session/plan.html:42
+#: templates/sport/session/plan.html:61
 msgid "has planned a "
 msgstr "a prévu"
 
-#: templates/sport/session/plan.html:59
-#| msgid "Change session"
+#: templates/sport/session/plan.html:78
 msgid "Change date"
 msgstr "Changer la date"
 
@@ -2363,19 +2456,15 @@ msgstr "Nom"
 msgid "Repeat your password"
 msgstr "Répétez votre mot de passe"
 
-#: users/forms.py:57
-msgid "Email"
-msgstr "Email"
-
-#: users/forms.py:71
+#: users/forms.py:79
 msgid "An account already uses this email."
 msgstr "Un compte utilise déjà cet email."
 
-#: users/forms.py:80
+#: users/forms.py:88
 msgid "Please repeat the same password"
 msgstr "Veuillez répéter le même mot de passe."
 
-#: users/forms.py:129
+#: users/forms.py:141
 msgid "Invalid Garmin authentification"
 msgstr "Authentification Garmin invalide"
 
@@ -2613,8 +2702,8 @@ msgid "Uncategorized"
 msgstr "Sans Catégorie"
 
 #: Sport/name:3
-msgid "Course à pied"
-msgstr ""
+msgid "Running"
+msgstr "Course à pied"
 
 #: Sport/name:4
 msgid "Street Running"
@@ -2633,8 +2722,8 @@ msgid "Treadmill Running"
 msgstr "Course sur tapis"
 
 #: Sport/name:8
-msgid "Vélo"
-msgstr ""
+msgid "Cycling"
+msgstr "Cyclisme sur "
 
 #: Sport/name:9
 msgid "Cyclocross"
@@ -2689,12 +2778,12 @@ msgid "Strength Training"
 msgstr "Entraînement de force"
 
 #: Sport/name:22
-msgid "Randonnée"
-msgstr ""
+msgid "hiking"
+msgstr "randonnée"
 
 #: Sport/name:23
-msgid "Natation"
-msgstr ""
+msgid "Swimming"
+msgstr "Natation"
 
 #: Sport/name:24
 msgid "Lap Swimming"
@@ -2705,8 +2794,10 @@ msgid "Open Water Swimming"
 msgstr "Natation en mer"
 
 #: Sport/name:26
-msgid "Marche"
-msgstr ""
+#, fuzzy
+#| msgid "Walking"
+msgid "Walking"
+msgstr "Marche"
 
 #: Sport/name:27
 msgid "Casual Walking"
@@ -2739,7 +2830,7 @@ msgid "Moto"
 msgstr "Moto"
 
 #: Sport/name:34
-msgid "Autre"
+msgid "Other"
 msgstr ""
 
 #: Sport/name:35
@@ -2751,8 +2842,8 @@ msgid "Boating"
 msgstr "Bateau"
 
 #: Sport/name:37
-msgid "Cross Country Skiing"
-msgstr "Ski Cross"
+msgid "Ski Cross"
+msgstr ""
 
 #: Sport/name:38
 msgid "Driving"
@@ -2835,8 +2926,10 @@ msgid "Workout"
 msgstr "Fitness"
 
 #: Sport/name:58
-msgid "BackcountrySki"
-msgstr "Ski"
+#, fuzzy
+#| msgid "Skating"
+msgid "Ski"
+msgstr "Patinage"
 
 #: Sport/name:59
 msgid "Hike"
@@ -2852,14 +2945,8 @@ msgstr ""
 msgid "Walk"
 msgstr "Marche"
 
-#~ msgid "Running"
-#~ msgstr "Course à pied"
+#~ msgid "Cross Country Skiing"
+#~ msgstr "Ski Cross"
 
-#~ msgid "Cycling"
-#~ msgstr "Cyclisme sur "
-
-#~ msgid "hiking"
-#~ msgstr "randonnée"
-
-#~ msgid "Swimming"
-#~ msgstr "Natation"
+#~ msgid "BackcountrySki"
+#~ msgstr "Ski"
