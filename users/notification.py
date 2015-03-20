@@ -41,7 +41,7 @@ class UserNotifications(object):
     self.store(notifications)
 
   def add_message(self, message):
-    from messages.models import TYPE_COMMENTS_PRIVATE, TYPE_MAIL
+    from messages.models import TYPE_COMMENTS_PRIVATE, TYPE_MAIL, TYPE_COMMENTS_WEEK
 
     # Check writer is not recipient : no notification
     if message.writer == self.user:
@@ -61,6 +61,25 @@ class UserNotifications(object):
 
       # Category
       cat = NOTIFICATION_MAIL
+    elif message.conversation.type == TYPE_COMMENTS_WEEK:
+      week = message.conversation.week
+      # Comment
+      context = {
+        'first_name' : message.writer.first_name,
+        'last_name' : message.writer.last_name,
+        'week' : str(week),
+      }
+      if week.user == self.user:
+        msg = _('%(first_name)s %(last_name)s has written a comment on your week %(week)s')
+      else:
+        msg = _('%(first_name)s %(last_name)s has written a comment on his week %(week)s')
+
+      # Week link
+      link = reverse('user-calendar-week', args=(week.user.username, week.year, week.week))
+
+      # Category
+      cat = NOTIFICATION_COMMENT
+
     else:
       # Comment
       is_private = message.conversation.type == TYPE_COMMENTS_PRIVATE

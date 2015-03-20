@@ -1,8 +1,8 @@
 from coach.mixins import JsonResponseMixin, JSON_OPTION_CLOSE, JSON_OPTION_NO_HTML, JSON_OPTION_BODY_RELOAD
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
-from messages.models import Message, Conversation, TYPE_COMMENTS_PRIVATE, TYPE_COMMENTS_PUBLIC, TYPE_MAIL
-from sport.models import SportSession
+from messages.models import Message, Conversation, TYPE_COMMENTS_PRIVATE, TYPE_COMMENTS_PUBLIC, TYPE_MAIL, TYPE_COMMENTS_WEEK
+from sport.models import SportSession, SportWeek
 from users.models import Athlete
 from django.core.exceptions import PermissionDenied
 from urlparse import urlparse
@@ -13,6 +13,7 @@ class MessageOwned(object):
     return get_object_or_404(Message, pk=self.kwargs['message_id'], writer=self.request.user)
 
 class ConversationMixin(object):
+  session = None
   def get_conversation(self):
     self.conversation = get_object_or_404(Conversation, pk=self.kwargs['conversation_id'])
 
@@ -29,6 +30,12 @@ class ConversationMixin(object):
       if self.request.user not in self.conversation.get_recipients():
         raise PermissionDenied
 
+    elif self.conversation.type == TYPE_COMMENTS_WEEK:
+      # A comment conversation has rights
+      self.privacy = self.conversation.week.user.get_privacy_rights(self.request.user)
+      if self.conversation.type not in self.privacy:
+        raise PermissionDenied
+
     return self.conversation
 
   def get_context_data(self, *args, **kwargs):
@@ -37,6 +44,19 @@ class ConversationMixin(object):
       self.get_conversation()
     context['conversation'] = self.conversation
     return context
+
+class MessageWeekMixin(object):
+
+  def get_week(self):
+    # Load week
+    self.week = get_object_or_404(SportWeek, pk=self.kwargs['week_id'])
+
+    # Check privacy
+    self.privacy = self.week.user.get_privacy_rights(self.request.user)
+    if 'comments_week' not in self.privacy:
+      raise PermissionDenied
+
+    return self.week
 
 
 class MessageUserMixin(object):
@@ -102,12 +122,19 @@ class MessageReloadMixin(JsonResponseMixin):
       self.json_options += [JSON_OPTION_BODY_RELOAD, ]
 
     # Reload conversation list for sessions
-    if conversation and conversation.type in (TYPE_COMMENTS_PRIVATE, TYPE_COMMENTS_PUBLIC, ):
-      session = conversation.get_session()
-      name = 'messages-%d' % (session.pk, )
+    if conversation:
       url = reverse('conversation-list', args=(conversation.pk, ))
-      self.json_boxes = {
-        name : url,
-      }
+      name = None
+      if conversation.type in (TYPE_COMMENTS_PRIVATE, TYPE_COMMENTS_PUBLIC,):
+        session = conversation.get_session()
+        name = 'messages-%d' % (session.pk, )
+
+      if conversation.type in (TYPE_COMMENTS_WEEK, ):
+        name = 'messages-%d' % (conversation.week.pk, )
+
+      if name and url:
+        self.json_boxes = {
+          name : url,
+        }
 
     return self.render_to_response({})

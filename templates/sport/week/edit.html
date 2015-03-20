@@ -48,6 +48,20 @@
 
   <div>
     <h4>{{ _('This week summary') }}</h4>
+    <div id="messages-{{report.pk}}" class="comments col-xs-12">
+      {% if 'comments_week' in privacy %}
+        {% if report.conversation %}
+        <div class="box" data-src="{% url conversation-list report.conversation.pk %}" >
+          {{ _('Loading week comments...') }}
+        </div>
+        {% else %}
+        <a href="{% url message-week-add report.pk %}" class="modal-action btn btn-sm btn-success btn-light">
+          <i class="icon-comment"></i> {{ _('Start a conversation') }}
+        </a>
+        {% endif %}
+      {% endif %}
+    </div>
+
     <div class="pull-right">
     {% if not member  %}
       {% if report.published or report.task %}
@@ -61,14 +75,6 @@
       {% endif %}
     {% endif %}
     </div>
-
-    {% if report.comment %}
-    <blockquote>
-      {{ report.comment }}
-    </blockquote>
-    {% else %}
-    <i class="text-muted">{{ _('No general comment') }}</i>
-    {% endif %}
 
     <h4>{{ _('Stats') }}</h4>
     {% with report.get_sports_stats() as stats %}

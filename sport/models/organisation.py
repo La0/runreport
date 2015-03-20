@@ -21,7 +21,7 @@ class SportWeek(models.Model):
   published = models.BooleanField(default=False)
   created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
-  comment = models.TextField(null=True, blank=True)
+  conversation = models.OneToOneField('messages.Conversation', null=True, blank=True, related_name='week')
   task = models.CharField(max_length=36, null=True, blank=True)
 
   class Meta:

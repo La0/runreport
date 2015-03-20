@@ -1,16 +1,11 @@
 from django.views.generic import UpdateView, DetailView
-from helpers import week_to_date, check_task
-from sport.models import SportWeek
-from datetime import date
-from sport.forms import SportWeekForm
 from sport.tasks import publish_report
 from mixins import CurrentWeekMixin, WeekPaginator
-from day import RunCalendarDay
 from coach.mixins import JsonResponseMixin, JSON_OPTION_CLOSE, JSON_OPTION_NO_HTML, JSON_OPTION_BODY_RELOAD
 
 class WeekPublish(JsonResponseMixin, CurrentWeekMixin, UpdateView):
   template_name = 'sport/week/publish.html'
-  form_class = SportWeekForm
+  form_class = None # TODO !!!
 
   def form_valid(self, form):
     # Checks
