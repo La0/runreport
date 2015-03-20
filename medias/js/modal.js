@@ -186,9 +186,6 @@ function load_box(url, method, data, output){
           replace : true
         });
 
-        // Trigger forms
-        modal.find('form').on('submit', submit_form);
-
       } else if(output instanceof jQuery) {
         // Render box element
         output.html(data.html);
@@ -197,13 +194,16 @@ function load_box(url, method, data, output){
         return;
       }
 
+      // Trigger forms
+      dom.find('form').on('submit', submit_form);
+
       // Add slow hideme trigger to fade out
       setInterval(function(){
         dom.find('.hideme').fadeOut('slow');
       }, 3000);
 
       // Load inline boxes
-      dom.find('.box').each(function(i, box){
+      dom.find('div.box').each(function(i, box){
         load_inline_box(box);
       });
     },
