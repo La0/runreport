@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-20 08:46+0100\n"
-"PO-Revision-Date: 2015-03-20 08:50+0100\n"
+"POT-Creation-Date: 2015-03-20 11:02+0100\n"
+"PO-Revision-Date: 2015-03-20 11:03+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -31,7 +31,6 @@ msgid "Link address"
 msgstr "Adresse du lien"
 
 #: club/models.py:202
-#| msgid "Use RunReport in"
 msgid "RunReport Invite"
 msgstr "Invitation RunReport"
 
@@ -397,9 +396,10 @@ msgstr "Créer un groupe"
 #: templates/messages/add/conversation.html:69
 #: templates/messages/add/session.html:55 templates/messages/add/user.html:25
 #: templates/messages/delete.html:19 templates/messages/edit.html:19
-#: templates/sport/day/delete.html:15 templates/sport/session/delete.html:10
-#: templates/sport/week/publish.html:48 templates/tracks/disconnect.html:12
-#: templates/users/notifications.html:43 templates/users/password.html:15
+#: templates/plan/delete.html:10 templates/sport/day/delete.html:15
+#: templates/sport/session/delete.html:10 templates/sport/week/publish.html:48
+#: templates/tracks/disconnect.html:12 templates/users/notifications.html:45
+#: templates/users/password.html:15
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -434,7 +434,7 @@ msgstr "Editer"
 
 #: templates/club/group/index.html:45 templates/club/races.html:31
 #: templates/messages/inbox.html:69 templates/sport/vma.html:71
-#: templates/users/notifications.html:30 templates/users/races.html:98
+#: templates/users/notifications.html:32 templates/users/races.html:98
 msgid "View"
 msgstr "Voir"
 
@@ -656,7 +656,6 @@ msgid "You can register athletes by sending us a CSV file"
 msgstr "Vous pouvez ajouter des athlètes en nous fournissant un fichier CSV"
 
 #: templates/club/manage.html:66 templates/club/subscriptions/editor.html:31
-#| msgid "My athletes"
 msgid "Subscribe athletes"
 msgstr "Inscription d'athlètes"
 
@@ -872,7 +871,6 @@ msgid "Edition is disabled for the demo."
 msgstr "L'édition est désactivée pour la démo."
 
 #: templates/club/subscriptions/editor.html:7
-#| msgid "No races for your athletes"
 msgid "Send invites to your athletes"
 msgstr "Envoyez des invitations à vos athlètes"
 
@@ -882,12 +880,10 @@ msgid "Email"
 msgstr "Email"
 
 #: templates/club/subscriptions/editor.html:15
-#| msgid "Firstname"
 msgid "First Name"
 msgstr "Prénom"
 
 #: templates/club/subscriptions/editor.html:16
-#| msgid "Lastname"
 msgid "Last Name"
 msgstr "Nom"
 
@@ -916,12 +912,10 @@ msgstr ""
 "point-virgule (;) pour rapidement inviter des athlètes dans votre club."
 
 #: templates/club/subscriptions/upload.html:12
-#| msgid "Firstname"
 msgid "First name"
 msgstr "Prénom"
 
 #: templates/club/subscriptions/upload.html:13
-#| msgid "Lastname"
 msgid "Last name"
 msgstr "Nom"
 
@@ -1360,7 +1354,6 @@ msgid "Week's summary"
 msgstr "Bilan de la semaine"
 
 #: templates/mail/subscription.html:3
-#| msgid "create an account"
 msgid "Activate your account"
 msgstr "Activer votre compte"
 
@@ -1370,7 +1363,6 @@ msgid "You have been registered as an athlete of the club %s"
 msgstr "Vous avez été inscrit au club %s en tant qu'athlète."
 
 #: templates/mail/subscription.html:14
-#| msgid "To create the club, use this unique invite:"
 msgid "Please activate your account with this unique invite:"
 msgstr "Veuillez activer votre compte avec cette invitation unique"
 
@@ -1607,6 +1599,21 @@ msgstr "formulaire de contact"
 msgid "Private"
 msgstr "Privé"
 
+#: templates/plan/delete.html:3
+#, python-format
+#| msgid "Remove"
+msgid "Remove plan %s"
+msgstr "Enlever plan %s"
+
+#: templates/plan/delete.html:6
+#| msgid "Are you sure to delete this day ?"
+msgid "Are you sure to remove this plan from your calendar ?"
+msgstr "Etes vous sûr de vouloir supprimer ce plan de votre calendrier ?"
+
+#: templates/plan/delete.html:11
+msgid "Remove this plan"
+msgstr "Enlever ce plan"
+
 #: templates/plan/details.html:25
 msgid "Download PDF"
 msgstr "Télécharger PDF"
@@ -1650,6 +1657,10 @@ msgstr "Dimanche"
 #: templates/plan/details.html:77
 msgid "No weeks available for this plan."
 msgstr "Pas de semaines disponibles pour ce plan."
+
+#: templates/plan/details.html:85
+msgid "Remove from my calendar"
+msgstr "Enlever de mon calendrier"
 
 #: templates/sport/calendar/_day.xs.html:4
 #: templates/sport/calendar/month.html:73
@@ -2169,11 +2180,11 @@ msgstr "Mot de passe oublié ?"
 msgid "Demo accounts"
 msgstr "Comptes Démos"
 
-#: templates/users/notifications.html:36
+#: templates/users/notifications.html:38
 msgid "You don't have any notifications."
 msgstr "Vous n'avez aucune notifications."
 
-#: templates/users/notifications.html:45
+#: templates/users/notifications.html:47
 msgid "Delete these notifications"
 msgstr "Supprimer ces notifications"
 
@@ -2637,16 +2648,16 @@ msgstr "visibilité des commentaires"
 msgid "tracks visibility"
 msgstr "visibilités des traces GPS"
 
-#: users/notification.py:52
+#: users/notification.py:53
 #, python-format
 msgid "%(first_name)s %(last_name)s has sent you a message"
 msgstr "%(first_name)s %(last_name)s vous a envoyé un message"
 
-#: users/notification.py:71
+#: users/notification.py:72
 msgid " private"
 msgstr "privé"
 
-#: users/notification.py:76
+#: users/notification.py:77
 #, python-format
 msgid ""
 "%(first_name)s %(last_name)s has written a comment %(type)s on his session "
@@ -2655,7 +2666,7 @@ msgstr ""
 "%(first_name)s %(last_name)s a écrit un commentaire %(type)s sur sa séance "
 "\"%(name)s\""
 
-#: users/notification.py:79
+#: users/notification.py:80
 #, python-format
 msgid ""
 "%(first_name)s %(last_name)s has written a comment %(type)s on your session "
@@ -2664,7 +2675,7 @@ msgstr ""
 "%(first_name)s %(last_name)s a écrit un commentaire %(type)s sur votre "
 "séance \"%(name)s\""
 
-#: users/notification.py:82
+#: users/notification.py:83
 #, python-format
 msgid ""
 "%(first_name)s %(last_name)s has written a comment on the session \"%(name)s"
@@ -2673,25 +2684,35 @@ msgstr ""
 " %(first_name)s %(last_name)s a écrit un commentaire sur la séance \"%(name)s"
 "\" de %(first_name)s %(last_name)s"
 
-#: users/notification.py:105
+#: users/notification.py:106
 #, python-format
 msgid "%(first_name)s %(last_name)s is now your friend on RunReport"
 msgstr "%(first_name)s %(last_name)s est dorénavant votre ami sur RunReport"
 
-#: users/notification.py:108
+#: users/notification.py:109
 #, python-format
 msgid "%(first_name)s %(last_name)s wants to add you as a friend."
 msgstr "%(first_name)s %(last_name)s veut vous ajouter en tant qu'ami."
 
-#: users/notification.py:123
+#: users/notification.py:124
 #, python-format
 msgid "%(first_name)s %(last_name)s has done his training : %(session_name)s"
 msgstr "%(first_name)s %(last_name)s a fait sa séance : %(session_name)s"
 
-#: users/notification.py:125
+#: users/notification.py:126
 #, python-format
 msgid "%(first_name)s %(last_name)s has missed his training : %(session_name)s"
 msgstr "%(first_name)s %(last_name)s n'a pas fait sa séance : %(session_name)s"
+
+#: users/notification.py:140
+#, python-format
+#| msgid "%(first_name)s %(last_name)s has sent you a message"
+msgid ""
+"%(first_name)s %(last_name)s has removed your plan %(plan_name)s from his "
+"calendar"
+msgstr ""
+"%(first_name)s %(last_name)s a supprimé le plan %(plan_name)s de son "
+"calendrier"
 
 #: Sport/name:1
 msgid "Any Activity Type"

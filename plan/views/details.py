@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from .mixins import PlanMixin
 from coach.mixins import JsonResponseMixin
+from users.notification import UserNotifications
 
 class PlanDetails(PlanMixin, DetailView):
   template_name = 'plan/details.html'
@@ -30,8 +31,13 @@ class PlanApplicationDelete(JsonResponseMixin, PlanMixin, DeleteView):
 
   def delete(self, *args, **kwargs):
 
+    app = self.get_application()['application']
+
+    # Notify creator the athlete has removed the plan
+    un = UserNotifications(app.plan.creator)
+    un.add_plan_application_removed(app)
+
     # Delete the application, not the plan !
-    app = self.get_application()
-    app['application'].delete()
+    app.delete()
 
     return HttpResponseRedirect(reverse('report-current-month'))
