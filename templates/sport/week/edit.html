@@ -46,8 +46,23 @@
 
   <hr />
 
-  <div>
-    <h4>{{ _('This week summary') }}</h4>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6">
+      <h4>{{ _('This week summary') }}</h4>
+    </div>
+    <div class="col-xs-12 col-sm-6 text-right">
+      {% if not member  %}
+        {% if report.published or report.task %}
+        <a href="{% url report-week-publish report.year, report.week %}" class="modal-action btn btn-success btn-light">
+          <i class="icon-list"></i> {{ _('Week published') }}
+        </a>
+        {% else %}
+        <a href="{% url report-week-publish report.year, report.week %}" class="{% if not report.is_publiable() %}disabled{% endif %} modal-action btn btn-info btn-light">
+          {{ _('Publish this week') }} <i class="icon-right-open"></i>
+        </a>
+        {% endif %}
+      {% endif %}
+    </div>
     <div id="messages-{{report.pk}}" class="comments col-xs-12">
       {% if 'comments_week' in privacy %}
         {% if report.conversation %}
@@ -55,25 +70,11 @@
           {{ _('Loading week comments...') }}
         </div>
         {% else %}
-        <a href="{% url message-week-add report.pk %}" class="modal-action btn btn-sm btn-success btn-light">
+        <a href="{% url message-week-add report.pk %}" class="modal-action btn btn-success btn-light">
           <i class="icon-comment"></i> {{ _('Start a conversation') }}
         </a>
         {% endif %}
       {% endif %}
-    </div>
-
-    <div class="pull-right">
-    {% if not member  %}
-      {% if report.published or report.task %}
-      <a href="{% url report-week-publish report.year, report.week %}" class="modal-action btn btn-success btn-light">
-        <i class="icon-list"></i> {{ _('Week published') }}
-      </a>
-      {% else %}
-      <a href="{% url report-week-publish report.year, report.week %}" class="{% if not report.is_publiable() %}disabled{% endif %} modal-action btn btn-info btn-light">
-        {{ _('Publish this week') }} <i class="icon-right-open"></i>
-      </a>
-      {% endif %}
-    {% endif %}
     </div>
 
     <h4>{{ _('Stats') }}</h4>

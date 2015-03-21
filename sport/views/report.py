@@ -1,21 +1,32 @@
-from django.views.generic import UpdateView, DetailView
+from django.views.generic import FormView, DetailView
 from sport.tasks import publish_report
+from sport.forms import SportWeekPublish
 from mixins import CurrentWeekMixin, WeekPaginator
 from coach.mixins import JsonResponseMixin, JSON_OPTION_CLOSE, JSON_OPTION_NO_HTML, JSON_OPTION_BODY_RELOAD
 
-class WeekPublish(JsonResponseMixin, CurrentWeekMixin, UpdateView):
+class WeekPublish(JsonResponseMixin, CurrentWeekMixin, FormView):
   template_name = 'sport/week/publish.html'
-  form_class = None # TODO !!!
+  form_class = SportWeekPublish
+
+  def get_context_data(self, *args, **kwargs):
+    # FormView does not embed local object
+    context = super(WeekPublish, self).get_context_data(*args, **kwargs)
+    context['report'] = self.get_object()
+    return context
 
   def form_valid(self, form):
     # Checks
+    report = self.get_object()
     if self.request.user.demo:
       raise Exception("No publish in demo")
-    if not self.object.is_publiable():
+    if not report.is_publiable():
       raise Exception('Not publiable.')
 
+    # Add a comment to conversation
+    if form.cleaned_data['comment']:
+      report.add_comment(form.cleaned_data['comment'], self.request.user)
+
     # Publish new report to all memberships
-    report = form.save()
     uri = self.request.build_absolute_uri('/')[:-1] # remove trailing /
     for m in self.request.user.memberships.all():
       task = publish_report.delay(report, m, uri)

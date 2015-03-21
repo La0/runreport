@@ -76,22 +76,10 @@ class MessageWeekAdd(MessageWeekMixin, MessageReloadMixin, CreateView):
   def form_valid(self, form):
     self.get_week()
 
-    # Create a new conversation
-    conversation = Conversation.objects.create(type=TYPE_COMMENTS_WEEK)
-    self.week.conversation = conversation
-    self.week.save()
+    # Add a comment to this week
+    message = self.week.add_comment(form.cleaned_data['message'], self.request.user)
 
-    # Save a new message for user
-    message = form.save(commit=False)
-    message.conversation = conversation
-    message.writer = self.request.user
-    message.save()
-
-    # Add notifications
-    conversation.notify(message)
-
-    return self.reload(conversation)
-
+    return self.reload(message.conversation)
 
 class ConversationAdd(ConversationMixin, MessageReloadMixin, CreateView):
   template_name = 'messages/add/conversation.html'

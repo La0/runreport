@@ -107,3 +107,9 @@ class SportDayAddForm(forms.Form):
       raise forms.ValidationError('Une séance existe déjà à cette date.')
 
     return self.cleaned_data['date']
+
+class SportWeekPublish(forms.Form):
+  '''
+  Add a comment while publising a week
+  '''
+  comment = forms.CharField(required=False, widget=forms.Textarea())
