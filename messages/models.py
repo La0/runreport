@@ -30,6 +30,9 @@ class Conversation(models.Model):
     if self.type == TYPE_MAIL:
       return reverse('conversation-view', args=(self.pk, ))
 
+    if self.type == TYPE_COMMENTS_WEEK:
+      return reverse('user-calendar-week', args=(self.week.user.username, self.week.year, self.week.week))
+
     # View session
     session = self.get_session()
     dt = session.day.date

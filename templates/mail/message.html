@@ -1,6 +1,6 @@
 {% extends "mail/base.html" %}
 
-{% set title = 'Nouveau message' %}
+{% set title = _('New message') %}
 
 {% block mail %}
 {{ _('Hello %s') % user.first_name }},
@@ -8,6 +8,13 @@
 
 {% if message.conversation.type == 'mail' %}
 {{ _('You just received a new private message from') }} <a href="http://{{site.domain}}{% url user-public-profile message.writer.username %}">{{ message.writer.first_name }} {{ message.writer.last_name }}</a>
+{% elif message.conversation.type == 'comments_week' %}
+  {% if week.user == user %}
+    {{ _('You just received a new comment on your week % by') % week }} 
+  {% else %}
+    {{ _('A new comment has been added on the week %s by') % week }}
+  {% endif %}
+  <a href="http://{{site.domain}}{% url user-calendar-week week.user.username, week.year, week.week %}">{{ message.writer.first_name }} {{ message.writer.last_name }}</a>
 {% else %}
   {% with message.conversation.get_session() as session %}
   {% with session.day.week.user as session_user %}
