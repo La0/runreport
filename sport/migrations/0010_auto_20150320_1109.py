@@ -17,13 +17,16 @@ def migrate_comment(app, schema_editor):
     # Create a conversation
     conv = Conversation.objects.create(type=TYPE_COMMENTS_WEEK, session_user_id=week.user_id)
 
+    # save updated date
+    date = week.updated
+
     # Attach it to the week
     week.conversation = conv
     week.save()
 
     # Create a new message with original comment
     m = conv.messages.create(writer_id=week.user_id, message=week.comment)
-    m.created = week.updated # Use week last update date
+    m.created = date # Use week last update date
     m.save()
 
 class Migration(migrations.Migration):
