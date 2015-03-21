@@ -10,7 +10,7 @@
 {{ _('You just received a new private message from') }} <a href="http://{{site.domain}}{% url user-public-profile message.writer.username %}">{{ message.writer.first_name }} {{ message.writer.last_name }}</a>
 {% elif message.conversation.type == 'comments_week' %}
   {% if week.user == user %}
-    {{ _('You just received a new comment on your week % by') % week }} 
+    {{ _('You just received a new comment on your week %s by') % week }} 
   {% else %}
     {{ _('A new comment has been added on the week %s by') % week }}
   {% endif %}
