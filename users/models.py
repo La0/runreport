@@ -235,7 +235,7 @@ class Athlete(AthleteBase):
     if visitor.is_superuser:
       privacy = fields # all access
       privacy += ['admin', ] # and has admin right
-      privacy += ['comments_public', 'comments_private'] # and full comments access
+      privacy += ['comments_public', 'comments_private', 'comments_week', ] # and full comments access
       return privacy
 
     # A trainer sees evertything for his athletes
@@ -248,7 +248,7 @@ class Athlete(AthleteBase):
         trainers_roles += is_manager and ['archive', ] or []
         if m.role in trainers_roles:
           privacy = fields # all access
-          privacy += ['comments_public', 'comments_private'] # and full comments access
+          privacy += ['comments_public', 'comments_private', 'comments_week', ] # and full comments access
           privacy += ['trainer', ] # and has trainer right
           return privacy
 
@@ -265,7 +265,7 @@ class Athlete(AthleteBase):
     # Add comments access
     if 'comments' in privacy:
       privacy += ['comments_public', ]
-      privacy += visitor == self and ['comments_private', ] or []
+      privacy += visitor == self and ['comments_private', 'comments_week', ] or []
 
     return privacy
 

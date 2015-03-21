@@ -15,6 +15,11 @@
         </a>
       {% endfor %}
     </p>
+  {% elif conversation.type == 'comments_week' %}
+    <p>
+      <i class="icon-calendar"></i>
+      {{ _('Week from %(start)s to %(end)s') % { 'start' : conversation.week.get_date_start()|date('l d E Y'), 'end' : conversation.week.get_date_end()|date('l d E Y')} }}
+    </p>
   {% else %}
     {% with conversation.get_session() as session %}
       <h4>

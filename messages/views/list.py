@@ -1,6 +1,6 @@
 from django.views.generic import ListView, DetailView
 from coach.mixins import JsonResponseMixin
-from mixins import MessageSessionMixin, ConversationMixin
+from mixins import ConversationMixin
 
 class ConversationView(ConversationMixin, DetailView):
   template_name = 'messages/conversation.html'
@@ -26,9 +26,9 @@ class ConversationList(JsonResponseMixin, ConversationMixin, ListView):
 
     # List all available conversations for user
     conversations = []
-    if 'comments_private' in self.privacy and self.session.comments_private:
+    if self.session and 'comments_private' in self.privacy and self.session.comments_private:
       conversations.append(self.session.comments_private)
-    if 'comments_public' in self.privacy and self.session.comments_public:
+    if self.session and 'comments_public' in self.privacy and self.session.comments_public:
       conversations.append(self.session.comments_public)
     context['conversations'] = conversations
 

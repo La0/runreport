@@ -7,6 +7,7 @@ from messages.tasks import notify_message
 TYPE_MAIL = 'mail'
 TYPE_COMMENTS_PUBLIC = 'comments_public'
 TYPE_COMMENTS_PRIVATE = 'comments_private'
+TYPE_COMMENTS_WEEK = 'comments_week'
 TYPE_PLAN_SESSION = 'plan_session'
 
 class Conversation(models.Model):
@@ -14,6 +15,7 @@ class Conversation(models.Model):
     (TYPE_MAIL, 'Mail'),
     (TYPE_COMMENTS_PUBLIC, 'Public comments'),
     (TYPE_COMMENTS_PRIVATE, 'Private comments'),
+    (TYPE_COMMENTS_WEEK, 'Week comments'),
     (TYPE_PLAN_SESSION, 'Plan session'),
   )
 
@@ -28,13 +30,16 @@ class Conversation(models.Model):
     if self.type == TYPE_MAIL:
       return reverse('conversation-view', args=(self.pk, ))
 
+    if self.type == TYPE_COMMENTS_WEEK:
+      return reverse('user-calendar-week', args=(self.week.user.username, self.week.year, self.week.week))
+
     # View session
     session = self.get_session()
     dt = session.day.date
     return reverse('user-calendar-day', args=(session.day.week.user.username, dt.year, dt.month, dt.day))
 
   def get_session(self):
-    if self.type in (TYPE_MAIL, TYPE_PLAN_SESSION):
+    if self.type in (TYPE_MAIL, TYPE_PLAN_SESSION, TYPE_COMMENTS_WEEK):
       raise Exception("No session on conversation typed : %s" % self.type)
 
     # Check the session is attached
@@ -66,20 +71,23 @@ class Conversation(models.Model):
 
       return writers
 
-    elif self.type == TYPE_COMMENTS_PRIVATE:
+    elif self.type in (TYPE_COMMENTS_PRIVATE, TYPE_COMMENTS_WEEK, ):
       # Send to all trainer + session user
       trainers = []
-      session = self.get_session()
-      session_user = session.day.week.user
+      if self.type == TYPE_COMMENTS_PRIVATE:
+        session = self.get_session()
+        user = session.day.week.user
+      else:
+        user = self.week.user
 
-      for m in session.day.week.user.memberships.all():
+      for m in user.memberships.all():
         for trainer in m.trainers.all():
           if exclude and trainer == exclude:
             continue
           trainers.append(trainer)
 
-      if session_user != exclude and session_user not in trainers:
-        trainers += [ session_user, ]
+      if user != exclude and user not in trainers:
+        trainers += [ user, ]
 
       return trainers
 

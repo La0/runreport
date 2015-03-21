@@ -3,16 +3,16 @@ from __future__ import absolute_import
 from django.db import models
 from django.db.models import Count
 from users.models import Athlete
-from datetime import datetime, date, time, timedelta
+from datetime import datetime, date, time
 import xlwt
 import tempfile
 from coach.settings import REPORT_SEND_DAY, REPORT_SEND_TIME
 from coach.mail import MailBuilder
 from helpers import date_to_day, week_to_date
-from . import SESSION_TYPES
 from sport.stats import StatsMonth
 from .sport import SportSession
 from collections import OrderedDict
+from messages.models import Conversation, TYPE_COMMENTS_WEEK
 
 class SportWeek(models.Model):
   user = models.ForeignKey(Athlete, related_name='sportweek')
@@ -21,7 +21,7 @@ class SportWeek(models.Model):
   published = models.BooleanField(default=False)
   created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
-  comment = models.TextField(null=True, blank=True)
+  conversation = models.OneToOneField('messages.Conversation', null=True, blank=True, related_name='week')
   task = models.CharField(max_length=36, null=True, blank=True)
 
   class Meta:
@@ -123,10 +123,6 @@ class SportWeek(models.Model):
         if s.comment:
           content.append(s.comment)
 
-      # Add week comment
-      if i == 6 and self.comment:
-        content.append('Bilan de la semaine :')
-        content.append(self.comment)
       ws.write(i, 1, '\n'.join(content), style_align)
       i += 1
     ws.col(0).width = 4000 # Static width for dates
@@ -200,6 +196,25 @@ class SportWeek(models.Model):
     # Rebuild the stats cache
     st = StatsMonth(self.user, self.year, self.get_date_start().month, preload=False)
     st.build()
+
+  def add_comment(self, message, writer):
+    '''
+    Add a new comment to the conversation
+    Init the conversation if needed
+    '''
+
+    # Create a new conversation
+    if not self.conversation:
+      self.conversation = Conversation.objects.create(type=TYPE_COMMENTS_WEEK)
+      self.save()
+
+    # Save a new message for user
+    message = self.conversation.messages.create(writer=writer, message=message)
+
+    # Add notifications
+    self.conversation.notify(message)
+
+    return message
 
 
 class SportDay(models.Model):

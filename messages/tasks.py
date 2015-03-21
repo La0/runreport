@@ -16,6 +16,8 @@ def notify_message(message, user):
     'message' : message,
     'user' : user,
   }
+  if message.conversation.type == 'comments_week':
+    data['week'] = message.conversation.week
   builder.subject = u'[RunReport] Nouveau message'
   builder.to = [user.email, ]
   mail = builder.build(data)

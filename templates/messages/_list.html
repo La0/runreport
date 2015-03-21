@@ -1,4 +1,6 @@
-{% if conversation and session %}
+{% if conversation %}
+
+{% if conversations %}
 <div class="row">
   <div class="col-xs-12">
     <ul class="breadcrumb" role="menu">
@@ -24,6 +26,7 @@
     </ul>
   </div>
 </div>
+{% endif %}
 
 {% if not full %}
 <div class="row">
@@ -74,18 +77,25 @@
         <i class="icon-plus"></i>
         {% if conversation.type == 'comments_private' %}
           {{ _('Add a private comment') }}
-        {% else %}
+        {% elif conversation.type == 'comments_public'  %}
           {{ _('Add a public comment') }}
+        {% elif conversation.type == 'comments_week'  %}
+          {{ _('Add a comment') }}
         {% endif %}
       </a>
-      {% if 'comments_public' in privacy and not session.comments_public %}
+      {% if session and 'comments_public' in privacy and not session.comments_public %}
       <a href="{% url message-session-add session.pk, 'public' %}" class="btn btn-sm btn-success modal-action btn-light">
         <i class="icon-comment"></i> {{ _('Start a public conversation') }}
       </a>
       {% endif %}
-      {% if 'comments_private' in privacy and not session.comments_private %}
+      {% if session and 'comments_private' in privacy and not session.comments_private %}
       <a href="{% url message-session-add session.pk, 'private' %}" class="btn btn-sm btn-warning modal-action btn-light">
         <i class="icon-comment"></i> {{ _('Start a private conversation') }}
+      </a>
+      {% endif %}
+      {% if conversation.type == 'comments_week' and 'comments_weeks' in privacy %}
+      <a href="" class="btn btn-sm btn-success modal-action btn-light">
+        <i class="icon-comment"></i> {{ _('Start a public conversation') }}
       </a>
       {% endif %}
     {% else %}

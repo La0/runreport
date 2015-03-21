@@ -82,17 +82,20 @@
     </td>
   </tr>
 
-  {% if report.comment %}
+  {% if report.conversation %}
   <tr>
     <td>
       <h3 style="margin-top: 20px">{{ _('Week\'s summary') }}</h3>
     </td>
   </tr>
-  <tr>
-    <td>
-    {{ report.comment }}
-    </td>
-  </tr>
+    {% for message in report.conversation.messages.all() %}
+    <tr>
+      <td>
+      <strong>{{ message.writer.first_name }} {{ message.writer.last_name }}</strong>
+      : {{ message.message }}
+      </td>
+    </tr>
+    {% endfor %}
   {% endif %}
 </table>
 {% endblock %}

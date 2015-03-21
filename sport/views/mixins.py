@@ -73,9 +73,17 @@ class CurrentWeekMixin(object):
       'pageday' : 'report-day',
     }
 
+  def get_privacy(self):
+    # Add privacy for current visitor
+    week = self.get_object()
+    return {
+      'privacy' : week.user.get_privacy_rights(self.request.user),
+    }
+
   def get_context_data(self, *args, **kwargs):
     context = super(CurrentWeekMixin, self).get_context_data(*args, **kwargs)
     context.update(self.get_links())
+    context.update(self.get_privacy())
     return context
 
 class WeekPaginator(object):

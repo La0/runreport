@@ -1,5 +1,5 @@
 #- coding: utf-8
-from models import Sport, SportWeek, SportDay, SportSession, SESSION_TYPES
+from models import Sport, SportDay, SportSession, SESSION_TYPES
 from datetime import date
 from django import forms
 from django.utils.translation import ugettext_lazy as _
@@ -108,7 +108,8 @@ class SportDayAddForm(forms.Form):
 
     return self.cleaned_data['date']
 
-class SportWeekForm(forms.ModelForm):
-  class Meta:
-    model = SportWeek
-    fields = ('comment', )
+class SportWeekPublish(forms.Form):
+  '''
+  Add a comment while publising a week
+  '''
+  comment = forms.CharField(required=False, widget=forms.Textarea())
