@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-21 19:20+0100\n"
+"POT-Creation-Date: 2015-03-23 22:33+0100\n"
 "PO-Revision-Date: 2015-02-09 17:42+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
@@ -419,7 +419,7 @@ msgid "Edit"
 msgstr ""
 
 #: templates/club/group/index.html:45 templates/club/races.html:31
-#: templates/messages/inbox.html:69 templates/sport/vma.html:71
+#: templates/messages/inbox.html:78 templates/sport/vma.html:71
 #: templates/users/notifications.html:32 templates/users/races.html:98
 msgid "View"
 msgstr ""
@@ -1422,13 +1422,13 @@ msgid "This comment will be public, anyone can see it."
 msgstr ""
 
 #: templates/messages/add/conversation.html:76
-#: templates/messages/conversation.html:40 templates/messages/inbox.html:62
+#: templates/messages/conversation.html:40 templates/messages/inbox.html:71
 msgid "Reply"
 msgstr ""
 
 #: templates/messages/add/conversation.html:76
 #: templates/messages/add/session.html:56
-#: templates/messages/conversation.html:42 templates/messages/inbox.html:64
+#: templates/messages/conversation.html:42 templates/messages/inbox.html:73
 msgid "Comment"
 msgstr ""
 
@@ -1476,35 +1476,45 @@ msgstr ""
 msgid "Private message"
 msgstr ""
 
+#: templates/messages/inbox.html:39
+#, python-format
+msgid "On your week from %s"
+msgstr ""
+
 #: templates/messages/inbox.html:42
+#, python-format
+msgid "On %(first_name)s %(last_name)s week from %(start)s"
+msgstr ""
+
+#: templates/messages/inbox.html:51
 msgid "On your session"
 msgstr ""
 
-#: templates/messages/inbox.html:44
+#: templates/messages/inbox.html:53
 msgid "On the session of"
 msgstr ""
 
-#: templates/messages/inbox.html:52 templates/page/detail.html:13
+#: templates/messages/inbox.html:61 templates/page/detail.html:13
 msgid "on"
 msgstr ""
 
-#: templates/messages/inbox.html:81
+#: templates/messages/inbox.html:90
 msgid "Previous conversations"
 msgstr ""
 
-#: templates/messages/inbox.html:86
+#: templates/messages/inbox.html:95
 msgid "Page"
 msgstr ""
 
-#: templates/messages/inbox.html:91
+#: templates/messages/inbox.html:100
 msgid "Next conversations"
 msgstr ""
 
-#: templates/messages/inbox.html:100
+#: templates/messages/inbox.html:109
 msgid "No conversations"
 msgstr ""
 
-#: templates/messages/inbox.html:101
+#: templates/messages/inbox.html:110
 msgid "You did not receive or send any message."
 msgstr ""
 
@@ -2643,8 +2653,8 @@ msgid "Uncategorized"
 msgstr ""
 
 #: Sport/name:3
-msgid "Running"
-msgstr ""
+msgid "Course à pied"
+msgstr "Running"
 
 #: Sport/name:4
 msgid "Street Running"
@@ -2663,8 +2673,8 @@ msgid "Treadmill Running"
 msgstr ""
 
 #: Sport/name:8
-msgid "Cycling"
-msgstr ""
+msgid "Vélo"
+msgstr "Cycling"
 
 #: Sport/name:9
 msgid "Cyclocross"
@@ -2719,12 +2729,12 @@ msgid "Strength Training"
 msgstr ""
 
 #: Sport/name:22
-msgid "hiking"
-msgstr ""
+msgid "Randonnée"
+msgstr "hiking"
 
 #: Sport/name:23
-msgid "Swimming"
-msgstr ""
+msgid "Natation"
+msgstr "Swimming"
 
 #: Sport/name:24
 msgid "Lap Swimming"
@@ -2735,8 +2745,8 @@ msgid "Open Water Swimming"
 msgstr ""
 
 #: Sport/name:26
-msgid "Walking"
-msgstr ""
+msgid "Marche"
+msgstr "Walking"
 
 #: Sport/name:27
 msgid "Casual Walking"
@@ -2769,8 +2779,8 @@ msgid "Moto"
 msgstr "Motorbike"
 
 #: Sport/name:34
-msgid "Other"
-msgstr ""
+msgid "Autre"
+msgstr "Other"
 
 #: Sport/name:35
 msgid "Backcountry Skiing/Snowboarding"
@@ -2879,24 +2889,6 @@ msgstr ""
 #: Sport/name:61
 msgid "Walk"
 msgstr ""
-
-#~ msgid "Course à pied"
-#~ msgstr "Running"
-
-#~ msgid "Vélo"
-#~ msgstr "Cycling"
-
-#~ msgid "Randonnée"
-#~ msgstr "hiking"
-
-#~ msgid "Natation"
-#~ msgstr "Swimming"
-
-#~ msgid "Marche"
-#~ msgstr "Walking"
-
-#~ msgid "Autre"
-#~ msgstr "Other"
 
 #~ msgid "Development Version"
 #~ msgstr "Development Version"

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-21 19:20+0100\n"
-"PO-Revision-Date: 2015-03-21 19:21+0100\n"
+"POT-Creation-Date: 2015-03-23 22:33+0100\n"
+"PO-Revision-Date: 2015-03-23 22:38+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -433,7 +433,7 @@ msgid "Edit"
 msgstr "Editer"
 
 #: templates/club/group/index.html:45 templates/club/races.html:31
-#: templates/messages/inbox.html:69 templates/sport/vma.html:71
+#: templates/messages/inbox.html:78 templates/sport/vma.html:71
 #: templates/users/notifications.html:32 templates/users/races.html:98
 msgid "View"
 msgstr "Voir"
@@ -1209,7 +1209,6 @@ msgstr " Vous venez de recevoir un nouveau message privé de"
 
 #: templates/mail/message.html:13
 #, python-format
-#| msgid "You just received a new comment on your week % by"
 msgid "You just received a new comment on your week %s by"
 msgstr "Vous venez de recevoir un nouveau commentaire sur votre semaine %s par"
 
@@ -1499,13 +1498,13 @@ msgid "This comment will be public, anyone can see it."
 msgstr "Ce commentaire sera public, tous les visiteurs peuvent le voir."
 
 #: templates/messages/add/conversation.html:76
-#: templates/messages/conversation.html:40 templates/messages/inbox.html:62
+#: templates/messages/conversation.html:40 templates/messages/inbox.html:71
 msgid "Reply"
 msgstr "Répondre"
 
 #: templates/messages/add/conversation.html:76
 #: templates/messages/add/session.html:56
-#: templates/messages/conversation.html:42 templates/messages/inbox.html:64
+#: templates/messages/conversation.html:42 templates/messages/inbox.html:73
 msgid "Comment"
 msgstr "Commenter"
 
@@ -1553,35 +1552,47 @@ msgstr "Il y'a %s"
 msgid "Private message"
 msgstr "Message privé"
 
+#: templates/messages/inbox.html:39
+#, python-format
+#| msgid "Your week %s"
+msgid "On your week from %s"
+msgstr "Sur votre semaine du %s"
+
 #: templates/messages/inbox.html:42
+#, python-format
+#| msgid "%(first_name)s %(last_name)s has sent you a message"
+msgid "On %(first_name)s %(last_name)s week from %(start)s"
+msgstr "Sur la semaine de %(first_name)s %(last_name)s du %(start)s"
+
+#: templates/messages/inbox.html:51
 msgid "On your session"
 msgstr "Sur votre séance"
 
-#: templates/messages/inbox.html:44
+#: templates/messages/inbox.html:53
 msgid "On the session of"
 msgstr "Sur la séance de"
 
-#: templates/messages/inbox.html:52 templates/page/detail.html:13
+#: templates/messages/inbox.html:61 templates/page/detail.html:13
 msgid "on"
 msgstr "le"
 
-#: templates/messages/inbox.html:81
+#: templates/messages/inbox.html:90
 msgid "Previous conversations"
 msgstr "Conversation précèdentes"
 
-#: templates/messages/inbox.html:86
+#: templates/messages/inbox.html:95
 msgid "Page"
 msgstr "Page"
 
-#: templates/messages/inbox.html:91
+#: templates/messages/inbox.html:100
 msgid "Next conversations"
 msgstr "Conversation suivantes"
 
-#: templates/messages/inbox.html:100
+#: templates/messages/inbox.html:109
 msgid "No conversations"
 msgstr "Pas de conversations"
 
-#: templates/messages/inbox.html:101
+#: templates/messages/inbox.html:110
 msgid "You did not receive or send any message."
 msgstr "Vous n'avez reçu ou envoyé aucun message."
 
@@ -2765,8 +2776,8 @@ msgid "Uncategorized"
 msgstr "Sans Catégorie"
 
 #: Sport/name:3
-msgid "Running"
-msgstr "Course à pied"
+msgid "Course à pied"
+msgstr ""
 
 #: Sport/name:4
 msgid "Street Running"
@@ -2785,8 +2796,8 @@ msgid "Treadmill Running"
 msgstr "Course sur tapis"
 
 #: Sport/name:8
-msgid "Cycling"
-msgstr "Cyclisme sur "
+msgid "Vélo"
+msgstr ""
 
 #: Sport/name:9
 msgid "Cyclocross"
@@ -2841,12 +2852,12 @@ msgid "Strength Training"
 msgstr "Entraînement de force"
 
 #: Sport/name:22
-msgid "hiking"
-msgstr "randonnée"
+msgid "Randonnée"
+msgstr ""
 
 #: Sport/name:23
-msgid "Swimming"
-msgstr "Natation"
+msgid "Natation"
+msgstr ""
 
 #: Sport/name:24
 msgid "Lap Swimming"
@@ -2857,10 +2868,8 @@ msgid "Open Water Swimming"
 msgstr "Natation en mer"
 
 #: Sport/name:26
-#, fuzzy
-#| msgid "Walking"
-msgid "Walking"
-msgstr "Marche"
+msgid "Marche"
+msgstr ""
 
 #: Sport/name:27
 msgid "Casual Walking"
@@ -2893,7 +2902,7 @@ msgid "Moto"
 msgstr "Moto"
 
 #: Sport/name:34
-msgid "Other"
+msgid "Autre"
 msgstr ""
 
 #: Sport/name:35
@@ -3008,11 +3017,14 @@ msgstr ""
 msgid "Walk"
 msgstr "Marche"
 
-#~ msgid "No general comment"
-#~ msgstr "Pas de commentaire général"
+#~ msgid "Running"
+#~ msgstr "Course à pied"
 
-#~ msgid "Cross Country Skiing"
-#~ msgstr "Ski Cross"
+#~ msgid "Cycling"
+#~ msgstr "Cyclisme sur "
 
-#~ msgid "BackcountrySki"
-#~ msgstr "Ski"
+#~ msgid "hiking"
+#~ msgstr "randonnée"
+
+#~ msgid "Swimming"
+#~ msgstr "Natation"

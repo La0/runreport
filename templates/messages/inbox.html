@@ -33,6 +33,15 @@
     <div class="col-sm-6 col-xs-12">
       {% if conversation.type == 'mail' %}
       <i class="icon-mail"></i> {{ _('Private message') }}
+      {% elif conversation.type == 'comments_week' %}
+        <i class="icon-calendar"></i>
+        {% if conversation.week.user == user %}
+          {{ _('On your week from %s') % conversation.week.get_date_start()|date('l d E Y') }}
+        {% else %}
+          {% with conversation.week.user as u %}
+          {{ _('On %(first_name)s %(last_name)s week from %(start)s') % {'first_name' : u.first_name, 'last_name' : u.last_name, 'start' : conversation.week.get_date_start()|date('l d E Y'), } }}
+          {% endwith %}
+        {% endif %}
       {% else %}
       <p>
         {% with conversation.get_session() as session %}
