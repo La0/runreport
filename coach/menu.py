@@ -77,6 +77,7 @@ def add_pages(request):
         if m.club.manager == request.user or request.user.is_superuser:
           submenu['menu'].append(_p(('club-members-name', m.club.slug, 'prospects', 'name'), _('Newcomers')))
           submenu['menu'].append(_p(('club-members-name', m.club.slug, 'archives', 'name'), _('Archives')))
+          submenu['menu'].append(_p(('places', m.club.slug, ), _('Places'), lazy=True))
           submenu['menu'].append(_p(('club-manage', m.club.slug), _('Manage')))
 
         submenu['menu'].append('__SEPARATOR__')

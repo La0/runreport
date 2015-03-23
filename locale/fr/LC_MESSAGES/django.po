@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-23 22:33+0100\n"
-"PO-Revision-Date: 2015-03-23 22:38+0100\n"
+"POT-Creation-Date: 2015-03-23 23:39+0100\n"
+"PO-Revision-Date: 2015-03-23 23:41+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -114,54 +114,59 @@ msgstr "Nouveaux"
 msgid "Archives"
 msgstr "Archives"
 
-#: coach/menu.py:80 templates/club/manage.html:9
+#: coach/menu.py:80
+#| msgid "Paces"
+msgid "Places"
+msgstr "Les lieux"
+
+#: coach/menu.py:81 templates/club/manage.html:9
 msgid "Manage"
 msgstr "Administrer"
 
-#: coach/menu.py:106
+#: coach/menu.py:107
 msgid "My messages"
 msgstr "Mes messages"
 
-#: coach/menu.py:107 templates/users/preferences.html:33
+#: coach/menu.py:108 templates/users/preferences.html:33
 msgid "My preferences"
 msgstr "Mes préférences"
 
-#: coach/menu.py:108 templates/friends/home.html:3
+#: coach/menu.py:109 templates/friends/home.html:3
 #: templates/friends/home.html.py:8
 msgid "My friends"
 msgstr "Mes amis"
 
-#: coach/menu.py:109
+#: coach/menu.py:110
 msgid "My public profile"
 msgstr "Mon profil public"
 
-#: coach/menu.py:110
+#: coach/menu.py:111
 msgid "My statistics"
 msgstr "Mes statistiques"
 
-#: coach/menu.py:111
+#: coach/menu.py:112
 msgid "My paces"
 msgstr "Mes allures"
 
-#: coach/menu.py:112
+#: coach/menu.py:113
 msgid "My races"
 msgstr "Mes résultats"
 
-#: coach/menu.py:113
+#: coach/menu.py:114
 msgid "My GPS services"
 msgstr "Mes services GPS"
 
-#: coach/menu.py:115
+#: coach/menu.py:116
 msgid "Logout"
 msgstr "Se déconnecter"
 
-#: coach/menu.py:118 templates/club/joined.html:23
+#: coach/menu.py:119 templates/club/joined.html:23
 #: templates/club/joined.modal.html:21 templates/landing/index.html:175
 #: templates/landing/index.html.py:310
 msgid "Create an account"
 msgstr "Créer un compte"
 
-#: coach/menu.py:121
+#: coach/menu.py:122
 msgid "Login"
 msgstr "Se connecter"
 
@@ -173,46 +178,43 @@ msgstr "Français"
 msgid "English"
 msgstr "Anglais"
 
-#: plan/models.py:96
-#: events/models.py:8 templates/club/manage.html:75
+#: events/models.py:10 templates/club/manage.html:80
 msgid "Name"
 msgstr "Nom"
 
-#: events/models.py:13
-#| msgid "Link address"
+#: events/models.py:15
 msgid "Address"
 msgstr "Adresse"
 
-#: events/models.py:14
+#: events/models.py:16
 msgid "Zip Code"
 msgstr "Code Postal"
 
-#: events/models.py:15
+#: events/models.py:17
 msgid "City"
 msgstr "Ville"
 
-#: plan/models.py:93
+#: plan/models.py:96
 #, python-format
 msgid "Training plan : %s"
 msgstr "Plan d'entraînement : %s"
 
 #: plan/models.py:101
-#: plan/models.py:98
 #, python-format
 msgid "Training plan - %s.pdf"
 msgstr "Plan d'entraînement - %s.pdf"
 
-#: plan/models.py:231 templates/mail/report.html:43
+#: plan/models.py:235 templates/mail/report.html:43
 #: templates/sport/session/list.html:40
 msgid "Applied"
 msgstr "A faire"
 
-#: plan/models.py:232 templates/mail/report.html:45
+#: plan/models.py:236 templates/mail/report.html:45
 #: templates/sport/session/list.html:42
 msgid "Done"
 msgstr "Fait"
 
-#: plan/models.py:233 templates/mail/report.html:47
+#: plan/models.py:237 templates/mail/report.html:47
 #: templates/sport/session/list.html:44
 msgid "Failed"
 msgstr "Manqué"
@@ -411,10 +413,8 @@ msgid "Create a new group"
 msgstr "Créer un groupe"
 
 #: templates/club/group/edit.html:23 templates/club/link/add.html:13
-#: templates/friends/delete.html:10
+#: templates/events/places/edit.html:28 templates/friends/delete.html:10
 #: templates/messages/add/conversation.html:74
-#: templates/events/places/edit.html:23 templates/friends/delete.html:10
-#: templates/messages/add/conversation.html:69
 #: templates/messages/add/session.html:55 templates/messages/add/user.html:25
 #: templates/messages/add/week.html:24 templates/messages/delete.html:19
 #: templates/messages/edit.html:19 templates/plan/delete.html:10
@@ -447,7 +447,8 @@ msgstr "Créer un groupe d'utilisateurs"
 msgid "Created by"
 msgstr "Crée par"
 
-#: templates/events/places/index.html:32 templates/messages/_list.html:63
+#: templates/club/group/index.html:41 templates/club/manage.html:121
+#: templates/events/places/index.html:32 templates/messages/_list.html:66
 #: templates/messages/edit.html:20 templates/sport/day/edit.html:40
 msgid "Edit"
 msgstr "Editer"
@@ -987,11 +988,11 @@ msgstr "Editer lieu : %s"
 msgid "Add a place"
 msgstr "Ajouter un lieu"
 
-#: templates/events/places/edit.html:28
+#: templates/events/places/edit.html:33
 msgid "Edit place"
 msgstr "Editer lieu"
 
-#: templates/events/places/edit.html:33
+#: templates/events/places/edit.html:38
 msgid "Create place"
 msgstr "Créer un lieu"
 
@@ -1388,7 +1389,7 @@ msgstr "Plan"
 msgid "No session"
 msgstr "Pas de séance"
 
-#: templates/mail/report.html:51 templates/sport/session/edit.html:101
+#: templates/mail/report.html:70 templates/sport/session/edit.html:40
 #: templates/sport/week/_stats.html:5
 msgid "Sport"
 msgstr "Sport"
@@ -1597,13 +1598,11 @@ msgstr "Message privé"
 
 #: templates/messages/inbox.html:39
 #, python-format
-#| msgid "Your week %s"
 msgid "On your week from %s"
 msgstr "Sur votre semaine du %s"
 
 #: templates/messages/inbox.html:42
 #, python-format
-#| msgid "%(first_name)s %(last_name)s has sent you a message"
 msgid "On %(first_name)s %(last_name)s week from %(start)s"
 msgstr "Sur la semaine de %(first_name)s %(last_name)s du %(start)s"
 
@@ -1772,7 +1771,7 @@ msgstr "Export CSV"
 msgid "Hide friends"
 msgstr "Cacher mes amis"
 
-#: templates/sport/calendar/month.html:46
+#: templates/sport/calendar/month.html:47
 msgid "Show friends"
 msgstr "Voir mes amis"
 
@@ -1915,11 +1914,6 @@ msgid "Change session"
 msgstr "Changer la séance"
 
 #: templates/sport/session/edit.html:99
-#: templates/sport/session/edit.html:70
-msgid "has planned a "
-msgstr "a prévu"
-
-#: templates/sport/session/edit.html:160
 msgid "Comments"
 msgstr "Commentaires"
 
@@ -1942,6 +1936,10 @@ msgstr "Pas de distance"
 #: templates/sport/session/list.html:136
 msgid "No sessions"
 msgstr "Pas de séances"
+
+#: templates/sport/session/plan.html:61
+msgid "has planned a "
+msgstr "a prévu"
 
 #: templates/sport/session/plan.html:78
 msgid "Change date"
