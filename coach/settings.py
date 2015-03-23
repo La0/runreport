@@ -179,6 +179,7 @@ INSTALLED_APPS = (
     'messages',
     'tracks',
     'friends',
+    'events',
     'api', # Api code
     'corsheaders', # CORS for api
     'vinaigrette', # Model translations

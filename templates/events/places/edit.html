@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container">
+  {% if place %}
+  <h1>{{ _('Edit place : %s') % place.name }}</h1>
+  {% else %}
+  <h1>{{ _('Add a place') }}</h1>
+  {% endif %}
+
+  {% if place and place.point %}
+  <div class="point_map" data-lat="{{ place.point.coords.0 }}" data-lon="{{ place.point.coords.1 }}">
+    Loading map...
+  </div>
+  {% endif %}
+
+  <form action="" method="post">
+    {% csrf_token %}
+
+    {{ macros.input(form.name) }}
+    {{ macros.input(form.address) }}
+    {{ macros.input(form.city) }}
+    {{ macros.input(form.zipcode) }}
+
+    <div class="col-xs-12 col-sm-10 col-sm-offset-2">
+      <a href="{% url 'places' club.slug %}" class="btn btn-default">
+        {{ _('Cancel') }}
+      </a>
+      {% if place %}
+      <button type="submit" class="btn btn-primary">
+        <i class="icon icon-edit"></i>
+        {{ _('Edit place') }}
+      </button>
+      {% else %}
+      <button type="submit" class="btn btn-primary">
+        <i class="icon icon-plus"></i>
+        {{ _('Create place') }}
+      </button>
+      {% endif %}
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-23 22:33+0100\n"
+"POT-Creation-Date: 2015-03-23 23:39+0100\n"
 "PO-Revision-Date: 2015-02-09 17:42+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
@@ -113,54 +113,58 @@ msgstr ""
 msgid "Archives"
 msgstr ""
 
-#: coach/menu.py:80 templates/club/manage.html:9
+#: coach/menu.py:80
+msgid "Places"
+msgstr ""
+
+#: coach/menu.py:81 templates/club/manage.html:9
 msgid "Manage"
 msgstr ""
 
-#: coach/menu.py:106
+#: coach/menu.py:107
 msgid "My messages"
 msgstr ""
 
-#: coach/menu.py:107 templates/users/preferences.html:33
+#: coach/menu.py:108 templates/users/preferences.html:33
 msgid "My preferences"
 msgstr ""
 
-#: coach/menu.py:108 templates/friends/home.html:3
+#: coach/menu.py:109 templates/friends/home.html:3
 #: templates/friends/home.html.py:8
 msgid "My friends"
 msgstr ""
 
-#: coach/menu.py:109
+#: coach/menu.py:110
 msgid "My public profile"
 msgstr ""
 
-#: coach/menu.py:110
+#: coach/menu.py:111
 msgid "My statistics"
 msgstr ""
 
-#: coach/menu.py:111
+#: coach/menu.py:112
 msgid "My paces"
 msgstr ""
 
-#: coach/menu.py:112
+#: coach/menu.py:113
 msgid "My races"
 msgstr ""
 
-#: coach/menu.py:113
+#: coach/menu.py:114
 msgid "My GPS services"
 msgstr ""
 
-#: coach/menu.py:115
+#: coach/menu.py:116
 msgid "Logout"
 msgstr ""
 
-#: coach/menu.py:118 templates/club/joined.html:23
+#: coach/menu.py:119 templates/club/joined.html:23
 #: templates/club/joined.modal.html:21 templates/landing/index.html:175
 #: templates/landing/index.html.py:310
 msgid "Create an account"
 msgstr ""
 
-#: coach/menu.py:121
+#: coach/menu.py:122
 msgid "Login"
 msgstr ""
 
@@ -170,6 +174,22 @@ msgstr ""
 
 #: coach/settings.py:73
 msgid "English"
+msgstr ""
+
+#: events/models.py:10 templates/club/manage.html:80
+msgid "Name"
+msgstr ""
+
+#: events/models.py:15
+msgid "Address"
+msgstr ""
+
+#: events/models.py:16
+msgid "Zip Code"
+msgstr ""
+
+#: events/models.py:17
+msgid "City"
 msgstr ""
 
 #: plan/models.py:96
@@ -182,17 +202,17 @@ msgstr ""
 msgid "Training plan - %s.pdf"
 msgstr ""
 
-#: plan/models.py:231 templates/mail/report.html:43
+#: plan/models.py:235 templates/mail/report.html:43
 #: templates/sport/session/list.html:40
 msgid "Applied"
 msgstr "To Do"
 
-#: plan/models.py:232 templates/mail/report.html:45
+#: plan/models.py:236 templates/mail/report.html:45
 #: templates/sport/session/list.html:42
 msgid "Done"
 msgstr ""
 
-#: plan/models.py:233 templates/mail/report.html:47
+#: plan/models.py:237 templates/mail/report.html:47
 #: templates/sport/session/list.html:44
 msgid "Failed"
 msgstr "Missed"
@@ -378,7 +398,7 @@ msgid "Create a new group"
 msgstr ""
 
 #: templates/club/group/edit.html:23 templates/club/link/add.html:13
-#: templates/friends/delete.html:10
+#: templates/events/places/edit.html:28 templates/friends/delete.html:10
 #: templates/messages/add/conversation.html:74
 #: templates/messages/add/session.html:55 templates/messages/add/user.html:25
 #: templates/messages/add/week.html:24 templates/messages/delete.html:19
@@ -413,8 +433,8 @@ msgid "Created by"
 msgstr ""
 
 #: templates/club/group/index.html:41 templates/club/manage.html:121
-#: templates/messages/_list.html:66 templates/messages/edit.html:20
-#: templates/sport/day/edit.html:40
+#: templates/events/places/index.html:32 templates/messages/_list.html:66
+#: templates/messages/edit.html:20 templates/sport/day/edit.html:40
 msgid "Edit"
 msgstr ""
 
@@ -651,10 +671,6 @@ msgstr ""
 msgid ""
 "They are useful to show external websites: Facebook groups, official website "
 "of the club, ..."
-msgstr ""
-
-#: templates/club/manage.html:80
-msgid "Name"
 msgstr ""
 
 #: templates/club/manage.html:81
@@ -925,6 +941,33 @@ msgstr ""
 
 #: templates/contact_form/contact_form_sent.html:9
 msgid "Thank you for writing us !"
+msgstr ""
+
+#: templates/events/places/edit.html:7
+#, python-format
+msgid "Edit place : %s"
+msgstr ""
+
+#: templates/events/places/edit.html:9 templates/events/places/index.html:10
+msgid "Add a place"
+msgstr ""
+
+#: templates/events/places/edit.html:33
+msgid "Edit place"
+msgstr ""
+
+#: templates/events/places/edit.html:38
+msgid "Create place"
+msgstr ""
+
+#: templates/events/places/index.html:3 templates/events/places/index.html:13
+#, python-format
+msgid "Places of %s"
+msgstr ""
+
+#: templates/events/places/index.html:38
+#, python-format
+msgid "No places created for club %s"
 msgstr ""
 
 #: templates/friends/delete.html:3

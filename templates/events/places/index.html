@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% set page_title = _('Places of %s') % club.name %}
+
+{% block content %}
+<div class="container">
+  <div class="pull-right">
+    <a href="{% url 'place-create' club.slug %}" class="btn btn-success">
+      <i class="icon-plus"></i>
+      {{ _('Add a place') }}
+    </a>
+  </div>
+  <h1>{{ _('Places of %s') % club.name }}</h1>
+
+  {% for place in places %}
+  <div class="row">
+    <div class="col-xs-4">
+      <a href="{% url 'place-edit' club.slug, place.pk %}">
+        {{ place.name }}
+      </a>
+    </div>
+    <div class="col-xs-4">
+      <address>
+        {{ place.address}}
+        <span class="text-muted">&bull;</span>
+        {{ place.zipcode }} {{ place.city }}
+      </address>
+    </div>
+    <div class="col-xs-4 text-right">
+      <a href="{% url 'place-edit' club.slug, place.pk %}" class="btn btn-primary btn-sm">
+        <i class="icon icon-edit"></i>
+        {{ _('Edit') }}
+      </a>
+    </div>
+  </div>
+  {% else %}
+  <div class="alert alert-info">
+    {{ _('No places created for club %s') % club.name }}
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
