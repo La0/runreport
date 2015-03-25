@@ -28,6 +28,7 @@ def prod():
       update_requirements()
       submodules()
       migrate_db()
+      static()
 
   # Start again
   supervisors('start')
@@ -136,3 +137,6 @@ def supervisor(cmd, process):
 def submodules():
   run('git submodule init')
   run('git submodule update')
+
+def static():
+  run('./manage.py collectstatic --clear --noinput')

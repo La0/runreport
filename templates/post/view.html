@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+
+{% set page_title = post.title %}
+{% set base_url = request.META.HTTP_HOST %}
+
+{% block js %}
+<script type="text/javascript">
+
+  {% if FACEBOOK_ID %}
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '{{ FACEBOOK_ID }}',
+      xfbml      : true,
+      version    : 'v2.1'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/fr_FR/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+  {% endif %}
+
+  
+
+</script>
+{% endblock %}
+
+{% block meta %}
+{% if FACEBOOK_ID %}
+  <meta property="fb:app_id"  content="{{ FACEBOOK_ID }}" /> 
+  <meta property="og:site_name"    content="RunReport" /> 
+  <meta property="og:type"    content="website" /> 
+  <meta property="og:url"     content="https://{{ base_url }}{% url 'post' post.writer.username, post.slug %}" /> 
+  <meta property="og:title"   content="{{ post.title }}" /> 
+  <meta property="og:description"   content="{{ post.html|striptags|truncatechars(200) }}" /> 
+  {% for m in medias %}
+    <meta property="og:image"   content="https://{{ base_url }}{{ m.url }}" />
+    {% if m.width %}
+      <meta property="og:image:width" content="{{ m.width }}" />
+    {% endif %}
+    {% if m.height %}
+      <meta property="og:image:height" content="{{ m.height }}" />
+    {% endif %}
+  {% endfor %}
+  <meta property="og:image"   content="https://{{ base_url }}{{ post.writer.avatar.url }}" /> 
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1>{{ post.title }}</h1>
+
+  <div class="row">
+    <div class="col-xs-1">
+      <img class="img-responsive img-rounded" src="{{ post.writer.avatar.url }}" />
+    </div>
+    <div class="col-xs-8">
+      <span class="lead">
+        {{ _('Written by') }}
+        <a href="{% url user-public-profile post.writer.username %}">
+          {{ post.writer.first_name }} {{ post.writer.last_name }}
+        </a>
+        {% if not post.published %}
+          <span class="label label-danger">{{ _('Not published') }}</span>
+        {% endif %}
+      </span>
+      <p>
+        {{ _('on') }} {{ post.created|date('l d E Y') }}
+      </p>
+    </div>
+    <div class="col-xs-3 text-right">
+      <div class="fb-like" data-href="https://{{ base_url }}{% url 'post' post.writer.username, post.slug %}" data-width="200" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div>
+
+      {% if user == post.writer %}
+      <a href="{% url 'post-edit' post.slug %}" class="btn btn-info">
+        {{ _('Edit') }}
+      </a>
+      {% endif %}
+    </div>
+  </div>
+
+  <hr />
+
+  <div class="row">
+      <div class="{% if sessions %}col-sm-8{% else %}col-sm-12{% endif %} col-xs-12">
+        {{ post.html|safe }}
+      </div>
+      {% if sessions or medias %}
+      <div class="col-sm-4 col-xs-12">
+        {% if sessions %}
+          <h4>{{ _('%d sport sessions') % sessions.count() }}</h4>
+          {% for s in sessions %}
+          <p>
+            <span class="type {{ s.type }} do-tooltip" title="{{ _(s.type|title) }}"></span>
+            <i class="icon-sport-{{ s.sport.slug }} do-tooltip" title="{{ _(s.sport.name) }}"></i>
+            {% if s.track %}
+            <i class="icon-location do-tooltip" title="{{ s.track.provider|title }}"></i>
+            {% endif %}
+            <a href="{% url 'user-calendar-day' post.writer.username, s.day.date.year, s.day.date.month, s.day.date.day %}">
+              {{ s.name }}
+            </a>
+          </p>
+          {% endfor %}
+        {% endif %}
+
+        {% if medias %}
+        <h4>{{ _('Images') }}</h4>
+        {% for m in medias %}
+        <p class="col-sm-4 col-xs-6">
+          <a href="{{ m.parent.url }}" data-lightbox="post" data-title="{{ m.fullname }}">
+            <img src="{{ m.url }}" class="img-responsive" />
+          </a>
+        </p>
+        {% endfor %}
+        {% endif %}
+      </div>
+      {% endif %}
+  </div>
+
+  {% if post.published %}
+  <hr />
+  <div class="row">
+    <div id="messages-{{post.pk}}" class="comments col-xs-12">
+        {% if post.conversation %}
+        <h4>{{ _('Comments') }}</h4>
+        <div class="box" data-src="{% url conversation-list post.conversation.pk %}" >
+          {{ _('Loading post comments...') }}
+        </div>
+        {% else %}
+        <a href="{% url message-post-add post.pk %}" class="modal-action btn btn-success btn-light">
+          <i class="icon-comment"></i> {{ _('Start a conversation') }}
+        </a>
+        {% endif %}
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

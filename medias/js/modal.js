@@ -127,11 +127,30 @@ $(function(){
   });
 });
 
+// Helper to add submit button data
+// in serialization
+function serialize_form(form, evt){
+  var formData = form.serializeArray();
+
+  // Add submit key/value
+  if(evt && evt.originalEvent){
+    var target = evt.originalEvent.explicitOriginalTarget || evt.originalEvent.target;
+    formData.push({ name: target.name, value: target.value });
+  }
+
+  var data = {};
+  $(formData).each(function(k, v){
+    data[v.name] = v.value;
+  });
+
+  return data;
+}
+
 function submit_form(evt){
   evt.preventDefault();
 
   // Use datas from form
-  var data = $(this).serialize();
+  var data = serialize_form($(this), evt);
 
   // Send data
   output = $(this).hasClass('box') ? $(this) : 'modal';
@@ -190,6 +209,10 @@ function load_box(url, method, data, output){
         // Render box element
         output.html(data.html);
         dom = output;
+
+        // Trigger forms
+        dom.find('form').on('submit', submit_form);
+
       } else {
         return;
       }

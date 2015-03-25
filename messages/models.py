@@ -9,6 +9,7 @@ TYPE_COMMENTS_PUBLIC = 'comments_public'
 TYPE_COMMENTS_PRIVATE = 'comments_private'
 TYPE_COMMENTS_WEEK = 'comments_week'
 TYPE_PLAN_SESSION = 'plan_session'
+TYPE_POST = 'post'
 
 class Conversation(models.Model):
   CONVERSATION_TYPES = (
@@ -17,6 +18,7 @@ class Conversation(models.Model):
     (TYPE_COMMENTS_PRIVATE, 'Private comments'),
     (TYPE_COMMENTS_WEEK, 'Week comments'),
     (TYPE_PLAN_SESSION, 'Plan session'),
+    (TYPE_POST, 'Post'),
   )
 
   type = models.CharField(max_length=50, choices=CONVERSATION_TYPES)
@@ -33,13 +35,16 @@ class Conversation(models.Model):
     if self.type == TYPE_COMMENTS_WEEK:
       return reverse('user-calendar-week', args=(self.week.user.username, self.week.year, self.week.week))
 
+    if self.type == TYPE_POST:
+      return reverse('post', args=(self.post.writer.username, self.post.slug, ))
+
     # View session
     session = self.get_session()
     dt = session.day.date
     return reverse('user-calendar-day', args=(session.day.week.user.username, dt.year, dt.month, dt.day))
 
   def get_session(self):
-    if self.type in (TYPE_MAIL, TYPE_PLAN_SESSION, TYPE_COMMENTS_WEEK):
+    if self.type not in (TYPE_COMMENTS_PRIVATE, TYPE_COMMENTS_PUBLIC, ):
       raise Exception("No session on conversation typed : %s" % self.type)
 
     # Check the session is attached
@@ -59,6 +64,13 @@ class Conversation(models.Model):
       # Send to all writers + mail recipient
       if self.mail_recipient and self.mail_recipient != exclude and self.mail_recipient not in writers:
         writers += [ self.mail_recipient, ]
+
+      return writers
+
+    elif self.type == TYPE_POST:
+      # Send to all writers + post writer
+      if self.post.writer != exclude and self.post.writer not in writers:
+        writers += [ self.post.writer, ]
 
       return writers
 

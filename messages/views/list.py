@@ -22,7 +22,8 @@ class ConversationList(JsonResponseMixin, ConversationMixin, ListView):
     # Current main conversation
     context['conversation'] = self.conversation
     context['session'] = self.session
-    context['privacy'] = self.privacy
+    if hasattr(self, 'privacy'):
+      context['privacy'] = self.privacy
 
     # List all available conversations for user
     conversations = []

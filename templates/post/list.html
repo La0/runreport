@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% set page_title = _('My posts') %}
+
+{% block content %}
+<div class="container">
+
+  <div class="row">
+    <div class="col-xs-8">
+      <h1>{{ _('My posts') }}</h1>
+    </div>
+    <div class="col-xs-4 text-right">
+      <a class="btn btn-success" href="{% url 'post-create' %}">
+        <i class="icon-plus"></i>
+        {{ _('Add a new post') }}
+      </a>
+    </div>
+  </div>
+
+  {% for post in posts %}
+  <div class="row">
+    <div class="col-xs-5">
+      <h4>{{ post.title }}</h4>
+      {{ post.html|striptags|truncatechars(100) }}
+    </div>
+    <div class="col-xs-1">
+      {% if post.published %}
+      <span class="label label-success">{{ _('Published') }}</span>
+      {% else %}
+      <span class="label label-danger">{{ _('Not published') }}</span>
+      {% endif %}
+    </div>
+    <div class="col-xs-3">
+      {{ post.created|date('l d E Y') }}
+    </div>
+    <div class="col-xs-3 text-right">
+      <a href="{% url 'post-edit' post.slug %}" class="btn btn-info">
+        <i class="icon-edit"></i>
+        {{ _('Edit') }}
+      </a>
+      <a href="{% url 'post' user.username, post.slug %}" class="btn btn-primary">
+        {{ _('View') }}
+        <i class="icon-right-open"></i>
+      </a>
+    </div>
+  </div>
+  {% else %}
+  <div class="alert alert-info">
+    {{ _('You do not have written any post yet.') }}
+  </div>
+  {% endfor %}
+
+</div>
+{% endblock %}

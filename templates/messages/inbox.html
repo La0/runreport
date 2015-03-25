@@ -33,6 +33,15 @@
     <div class="col-sm-6 col-xs-12">
       {% if conversation.type == 'mail' %}
       <i class="icon-mail"></i> {{ _('Private message') }}
+      {% elif conversation.type == 'post' %}
+        <i class="icon-post"></i>
+        {% if conversation.post.writer == user %}
+          {{ _('On your post: %s') % conversation.post.title }}
+        {% else %}
+          {% with conversation.post.writer as u %}
+          {{ _('On %(first_name)s %(last_name)s post: %(title)s') % {'first_name' : u.first_name, 'last_name' : u.last_name, 'title' : conversation.post.title, } }}
+          {% endwith %}
+        {% endif %}
       {% elif conversation.type == 'comments_week' %}
         <i class="icon-calendar"></i>
         {% if conversation.week.user == user %}

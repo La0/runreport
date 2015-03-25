@@ -1,9 +1,10 @@
 from coach.mixins import JsonResponseMixin, JSON_OPTION_CLOSE, JSON_OPTION_NO_HTML, JSON_OPTION_BODY_RELOAD
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
-from messages.models import Message, Conversation, TYPE_COMMENTS_PRIVATE, TYPE_COMMENTS_PUBLIC, TYPE_MAIL, TYPE_COMMENTS_WEEK
+from messages.models import Message, Conversation, TYPE_COMMENTS_PRIVATE, TYPE_COMMENTS_PUBLIC, TYPE_MAIL, TYPE_COMMENTS_WEEK, TYPE_POST
 from sport.models import SportSession, SportWeek
 from users.models import Athlete
+from post.models import Post
 from django.core.exceptions import PermissionDenied
 from urlparse import urlparse
 
@@ -58,6 +59,13 @@ class MessageWeekMixin(object):
 
     return self.week
 
+class MessagePostMixin(object):
+
+  def get_post(self):
+    # Load post
+    self.post = get_object_or_404(Post, pk=self.kwargs['post_id'], published=True)
+
+    return self.post
 
 class MessageUserMixin(object):
   def get_member(self):
@@ -131,6 +139,9 @@ class MessageReloadMixin(JsonResponseMixin):
 
       if conversation.type in (TYPE_COMMENTS_WEEK, ):
         name = 'messages-%d' % (conversation.week.pk, )
+
+      if conversation.type in (TYPE_POST, ):
+        name = 'messages-%d' % (conversation.post.pk, )
 
       if name and url:
         self.json_boxes = {

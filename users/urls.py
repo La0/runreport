@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import password_reset, password_reset_done, password_reset_confirm, password_reset_complete
 from django.views.generic.base import RedirectView
 from views import *
+from post.views import PostView
 
 user_patterns = patterns('',
   # Calendar for a user
@@ -15,6 +16,9 @@ user_patterns = patterns('',
   url(r'^stats/?$', AthleteStats.as_view(), name='athlete-stats'),
   url(r'^stats/all/?$', AthleteStats.as_view(), name='athlete-stats-all', kwargs={'all': True}),
   url(r'^stats/(?P<year>\d{4})/?$', AthleteStats.as_view(), name='athlete-stats-year'),
+
+  # View post
+  url(r'^post/(?P<slug>[\w_]+)/?$', PostView.as_view(), name='post'),
 
   url(r'^/?', PublicProfile.as_view(), name="user-public-profile"),
 )

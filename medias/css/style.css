@@ -722,6 +722,7 @@ div#friendships div.actions .btn {
 
 /* Post editor */
 #text_editor {
+  width: 100%;
   overflow:scroll;
   min-height:300px;
   outline: none;
@@ -730,16 +731,6 @@ div#friendships div.actions .btn {
   box-sizing: content-box;
 }
 
-#post_editor div[data-role="editor-toolbar"] {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-#post_editor .dropdown-menu a {
-  cursor: pointer;
-}
 
 #medias .thumbnail {
   min-height: 300px;
@@ -774,4 +765,17 @@ div.plan-status div.details > p {
 
 div.plan-status label {
   padding-top: 2px !important;
+}
+
+#medias .thumbnail {
+  min-height: 300px;
+}
+
+/* Attached sessions in post editor */
+#attached_sessions div.date {
+  padding-top: 15px;
+}
+
+#attached_sessions #id_date_day {
+  display: none !important;
 }

@@ -79,6 +79,8 @@
           {{ _('Add a private comment') }}
         {% elif conversation.type == 'comments_public'  %}
           {{ _('Add a public comment') }}
+        {% elif conversation.type == 'post'  %}
+          {{ _('Add a comment') }}
         {% elif conversation.type == 'comments_week'  %}
           {{ _('Add a comment') }}
         {% endif %}

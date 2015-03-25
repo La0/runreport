@@ -3,10 +3,10 @@
 {% set page_title = _('Stats') %}
 
 {% block js %}
-<script type="text/javascript" src="/medias/js/jquery.flot.js" ></script>
-<script type="text/javascript" src="/medias/js/jquery.flot.time.js" ></script>
-<script type="text/javascript" src="/medias/js/jquery.flot.stack.js" ></script>
-<script type="text/javascript" src="/medias/js/stats.js" ></script>
+<script type="text/javascript" src="{% static 'flot/jquery.flot.js' %}" ></script>
+<script type="text/javascript" src="{% static 'flot/jquery.flot.time.js' %}" ></script>
+<script type="text/javascript" src="{% static 'flot/jquery.flot.stack.js' %}" ></script>
+<script type="text/javascript" src="{% static 'js/stats.js' %}" ></script>
 <script type="text/javascript">
 $(function(){
 

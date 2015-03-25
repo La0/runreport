@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% set page_title = post and _('Edit %s') % post.title or _('Create a post') %}
+
+{% block js %}
+<script type="text/javascript">
+$(function(){
+  
+  {% if post %}
+  // Image upload through DropZone
+  $("div#dropzone").dropzone({
+    url: "{% url 'post-upload' post.slug %}",
+    headers : {
+      'X-CSRFToken' : '{{ csrf_token }}',
+    },
+  });
+  {% endif %}
+});
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  {% if post %}
+  <h1>{{ _('Edit post : %s') % post.title }}</h1>
+  {% else %}
+  <h1>{{ _('Create a post') }}</h1>
+  {% endif %}
+
+  <p class="pull-right">
+    <a href="{% url 'posts' %}" class="btn btn-primary btn-light">{{ _('All posts') }}</a>
+    {% if post %}
+    <a href="{% url 'post' user.username, post.slug %}" class="btn btn-info btn-light">{{ _('View the post') }}</a>
+    {% endif %}
+  </p>
+
+  <div role="tabpanel">
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active">
+        <a href="#edit" aria-controls="edit" role="tab" data-toggle="tab">{{ _('Edit') }}</a>
+      </li>
+      {% if post %}
+      <li role="presentation">
+        <a href="#images" aria-controls="images" role="tab" data-toggle="tab">{{ _('Images') }}</a>
+      </li>
+      <li role="presentation">
+        <a href="#sessions" aria-controls="sessions" role="tab" data-toggle="tab">{{ _('Sessions') }}</a>
+      </li>
+      {% endif %}
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="edit">
+        {% include 'post/editor/text.html' %}
+      </div>
+      {% if post %}
+      <div role="tabpanel" class="tab-pane" id="images">
+        {% include 'post/editor/images.html' %}
+      </div>
+      <div role="tabpanel" class="tab-pane" id="sessions">
+        <div class="box" data-src="{% url 'post-sessions' post.slug %}">
+          {{ _('Loading sessions...') }}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

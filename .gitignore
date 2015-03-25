@@ -12,3 +12,6 @@ celerybeat-schedule
 cache
 medias/avatars
 medias/min
+bower_components
+static
+medias/posts
