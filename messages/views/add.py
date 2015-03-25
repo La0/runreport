@@ -1,7 +1,7 @@
 from django.views.generic.edit import CreateView
 from messages.forms import MessageTextForm
-from mixins import MessageReloadMixin, MessageSessionMixin, MessageUserMixin, ConversationMixin, MessageWeekMixin
-from messages.models import Conversation, TYPE_MAIL, TYPE_COMMENTS_WEEK
+from mixins import MessageReloadMixin, MessageSessionMixin, MessageUserMixin, ConversationMixin, MessageWeekMixin, MessagePostMixin
+from messages.models import Conversation, TYPE_MAIL
 
 class MessageUserAdd(MessageUserMixin, MessageReloadMixin, CreateView):
   template_name = 'messages/add/user.html'
@@ -78,6 +78,23 @@ class MessageWeekAdd(MessageWeekMixin, MessageReloadMixin, CreateView):
 
     # Add a comment to this week
     message = self.week.add_comment(form.cleaned_data['message'], self.request.user)
+
+    return self.reload(message.conversation)
+
+class MessagePostAdd(MessagePostMixin, MessageReloadMixin, CreateView):
+  template_name = 'messages/add/post.html'
+  form_class = MessageTextForm
+
+  def get_context_data(self, *args, **kwargs):
+    context = super(MessagePostAdd, self).get_context_data(*args, **kwargs)
+    context['post'] = self.get_post()
+    return context
+
+  def form_valid(self, form):
+    self.get_post()
+
+    # Add a comment to this week
+    message = self.post.add_comment(form.cleaned_data['message'], self.request.user)
 
     return self.reload(message.conversation)
 

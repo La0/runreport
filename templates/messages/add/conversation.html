@@ -20,6 +20,14 @@
       <i class="icon-calendar"></i>
       {{ _('Week from %(start)s to %(end)s') % { 'start' : conversation.week.get_date_start()|date('l d E Y'), 'end' : conversation.week.get_date_end()|date('l d E Y')} }}
     </p>
+  {% elif conversation.type == 'post' %}
+    <p>
+      <i class="icon-edit"></i>
+      <strong>{{ conversation.post.title }}</strong> {{ _('written by') }} 
+      <a href="{% url 'user-public-profile' conversation.post.writer.username %}">
+        {{ conversation.post.writer.first_name }} {{ conversation.post.writer.last_name }}
+      </a>
+    </p>
   {% else %}
     {% with conversation.get_session() as session %}
       <h4>

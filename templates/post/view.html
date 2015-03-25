@@ -120,5 +120,23 @@
       </div>
       {% endif %}
   </div>
+
+  {% if post.published %}
+  <hr />
+  <div class="row">
+    <div id="messages-{{post.pk}}" class="comments col-xs-12">
+        {% if post.conversation %}
+        <h4>{{ _('Comments') }}</h4>
+        <div class="box" data-src="{% url conversation-list post.conversation.pk %}" >
+          {{ _('Loading post comments...') }}
+        </div>
+        {% else %}
+        <a href="{% url message-post-add post.pk %}" class="modal-action btn btn-success btn-light">
+          <i class="icon-comment"></i> {{ _('Start a conversation') }}
+        </a>
+        {% endif %}
+    </div>
+  </div>
+  {% endif %}
 </div>
 {% endblock %}

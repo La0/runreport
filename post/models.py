@@ -6,6 +6,7 @@ import os
 import re
 from helpers import crop_image
 from PIL import Image
+from messages.models import Conversation, TYPE_POST
 
 POST_TYPES = (
   ('race', _('Race')),
@@ -32,6 +33,9 @@ class Post(models.Model):
   # Attached sessions
   sessions = models.ManyToManyField('sport.SportSession', related_name='posts')
 
+  # Comments
+  conversation = models.OneToOneField('messages.Conversation', null=True, blank=True, related_name='post')
+
   # Dates
   created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
@@ -44,6 +48,26 @@ class Post(models.Model):
 
   def __unicode__(self):
     return self.title
+
+  def add_comment(self, message, writer):
+    '''
+    Add a new comment to the conversation
+    Init the conversation if needed
+    '''
+
+    # Create a new conversation
+    if not self.conversation:
+      self.conversation = Conversation.objects.create(type=TYPE_POST)
+      self.save()
+
+    # Save a new message for user
+    message = self.conversation.messages.create(writer=writer, message=message)
+
+    # Add notifications
+    self.conversation.notify(message)
+
+    return message
+
 
 class PostMedia(models.Model):
   post = models.ForeignKey(Post, related_name='medias')

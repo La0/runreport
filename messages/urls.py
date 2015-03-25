@@ -17,6 +17,8 @@ urlpatterns = patterns('',
   url(r'^add/session/(?P<session_id>\d+)/(?P<type>\w+)', login_required(MessageSessionAdd.as_view()), name="message-session-add"),
   # From sport week
   url(r'^add/week/(?P<week_id>\d+)', login_required(MessageWeekAdd.as_view()), name="message-week-add"),
+  # From sport week
+  url(r'^add/post/(?P<post_id>\d+)', login_required(MessagePostAdd.as_view()), name="message-post-add"),
   # From conversation
   url(r'^add/conversation/(?P<conversation_id>\d+)', login_required(ConversationAdd.as_view()), name="conversation-add"),
 

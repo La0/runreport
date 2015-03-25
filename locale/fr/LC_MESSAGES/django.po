@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-23 23:39+0100\n"
-"PO-Revision-Date: 2015-03-25 11:30+0100\n"
+"POT-Creation-Date: 2015-03-25 12:54+0100\n"
+"PO-Revision-Date: 2015-03-25 12:55+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -38,7 +38,7 @@ msgstr "Invitation RunReport"
 msgid "Group name"
 msgstr "Nom du group"
 
-#: club/models.py:226
+#: club/models.py:226 post/models.py:25
 msgid "Name in the url"
 msgstr "Nom dans l'url"
 
@@ -59,7 +59,7 @@ msgstr "Voir les clubs"
 msgid "Create a club"
 msgstr "Créer un club"
 
-#: coach/menu.py:34 coach/menu.py:38 templates/base.html:125
+#: coach/menu.py:34 coach/menu.py:38 templates/base.html:133
 #: templates/club/join.html:11 templates/club/manage.html:13
 #: templates/club/manage.html.py:72 templates/sport/vma.html:70
 msgid "Help"
@@ -69,10 +69,11 @@ msgstr "Aide"
 msgid "Glossary"
 msgstr "Glossaire"
 
-#: coach/menu.py:40 templates/base.html:122 templates/mail/base.html:37
+#: coach/menu.py:40 templates/base.html:130 templates/mail/base.html:37
 msgid "News"
 msgstr "News"
 
+#: coach/menu.py:41 templates/base.html:136 templates/mail/base.html:37
 msgid "Contact"
 msgstr "Contact"
 
@@ -114,7 +115,6 @@ msgid "Archives"
 msgstr "Archives"
 
 #: coach/menu.py:80
-#| msgid "Paces"
 msgid "Places"
 msgstr "Les lieux"
 
@@ -130,47 +130,46 @@ msgstr "Mes messages"
 msgid "My preferences"
 msgstr "Mes préférences"
 
-#: coach/menu.py:108 templates/post/list.html:3 templates/post/list.html.py:10
-#| msgid "My paces"
+#: coach/menu.py:109 templates/post/list.html:3 templates/post/list.html.py:10
 msgid "My posts"
 msgstr "Mes articles"
 
-#: coach/menu.py:109 templates/friends/home.html:3
+#: coach/menu.py:110 templates/friends/home.html:3
 #: templates/friends/home.html.py:8
 msgid "My friends"
 msgstr "Mes amis"
 
-#: coach/menu.py:110
+#: coach/menu.py:111
 msgid "My public profile"
 msgstr "Mon profil public"
 
-#: coach/menu.py:111
+#: coach/menu.py:112
 msgid "My statistics"
 msgstr "Mes statistiques"
 
-#: coach/menu.py:112
+#: coach/menu.py:113
 msgid "My paces"
 msgstr "Mes allures"
 
-#: coach/menu.py:113
+#: coach/menu.py:114
 msgid "My races"
 msgstr "Mes résultats"
 
-#: coach/menu.py:114
+#: coach/menu.py:115
 msgid "My GPS services"
 msgstr "Mes services GPS"
 
-#: coach/menu.py:116
+#: coach/menu.py:117
 msgid "Logout"
 msgstr "Se déconnecter"
 
-#: coach/menu.py:119 templates/club/joined.html:23
+#: coach/menu.py:120 templates/club/joined.html:23
 #: templates/club/joined.modal.html:21 templates/landing/index.html:175
 #: templates/landing/index.html.py:310
 msgid "Create an account"
 msgstr "Créer un compte"
 
-#: coach/menu.py:122
+#: coach/menu.py:123
 msgid "Login"
 msgstr "Se connecter"
 
@@ -227,6 +226,45 @@ msgstr "Manqué"
 msgid "Your athlete's sessions today"
 msgstr "Les séances du jour de vos athlètes"
 
+#: post/models.py:12 templates/club/races.html:19
+#: templates/messages/add/conversation.html:37
+#: templates/messages/add/session.html:13
+msgid "Race"
+msgstr "Course"
+
+#: post/models.py:13 templates/messages/add/conversation.html:35
+#: templates/messages/add/session.html:11
+msgid "Training"
+msgstr "Entraînement"
+
+#: post/models.py:14
+msgid "Blog"
+msgstr "Blog"
+
+#: post/models.py:18
+msgid "Source Image"
+msgstr "Image source"
+
+#: post/models.py:19
+msgid "Thumbnail Image"
+msgstr "Image Aperçu"
+
+#: post/models.py:20
+msgid "Cropped Image"
+msgstr "Image Carrée"
+
+#: post/models.py:27
+msgid "Post Type"
+msgstr "Type d'article"
+
+#: post/models.py:30
+msgid "Post title"
+msgstr "Titre de l'article"
+
+#: post/models.py:31
+msgid "Post content"
+msgstr "Contenu de l'article"
+
 #: sport/forms.py:46
 msgid "You must select a status for your training plan."
 msgstr "Vous devez choisir un status pour votre plan d'entraînement."
@@ -234,47 +272,6 @@ msgstr "Vous devez choisir un status pour votre plan d'entraînement."
 #: sport/forms.py:49
 msgid "You must validate your training plan (select Done or Missed)."
 msgstr "Vous devez valider votre plan d'entraînement (Fait ou Manqué)"
-
-#: post/models.py:11 templates/club/races.html:19
-#: templates/messages/add/conversation.html:24
-#: templates/messages/add/session.html:13
-msgid "Race"
-msgstr "Course"
-
-#: post/models.py:12 templates/messages/add/conversation.html:22
-#: templates/messages/add/session.html:11
-msgid "Training"
-msgstr "Entraînement"
-
-#: post/models.py:13
-msgid "Blog"
-msgstr "Blog"
-
-#: post/models.py:17
-#| msgid "Source code on"
-msgid "Source Image"
-msgstr "Image source"
-
-#: post/models.py:18
-msgid "Thumbnail Image"
-msgstr "Image Aperçu"
-
-#: post/models.py:19
-msgid "Cropped Image"
-msgstr "Image Carrée"
-
-#: post/models.py:26
-#| msgid "Type"
-msgid "Post Type"
-msgstr "Type d'article"
-
-#: post/models.py:29
-msgid "Post title"
-msgstr "Titre de l'article"
-
-#: post/models.py:30
-msgid "Post content"
-msgstr "Contenu de l'article"
 
 #: sport/models/__init__.py:4
 msgid "training"
@@ -328,33 +325,33 @@ msgstr ""
 msgid "Session"
 msgstr "Séance"
 
-#: templates/base.html:86
+#: templates/base.html:94
 msgid "Use RunReport in"
 msgstr "Utiliser RunReport en"
 
-#: templates/base.html:101
+#: templates/base.html:106
 msgid "You are ussing a demo account, some features will not be available."
 msgstr ""
 "Vous utilisez un compte démo, certaines fonctionalistés seront désactivées."
 
-#: templates/base.html:110
+#: templates/base.html:118
 msgid "Built by"
 msgstr "Construit par"
 
-#: templates/base.html:113 templates/landing/team.html:3
+#: templates/base.html:121 templates/landing/team.html:3
 #: templates/landing/team.html.py:7
 msgid "The team"
 msgstr "L'équipe"
 
-#: templates/base.html:116
+#: templates/base.html:124
 msgid "Source code on"
 msgstr "Code source sur"
 
-#: templates/base.html:116
+#: templates/base.html:124
 msgid "Github"
 msgstr "Github"
 
-#: templates/base.html:119 templates/mail/base.html:37
+#: templates/base.html:127 templates/mail/base.html:37
 msgid "Facebook"
 msgstr "Facebook"
 
@@ -459,10 +456,11 @@ msgstr "Créer un groupe"
 
 #: templates/club/group/edit.html:23 templates/club/link/add.html:13
 #: templates/events/places/edit.html:28 templates/friends/delete.html:10
-#: templates/messages/add/conversation.html:74
-#: templates/messages/add/session.html:55 templates/messages/add/user.html:25
-#: templates/messages/add/week.html:24 templates/messages/delete.html:19
-#: templates/messages/edit.html:19 templates/plan/delete.html:10
+#: templates/messages/add/conversation.html:82
+#: templates/messages/add/post.html:27 templates/messages/add/session.html:55
+#: templates/messages/add/user.html:25 templates/messages/add/week.html:24
+#: templates/messages/delete.html:19 templates/messages/edit.html:19
+#: templates/plan/delete.html:10 templates/post/media.delete.html:10
 #: templates/sport/day/delete.html:15 templates/sport/session/delete.html:10
 #: templates/sport/week/publish.html:48 templates/tracks/disconnect.html:12
 #: templates/users/notifications.html:45 templates/users/password.html:15
@@ -494,13 +492,16 @@ msgstr "Crée par"
 
 #: templates/club/group/index.html:41 templates/club/manage.html:121
 #: templates/events/places/index.html:32 templates/messages/_list.html:66
-#: templates/messages/edit.html:20 templates/sport/day/edit.html:40
+#: templates/messages/edit.html:20 templates/post/edit.html:41
+#: templates/post/editor/images.html:12 templates/post/list.html:39
+#: templates/post/view.html:80 templates/sport/day/edit.html:40
 msgid "Edit"
 msgstr "Editer"
 
 #: templates/club/group/index.html:45 templates/club/races.html:31
-#: templates/messages/inbox.html:78 templates/sport/vma.html:71
-#: templates/users/notifications.html:32 templates/users/races.html:98
+#: templates/messages/inbox.html:87 templates/post/list.html:42
+#: templates/sport/vma.html:71 templates/users/notifications.html:32
+#: templates/users/races.html:95
 msgid "View"
 msgstr "Voir"
 
@@ -754,8 +755,9 @@ msgstr "Url"
 msgid "Actions"
 msgstr "Actions"
 
-#: templates/messages/_list.html:62 templates/messages/delete.html:20
-#: templates/sport/session/edit.html:51 templates/post/editor/images.html:13
+#: templates/club/manage.html:89 templates/friends/home.html:27
+#: templates/messages/_list.html:65 templates/messages/delete.html:20
+#: templates/post/editor/images.html:13 templates/sport/session/edit.html:55
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -840,7 +842,7 @@ msgid "Top speed"
 msgstr "VMA"
 
 #: templates/club/members.html:40 templates/club/members.html.py:101
-#: templates/post/edit.html:78
+#: templates/post/edit.html:48
 msgid "Sessions"
 msgstr "Séances"
 
@@ -977,7 +979,8 @@ msgid "Last name"
 msgstr "Nom"
 
 #: templates/club/subscriptions/upload.html:22
-#: templates/messages/add/user.html:26 templates/messages/add/week.html:25
+#: templates/messages/add/post.html:28 templates/messages/add/user.html:26
+#: templates/messages/add/week.html:25
 msgid "Send"
 msgstr "Envoyer"
 
@@ -1531,22 +1534,23 @@ msgstr "Ajouter un commentaire privé"
 msgid "Add a public comment"
 msgstr "Ajouter un commentaire public"
 
-#: templates/messages/_list.html:83 templates/messages/_list.html.py:103
+#: templates/messages/_list.html:83 templates/messages/_list.html.py:85
+#: templates/messages/_list.html:105
 #: templates/messages/add/conversation.html:3
 #: templates/messages/add/session.html:3
 msgid "Add a comment"
 msgstr "Ajouter un commentaire"
 
-#: templates/messages/_list.html:88 templates/messages/_list.html.py:98
+#: templates/messages/_list.html:90 templates/messages/_list.html.py:100
 #: templates/sport/session/_comments.html:20
 msgid "Start a public conversation"
 msgstr "Démarrer une conversation publique"
 
-#: templates/messages/_list.html:93 templates/sport/session/_comments.html:14
+#: templates/messages/_list.html:95 templates/sport/session/_comments.html:14
 msgid "Start a private conversation"
 msgstr "Démarrer une conversation privée"
 
-#: templates/messages/_list.html:102
+#: templates/messages/_list.html:104
 msgid "You must be logged in to add a comment"
 msgstr "Vous devez être connecté pour ajouter un commentaire"
 
@@ -1560,13 +1564,18 @@ msgstr "Répondre au message"
 msgid "Week from %(start)s to %(end)s"
 msgstr "Semaine du %(start)s au %(end)s"
 
-#: templates/messages/add/conversation.html:31
 #: templates/messages/add/conversation.html:26
+#: templates/messages/add/post.html:11
+#| msgid "Written by"
+msgid "written by"
+msgstr "écrit par"
+
+#: templates/messages/add/conversation.html:39
 #: templates/messages/add/session.html:15
 msgid "Rest"
 msgstr "Repos"
 
-#: templates/messages/add/conversation.html:60
+#: templates/messages/add/conversation.html:68
 #: templates/messages/add/session.html:42
 msgid ""
 "This comment will be private, only the athlete and his trainers will see it."
@@ -1574,21 +1583,26 @@ msgstr ""
 "Ce commentaire sera privé, seul l'athlète et ses entraineurs pourront le "
 "voir."
 
-#: templates/messages/add/conversation.html:66
+#: templates/messages/add/conversation.html:74
 #: templates/messages/add/session.html:47
 msgid "This comment will be public, anyone can see it."
 msgstr "Ce commentaire sera public, tous les visiteurs peuvent le voir."
 
-#: templates/messages/add/conversation.html:76
-#: templates/messages/conversation.html:40 templates/messages/inbox.html:71
+#: templates/messages/add/conversation.html:84
+#: templates/messages/conversation.html:40 templates/messages/inbox.html:80
 msgid "Reply"
 msgstr "Répondre"
 
-#: templates/messages/add/conversation.html:76
+#: templates/messages/add/conversation.html:84
 #: templates/messages/add/session.html:56
-#: templates/messages/conversation.html:42 templates/messages/inbox.html:73
+#: templates/messages/conversation.html:42 templates/messages/inbox.html:82
 msgid "Comment"
 msgstr "Commenter"
+
+#: templates/messages/add/post.html:3
+#| msgid "Start a conversation"
+msgid "Start a post conversation"
+msgstr "Démarrer une conversation"
 
 #: templates/messages/add/user.html:3
 #, python-format
@@ -1636,48 +1650,60 @@ msgstr "Message privé"
 
 #: templates/messages/inbox.html:39
 #, python-format
+#| msgid "On your week from %s"
+msgid "On your post: %s"
+msgstr "Sur votre article: %s"
+
+#: templates/messages/inbox.html:42
+#, python-format
+#| msgid "On %(first_name)s %(last_name)s week from %(start)s"
+msgid "On %(first_name)s %(last_name)s post: %(title)s"
+msgstr "Sur l'article de %(first_name)s %(last_name)s : %(title)s"
+
+#: templates/messages/inbox.html:48
+#, python-format
 msgid "On your week from %s"
 msgstr "Sur votre semaine du %s"
 
-#: templates/messages/inbox.html:42
+#: templates/messages/inbox.html:51
 #, python-format
 msgid "On %(first_name)s %(last_name)s week from %(start)s"
 msgstr "Sur la semaine de %(first_name)s %(last_name)s du %(start)s"
 
-#: templates/messages/inbox.html:51
+#: templates/messages/inbox.html:60
 msgid "On your session"
 msgstr "Sur votre séance"
 
-#: templates/messages/inbox.html:53
+#: templates/messages/inbox.html:62
 msgid "On the session of"
 msgstr "Sur la séance de"
 
-#: templates/messages/inbox.html:61 templates/page/detail.html:13
-#: templates/post/view.html:63
+#: templates/messages/inbox.html:70 templates/page/detail.html:13
+#: templates/post/view.html:72
 msgid "on"
 msgstr "le"
 
-#: templates/messages/inbox.html:90
+#: templates/messages/inbox.html:99
 msgid "Previous conversations"
 msgstr "Conversation précèdentes"
 
-#: templates/messages/inbox.html:95
+#: templates/messages/inbox.html:104
 msgid "Page"
 msgstr "Page"
 
-#: templates/messages/inbox.html:100
+#: templates/messages/inbox.html:109
 msgid "Next conversations"
 msgstr "Conversation suivantes"
 
-#: templates/messages/inbox.html:109
+#: templates/messages/inbox.html:118
 msgid "No conversations"
 msgstr "Pas de conversations"
 
-#: templates/messages/inbox.html:110
+#: templates/messages/inbox.html:119
 msgid "You did not receive or send any message."
 msgstr "Vous n'avez reçu ou envoyé aucun message."
 
-#: templates/page/detail.html:12 templates/post/view.html:54
+#: templates/page/detail.html:12 templates/post/view.html:63
 msgid "Written by"
 msgstr "Ecrit par"
 
@@ -1718,160 +1744,7 @@ msgstr "formulaire de contact"
 msgid "Private"
 msgstr "Privé"
 
-#: templates/plan/delete.html:3 templates/post/edit.html:3
-#, python-format
-#| msgid "Edit"
-msgid "Edit %s"
-msgstr "Editer %s"
-
-#: templates/post/edit.html:3 templates/post/edit.html.py:58
-#| msgid "Create an account"
-msgid "Create a post"
-msgstr "Créer un article"
-
-#: templates/post/edit.html:56
-#, python-format
-msgid "Edit post : %s"
-msgstr "Editer article : %s"
-
-#: templates/post/edit.html:62
-msgid "All posts"
-msgstr "Tous les articles"
-
-#: templates/post/edit.html:64
-#| msgid "View the month"
-msgid "View the post"
-msgstr "Voir l'article"
-
-#: templates/post/edit.html:75 templates/post/view.html:102
-msgid "Images"
-msgstr "Images"
-
-#: templates/post/edit.html:94
-#| msgid "Loading comments..."
-msgid "Loading sessions..."
-msgstr "Chargement des séances..."
-
-#: templates/post/editor/images.html:22
-msgid "Use the zone below to add some pictures"
-msgstr "Utiliser la zone ci-dessous pour ajouter des images"
-
-#: templates/post/editor/text.html:14
-msgid "Bold (Ctrl+B)"
-msgstr "Gras (Ctrl+B)"
-
-#: templates/post/editor/text.html:17
-msgid "Italic (Ctrl+I)"
-msgstr "Italique (Ctrl+B)"
-
-#: templates/post/editor/text.html:20
-msgid "Strikethrough"
-msgstr "Barré"
-
-#: templates/post/editor/text.html:23
-msgid "Underline (Ctrl+U)"
-msgstr "Souligné (Ctrl+U)"
-
-#: templates/post/editor/text.html:29
-#| msgid "Public list"
-msgid "Bullet list"
-msgstr "Liste"
-
-#: templates/post/editor/text.html:32
-#| msgid "Newcomers list"
-msgid "Numbered list"
-msgstr "Liste numérotée"
-
-#: templates/post/editor/text.html:37
-msgid "External link"
-msgstr "Lien externe"
-
-#: templates/post/editor/text.html:48
-msgid "Edit the post"
-msgstr "Editer l'article"
-
-#: templates/post/editor/text.html:48
-#| msgid "Create the club"
-msgid "Create the post"
-msgstr "Créer un article"
-
-#: templates/post/list.html:15
-#| msgid "Add a record"
-msgid "Add a new post"
-msgstr "Ajouter un nouvel article"
-
-#: templates/post/list.html:28
-#| msgid "Week published"
-msgid "Published"
-msgstr "Publié"
-
-#: templates/post/list.html:30 templates/post/view.html:59
-#| msgid "Page not published"
-msgid "Not published"
-msgstr "Non publié"
-
-#: templates/post/list.html:49
-#| msgid "You do not have access to this page."
-msgid "You do not have written any post yet."
-msgstr "Vous n'avez écrit aucun article pour le moment."
-
-#: templates/post/media.delete.html:3
-#| msgid "Delete a message"
-msgid "Delete media"
-msgstr "Supprimer ce media"
-
-#: templates/post/media.delete.html:6
-#, python-format
-#| msgid "Are you sure to delete this day ?"
-msgid "Are you sure to delete this media %s ?"
-msgstr "Etes vous sûr de vouloir supprimer ce media %s ?"
-
-#: templates/post/media.delete.html:11
-#| msgid "Delete this day"
-msgid "Delete this media"
-msgstr "Supprimer ce media"
-
-#: templates/post/sessions.html:18
-#| msgid "Delete this session"
-msgid "Remove this session"
-msgstr "Supprimer cette séance"
-
-#: templates/post/sessions.html:23
-#| msgid "this session"
-msgid "Add this session"
-msgstr "Ajouter cette séance"
-
-#: templates/post/sessions.html:30
-#| msgid "Saved session."
-msgid "Attached sessions"
-msgstr "Séances liées"
-
-#: templates/post/sessions.html:43
-msgid "There are no sport sessions attached to this post."
-msgstr "Il n'y a aucune séance de sport liée à cet article."
-
-#: templates/post/sessions.html:51
-#| msgid "on your session"
-msgid "Your sport sessions"
-msgstr "Vos séances sportives"
-
-#: templates/post/sessions.html:56
-#| msgid "friends sessions"
-msgid "View sessions"
-msgstr "Voir les séances"
-
-#: templates/post/sessions.html:67
-#| msgid "No session name"
-msgid "No sport session available."
-msgstr "Pas de séance disponible."
-
-#: templates/post/view.html:86
-#, python-format
-#| msgid "%d last sessions"
-msgid "%d sport sessions"
-msgstr "%d séances de sport"
-
-#: templates/sport/calendar/month.html:3
+#: templates/plan/delete.html:3
 #, python-format
 msgid "Remove plan %s"
 msgstr "Enlever plan %s"
@@ -1931,6 +1804,151 @@ msgstr "Pas de semaines disponibles pour ce plan."
 #: templates/plan/details.html:85
 msgid "Remove from my calendar"
 msgstr "Enlever de mon calendrier"
+
+#: templates/post/edit.html:3
+#, python-format
+msgid "Edit %s"
+msgstr "Editer %s"
+
+#: templates/post/edit.html:3 templates/post/edit.html.py:28
+msgid "Create a post"
+msgstr "Créer un article"
+
+#: templates/post/edit.html:26
+#, python-format
+msgid "Edit post : %s"
+msgstr "Editer article : %s"
+
+#: templates/post/edit.html:32
+msgid "All posts"
+msgstr "Tous les articles"
+
+#: templates/post/edit.html:34
+msgid "View the post"
+msgstr "Voir l'article"
+
+#: templates/post/edit.html:45 templates/post/view.html:111
+msgid "Images"
+msgstr "Images"
+
+#: templates/post/edit.html:64
+msgid "Loading sessions..."
+msgstr "Chargement des séances..."
+
+#: templates/post/editor/images.html:22
+msgid "Use the zone below to add some pictures"
+msgstr "Utiliser la zone ci-dessous pour ajouter des images"
+
+#: templates/post/editor/text.html:49
+msgid "Bold (Ctrl+B)"
+msgstr "Gras (Ctrl+B)"
+
+#: templates/post/editor/text.html:52
+msgid "Italic (Ctrl+I)"
+msgstr "Italique (Ctrl+B)"
+
+#: templates/post/editor/text.html:55
+msgid "Strikethrough"
+msgstr "Barré"
+
+#: templates/post/editor/text.html:58
+msgid "Underline (Ctrl+U)"
+msgstr "Souligné (Ctrl+U)"
+
+#: templates/post/editor/text.html:64
+msgid "Bullet list"
+msgstr "Liste"
+
+#: templates/post/editor/text.html:67
+msgid "Numbered list"
+msgstr "Liste numérotée"
+
+#: templates/post/editor/text.html:72
+msgid "External link"
+msgstr "Lien externe"
+
+#: templates/post/editor/text.html:83
+msgid "Edit the post"
+msgstr "Editer l'article"
+
+#: templates/post/editor/text.html:83
+msgid "Create the post"
+msgstr "Créer un article"
+
+#: templates/post/list.html:15
+msgid "Add a new post"
+msgstr "Ajouter un nouvel article"
+
+#: templates/post/list.html:28
+msgid "Published"
+msgstr "Publié"
+
+#: templates/post/list.html:30 templates/post/view.html:68
+msgid "Not published"
+msgstr "Non publié"
+
+#: templates/post/list.html:49
+msgid "You do not have written any post yet."
+msgstr "Vous n'avez écrit aucun article pour le moment."
+
+#: templates/post/media.delete.html:3
+msgid "Delete media"
+msgstr "Supprimer ce media"
+
+#: templates/post/media.delete.html:6
+#, python-format
+msgid "Are you sure to delete this media %s ?"
+msgstr "Etes vous sûr de vouloir supprimer ce media %s ?"
+
+#: templates/post/media.delete.html:11
+msgid "Delete this media"
+msgstr "Supprimer ce media"
+
+#: templates/post/sessions.html:18
+msgid "Remove this session"
+msgstr "Supprimer cette séance"
+
+#: templates/post/sessions.html:23
+msgid "Add this session"
+msgstr "Ajouter cette séance"
+
+#: templates/post/sessions.html:32
+msgid "Attached sessions"
+msgstr "Séances liées"
+
+#: templates/post/sessions.html:42
+msgid "There are no sport sessions attached to this post."
+msgstr "Il n'y a aucune séance de sport liée à cet article."
+
+#: templates/post/sessions.html:50
+msgid "Your sport sessions"
+msgstr "Vos séances sportives"
+
+#: templates/post/sessions.html:55
+msgid "View sessions"
+msgstr "Voir les séances"
+
+#: templates/post/sessions.html:66
+msgid "No sport session available."
+msgstr "Pas de séance disponible."
+
+#: templates/post/view.html:95
+#, python-format
+msgid "%d sport sessions"
+msgstr "%d séances de sport"
+
+#: templates/post/view.html:129 templates/sport/session/edit.html:99
+msgid "Comments"
+msgstr "Commentaires"
+
+#: templates/post/view.html:131
+#| msgid "Loading comments..."
+msgid "Loading post comments..."
+msgstr "Chargement des commentaires"
+
+#: templates/post/view.html:135 templates/sport/week/edit.html:74
+msgid "Start a conversation"
+msgstr "Démarrer une conversation"
 
 #: templates/sport/calendar/_day.xs.html:4
 #: templates/sport/calendar/month.html:73
@@ -2105,10 +2123,6 @@ msgstr "Carte"
 msgid "Change session"
 msgstr "Changer la séance"
 
-#: templates/sport/session/edit.html:99
-msgid "Comments"
-msgstr "Commentaires"
-
 #: templates/sport/session/list.html:30 templates/sport/session/list.html:98
 msgid "No session name"
 msgstr "Pas de nom de séance"
@@ -2216,10 +2230,6 @@ msgstr "Bilan de la semaine"
 #: templates/sport/week/edit.html:70
 msgid "Loading week comments..."
 msgstr "Chargement des commentaires de la semaine ..."
-
-#: templates/sport/week/edit.html:74
-msgid "Start a conversation"
-msgstr "Démarrer une conversation"
 
 #: templates/sport/week/publish.html:9
 msgid "Send to trainers"
@@ -2697,18 +2707,19 @@ msgid "My Records"
 msgstr "Mes résultats"
 
 #: templates/users/races.html:29
-msgid "Records of"
-msgstr "Records de"
+#| msgid "My results"
+msgid "Results of"
+msgstr "Résultats de"
 
 #: templates/users/races.html:31
 msgid "Back to club"
 msgstr "Retour au club"
 
-#: templates/users/races.html:37
+#: templates/users/races.html:34
 msgid "My results"
 msgstr "Mes résultats"
 
-#: templates/users/races.html:39
+#: templates/users/races.html:36
 msgid "Add a result"
 msgstr "Ajouter un résultat"
 
@@ -2870,63 +2881,55 @@ msgstr "Sport par défaut"
 msgid "auto send emails"
 msgstr "envoi automatique des commentaires en fin de semaine"
 
-#: users/models.py:86
+#: users/models.py:85
 msgid "Daily trainer mail"
 msgstr "Envoi quotidien des séances de vos athlètes"
 
-#: users/models.py:87
+#: users/models.py:86
 msgid "language used"
 msgstr "language utilisé"
 
-#: users/models.py:90
+#: users/models.py:89
 msgid "garmin login"
 msgstr "login Garmin"
 
-#: users/models.py:91
+#: users/models.py:90
 msgid "garmin password"
 msgstr "mot de passe garmin"
 
-#: users/models.py:97
+#: users/models.py:96
 msgid "demo user"
 msgstr "utilisateur de démonstration"
 
-#: users/models.py:100
+#: users/models.py:99
 msgid "profile picture"
 msgstr "Photo de profil"
-
-#: users/models.py:101
-msgid "profile visibility"
-msgstr "visibilité globale du profil"
-
-#: users/models.py:101
-msgid "Indicates if your public profile is visible, and by who."
-msgstr "Détermine si votre page de profil public est visible et par qui."
 
 #: users/models.py:102
 msgid "profile picture visibility"
 msgstr "visibilité de votre photo"
 
-#: users/models.py:104
+#: users/models.py:103
 msgid "races visibility"
 msgstr "visibilité de vos courses"
 
-#: users/models.py:105
+#: users/models.py:104
 msgid "records visibility"
 msgstr "visibilité de vos records"
 
-#: users/models.py:106
+#: users/models.py:105
 msgid "stats visibility"
 msgstr "visibilité de vos statistiques"
 
-#: users/models.py:107
+#: users/models.py:106
 msgid "calendar visibility"
 msgstr "visibilité de votre calendrier complet"
 
-#: users/models.py:108
+#: users/models.py:107
 msgid "comments visibility"
 msgstr "visibilité des commentaires"
 
-#: users/models.py:109
+#: users/models.py:108
 msgid "tracks visibility"
 msgstr "visibilités des traces GPS"
 
@@ -3018,8 +3021,8 @@ msgid "Uncategorized"
 msgstr "Sans Catégorie"
 
 #: Sport/name:3
-msgid "Course à pied"
-msgstr ""
+msgid "Running"
+msgstr "Course à pied"
 
 #: Sport/name:4
 msgid "Street Running"
@@ -3038,8 +3041,8 @@ msgid "Treadmill Running"
 msgstr "Course sur tapis"
 
 #: Sport/name:8
-msgid "Vélo"
-msgstr ""
+msgid "Cycling"
+msgstr "Cyclisme sur "
 
 #: Sport/name:9
 msgid "Cyclocross"
@@ -3094,12 +3097,12 @@ msgid "Strength Training"
 msgstr "Entraînement de force"
 
 #: Sport/name:22
-msgid "Randonnée"
-msgstr ""
+msgid "hiking"
+msgstr "randonnée"
 
 #: Sport/name:23
-msgid "Natation"
-msgstr ""
+msgid "Swimming"
+msgstr "Natation"
 
 #: Sport/name:24
 msgid "Lap Swimming"
@@ -3110,8 +3113,10 @@ msgid "Open Water Swimming"
 msgstr "Natation en mer"
 
 #: Sport/name:26
-msgid "Marche"
-msgstr ""
+#, fuzzy
+#| msgid "Walking"
+msgid "Walking"
+msgstr "Marche"
 
 #: Sport/name:27
 msgid "Casual Walking"
@@ -3144,7 +3149,7 @@ msgid "Moto"
 msgstr "Moto"
 
 #: Sport/name:34
-msgid "Autre"
+msgid "Other"
 msgstr ""
 
 #: Sport/name:35
@@ -3259,14 +3264,11 @@ msgstr ""
 msgid "Walk"
 msgstr "Marche"
 
-#~ msgid "Running"
-#~ msgstr "Course à pied"
+#~ msgid "Records of"
+#~ msgstr "Records de"
 
-#~ msgid "Cycling"
-#~ msgstr "Cyclisme sur "
+#~ msgid "profile visibility"
+#~ msgstr "visibilité globale du profil"
 
-#~ msgid "hiking"
-#~ msgstr "randonnée"
-
-#~ msgid "Swimming"
-#~ msgstr "Natation"
+#~ msgid "Indicates if your public profile is visible, and by who."
+#~ msgstr "Détermine si votre page de profil public est visible et par qui."
