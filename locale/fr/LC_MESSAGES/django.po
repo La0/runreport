@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-23 23:39+0100\n"
-"PO-Revision-Date: 2015-03-23 23:41+0100\n"
+"PO-Revision-Date: 2015-03-25 11:30+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -133,7 +133,7 @@ msgstr "Mes préférences"
 #: coach/menu.py:108 templates/post/list.html:3 templates/post/list.html.py:10
 #| msgid "My paces"
 msgid "My posts"
-msgstr "Mes posts"
+msgstr "Mes articles"
 
 #: coach/menu.py:109 templates/friends/home.html:3
 #: templates/friends/home.html.py:8
@@ -266,15 +266,15 @@ msgstr "Image Carrée"
 #: post/models.py:26
 #| msgid "Type"
 msgid "Post Type"
-msgstr "Type de post"
+msgstr "Type d'article"
 
 #: post/models.py:29
 msgid "Post title"
-msgstr "Titre du post"
+msgstr "Titre de l'article"
 
 #: post/models.py:30
 msgid "Post content"
-msgstr "Contenu du post"
+msgstr "Contenu de l'article"
 
 #: sport/models/__init__.py:4
 msgid "training"
@@ -755,8 +755,7 @@ msgid "Actions"
 msgstr "Actions"
 
 #: templates/messages/_list.html:62 templates/messages/delete.html:20
-#: templates/sport/session/edit.html:51
-#: templates/post/editor/images.html:13 templates/sport/session/edit.html:51
+#: templates/sport/session/edit.html:51 templates/post/editor/images.html:13
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -1719,8 +1718,7 @@ msgstr "formulaire de contact"
 msgid "Private"
 msgstr "Privé"
 
-#: templates/plan/delete.html:3
-#: templates/post/edit.html:3
+#: templates/plan/delete.html:3 templates/post/edit.html:3
 #, python-format
 #| msgid "Edit"
 msgid "Edit %s"
@@ -1729,21 +1727,21 @@ msgstr "Editer %s"
 #: templates/post/edit.html:3 templates/post/edit.html.py:58
 #| msgid "Create an account"
 msgid "Create a post"
-msgstr "Créer un post"
+msgstr "Créer un article"
 
 #: templates/post/edit.html:56
 #, python-format
 msgid "Edit post : %s"
-msgstr "Editer post : %s"
+msgstr "Editer article : %s"
 
 #: templates/post/edit.html:62
 msgid "All posts"
-msgstr "Tous les posts"
+msgstr "Tous les articles"
 
 #: templates/post/edit.html:64
 #| msgid "View the month"
 msgid "View the post"
-msgstr "Voir le post"
+msgstr "Voir l'article"
 
 #: templates/post/edit.html:75 templates/post/view.html:102
 msgid "Images"
@@ -1790,17 +1788,17 @@ msgstr "Lien externe"
 
 #: templates/post/editor/text.html:48
 msgid "Edit the post"
-msgstr "Editer le post"
+msgstr "Editer l'article"
 
 #: templates/post/editor/text.html:48
 #| msgid "Create the club"
 msgid "Create the post"
-msgstr "Créer un post"
+msgstr "Créer un article"
 
 #: templates/post/list.html:15
 #| msgid "Add a record"
 msgid "Add a new post"
-msgstr "Ajouter un nouveau post"
+msgstr "Ajouter un nouvel article"
 
 #: templates/post/list.html:28
 #| msgid "Week published"
@@ -1815,7 +1813,7 @@ msgstr "Non publié"
 #: templates/post/list.html:49
 #| msgid "You do not have access to this page."
 msgid "You do not have written any post yet."
-msgstr "Vous n'avez écrit aucun post pour le moment."
+msgstr "Vous n'avez écrit aucun article pour le moment."
 
 #: templates/post/media.delete.html:3
 #| msgid "Delete a message"
@@ -1850,7 +1848,7 @@ msgstr "Séances liées"
 
 #: templates/post/sessions.html:43
 msgid "There are no sport sessions attached to this post."
-msgstr "Il n'y a aucune séance de sport liée à ce post."
+msgstr "Il n'y a aucune séance de sport liée à cet article."
 
 #: templates/post/sessions.html:51
 #| msgid "on your session"
