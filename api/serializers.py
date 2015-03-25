@@ -61,13 +61,15 @@ class PlanSessionSerializer(serializers.ModelSerializer):
     )
 
 class PlanSerializer(serializers.ModelSerializer):
-  weeks_nb = serializers.IntegerField(source='get_weeks_nb', read_only=True)
+  weeks_nb = serializers.IntegerField(read_only=True)
   sessions_nb = serializers.IntegerField(source='sessions.count', read_only=True)
   export_pdf = serializers.HyperlinkedIdentityField(view_name='plan-export-pdf')
+  applications_nb = serializers.IntegerField(source='applications.count', read_only=True)
+  is_active = serializers.BooleanField(read_only=True)
 
   class Meta:
     model = Plan
-    fields = ('id', 'name', 'weeks_nb', 'sessions_nb', 'updated', 'start', 'export_pdf', )
+    fields = ('id', 'name', 'weeks_nb', 'sessions_nb', 'updated', 'start', 'end', 'export_pdf', 'applications_nb', 'is_active', )
 
   def create(self, validated_data):
     # Attach current user to plan creation

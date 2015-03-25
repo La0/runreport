@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from users.models import Athlete
 from users.notification import UserNotifications
 from sport.models import Sport, SportWeek, SportDay, SportSession, SESSION_TYPES
-from datetime import timedelta
+from datetime import date, timedelta
 from helpers import date_to_week
 from django.utils import timezone
 from coach.mail import MailBuilder
@@ -23,10 +23,38 @@ class Plan(models.Model):
   def __unicode__(self):
     return u'Plan: "%s" from %s' % (self.name, self.creator.username)
 
-  def get_weeks_nb(self):
+  @property
+  def end(self):
+    '''
+    Calc the end date, on Sunday
+    '''
+    if not self.weeks_nb or not self.start:
+      return self.start
+    return self.start + timedelta(days=(7 * self.weeks_nb) - 1)
+
+  @property
+  def is_active(self):
+    '''
+    Plan is only active from start date
+    until the nb of weeks specified
+    '''
+    if not self.start:
+      return False
+
+    today = date.today()
+    return self.start <= today <= self.end
+
+  @property
+  def weeks_nb(self):
     '''
     Get current number of weeks in plan
     '''
+    # Fetch prepared annotation (from api)
+    nb = getattr(self, 'nb_weeks', 0)
+    if nb:
+      return nb
+
+    # Calc through aggregation (slow on lists)
     agg = self.sessions.aggregate(nb=models.Max('week'))
     if agg['nb'] is None:
       return 0

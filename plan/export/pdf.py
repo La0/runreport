@@ -84,7 +84,7 @@ class PlanPdfExporter(object):
     '''
 
     # Add sessions and dates to lines
-    for week_pos in range(0, self.plan.get_weeks_nb()):
+    for week_pos in range(0, self.plan.weeks_nb):
       dates = []
       week = []
 

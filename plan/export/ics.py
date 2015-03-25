@@ -17,8 +17,7 @@ class PlanIcsExporter(object):
 
     cal = Calendar()
     # Add sessions and dates to lines
-    for week_pos in range(0, self.plan.get_weeks_nb()):
-      dates = []
+    for week_pos in range(0, self.plan.weeks_nb):
       week = []
 
       for day_pos in range(0, 7):

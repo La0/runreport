@@ -18,7 +18,7 @@ class PlanDetails(PlanMixin, DetailView):
     '''
     Load weeks & sessions as a calendar
     '''
-    weeks = [ [[] for d in range(0,7)] for i in range(0, self.object.get_weeks_nb())]
+    weeks = [ [[] for d in range(0,7)] for i in range(0, self.object.weeks_nb)]
     for session in self.object.sessions.all():
       weeks[session.week][session.day].append(session)
 

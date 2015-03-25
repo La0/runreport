@@ -1,17 +1,22 @@
 from __future__ import absolute_import
+from django.db.models import Max
 from api.serializers import PlanSerializer, PlanSessionSerializer, PlanAppliedSerializer, MessageSerializer
 from rest_framework import viewsets, views, response
 from django.core.exceptions import PermissionDenied
 from users.models import Athlete
 from plan.tasks import publish_plan
 from .mixins import PlanMixin, PlanSessionMixin
-from messages.models import Conversation, TYPE_PLAN_SESSION, Message
+from messages.models import Conversation, TYPE_PLAN_SESSION
 
 class PlanViewSet(viewsets.ModelViewSet):
   serializer_class = PlanSerializer
 
   def get_queryset(self):
-    return self.request.user.plans.all()
+    plans = self.request.user.plans.all()
+    plans = plans.prefetch_related('applications', 'sessions')
+    plans = plans.annotate(nb_weeks=Max('sessions__week'))
+    plans = plans.order_by('-updated', 'name')
+    return plans
 
 class PlanSessionViewSet(viewsets.ModelViewSet):
   serializer_class = PlanSessionSerializer
