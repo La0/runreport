@@ -52,7 +52,7 @@ class Plan(models.Model):
     # Fetch prepared annotation (from api)
     nb = getattr(self, 'nb_weeks', 0)
     if nb:
-      return nb
+      return nb + 1 # Max() needs an offset
 
     # Calc through aggregation (slow on lists)
     agg = self.sessions.aggregate(nb=models.Max('week'))
