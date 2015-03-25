@@ -108,9 +108,10 @@ def virtualenv(name='django'):
 
 def update_requirements():
   '''
-  Update through pip
+  Update through pip & bower
   '''
   run('pip install -r requirements.txt')
+  run('bower install')
 
 def pull():
   '''
