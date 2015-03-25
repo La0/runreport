@@ -2,14 +2,13 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from users.models import Athlete
-from users.notification import UserNotifications
 from sport.models import Sport, SportWeek, SportDay, SportSession, SESSION_TYPES
 from datetime import date, timedelta
 from helpers import date_to_week
-from django.utils import timezone
 from coach.mail import MailBuilder
 from plan.export import PlanPdfExporter
 from interval.fields import IntervalField
+from .apps import PlanApplied, PlanSessionApplied
 
 class Plan(models.Model):
   name = models.CharField(max_length=250)
@@ -257,90 +256,3 @@ class PlanSession(models.Model):
 
       for c in self.comments.messages.all():
         c.copy(session.comments_private)
-
-
-PLAN_SESSION_APPLICATIONS = (
-  ('applied', _('Applied')), # Just applied by trainer
-  ('done', _('Done')), # Success
-  ('failed', _('Failed')), # Failed the plan
-)
-
-class PlanApplied(models.Model):
-  '''
-  Links a Plan to a User
-  Shows global status of a plan application
-  '''
-  plan = models.ForeignKey(Plan, related_name='applications')
-  user = models.ForeignKey('users.Athlete', related_name='plans_applied')
-
-  # Dates
-  created = models.DateTimeField(auto_now_add=True)
-  updated = models.DateTimeField(auto_now=True)
-
-  class Meta:
-    unique_together = (('user', 'plan'), )
-
-  @property
-  def status(self):
-    '''
-    Calc stats about sessions & theirs status
-    '''
-    out = {}
-    for s, _name in PLAN_SESSION_APPLICATIONS:
-      out[s] = self.sessions.filter(status=s).count()
-    return out
-
-
-class PlanSessionApplied(models.Model):
-  '''
-  Links a PlanSession to a SportSession
-  '''
-  # Links
-  application = models.ForeignKey(PlanApplied, related_name='sessions')
-  plan_session = models.ForeignKey(PlanSession, related_name='applications')
-  sport_session = models.OneToOneField('sport.SportSession', related_name='plan_session')
-
-  # Validation
-  status = models.CharField(max_length=20, choices=PLAN_SESSION_APPLICATIONS, default='applied')
-  validated = models.DateTimeField(null=True, blank=True)
-
-  # Dates
-  created = models.DateTimeField(auto_now_add=True)
-  updated = models.DateTimeField(auto_now=True)
-  trainer_notified = models.DateTimeField(null=True, blank=True)
-
-  def move(self, date):
-    '''
-    Move to another day the plan session application
-    '''
-    # Retrieve new day
-    day = self.plan_session._build_day(self.application.user, date)
-
-    # Build session
-    defaults = {
-      'name' : self.plan_session.name,
-      'distance' : self.plan_session.distance,
-      'time' : self.plan_session.time,
-    }
-    session,_ = SportSession.objects.exclude(plan_session__isnull=False).get_or_create(sport=self.plan_session.sport, day=day, type=self.plan_session.type, defaults=defaults)
-
-    # Update session attached
-    self.sport_session = session
-    self.save()
-
-    return session
-
-  def notify_trainer(self):
-    '''
-    Notify trainer of new validation from user
-    '''
-    if self.status == 'applied':
-      raise Exception('Invalid status')
-
-    # Send UserNotification
-    un = UserNotifications(self.plan_session.plan.creator)
-    un.add_plan_session_applied(self)
-
-    # Update notification date
-    self.trainer_notified = timezone.now()
-    self.save()
