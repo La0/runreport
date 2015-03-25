@@ -5,6 +5,7 @@ import re
 import pytz
 import logging
 import json
+import math
 from datetime import datetime, timedelta, time
 from django.utils.timezone import utc
 from django.contrib.gis.geos import Point
@@ -232,11 +233,14 @@ class GarminProvider(TrackProvider):
     logger.debug('Time : %s' % identity['time'])
 
     # Distance in km
-    distance = activity['sumDistance']
-    if distance['unitAbbr'] == 'm':
-      identity['distance'] =  float(distance['value']) / 1000.0
+    distance = activity.get('sumDistance')
+    if distance:
+      if distance['unitAbbr'] == 'm':
+        identity['distance'] =  float(distance['value']) / 1000.0
+      else:
+        identity['distance'] =  float(distance['value'])
     else:
-      identity['distance'] =  float(distance['value'])
+      identity['distance'] = 0.0
     logger.debug('Distance : %s km' % identity['distance'])
 
     # Speed
@@ -247,18 +251,20 @@ class GarminProvider(TrackProvider):
       if speed['unitAbbr'] == 'km/h' or (speed['uom'] == 'kph' and identity['sport'].get_category() != 'running'):
         # Transform km/h in min/km
         s = float(speed['value'])
-        mpk = 60.0 / s
-        hour = int(mpk / 60.0)
-        minutes = int(mpk % 60.0)
-        seconds = int((mpk - minutes) * 60.0)
-        identity['speed'] = time(hour, minutes, seconds)
+        if s != 0.0:
+          mpk = 60.0 / s
+          hour = int(mpk / 60.0)
+          minutes = int(mpk % 60.0)
+          seconds = int((mpk - minutes) * 60.0)
+          identity['speed'] = time(hour, minutes, seconds)
       elif speed['unitAbbr'] == 'min/km':
         try:
           identity['speed'] = datetime.strptime(speed['display'], '%M:%S').time()
         except:
           s = float(speed['value'])
-          minutes = int(s)
-          identity['speed'] = time(0, minutes, int((s - minutes) * 60.0))
+          if not math.isinf(s):
+            minutes = int(s)
+            identity['speed'] = time(0, minutes, int((s - minutes) * 60.0))
     logger.debug('Speed : %s' % identity['speed'])
 
     # update name

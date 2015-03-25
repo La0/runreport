@@ -212,14 +212,10 @@ class TrackProvider:
       logger.info("Existing %s activity %s needs update" % (self.NAME, activity_id))
     except Track.DoesNotExist, e:
       track = Track(provider=self.NAME, provider_id=activity_id)
-      created = True
       logger.info("Created %s activity %s" % (self.NAME, activity_id))
     except Exception, e:
       logger.error("Failed to import %s activity %s : %s" % (self.NAME, activity_id, str(e)))
       return None, None
-
-    # Store raw activity
-    self.store_file(activity, 'raw', activity_raw)
 
     # Build optional simplified polyline
     if not track.simple:
@@ -242,6 +238,9 @@ class TrackProvider:
     # Save full track
     track.save()
     logger.info("Saved %s track #%d"% (self.NAME, track.pk))
+
+    # Store raw activity
+    self.store_file(activity, 'raw', activity_raw)
 
     # Save files when we are sure to have a PK
     self.load_files(activity)
