@@ -27,10 +27,9 @@
 </div>
 {%- endmacro %}
 
-<h2>{{ _('Attached sessions') }}</h2>
-
 <form class="box" action="{% url 'post-sessions' post.slug %}" method="post" id="attached_sessions">
   {% csrf_token %}
+  <h2>{{ _('Attached sessions') }}</h2>
 
   {# List post sessions #}
   {% with post.sessions.all() as sessions %}
