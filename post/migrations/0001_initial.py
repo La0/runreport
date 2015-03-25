@@ -8,7 +8,7 @@ from django.conf import settings
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('sport', '0007_auto_20141219_1048'),
+        ('sport', '0010_auto_20150320_1109'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
