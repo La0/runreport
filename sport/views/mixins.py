@@ -278,8 +278,7 @@ class AthleteRaces(object):
     for r in past_races:
       for c in r.sessions.filter(type='race').values('race_category').distinct():
         cat_id = c['race_category']
-        cat = categories[cat_id]
-        if cat_id not in races:
+        if cat_id not in categories or cat_id not in races:
           races[cat_id] = []
         races[cat_id].append(r)
 

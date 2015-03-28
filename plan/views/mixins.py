@@ -28,6 +28,8 @@ class PlanMixin(object):
      * its creator
      * the assigned athletes
     '''
+    if not self.request.user.is_authenticated():
+      return Plan.objects.none()
     return Plan.objects.filter( \
       Q(creator=self.request.user) | \
       Q(sessions__applications__sport_session__day__week__user=self.request.user) \
