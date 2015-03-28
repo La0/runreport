@@ -26,10 +26,14 @@ class GarminProvider(TrackProvider):
   settings = ['GPG_HOME', 'GPG_PASSPHRASE', ]
 
   # Login Urls
-  url_hostname = 'http://connect.garmin.com/gauth/hostname'
+  url_hostname = 'https://connect.garmin.com/gauth/hostname'
   url_login = 'https://sso.garmin.com/sso/login'
-  url_post_login = 'http://connect.garmin.com/post-auth/login'
-  url_check_login = 'http://connect.garmin.com/user/username'
+  url_post_login = 'https://connect.garmin.com/post-auth/login'
+  url_check_login = 'https://connect.garmin.com/user/username'
+
+  # Host header urls
+  url_host_sso = 'sso.garmin.com'
+  url_host_connect = 'connect.garmin.com'
 
   # Data Urls
   url_activity = 'http://connect.garmin.com/proxy/activity-search-service-1.0/json/activities'
@@ -61,15 +65,38 @@ class GarminProvider(TrackProvider):
     self.session = requests.Session()
 
     # Get SSO server hostname
+    # without the .garmin.com FQDN
     res = self.session.get(self.url_hostname)
-    sso_hostname = res.json().get('host', None)
+    sso_hostname = res.json().get('host', None).rstrip('.garmin.com')
     if not sso_hostname:
       raise GarminAuthException('No SSO server available')
+    logger.debug('Use SSO hostname %s', sso_hostname)
 
     # Load login page to get login ticket
     params = {
       'clientId' : 'GarminConnect',
       'webhost' : sso_hostname,
+
+      # Full parameters from Firebug
+      # Fuck this shit. Who needs mandatory urls in a request parameters !
+      'consumeServiceTicket' : 'false',
+      'createAccountShown' : 'true',
+      'cssUrl' : 'https://static.garmincdn.com/com.garmin.connect/ui/css/gauth-custom-v1.1-min.css',
+      'displayNameShown' : 'false',
+      'embedWidget' : 'false',
+      'gauthHost' : 'https://sso.garmin.com/sso',
+      'generateExtraServiceTicket' : 'false',
+      'id' : 'gauth-widget',
+      'initialFocus' : 'true',
+      'locale' : 'fr',
+      'openCreateAccount' : 'false',
+      'redirectAfterAccountCreationUrl' : 'https://connect.garmin.com/post-auth/login',
+      'redirectAfterAccountLoginUrl' : 'https://connect.garmin.com/post-auth/login',
+      'rememberMeChecked' : 'false',
+      'rememberMeShown' : 'true',
+      'service' : 'https://connect.garmin.com/post-auth/login',
+      'source' : 'https://connect.garmin.com/fr-FR/signin',
+      'usernameShown' : 'false',
     }
     res = self.session.get(self.url_login, params=params)
     if res.status_code != 200:
@@ -81,23 +108,45 @@ class GarminProvider(TrackProvider):
     if not res:
       raise GarminAuthException('No login ticket')
     login_ticket = res.group('lt')
+    logger.debug('Found login ticket %s', login_ticket)
 
     # Login/Password with login ticket
     # Send through POST
     data = {
-      '_eventId' : 'submit', # Strange, but needed
+      # All parameters are needed
+      '_eventId' : 'submit',
+      'displayNameRequired' : 'false',
+      'embed' : 'true',
       'lt' : login_ticket,
       'username' : login,
       'password' : password,
     }
-    res = self.session.post(self.url_login, params=params, data=data)
+    headers = {
+      'Host' : self.url_host_sso,
+    }
+
+    res = self.session.post(self.url_login, params=params, data=data, headers=headers)
     if res.status_code != 200:
       raise GarminAuthException('Authentification failed.')
 
+    # Try to find the full post login url in response
+    # From JS code source :
+    # var response_url = 'https://connect.garmin.com/post-auth/login?ticket=ST-03582405-W6gvTaVCJe0Yx93AB2yu-cas'
+    regex = 'var response_url(\s+)= \'%s\?ticket=(?P<ticket>.+)\'' % self.url_post_login
+    params = {}
+    matches = re.search(regex, res.text)
+    if matches:
+      params['ticket'] = matches.group('ticket')
+      logger.debug('Found service ticket %s', params['ticket'])
+
     # Second auth step
-    # Don't know why this one is necessary :/
-    res = self.session.get(self.url_post_login)
-    if res.status_code != 200:
+    # Needs a service ticket from previous response
+    # Currently gives 3 302 redirects until a 404 :/
+    headers = {
+      'Host' : self.url_host_connect,
+    }
+    res = self.session.get(self.url_post_login, params=params, headers=headers)
+    if res.status_code != 200 and not res.history:
       raise GarminAuthException('Second auth step failed.')
 
     # Check login
