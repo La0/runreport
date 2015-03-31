@@ -355,7 +355,8 @@ class GarminProvider(TrackProvider):
       if name not in lap:
         return 0.0
       d = lap[name]
-      tz = pytz.timezone(d['uom'])
+      tz_name = d['uom'] == 'gmt' and 'Etc/GMT' or d['uom']
+      tz = pytz.timezone(tz_name)
       return make_aware(datetime.fromtimestamp(float(d['value']) / 1000.0), tz)
 
     def _convert_point(lap, name_lat, name_lng):
