@@ -9,38 +9,36 @@
   <meta http-equiv="X-UA-Compatible" content="IE=9">
   {% block meta %}{% endblock %}
 
-  {% load staticfiles %}
-  {% load compress %}
   {% compress css %}
-	<link href="{% static 'bootswatch-dist/css/bootstrap.css' %}" rel="stylesheet">
-	<link href="{% static 'bootstrap-modal/css/bootstrap-modal-bs3patch.css' %}" rel="stylesheet">
-	<link href="{% static 'bootstrap-modal/css/bootstrap-modal.css' %}" rel="stylesheet">
-	<link href="{% static 'leaflet/dist/leaflet.css' %}" rel="stylesheet">
-	<link href="{% static 'bootstrap-datepicker/css/datepicker3.css' %}" rel="stylesheet">
-	<link href="{% static 'quill/dist/quill.base.css' %}" rel="stylesheet">
-	<link href="{% static 'dropzone/downloads/css/dropzone.css' %}" rel="stylesheet">
-	<link href="{% static 'lightbox2/css/lightbox.css' %}" rel="stylesheet">
-	<link href="{% static 'css/runreport-embedded.css' %}" rel="stylesheet">
-	<link href="{% static 'css/style.css' %}" rel="stylesheet">
+	<link href="{{ static('bootswatch-dist/css/bootstrap.css') }}" rel="stylesheet">
+	<link href="{{ static('bootstrap-modal/css/bootstrap-modal-bs3patch.css') }}" rel="stylesheet">
+	<link href="{{ static('bootstrap-modal/css/bootstrap-modal.css') }}" rel="stylesheet">
+	<link href="{{ static('leaflet/dist/leaflet.css') }}" rel="stylesheet">
+	<link href="{{ static('bootstrap-datepicker/css/datepicker3.css') }}" rel="stylesheet">
+	<link href="{{ static('quill/dist/quill.base.css') }}" rel="stylesheet">
+	<link href="{{ static('dropzone/downloads/css/dropzone.css') }}" rel="stylesheet">
+	<link href="{{ static('lightbox2/css/lightbox.css') }}" rel="stylesheet">
+	<link href="{{ static('css/runreport-embedded.css') }}" rel="stylesheet">
+	<link href="{{ static('css/style.css') }}" rel="stylesheet">
 	{% block style %}{% endblock %}
   {% endcompress %}
 
   {% compress js %}
-	<script type="text/javascript" src="{% static 'jquery/dist/jquery.js' %}"></script>
-	<script type="text/javascript" src="{% static 'bootswatch-dist/js/bootstrap.js' %}"></script>
-	<script type="text/javascript" src="{% static 'bootstrap-modal/js/bootstrap-modalmanager.js' %}"></script>
-	<script type="text/javascript" src="{% static 'bootstrap-modal/js/bootstrap-modal.js' %}"></script>
-	<script type="text/javascript" src="{% static 'leaflet/dist/leaflet.js' %}"></script>
-	<script type="text/javascript" src="{% static 'bootstrap-datepicker/js/bootstrap-datepicker.js' %}"></script>
-	<script type="text/javascript" src="{% static 'quill/dist/quill.js' %}" ></script>
-	<script type="text/javascript" src="{% static 'lightbox2/js/lightbox.js' %}" ></script>
-	<script type="text/javascript" src="{% static 'js/csrf.js' %}" ></script>
-	<script type="text/javascript" src="{% static 'js/modal.js' %}" ></script>
-	<script type="text/javascript" src="{% static 'js/tracks.js' %}" ></script>
+	<script type="text/javascript" src="{{ static('jquery/dist/jquery.js') }}"></script>
+	<script type="text/javascript" src="{{ static('bootswatch-dist/js/bootstrap.js') }}"></script>
+	<script type="text/javascript" src="{{ static('bootstrap-modal/js/bootstrap-modalmanager.js') }}"></script>
+	<script type="text/javascript" src="{{ static('bootstrap-modal/js/bootstrap-modal.js') }}"></script>
+	<script type="text/javascript" src="{{ static('leaflet/dist/leaflet.js') }}"></script>
+	<script type="text/javascript" src="{{ static('bootstrap-datepicker/js/bootstrap-datepicker.js') }}"></script>
+	<script type="text/javascript" src="{{ static('quill/dist/quill.js') }}" ></script>
+	<script type="text/javascript" src="{{ static('lightbox2/js/lightbox.js') }}" ></script>
+	<script type="text/javascript" src="{{ static('js/csrf.js') }}" ></script>
+	<script type="text/javascript" src="{{ static('js/modal.js') }}" ></script>
+	<script type="text/javascript" src="{{ static('js/tracks.js') }}" ></script>
 	{% block js %}{% endblock %}
   {% endcompress %}
   {# Compress fails with this file :/ #}
-	<script type="text/javascript" src="{% static 'dropzone/downloads/dropzone.js' %}" ></script>
+	<script type="text/javascript" src="{{ static('dropzone/downloads/dropzone.js') }}" ></script>
 </head>
 <body class="{% if user.demo %}demo{% endif %}">
 	<header class="navbar navbar-default navbar-fixed-top">
@@ -78,7 +76,7 @@
 					</li>
           {% elif 'notifications' in p %}
           <li class="notifications {% if p.notifications > 0 %}red{% endif %}">
-            <a class="modal-action" href="{% url user-notifications %}" title="{{ p.notifications }} notifications">
+            <a class="modal-action" href="{{ url('user-notifications') }}" title="{{ p.notifications }} notifications">
               <span class="badge">{{ p.notifications }}</span>
             </a>
           </li>
@@ -88,7 +86,7 @@
 					{% endfor %}
 
           <li class="lang">
-            <form action="{% url set_language %}" method="post">
+            <form action="{{ url('set_language') }}" method="post">
               {% csrf_token %}
               {% for lang_code, lang_name in LANGUAGES %}
                 {% if lang_code != LANGUAGE_CODE %}
@@ -119,7 +117,7 @@
       {{ _('Built by') }} <a href="http://nextcairn.com">Next Cairn</a>
       <span class="text-muted">&bull;</span>
 
-      <a href="{% url landing-team %}"><i class="icon-club"></i> {{ _('The team') }}</a>
+      <a href="{{ url('landing-team') }}"><i class="icon-club"></i> {{ _('The team') }}</a>
       <span class="text-muted">&bull;</span>
 
 			{{ _('Source code on') }} <a href="http://github.com/La0/coach"><i class="icon-github"></i> {{ _('Github') }}</a>
@@ -128,10 +126,10 @@
 			<a href="http://facebook.com/runreport.fr"><i class="icon-facebook"></i> {{_('Facebook') }}</a>
       <span class="text-muted">&bull;</span>
 
-			<a href="{% url page-list 'news' %}"><i class="icon-mail"></i> {{ _('News') }}</a>
+			<a href="{{ url('page-list', 'news') }}"><i class="icon-mail"></i> {{ _('News') }}</a>
       <span class="text-muted">&bull;</span>
 
-			<a href="{% url page-list 'help' %}"><i class="icon-help-circled"></i> {{ _('Help') }}</a>
+			<a href="{{ url('page-list', 'help') }}"><i class="icon-help-circled"></i> {{ _('Help') }}</a>
       <span class="text-muted">&bull;</span>
 
 			<a href="/contact"><i class="icon-user"></i> {{ _('Contact') }}</a>

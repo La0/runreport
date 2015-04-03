@@ -54,11 +54,11 @@
 	<label class="col-sm-4 control-label" for="id_{{field.html_name}}">{{ label or field.label }}</label>
 	<div class="col-sm-8">
 
-    {% with field.field.choices as choices %}
+    {% with choices = field.field.choices %}
     <div class="btn-group" data-toggle="buttons">
-      {% with field.value() as value %}
+      {% with value = field.value() %}
       {% for choice, name in choices %}
-      {% with field_classes and field_classes[loop.index0 % field_classes|length()] as fclass %}
+      {% with fclass = field_classes and field_classes[loop.index0 % field_classes|length()] %}
       <label class="btn btn-default {% if value == choice %}active {{fclass}}{% endif %}">
         <input type="radio" name="{{field.name}}" value="{{choice}}" {% if value == choice %}checked="checked"{% endif %}> {{ name }}
       </label>
@@ -82,7 +82,7 @@
 <div class="sport dropdown">
   <button class="btn btn-sm btn-warning dropdown-toggle" data-toggle="dropdown">
     <span class="name">
-      {% with form.instance.sport as sport %}
+      {% with sport = form.instance.sport %}
         <i class="{{sport.icon}}"></i> {{sport.name}}
       {% endwith %}
     </span>
@@ -107,8 +107,8 @@
 
 {% macro session_types_name(form, types) -%}
 
-{% with form.instance.type as type %}
-{% with form.name as field %}
+{% with type = form.instance.type %}
+{% with field = form.name %}
 <div class="types-name form-group row {% if field.errors %}error{% elif field.value() %}success{% endif %}">
 	{% if field.errors %}
 	<span class="help-inline">{{field.errors|safe}}</span>
@@ -174,7 +174,7 @@
 {% if active %}
 <i class="icon-{{direction}}-open"></i>
 {% else %}
-<a href="{{ urlname|url(*urlargs + (sort_name, )) }}"><i class="icon-{{direction}}-open"></i></a>
+<a href="{{ url(urlname, urlargs + (sort_name, )) }}"><i class="icon-{{direction}}-open"></i></a>
 {% endif %}
 </span>
 
