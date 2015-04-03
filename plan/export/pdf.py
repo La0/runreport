@@ -5,7 +5,7 @@ from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.pagesizes import letter, landscape
 from reportlab.lib.enums import TA_CENTER
 from reportlab.rl_config import defaultPageSize
-from coffin.template.loader import render_to_string
+from django.template.loader import render_to_string
 from django.contrib.sites.models import get_current_site
 from django.utils import formats
 from helpers import week_to_date

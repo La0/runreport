@@ -1,4 +1,4 @@
-from coffin.conf.urls import patterns, url
+from django.conf.urls import patterns, url
 from django.shortcuts import get_object_or_404, render
 from django.contrib import admin
 from models import *
