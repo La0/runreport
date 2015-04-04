@@ -319,8 +319,8 @@ CELERY_ROUTES = {
 }
 
 # Js/Css Compressor
-COMPRESS_ROOT = MEDIA_ROOT
-COMPRESS_URL = MEDIA_URL
+COMPRESS_ROOT = STATIC_ROOT
+COMPRESS_URL = STATIC_URL
 COMPRESS_OUTPUT_DIR = '/min' # must be a relative dir to
 COMPRESS_CSS_FILTERS = [
   'compressor.filters.css_default.CssAbsoluteFilter', # default: absolute url()
