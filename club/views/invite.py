@@ -8,6 +8,7 @@ from django.views.generic.edit import CreateView
 from django.conf import settings
 
 class ClubInviteCheck(RedirectView, DetailView):
+  permanent = False
   model = ClubInvite
 
   def get_redirect_url(self, *args, **kwargs):

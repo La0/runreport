@@ -25,7 +25,7 @@ user_patterns = patterns('',
 
 urlpatterns = patterns('',
   # Preferences, old & new
-  url(r'^profile/?$', RedirectView.as_view(url='/user/preferences')),
+  url(r'^profile/?$', RedirectView.as_view(url='/user/preferences', permanent=True)),
   url(r'^preferences/?$', login_required(Preferences.as_view()), name='user-preferences'),
 
   url(r'^login/?$', LoginUser.as_view(), name='login'),

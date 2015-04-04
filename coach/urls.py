@@ -46,7 +46,7 @@ dev_urls = patterns('',
 # Hide a little admin
 prod_urls = patterns('',
   url(r'^%s/' % settings.ADMIN_BASE_URL, include(admin.site.urls)),
-  url(r'^admin/', RedirectView.as_view(url='http://docs.djangoproject.com/en/dev/ref/contrib/admin/')),
+  url(r'^admin/', RedirectView.as_view(url='http://docs.djangoproject.com/en/dev/ref/contrib/admin/', permanent=True)),
 )
 
 urlpatterns += settings.DEBUG and dev_urls or prod_urls

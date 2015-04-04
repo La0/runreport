@@ -56,6 +56,7 @@ class PublicProfile(ProfilePrivacyMixin, DetailView, SportStatsMixin, AthleteRac
     }
 
 class OwnProfile(RedirectView):
+  permanent = False
   def get_redirect_url(self):
     # redirect to own profile
     return reverse('user-public-profile', args=(self.request.user.username, ))
