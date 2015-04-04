@@ -176,6 +176,7 @@ class SportWeek(models.Model):
     '''
     stats = []
     sessions = SportSession.objects.filter(day__week=self)
+    sessions = sessions.exclude(plan_session__status='failed')
     sports = set([s.sport for s in sessions])
 
     for sport in sports:

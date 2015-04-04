@@ -59,6 +59,7 @@ class StatsMonth(object):
 
     # Fetch all sessions in the month
     sessions = sport.models.SportSession.objects.filter(day__week__user=self.user, day__date__gte=start, day__date__lte=end)
+    sessions = sessions.exclude(plan_session__status='failed')
 
     # Get stats per types
     types = sessions.values('type').annotate(nb=Count('type'))
