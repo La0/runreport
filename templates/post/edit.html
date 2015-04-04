@@ -9,7 +9,7 @@ $(function(){
   {% if post %}
   // Image upload through DropZone
   $("div#dropzone").dropzone({
-    url: "{% url 'post-upload' post.slug %}",
+    url: "{{ url('post-upload', post.slug) }}",
     headers : {
       'X-CSRFToken' : '{{ csrf_token }}',
     },
@@ -29,9 +29,9 @@ $(function(){
   {% endif %}
 
   <p class="pull-right">
-    <a href="{% url 'posts' %}" class="btn btn-primary btn-light">{{ _('All posts') }}</a>
+    <a href="{{ url('posts') }}" class="btn btn-primary btn-light">{{ _('All posts') }}</a>
     {% if post %}
-    <a href="{% url 'post' user.username, post.slug %}" class="btn btn-info btn-light">{{ _('View the post') }}</a>
+    <a href="{{ url('post', user.username, post.slug) }}" class="btn btn-info btn-light">{{ _('View the post') }}</a>
     {% endif %}
   </p>
 
@@ -60,7 +60,7 @@ $(function(){
         {% include 'post/editor/images.html' %}
       </div>
       <div role="tabpanel" class="tab-pane" id="sessions">
-        <div class="box" data-src="{% url 'post-sessions' post.slug %}">
+        <div class="box" data-src="{{ url('post-sessions', post.slug) }}">
           {{ _('Loading sessions...') }}
         </div>
       </div>

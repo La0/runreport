@@ -8,5 +8,5 @@
 
 {% block footer %}
 <button class="btn" data-dismiss="modal">{{ _('Cancel') }}</button>
-<a href="{% url 'friend-delete' friend.username %}" class="btn btn-danger modal-action modal-post">{{ _('Delete this friendship') }}</a>
+<a href="{{ url('friend-delete', friend.username) }}" class="btn btn-danger modal-action modal-post">{{ _('Delete this friendship') }}</a>
 {% endblock %}

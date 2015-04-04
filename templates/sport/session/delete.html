@@ -8,6 +8,6 @@
 
 {% block footer %}
 <button class="btn" data-dismiss="modal">{{ _('Cancel') }}</button>
-<a href="{% url sport-session-delete day_date.year, day_date.month, day_date.day, session.pk %}" class="btn btn-danger modal-action modal-post">{{ _('Delete this session') }}</a>
+<a href="{{ url('sport-session-delete', day_date.year, day_date.month, day_date.day, session.pk) }}" class="btn btn-danger modal-action modal-post">{{ _('Delete this session') }}</a>
 {% endblock %}
 

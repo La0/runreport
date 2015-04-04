@@ -13,7 +13,7 @@
 
     <div class="col-sm-2 col-xs-4">
       {% for r in conversation.get_recipients() %}
-      <a class="recipient" href="{% url user-public-profile r.username %}">
+      <a class="recipient" href="{{ url('user-public-profile', r.username) }}">
         <img src="{{ r.avatar.url }}" class="img-responsive img-rounded do-tootip" title="{{ r.first_name }} {{ r.last_name }}" />
         {{ r.first_name }}
       </a>
@@ -38,7 +38,7 @@
         {% if conversation.post.writer == user %}
           {{ _('On your post: %s') % conversation.post.title }}
         {% else %}
-          {% with conversation.post.writer as u %}
+          {% with u = conversation.post.writer %}
           {{ _('On %(first_name)s %(last_name)s post: %(title)s') % {'first_name' : u.first_name, 'last_name' : u.last_name, 'title' : conversation.post.title, } }}
           {% endwith %}
         {% endif %}
@@ -47,24 +47,24 @@
         {% if conversation.week.user == user %}
           {{ _('On your week from %s') % conversation.week.get_date_start()|date('l d E Y') }}
         {% else %}
-          {% with conversation.week.user as u %}
+          {% with u = conversation.week.user %}
           {{ _('On %(first_name)s %(last_name)s week from %(start)s') % {'first_name' : u.first_name, 'last_name' : u.last_name, 'start' : conversation.week.get_date_start()|date('l d E Y'), } }}
           {% endwith %}
         {% endif %}
       {% else %}
       <p>
-        {% with conversation.get_session() as session %}
+        {% with session = conversation.get_session() %}
           <i class="icon-comment"></i>
-          {% with session.day.week.user as session_user %}
+          {% with session_user = session.day.week.user %}
             {% if user == session_user %}
             {{ _('On your session') }}
             {% else %}
-            {{ _('On the session of') }} <a href="{% url user-public-profile session_user.username %}">{{ session_user.first_name }} {{ session_user.last_name }}</a>
+            {{ _('On the session of') }} <a href="{{ url('user-public-profile', session_user.username) }}">{{ session_user.first_name }} {{ session_user.last_name }}</a>
             {% endif %}
           {% endwith %}
           <i class="{{session.sport.icon}}"></i>
-          {% with session.day.date as dt %}
-          <a href="{% url report-day dt.year, dt.month, dt.day %}">
+          {% with dt = session.day.date %}
+          <a href="{{ url('report-day', dt.year, dt.month, dt.day) }}">
             {{ session.name }}
           </a>
           {{ _('on') }} {{ dt|date('l d E Y') }}
@@ -75,7 +75,7 @@
     </div>
 
     <div class="col-sm-2 text-right">
-      <a href="{% url conversation-add conversation.pk %}" class="modal-action btn btn-default btn-sm">
+      <a href="{{ url('conversation-add', conversation.pk) }}" class="modal-action btn btn-default btn-sm">
         {% if conversation.type == 'mail' %}
         {{ _('Reply') }}
         {% else %}
@@ -95,7 +95,7 @@
     <ul class="pager">
       {% if conversations.has_previous() %}
       <li class="previous">
-        <a href="{% url message-inbox-page conversations.previous_page_number() %}">
+        <a href="{{ url('message-inbox-page', conversations.previous_page_number()) }}">
           <i class="icon-left-open"></i> {{ _('Previous conversations') }}
         </a>
       </li>
@@ -105,7 +105,7 @@
       </li>
       {% if conversations.has_next() %}
       <li class="next">
-        <a href="{% url message-inbox-page conversations.next_page_number() %}">
+        <a href="{{ url('message-inbox-page', conversations.next_page_number()) }}">
           {{ _('Next conversations') }} <i class="icon-right-open"></i>
         </a>
       </li>

@@ -10,7 +10,7 @@
         {% endif %}
         <p class="text-right">
           <a href="#" class="btn btn-primary btn-sm" role="button">{{ _('Edit') }}</a>
-          <a href="{% url 'post-media-delete' thumb.parent.pk %}" class="btn btn-danger btn-sm modal-action" role="button">{{ _('Delete') }}</a>
+          <a href="{{ url('post-media-delete', thumb.parent.pk) }}" class="btn btn-danger btn-sm modal-action" role="button">{{ _('Delete') }}</a>
         </p>
       </div>
     </div>

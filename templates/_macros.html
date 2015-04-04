@@ -1,8 +1,6 @@
 
 
 {% macro input(field, label=None, help=False, colLabel=2, colField=10) -%}
-{{ field.type}}
-
 <div class="form-group row {% if field.errors %}has-error{% endif %}">
 	<label class="col-sm-{{colLabel}} control-label" for="id_{{field.html_name}}">
     {{ label or field.label }}

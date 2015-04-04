@@ -12,21 +12,21 @@ $(function(){
       psa : {{ session.plan_session.pk }},
       date : Math.floor(evt.date.getTime() / 1000),
     };
-    load_box('{% url 'plan-session-move' %}', 'POST', data);
+    load_box('{{ url('plan-session-move') }}', 'POST', data);
   });
 });
 </script>
 
-{% with session.plan_session.plan_session as psess %}
+{% with psess = session.plan_session.plan_session %}
 <div class="form-group row plan-status ">
   <label class="control-label col-sm-2 hidden-xs">
     {{ _('Training plan') }}
-    <a href="{% url 'plan' psess.plan.pk %}">
+    <a href="{{ url('plan', psess.plan.pk) }}">
       {{ psess.plan.name }}
     </a>
   </label>
   <div class="col-xs-4 col-sm-1">
-    {% with session.plan_session.status as status %}
+    {% with status = session.plan_session.status %}
     <div class="dropdown">
       <button class="btn btn-sm btn-primary dropdown-toggle {{ status }}" data-toggle="dropdown">
         <span class="name">
@@ -34,7 +34,7 @@ $(function(){
         </span>
         <span class="caret"></span>
       </button>
-      {% with form.plan_status.field.choices as choices %}
+      {% with choices = form.plan_status.field.choices %}
       <ul class="dropdown-menu plan-status">
         {% for k, name in choices %}
         <li{% if status == k %} class="active"{% endif %}>
@@ -53,8 +53,8 @@ $(function(){
     </p>
     <p>
       <i class="icon-sport-{{ psess.sport.slug }}"></i>
-      {% with psess.plan.creator as trainer %}
-      <a href="{% url 'user-public-profile' trainer.username %}" target="_blank">
+      {% with trainer = psess.plan.creator %}
+      <a href="{{ url('user-public-profile', trainer.username) }}" target="_blank">
         {{ trainer.first_name }} {{ trainer.last_name }}
       </a>
       {% endwith %}

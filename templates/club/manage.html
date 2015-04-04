@@ -45,7 +45,7 @@
     <h4>{{ _('Subscriptions for a private club') }}</h4>
     <p>
       {{ _('Your club is private, you must then this link to future members') }} :
-      <a href="{% url club-join-private club.slug, club.get_private_hash() %}" class="btn btn-sm btn-danger">{{ _('Private access') }}</a>
+      <a href="{{ url('club-join-private', club.slug, club.get_private_hash()) }}" class="btn btn-sm btn-danger">{{ _('Private access') }}</a>
     </p>
   </div>
   {% else %}
@@ -53,17 +53,17 @@
     <h4>{{ _('Subscription for a public club') }}</h4>
     <p>
       {{ _('Your club is public, any user or visitor can view your club in this list') }} : 
-      <a href="{% url club-list %}" class="btn btn-sm btn-info">{{ _('Public list') }}</a>
+      <a href="{{ url('club-list') }}" class="btn btn-sm btn-info">{{ _('Public list') }}</a>
     </p>
     <p>
       {{ _('You can send this to your athletes so they can join directly') }} :
-      <a href="{% url club-join club.slug %}" class="btn btn-sm btn-info">{{ _('Club link') }}</a>
+      <a href="{{ url('club-join', club.slug) }}" class="btn btn-sm btn-info">{{ _('Club link') }}</a>
     </p>
   </div>
 
   <p>
     {{ _('You can register athletes by sending us a CSV file') }} : 
-      <a href="{% url club-subscriptions-upload club.slug %}" class="btn btn-sm btn-primary">{{ _('Subscribe athletes') }}</a>
+      <a href="{{ url('club-subscriptions-upload', club.slug) }}" class="btn btn-sm btn-primary">{{ _('Subscribe athletes') }}</a>
   </p>
   {% endif %}
 
@@ -86,7 +86,7 @@
 				<td>{{link.name}}</td>
 				<td><a href="{{link.url}}" target="_blank">{{link.url}}</a></td>
 				<td>
-					<a href="{% url club-link-delete club.slug, link.id%}" class="modal-action modal-post btn btn-danger btn-xs">{{ _('Delete') }}</a>
+					<a href="{{ url('club-link-delete', club.slug, link.id) }}" class="modal-action modal-post btn btn-danger btn-xs">{{ _('Delete') }}</a>
 				</td>
 			</tr>
 			{% endfor %}
@@ -97,7 +97,7 @@
 		{{ _('There are no public link for your club.') }}
 	</p>
 	{% endif %}
-	<a href="{% url club-link-add club.slug %}" class="modal-action btn btn-info pull-right">{{ _('Add a link') }}</a>
+	<a href="{{ url('club-link-add', club.slug) }}" class="modal-action btn btn-info pull-right">{{ _('Add a link') }}</a>
 	<div class="clearfix">&nbsp;</div>
 
 	<h3>Edition</h3>

@@ -7,7 +7,7 @@
   <p class="alert alert-warning">
     {{ _('You do not have access to this page.') }}
   </p>
-  <a class="btn btn-danger pull-right" href="{% url report-current %}">{{ _('Back to homepage') }}</a>
+  <a class="btn btn-danger pull-right" href="{{ url('report-current') }}">{{ _('Back to homepage') }}</a>
 </div>
 
 {% endblock %}

@@ -7,23 +7,23 @@
 <br />
 
 {% if message.conversation.type == 'mail' %}
-{{ _('You just received a new private message from') }} <a href="http://{{site.domain}}{% url user-public-profile message.writer.username %}">{{ message.writer.first_name }} {{ message.writer.last_name }}</a>
+{{ _('You just received a new private message from') }} <a href="http://{{site.domain}}{{ url('user-public-profile', message.writer.username) }}">{{ message.writer.first_name }} {{ message.writer.last_name }}</a>
 {% elif message.conversation.type == 'comments_week' %}
   {% if week.user == user %}
     {{ _('You just received a new comment on your week %s by') % week }} 
   {% else %}
     {{ _('A new comment has been added on the week %s by') % week }}
   {% endif %}
-  <a href="http://{{site.domain}}{% url user-calendar-week week.user.username, week.year, week.week %}">{{ message.writer.first_name }} {{ message.writer.last_name }}</a>
+  <a href="http://{{site.domain}}{{ url('user-calendar-week', week.user.username, week.year, week.week) }}">{{ message.writer.first_name }} {{ message.writer.last_name }}</a>
 {% else %}
-  {% with message.conversation.get_session() as session %}
-  {% with session.day.week.user as session_user %}
-  {% with session.day.date as dt %}
+  {% with session = message.conversation.get_session() %}
+  {% with session_user = session.day.week.user %}
+  {% with dt = session.day.date %}
   {{ _('You just received a new comment') }}
     {% if user == session_user %}
     {{ _('on your session') }}
     {% else %}
-    {{ _('on the session of') }} <a href="http://{{site.domain}}{% url user-public-profile session_user.username %}">{{ session_user.first_name }} {{ session_user.last_name }}</a>
+    {{ _('on the session of') }} <a href="http://{{site.domain}}{{ url('user-public-profile', session_user.username) }}">{{ session_user.first_name }} {{ session_user.last_name }}</a>
     {% endif %}
     <strong>{{ session.name }}</strong>
     {{ _('on %s') % dt|date('l d E Y') }}

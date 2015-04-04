@@ -35,7 +35,7 @@ def environment(**options):
 
   # Setup translations
   translation = import_module('django.utils.translation')
-  env.install_gettext_translations(translation, newstyle=True)
+  env.install_gettext_translations(translation, newstyle=False)
 
   return env
 

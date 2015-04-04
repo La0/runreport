@@ -4,10 +4,10 @@
 
 {% if 'stats' in privacy %}
   {% block js %}
-  <script type="text/javascript" src="{% static 'flot/jquery.flot.js' %}" ></script>
-  <script type="text/javascript" src="{% static 'flot/jquery.flot.time.js' %}" ></script>
-  <script type="text/javascript" src="{% static 'flot/jquery.flot.stack.js' %}" ></script>
-  <script type="text/javascript" src="{% static 'js/stats.js' %}" ></script>
+  <script type="text/javascript" src="{{ static('flot/jquery.flot.js') }}" ></script>
+  <script type="text/javascript" src="{{ static('flot/jquery.flot.time.js') }}" ></script>
+  <script type="text/javascript" src="{{ static('flot/jquery.flot.stack.js') }}" ></script>
+  <script type="text/javascript" src="{{ static('js/stats.js') }}" ></script>
   {% endblock %}
 {% endif %}
 
@@ -43,14 +43,14 @@
         </button>
         {% else %}
         <span id="fr_{{ member.pk }}">
-          <button data-replaces="fr_{{ member.pk }}" class="btn btn-info modal-action modal-post" href="{% url friend-add member.username %}">
+          <button data-replaces="fr_{{ member.pk }}" class="btn btn-info modal-action modal-post" href="{{ url('friend-add', member.username) }}">
             <i class="icon-club"></i> {{ _('Add friend') }}
           </button>
         </span>
         {% endif %}
 
         {# Send a message #}
-        <a href="{% url message-user-add member.username %}" class="modal-action btn btn-info">
+        <a href="{{ url('message-user-add', member.username) }}" class="modal-action btn btn-info">
           <i class="icon-mail"></i> {{ _('Send a message') }}
         </a>
       </p>
@@ -58,20 +58,20 @@
 
       {% for m in member.memberships.exclude(role__in=('prospect', 'archive')) %}
       <h4>
-        <span class="label {{ role_css[m.role] }}">{{ _(m.role|title) }}</span> <a href="{% url club-members m.club.slug %}">{{ m.club.name }}</a>
+        <span class="label {{ role_css[m.role] }}">{{ _(m.role|title) }}</span> <a href="{{ url('club-members', m.club.slug) }}">{{ m.club.name }}</a>
       </h4>
-        {% with m.trainers.exclude(pk=member.pk) as trainers %}
+        {% with trainers = m.trainers.exclude(pk=member.pk) %}
           {% for trainer in trainers %}
           <span class="label {{ role_css['trainer'] }}">{{ _('Trained by') }}</span>
-            <a href="{% url user-public-profile  trainer.username %}">{{ trainer.first_name }} {{ trainer.last_name }}</a>
+            <a href="{{ url('user-public-profile', trainer.username) }}">{{ trainer.first_name }} {{ trainer.last_name }}</a>
           {% endfor %}
         {% endwith %}
-      {% with m.groups.all() as groups %}
+      {% with groups = m.groups.all() %}
       {% if groups %}
       <p>
         <span class="label label-warning">{{ _('Groups') }}</span>
         {% for group in groups %}
-          <a href="{% url 'club-group' m.club.slug, group.slug %}">{{ group.name }}</a>
+          <a href="{{ url('club-group', m.club.slug, group.slug) }}">{{ group.name }}</a>
           {% if not loop.last %}&bull;{% endif %}
         {% endfor %}
       </p>
@@ -91,12 +91,12 @@
           {% for session in last_sessions %}
           <p>
             <i class="icon-sport-{{session.sport.slug }}"></i>
-            <a href="{% url user-calendar-day member.username, session.day.date.year, session.day.date.month, session.day.date.day %}">{{ session.name|default('Séance')|truncate(40)}}</a>, {{ _('%s ago') % session.day.date|timesince }}
+            <a href="{{ url('user-calendar-day', member.username, session.day.date.year, session.day.date.month, session.day.date.day) }}">{{ session.name|default('Séance')|truncate(40)}}</a>, {{ _('%s ago') % session.day.date|timesince }}
           </p>
           {% endfor %}
           {% endif %}
 
-          <a class="btn btn-primary btn-sm" href="{% url user-calendar-month member.username, today.year, today.month %}">{{ _('View calendar') }}<i class="icon-calendar"></i></a>
+          <a class="btn btn-primary btn-sm" href="{{ url('user-calendar-month', member.username, today.year, today.month) }}">{{ _('View calendar') }}<i class="icon-calendar"></i></a>
         </div>
 
         {% if 'comments' in privacy %}
@@ -108,7 +108,7 @@
           {% for session in commented_sessions %}
           <p>
             <i class="icon-sport-{{session.sport.slug }}"></i>
-            <a href="{% url user-calendar-day member.username, session.day.date.year, session.day.date.month, session.day.date.day %}">{{ session.name|default('Séance')|truncate(40)}}</a>
+            <a href="{{ url('user-calendar-day', member.username, session.day.date.year, session.day.date.month, session.day.date.day) }}">{{ session.name|default('Séance')|truncate(40)}}</a>
             , {{ _('%d comments') % session.nb_comments }}
           </p>
           {% endfor %}

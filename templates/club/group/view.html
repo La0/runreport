@@ -5,12 +5,12 @@
 {% block content %}
 <div class="container">
   <p class="pull-right">
-    <a href="{% url 'club-groups' club.slug %}" class="btn btn-default">{{ _('Groups of %s') % club.name }}</a>
+    <a href="{{ url('club-groups', club.slug) }}" class="btn btn-default">{{ _('Groups of %s') % club.name }}</a>
   </p>
   <h1>{{ _('View group: %s') % group.name }}</h1>
   <p class="lead">
     {{ _('Created by') }}
-    <a href="{% url 'user-public-profile' group.creator.username %}">
+    <a href="{{ url('user-public-profile', group.creator.username) }}">
       {{ group.creator.first_name }} {{ group.creator.last_name }}
     </a>
   </p>
@@ -24,7 +24,7 @@
     {% for member in group.get_members() %}
     <div class="col-sm-3 col-xs-6">
       <img src="{{ member.user.avatar.url }}" class="img-rounded img-responsive avatar tiny"/>
-      <a href="{% url 'user-public-profile' member.user.username %}">
+      <a href="{{ url('user-public-profile', member.user.username) }}">
         {{ member.user.first_name }} {{ member.user.last_name }}
       </a>
     </div>

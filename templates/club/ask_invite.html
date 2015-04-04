@@ -25,7 +25,7 @@
         <p class="text-muted">
           {{ _('To ensure a better support, clubs creation are currently limited.') }}
         </p>
-        <form action="{% url club-landing %}" method="post" role="form" class="form-inline">
+        <form action="{{ url('club-landing') }}" method="post" role="form" class="form-inline">
           {% csrf_token %}
 
           <p class="col-sm-6 col-xs-12 {% if form.recipient.errors %}has-error{% endif %}">
@@ -45,7 +45,7 @@
         <p class="text-muted">
           {{ _('Test RunReport using the Trainer account!') }}
         </p>
-        <a class="btn btn-primary" href="{% url login %}">{{ _('Try the demo') }}</a>
+        <a class="btn btn-primary" href="{{ url('login') }}">{{ _('Try the demo') }}</a>
       </div>
 
     </div>

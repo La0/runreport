@@ -3,7 +3,7 @@
 
 {% block body %}
 <div class="roles">
-	<form method="POST" action="{% url club-member-role club.slug, member.username %}">
+	<form method="POST" action="{{ url('club-member-role', club.slug, member.username) }}">
 		<p class="text-info">
       {{ member.first_name }} {{ member.last_name }} {{ _('is a %s in club') % _(membership.role|title()) }} : {{ club.name }}
 		</p>

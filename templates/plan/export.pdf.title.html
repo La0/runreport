@@ -1,1 +1,1 @@
-Plan &laquo;{{ plan.name }}&raquo; crée par <a href="http://{{ site.domain }}{% url 'user-public-profile' plan.creator.username %}">{{ plan.creator.first_name }} {{ plan.creator.last_name }}</a>
+Plan &laquo;{{ plan.name }}&raquo; crée par <a href="http://{{ site.domain }}{{ url('user-public-profile' plan.creator.username) }}">{{ plan.creator.first_name }} {{ plan.creator.last_name }}</a>

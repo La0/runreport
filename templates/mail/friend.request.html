@@ -14,16 +14,16 @@
 <br />
 
 {% if accepted %}
-  <a href="http://{{ site.domain }}{% url user-public-profile recipient.username %}">{{ recipient.first_name }} {{ recipient.last_name }}</a>
+  <a href="http://{{ site.domain }}{{ url('user-public-profile', recipient.username) }}">{{ recipient.first_name }} {{ recipient.last_name }}</a>
     {{ _('has accepted your friend request on RunReport !') }}
 {% else %}
-  <a href="http://{{ site.domain }}{% url user-public-profile sender.username %}">{{ sender.first_name }} {{ sender.last_name }}</a>
+  <a href="http://{{ site.domain }}{{ url('user-public-profile', sender.username) }}">{{ sender.first_name }} {{ sender.last_name }}</a>
     {{ _('would like to add you as a friend on RunReport') }}
   <br />
   {{ _('If you accept, you will be able to see his whole calendar. He will be able to do the same.') }}
   <br />
   <br />
-  <a href="http://{{ site.domain }}{% url friends %}">{{ _('You can accept or refuse on RunReport') }}</a>
+  <a href="http://{{ site.domain }}{{ url('friends') }}">{{ _('You can accept or refuse on RunReport') }}</a>
 {% endif %}
 
 {% endblock %}

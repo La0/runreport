@@ -13,7 +13,7 @@
 
 {{ _('You can validate this subscription in the Newcomers section, by clicking on the role button "Newcomer", and giving him the new role of "Athlete"') }}
 
-<a href="{{ site.domain }}{% url 'club-members-name' club.slug, 'prospects', 'name' %}">{{ _('Newcomers list') }}</a>
+<a href="{{ site.domain }}{{ url('club-members-name', club.slug, 'prospects', 'name') }}">{{ _('Newcomers list') }}</a>
 
 <br />
 <br />

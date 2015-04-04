@@ -24,7 +24,7 @@
     {{ macros.input(form.zipcode) }}
 
     <div class="col-xs-12 col-sm-10 col-sm-offset-2">
-      <a href="{% url 'places' club.slug %}" class="btn btn-default">
+      <a href="{{ url('places', club.slug) }}" class="btn btn-default">
         {{ _('Cancel') }}
       </a>
       {% if place %}

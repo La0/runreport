@@ -19,15 +19,15 @@
     {% for member in members %}
     <div class="row member">
       <div class="avatar col-sm-5 col-xs-9">
-        <a href="{% url user-public-profile member.username %}">
+        <a href="{{ url('user-public-profile', member.username) }}">
           <img class="small" src="{{ member.avatar.url }}" alt="{{ member.username }} avatar"/>
         </a>
-        <a href="{% url user-public-profile member.username %}">
+        <a href="{{ url('user-public-profile', member.username) }}">
           {{ member.first_name|lower|title }} {{ member.last_name|lower|title }}
         </a>
       </div>
       <div class="col-sm-2 col-xs-3">
-        {% with member.membership.role as role %}
+        {% with role = member.membership.role %}
         {% if role == 'trainer' %}
         <span class="label label-info">{{ _('Trainer') }}</span>
         {% elif role == 'staff' %}
@@ -52,13 +52,13 @@
           </button>
           {% elif user.is_authenticated() %}
           <span id="fr_{{ member.pk }}">
-            <button data-replaces="fr_{{ member.pk }}" class="btn btn-info modal-action modal-post" href="{% url friend-add member.username %}">
+            <button data-replaces="fr_{{ member.pk }}" class="btn btn-info modal-action modal-post" href="{{ url('friend-add', member.username) }}">
               <i class="icon-club"></i> {{ _('Add friend') }}
             </button>
           </span>
           {% endif %}
         {% endif %}
-        <a class="btn btn-primary" href="{% url user-public-profile member.username %}">
+        <a class="btn btn-primary" href="{{ url('user-public-profile', member.username) }}">
           {{ _('Check profile') }} <i class="icon-right-open"></i>
         </a>
       </div>

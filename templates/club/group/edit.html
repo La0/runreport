@@ -19,7 +19,7 @@
     {{ macros.input(form.description) }}
     <div class="form-group">
       <div class="col-sm-10 col-sm-offset-2">
-        <a href="{% url 'club-groups' club.slug %}" class="btn btn-default">
+        <a href="{{ url('club-groups', club.slug) }}" class="btn btn-default">
           {{ _('Cancel') }}
         </a>
         <button type="submit" class="btn btn-primary">
@@ -34,7 +34,7 @@
   </form>
 
   {% if group %}
-  <div class="box" data-src="{% url 'club-group-members' club.slug, group.slug %}"></div>
+  <div class="box" data-src="{{ url('club-group-members', club.slug, group.slug) }}"></div>
   {% endif %}
 
 </div>

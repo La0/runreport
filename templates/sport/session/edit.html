@@ -1,10 +1,10 @@
 {% import '_macros.html' as macros %}
 
 {% if session.pk %}
-<form id="session-{{day_date}}-{{session.pk}}" method="post" action="{% url sport-session-edit day_date.year, day_date.month, day_date.day, session.pk %}" class="form-horizontal report box">
+<form id="session-{{day_date}}-{{session.pk}}" method="post" action="{{ url('sport-session-edit', day_date.year, day_date.month, day_date.day, session.pk) }}" class="form-horizontal report box">
   <input type="hidden" name="session" value="{{session.pk}}" />
 {% else %}
-<form id="session-{{day_date}}-add" method="post" action="{% url sport-session-add day_date.year, day_date.month, day_date.day %}" class="form-horizontal report box">
+<form id="session-{{day_date}}-add" method="post" action="{{ url('sport-session-add', day_date.year, day_date.month, day_date.day) }}" class="form-horizontal report box">
 {% endif %}
   {% csrf_token %}
   {% if modal %}
@@ -17,7 +17,7 @@
   </div>
   {% endif %}
 
-  {% with form.non_field_errors() as err %}
+  {% with err = form.non_field_errors() %}
   {% if err %}
   <div class="alert alert-danger">
     {{ err|safe }}
@@ -52,7 +52,7 @@
         <div class="col-sm-4 col-xs-12 actions">
           <button type="submit" class="pull-right btn btn-sm btn-primary" >{{ _('Save') }}<span class="hidden-xs"> {% if not modal %}{{ _('this session') }} {% endif %}</span><i class="icon-right-open"></i></button>
           {% if session.pk %}
-          <a href="{% url sport-session-delete day_date.year, day_date.month, day_date.day, form.instance.pk %}" class="modal-action pull-right btn btn-sm btn-danger"><i class="icon-trash"></i><span class="hidden-xs">{% if not modal %}{{ _('Delete') }}{% endif %}</span></a>
+          <a href="{{ url('sport-session-delete', day_date.year, day_date.month, day_date.day, form.instance.pk) }}" class="modal-action pull-right btn btn-sm btn-danger"><i class="icon-trash"></i><span class="hidden-xs">{% if not modal %}{{ _('Delete') }}{% endif %}</span></a>
           {% endif %}
         </div>
       </div>
@@ -64,7 +64,7 @@
     <div class="col-sm-2 hidden-xs labels">
       <label class="control-label">{{_('Map') }} {{ session.track.provider|title() }}</label>
 
-      {% with session.day.sessions.all() as sessions %}
+      {% with sessions = session.day.sessions.all() %}
       {% if sessions.count() > 1 %}
       <div class="dropdown">
         <button class="btn btn-primary btn-light btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
@@ -73,7 +73,7 @@
         </button>
         <ul class="dropdown-menu" role="menu">
           {% for s in sessions %}
-          <li role="presentation" class="{% if session == s or s.track %}disabled{% endif %} modal-action modal-post" href="{% url 'track-session' session.track.pk %}" data-post-session="{{ s.pk }}">
+          <li role="presentation" class="{% if session == s or s.track %}disabled{% endif %} modal-action modal-post" href="{{ url('track-session', session.track.pk) }}" data-post-session="{{ s.pk }}">
             <a role="menuitem" tabindex="-1" href="#">
               <i class="icon-sport-{{ s.sport.slug }}"></i> {{ s.name|truncatechars(20) }}
             </a>
@@ -86,7 +86,7 @@
     </div>
 
     <div class="col-sm-10 col-xs-12">
-    {% with ('tracks') as privacy %}
+    {% with privacy = ('tracks') %}
       {% include  'tracks/_session.html' %}
     {% endwith %}
     </div>
@@ -95,7 +95,7 @@
 
   {% if session.pk %}
   <div class="row">
-    {% with ('comments', 'comments_public', 'comments_private') as privacy %}
+    {% with privacy = ('comments', 'comments_public', 'comments_private') %}
     <label class="control-label col-sm-2 hidden-xs">{{ _('Comments') }}</label>
     <div class="col-sm-10 col-xs-12">
       {% include 'sport/session/_comments.html' %}

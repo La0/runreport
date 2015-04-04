@@ -22,16 +22,16 @@
     {% endif %}
 
 		<div class="col-sm-6 col-xs-12 text-right buttons">
-			<a class="btn btn-primary btn-light" href="{{pageyear|url(*pageargs + [months.1.year ])}}"><i class="icon-list-alt"></i> {{ _('Year\'s calendar') }}</a>
+			<a class="btn btn-primary btn-light" href="{{url(pageyear, *pageargs + [months.1.year ])}}"><i class="icon-list-alt"></i> {{ _('Year\'s calendar') }}</a>
 			{% if member %}
-			<a class="btn btn-success btn-light" href="{% url athlete-stats-year member.username, months.1.year %}"><i class="icon-plus"></i> {{ _('Stats') }}</a>
+			<a class="btn btn-success btn-light" href="{{ url('athlete-stats-year', member.username, months.1.year) }}"><i class="icon-plus"></i> {{ _('Stats') }}</a>
 
-      <a href="{% url user-public-profile member.username %}" class="btn btn-primary btn-light">
+      <a href="{{ url('user-public-profile', member.username) }}" class="btn btn-primary btn-light">
         <i class="icon-user"></i> {{ _('View his profile') }}
       </a>
       {% else %}
-			<a class="btn btn-success btn-light" href="{% url stats-year months.1.year %}"><i class="icon-plus"></i> {{ _('Stats') }}</a>
-			<a class="btn btn-info btn-light" href="{% url export-month months.1.year, months.1.month %}"><i class="icon-down-open"></i> {{ _('CSV Export') }}</a>
+			<a class="btn btn-success btn-light" href="{{ url('stats-year', months.1.year) }}"><i class="icon-plus"></i> {{ _('Stats') }}</a>
+			<a class="btn btn-info btn-light" href="{{ url('export-month', months.1.year, months.1.month) }}"><i class="icon-down-open"></i> {{ _('CSV Export') }}</a>
 			{% endif %}
     </div>
 
@@ -65,8 +65,8 @@
 		{% for week in weeks %}
 		<tr>
 			{% for day in week %}
-			{% with sessions[day] as session %}
-			<td class="day link {% if day == today %}today{% endif %}" href="{{pageday|url(*pageargs + [day.year, day.month, day.day])}}">
+			{% with session = sessions[day] %}
+			<td class="day link {% if day == today %}today{% endif %}" href="{{url(pageday, *pageargs + [day.year, day.month, day.day])}}">
 
 				<p class="date">
           {% if day == today %}
@@ -97,7 +97,7 @@
 
           {% endfor %}
 				{% endif %}
-        {% with friends_sessions[day] as nb %}
+        {% with nb = friends_sessions[day] %}
           {% if nb %}
           <p class="session friends">
             <i class="icon-club"> </i> {{ nb }} {{ _('friends sessions') }}
@@ -113,7 +113,7 @@
 
 	<div class="visible-xs row-striped">
 		{% for day_date in date_list %}
-      {% with object_list.get(day_date, None) as day %}
+      {% with day = object_list.get(day_date, None) %}
       {% include 'sport/calendar/_day.xs.html' %}
       {% endwith %}
 		{% endfor %}
@@ -123,12 +123,12 @@
 	<ul class="pager">
 		{% if months.0 %}
 		<li class="previous">
-			<a href="{{pagemonth|url(*pageargs + [months.0.year, months.0.month ])}}">&laquo; {{months.0|date('E Y')}}</a>
+			<a href="{{url(pagemonth, *pageargs + [months.0.year, months.0.month ])}}">&laquo; {{months.0|date('E Y')}}</a>
 		</li>
 		{% endif %}
 		{% if months.2 %}
 		<li class="next">
-			<a href="{{pagemonth|url(*pageargs + [months.2.year, months.2.month ])}}">{{months.2|date('E Y')}} &raquo;</a>
+			<a href="{{url(pagemonth, *pageargs + [months.2.year, months.2.month ])}}">{{months.2|date('E Y')}} &raquo;</a>
 		</li>
 		{% endif %}
 	</ul>

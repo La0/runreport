@@ -5,7 +5,7 @@
     {{ _(s.type|title()) }}
   </div>
   <div class="col-xs-4">
-    <a href="{% url 'report-day' s.day.date.year, s.day.date.month, s.day.date.day  %}">
+    <a href="{{ url('report-day', s.day.date.year, s.day.date.month, s.day.date.day ) }}">
       {{ s.name|default('-') }}
     </a>
   </div>
@@ -27,12 +27,12 @@
 </div>
 {%- endmacro %}
 
-<form class="box" action="{% url 'post-sessions' post.slug %}" method="post" id="attached_sessions">
+<form class="box" action="{{ url('post-sessions', post.slug) }}" method="post" id="attached_sessions">
   {% csrf_token %}
   <h2>{{ _('Attached sessions') }}</h2>
 
   {# List post sessions #}
-  {% with post.sessions.all() as sessions %}
+  {% with sessions = post.sessions.all() %}
   {% if sessions %}
     {% for s in sessions %}
       {{ session_inline(s) }}

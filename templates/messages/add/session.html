@@ -22,9 +22,9 @@
   <i class="icon-calendar"></i>
   {{ session.day.date|date('l d E Y') }}
 
-  {% with session.day.week.user as user %}
+  {% with user = session.day.week.user %}
   <i class="icon-user"></i>
-  <a href="{% url user-public-profile user.username %}">{{ user.first_name }} {{ user.last_name }}</a>
+  <a href="{{ url('user-public-profile', user.username) }}">{{ user.first_name }} {{ user.last_name }}</a>
   {% endwith %}
 
   {% csrf_token %}
