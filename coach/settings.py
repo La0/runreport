@@ -297,7 +297,7 @@ CELERYBEAT_SCHEDULE = {
   },
   'tracks-import-10-min': {
     'task': 'tracks.tasks.tracks_import',
-    'schedule': timedelta(minutes=10),
+    'schedule': timedelta(minutes=30),
   },
   'send-race-mail-every-day-at-9': {
     'task': 'sport.tasks.race_mail',
