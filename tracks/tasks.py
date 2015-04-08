@@ -1,7 +1,6 @@
 from __future__ import absolute_import
 
 from celery import shared_task, task
-from celery.task.sets import subtask
 
 @shared_task
 def tracks_import(*args, **kwargs):
@@ -17,7 +16,7 @@ def tracks_import(*args, **kwargs):
         continue
 
       # Start a subtask per import
-      subtask('tracks.tasks.provider_import').delay(provider)
+      provider_import.delay(provider)
 
 @task
 def provider_import(provider):
