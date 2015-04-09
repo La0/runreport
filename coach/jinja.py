@@ -10,10 +10,6 @@ def environment(**options):
   '''
   Setup Jinja2 environment:
   '''
-  # TODO: In prod use cached templates
-  if not settings.DEBUG:
-     options['loader'] = 'django.template.loaders.cached.Loader'
-
   # Init environment
   env = Environment(**options)
 
