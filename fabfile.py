@@ -1,4 +1,5 @@
 from fabric.api import *
+from fabric.operations import prompt
 from coach.settings import FABRIC_HOSTS, DATABASES # Mandatory
 try:
   from coach.settings import FABRIC_ENV, FABRIC_BASE, FABRIC_SUPERVISORS # Optional
@@ -6,8 +7,6 @@ except Exception:
   FABRIC_SUPERVISORS = []
   pass
 import os
-import shutil
-from time import time
 env.hosts = FABRIC_HOSTS
 from datetime import date
 
@@ -37,18 +36,25 @@ def syncdb(update=False):
 
   # Import dump from server
   local_dump = 'prod.json'
-  if update:
-    print 'Try to update Database dump'
-    prod_dump = '/tmp/runreport.json'
-    apps = ('sport', 'users', 'club', 'page', 'messages', 'friends', 'plan')
-    with cd(FABRIC_BASE):
-      with virtualenv(FABRIC_ENV):
-        run('./manage.py dumpdata --indent=4 -e sessions %s > %s' % (' '.join(apps), prod_dump))
-        get(prod_dump, local_dump)
-  else:
-    print 'Use today dump on server'
-    prod_dump = '~/db/%s.json' % date.today().strftime('%Y%m%d')
-    get(prod_dump, local_dump)
+  if os.path.exists(local_dump):
+    # Adk for reuse of local_dump
+    keep_dump = prompt('Found a local dump (%s). Use it [y/n] ?' % local_dump)
+    if keep_dump.lower() != 'y':
+      os.unlink(local_dump)
+
+  if not os.path.exists(local_dump):
+    if update:
+      print 'Try to update Database dump'
+      prod_dump = '/tmp/runreport.json'
+      apps = ('sport', 'users', 'club', 'page', 'messages', 'friends', 'plan')
+      with cd(FABRIC_BASE):
+        with virtualenv(FABRIC_ENV):
+          run('./manage.py dumpdata --indent=4 -e sessions %s > %s' % (' '.join(apps), prod_dump))
+          get(prod_dump, local_dump)
+    else:
+      print 'Use today dump on server'
+      prod_dump = '~/db/%s.json' % date.today().strftime('%Y%m%d')
+      get(prod_dump, local_dump)
 
   # Re create db & load dump
   createdb(False) # no fixtures here
