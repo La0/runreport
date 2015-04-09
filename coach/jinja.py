@@ -46,13 +46,14 @@ class ContextTemplate(Template):
   Every data from request is processed here
   '''
   def render(self, context, *args, **kwargs):
-    request = context['request']
+    if context and 'request' in context:
+      request = context['request']
 
-    # Add user in context
-    context['user'] = request.user
+      # Add user in context
+      context['user'] = request.user
 
-    # Add menu
-    context.update(add_pages(request))
+      # Add menu
+      context.update(add_pages(request))
 
     return super(ContextTemplate, self).render(context, *args, **kwargs)
 

@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib.gis import admin
 from django.views.generic.base import RedirectView, TemplateView
 from club.views import ClubInviteCheck
+from messages.views import ContactView
 
 admin.autodiscover()
 
@@ -28,7 +29,7 @@ urlpatterns = patterns('',
   url(r'^team/?', TemplateView.as_view(template_name='landing/team.html'), name="landing-team"),
 
   # Contact Form
-  url(r'^contact/', include('contact_form.urls')),
+  url(r'^contact/(?P<sent>sent)?', ContactView.as_view(), name='contact'),
 
   # Languages switch
   url(r'^lang/', include('django.conf.urls.i18n')),

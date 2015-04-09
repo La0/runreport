@@ -1,6 +1,5 @@
 # coding=utf-8
 from django.core.urlresolvers import reverse
-from club.models import ClubMembership
 from users.notification import UserNotifications
 from django.utils.translation import ugettext_lazy as _
 
@@ -38,7 +37,7 @@ def add_pages(request):
     submenu['menu'].append(_p(('page-list', 'help'), _('Help'), lazy=True))
     submenu['menu'].append(_p('vma-glossary', _('Glossary')))
     submenu['menu'].append(_p(('page-list', 'news'), _('News'), lazy=True))
-    submenu['menu'].append(_p(('contact_form',), _('Contact'), lazy=True))
+    submenu['menu'].append(_p(('contact',), _('Contact'), lazy=True))
     return submenu
 
   menu = []

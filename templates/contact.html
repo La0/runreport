@@ -4,6 +4,15 @@
 <div class="container">
 
 <h2>{{ _('Contact form') }}</h2>
+
+{% if sent %}
+<p class="alert alert-success">
+  {{ _('Your message has been sent to the RunReport team, you will receive a reply as soon as possible.') }}
+	<br />
+  {{ _('Thank you for writing us !') }}
+</p>
+{% else %}
+
 <div class="alert alert-info">
 	<h4>{{ _('Need help ?') }}</h4>
   {{ _('Please, use this form if you have any problem while using RunReport, you will have a personal response as soon as possible') }}
@@ -13,13 +22,14 @@
 	{% csrf_token %}
 	{{ macros.input(form.name) }}
 	{{ macros.input(form.email) }}
-	{{ macros.input(form.body) }}
+	{{ macros.input(form.message) }}
 	<div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
       <input type="submit" value="{{ _('Send message') }}" class="btn btn-primary" />
     </div>
 	</div>
 </form>
+{% endif %}
 
 </div>
 {% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'mail/base.html' %}
+
+{% set title = _('New contact message') %}
+
+{% block mail %}
+
+<p>
+{{ _('Hello admin !') }}
+</p>
+
+<p>
+  {{ _('You received a new contact message from %s') % name }}
+</p>
+
+<p>
+  {{ message|linebreaksbr }}
+</p>
+
+<p>
+  {{ _('You can reply to : %s') % email }}
+</p>
+
+{% endblock %}
