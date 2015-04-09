@@ -333,6 +333,9 @@ CELERY_ROUTES = {
   'tracks.tasks.tracks_import' : {
     'queue' : 'tracks',
   },
+  'tracks.tasks.provider_import' : {
+    'queue' : 'tracks',
+  },
 }
 
 # Js/Css Compressor
