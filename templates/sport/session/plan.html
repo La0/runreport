@@ -6,7 +6,7 @@ $(function(){
     todayHighlight : true,
     weekStart : 1,
   }).on('changeDate', function(evt){
-    if(evt.viewMode != 'days')
+    if(!evt.date)
       return;
     var data = {
       psa : {{ session.plan_session.pk }},

@@ -71,9 +71,19 @@ class PlanSessionApplied(models.Model):
     }
     session,_ = SportSession.objects.exclude(plan_session__isnull=False).get_or_create(sport=self.plan_session.sport, day=day, type=self.plan_session.type, defaults=defaults)
 
+    # Save empty session for later deletion
+    to_delete = None
+    if (not self.sport_session.comment or self.sport_session.comment == '') \
+      and not self.sport_session.distance and not self.sport_session.time:
+      to_delete = self.sport_session
+
     # Update session attached
     self.sport_session = session
     self.save()
+
+    # Delete after replacement
+    if to_delete:
+      to_delete.delete()
 
     return session
 
