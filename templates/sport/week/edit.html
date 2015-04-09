@@ -32,7 +32,7 @@
   {% endif %}
 
   {% for day_date, day in report.get_days_per_date().items() %}
-  <div class="row day actions-hover link" href="{{ (pageday, pageargs + [day_date.year, day_date.month, day_date.day]) }}">
+  <div class="row day actions-hover link" href="{{ url(pageday, *pageargs + [day_date.year, day_date.month, day_date.day]) }}">
     <div class="col-xs-12">
       <h4>
         <a href="{{ url(pageday,  *pageargs + [day_date.year, day_date.month, day_date.day]) }}">
