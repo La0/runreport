@@ -116,28 +116,48 @@ STATICFILES_FINDERS = (
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'nq!g^hyy-_l!*apn3302^5(jwt$t-&amp;!fo4my*^u3j!zj7=if%r'
 
-# Load template trough jinja
-TEMPLATE_LOADERS = (
-  'coach.jinja.FileSystemLoader',
-  'coach.jinja.AppLoader',
-)
 
-JINJA2_TEMPLATE_LOADERS = (
-  'django.template.loaders.filesystem.Loader',
-  'django.template.loaders.app_directories.Loader',
-)
+# Setup Templates engine with Jinja2
+TEMPLATES = [
+    # Django templates for apps
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],
+        'APP_DIRS': True,
+        'OPTIONS' : {
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+            ],
+        }
+    },
 
-JINJA2_EXTENSIONS = [
-  'compressor.contrib.jinja2ext.CompressorExtension',
+    # Jinja for our templates
+    {
+        'BACKEND': 'django.template.backends.jinja2.Jinja2',
+        'DIRS': [
+            os.path.join(HOME, 'templates'),
+        ],
+        'APP_DIRS': False,
+        'OPTIONS': {
+            'environment' : 'coach.jinja.environment',
+            'extensions' : [
+                'jinja2.ext.i18n',
+                'jinja2.ext.with_',
+                'jinja2.ext.autoescape',
+                'django_jinja.builtins.extensions.CsrfExtension',
+                'django_jinja.builtins.extensions.UrlsExtension',
+                'django_jinja.builtins.extensions.StaticFilesExtension',
+                'django_jinja.builtins.extensions.DjangoFiltersExtension',
+                'compressor.contrib.jinja2ext.CompressorExtension',
+            ],
+        },
+    },
 ]
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-  'coach.menu.add_pages',
-  'coach.settings.load_constants',
-  'django.contrib.auth.context_processors.auth',
-  'django.core.context_processors.request',
-  'django.core.context_processors.i18n',
-)
 
 MIDDLEWARE_CLASSES = (
     'corsheaders.middleware.CorsMiddleware',
@@ -157,9 +177,6 @@ ROOT_URLCONF = 'coach.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'coach.wsgi.application'
 
-TEMPLATE_DIRS = (
-  HOME + '/templates',
-)
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -382,19 +399,5 @@ else:
   # Add raven
   INSTALLED_APPS = INSTALLED_APPS + ('raven.contrib.django.raven_compat',)
 
-  # Use cached templates
-  TEMPLATE_LOADERS = (
-    ('django.template.loaders.cached.Loader', TEMPLATE_LOADERS,),
-  )
-  JINJA2_TEMPLATE_LOADERS = (
-    ('django.template.loaders.cached.Loader', JINJA2_TEMPLATE_LOADERS, ),
-  )
-
   # Disable admin interface
   REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = ('rest_framework.renderers.JSONRenderer', )
-
-# Load some settings constants in the templates
-def load_constants(request):
-  from django.conf import settings
-  keys = ['DEBUG', 'PIWIK_HOST', 'PIWIK_ID', 'FACEBOOK_ID', ]
-  return dict([(k, getattr(settings, k, None)) for k in keys])

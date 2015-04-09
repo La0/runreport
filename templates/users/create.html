@@ -14,7 +14,7 @@
   {% endif %}
 	<form method="post" class="form-horizontal" role="form">
 		{% csrf_token %}
-		{% with form.non_field_errors() as err %}
+		{% with err = form.non_field_errors() %}
 		{{ err|safe }}
 		{% endwith %}
 		{{ macros.input(form.firstname) }}

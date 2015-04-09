@@ -11,7 +11,7 @@
     <div class="col-xs-6">
       <p>
         {{ _('Created by') }}
-        <a href="{% url 'user-public-profile' plan.creator.username %}">
+        <a href="{{ url('user-public-profile', plan.creator.username) }}">
           {{ plan.creator.first_name }} {{ plan.creator.last_name }}
         </a>
       </p>
@@ -20,11 +20,11 @@
       </p>
     </div>
     <div class="col-xs-5 text-right">
-      <a href="{% url 'plan-export-pdf' plan.pk %}" class="btn btn-info btn-light">
+      <a href="{{ url('plan-export-pdf', plan.pk) }}" class="btn btn-info btn-light">
         <i class="icon-down-open"></i>
         {{ _('Download PDF') }}
       </a>
-      <a href="{% url 'plan-export-ics' plan.pk %}" class="btn btn-info btn-light" title="{{ _('calendar applications format') }}">
+      <a href="{{ url('plan-export-ics', plan.pk) }}" class="btn btn-info btn-light" title="{{ _('calendar applications format') }}">
         <i class="icon-down-open"></i>
         {{ _('Download ICS') }}
         <i class="icon-calendar"></i>
@@ -45,12 +45,12 @@
 		</tr>
 
     {% for week in weeks %}
-    {% with loop.index0 as week_idx %}
+    {% with week_idx = loop.index0 %}
     <tr>
       {% for day in week %}
-      {% with loop.index0 as day_idx %}
-      {% with plan.calc_date(week_idx, day_idx) as day_date %}
-      <td class="day link" href="{% url 'report-day' day_date.year, day_date.month, day_date.day %}">
+      {% with day_idx = loop.index0 %}
+      {% with day_date = plan.calc_date(week_idx, day_idx) %}
+      <td class="day link" href="{{ url('report-day', day_date.year, day_date.month, day_date.day) }}">
 				<p class="date">
 					{% if day_idx == 0 or day_date.day == 1 %}
             {{day_date|date('d E Y')}}
@@ -80,7 +80,7 @@
 
   <div class="text-right">
     {% if application %}
-    <a href="{% url plan-application-delete plan.pk %}" class="modal-action btn btn-danger">
+    <a href="{{ url('plan-application-delete', plan.pk) }}" class="modal-action btn btn-danger">
       <i class="icon-trash"></i>
       {{ _('Remove from my calendar') }}
     </a>

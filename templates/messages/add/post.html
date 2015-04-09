@@ -9,7 +9,7 @@
 
   <i class="icon-edit"></i>
   <strong>{{ post.title }}</strong> {{ _('written by') }} 
-  <a href="{% url 'user-public-profile' post.writer.username %}">
+  <a href="{{ url('user-public-profile', post.writer.username) }}">
     {{ post.writer.first_name }} {{ post.writer.last_name }}
   </a>
   {% csrf_token %}

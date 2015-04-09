@@ -3,27 +3,27 @@
 {% set page_title = _('Stats') %}
 
 {% block js %}
-<script type="text/javascript" src="{% static 'flot/jquery.flot.js' %}" ></script>
-<script type="text/javascript" src="{% static 'flot/jquery.flot.time.js' %}" ></script>
-<script type="text/javascript" src="{% static 'flot/jquery.flot.stack.js' %}" ></script>
-<script type="text/javascript" src="{% static 'js/stats.js' %}" ></script>
+<script type="text/javascript" src="{{ static('flot/jquery.flot.js') }}" ></script>
+<script type="text/javascript" src="{{ static('flot/jquery.flot.time.js') }}" ></script>
+<script type="text/javascript" src="{{ static('flot/jquery.flot.stack.js') }}" ></script>
+<script type="text/javascript" src="{{ static('js/stats.js') }}" ></script>
 <script type="text/javascript">
 $(function(){
 
   // Setup data sets
-  var distances = [{% for m in months %}[{{m.timestamp()*1000}}, {{m.distance|default(0)}}],{% endfor %}];
-  var hours     = [{% for m in months %}[{{m.timestamp()*1000}}, {{m.hours|default(0)}}],{% endfor %}];
+  var distances = [{% for m in months %}[{{m.timestamp()*1000}}, {{m.distance or '0'}}],{% endfor %}];
+  var hours     = [{% for m in months %}[{{m.timestamp()*1000}}, {{m.hours or '0'}}],{% endfor %}];
   var sports    = [
     {% for sport in sports %}
     {
       label : '{{sport.name}}',
-      data : [{% for m in months %}[{{m.timestamp()*1000}}, {% if m.sports[sport.pk] %}{{m.sports[sport.pk]['nb']|default(0)}}{% else %}0{% endif %}],{% endfor %}],
+      data : [{% for m in months %}[{{m.timestamp()*1000}}, {% if m.sports[sport.pk] %}{{m.sports[sport.pk]['nb'] or 0}}{% else %}0{% endif %}],{% endfor %}],
     },
     {% endfor %}  
   ];
 
   // Build months urls
-  var urls = [{% for m in months %}'{{ url_month|url(*url_args + [m.year, m.month])}}',{% endfor %}];
+  var urls = [{% for m in months %}'{{ url(url_month, *url_args + [m.year, m.month])}}',{% endfor %}];
 
   // Plot charts
   plot_hours_distances(hours, distances, urls);
@@ -46,21 +46,21 @@ $(function(){
     {% if date_range == 'last' %}
     <li class="active">{{ _('Last 12 months') }}</li>
     {% else %}
-    <li><a href="{{ url_base|url(*url_args) }}">{{ _('Last 12 months') }}</a> <span class="divider"></span></li>
+    <li><a href="{{ url(url_base, *url_args) }}">{{ _('Last 12 months') }}</a> <span class="divider"></span></li>
     {% endif %}
 
     {% for year in years %}
       {% if date_range == 'year' and year == start.year %}
       <li class="active">{{ _('Year %s') % year}}</li>
       {% else %}
-      <li><a href="{{ (url_base + '-year')|url(*url_args + [year]) }}">{{ _('Year %s') % year}}</a> <span class="divider"></span></li>
+      <li><a href="{{ url(url_base + '-year', *url_args + [year]) }}">{{ _('Year %s') % year}}</a> <span class="divider"></span></li>
       {% endif %}
     {% endfor %}
 
     {% if date_range == 'all' %}
     <li class="active">{{ _('Every session') }}</li>
     {% else %}
-    <li><a href="{{ (url_base + '-all')|url(*url_args) }}">{{ _('Every session') }}</a> <span class="divider"></span></li>
+    <li><a href="{{ url(url_base + '-all', *url_args) }}">{{ _('Every session') }}</a> <span class="divider"></span></li>
     {% endif %}
   </ul>
 

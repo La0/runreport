@@ -8,7 +8,7 @@
 <div class="add-comment">
 
   <i class="icon-user"></i>
-  <a href="{% url user-public-profile member.username %}">{{ member.first_name }} {{ member.last_name }}</a>
+  <a href="{{ url('user-public-profile', member.username) }}">{{ member.first_name }} {{ member.last_name }}</a>
 
   {% csrf_token %}
 

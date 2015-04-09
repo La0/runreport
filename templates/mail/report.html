@@ -6,7 +6,7 @@
 <table cellpadding="0" cellspacing="0" border="0" align="center">
   <tr>
     <td>
-    {{ _('View week') }} <a href="http://{{ site.domain }}{% url user-calendar-week report.user.username,  report.year, report.week %}">{{ report.user.first_name }} {{ report.user.last_name }}</a>
+    {{ _('View week') }} <a href="http://{{ site.domain }}{{ url('user-calendar-week', report.user.username,  report.year, report.week) }}">{{ report.user.first_name }} {{ report.user.last_name }}</a>
     </td>
   </tr>
   <tr>
@@ -34,7 +34,7 @@
             <span class="label">{{ _('Distance') }}</span> {{s.distance|floatformat(2)}} km
             {% endif %}
 
-            {% with s.plan_session as psa %}
+            {% with psa = s.plan_session %}
             {% if psa %}
             <p>
               {{ _('Plan') }}
@@ -47,7 +47,7 @@
               <strong>{{ _('Failed') }}</strong>
               {% endif %}
 
-              <a href="https://{{ site.domain }}{% url 'plan' psa.plan_session.plan.pk %}">{{ psa.plan_session.plan.name }}</a>
+              <a href="https://{{ site.domain }}{{ url('plan', psa.plan_session.plan.pk) }}">{{ psa.plan_session.plan.name }}</a>
             </p>
             {% endif %}
             {% endwith %}

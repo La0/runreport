@@ -1,9 +1,9 @@
 {% if session.track and 'tracks' in privacy %}
-{% with session.track as track %}
+{% with track = session.track %}
 
 {% if track.simple %}
 <div class="col-xs-12">
-  <div id="track_{{ track.id }}" class="track_map" data-src="{% url track-coords track.id %}">
+  <div id="track_{{ track.id }}" class="track_map" data-src="{{ url('track-coords', track.id) }}">
     Loading map...
     <a target="_blank" href="{{ track.get_url() }}" class="btn btn-info btn-sm">
       {{ _('View on') }} {{ track.provider|title() }} <i class="icon-right-open"></i>

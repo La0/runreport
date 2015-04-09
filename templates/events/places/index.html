@@ -5,7 +5,7 @@
 {% block content %}
 <div class="container">
   <div class="pull-right">
-    <a href="{% url 'place-create' club.slug %}" class="btn btn-success">
+    <a href="{{ url('place-create', club.slug) }}" class="btn btn-success">
       <i class="icon-plus"></i>
       {{ _('Add a place') }}
     </a>
@@ -15,7 +15,7 @@
   {% for place in places %}
   <div class="row">
     <div class="col-xs-4">
-      <a href="{% url 'place-edit' club.slug, place.pk %}">
+      <a href="{{ url('place-edit', club.slug, place.pk) }}">
         {{ place.name }}
       </a>
     </div>
@@ -27,7 +27,7 @@
       </address>
     </div>
     <div class="col-xs-4 text-right">
-      <a href="{% url 'place-edit' club.slug, place.pk %}" class="btn btn-primary btn-sm">
+      <a href="{{ url('place-edit', club.slug, place.pk) }}" class="btn btn-primary btn-sm">
         <i class="icon icon-edit"></i>
         {{ _('Edit') }}
       </a>

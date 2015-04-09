@@ -29,7 +29,7 @@
 
     <div class="col-xs-2">
       {% if n.link %}
-      <a class="pull-right btn btn-sm btn-info" href="{% url user-notifications-clear n.id %}">{{ _('View') }} <i class="icon-right-open"></i></a>
+      <a class="pull-right btn btn-sm btn-info" href="{{ url('user-notifications-clear', n.id) }}">{{ _('View') }} <i class="icon-right-open"></i></a>
       {% endif %}
     </div>
   </div>
@@ -44,6 +44,6 @@
 {% block footer %}
 <button class="btn" data-dismiss="modal">{{ _('Cancel') }}</button>
 {% if notifications %}
-<a href="{% url user-notifications-clear-all %}" class="modal-action btn btn-warning">{{ _('Delete these notifications') }}</a>
+<a href="{{ url('user-notifications-clear-all') }}" class="modal-action btn btn-warning">{{ _('Delete these notifications') }}</a>
 {% endif %}
 {% endblock %}

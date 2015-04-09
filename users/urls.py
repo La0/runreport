@@ -1,4 +1,4 @@
-from coffin.conf.urls import *
+from django.conf.urls import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import password_reset, password_reset_done, password_reset_confirm, password_reset_complete
 from django.views.generic.base import RedirectView
@@ -25,7 +25,7 @@ user_patterns = patterns('',
 
 urlpatterns = patterns('',
   # Preferences, old & new
-  url(r'^profile/?$', RedirectView.as_view(url='/user/preferences')),
+  url(r'^profile/?$', RedirectView.as_view(url='/user/preferences', permanent=True)),
   url(r'^preferences/?$', login_required(Preferences.as_view()), name='user-preferences'),
 
   url(r'^login/?$', LoginUser.as_view(), name='login'),

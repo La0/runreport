@@ -34,12 +34,12 @@
 
 		<div class="col-sm-6 text-right buttons">
 			{% if member %}
-			<a class="btn btn-success btn-light" href="{% url athlete-stats-year member.username, year %}"><i class="icon-plus"></i> {{ _('Stats') }}</a>
-      <a href="{% url user-public-profile member.username %}" class="btn btn-primary btn-light">
+			<a class="btn btn-success btn-light" href="{{ url('athlete-stats-year', member.username, year) }}"><i class="icon-plus"></i> {{ _('Stats') }}</a>
+      <a href="{{ url('user-public-profile', member.username) }}" class="btn btn-primary btn-light">
         <i class="icon-user"></i> {{ _('View this profile') }}
       </a>
       {% else %}
-			<a class="btn btn-success btn-light" href="{% url stats-year year %}"><i class="icon-plus"></i> {{ _('Stats') }}</a>
+			<a class="btn btn-success btn-light" href="{{ url('stats-year', year) }}"><i class="icon-plus"></i> {{ _('Stats') }}</a>
 			{% endif %}
 		</div>
 	</div>
@@ -51,11 +51,11 @@
           {% for month, days in date_list.items() %}
           <div class="month">
             <div class="head">
-              <a href="{{ pagemonth|url(*pageargs + [year, month.month]) }}" >{{ month|date('E')|title() }}</a>
+              <a href="{{ url(pagemonth, *pageargs + [year, month.month]) }}" >{{ month|date('E')|title() }}</a>
             </div>
 
             {% for day_date, day in days.items() %}
-            <div class="day link" href="{{ pageday|url(*pageargs + [day_date.year, day_date.month, day_date.day]) }}">
+            <div class="day link" href="{{ url(pageday, *pageargs + [day_date.year, day_date.month, day_date.day]) }}">
               <span class="date">{{ day_date.day }}</span>
               {% if day %}
                 <p class="name">
@@ -84,7 +84,7 @@
     {% if month.month in months_active %}
       <h3>
         {{ month|date('E Y')|title() }}
-        <a href="{% url report-month month.year, month.month %}" class="btn btn-sm btn-info pull-right">{{ _('View this month') }}</a>
+        <a href="{{ url('report-month', month.year, month.month) }}" class="btn btn-sm btn-info pull-right">{{ _('View this month') }}</a>
       </h3>
 			<div class="row-striped">
 	      {% for day_date,day in days.items() %}
@@ -98,12 +98,12 @@
 	<ul class="pager">
 		{% if previous_year %}
 		<li class="previous">
-			<a href="{{ pageyear|url(*pageargs + [previous_year, ]) }}">&laquo; {{ _('Year %s') % previous_year }}</a>
+			<a href="{{ url(pageyear, *pageargs + [previous_year, ]) }}">&laquo; {{ _('Year %s') % previous_year }}</a>
 		</li>
 		{% endif %}
 		{% if next_year %}
 		<li class="next">
-			<a href="{{ pageyear|url(*pageargs + [next_year, ]) }}">{{ _('Year %s') % next_year }} &raquo;</a>
+			<a href="{{ url(pageyear, *pageargs + [next_year, ]) }}">{{ _('Year %s') % next_year }} &raquo;</a>
 		</li>
 		{% endif %}
 	</ul>

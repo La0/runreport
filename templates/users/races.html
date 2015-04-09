@@ -28,7 +28,7 @@ h2, h3 {
     {% if member %}
     {{ _('Results of') }} {{ member.first_name }} {{ member.last_name }}
     <p class="actions pull-right">
-      <a class="btn btn-success" href="{% url club-members club.slug %}">{{ _('Back to club') }}</a>
+      <a class="btn btn-success" href="{{ url('club-members', club.slug) }}">{{ _('Back to club') }}</a>
     </p>
     {% else %}
     {{ _('My results') }}
@@ -45,7 +45,7 @@ h2, h3 {
 
 	<div class="row-striped">
 		{% for race in races[category.id] %}
-    {% with race.sessions.filter(type='race') as sessions %}
+    {% with sessions = race.sessions.filter(type='race') %}
 		<div class="row {% if loop.first %}race-record{% endif %}">
 
 			<div class="col-sm-4">
@@ -92,7 +92,7 @@ h2, h3 {
         {% endif %}
       </div>
 			<div class="col-sm-1">
-				<a class="btn btn-xs {% if loop.first %}btn-warning{% else %}btn-default{% endif %}" href="{{ raceurl|url(*raceargs + [race.date.year, race.date.month, race.date.day]) }}">{{ _('View') }}</a>
+				<a class="btn btn-xs {% if loop.first %}btn-warning{% else %}btn-default{% endif %}" href="{{ url(raceurl, *raceargs + [race.date.year, race.date.month, race.date.day]) }}">{{ _('View') }}</a>
 			</div>
 		</div>
 		{% endwith %}
@@ -116,7 +116,7 @@ h2, h3 {
 				<div class="col-sm-7">
           {% for session in race.sessions.all() %}
           <p>
-            <a class="modal-action" href="{% url report-day race.date.year, race.date.month, race.date.day %}">{{ session.name }}</a>
+            <a class="modal-action" href="{{ url('report-day', race.date.year, race.date.month, race.date.day) }}">{{ session.name }}</a>
           </p>
           {% endfor %}
 				</div>

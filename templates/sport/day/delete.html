@@ -13,5 +13,5 @@
 
 {% block footer %}
 <button class="btn" data-dismiss="modal">{{ _('Cancel') }}</button>
-<a href="{% url report-day-delete day.date.year, day.date.month, day.date.day %}" class="btn btn-danger modal-action modal-post">{{ _('Delete this day') }}</a>
+<a href="{{ url('report-day-delete', day.date.year, day.date.month, day.date.day) }}" class="btn btn-danger modal-action modal-post">{{ _('Delete this day') }}</a>
 {% endblock %}

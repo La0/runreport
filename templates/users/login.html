@@ -66,7 +66,7 @@ p.forgot {
       {{ _('Please sign in before using the invite') }}
     </div>
     {% endif %}
-		{% with form.non_field_errors() as err %}
+		{% with err = form.non_field_errors() %}
 		{% if err %}
 		<div class="alert alert-danger">{{ err|safe }}</div>
 		{% endif %}
@@ -78,7 +78,7 @@ p.forgot {
     </label>
 		<button class="btn btn-lg btn-primary btn-block" type="submit">{{ _('Sign in') }}</button>
     <p class="forgot">
-      <a href="{% url password_reset %}" class="pull-right">{{ _('Forgot password ?') }}<i class="icon-help-circled"></i></a>
+      <a href="{{ url('password_reset') }}" class="pull-right">{{ _('Forgot password ?') }}<i class="icon-help-circled"></i></a>
     </p>
 
     <p class="demos">

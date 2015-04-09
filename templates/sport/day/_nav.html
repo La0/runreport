@@ -1,4 +1,4 @@
-{% with report.get_days_per_date().items() as days %}
+{% with days = report.get_days_per_date().items() %}
 <div class="row  visible-sm visible-xs">
   <div class="col-xs-12">
     <div class="dropdown">
@@ -7,13 +7,13 @@
       </a>
       <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
         <li>
-          <a href="{{ pageday|url(*pageargs + [previous_day.year, previous_day.month, previous_day.day]) }}" role="tab">
+          <a href="{{ url(pageday, *pageargs + [previous_day.year, previous_day.month, previous_day.day]) }}" role="tab">
             <i class="icon-left-open"></i>
           </a>
         </li>
         {% for d, sd in days %}
         <li class="{% if d == session.date %}active{% endif %}">
-          <a href="{{ pageday|url(*pageargs + [d.year, d.month, d.day]) }}" role="tab" >
+          <a href="{{ url(pageday, *pageargs + [d.year, d.month, d.day]) }}" role="tab" >
             {{ d|date('l d E Y')|title() }}
             {% if sd %}
               {% for sport, nb in sd.sports_count() %}
@@ -24,7 +24,7 @@
         </li>
         {% endfor %}
         <li>
-          <a href="{{ pageday|url(*pageargs + [next_day.year, next_day.month, next_day.day]) }}" role="tab">
+          <a href="{{ url(pageday, *pageargs + [next_day.year, next_day.month, next_day.day]) }}" role="tab">
             <i class="icon-right-open"></i>
           </a>
         </li>
@@ -35,13 +35,13 @@
 
 <ul class="nav nav-tabs hidden-sm hidden-xs" role="tablist">
   <li>
-    <a href="{{ pageday|url(*pageargs + [previous_day.year, previous_day.month, previous_day.day]) }}" role="tab">
+    <a href="{{ url(pageday, *pageargs + [previous_day.year, previous_day.month, previous_day.day]) }}" role="tab">
       <i class="icon-left-open"></i>
     </a>
   </li>
   {% for d, sd in days %}
   <li class="{% if d == session.date %}active{% endif %}">
-    <a href="{{ pageday|url(*pageargs + [d.year, d.month, d.day]) }}" role="tab" >
+    <a href="{{ url(pageday, *pageargs + [d.year, d.month, d.day]) }}" role="tab" >
       {% if d == session.date  %}
         {{ d|date('l d E Y')|title() }}
       {% else %}
@@ -56,7 +56,7 @@
   </li>
   {% endfor %}
   <li>
-    <a href="{{ pageday|url(*pageargs + [next_day.year, next_day.month, next_day.day]) }}" role="tab">
+    <a href="{{ url(pageday, *pageargs + [next_day.year, next_day.month, next_day.day]) }}" role="tab">
       <i class="icon-right-open"></i>
     </a>
   </li>

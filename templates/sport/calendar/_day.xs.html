@@ -1,5 +1,5 @@
 {% if day %}
-<div class="row modal-action" href="{{pageday|url(*pageargs + [day.date.year, day.date.month, day.date.day])}}">
+<div class="row modal-action" href="{{url(pageday, *pageargs + [day.date.year, day.date.month, day.date.day])}}">
   <div class="col-xs-12">
     <strong>{% if day.date == today %}{{ _('Today') }} : {% endif %}{{day.date|date('l d E Y')|title()}}</strong>
     {% for session in day.sessions.all() %}

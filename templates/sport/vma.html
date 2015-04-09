@@ -52,7 +52,7 @@ table.table th, table.table td {
 				<td>{{pace.percent}}</td>
 				{% for d in vma.get_distances() %}
 				<td>
-					{% with vma.get_time(pace, d) as t %}
+					{% with t = vma.get_time(pace, d) %}
 					{% if t.hour > 0 %}
 					{{t|date("g\hi's\"")}}
 					{% else %}
@@ -68,7 +68,7 @@ table.table th, table.table td {
 
 	<div class="alert alert-info" style="margin-top: 10px">
 		<h4>{{ _('Help') }}</h4>
-    {{ _('All the terms are explained in the glossary') }} : <a href="{% url vma-glossary %}" class="btn btn-primary">{{ _('View') }}</a>.
+    {{ _('All the terms are explained in the glossary') }} : <a href="{{ url('vma-glossary') }}" class="btn btn-primary">{{ _('View') }}</a>.
 	</div>
 
 	<h2>{{ _('Paces') }}</h2>
@@ -97,7 +97,7 @@ table.table th, table.table td {
 	{% else %}
 	<div class="alert alert-danger">
 		<h4>{{ _('No top speed') }}</h4>
-    {{ _('You need to specify your top speed in your preferences to enable this data tables.') }} : <a href="{% url user-preferences %}#sport" class="btn btn-primary">{{ _('Preferences') }}</a>
+    {{ _('You need to specify your top speed in your preferences to enable this data tables.') }} : <a href="{{ url('user-preferences') }}#sport" class="btn btn-primary">{{ _('Preferences') }}</a>
 	</div>
 	{% endif %}
 

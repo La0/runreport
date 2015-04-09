@@ -24,10 +24,10 @@
     </div>
     {% endif %}
     <div class="col-sm-6 col-xs-12 text-right">
-      <a href="{{ pageweek|url(*pageargs + [report.year, report.week]) }}" class="btn btn-info btn-light"><i class="icon-list"></i> {{ _('View the week') }}</a>
-      <a href="{{ pagemonth|url(*pageargs + [day_date.year, day_date.month]) }}" class="btn btn-danger btn-light"><i class="icon-calendar"></i> {{ _('View the month') }}</a>
+      <a href="{{ url(pageweek, *pageargs + [report.year, report.week]) }}" class="btn btn-info btn-light"><i class="icon-list"></i> {{ _('View the week') }}</a>
+      <a href="{{ url(pagemonth, *pageargs + [day_date.year, day_date.month]) }}" class="btn btn-danger btn-light"><i class="icon-calendar"></i> {{ _('View the month') }}</a>
       {% if member %}
-      <a href="{% url user-public-profile member.username %}" class="btn btn-primary btn-light">
+      <a href="{{ url('user-public-profile', member.username) }}" class="btn btn-primary btn-light">
         <i class="icon-user"></i>
           {% if member == user %}
             {{ _('View your profile') }}
@@ -36,12 +36,12 @@
           {% endif %}
       </a>
         {% if member == user %}
-        <a href="{% url report-day day_date.year, day_date.month, day_date.day %}" class="btn btn-success btn-light">
+        <a href="{{ url('report-day', day_date.year, day_date.month, day_date.day) }}" class="btn btn-success btn-light">
           <i class="icon-edit"></i> {{ _('Edit') }}
         </a>
         {% endif %}
       {% else %}
-      <a href="{% url user-calendar-day user.username, day_date.year, day_date.month, day_date.day %}" class="btn btn-success btn-light">
+      <a href="{{ url('user-calendar-day', user.username, day_date.year, day_date.month, day_date.day) }}" class="btn btn-success btn-light">
         <i class="icon-link"></i> {{ _('Public profile link') }}
       </a>
       {% endif %}
@@ -69,9 +69,9 @@
       <div id="friends_sessions" class="panel-collapse collapse" role="tabpanel">
         <div class="panel-body">
         {% for fs in friends_sessions %}
-          {% with fs.day.week.user as friend %}
-          {% with fs.day.date as dt %}
-          <a class="session col-md-4 col-sm-6 col-xs-12 shortcut" href="{% url user-calendar-day friend.username, dt.year, dt.month, dt.day %}" target="_blank">
+          {% with friend = fs.day.week.user %}
+          {% with dt = fs.day.date %}
+          <a class="session col-md-4 col-sm-6 col-xs-12 shortcut" href="{{ url('user-calendar-day', friend.username, dt.year, dt.month, dt.day) }}" target="_blank">
             <img class="img-rounded img-responsive" src="{{ friend.avatar.url }}" alt="{{ friend.username }}" />
             <strong>{{ friend.first_name }} {{ friend.last_name }}</strong>
             <p>
@@ -94,12 +94,12 @@
 
   <div id="sessions-{{day_date}}">
   {% if member %}
-    {% with True as show_comments %}
+    {% with show_comments = True %}
     {% include 'sport/session/list.html' %}
     {% endwith %}
   {% else %}
     {% for form in forms %}
-      {% with form.instance as session %}
+      {% with session = form.instance %}
         {% include 'sport/session/edit.html' %}
       {% endwith %}
       <hr />
@@ -117,18 +117,18 @@
 
   <div class="actions">
     {% if session.pk %}
-    <a href="{% url report-day-delete day_date.year, day_date.month, day_date.day %}" class="pull-left modal-action btn btn-light btn-danger"><i class="icon-trash"></i> {{ _('Delete this day') }}</a>
+    <a href="{{ url('report-day-delete', day_date.year, day_date.month, day_date.day) }}" class="pull-left modal-action btn btn-light btn-danger"><i class="icon-trash"></i> {{ _('Delete this day') }}</a>
     {% endif %}
     <p class="text-right">
-      <a href="{% url sport-session-add day_date.year, day_date.month, day_date.day %}" class="modal-action btn btn-light btn-primary extra-sport-add" data-append="sessions-{{day_date}}">
+      <a href="{{ url('sport-session-add', day_date.year, day_date.month, day_date.day) }}" class="modal-action btn btn-light btn-primary extra-sport-add" data-append="sessions-{{day_date}}">
         <i class="icon-plus"></i> {{ _('Add a session') }}
       </a>
       {% if report.published or report.task %}
-      <a href="{% url report-week-publish report.year, report.week %}" class="modal-action btn btn-light btn-success">
+      <a href="{{ url('report-week-publish', report.year, report.week) }}" class="modal-action btn btn-light btn-success">
         <i class="icon-list"></i> {{ _('Week published') }}
       </a>
       {% else %}
-      <a href="{% url report-week-publish report.year, report.week %}" class="modal-action btn btn-light btn-info">
+      <a href="{{ url('report-week-publish', report.year, report.week) }}" class="modal-action btn btn-light btn-info">
         {{ _('Publish this week') }} <i class="icon-right-open"></i>
       </a>
       {% endif %}
@@ -137,7 +137,7 @@
 
     {% if previous_week %}
     <div class="alert alert-danger">
-      <a class="btn btn-danger pull-right" href="{% url 'report-week' previous_week.year, previous_week.week %}">
+      <a class="btn btn-danger pull-right" href="{{ url('report-week', previous_week.year, previous_week.week) }}">
         {{ _('Publish last week') }}
       </a>
       <h4>{{ _('Last week\'s report not published !') }}</h4>

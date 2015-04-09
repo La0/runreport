@@ -35,7 +35,7 @@ $(function(){
 });
 </script>
 
-<form class="form-horizontal" method="post" action="{% if post %}{% url 'post-edit' post.slug %}{% else %}{% url 'post-create' %}{% endif %}" id="post_editor">
+<form class="form-horizontal" method="post" action="{% if post %}{{ url('post-edit', post.slug) }}{% else %}{{ url('post-create') }}{% endif %}" id="post_editor">
   {% csrf_token %}
   {{ macros.input(form.title) }}
   {{ macros.input(form.slug) }}

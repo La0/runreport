@@ -26,7 +26,7 @@
 	<form class="form form-horizontal" action="" method="POST">
 		{% csrf_token %}
 
-		{% with form.non_field_errors() as err %}
+		{% with err = form.non_field_errors() %}
 		{% if err %}
 		<div class="alert alert-danger">
 			<h4>{{ _('Error') }}</h4>

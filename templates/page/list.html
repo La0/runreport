@@ -18,7 +18,7 @@
 		{% for page in pages %}
 		<div class="row">
 			<div class="col-sm-8">
-				<a href="{% url page page.type, page.slug %}">
+				<a href="{{ url('page', page.type, page.slug) }}">
 					<strong>{{ page.name }}</strong>
 
 				</a>

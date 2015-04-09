@@ -10,9 +10,9 @@
 
 <p>
   {{ _('Your trainer') }}
-  <a href="http://{{ site.domain }}{% url 'user-public-profile' plan.creator.username %}">{{ plan.creator.first_name }} {{ plan.creator.last_name }}</a>
+  <a href="http://{{ site.domain }}{{ url('user-public-profile', plan.creator.username) }}">{{ plan.creator.first_name }} {{ plan.creator.last_name }}</a>
   {{ _('has sent you a training plan for %d weeks') % plan.weeks_nb}}
-  : <a href="http://{{ site.domain }}{% url plan plan.pk %}">{{ plan.name }}</a>
+  : <a href="http://{{ site.domain }}{{ url('plan', plan.pk) }}">{{ plan.name }}</a>
 </p>
 
 <p>

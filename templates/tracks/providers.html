@@ -11,8 +11,8 @@
 
   {% for provider in providers %}
   <div class="row">
-    {% with provider.imported_stats() as stats %}
-    {% with provider.is_connected() as connected %}
+    {% with stats = provider.imported_stats() %}
+    {% with connected = provider.is_connected() %}
     <h2>
       {{ provider.NAME|title() }}
     </h2>
@@ -35,12 +35,12 @@
 
     <div class="col-sm-4 col-xs-12 text-right">
       {% if connected %}
-        <a href="{% url track-provider-disconnect provider.NAME %}" class="btn btn-danger modal-action">
+        <a href="{{ url('track-provider-disconnect', provider.NAME) }}" class="btn btn-danger modal-action">
           <i class="icon-trash"></i> {{ _('Disconnect %s') % provider.NAME|title() }}
         </a>
       {% else %}
         {% if provider.NAME == 'garmin' %}
-        <a href="{% url user-garmin %}" class="btn btn-success">
+        <a href="{{ url('user-garmin') }}" class="btn btn-success">
           {{ _('Connect %s') % provider.NAME|title() }} <i class="icon-right-open"></i>
         </a>
         {% else %}

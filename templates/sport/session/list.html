@@ -31,7 +31,7 @@
       {% endif %}
     </h4>
 
-    {% with session.plan_session as psa %}
+    {% with psa = session.plan_session %}
     {% if psa %}
     <div class="plan_session">
       <i class="icon-plan-session"></i>
@@ -45,10 +45,10 @@
       {% endif %}
 
       {{ _('Plan') }}
-      <a href="{% url 'plan' psa.plan_session.plan.pk %}">{{ psa.plan_session.plan.name }}</a>
+      <a href="{{ url('plan', psa.plan_session.plan.pk) }}">{{ psa.plan_session.plan.name }}</a>
       {{ _('created by') }}
-      {% with psa.plan_session.plan.creator as creator %}
-      <a href="{% url 'user-public-profile' creator.username %}">{{ creator.first_name }} {{ creator.last_name }}</a>
+      {% with creator = psa.plan_session.plan.creator %}
+      <a href="{{ url('user-public-profile', creator.username) }}">{{ creator.first_name }} {{ creator.last_name }}</a>
       {% endwith %}
     </div>
     {% endif %}

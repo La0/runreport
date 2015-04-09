@@ -1,22 +1,22 @@
 <div id="messages-{{session.pk}}" class="comments col-xs-12">
   {% if 'comments_private' in privacy and session.comments_private %}
-  <div class="box" data-src="{% url conversation-list session.comments_private.pk %}" >
+  <div class="box" data-src="{{ url('conversation-list', session.comments_private.pk) }}" >
     {{ _('Loading private comments...') }}
   </div>
   {% elif 'comments_public' in privacy and session.comments_public %}
-  <div class="box" data-src="{% url conversation-list session.comments_public.pk %}" >
+  <div class="box" data-src="{{ url('conversation-list', session.comments_public.pk) }}" >
     {{ _('Loading comments...') }}
   </div>
   {% else %}
 
     {% if 'comments_private' in privacy %}
-    <a href="{% url message-session-add session.pk, 'private' %}" class="modal-action btn btn-sm btn-warning btn-light">
+    <a href="{{ url('message-session-add', session.pk, 'private') }}" class="modal-action btn btn-sm btn-warning btn-light">
       <i class="icon-comment"></i> {{ _('Start a private conversation') }}
     </a>
     {% endif %}
 
     {% if 'comments_public' in privacy %}
-    <a href="{% url message-session-add session.pk, 'public' %}" class="modal-action btn btn-sm btn-success btn-light">
+    <a href="{{ url('message-session-add', session.pk, 'public') }}" class="modal-action btn btn-sm btn-success btn-light">
       <i class="icon-comment"></i> {{ _('Start a public conversation') }}
     </a>
     {% endif %}
@@ -30,10 +30,10 @@
 
   {# Add conversation urls for notifications links #}
   {% if 'comments_private' in privacy and session.comments_private %}
-  <input type="hidden" name="conversation-{{ session.pk }}-private" value="{% url conversation-list session.comments_private.pk %}" />
+  <input type="hidden" name="conversation-{{ session.pk }}-private" value="{{ url('conversation-list', session.comments_private.pk) }}" />
   {% endif %}
   {% if 'comments_public' in privacy and session.comments_public %}
-  <input type="hidden" name="conversation-{{ session.pk }}-public" value="{% url conversation-list session.comments_public.pk %}" />
+  <input type="hidden" name="conversation-{{ session.pk }}-public" value="{{ url('conversation-list', session.comments_public.pk) }}" />
   {% endif %}
 
 </div>

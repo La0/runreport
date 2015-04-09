@@ -10,7 +10,7 @@
       <h1>{{ _('My posts') }}</h1>
     </div>
     <div class="col-xs-4 text-right">
-      <a class="btn btn-success" href="{% url 'post-create' %}">
+      <a class="btn btn-success" href="{{ url('post-create') }}">
         <i class="icon-plus"></i>
         {{ _('Add a new post') }}
       </a>
@@ -34,11 +34,11 @@
       {{ post.created|date('l d E Y') }}
     </div>
     <div class="col-xs-3 text-right">
-      <a href="{% url 'post-edit' post.slug %}" class="btn btn-info">
+      <a href="{{ url('post-edit', post.slug) }}" class="btn btn-info">
         <i class="icon-edit"></i>
         {{ _('Edit') }}
       </a>
-      <a href="{% url 'post' user.username, post.slug %}" class="btn btn-primary">
+      <a href="{{ url('post', user.username, post.slug) }}" class="btn btn-primary">
         {{ _('View') }}
         <i class="icon-right-open"></i>
       </a>

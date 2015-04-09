@@ -6,7 +6,7 @@
 <div class="container">
   {% if editable %}
   <div class="pull-right">
-    <a href="{% url club-group-create club.slug %}" class="btn btn-success">
+    <a href="{{ url('club-group-create', club.slug) }}" class="btn btn-success">
       <i class="icon-plus"></i>
       {{ _('Create user group') }}
     </a>
@@ -16,10 +16,10 @@
 
   {% if groups %}
     {% for group in groups %}
-    {% with group.creator == user as group_editable %}
+    {% with group_editable = group.creator == user %}
     <div class="row">
       <div class="col-sm-4 col-xs-12">
-        <a class="lead" href="{% url 'club-group' club.slug, group.slug %}">
+        <a class="lead" href="{{ url('club-group', club.slug, group.slug) }}">
           {{ group.name }}
         </a>
         <blockquote>
@@ -31,17 +31,17 @@
       </div>
       <div class="col-sm-3 col-xs-6">
         {{ _('Created by') }}
-        <a href="{% url 'user-public-profile' group.creator.username %}">
+        <a href="{{ url('user-public-profile', group.creator.username) }}">
           {{ group.creator.first_name }} {{ group.creator.last_name }}
         </a>
       </div>
       <div class="col-sm-3 col-xs-12 text-right">
         {% if editable and group_editable %}
-        <a href="{% url 'club-group-edit' club.slug, group.slug %}" class="btn btn-info">
+        <a href="{{ url('club-group-edit', club.slug, group.slug) }}" class="btn btn-info">
           {{ _('Edit') }}
         </a>
         {% endif %}
-        <a href="{% url 'club-group' club.slug, group.slug %}" class="btn btn-primary">
+        <a href="{{ url('club-group', club.slug, group.slug) }}" class="btn btn-primary">
           {{ _('View') }}
         </a>
       </div>

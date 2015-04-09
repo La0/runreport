@@ -13,5 +13,5 @@
 </ul>
 <br />
 
-{{ _('You can active it by using this link') }} : http://{{site.domain}}{% url "admin:club-invite-send" invite.id %}
+{{ _('You can active it by using this link') }} : http://{{site.domain}}{{ url("admin:club-invite-send", invite.id) }}
 {% endblock %}
