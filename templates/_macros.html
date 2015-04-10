@@ -172,7 +172,7 @@
 {% if active %}
 <i class="icon-{{direction}}-open"></i>
 {% else %}
-<a href="{{ url(urlname, urlargs + (sort_name, )) }}"><i class="icon-{{direction}}-open"></i></a>
+<a href="{{ url(urlname, *urlargs + (sort_name, )) }}"><i class="icon-{{direction}}-open"></i></a>
 {% endif %}
 </span>
 
