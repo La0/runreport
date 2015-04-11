@@ -210,6 +210,8 @@ class CalendarSession(CalendarDay):
     if session_id:
       self.session = SportSession.objects.get(pk=session_id, day__week__user=self.request.user)
     else:
+      if not self.object.pk:
+        self.object.save() # need a pk to attribute
       self.session = SportSession(sport=self.request.user.default_sport, day=self.object)
 
     return self.session
