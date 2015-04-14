@@ -5,6 +5,7 @@ from django.contrib.auth import login as auth_login, authenticate
 from django.http import HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 from .mixins import UserInviteMixin
+from datetime import datetime
 
 class CreateUser(UserInviteMixin, FormView):
   template_name = 'users/create.html'
@@ -22,7 +23,7 @@ class CreateUser(UserInviteMixin, FormView):
 
   def form_valid(self, form):
     # Create user
-    user = Athlete.objects.create_user(form.cleaned_data['username'], form.cleaned_data['email'], form.cleaned_data['password'])
+    user = Athlete.objects.create_user(form.cleaned_data['username'], form.cleaned_data['email'], form.cleaned_data['password'], last_login=datetime.now())
     user.first_name = form.cleaned_data['firstname']
     user.last_name = form.cleaned_data['lastname']
     user.build_avatar()
