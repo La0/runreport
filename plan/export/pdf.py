@@ -6,7 +6,7 @@ from reportlab.lib.pagesizes import letter, landscape
 from reportlab.lib.enums import TA_CENTER
 from reportlab.rl_config import defaultPageSize
 from django.template.loader import render_to_string
-from django.contrib.sites.models import get_current_site
+from django.contrib.sites.shortcuts import get_current_site
 from django.utils import formats
 from helpers import week_to_date
 from StringIO import StringIO
