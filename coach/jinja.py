@@ -26,7 +26,7 @@ def environment(**options):
   })
 
   # Add constants from settings
-  keys = ['DEBUG', 'PIWIK_HOST', 'PIWIK_ID', 'FACEBOOK_ID', ]
+  keys = ['DEBUG', 'PIWIK_HOST', 'PIWIK_ID', 'FACEBOOK_ID', 'LANGUAGES', ]
   env.globals.update(dict([(k, getattr(settings, k, None)) for k in keys]))
 
   # Setup translations
@@ -44,6 +44,10 @@ class ContextTemplate(Template):
   def render(self, context, *args, **kwargs):
     if context and 'request' in context:
       request = context['request']
+
+      # Add language from current request
+      from django.utils import translation
+      context['LANGUAGE_CODE'] = translation.get_language()
 
       # Add user in context
       context['user'] = request.user
