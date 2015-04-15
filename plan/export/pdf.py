@@ -7,7 +7,8 @@ from reportlab.lib.enums import TA_CENTER
 from reportlab.rl_config import defaultPageSize
 from django.template.loader import render_to_string
 from django.contrib.sites.shortcuts import get_current_site
-from django.utils import formats
+from django.utils import formats, translation
+from django.conf import settings
 from helpers import week_to_date
 from StringIO import StringIO
 
@@ -40,6 +41,10 @@ class PlanPdfExporter(object):
     self.width = defaultPageSize[0]
     self.height = defaultPageSize[1]
     self.row_heights = [] # reset for celery workers
+
+    # Check language is activated
+    if translation.get_language() is None:
+      translation.activate(settings.LANGUAGE_CODE)
 
   def setup_styles(self):
     # Build style sheets
