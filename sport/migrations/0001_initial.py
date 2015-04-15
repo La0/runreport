@@ -2,7 +2,6 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
-import interval.fields
 
 
 class Migration(migrations.Migration):
@@ -18,7 +17,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('garmin_id', models.IntegerField(unique=True)),
                 ('name', models.CharField(max_length=255)),
-                ('time', interval.fields.IntervalField()),
+                ('time', models.DurationField(null=True, blank=True)),
                 ('distance', models.FloatField()),
                 ('speed', models.TimeField()),
                 ('md5_raw', models.CharField(max_length=32)),
@@ -73,7 +72,7 @@ class Migration(migrations.Migration):
             name='SportSession',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('time', interval.fields.IntervalField(null=True, blank=True)),
+                ('time', models.DurationField(null=True, blank=True)),
                 ('distance', models.FloatField(null=True, blank=True)),
                 ('name', models.CharField(max_length=255, null=True, blank=True)),
                 ('comment', models.TextField(null=True, blank=True)),

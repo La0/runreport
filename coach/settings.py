@@ -186,7 +186,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.gis',
-    'interval',
     'sport',
     'users',
     'club',

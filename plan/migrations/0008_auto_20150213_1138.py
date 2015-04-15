@@ -2,7 +2,6 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
-import interval.fields
 
 
 class Migration(migrations.Migration):
@@ -21,7 +20,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='plansession',
             name='time',
-            field=interval.fields.IntervalField(null=True, blank=True),
+            field=models.DurationField(null=True, blank=True),
             preserve_default=True,
         ),
     ]

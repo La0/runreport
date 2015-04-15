@@ -1,7 +1,6 @@
 # coding=utf-8
 from django.db import models
 from . import SESSION_TYPES
-from interval.fields import IntervalField
 from django.utils.translation import ugettext_lazy as _
 import vinaigrette
 from messages.models import Conversation
@@ -41,7 +40,7 @@ vinaigrette.register(Sport, ['name', ])
 class SportSession(models.Model):
   day = models.ForeignKey('SportDay', related_name="sessions")
   sport = models.ForeignKey(Sport)
-  time = IntervalField(format='DHMSX', null=True, blank=True)
+  time = models.DurationField(null=True, blank=True)
   distance = models.FloatField(null=True, blank=True)
   name = models.CharField(max_length=255, null=True, blank=True)
   comment = models.TextField(_('session comment'), null=True, blank=True)

@@ -7,7 +7,6 @@ from datetime import date, timedelta
 from helpers import date_to_week
 from coach.mail import MailBuilder
 from plan.export import PlanPdfExporter
-from interval.fields import IntervalField
 from .apps import PlanApplied, PlanSessionApplied
 
 class Plan(models.Model):
@@ -156,7 +155,7 @@ class PlanSession(models.Model):
   # Dummy data, should be later specified
   # using a collections of PlanPart
   name = models.CharField(max_length=250)
-  time = IntervalField(format='DHMSX', null=True, blank=True)
+  time = models.DurationField(null=True, blank=True)
   distance = models.FloatField(null=True, blank=True)
 
   # Mappings to SportSession

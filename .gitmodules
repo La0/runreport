@@ -1,3 +1,0 @@
-[submodule "libs/intervals"]
-	path = libs/intervals
-	url = https://github.com/mpasternak/django-interval-field
