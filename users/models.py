@@ -93,6 +93,9 @@ class Athlete(AthleteBase):
   # Strava
   strava_token = models.CharField(max_length=255, null=True, blank=True)
 
+  # Google Calendar
+  gcal_token = models.CharField(max_length=255, null=True, blank=True)
+
   # Demo dummy account ?
   demo = models.BooleanField(_('demo user'), default=False)
 

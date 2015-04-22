@@ -60,6 +60,9 @@ urlpatterns = patterns('',
   url(r'^notification/clear/all/?$', login_required(UserNotificationsClear.as_view()), name="user-notifications-clear-all"),
   url(r'^notification/clear/(?P<uuid>[a-z0-9]+)/?$', login_required(UserNotificationsClear.as_view()), name="user-notifications-clear"),
 
+  # Google calendar
+  url(r'gcal/(?P<redirect>redirect)?/?$', login_required(GCalOauthView.as_view()), name='gcal-oauth'),
+
   # Fallback to user public profile
   url(r'^(?P<username>[\w\_]+)/', include(user_patterns)),
 )
