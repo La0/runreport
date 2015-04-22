@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-09 19:44+0200\n"
+"POT-Creation-Date: 2015-04-22 14:07+0200\n"
 "PO-Revision-Date: 2015-02-09 17:42+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
@@ -833,6 +833,15 @@ msgid "Don't forget to fill in your session report after the race"
 msgstr ""
 
 msgid "Enjoy your race !"
+msgstr ""
+
+msgid "New friends races"
+msgstr ""
+
+msgid "These are your friends races for tommorow:"
+msgstr ""
+
+msgid "will race"
 msgstr ""
 
 msgid "View week"

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-09 19:44+0200\n"
-"PO-Revision-Date: 2015-04-09 19:41+0100\n"
+"POT-Creation-Date: 2015-04-22 14:07+0200\n"
+"PO-Revision-Date: 2015-04-22 14:08+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -906,6 +906,17 @@ msgstr "N'oubliez pas de renseigner votre séance après la course"
 
 msgid "Enjoy your race !"
 msgstr "Bonne course !"
+
+#| msgid "No future races"
+msgid "New friends races"
+msgstr "Nouvelles courses d'amis"
+
+msgid "These are your friends races for tommorow:"
+msgstr "Voici les courses de vos amis pour demain:"
+
+#| msgid "race"
+msgid "will race"
+msgstr "participera à"
 
 msgid "View week"
 msgstr "Voir semaine"
@@ -2128,11 +2139,6 @@ msgstr "entraînement"
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0
-msgid "race"
-msgstr "course"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
 msgid "rest"
 msgstr "repos"
 
@@ -2178,8 +2184,7 @@ msgstr "nom d'utilisateur"
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0
-msgid ""
-"Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."
+msgid "Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."
 msgstr ""
 "Requis. 30 charactères ou moins. Lettres, chiffrs et @/./+/-/_ seulement."
 
@@ -2211,8 +2216,7 @@ msgstr "status staff"
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0
 msgid "Designates whether the user can log into this admin site."
-msgstr ""
-"Indique si l'utilisateur peut se connecter à l'administration du site"
+msgstr "Indique si l'utilisateur peut se connecter à l'administration du site"
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0
@@ -2225,8 +2229,8 @@ msgid ""
 "Designates whether this user should be treated as active. Unselect this "
 "instead of deleting accounts."
 msgstr ""
-"Indique si cet utilisateur doit être considéré actif.Décochez cette "
-"option au lieu de supprimer des comptes."
+"Indique si cet utilisateur doit être considéré actif.Décochez cette option "
+"au lieu de supprimer des comptes."
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0
@@ -2398,11 +2402,9 @@ msgstr ""
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0
-msgid ""
-"%(first_name)s %(last_name)s has written a comment on his week %(week)s"
+msgid "%(first_name)s %(last_name)s has written a comment on his week %(week)s"
 msgstr ""
-"%(first_name)s %(last_name)s a écrit un commentaire sur sa semaine "
-"%(week)s"
+"%(first_name)s %(last_name)s a écrit un commentaire sur sa semaine %(week)s"
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0
@@ -2412,17 +2414,17 @@ msgstr "privé"
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0
 msgid ""
-"%(first_name)s %(last_name)s has written a comment %(type)s on his "
-"session \"%(name)s\""
+"%(first_name)s %(last_name)s has written a comment %(type)s on his session "
+"\"%(name)s\""
 msgstr ""
-"%(first_name)s %(last_name)s a écrit un commentaire %(type)s sur sa "
-"séance \"%(name)s\""
+"%(first_name)s %(last_name)s a écrit un commentaire %(type)s sur sa séance "
+"\"%(name)s\""
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0
 msgid ""
-"%(first_name)s %(last_name)s has written a comment %(type)s on your "
-"session \"%(name)s\""
+"%(first_name)s %(last_name)s has written a comment %(type)s on your session "
+"\"%(name)s\""
 msgstr ""
 "%(first_name)s %(last_name)s a écrit un commentaire %(type)s sur votre "
 "séance \"%(name)s\""
@@ -2430,11 +2432,11 @@ msgstr ""
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0
 msgid ""
-"%(first_name)s %(last_name)s has written a comment on the session "
-"\"%(name)s\" of %(first_name)s %(last_name)s"
+"%(first_name)s %(last_name)s has written a comment on the session \"%(name)s"
+"\" of %(first_name)s %(last_name)s"
 msgstr ""
-" %(first_name)s %(last_name)s a écrit un commentaire sur la séance "
-"\"%(name)s\" de %(first_name)s %(last_name)s"
+" %(first_name)s %(last_name)s a écrit un commentaire sur la séance \"%(name)s"
+"\" de %(first_name)s %(last_name)s"
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0
@@ -2448,16 +2450,13 @@ msgstr "%(first_name)s %(last_name)s veut vous ajouter en tant qu'ami."
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0
-msgid ""
-"%(first_name)s %(last_name)s has done his training : %(session_name)s"
+msgid "%(first_name)s %(last_name)s has done his training : %(session_name)s"
 msgstr "%(first_name)s %(last_name)s a fait sa séance : %(session_name)s"
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0
-msgid ""
-"%(first_name)s %(last_name)s has missed his training : %(session_name)s"
-msgstr ""
-"%(first_name)s %(last_name)s n'a pas fait sa séance : %(session_name)s"
+msgid "%(first_name)s %(last_name)s has missed his training : %(session_name)s"
+msgstr "%(first_name)s %(last_name)s n'a pas fait sa séance : %(session_name)s"
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0

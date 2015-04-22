@@ -327,6 +327,10 @@ CELERYBEAT_SCHEDULE = {
     'task': 'plan.tasks.athletes_daily_sessions',
     'schedule': crontab(hour=7, minute=30),
   },
+  'send-related-races-every-morning': {
+    'task': 'users.tasks.send_related_races_mail',
+    'schedule': crontab(hour=7, minute=50),
+  },
 }
 CELERY_ROUTES = {
   'tracks.tasks.tracks_import' : {

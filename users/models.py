@@ -1,6 +1,7 @@
 # coding=utf-8
 import glob
 import os
+from datetime import date, timedelta
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import AbstractBaseUser, UserManager, PermissionsMixin
@@ -279,6 +280,34 @@ class Athlete(AthleteBase):
       return 'request'
 
     return 'stranger'
+
+  def list_related_races(self):
+    '''
+    List all friends & club members race
+    on tommorow
+    '''
+    from sport.models import SportSession
+
+    # List all the related athletes from clubs
+    related = set()
+    for club in self.club_set.all():
+      members = club.clubmembership_set.exclude(role__in=('prospect', 'archive'))
+      members = members.exclude(user__pk=self.pk)
+      related.update(members.values_list('user__pk', flat=True))
+
+    # Add friends
+    related.update(self.friends.values_list('pk', flat=True))
+
+    # List tommorow races for this users
+    tommorow = date.today() + timedelta(days=1)
+    f = {
+      'type' : 'race',
+      'day__date' : tommorow,
+      'day__week__user__in' : related,
+    }
+    races = SportSession.objects.filter(**f)
+    races = races.prefetch_related('day', 'day__week', 'day__week__user')
+    return races
 
 class UserCategory(models.Model):
   code = models.CharField(max_length=10)
