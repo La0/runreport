@@ -4,6 +4,7 @@ from . import SESSION_TYPES
 from django.utils.translation import ugettext_lazy as _
 import vinaigrette
 from messages.models import Conversation
+from ..tasks import sync_session_gcal
 
 class Sport(models.Model):
   name = models.CharField(max_length=250)
@@ -70,6 +71,19 @@ class SportSession(models.Model):
       raise Exception("Invalid sport '%s', only level 1 authorized for SportSession" % self.sport)
 
     super(SportSession, self).save(*args, **kwargs)
+
+    # Sync event in Google Calendar
+    if self.gcal_id or self.day.week.user.has_gcal:
+      sync_session_gcal.delay(self)
+
+  def delete(self, *args, **kwargs):
+
+    # Delete event in Google Calendar
+    if self.gcal_id:
+      sync_session_gcal.delay(self, delete=True)
+
+    super(SportSession, self).delete(*args, **kwargs)
+
 
   def build_conversation(self, type):
     '''

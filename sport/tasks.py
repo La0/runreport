@@ -36,6 +36,25 @@ def publish_report(report, membership, uri):
   report.publish(membership, uri)
 
 @shared_task
+def sync_session_gcal(session, delete=False):
+  '''
+  Sync a SportSession on Google calendar
+  '''
+  from sport.gcal import GCalSync
+
+  # Check the user has gcal
+  user = session.day.week.user
+  if not user.has_gcal():
+    return
+
+  # Start sync
+  gc = GCalSync(user)
+  if delete and session.gcal_id:
+    gc.delete_event(session.gcal_id)
+  else:
+    gc.sync_sport_session(session)
+
+@shared_task
 def race_mail(*args, **kwargs):
   '''
   Send a mail to all users having a race today

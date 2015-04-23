@@ -313,6 +313,10 @@ class Athlete(AthleteBase):
     races = races.prefetch_related('day', 'day__week', 'day__week__user')
     return races
 
+  def has_gcal(self):
+    # Gcal enabled ?
+    return self.gcal_token and self.gcal_id
+
 class UserCategory(models.Model):
   code = models.CharField(max_length=10)
   name = models.CharField(max_length=120)

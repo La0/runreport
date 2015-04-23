@@ -141,10 +141,6 @@ class GCalSync(object):
       },
     }
 
-    from pprint import pprint
-    pprint (data)
-
-
     if session.gcal_id:
       # Update the event
       url += '/%s' % session.gcal_id
@@ -162,7 +158,18 @@ class GCalSync(object):
     event = resp.json()
     if not session.gcal_id:
       session.gcal_id = event['id']
-      session.save()
+      session.save_base(raw=True) # No signals / loop
 
     return event
 
+  def delete_event(self, event_id):
+    '''
+    Delete an event from user calendar
+    '''
+    url = 'https://www.googleapis.com/calendar/v3/calendars/%s/events/%s' % (self.user.gcal_id, event_id)
+    resp = self.google.delete(url)
+
+    if resp.status_code != 200:
+      raise Exception('Failed to delete event')
+
+    return resp.json()
