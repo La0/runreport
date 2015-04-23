@@ -1,5 +1,7 @@
 from django.conf import settings
+from django.contrib.sites.models import Site
 from requests_oauthlib import OAuth2Session
+from django.core.urlresolvers import reverse
 from sport.models import SportSession
 
 GAUTH_URL = 'https://accounts.google.com/o/oauth2/auth'
@@ -30,7 +32,10 @@ class GCalSync(object):
     os.environ['OAUTHLIB_RELAX_TOKEN_SCOPE'] = "1"
 
     # Init google session
-    redirect_uri = 'http://localhost:8000/user/gcal' # TRASHME
+    url = reverse('gcal-oauth')
+    scheme = settings.DEBUG and 'http' or 'https'
+    site = Site.objects.get(pk=settings.SITE_ID)
+    redirect_uri = '%s://%s%s' % (scheme, site.domain, url)
     args = {
       'redirect_uri' : redirect_uri,
       'scope' : GCAL_SCOPE,
