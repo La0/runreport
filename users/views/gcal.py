@@ -9,7 +9,16 @@ class GCalOauthView(TemplateView):
 
     # Check oauth
     self.gc = GCalSync(self.request.user)
-    if not self.request.user.gcal_token:
+    if self.request.user.gcal_token:
+
+      # Build runreport calendar
+      if not self.request.user.gcal_id:
+        cal = self.gc.create_calendar('RunReport')
+        if cal:
+          self.request.user.gcal_id = cal['id']
+          self.request.user.save()
+
+    else:
 
       # First step: redirect to Google
       redirect = self.kwargs.get('redirect') == 'redirect'

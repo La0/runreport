@@ -87,3 +87,18 @@ class GCalSync(object):
         return None
 
     return resp.json()
+
+  def create_calendar(self, summary):
+    '''
+    Create a new calendar
+    '''
+    url = 'https://www.googleapis.com/calendar/v3/calendars'
+    data = {
+      'summary' : summary,
+    }
+    resp = self.google.post(url, json=data)
+
+    if resp.status_code != 200:
+        return None
+
+    return resp.json()
