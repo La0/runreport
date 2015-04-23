@@ -1,5 +1,6 @@
 from django.conf import settings
 from requests_oauthlib import OAuth2Session
+from sport.models import SportSession
 
 GAUTH_URL = 'https://accounts.google.com/o/oauth2/auth'
 GTOKEN_URL = 'https://accounts.google.com/o/oauth2/token'
@@ -88,6 +89,18 @@ class GCalSync(object):
 
     return resp.json()
 
+  def get_calendar(self, calendar_id):
+    '''
+    Get details about a calendar
+    '''
+    url = 'https://www.googleapis.com/calendar/v3/calendars/%s' % calendar_id
+    resp = self.google.get(url)
+
+    if resp.status_code != 200:
+        return None
+
+    return resp.json()
+
   def create_calendar(self, summary):
     '''
     Create a new calendar
@@ -150,7 +163,6 @@ class GCalSync(object):
       # Create the event
       resp = self.google.post(url, json=data)
 
-
     if resp.status_code != 200:
       raise Exception('Failed to create event')
 
@@ -173,3 +185,17 @@ class GCalSync(object):
       raise Exception('Failed to delete event')
 
     return resp.json()
+
+  def cleanup(self):
+    '''
+    Cleanup all calendar sync traces
+    '''
+
+    # Remove token & id
+    self.user.gcal_token = None
+    self.user.gcal_id = None
+    self.user.save()
+
+    # Remove all id from Sport sessions
+    sessions = SportSession.objects.filter(day__week__user=self.user, gcal_id__isnull=False)
+    sessions.update(gcal_id=None)
