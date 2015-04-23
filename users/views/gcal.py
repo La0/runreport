@@ -13,10 +13,7 @@ class GCalOauthView(TemplateView):
 
       # Build runreport calendar
       if not self.request.user.gcal_id:
-        cal = self.gc.create_calendar('RunReport')
-        if cal:
-          self.request.user.gcal_id = cal['id']
-          self.request.user.save()
+        self.gc.create_calendar('RunReport')
 
     else:
 

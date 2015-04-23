@@ -92,6 +92,9 @@ class GCalSync(object):
     '''
     Create a new calendar
     '''
+    if self.user.gcal_id:
+      raise Exception('Already a calendar for this user')
+
     url = 'https://www.googleapis.com/calendar/v3/calendars'
     data = {
       'summary' : summary,
@@ -101,4 +104,65 @@ class GCalSync(object):
     if resp.status_code != 200:
         return None
 
-    return resp.json()
+    # Save calendar id
+    data = resp.json()
+    self.user.gcal_id = data['id']
+    self.user.save()
+
+    return data
+
+  def sync_sport_session(self, session):
+    '''
+    sync a sport session in calendar
+    '''
+    if not self.user.gcal_id:
+      raise Exception('No calendar available for this user')
+
+    url = 'https://www.googleapis.com/calendar/v3/calendars/%s/events' % (self.user.gcal_id, )
+
+    # Serialize session as Gcal
+    description = '\n'.join([
+      '%s %s' % (session.type, session.sport),
+      session.comment or '',
+    ])
+    dt = session.day.date.strftime('%Y-%m-%d')
+    data = {
+      'summary' : session.name or '-',
+      'description' : description,
+      'start' : {
+        'date' : dt,
+      },
+      'end' : {
+        'date' : dt,
+      },
+      'source' : {
+        'title' : 'RunReport',
+        'url' : session.day.absolute_url,
+      },
+    }
+
+    from pprint import pprint
+    pprint (data)
+
+
+    if session.gcal_id:
+      # Update the event
+      url += '/%s' % session.gcal_id
+      resp = self.google.patch(url, json=data)
+
+    else:
+      # Create the event
+      resp = self.google.post(url, json=data)
+
+
+    if resp.status_code != 200:
+      raise Exception('Failed to create event')
+
+    # Save gcal id
+    event = resp.json()
+    if not session.gcal_id:
+      session.gcal_id = event['id']
+      session.save()
+
+    return event
+

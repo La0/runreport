@@ -6,13 +6,15 @@ from users.models import Athlete
 from datetime import datetime, date, time
 import xlwt
 import tempfile
-from coach.settings import REPORT_SEND_DAY, REPORT_SEND_TIME
+from django.conf import settings
 from coach.mail import MailBuilder
 from helpers import date_to_day, week_to_date
 from sport.stats import StatsMonth
 from .sport import SportSession
 from collections import OrderedDict
 from messages.models import Conversation, TYPE_COMMENTS_WEEK
+from django.core.urlresolvers import reverse
+from django.contrib.sites.models import Site
 
 class SportWeek(models.Model):
   user = models.ForeignKey(Athlete, related_name='sportweek')
@@ -69,8 +71,8 @@ class SportWeek(models.Model):
     '''
     Build the next date to send reports
     '''
-    day = self.get_date(REPORT_SEND_DAY)
-    t = time(REPORT_SEND_TIME[0], REPORT_SEND_TIME[1])
+    day = self.get_date(settings.REPORT_SEND_DAY)
+    t = time(settings.REPORT_SEND_TIME[0], settings.REPORT_SEND_TIME[1])
     return datetime.combine(day, t)
 
   def is_current(self):
@@ -227,6 +229,15 @@ class SportDay(models.Model):
     unique_together = (('week', 'date'),)
     db_table = 'sport_day'
     app_label = 'sport'
+
+  @property
+  def absolute_url(self):
+    '''
+    Build the absolute private url of the day
+    '''
+    site = Site.objects.get(pk=settings.SITE_ID)
+    url = reverse('report-day', args=(self.date.year, self.date.month, self.date.day))
+    return 'https://%s%s' % (site.domain, url)
 
   def sports_count(self):
     # List sports usage in this day

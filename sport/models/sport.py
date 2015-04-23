@@ -49,6 +49,9 @@ class SportSession(models.Model):
   created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
 
+  # Google Calendar
+  gcal_id = models.CharField(max_length=255, null=True, blank=True)
+
   # Comments
   comments_public = models.OneToOneField('messages.Conversation', null=True, blank=True, related_name='session_public')
   comments_private = models.OneToOneField('messages.Conversation', null=True, blank=True, related_name='session_private')
