@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h1>{{ _('Connect to your Google Calendar') }}</h1>
+
+  {% if user.has_gcal() %}
+    {% if calendar %}
+    <div class="alert alert-success">
+      {{ _('Your google account is correctly linked to your RunReport account.') }}
+    </div>
+    {% else %}
+    <div class="alert alert-error">
+      <h4>{{ _('Error') }}</h4>
+      {{ _('An error occured while loading the RunReport calendar') }}
+    </div>
+    {% endif %}
+
+    <hr />
+    <div class="text-right">
+      <a class="btn btn-primary" href="https://calendar.google.com" target="_blank">
+        {{ _('View Google Calendar') }}
+      </a>
+      <a class="btn btn-danger" href="{{ url('gcal-oauth', 'delete') }}">
+        {{ _('Remove Google Calendar sync') }}
+      </a>
+    </div>
+  {% else %}
+  <div class="text-info">
+    <p>
+      {{ _('You can link your Google Calendar account to your RunReport account') }}
+    </p>
+    <p>
+      {{ _('A new calendar will be created, named RunReport. Every RunReport sessions will be saved to this new Google calendar') }}
+    </p>
+  </div>
+
+  <hr />
+  <div class="text-right">
+    <a href="{{ url('gcal-oauth', 'redirect') }}" class="btn btn-primary">
+      {{ _('Connect to your Google account') }}
+    </a>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

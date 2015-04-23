@@ -93,6 +93,10 @@ class Athlete(AthleteBase):
   # Strava
   strava_token = models.CharField(max_length=255, null=True, blank=True)
 
+  # Google Calendar
+  gcal_token = models.CharField(max_length=255, null=True, blank=True)
+  gcal_id = models.CharField(max_length=255, null=True, blank=True)
+
   # Demo dummy account ?
   demo = models.BooleanField(_('demo user'), default=False)
 
@@ -308,6 +312,10 @@ class Athlete(AthleteBase):
     races = SportSession.objects.filter(**f)
     races = races.prefetch_related('day', 'day__week', 'day__week__user')
     return races
+
+  def has_gcal(self):
+    # Gcal enabled ?
+    return self.gcal_token and self.gcal_id
 
 class UserCategory(models.Model):
   code = models.CharField(max_length=10)

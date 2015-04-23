@@ -24,6 +24,7 @@ geopy==1.4.0
 gunicorn==18.0
 ics==0.3
 kombu==3.0.21
+oauthlib==0.7.2
 paramiko==1.10.1
 psutil==1.0.1
 psycopg2==2.5.3
@@ -35,8 +36,9 @@ randomavatar==0.4.1
 raven==3.6.1
 redis==2.8.0
 reportlab==3.1.44
-requests==1.2.3
-simplejson==3.6.2
+requests==2.6.0
+requests-oauthlib==0.4.2
+simplejson==3.6.5
 six==1.9.0
 sqlparse==0.1.14
 xlwt==0.7.5

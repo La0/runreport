@@ -286,6 +286,9 @@ TRACK_DATA=os.path.join(HOME, 'tracks_data')
 STRAVA_ID = 0
 STRAVA_SECRET = ''
 
+# Google Calendar
+GCAL_CLIENT_ID = ''
+GCAL_CLIENT_SECRET = ''
 
 # Club Invite sender username
 CLUB_INVITE_SENDER = 'sender'

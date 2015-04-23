@@ -7,3 +7,4 @@ from races import RacesView
 from calendar import AthleteCalendarWeek, AthleteCalendarMonth, AthleteCalendarDay, AthleteCalendarYear
 from stats import AthleteStats
 from notifications import UserNotificationsList, UserNotificationsClear
+from gcal import GCalOauthView

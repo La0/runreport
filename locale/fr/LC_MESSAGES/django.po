@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-22 14:07+0200\n"
-"PO-Revision-Date: 2015-04-22 14:08+0100\n"
+"POT-Creation-Date: 2015-04-23 16:10+0200\n"
+"PO-Revision-Date: 2015-04-23 16:12+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -907,14 +907,12 @@ msgstr "N'oubliez pas de renseigner votre séance après la course"
 msgid "Enjoy your race !"
 msgstr "Bonne course !"
 
-#| msgid "No future races"
 msgid "New friends races"
 msgstr "Nouvelles courses d'amis"
 
 msgid "These are your friends races for tommorow:"
 msgstr "Voici les courses de vos amis pour demain:"
 
-#| msgid "race"
 msgid "will race"
 msgstr "participera à"
 
@@ -1700,6 +1698,39 @@ msgstr ""
 
 msgid "Error"
 msgstr "Erreur"
+
+msgid "Connect to your Google Calendar"
+msgstr "Connectez votre calendrier Google"
+
+#| msgid "Your RunReport account is now connected to your Garmin account."
+msgid "Your google account is correctly linked to your RunReport account."
+msgstr "Votre compte RunReport est maintenant connecté à votre compte Google."
+
+msgid "An error occured while loading the RunReport calendar"
+msgstr "Une erreur est survenue pendant le chargement du calendrier RunReport"
+
+#| msgid "View calendar"
+msgid "View Google Calendar"
+msgstr "Voir le calendrier Google"
+
+#| msgid "Remove from my calendar"
+msgid "Remove Google Calendar sync"
+msgstr "Supprimer la synchronisation Google"
+
+msgid "You can link your Google Calendar account to your RunReport account"
+msgstr ""
+"Vous pouvez relier votre calendrier Google personnel à votre compte RunReport"
+
+msgid ""
+"A new calendar will be created, named RunReport. Every RunReport sessions "
+"will be saved to this new Google calendar"
+msgstr ""
+"Un nouveau calendrier a été crée, nommé RunReport. Chaque séance de sport "
+"RunReport sera exportée vers ce nouveau calendrier Google."
+
+#| msgid "Activate your account"
+msgid "Connect to your Google account"
+msgstr "Connectez votre compte Google"
 
 msgid "Please sign in before using the invite"
 msgstr "Merci de vous connecter avant d'utiliser l'invitation."

@@ -210,9 +210,6 @@ function load_box(url, method, data, output){
         output.html(data.html);
         dom = output;
 
-        // Trigger forms
-        dom.find('form').on('submit', submit_form);
-
       } else {
         return;
       }
