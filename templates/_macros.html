@@ -117,14 +117,14 @@
 			<div class="input-group-btn dropdown">
 				<button class="btn dropdown-toggle {{ type }}" data-toggle="dropdown">
 					<span class="name">
-            {{ _(type)|title() }}
+            {{ _(type|title()) }}
 					</span>
 					<span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu types">
 					{% for k, name in types %}
 					<li{% if type == k %} class="active"{% endif %}>
-					<a href="#" value="{{k}}">{{ _(name)|title() }}</a>
+					<a href="#" value="{{k}}">{{ name }}</a>
 				</li>
 				{% endfor %}
 			</ul>
