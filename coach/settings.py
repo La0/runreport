@@ -122,7 +122,9 @@ TEMPLATES = [
     # Django templates for apps
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(HOME, 'templates_admin'),
+        ],
         'APP_DIRS': True,
         'OPTIONS' : {
             'context_processors': [
@@ -179,12 +181,12 @@ WSGI_APPLICATION = 'coach.wsgi.application'
 
 
 INSTALLED_APPS = (
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.staticfiles',
-    'django.contrib.admin',
     'django.contrib.gis',
     'sport',
     'users',

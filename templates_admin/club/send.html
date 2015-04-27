@@ -12,7 +12,7 @@
 </p>
 {% else %}
   Send this invite right now ?
-  <form action="{{ url("admin:club-invite-send", invite.pk) }}" method="POST">
+  <form action="{% url "admin:club-invite-send" invite.pk %}" method="POST">
     {% csrf_token %}
     <button type="submit">Send</button>
   </form>

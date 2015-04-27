@@ -30,7 +30,7 @@ class ClubInviteAdmin(admin.ModelAdmin):
     context = {
       'invite' : invite,
     }
-    return render(request, 'admin/club/send.html', context)
+    return render(request, 'club/send.html', context)
 
 admin.site.register(ClubInvite, ClubInviteAdmin)
 
