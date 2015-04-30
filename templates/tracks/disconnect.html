@@ -2,7 +2,7 @@
 
 {% set modal_title = _('Disconnect %s') % provider.NAME|title() %}
 
-{% set form_url = 'track-provider-disconnect'|url(provider.NAME) %}
+{% set form_url = url('track-provider-disconnect', provider.NAME) %}
 
 {% block body %}
 {{ _('Are you sure to disconnect the GPS Service %s from your account ?') % provider.NAME|title() }}
