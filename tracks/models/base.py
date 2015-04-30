@@ -41,7 +41,7 @@ class Track(models.Model):
     # Helper to access file by name
     try:
       return self.files.get(name=name)
-    except:
+    except TrackFile.DoesNotExist:
       return None
 
   def add_file(self, name, data):

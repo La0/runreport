@@ -270,8 +270,8 @@ class TrackProvider:
       s.distance_total = total.distance
       s.time_total = total.time
 
-      s.track = track
-      s.save()
+      s.track_id = track.pk
+      s.save_base(raw=True)
       logger.debug("%s split #%d added split %d"% (self.NAME, track.pk, s.position))
 
     # Save main split
