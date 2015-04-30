@@ -8,6 +8,9 @@ $(function(){
   // Modals show
   $(document).on('click', '.modal-action', load_modal);
 
+  // Popover show
+  $('[data-toggle="popover"]').popover();
+
   // Load anchor urls if available
   var hash = window.location.hash.substring(1);
   if(hash){

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-23 16:10+0200\n"
+"POT-Creation-Date: 2015-04-30 16:41+0200\n"
 "PO-Revision-Date: 2015-02-09 17:42+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
@@ -16,6 +16,209 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.4\n"
+
+msgid "The CSV file has not 3 columns."
+msgstr ""
+
+msgid "Link name"
+msgstr ""
+
+msgid "Link address"
+msgstr ""
+
+msgid "RunReport Invite"
+msgstr ""
+
+msgid "Group name"
+msgstr ""
+
+msgid "Name in the url"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Clubs"
+msgstr ""
+
+msgid "View clubs"
+msgstr ""
+
+msgid "Create a club"
+msgstr ""
+
+msgid "Help"
+msgstr ""
+
+msgid "Glossary"
+msgstr ""
+
+msgid "News"
+msgstr ""
+
+msgid "Contact"
+msgstr ""
+
+msgid "My Week"
+msgstr ""
+
+msgid "My Calendar"
+msgstr ""
+
+msgid "Members"
+msgstr ""
+
+msgid "Groups"
+msgstr ""
+
+msgid "My athletes"
+msgstr ""
+
+msgid "Races"
+msgstr ""
+
+msgid "All the club"
+msgstr ""
+
+msgid "Newcomers"
+msgstr ""
+
+msgid "Archives"
+msgstr ""
+
+msgid "Places"
+msgstr ""
+
+msgid "Manage"
+msgstr ""
+
+msgid "My messages"
+msgstr ""
+
+msgid "My preferences"
+msgstr ""
+
+msgid "My posts"
+msgstr ""
+
+msgid "My friends"
+msgstr ""
+
+msgid "My public profile"
+msgstr ""
+
+msgid "My statistics"
+msgstr ""
+
+msgid "My paces"
+msgstr ""
+
+msgid "My races"
+msgstr ""
+
+msgid "My GPS services"
+msgstr ""
+
+msgid "Logout"
+msgstr ""
+
+msgid "Create an account"
+msgstr ""
+
+msgid "Login"
+msgstr ""
+
+msgid "French"
+msgstr ""
+
+msgid "English"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Address"
+msgstr ""
+
+msgid "Zip Code"
+msgstr ""
+
+msgid "City"
+msgstr ""
+
+msgid "Your email"
+msgstr ""
+
+msgid "Your name"
+msgstr ""
+
+msgid "Your message"
+msgstr ""
+
+msgid "New contact message"
+msgstr ""
+
+msgid "Applied"
+msgstr "To Do"
+
+msgid "Done"
+msgstr ""
+
+msgid "Failed"
+msgstr "Missed"
+
+#, python-format
+msgid "Training plan : %s"
+msgstr ""
+
+#, python-format
+msgid "Training plan - %s.pdf"
+msgstr ""
+
+msgid "Your athlete's sessions today"
+msgstr ""
+
+msgid "Race"
+msgstr ""
+
+msgid "Training"
+msgstr ""
+
+msgid "Blog"
+msgstr ""
+
+msgid "Source Image"
+msgstr ""
+
+msgid "Thumbnail Image"
+msgstr ""
+
+msgid "Cropped Image"
+msgstr ""
+
+msgid "Post Type"
+msgstr ""
+
+msgid "Post title"
+msgstr ""
+
+msgid "Post content"
+msgstr ""
+
+msgid "You must select a status for your training plan."
+msgstr ""
+
+msgid "You must validate your training plan (select Done or Missed)."
+msgstr ""
+
+msgid "Rest"
+msgstr ""
+
+msgid "session comment"
+msgstr ""
+
+msgid "Race category"
+msgstr ""
 
 msgid "Forbidden"
 msgstr ""
@@ -40,9 +243,6 @@ msgstr ""
 msgid "Session"
 msgstr ""
 
-msgid "Race category"
-msgstr ""
-
 msgid "Use RunReport in"
 msgstr ""
 
@@ -62,15 +262,6 @@ msgid "Github"
 msgstr ""
 
 msgid "Facebook"
-msgstr ""
-
-msgid "News"
-msgstr ""
-
-msgid "Help"
-msgstr ""
-
-msgid "Contact"
 msgstr ""
 
 msgid "Manage all your athletes"
@@ -125,9 +316,6 @@ msgstr ""
 msgid "Directly receive in your mailbox your athletes weekly reports."
 msgstr ""
 
-msgid "Create a club"
-msgstr ""
-
 msgid "Warning"
 msgstr ""
 
@@ -158,9 +346,6 @@ msgid "Groups of %s"
 msgstr ""
 
 msgid "Create user group"
-msgstr ""
-
-msgid "Members"
 msgstr ""
 
 msgid "Created by"
@@ -245,9 +430,6 @@ msgstr ""
 msgid "You are not currently logged with an user account."
 msgstr ""
 
-msgid "Create an account"
-msgstr ""
-
 msgid "Already a member"
 msgstr ""
 
@@ -281,9 +463,6 @@ msgid "Close"
 msgstr ""
 
 msgid "Add a link"
-msgstr ""
-
-msgid "Manage"
 msgstr ""
 
 msgid "Users"
@@ -350,9 +529,6 @@ msgid ""
 "of the club, ..."
 msgstr ""
 
-msgid "Name"
-msgstr ""
-
 msgid "Url"
 msgstr ""
 
@@ -411,12 +587,6 @@ msgstr ""
 msgid "All members"
 msgstr ""
 
-msgid "Newcomers"
-msgstr ""
-
-msgid "Archives"
-msgstr ""
-
 msgid "Trainers"
 msgstr ""
 
@@ -453,9 +623,6 @@ msgid "Races of %s"
 msgstr ""
 
 msgid "Type"
-msgstr ""
-
-msgid "Race"
 msgstr ""
 
 msgid "Date"
@@ -583,9 +750,6 @@ msgstr ""
 msgid "Delete this friendship"
 msgstr ""
 
-msgid "My friends"
-msgstr ""
-
 msgid "View this profile"
 msgstr ""
 
@@ -599,6 +763,34 @@ msgid "Accept"
 msgstr ""
 
 msgid "You don't have any friend request to validate."
+msgstr ""
+
+msgid ""
+"You can add people you know as friends on RunReport to view their sessions "
+"next to yours."
+msgstr ""
+
+msgid "Your friends"
+msgstr ""
+
+msgid "Supported formats for times are : HH:MM, HH:MM:SS, 1h, 1h20"
+msgstr ""
+
+msgid "Time"
+msgstr ""
+
+msgid "Supported formats for distances are : Xkm or X.Y"
+msgstr ""
+
+msgid "Distance"
+msgstr ""
+
+msgid ""
+"On this page, you can view all your sport sessions in a week. Click on a "
+"session to edit it."
+msgstr ""
+
+msgid "Your week"
 msgstr ""
 
 msgid "Features"
@@ -717,9 +909,6 @@ msgid "If you refuse this subscription, you can archive it on the same page."
 msgstr ""
 
 msgid "In both cases, an email will be sent to the subscriber."
-msgstr ""
-
-msgid "New contact message"
 msgstr ""
 
 msgid "Hello admin !"
@@ -847,23 +1036,8 @@ msgstr ""
 msgid "View week"
 msgstr ""
 
-msgid "Time"
-msgstr ""
-
-msgid "Distance"
-msgstr ""
-
 msgid "Plan"
 msgstr ""
-
-msgid "Applied"
-msgstr "To Do"
-
-msgid "Done"
-msgstr ""
-
-msgid "Failed"
-msgstr "Missed"
 
 msgid "No session"
 msgstr ""
@@ -881,9 +1055,6 @@ msgid "Total"
 msgstr ""
 
 msgid "Week's summary"
-msgstr ""
-
-msgid "Your athlete's sessions today"
 msgstr ""
 
 msgid "Activate your account"
@@ -964,12 +1135,6 @@ msgid "Week from %(start)s to %(end)s"
 msgstr ""
 
 msgid "written by"
-msgstr ""
-
-msgid "Training"
-msgstr ""
-
-msgid "Rest"
 msgstr ""
 
 msgid ""
@@ -1190,9 +1355,6 @@ msgstr ""
 msgid "Create the post"
 msgstr ""
 
-msgid "My posts"
-msgstr ""
-
 msgid "Add a new post"
 msgstr ""
 
@@ -1338,9 +1500,6 @@ msgid "Your comments from last week have not been published"
 msgstr ""
 
 msgid "Sport icons"
-msgstr ""
-
-msgid "Glossary"
 msgstr ""
 
 msgid "Loading private comments..."
@@ -1631,9 +1790,6 @@ msgstr ""
 msgid "Please sign in before using the invite"
 msgstr ""
 
-msgid "Your email"
-msgstr ""
-
 msgid "Your password"
 msgstr ""
 
@@ -1699,9 +1855,6 @@ msgid ""
 "Specify your email address below, and you'll receive a mail to change it."
 msgstr ""
 
-msgid "My preferences"
-msgstr ""
-
 msgid "Personal Informations"
 msgstr ""
 
@@ -1715,6 +1868,9 @@ msgid "Mails"
 msgstr ""
 
 msgid "Sports Informations"
+msgstr ""
+
+msgid "Settings"
 msgstr ""
 
 msgid "Password"
@@ -1773,9 +1929,6 @@ msgid "Send a message"
 msgstr ""
 
 msgid "Trained by"
-msgstr ""
-
-msgid "Groups"
 msgstr ""
 
 #, python-format
@@ -1852,45 +2005,390 @@ msgstr ""
 msgid "No future races"
 msgstr ""
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
+msgid "Firstname"
+msgstr ""
+
+msgid "Lastname"
+msgstr ""
+
+msgid "Repeat your password"
+msgstr ""
+
+msgid "An account already uses this email."
+msgstr ""
+
+msgid "Please repeat the same password"
+msgstr ""
+
+msgid "Invalid Garmin authentification"
+msgstr ""
+
+msgid "username"
+msgstr ""
+
+msgid "Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."
+msgstr ""
+
+msgid "Enter a valid username."
+msgstr ""
+
+msgid "first name"
+msgstr ""
+
+msgid "last name"
+msgstr ""
+
+msgid "email address"
+msgstr ""
+
+msgid "staff status"
+msgstr ""
+
+msgid "Designates whether the user can log into this admin site."
+msgstr ""
+
+msgid "active"
+msgstr ""
+
+msgid ""
+"Designates whether this user should be treated as active. Unselect this "
+"instead of deleting accounts."
+msgstr ""
+
+msgid "date joined"
+msgstr ""
+
+msgid "user"
+msgstr ""
+
+msgid "users"
+msgstr ""
+
+msgid "birthday"
+msgstr ""
+
+msgid "category"
+msgstr ""
+
+msgid "vma"
+msgstr ""
+
+msgid "Ex: 12.5 km/h"
+msgstr ""
+
+msgid "cardiac frequency"
+msgstr ""
+
+msgid "cardiac frequency at rest"
+msgstr ""
+
+msgid "height"
+msgstr ""
+
+msgid "Unit: cm"
+msgstr ""
+
+msgid "weight"
+msgstr ""
+
+msgid "Unit: kg"
+msgstr ""
+
+msgid "comment"
+msgstr ""
+
+msgid "number of sessions per week"
+msgstr ""
+
+msgid "license"
+msgstr ""
+
+msgid "default sport"
+msgstr ""
+
 msgid "auto send emails"
 msgstr "automatically send reports to your trainers at the end of weeks"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Moto"
-msgstr "Motorbike"
+msgid "Daily trainer mail"
+msgstr ""
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
+msgid "language used"
+msgstr ""
+
+msgid "garmin login"
+msgstr ""
+
+msgid "garmin password"
+msgstr ""
+
+msgid "demo user"
+msgstr ""
+
+msgid "profile picture"
+msgstr ""
+
+msgid "profile picture visibility"
+msgstr ""
+
+msgid "races visibility"
+msgstr ""
+
+msgid "records visibility"
+msgstr ""
+
+msgid "stats visibility"
+msgstr ""
+
+msgid "calendar visibility"
+msgstr ""
+
+msgid "comments visibility"
+msgstr ""
+
+msgid "tracks visibility"
+msgstr ""
+
+msgid "Display contextual help"
+msgstr ""
+
+#, python-format
+msgid "%(first_name)s %(last_name)s has sent you a message"
+msgstr ""
+
+#, python-format
+msgid ""
+"%(first_name)s %(last_name)s has written a comment on your week %(week)s"
+msgstr ""
+
+#, python-format
+msgid "%(first_name)s %(last_name)s has written a comment on his week %(week)s"
+msgstr ""
+
+msgid " private"
+msgstr ""
+
+#, python-format
+msgid ""
+"%(first_name)s %(last_name)s has written a comment %(type)s on his session "
+"\"%(name)s\""
+msgstr ""
+
+#, python-format
+msgid ""
+"%(first_name)s %(last_name)s has written a comment %(type)s on your session "
+"\"%(name)s\""
+msgstr ""
+
+#, python-format
+msgid ""
+"%(first_name)s %(last_name)s has written a comment on the session \"%(name)s"
+"\" of %(first_name)s %(last_name)s"
+msgstr ""
+
+#, python-format
+msgid "%(first_name)s %(last_name)s is now your friend on RunReport"
+msgstr ""
+
+#, python-format
+msgid "%(first_name)s %(last_name)s wants to add you as a friend."
+msgstr ""
+
+#, python-format
+msgid "%(first_name)s %(last_name)s has done his training : %(session_name)s"
+msgstr ""
+
+#, python-format
+msgid "%(first_name)s %(last_name)s has missed his training : %(session_name)s"
+msgstr ""
+
+#, python-format
+msgid ""
+"%(first_name)s %(last_name)s has removed your plan %(plan_name)s from his "
+"calendar"
+msgstr ""
+
+msgid "Any Activity Type"
+msgstr ""
+
+msgid "Uncategorized"
+msgstr ""
+
 msgid "Course à pied"
 msgstr "Running"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
+msgid "Street Running"
+msgstr ""
+
+msgid "Track Running"
+msgstr ""
+
+msgid "Trail Running"
+msgstr ""
+
+msgid "Treadmill Running"
+msgstr ""
+
 msgid "Vélo"
 msgstr "Cycling"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
+msgid "Cyclocross"
+msgstr ""
+
+msgid "Downhill Biking"
+msgstr ""
+
+msgid "Indoor Cycling"
+msgstr ""
+
+msgid "Mountain Biking"
+msgstr ""
+
+msgid "Recumbent Cycling"
+msgstr ""
+
+msgid "Road Cycling"
+msgstr ""
+
+msgid "Track Cycling"
+msgstr ""
+
+msgid "Fitness"
+msgstr ""
+
+msgid "Elliptical"
+msgstr ""
+
+msgid "Indoor Cardio"
+msgstr ""
+
+msgid "Indoor Rowing"
+msgstr ""
+
+msgid "Stair Climbing"
+msgstr ""
+
+msgid "Strength Training"
+msgstr ""
+
 msgid "Randonnée"
 msgstr "hiking"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
 msgid "Natation"
 msgstr "Swimming"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
+msgid "Lap Swimming"
+msgstr ""
+
+msgid "Open Water Swimming"
+msgstr ""
+
 msgid "Marche"
 msgstr "Walking"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
+msgid "Casual Walking"
+msgstr ""
+
+msgid "Speed Walking"
+msgstr ""
+
+msgid "Transition"
+msgstr ""
+
+msgid "Swim to Bike Transition"
+msgstr ""
+
+msgid "Bike to Run Transition"
+msgstr ""
+
+msgid "Run to Bike Transition"
+msgstr ""
+
+msgid "Moto"
+msgstr "Motorbike"
+
 msgid "Autre"
 msgstr "Other"
+
+msgid "Backcountry Skiing/Snowboarding"
+msgstr ""
+
+msgid "Boating"
+msgstr ""
+
+msgid "Ski Cross"
+msgstr ""
+
+msgid "Driving"
+msgstr ""
+
+msgid "Flying"
+msgstr ""
+
+msgid "Golf"
+msgstr ""
+
+msgid "Horseback Riding"
+msgstr ""
+
+msgid "Inline Skating"
+msgstr ""
+
+msgid "Mountaineering"
+msgstr ""
+
+msgid "Paddling"
+msgstr ""
+
+msgid "Resort Skiing/Snowboarding"
+msgstr ""
+
+msgid "Rowing"
+msgstr ""
+
+msgid "Sailing"
+msgstr ""
+
+msgid "Skate Skiing"
+msgstr ""
+
+msgid "Skating"
+msgstr ""
+
+msgid "Snowmobiling"
+msgstr ""
+
+msgid "Snowshoeing"
+msgstr ""
+
+msgid "Stand Up Paddleboarding"
+msgstr ""
+
+msgid "Whitewater Kayaking/Rafting"
+msgstr ""
+
+msgid "Wind/Kite Surfing"
+msgstr ""
+
+msgid "Ride"
+msgstr ""
+
+msgid "Run"
+msgstr ""
+
+msgid "Workout"
+msgstr ""
+
+msgid "Ski"
+msgstr ""
+
+msgid "Hike"
+msgstr ""
+
+msgid "Swim"
+msgstr ""
+
+msgid "Walk"
+msgstr ""
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0

@@ -177,3 +177,11 @@
 </span>
 
 {%- endmacro %}
+
+{% macro help(user, text, title, direction='top') %}
+  {% if not user.is_authenticated() or user.display_help %}
+  <button type="button" class="help btn btn-info btn-light btn-sm" role="button" data-toggle="popover" data-trigger="focus" data-placement="{{ direction }}" title="{{ title or _('Help') }}" data-content="{{ text }}">
+    <i class="icon-help-circled"></i> {{ _('Help') }}
+  </button>
+  {% endif %}
+{%- endmacro %}

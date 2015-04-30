@@ -116,6 +116,9 @@ class Athlete(AthleteBase):
   # It's automatically symmetrical
   friends = models.ManyToManyField("self")
 
+  # Display contextual help
+  display_help = models.BooleanField(_('Display contextual help'), default=True)
+
   def search_category(self):
     if not self.birthday:
       return None

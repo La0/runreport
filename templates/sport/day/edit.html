@@ -59,6 +59,7 @@
             <i class="icon-down-open"></i>
             {{ friends_sessions|count }} {{ _('Friends sessions') }}
           </a>
+          {{ macros.help(user, _('You can add people you know as friends on RunReport to view their sessions next to yours.'), _('Your friends')) }}
           <div class="images hidden-xs">
           {% for friend in friends_shortlist %}
             <img src="{{ friend.avatar.url }}" class="img-rounded do-tooltip" title="{{ friend.first_name }} {{ friend.last_name }}" />

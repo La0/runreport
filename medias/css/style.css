@@ -779,3 +779,9 @@ div.plan-status label {
 #attached_sessions #id_date_day {
   display: none !important;
 }
+
+/* Help popover */
+div.popover div.popover-content {
+  font-weight: normal !important;
+  font-size: 14px !important;
+}

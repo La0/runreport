@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-23 16:10+0200\n"
-"PO-Revision-Date: 2015-04-23 16:12+0100\n"
+"POT-Creation-Date: 2015-04-30 16:41+0200\n"
+"PO-Revision-Date: 2015-04-30 16:42+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -17,6 +17,209 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 1.5.4\n"
+
+msgid "The CSV file has not 3 columns."
+msgstr "Le fichier CSV n'a pas 3 colonnes."
+
+msgid "Link name"
+msgstr "Nom du lien"
+
+msgid "Link address"
+msgstr "Adresse du lien"
+
+msgid "RunReport Invite"
+msgstr "Invitation RunReport"
+
+msgid "Group name"
+msgstr "Nom du group"
+
+msgid "Name in the url"
+msgstr "Nom dans l'url"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Clubs"
+msgstr "Clubs"
+
+msgid "View clubs"
+msgstr "Voir les clubs"
+
+msgid "Create a club"
+msgstr "Créer un club"
+
+msgid "Help"
+msgstr "Aide"
+
+msgid "Glossary"
+msgstr "Glossaire"
+
+msgid "News"
+msgstr "News"
+
+msgid "Contact"
+msgstr "Contact"
+
+msgid "My Week"
+msgstr "Ma Semaine"
+
+msgid "My Calendar"
+msgstr "Mon Calendrier"
+
+msgid "Members"
+msgstr "Membres"
+
+msgid "Groups"
+msgstr "Groupes"
+
+msgid "My athletes"
+msgstr "Mes athlètes"
+
+msgid "Races"
+msgstr "Les Courses"
+
+msgid "All the club"
+msgstr "Tout le club"
+
+msgid "Newcomers"
+msgstr "Nouveaux"
+
+msgid "Archives"
+msgstr "Archives"
+
+msgid "Places"
+msgstr "Les lieux"
+
+msgid "Manage"
+msgstr "Administrer"
+
+msgid "My messages"
+msgstr "Mes messages"
+
+msgid "My preferences"
+msgstr "Mes préférences"
+
+msgid "My posts"
+msgstr "Mes articles"
+
+msgid "My friends"
+msgstr "Mes amis"
+
+msgid "My public profile"
+msgstr "Mon profil public"
+
+msgid "My statistics"
+msgstr "Mes statistiques"
+
+msgid "My paces"
+msgstr "Mes allures"
+
+msgid "My races"
+msgstr "Mes résultats"
+
+msgid "My GPS services"
+msgstr "Mes services GPS"
+
+msgid "Logout"
+msgstr "Se déconnecter"
+
+msgid "Create an account"
+msgstr "Créer un compte"
+
+msgid "Login"
+msgstr "Se connecter"
+
+msgid "French"
+msgstr "Français"
+
+msgid "English"
+msgstr "Anglais"
+
+msgid "Name"
+msgstr "Nom"
+
+msgid "Address"
+msgstr "Adresse"
+
+msgid "Zip Code"
+msgstr "Code Postal"
+
+msgid "City"
+msgstr "Ville"
+
+msgid "Your email"
+msgstr "Votre email"
+
+msgid "Your name"
+msgstr "Votre nom"
+
+msgid "Your message"
+msgstr "Votre message"
+
+msgid "New contact message"
+msgstr "Nouveau message de contact"
+
+msgid "Applied"
+msgstr "A faire"
+
+msgid "Done"
+msgstr "Fait"
+
+msgid "Failed"
+msgstr "Manqué"
+
+#, python-format
+msgid "Training plan : %s"
+msgstr "Plan d'entraînement : %s"
+
+#, python-format
+msgid "Training plan - %s.pdf"
+msgstr "Plan d'entraînement - %s.pdf"
+
+msgid "Your athlete's sessions today"
+msgstr "Les séances du jour de vos athlètes"
+
+msgid "Race"
+msgstr "Course"
+
+msgid "Training"
+msgstr "Entraînement"
+
+msgid "Blog"
+msgstr "Blog"
+
+msgid "Source Image"
+msgstr "Image source"
+
+msgid "Thumbnail Image"
+msgstr "Image Aperçu"
+
+msgid "Cropped Image"
+msgstr "Image Carrée"
+
+msgid "Post Type"
+msgstr "Type d'article"
+
+msgid "Post title"
+msgstr "Titre de l'article"
+
+msgid "Post content"
+msgstr "Contenu de l'article"
+
+msgid "You must select a status for your training plan."
+msgstr "Vous devez choisir un status pour votre plan d'entraînement."
+
+msgid "You must validate your training plan (select Done or Missed)."
+msgstr "Vous devez valider votre plan d'entraînement (Fait ou Manqué)"
+
+msgid "Rest"
+msgstr "Repos"
+
+msgid "session comment"
+msgstr "Commentaire"
+
+msgid "Race category"
+msgstr "Type de course"
 
 msgid "Forbidden"
 msgstr "Interdit"
@@ -43,9 +246,6 @@ msgstr ""
 msgid "Session"
 msgstr "Séance"
 
-msgid "Race category"
-msgstr "Type de course"
-
 msgid "Use RunReport in"
 msgstr "Utiliser RunReport en"
 
@@ -67,15 +267,6 @@ msgstr "Github"
 
 msgid "Facebook"
 msgstr "Facebook"
-
-msgid "News"
-msgstr "News"
-
-msgid "Help"
-msgstr "Aide"
-
-msgid "Contact"
-msgstr "Contact"
 
 msgid "Manage all your athletes"
 msgstr "Gérez tous vos athlètes"
@@ -139,9 +330,6 @@ msgstr ""
 "Recevez directement sur votre boite mail les rapports hebdomadaires de vos "
 "athlètes."
 
-msgid "Create a club"
-msgstr "Créer un club"
-
 msgid "Warning"
 msgstr "Attention"
 
@@ -173,9 +361,6 @@ msgstr "Groupes de %s"
 
 msgid "Create user group"
 msgstr "Créer un groupe d'utilisateurs"
-
-msgid "Members"
-msgstr "Membres"
 
 msgid "Created by"
 msgstr "Crée par"
@@ -259,9 +444,6 @@ msgstr "Pas de compte"
 msgid "You are not currently logged with an user account."
 msgstr "Vous n'êtes actuellement pas connecté avec un compte utilisateur"
 
-msgid "Create an account"
-msgstr "Créer un compte"
-
 msgid "Already a member"
 msgstr "Déjà membre"
 
@@ -298,9 +480,6 @@ msgstr "Fermer"
 
 msgid "Add a link"
 msgstr "Ajouter un lien"
-
-msgid "Manage"
-msgstr "Administrer"
 
 msgid "Users"
 msgstr "Utilisateurs"
@@ -376,9 +555,6 @@ msgstr ""
 "Ils sont utiles pour indiquer des sites externes: groupe Facebook, site "
 "officiel du club, ..."
 
-msgid "Name"
-msgstr "Nom"
-
 msgid "Url"
 msgstr "Url"
 
@@ -437,12 +613,6 @@ msgstr "Mes Athlètes"
 msgid "All members"
 msgstr "Tous les membres"
 
-msgid "Newcomers"
-msgstr "Nouveaux"
-
-msgid "Archives"
-msgstr "Archives"
-
 msgid "Trainers"
 msgstr "Entraîneurs"
 
@@ -480,9 +650,6 @@ msgstr "Courses de %s"
 
 msgid "Type"
 msgstr "Type"
-
-msgid "Race"
-msgstr "Course"
 
 msgid "Date"
 msgstr "Date"
@@ -620,9 +787,6 @@ msgstr ""
 msgid "Delete this friendship"
 msgstr "Supprimer cette relation d'amitié"
 
-msgid "My friends"
-msgstr "Mes amis"
-
 msgid "View this profile"
 msgstr "Voir ce profil public"
 
@@ -637,6 +801,40 @@ msgstr "Accepter"
 
 msgid "You don't have any friend request to validate."
 msgstr "Vous n'avez aucune demande d'amitié à valider."
+
+msgid ""
+"You can add people you know as friends on RunReport to view their sessions "
+"next to yours."
+msgstr ""
+"Vous pouvez ajouter les personnes de votre connaissance sur RunReport en "
+"tant qu'amis afin de voir leur séances de sport."
+
+msgid "Your friends"
+msgstr "Vos amis"
+
+msgid "Supported formats for times are : HH:MM, HH:MM:SS, 1h, 1h20"
+msgstr "Formats supportés pour les temps :  HH:MM, HH:MM:SS, 1h, 1h20"
+
+msgid "Time"
+msgstr "Temps"
+
+msgid "Supported formats for distances are : Xkm or X.Y"
+msgstr "Formats supportés pour les distances :  Xkm ou X.Y"
+
+msgid "Distance"
+msgstr "Distance"
+
+msgid ""
+"On this page, you can view all your sport sessions in a week. Click on a "
+"session to edit it."
+msgstr ""
+"Sur cette page, vous pouvez voir toutes vos séances de sport de la semaine. "
+"Cliquez sur une séance pour l'éditer. Cliquez sur une journée pour ajouter "
+"une séance."
+
+#| msgid "Your week %s"
+msgid "Your week"
+msgstr "Votre semaine"
 
 msgid "Features"
 msgstr "Fonctionalités"
@@ -783,9 +981,6 @@ msgstr ""
 msgid "In both cases, an email will be sent to the subscriber."
 msgstr "Dans les deux cas, un email sera envoyé à l'athlète."
 
-msgid "New contact message"
-msgstr "Nouveau message de contact"
-
 msgid "Hello admin !"
 msgstr "Bonjour admin !"
 
@@ -919,23 +1114,8 @@ msgstr "participera à"
 msgid "View week"
 msgstr "Voir semaine"
 
-msgid "Time"
-msgstr "Temps"
-
-msgid "Distance"
-msgstr "Distance"
-
 msgid "Plan"
 msgstr "Plan"
-
-msgid "Applied"
-msgstr "A faire"
-
-msgid "Done"
-msgstr "Fait"
-
-msgid "Failed"
-msgstr "Manqué"
 
 msgid "No session"
 msgstr "Pas de séance"
@@ -954,9 +1134,6 @@ msgstr "Total"
 
 msgid "Week's summary"
 msgstr "Bilan de la semaine"
-
-msgid "Your athlete's sessions today"
-msgstr "Les séances du jour de vos athlètes"
 
 msgid "Activate your account"
 msgstr "Activer votre compte"
@@ -1041,12 +1218,6 @@ msgstr "Semaine du %(start)s au %(end)s"
 
 msgid "written by"
 msgstr "écrit par"
-
-msgid "Training"
-msgstr "Entraînement"
-
-msgid "Rest"
-msgstr "Repos"
 
 msgid ""
 "This comment will be private, only the athlete and his trainers will see it."
@@ -1268,9 +1439,6 @@ msgstr "Editer l'article"
 msgid "Create the post"
 msgstr "Créer un article"
 
-msgid "My posts"
-msgstr "Mes articles"
-
 msgid "Add a new post"
 msgstr "Ajouter un nouvel article"
 
@@ -1417,9 +1585,6 @@ msgstr "Vos commentaires de la semaine précèdente n'ont pas été publié"
 
 msgid "Sport icons"
 msgstr "Icones de sport"
-
-msgid "Glossary"
-msgstr "Glossaire"
 
 msgid "Loading private comments..."
 msgstr "Chargement des commentaires privés..."
@@ -1702,18 +1867,15 @@ msgstr "Erreur"
 msgid "Connect to your Google Calendar"
 msgstr "Connectez votre calendrier Google"
 
-#| msgid "Your RunReport account is now connected to your Garmin account."
 msgid "Your google account is correctly linked to your RunReport account."
 msgstr "Votre compte RunReport est maintenant connecté à votre compte Google."
 
 msgid "An error occured while loading the RunReport calendar"
 msgstr "Une erreur est survenue pendant le chargement du calendrier RunReport"
 
-#| msgid "View calendar"
 msgid "View Google Calendar"
 msgstr "Voir le calendrier Google"
 
-#| msgid "Remove from my calendar"
 msgid "Remove Google Calendar sync"
 msgstr "Supprimer la synchronisation Google"
 
@@ -1728,15 +1890,11 @@ msgstr ""
 "Un nouveau calendrier a été crée, nommé RunReport. Chaque séance de sport "
 "RunReport sera exportée vers ce nouveau calendrier Google."
 
-#| msgid "Activate your account"
 msgid "Connect to your Google account"
 msgstr "Connectez votre compte Google"
 
 msgid "Please sign in before using the invite"
 msgstr "Merci de vous connecter avant d'utiliser l'invitation."
-
-msgid "Your email"
-msgstr "Votre email"
 
 msgid "Your password"
 msgstr "Votre mot de passe"
@@ -1809,9 +1967,6 @@ msgstr ""
 "Spécifiez votre adresse email ci-dessous, et vous recevrez un mail pour le "
 "changer."
 
-msgid "My preferences"
-msgstr "Mes préférences"
-
 msgid "Personal Informations"
 msgstr "Informations personelles"
 
@@ -1826,6 +1981,9 @@ msgstr "Mails"
 
 msgid "Sports Informations"
 msgstr "Informations sportives"
+
+msgid "Settings"
+msgstr "Réglages"
 
 msgid "Password"
 msgstr "Mot de passe"
@@ -1890,9 +2048,6 @@ msgstr "Envoyer un message"
 
 msgid "Trained by"
 msgstr "Entraîné par"
-
-msgid "Groups"
-msgstr "Groupes"
 
 #, python-format
 msgid "%d last sessions"
@@ -1968,200 +2123,416 @@ msgstr "Dans %s"
 msgid "No future races"
 msgstr "Pas de courses à venir"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "The CSV file has not 3 columns."
-msgstr "Le fichier CSV n'a pas 3 colonnes."
+msgid "Firstname"
+msgstr "Prénom"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Link name"
-msgstr "Nom du lien"
+msgid "Lastname"
+msgstr "Nom"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Link address"
-msgstr "Adresse du lien"
+msgid "Repeat your password"
+msgstr "Répétez votre mot de passe"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "RunReport Invite"
-msgstr "Invitation RunReport"
+msgid "An account already uses this email."
+msgstr "Un compte utilise déjà cet email."
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Group name"
-msgstr "Nom du group"
+msgid "Please repeat the same password"
+msgstr "Veuillez répéter le même mot de passe."
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Name in the url"
-msgstr "Nom dans l'url"
+msgid "Invalid Garmin authentification"
+msgstr "Authentification Garmin invalide"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Description"
-msgstr "Description"
+msgid "username"
+msgstr "nom d'utilisateur"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Clubs"
-msgstr "Clubs"
+msgid "Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."
+msgstr ""
+"Requis. 30 charactères ou moins. Lettres, chiffrs et @/./+/-/_ seulement."
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "View clubs"
-msgstr "Voir les clubs"
+msgid "Enter a valid username."
+msgstr "Donner un nom d'utlisateur valide."
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "My Week"
-msgstr "Ma Semaine"
+msgid "first name"
+msgstr "Prénom"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "My Calendar"
-msgstr "Mon Calendrier"
+msgid "last name"
+msgstr "Nom"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "My athletes"
-msgstr "Mes athlètes"
+msgid "email address"
+msgstr "adresse email"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Races"
-msgstr "Les Courses"
+msgid "staff status"
+msgstr "status staff"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "All the club"
-msgstr "Tout le club"
+msgid "Designates whether the user can log into this admin site."
+msgstr "Indique si l'utilisateur peut se connecter à l'administration du site"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Places"
-msgstr "Les lieux"
+msgid "active"
+msgstr "actif"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "My messages"
-msgstr "Mes messages"
+msgid ""
+"Designates whether this user should be treated as active. Unselect this "
+"instead of deleting accounts."
+msgstr ""
+"Indique si cet utilisateur doit être considéré actif.Décochez cette option "
+"au lieu de supprimer des comptes."
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "My public profile"
-msgstr "Mon profil public"
+msgid "date joined"
+msgstr "date d'inscription"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "My statistics"
-msgstr "Mes statistiques"
+msgid "user"
+msgstr "utilisateur"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "My paces"
-msgstr "Mes allures"
+msgid "users"
+msgstr "utilisateurs"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "My races"
-msgstr "Mes résultats"
+msgid "birthday"
+msgstr "date de naissance"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "My GPS services"
-msgstr "Mes services GPS"
+msgid "category"
+msgstr "catégorie"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Logout"
-msgstr "Se déconnecter"
+msgid "vma"
+msgstr "vma"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Login"
-msgstr "Se connecter"
+msgid "Ex: 12.5 km/h"
+msgstr "Ex: 12.5 km/h"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "French"
-msgstr "Français"
+msgid "cardiac frequency"
+msgstr "fréquence cardiaque maximale"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "English"
-msgstr "Anglais"
+msgid "cardiac frequency at rest"
+msgstr "fréquence cardiaque au repos"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Address"
-msgstr "Adresse"
+msgid "height"
+msgstr "hauteur"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Zip Code"
-msgstr "Code Postal"
+msgid "Unit: cm"
+msgstr "En centimètres"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "City"
-msgstr "Ville"
+msgid "weight"
+msgstr "poids"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Training plan : %s"
-msgstr "Plan d'entraînement : %s"
+msgid "Unit: kg"
+msgstr "En kg"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Training plan - %s.pdf"
-msgstr "Plan d'entraînement - %s.pdf"
+msgid "comment"
+msgstr "Renseignements divers"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Blog"
-msgstr "Blog"
+msgid "number of sessions per week"
+msgstr "nb séances hebdomadaires"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Source Image"
-msgstr "Image source"
+msgid "license"
+msgstr "licence FFA"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Thumbnail Image"
-msgstr "Image Aperçu"
+msgid "default sport"
+msgstr "Sport par défaut"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Cropped Image"
-msgstr "Image Carrée"
+msgid "auto send emails"
+msgstr "envoi automatique des commentaires en fin de semaine"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Post Type"
-msgstr "Type d'article"
+msgid "Daily trainer mail"
+msgstr "Envoi quotidien des séances de vos athlètes"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Post title"
-msgstr "Titre de l'article"
+msgid "language used"
+msgstr "language utilisé"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Post content"
-msgstr "Contenu de l'article"
+msgid "garmin login"
+msgstr "login Garmin"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "You must select a status for your training plan."
-msgstr "Vous devez choisir un status pour votre plan d'entraînement."
+msgid "garmin password"
+msgstr "mot de passe garmin"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "You must validate your training plan (select Done or Missed)."
-msgstr "Vous devez valider votre plan d'entraînement (Fait ou Manqué)"
+msgid "demo user"
+msgstr "utilisateur de démonstration"
+
+msgid "profile picture"
+msgstr "Photo de profil"
+
+msgid "profile picture visibility"
+msgstr "visibilité de votre photo"
+
+msgid "races visibility"
+msgstr "visibilité de vos courses"
+
+msgid "records visibility"
+msgstr "visibilité de vos records"
+
+msgid "stats visibility"
+msgstr "visibilité de vos statistiques"
+
+msgid "calendar visibility"
+msgstr "visibilité de votre calendrier complet"
+
+msgid "comments visibility"
+msgstr "visibilité des commentaires"
+
+msgid "tracks visibility"
+msgstr "visibilités des traces GPS"
+
+msgid "Display contextual help"
+msgstr "Affiche aides contextuelles"
+
+#, python-format
+msgid "%(first_name)s %(last_name)s has sent you a message"
+msgstr "%(first_name)s %(last_name)s vous a envoyé un message"
+
+#, python-format
+msgid ""
+"%(first_name)s %(last_name)s has written a comment on your week %(week)s"
+msgstr ""
+"%(first_name)s %(last_name)s a écrit un commentaire sur votre semaine "
+"%(week)s"
+
+#, python-format
+msgid "%(first_name)s %(last_name)s has written a comment on his week %(week)s"
+msgstr ""
+"%(first_name)s %(last_name)s a écrit un commentaire sur sa semaine %(week)s"
+
+msgid " private"
+msgstr "privé"
+
+#, python-format
+msgid ""
+"%(first_name)s %(last_name)s has written a comment %(type)s on his session "
+"\"%(name)s\""
+msgstr ""
+"%(first_name)s %(last_name)s a écrit un commentaire %(type)s sur sa séance "
+"\"%(name)s\""
+
+#, python-format
+msgid ""
+"%(first_name)s %(last_name)s has written a comment %(type)s on your session "
+"\"%(name)s\""
+msgstr ""
+"%(first_name)s %(last_name)s a écrit un commentaire %(type)s sur votre "
+"séance \"%(name)s\""
+
+#, python-format
+msgid ""
+"%(first_name)s %(last_name)s has written a comment on the session \"%(name)s"
+"\" of %(first_name)s %(last_name)s"
+msgstr ""
+" %(first_name)s %(last_name)s a écrit un commentaire sur la séance \"%(name)s"
+"\" de %(first_name)s %(last_name)s"
+
+#, python-format
+msgid "%(first_name)s %(last_name)s is now your friend on RunReport"
+msgstr "%(first_name)s %(last_name)s est dorénavant votre ami sur RunReport"
+
+#, python-format
+msgid "%(first_name)s %(last_name)s wants to add you as a friend."
+msgstr "%(first_name)s %(last_name)s veut vous ajouter en tant qu'ami."
+
+#, python-format
+msgid "%(first_name)s %(last_name)s has done his training : %(session_name)s"
+msgstr "%(first_name)s %(last_name)s a fait sa séance : %(session_name)s"
+
+#, python-format
+msgid "%(first_name)s %(last_name)s has missed his training : %(session_name)s"
+msgstr "%(first_name)s %(last_name)s n'a pas fait sa séance : %(session_name)s"
+
+#, python-format
+msgid ""
+"%(first_name)s %(last_name)s has removed your plan %(plan_name)s from his "
+"calendar"
+msgstr ""
+"%(first_name)s %(last_name)s a supprimé le plan %(plan_name)s de son "
+"calendrier"
+
+msgid "Any Activity Type"
+msgstr "Tous sports"
+
+msgid "Uncategorized"
+msgstr "Sans Catégorie"
+
+msgid "Course à pied"
+msgstr ""
+
+msgid "Street Running"
+msgstr "Course à pied sur route"
+
+msgid "Track Running"
+msgstr "Course sur piste"
+
+msgid "Trail Running"
+msgstr "Trail"
+
+msgid "Treadmill Running"
+msgstr "Course sur tapis"
+
+msgid "Vélo"
+msgstr ""
+
+msgid "Cyclocross"
+msgstr "Cyclocross"
+
+msgid "Downhill Biking"
+msgstr "Vélo de descente"
+
+msgid "Indoor Cycling"
+msgstr "Vélo d'intérieur"
+
+msgid "Mountain Biking"
+msgstr "Vélo en montagne"
+
+#, fuzzy
+#| msgid "Road Cycling"
+msgid "Recumbent Cycling"
+msgstr "Cyclisme sur route"
+
+msgid "Road Cycling"
+msgstr "Cyclisme sur route"
+
+msgid "Track Cycling"
+msgstr "Cyclisme sur piste"
+
+msgid "Fitness"
+msgstr "Fitness"
+
+msgid "Elliptical"
+msgstr ""
+
+msgid "Indoor Cardio"
+msgstr "cardio"
+
+msgid "Indoor Rowing"
+msgstr "rameur"
+
+msgid "Stair Climbing"
+msgstr "Escaliers"
+
+msgid "Strength Training"
+msgstr "Entraînement de force"
+
+msgid "Randonnée"
+msgstr ""
+
+msgid "Natation"
+msgstr ""
+
+msgid "Lap Swimming"
+msgstr "Natation"
+
+msgid "Open Water Swimming"
+msgstr "Natation en mer"
+
+msgid "Marche"
+msgstr ""
+
+msgid "Casual Walking"
+msgstr "Marche normale"
+
+msgid "Speed Walking"
+msgstr "Marche rapide"
+
+msgid "Transition"
+msgstr "Transition"
+
+msgid "Swim to Bike Transition"
+msgstr "Transition Natation Vélo"
+
+msgid "Bike to Run Transition"
+msgstr "Transition Vélo Course"
+
+msgid "Run to Bike Transition"
+msgstr "Transition Course Vélo"
+
+msgid "Moto"
+msgstr "Moto"
+
+msgid "Autre"
+msgstr ""
+
+#, fuzzy
+#| msgid "Resort Skiing/Snowboarding"
+msgid "Backcountry Skiing/Snowboarding"
+msgstr "Ski de piste"
+
+msgid "Boating"
+msgstr "Bateau"
+
+msgid "Ski Cross"
+msgstr ""
+
+msgid "Driving"
+msgstr "Voiture"
+
+msgid "Flying"
+msgstr "Vol"
+
+msgid "Golf"
+msgstr "Golf"
+
+msgid "Horseback Riding"
+msgstr "Poney"
+
+msgid "Inline Skating"
+msgstr ""
+
+msgid "Mountaineering"
+msgstr "Alpinisme"
+
+msgid "Paddling"
+msgstr "Pagai"
+
+msgid "Resort Skiing/Snowboarding"
+msgstr "Ski de piste"
+
+msgid "Rowing"
+msgstr "rameur"
+
+msgid "Sailing"
+msgstr "Voile"
+
+msgid "Skate Skiing"
+msgstr ""
+
+#, fuzzy
+#| msgid "Boating"
+msgid "Skating"
+msgstr "Bateau"
+
+#, fuzzy
+#| msgid "Snowshoeing"
+msgid "Snowmobiling"
+msgstr "Raquettes"
+
+msgid "Snowshoeing"
+msgstr "Raquettes"
+
+msgid "Stand Up Paddleboarding"
+msgstr "PaddleBoard"
+
+msgid "Whitewater Kayaking/Rafting"
+msgstr ""
+
+msgid "Wind/Kite Surfing"
+msgstr ""
+
+msgid "Ride"
+msgstr ""
+
+#, fuzzy
+#| msgid "Running"
+msgid "Run"
+msgstr "Course à pied"
+
+msgid "Workout"
+msgstr "Fitness"
+
+msgid "Ski"
+msgstr "Patinage"
+
+msgid "Hike"
+msgstr ""
+
+#, fuzzy
+#| msgid "Swimming"
+msgid "Swim"
+msgstr "Natation"
+
+msgid "Walk"
+msgstr " Marche"
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0
@@ -2175,423 +2546,8 @@ msgstr "repos"
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0
-msgid "session comment"
-msgstr "Commentaire"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Firstname"
-msgstr "Prénom"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Lastname"
-msgstr "Nom"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Repeat your password"
-msgstr "Répétez votre mot de passe"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "An account already uses this email."
-msgstr "Un compte utilise déjà cet email."
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Please repeat the same password"
-msgstr "Veuillez répéter le même mot de passe."
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Invalid Garmin authentification"
-msgstr "Authentification Garmin invalide"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "username"
-msgstr "nom d'utilisateur"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."
-msgstr ""
-"Requis. 30 charactères ou moins. Lettres, chiffrs et @/./+/-/_ seulement."
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Enter a valid username."
-msgstr "Donner un nom d'utlisateur valide."
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "first name"
-msgstr "Prénom"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "last name"
-msgstr "Nom"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "email address"
-msgstr "adresse email"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "staff status"
-msgstr "status staff"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Designates whether the user can log into this admin site."
-msgstr "Indique si l'utilisateur peut se connecter à l'administration du site"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "active"
-msgstr "actif"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid ""
-"Designates whether this user should be treated as active. Unselect this "
-"instead of deleting accounts."
-msgstr ""
-"Indique si cet utilisateur doit être considéré actif.Décochez cette option "
-"au lieu de supprimer des comptes."
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "date joined"
-msgstr "date d'inscription"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "user"
-msgstr "utilisateur"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "users"
-msgstr "utilisateurs"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "birthday"
-msgstr "date de naissance"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "category"
-msgstr "catégorie"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "vma"
-msgstr "vma"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Ex: 12.5 km/h"
-msgstr "Ex: 12.5 km/h"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "cardiac frequency"
-msgstr "fréquence cardiaque maximale"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "cardiac frequency at rest"
-msgstr "fréquence cardiaque au repos"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "height"
-msgstr "hauteur"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Unit: cm"
-msgstr "En centimètres"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "weight"
-msgstr "poids"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Unit: kg"
-msgstr "En kg"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "comment"
-msgstr "Renseignements divers"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "number of sessions per week"
-msgstr "nb séances hebdomadaires"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "license"
-msgstr "licence FFA"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "default sport"
-msgstr "Sport par défaut"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "auto send emails"
-msgstr "envoi automatique des commentaires en fin de semaine"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Daily trainer mail"
-msgstr "Envoi quotidien des séances de vos athlètes"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "language used"
-msgstr "language utilisé"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "garmin login"
-msgstr "login Garmin"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "garmin password"
-msgstr "mot de passe garmin"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "demo user"
-msgstr "utilisateur de démonstration"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "profile picture"
-msgstr "Photo de profil"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "profile picture visibility"
-msgstr "visibilité de votre photo"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "races visibility"
-msgstr "visibilité de vos courses"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "records visibility"
-msgstr "visibilité de vos records"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "stats visibility"
-msgstr "visibilité de vos statistiques"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "calendar visibility"
-msgstr "visibilité de votre calendrier complet"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "comments visibility"
-msgstr "visibilité des commentaires"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "tracks visibility"
-msgstr "visibilités des traces GPS"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "%(first_name)s %(last_name)s has sent you a message"
-msgstr "%(first_name)s %(last_name)s vous a envoyé un message"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid ""
-"%(first_name)s %(last_name)s has written a comment on your week %(week)s"
-msgstr ""
-"%(first_name)s %(last_name)s a écrit un commentaire sur votre semaine "
-"%(week)s"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "%(first_name)s %(last_name)s has written a comment on his week %(week)s"
-msgstr ""
-"%(first_name)s %(last_name)s a écrit un commentaire sur sa semaine %(week)s"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid " private"
-msgstr "privé"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid ""
-"%(first_name)s %(last_name)s has written a comment %(type)s on his session "
-"\"%(name)s\""
-msgstr ""
-"%(first_name)s %(last_name)s a écrit un commentaire %(type)s sur sa séance "
-"\"%(name)s\""
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid ""
-"%(first_name)s %(last_name)s has written a comment %(type)s on your session "
-"\"%(name)s\""
-msgstr ""
-"%(first_name)s %(last_name)s a écrit un commentaire %(type)s sur votre "
-"séance \"%(name)s\""
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid ""
-"%(first_name)s %(last_name)s has written a comment on the session \"%(name)s"
-"\" of %(first_name)s %(last_name)s"
-msgstr ""
-" %(first_name)s %(last_name)s a écrit un commentaire sur la séance \"%(name)s"
-"\" de %(first_name)s %(last_name)s"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "%(first_name)s %(last_name)s is now your friend on RunReport"
-msgstr "%(first_name)s %(last_name)s est dorénavant votre ami sur RunReport"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "%(first_name)s %(last_name)s wants to add you as a friend."
-msgstr "%(first_name)s %(last_name)s veut vous ajouter en tant qu'ami."
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "%(first_name)s %(last_name)s has done his training : %(session_name)s"
-msgstr "%(first_name)s %(last_name)s a fait sa séance : %(session_name)s"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "%(first_name)s %(last_name)s has missed his training : %(session_name)s"
-msgstr "%(first_name)s %(last_name)s n'a pas fait sa séance : %(session_name)s"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid ""
-"%(first_name)s %(last_name)s has removed your plan %(plan_name)s from his "
-"calendar"
-msgstr ""
-"%(first_name)s %(last_name)s a supprimé le plan %(plan_name)s de son "
-"calendrier"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Any Activity Type"
-msgstr "Tous sports"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Uncategorized"
-msgstr "Sans Catégorie"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Running"
-msgstr "Course à pied"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Street Running"
-msgstr "Course à pied sur route"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Track Running"
-msgstr "Course sur piste"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Trail Running"
-msgstr "Trail"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Treadmill Running"
-msgstr "Course sur tapis"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
 msgid "Cycling"
 msgstr "Cyclisme sur "
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Cyclocross"
-msgstr "Cyclocross"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Downhill Biking"
-msgstr "Vélo de descente"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Indoor Cycling"
-msgstr "Vélo d'intérieur"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Mountain Biking"
-msgstr "Vélo en montagne"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Road Cycling"
-msgstr "Cyclisme sur route"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Track Cycling"
-msgstr "Cyclisme sur piste"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Fitness"
-msgstr "Fitness"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Indoor Cardio"
-msgstr "cardio"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Indoor Rowing"
-msgstr "rameur"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Stair Climbing"
-msgstr "Escaliers"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Strength Training"
-msgstr "Entraînement de force"
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0
@@ -2600,138 +2556,8 @@ msgstr "randonnée"
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0
-msgid "Swimming"
-msgstr "Natation"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Lap Swimming"
-msgstr "Natation"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Open Water Swimming"
-msgstr "Natation en mer"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
 msgid "Walking"
 msgstr "Marche"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Casual Walking"
-msgstr "Marche normale"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Speed Walking"
-msgstr "Marche rapide"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Transition"
-msgstr "Transition"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Swim to Bike Transition"
-msgstr "Transition Natation Vélo"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Bike to Run Transition"
-msgstr "Transition Vélo Course"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Run to Bike Transition"
-msgstr "Transition Course Vélo"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Moto"
-msgstr "Moto"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Boating"
-msgstr "Bateau"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Driving"
-msgstr "Voiture"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Flying"
-msgstr "Vol"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Golf"
-msgstr "Golf"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Horseback Riding"
-msgstr "Poney"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Mountaineering"
-msgstr "Alpinisme"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Paddling"
-msgstr "Pagai"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Resort Skiing/Snowboarding"
-msgstr "Ski de piste"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Rowing"
-msgstr "rameur"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Sailing"
-msgstr "Voile"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Skating"
-msgstr "Patinage"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Snowshoeing"
-msgstr "Raquettes"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Stand Up Paddleboarding"
-msgstr "PaddleBoard"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Workout"
-msgstr "Fitness"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Ski"
-msgstr "Patinage"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Walk"
-msgstr " Marche"
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0
