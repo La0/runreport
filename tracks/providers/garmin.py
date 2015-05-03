@@ -178,7 +178,7 @@ class GarminProvider(TrackProvider):
     return self.import_activities(source)
 
   def is_connected(self):
-    return self.user.garmin_login and self.user.garmin_password
+    return self.user.garmin_login != None and self.user.garmin_password != None
 
   def disconnect(self):
     # Just destroy credentials

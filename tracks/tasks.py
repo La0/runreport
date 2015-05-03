@@ -10,13 +10,15 @@ def tracks_import(*args, **kwargs):
   from users.models import Athlete
   from tracks.providers import all_providers
 
-  for user in Athlete.objects.all():
+  users = Athlete.objects.all()
+  users = users.order_by('pk')
+  for user in users:
     for provider in all_providers(user):
       if not provider.is_connected():
         continue
 
       # Start a subtask per import
-      provider_import.delay(provider)
+      provider.import_user()
 
 @task
 def provider_import(provider):

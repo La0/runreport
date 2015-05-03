@@ -165,19 +165,26 @@ class TrackProvider:
     activities = []
     updated_nb = 0
     for activity in source:
+      act = None
       try:
-        with transaction.atomic():
-          act, updated = self.build_track(activity)
-          if act:
-            activities.append(act)
-            if updated:
-              updated_nb += 1
-          else:
-            transaction.rollback()
+        #with transaction.atomic():
+        act, updated = self.build_track(activity)
+        if act:
+          activities.append(act)
+          if updated:
+            updated_nb += 1
+          #else:
+          #  transaction.rollback()
       except Exception, e:
         if settings.DEBUG:
           raise e
         logger.error('%s activity import failed: %s' % (self.NAME, str(e),))
+
+      if act:
+        try:
+          self.attach_splits(act, activity)
+        except Exception, e:
+          logger.error('%s activity splits failed: %s' % (self.NAME, str(e),))
 
     # When not enough source activities, it's the end
     if len(source) < 10:
@@ -248,12 +255,17 @@ class TrackProvider:
       track.add_file(name, data)
       logger.info("%s track #%d added file %s"% (self.NAME, track.pk, name))
 
-    # Add splits to track
+    return track, True
+
+  def attach_splits(self, track, activity):
+    '''
+    Build & attach the splits outside
+    of main track build
+    '''
     track.splits.all().delete() # cleanup
     splits = self.build_splits(activity)
     self.build_total(track, splits)
 
-    return track, True
 
   def build_total(self, track, splits):
     '''
@@ -271,8 +283,9 @@ class TrackProvider:
       s.time_total = total.time
 
       s.track_id = track.pk
+      print s.track_id  # heisenbug :'(
       s.save_base(raw=True)
-      logger.debug("%s split #%d added split %d"% (self.NAME, track.pk, s.position))
+      logger.debug("%s split #%d added split %d"% (self.NAME, s.track_id, s.position))
 
     # Save main split
     nb = len(splits)

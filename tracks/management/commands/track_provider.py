@@ -48,5 +48,9 @@ class Command(BaseCommand):
     if not self.provider:
       raise CommandError("Invalid provider %s" % options['provider'])
 
+    # Check connectivity
+    if not self.provider.is_connected():
+      raise CommandError("Provider %s is not connected for user %s" % (self.provider.NAME, self.provider.user))
+
     # Run the import
     self.provider.import_user(options['full'])
