@@ -27,12 +27,7 @@
 		<div class="container">
 			<div class="navbar-header">
         <a href="/" class="navbar-brand">
-          {% if user.is_authenticated() %}
-          <img src="{{ static('img/logo_bloc.svg') }}" alt="Run Report" class="block" />
-          {% else %}
-          <img src="{{ static('img/logo_ligne.svg') }}" alt="Run Report" class="line visible-lg"/>
-          <img src="{{ static('img/logo_bloc.svg') }}" alt="Run Report" class="block hidden-lg"/>
-          {% endif %}
+          <img src="/medias/img/logo_bloc.svg" alt="Run Report" class="block" />
         </a>
 				<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
 					<span class="icon-bar"></span>

@@ -3,6 +3,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.gis import admin
 from django.views.generic.base import RedirectView, TemplateView
+from coach.views import FeaturesView
 from club.views import ClubInviteCheck
 from messages.views import ContactView
 
@@ -23,7 +24,8 @@ urlpatterns = patterns('',
   url(r'^invite/(?P<slug>.*)', ClubInviteCheck.as_view(), name="club-invite"),
 
   # Landing pages
-  url(r'^features/?', TemplateView.as_view(template_name='landing/features.html'), name="landing-features"),
+  url(r'^features/(?P<page>\w+)/?', FeaturesView.as_view(), name="features"),
+  url(r'^features/?', FeaturesView.as_view(), name="features-home"),
 
   # Contact Form
   url(r'^contact/(?P<sent>sent)?', ContactView.as_view(), name='contact'),
