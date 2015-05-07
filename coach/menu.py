@@ -2,6 +2,7 @@
 from django.core.urlresolvers import reverse
 from users.notification import UserNotifications
 from django.utils.translation import ugettext_lazy as _
+from django.conf import settings
 
 MENU_SEPARATOR = '__SEPARATOR__'
 
@@ -20,9 +21,10 @@ def add_pages(request):
     return {'url' : url, 'caption' : caption, 'active' : False, 'external' : True}
 
   def _build_club_generic(admin=False):
+    club_creation = settings.CLUB_CREATION_OPEN and 'club-create' or 'club-landing'
     menu = [
       _p('club-list', _('View clubs')),
-      _p('club-landing', _('Create a club')),
+      _p(club_creation, _('Create a club')),
     ]
     if admin:
       menu += [

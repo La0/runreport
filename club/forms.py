@@ -38,7 +38,7 @@ class ClubCreateForm(forms.ModelForm):
 
   class Meta:
     model = Club
-    fields = ('name', 'slug', 'address', 'zipcode', 'city', 'private')
+    fields = ('name', 'slug', 'address', 'zipcode', 'city', )
 
   def clean_slug(self):
     # Check the slug is not already taken

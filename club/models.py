@@ -9,8 +9,8 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
 class Club(models.Model):
-  name = models.CharField(max_length=250)
-  slug = models.SlugField(unique=True, max_length=20)
+  name = models.CharField(_('Club name'), max_length=250)
+  slug = models.SlugField(_('Slug'), help_text="Represents the club's name in urls", unique=True, max_length=20)
   members = models.ManyToManyField(Athlete, through='ClubMembership')
   main_trainer = models.ForeignKey(Athlete, null=True, blank=True, related_name="club_main_trainer")
   manager = models.ForeignKey(Athlete, related_name="club_manager")
@@ -21,15 +21,15 @@ class Club(models.Model):
   max_athlete = models.IntegerField(default=20)
 
   # Extra infos
-  address = models.CharField(max_length=250)
-  zipcode = models.CharField(max_length=10)
-  city = models.CharField(max_length=250)
+  address = models.CharField(_('Address'), max_length=250)
+  zipcode = models.CharField(_('Zip code'), max_length=10)
+  city = models.CharField(_('City'), max_length=250)
 
   # Demo dummy club ?
   demo = models.BooleanField(default=False)
 
   # Private club ?
-  private = models.BooleanField(default=False)
+  private = models.BooleanField(_('Private club'), help_text=_('When private, a club is only accessible y its members'), default=False)
 
   # Mailing list (does not change)
   mailing_list = models.CharField(max_length=255, null=True, blank=True)

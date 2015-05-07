@@ -2,6 +2,7 @@ from django.views.generic.edit import CreateView
 from django.http import HttpResponseRedirect
 from club.models import Club, ClubMembership
 from club.forms import ClubCreateForm
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from mixins import ClubCreateMixin
 
@@ -29,8 +30,9 @@ class ClubCreate(ClubCreateMixin, CreateView):
     ClubMembership.objects.create(club=club, user=self.request.user, role="trainer")
 
     # Use invite
-    self.invite.use(club)
-    del self.request.session['invite']
+    if not settings.CLUB_CREATION_OPEN :
+      self.invite.use(club)
+      del self.request.session['invite']
 
     # Create the mailing list
     club.create_mailing_list()

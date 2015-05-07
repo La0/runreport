@@ -404,6 +404,10 @@ CORS_ORIGIN_WHITELIST = (
   'localhost:8100',
 )
 
+# Club creation is allowed directly
+# No invite needed
+CLUB_CREATION_OPEN = True
+
 # Import local settings, if any
 try:
   from coach.local_settings import *

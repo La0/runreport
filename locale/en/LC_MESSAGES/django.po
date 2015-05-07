@@ -23,6 +23,27 @@ msgstr ""
 msgid "The CSV file has not 3 columns."
 msgstr ""
 
+msgid "Club name"
+msgstr ""
+
+msgid "Slug"
+msgstr ""
+
+msgid "Address"
+msgstr ""
+
+msgid "Zip code"
+msgstr ""
+
+msgid "City"
+msgstr ""
+
+msgid "Private club"
+msgstr ""
+
+msgid "When private, a club is only accessible y its members"
+msgstr ""
+
 msgid "Link name"
 msgstr ""
 
@@ -143,13 +164,7 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-msgid "Address"
-msgstr ""
-
 msgid "Zip Code"
-msgstr ""
-
-msgid "City"
 msgstr ""
 
 msgid "Your email"
@@ -352,6 +367,15 @@ msgstr ""
 msgid "Create the club"
 msgstr ""
 
+msgid "Logged out user"
+msgstr ""
+
+msgid "You need to sign in or create an account in order to create a club."
+msgstr ""
+
+msgid "Sign in"
+msgstr ""
+
 #, python-format
 msgid "Remove group %s"
 msgstr ""
@@ -420,9 +444,6 @@ msgid "You can join a club clicking on \"Join\"."
 msgstr ""
 
 msgid "Each request is then validated (or not) by the club's manager."
-msgstr ""
-
-msgid "Private club"
 msgstr ""
 
 msgid "Refused"
@@ -854,9 +875,6 @@ msgid "Features"
 msgstr ""
 
 msgid "Training logbook & Athletes management"
-msgstr ""
-
-msgid "Sign in"
 msgstr ""
 
 msgid "More information"

@@ -2,7 +2,7 @@ from club.models import ClubInvite
 from club.forms import InviteAskForm
 from users.models import Athlete
 from django.views.generic import DetailView, RedirectView
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.views.generic.edit import CreateView
 from django.conf import settings
@@ -45,6 +45,14 @@ class ClubInviteAsk(CreateView):
   template_name = 'club/ask_invite.html'
   model = ClubInvite
   form_class = InviteAskForm
+
+  def dispatch(self, *args, **kwargs):
+    # When club creation is open
+    # go directly to form
+    if settings.CLUB_CREATION_OPEN:
+      return HttpResponseRedirect(reverse('club-create'))
+
+    return super(ClubInviteAsk, self).dispatch(*args, **kwargs)
 
   def form_valid(self, form):
 

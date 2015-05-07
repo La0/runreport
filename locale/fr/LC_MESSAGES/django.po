@@ -24,6 +24,29 @@ msgstr "Un groupe avec ce nom existe déja."
 msgid "The CSV file has not 3 columns."
 msgstr "Le fichier CSV n'a pas 3 colonnes."
 
+#| msgid "Club invite"
+msgid "Club name"
+msgstr "Nom du club"
+
+msgid "Slug"
+msgstr "Nom dans l'url"
+
+msgid "Address"
+msgstr "Adresse"
+
+#| msgid "Zip Code"
+msgid "Zip code"
+msgstr "Code Postal"
+
+msgid "City"
+msgstr "Ville"
+
+msgid "Private club"
+msgstr "Club privé"
+
+msgid "When private, a club is only accessible y its members"
+msgstr "Un club privé est uniquement accessible par ses membres."
+
 msgid "Link name"
 msgstr "Nom du lien"
 
@@ -144,14 +167,8 @@ msgstr "Anglais"
 msgid "Name"
 msgstr "Nom"
 
-msgid "Address"
-msgstr "Adresse"
-
 msgid "Zip Code"
 msgstr "Code Postal"
-
-msgid "City"
-msgstr "Ville"
 
 msgid "Your email"
 msgstr "Votre email"
@@ -366,6 +383,17 @@ msgstr "Vous ne pouvez créer et administrer qu'un club."
 msgid "Create the club"
 msgstr "Créer un club"
 
+msgid "Logged out user"
+msgstr "Vous êtes déconnecté"
+
+#| msgid ""
+#| "Welcome ! You must create a personal account in order to create your club."
+msgid "You need to sign in or create an account in order to create a club."
+msgstr "Vous devez vous connecterou créer un compte avant de créer un club."
+
+msgid "Sign in"
+msgstr "Se connecter"
+
 #, python-format
 #| msgid "Remove plan %s"
 msgid "Remove group %s"
@@ -437,9 +465,6 @@ msgstr "Vous pouvez rejoindre un club, en cliquant sur \"Rejoindre\"."
 
 msgid "Each request is then validated (or not) by the club's manager."
 msgstr "Chaque demande est alors validée (ou non) par le gérant du club."
-
-msgid "Private club"
-msgstr "Club privé"
 
 msgid "Refused"
 msgstr "Refusé"
@@ -904,9 +929,6 @@ msgstr "Fonctionalités"
 
 msgid "Training logbook & Athletes management"
 msgstr "Carnet d'entraînement & Gestion d'athlètes"
-
-msgid "Sign in"
-msgstr "Se connecter"
 
 msgid "More information"
 msgstr "Plus d'informations"

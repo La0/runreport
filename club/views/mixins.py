@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404
 from django.core.exceptions import PermissionDenied
 from django.http import Http404
 from django.core.urlresolvers import reverse
+from django.conf import settings
 from club.forms import ClubGroupForm
 
 class ClubMixin(object):
@@ -75,22 +76,22 @@ class ClubCreateMixin(object):
   Check that the user is:
     * logged in
     * does not already manage a club
-    * has a loaded invite in session
+    * has a loaded invite in session, when club creation is not open
   """
   invite = None
 
   def dispatch(self, request, *args, **kwargs):
-    if not request.user.is_authenticated():
-      raise PermissionDenied
+    if request.user.is_authenticated():
 
-    if Club.objects.filter(manager=request.user).count() > 0:
-      raise PermissionDenied
+      if Club.objects.filter(manager=request.user).count() > 0:
+        raise PermissionDenied
 
-    try:
-      invite_slug = request.session['invite']
-      self.invite = ClubInvite.objects.get(slug=invite_slug)
-    except:
-      raise Http404('Invalid or missing Beta invitation.')
+      if not settings.CLUB_CREATION_OPEN:
+        try:
+          invite_slug = request.session['invite']
+          self.invite = ClubInvite.objects.get(slug=invite_slug)
+        except:
+          raise Http404('Invalid or missing Beta invitation.')
 
     return super(ClubCreateMixin, self).dispatch(request, *args, **kwargs)
 
