@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container" id="features">
+
+  <div class="row">
+    <div class="col-sm-2 col-xs-12">
+      <img class="img-circle img-responsive" src="{{ static('img/home/runner.jpg') }}" alt="{{ _('Runner') }}">
+    </div>
+    <div class="col-sm-10 col-xs-12">
+      <h3>{{ _('Features for runners') }}</h3>
+
+      <ul>
+        <li>
+          <a href="#gcal" data-toggle="collapse">{{ _('Google Calendar Export') }}</a>
+          <span class="label label-info">{{ _('New') }}</span>
+          <span class="label label-success">{{ _('Premium') }}</span>
+          <div class="collapse" id="gcal">
+            <div class="well">
+              Description de l'offre ici
+            </div>
+          </div>
+        </li>
+        <li>
+          <a href="#strava" data-toggle="collapse">{{ _('Strava Synchronisation') }}</a>
+          <span class="label label-success">{{ _('Premium') }}</span>
+          <div class="collapse" id="strava">
+            <div class="well">
+              Description de l'offre ici
+            </div>
+          </div>
+        </li>
+        <li>
+          <a href="#garmin" data-toggle="collapse">{{ _('Garmin Synchronisation') }}</a>
+          <span class="label label-success">{{ _('Premium') }}</span>
+          <div class="collapse" id="garmin">
+            <div class="well">
+              Description de l'offre ici
+            </div>
+          </div>
+        </li>
+        <li>
+          <a href="#weeklystats" data-toggle="collapse">{{ _('Detailed weekly stats') }}</a>
+          <span class="label label-info">{{ _('New') }}</span>
+          <span class="label label-success">{{ _('Premium') }}</span>
+          <div class="collapse" id="weeklystats">
+            <div class="well">
+              Description de l'offre ici
+            </div>
+          </div>
+        </li>
+        <li>
+          <a href="#monthlystats" data-toggle="collapse">{{ _('Monthly stats') }}</a>
+          <div class="collapse" id="monthlystats">
+            <div class="well">
+              Description de l'offre ici
+            </div>
+          </div>
+        </li>
+        <li>
+          <a href="#blog" data-toggle="collapse">{{ _('Write blog posts') }}</a>
+          <span class="label label-info">{{ _('New') }}</span>
+          <span class="label label-success">{{ _('Premium') }}</span>
+          <div class="collapse" id="blog">
+            <div class="well">
+              Description de l'offre ici
+            </div>
+          </div>
+        </li>
+        <li>
+          <a href="#share" data-toggle="collapse">{{ _('Share your sessions details') }}</a>
+          <div class="collapse" id="share">
+            <div class="well">
+              Description de l'offre ici
+            </div>
+          </div>
+        </li>
+        <li>
+          <a href="#join" data-toggle="collapse">{{ _('Join a club and communicate with your trainer') }}</a>
+          <div class="collapse" id="join">
+            <div class="well">
+              Description de l'offre ici
+            </div>
+          </div>
+        </li>
+        <li>
+          <a href="#privacy" data-toggle="collapse">{{ _('Detailed privacy control') }}</a>
+          <span class="label label-success">{{ _('Premium') }}</span>
+          <div class="collapse" id="privacy">
+            <div class="well">
+              Description de l'offre ici
+            </div>
+          </div>
+        </li>
+        <li>
+          <a href="#track" data-toggle="collapse">{{ _('Track your sport sessions') }}</a>
+          <div class="collapse" id="track">
+            <div class="well">
+              Description de l'offre ici
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-2 col-xs-12">
+      <img class="img-circle img-responsive" src="{{ static('img/home/trainer.jpg') }}" alt="{{ _('Trainer') }}">
+    </div>
+    <div class="col-sm-10 col-xs-12">
+      <h3>{{ _('Features for trainers') }}</h3>
+
+      <ul>
+        <li>
+          <a href="#sendplans" data-toggle="collapse">{{ _('Send training plans to your athletes in one click') }}</a>
+          <span class="label label-info">{{ _('New') }}</span>
+          <span class="label label-success">{{ _('Premium') }}</span>
+          <div class="collapse" id="sendplans">
+            <div class="well">
+              Description de l'offre ici
+            </div>
+          </div>
+        </li>
+        <li>
+          <a href="#plans" data-toggle="collapse">{{ _('Easily create training plans') }}</a>
+          <span class="label label-info">{{ _('New') }}</span>
+          <span class="label label-success">{{ _('Premium') }}</span>
+          <div class="collapse" id="plans">
+            <div class="well">
+              Description de l'offre ici
+            </div>
+          </div>
+        </li>
+        <li>
+          <a href="#notify" data-toggle="collapse">{{ _('Be notified of your athletes sessions') }}</a>
+          <div class="collapse" id="notify">
+            <div class="well">
+              Description de l'offre ici
+            </div>
+          </div>
+        </li>
+        <li>
+          <a href="#manage" data-toggle="collapse">{{ _('Manage your athletes with a powerful interface') }}</a>
+          <div class="collapse" id="manage">
+            <div class="well">
+              Description de l'offre ici
+            </div>
+          </div>
+        </li>
+        <li>
+          <a href="#comments" data-toggle="collapse">{{ _('Talk directly and privately with your athletes') }}</a>
+          <div class="collapse" id="comments">
+            <div class="well">
+              Description de l'offre ici
+            </div>
+          </div>
+        </li>
+        <li>
+          <a href="#trainers" data-toggle="collapse">{{ _('Manage multiple trainers in your club') }}</a>
+          <span class="label label-success">{{ _('Premium') }}</span>
+          <div class="collapse" id="trainers">
+            <div class="well">
+              Description de l'offre ici
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-2 col-xs-12">
+      <img class="img-circle img-responsive" src="{{ static('img/home/win.jpg') }}" alt="{{ _('Trainer') }}">
+    </div>
+    <div class="col-sm-10 col-xs-12">
+      <h3>{{ _('Premium account') }}</h3>
+
+      <p>
+        {{ _('All the above features with the tag Premium are only available to paying members of RunReport') }}
+      </p>
+      <p>
+        {{ _('A premium membership costs 3.50 euros per month, or 35 euros per year, without any engagement whatsoever.') }}
+      </p>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

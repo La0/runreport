@@ -24,7 +24,6 @@ msgstr "Un groupe avec ce nom existe déja."
 msgid "The CSV file has not 3 columns."
 msgstr "Le fichier CSV n'a pas 3 colonnes."
 
-#| msgid "Club invite"
 msgid "Club name"
 msgstr "Nom du club"
 
@@ -34,7 +33,6 @@ msgstr "Nom dans l'url"
 msgid "Address"
 msgstr "Adresse"
 
-#| msgid "Zip Code"
 msgid "Zip code"
 msgstr "Code Postal"
 
@@ -151,6 +149,9 @@ msgstr "Mes services GPS"
 
 msgid "Logout"
 msgstr "Se déconnecter"
+
+msgid "Features"
+msgstr "Fonctionalités"
 
 msgid "Create an account"
 msgstr "Créer un compte"
@@ -386,8 +387,6 @@ msgstr "Créer un club"
 msgid "Logged out user"
 msgstr "Vous êtes déconnecté"
 
-#| msgid ""
-#| "Welcome ! You must create a personal account in order to create your club."
 msgid "You need to sign in or create an account in order to create a club."
 msgstr "Vous devez vous connecterou créer un compte avant de créer un club."
 
@@ -863,6 +862,99 @@ msgstr "Lieux de %s"
 msgid "No places created for club %s"
 msgstr "Pas de lieux crées pour le club %s"
 
+msgid "Runner"
+msgstr "Coureur"
+
+msgid "Features for runners"
+msgstr "Fonctionalités pour les athlètes"
+
+#| msgid "View Google Calendar"
+msgid "Google Calendar Export"
+msgstr "Export calendrier Google"
+
+#| msgid "News"
+msgid "New"
+msgstr "Nouveau"
+
+msgid "Premium"
+msgstr "Premium"
+
+#| msgid "GPS Synchronisation"
+msgid "Strava Synchronisation"
+msgstr "Synchronisation Strava"
+
+#| msgid "GPS Synchronisation"
+msgid "Garmin Synchronisation"
+msgstr "Synchronisation Garmin"
+
+msgid "Detailed weekly stats"
+msgstr "Statistiques détaillées par semaine"
+
+#| msgid "My statistics"
+msgid "Monthly stats"
+msgstr "Statistiques mensuelles"
+
+#| msgid "Create a post"
+msgid "Write blog posts"
+msgstr "Ecriver des articles"
+
+#| msgid "on your session"
+msgid "Share your sessions details"
+msgstr "Partager vos séances sportives "
+
+msgid "Join a club and communicate with your trainer"
+msgstr "Rejoindre un club et communiquer avec votre entraineur"
+
+msgid "Detailed privacy control"
+msgstr "Contrôle détaillé de vos publications"
+
+#| msgid "Your sport sessions"
+msgid "Track your sport sessions"
+msgstr "Suivez efficacement vos séances sportives"
+
+#| msgid "Infos for trainers"
+msgid "Features for trainers"
+msgstr "Fonctionalités pour entraineurs"
+
+#| msgid "Send invites to your athletes"
+msgid "Send training plans to your athletes in one click"
+msgstr "Envoyez vos plans à vos athlètes en un clic"
+
+msgid "Easily create training plans"
+msgstr "Créer facilement des plans d'entrainement"
+
+#| msgid "Your athlete's sessions today"
+msgid "Be notified of your athletes sessions"
+msgstr "Soyez notifié de la progression de vos athlètes"
+
+msgid "Manage your athletes with a powerful interface"
+msgstr "Gérez vos athlètes avec une interface puissante"
+
+#| msgid "Send invites to your athletes"
+msgid "Talk directly and privately with your athletes"
+msgstr "Parlez directement et de manière privée à vos athlètes"
+
+msgid "Manage multiple trainers in your club"
+msgstr "Gérer plusieurs entraineurs dans votre club"
+
+#| msgid "Demo account"
+msgid "Premium account"
+msgstr "Compte Premium"
+
+msgid ""
+"All the above features with the tag Premium are only available to paying "
+"members of RunReport"
+msgstr ""
+"Toutes les fonctionalités ci dessus marquées \"Premium\" sont disponibles "
+"uniquement aux abonnés payant de RunReport."
+
+msgid ""
+"A premium membership costs 3.50 euros per month, or 35 euros per year, "
+"without any engagement whatsoever."
+msgstr ""
+"Un abonnement payant à RunReport coute 3,50 euros par mois, ou 35 euros par "
+"an, sans aucun engagement."
+
 #, python-format
 msgid "Delete friendship with %(first)s %(last)s"
 msgstr "Supprimer la relation d'amitié avec %(first)s  %(last)s"
@@ -924,74 +1016,36 @@ msgstr ""
 msgid "Your week"
 msgstr "Votre semaine"
 
-msgid "Features"
-msgstr "Fonctionalités"
+msgid "The website of your running success"
+msgstr "Le site de vos exploits sportifs"
 
-msgid "Training logbook & Athletes management"
-msgstr "Carnet d'entraînement & Gestion d'athlètes"
+msgid "Track precisely your progression"
+msgstr "Suivez précisémment votre progression"
 
-msgid "More information"
-msgstr "Plus d'informations"
+msgid "Communicate with your sport friends & clubs"
+msgstr "Communiquez avec vos amis et clubs sportifs"
 
-msgid "Sport logbook"
-msgstr "Carnet d'entraînement"
+msgid "Previous"
+msgstr "Précèdent"
 
-msgid ""
-"You can freely create your training logbook, manage your sports sesssions, "
-"and clearly view your evolution across several month or years."
-msgstr ""
-"Vous pouvez créer gratuitement votre carnet d'entrainement, gérer vos "
-"séances de sport, et visualiser clairement votre évolution au cours des mois "
-"& années."
+msgid "Next"
+msgstr "Suivant"
 
-msgid "Athlete management"
-msgstr "Gestion d'athlètes"
+msgid "I'm a runner"
+msgstr "Je suis un coureur"
 
-msgid "for a club or an enterprise"
-msgstr "pour un club ou une entreprise"
+msgid "Want to know more"
+msgstr "En savoir plus"
 
-msgid ""
-"This website will allow you to easily manage all your athletes, using or one "
-"several trainers."
-msgstr ""
-"Ce site vous permet de gérer aisèment tous vos athlètes, répartis sur un ou "
-"plusieurs entraineurs."
+#| msgid "%s trainer"
+msgid "I'm a trainer"
+msgstr "Je suis un Entraîneur"
 
-msgid ""
-"Every trainer can view his athletes' sessions, create his training plans, "
-"and efficiently communicate with them."
-msgstr ""
-"Chaque entraineur peut voir les séances de ses athlètes, créer ses plans "
-"d'entrainement, et communiquer efficacement avec eux."
+msgid "Challenge"
+msgstr "Challenge"
 
-msgid "Phone display"
-msgstr "Affichage sur smartphones"
-
-msgid "Apple, Android, ..."
-msgstr "Apple, Android, ..."
-
-msgid ""
-"RunReport displays nicely on every smartphones & tablets, automatically "
-"adapting to your screen size."
-msgstr ""
-"RunReport s'affiche correctement sur tous les smartphones & tablettes du "
-"marché, en s'adaptant automatiquement à la taille de votre écran."
-
-msgid "GPS Synchronisation"
-msgstr "Synchronisation GPS"
-
-msgid "Garmin, Strava, ..."
-msgstr "Garmin, Strava, ..."
-
-msgid ""
-"Run Report can automatically import your data from your Garmin Connect or "
-"Strava, and show them to your friends, trainers, ..."
-msgstr ""
-"RunReport peut automatiquement importer vos données depuis Garmin Connect ou "
-"Strava, et les afficher à vos amis, entraineurs, ..."
-
-msgid "Discover RunReport:"
-msgstr "Découvrir RunReport:"
+msgid "Premium Membership"
+msgstr "Abonnement Premium"
 
 #, python-format
 msgid "Hello %s"
@@ -2661,6 +2715,19 @@ msgstr "L'équipe"
 msgid "Source code on"
 msgstr "Code source sur"
 
+msgid "Training logbook & Athletes management"
+msgstr "Carnet d'entraînement & Gestion d'athlètes"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "More information"
+msgstr "Plus d'informations"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Sport logbook"
+msgstr "Carnet d'entraînement"
+
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0
 msgid ""
@@ -2669,6 +2736,24 @@ msgid ""
 msgstr ""
 "Développeur, Entrepreneur et athlète, j'ai crée en 2013 RunReport pour "
 "améliorer la communication au sein de mon club de course à pied."
+
+msgid ""
+"You can freely create your training logbook, manage your sports sesssions, "
+"and clearly view your evolution across several month or years."
+msgstr ""
+"Vous pouvez créer gratuitement votre carnet d'entrainement, gérer vos "
+"séances de sport, et visualiser clairement votre évolution au cours des mois "
+"& années."
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Athlete management"
+msgstr "Gestion d'athlètes"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "for a club or an enterprise"
+msgstr "pour un club ou une entreprise"
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0
@@ -2679,6 +2764,13 @@ msgstr ""
 "Entraineur principal au CS Ternes (club de course à pied), j'apporte mon "
 "expertise sportive pour améliorer le site."
 
+msgid ""
+"This website will allow you to easily manage all your athletes, using or one "
+"several trainers."
+msgstr ""
+"Ce site vous permet de gérer aisèment tous vos athlètes, répartis sur un ou "
+"plusieurs entraineurs."
+
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0
 msgid ""
@@ -2687,6 +2779,37 @@ msgid ""
 msgstr ""
 "Triathlète, formateur informatique et designer, j'ai crée le design actuel "
 "de RunReport."
+
+msgid ""
+"Every trainer can view his athletes' sessions, create his training plans, "
+"and efficiently communicate with them."
+msgstr ""
+"Chaque entraineur peut voir les séances de ses athlètes, créer ses plans "
+"d'entrainement, et communiquer efficacement avec eux."
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Phone display"
+msgstr "Affichage sur smartphones"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Apple, Android, ..."
+msgstr "Apple, Android, ..."
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid ""
+"RunReport displays nicely on every smartphones & tablets, automatically "
+"adapting to your screen size."
+msgstr ""
+"RunReport s'affiche correctement sur tous les smartphones & tablettes du "
+"marché, en s'adaptant automatiquement à la taille de votre écran."
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Garmin, Strava, ..."
+msgstr "Garmin, Strava, ..."
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0
@@ -2701,6 +2824,18 @@ msgstr ""
 #: obsolete:0
 msgid "Sorry, but you are no longer in the club %s"
 msgstr "Désolé, mais vous n'êtes plus dans le club %s"
+
+msgid ""
+"Run Report can automatically import your data from your Garmin Connect or "
+"Strava, and show them to your friends, trainers, ..."
+msgstr ""
+"RunReport peut automatiquement importer vos données depuis Garmin Connect ou "
+"Strava, et les afficher à vos amis, entraineurs, ..."
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Discover RunReport:"
+msgstr "Découvrir RunReport:"
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0

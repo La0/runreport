@@ -62,35 +62,35 @@
     </div>
     <div class="row">
       <div class="col-lg-4">
-        <img class="img-circle" src="{{ static('img/home/runner.jpg') }}" alt="{{ _('Runner') }}" width="140" height="140">
+        <img class="img-circle img-responsive" src="{{ static('img/home/runner.jpg') }}" alt="{{ _('Runner') }}" >
         <h2>{{ _("I'm a runner") }}</h2>
         <p>RunReport est votre nouveau partenaire running : <a href="{{ url('login') }}">connectez vous</a>, planifiez vos séances, suivez vos performances et partagez-les avec votre entraîneur et vos amis</p>
         <p>
-          <a class="btn btn-info btn-light" href="{{ url('features', 'runner') }}" role="button">
+          <a class="btn btn-info btn-light" href="{{ url('features') }}" role="button">
             {{ _('Want to know more') }}
             <i class="icon-right-open"></i>
           </a>
         </p>
       </div>
       <div class="col-lg-4">
-        <img class="img-circle" src="{{ static('img/home/trainer.jpg') }}" alt="{{ _('Trainer') }}" width="140" height="140">
+        <img class="img-circle img-responsive" src="{{ static('img/home/trainer.jpg') }}" alt="{{ _('Trainer') }}">
         <h2>{{ _("I'm a trainer") }}</h2>
         <p>RunReport est la plateforme idéale pour entraîner, suivre et motiver vos athlètes. <a href="{{ url('login') }}">Connectez vous</a>, créez et partagez vos plans d'entraînement .</p>
         <p>
-          <a class="btn btn-info btn-light" href="{{ url('features', 'trainer') }}" role="button">
+          <a class="btn btn-info btn-light" href="{{ url('features') }}" role="button">
             {{ _('Want to know more') }}
             <i class="icon-right-open"></i>
           </a>
         </p>
       </div>
       <div class="col-lg-4">
-        <img class="img-circle" src="{{ static('img/home/win.jpg') }}" alt="{{ _('Challenge') }}" width="140" height="140">
-        <h2>J'ai un objectif à atteindre</h2>
-        <p>RunReport est le moyen le plus simple de motiver vos amis en se mettant dans la peau d un entraîneur
-        <a href="{{ url('login') }}">Connectez vous</a>, créez une tribu et élaborez des séances sportives et conviviales a la manière d'un vrai entraîneur.
+        <img class="img-circle img-responsive" src="{{ static('img/home/win.jpg') }}" alt="{{ _('Challenge') }}">
+        <h2>{{ _('Premium Membership') }}</h2>
+        <p>
+          RunReport est (et restera) gratuit, mais un abonnement premium existe pour diposer de fonctionalités avancées. Améliorez votre suivi sportif en vous abonnant !
         </p>
         <p>
-          <a class="btn btn-info btn-light" href="{{ url('features-home') }}" role="button">
+          <a class="btn btn-info btn-light" href="{{ url('features') }}" role="button">
             {{ _('Want to know more') }}
             <i class="icon-right-open"></i>
           </a>

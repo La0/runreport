@@ -149,6 +149,9 @@ msgstr ""
 msgid "Logout"
 msgstr ""
 
+msgid "Features"
+msgstr ""
+
 msgid "Create an account"
 msgstr ""
 
@@ -817,6 +820,82 @@ msgstr ""
 msgid "No places created for club %s"
 msgstr ""
 
+msgid "Runner"
+msgstr ""
+
+msgid "Features for runners"
+msgstr ""
+
+msgid "Google Calendar Export"
+msgstr ""
+
+msgid "New"
+msgstr ""
+
+msgid "Premium"
+msgstr ""
+
+msgid "Strava Synchronisation"
+msgstr ""
+
+msgid "Garmin Synchronisation"
+msgstr ""
+
+msgid "Detailed weekly stats"
+msgstr ""
+
+msgid "Monthly stats"
+msgstr ""
+
+msgid "Write blog posts"
+msgstr ""
+
+msgid "Share your sessions details"
+msgstr ""
+
+msgid "Join a club and communicate with your trainer"
+msgstr ""
+
+msgid "Detailed privacy control"
+msgstr ""
+
+msgid "Track your sport sessions"
+msgstr ""
+
+msgid "Features for trainers"
+msgstr ""
+
+msgid "Send training plans to your athletes in one click"
+msgstr ""
+
+msgid "Easily create training plans"
+msgstr ""
+
+msgid "Be notified of your athletes sessions"
+msgstr ""
+
+msgid "Manage your athletes with a powerful interface"
+msgstr ""
+
+msgid "Talk directly and privately with your athletes"
+msgstr ""
+
+msgid "Manage multiple trainers in your club"
+msgstr ""
+
+msgid "Premium account"
+msgstr ""
+
+msgid ""
+"All the above features with the tag Premium are only available to paying "
+"members of RunReport"
+msgstr ""
+
+msgid ""
+"A premium membership costs 3.50 euros per month, or 35 euros per year, "
+"without any engagement whatsoever."
+msgstr ""
+
 #, python-format
 msgid "Delete friendship with %(first)s %(last)s"
 msgstr ""
@@ -871,62 +950,34 @@ msgstr ""
 msgid "Your week"
 msgstr ""
 
-msgid "Features"
+msgid "The website of your running success"
 msgstr ""
 
-msgid "Training logbook & Athletes management"
+msgid "Track precisely your progression"
 msgstr ""
 
-msgid "More information"
+msgid "Communicate with your sport friends & clubs"
 msgstr ""
 
-msgid "Sport logbook"
+msgid "Previous"
 msgstr ""
 
-msgid ""
-"You can freely create your training logbook, manage your sports sesssions, "
-"and clearly view your evolution across several month or years."
+msgid "Next"
 msgstr ""
 
-msgid "Athlete management"
+msgid "I'm a runner"
 msgstr ""
 
-msgid "for a club or an enterprise"
+msgid "Want to know more"
 msgstr ""
 
-msgid ""
-"This website will allow you to easily manage all your athletes, using or one "
-"several trainers."
+msgid "I'm a trainer"
 msgstr ""
 
-msgid ""
-"Every trainer can view his athletes' sessions, create his training plans, "
-"and efficiently communicate with them."
+msgid "Challenge"
 msgstr ""
 
-msgid "Phone display"
-msgstr ""
-
-msgid "Apple, Android, ..."
-msgstr ""
-
-msgid ""
-"RunReport displays nicely on every smartphones & tablets, automatically "
-"adapting to your screen size."
-msgstr ""
-
-msgid "GPS Synchronisation"
-msgstr ""
-
-msgid "Garmin, Strava, ..."
-msgstr ""
-
-msgid ""
-"Run Report can automatically import your data from your Garmin Connect or "
-"Strava, and show them to your friends, trainers, ..."
-msgstr ""
-
-msgid "Discover RunReport:"
+msgid "Premium Membership"
 msgstr ""
 
 #, python-format
