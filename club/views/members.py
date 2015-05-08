@@ -39,6 +39,10 @@ class ClubMembers(ClubMixin, ListView):
         'memberships__role__in' : ('athlete', 'trainer'),
         'memberships__trainers__username' : self.kwargs.get('username', None),
       },
+      'notrainer' : {
+        'memberships__role__in' : ('athlete', 'trainer'),
+        'memberships__trainers__isnull' : True,
+      },
       'archives' : {
         'memberships__role' : 'archive',
       }
@@ -186,8 +190,13 @@ class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, Proces
 
       membership.save()
 
-      # Only send mail for new roles
       if self.role_original != membership.role:
+        # When losing trainer role
+        # remove all athletes
+        if self.role_original == 'trainer':
+          membership.user.trainees.clear()
+
+        # Only send mail for new roles
         membership.mail_user(self.role_original)
     except Exception, e:
       print str(e)

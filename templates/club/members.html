@@ -23,6 +23,7 @@
     {% for trainer in trainers %}
 		<li><a href="{{ url('club-trainer', club.slug, trainer.username) }}">{{ trainer.first_name }}</a></li>
     {% endfor %}
+		<li><a href="{{ url('club-no-trainer', club.slug) }}">{{ _('Without trainer') }}</a></li>
   </ul>
 	{% endif %}
 
