@@ -15,6 +15,8 @@ class PaymentSubscription(models.Model):
 
   # Paymill
   paymill_id = models.CharField(max_length=50)
+
+  # TODO: replace with a transaction model
   paymill_transaction_id = models.CharField(max_length=50)
 
   # Dates

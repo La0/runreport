@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h1>{{ _('Premium Membership') }}</h1>
+
+  {% if user.is_premium %}
+  <div class="alert alert-success">
+    {{ _('You are a premium RunReport member !') }}
+  </div>
+  {% endif %}
+
+  {% with subs = user.subscriptions.all() %}
+    {% for sub in subs %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4>{{ sub.offer.name }}</h4>
+      </div>
+      <div class="panel-body">
+        Basic panel example
+      </div>
+      <div class="panel-footer text-right">
+        <a href="" class="btn btn-danger">
+          {{ _('Cancel subscription') }}
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+    <p>
+      <a href="{{ url('payment-offer', 'monthly') }}" class="btn btn-default">
+        {{ _('Buy monthly') }}
+      </a>
+      <a href="{{ url('payment-offer', 'yearly') }}" class="btn btn-default">
+        {{ _('Buy yearly') }}
+      </a>
+    </p>
+  {% endwith %}
+</div>
+{% endblock %}

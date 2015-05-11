@@ -1,6 +1,11 @@
-from django.conf.urls import patterns, url, include
+from django.conf.urls import patterns, url
 from payments.views import *
 
 urlpatterns = patterns('',
-  url(r'^(?P<slug>\w+)/pay?$', PaymentOfferPay.as_view(), name="payment-offer-pay"),
+
+  # Payment status
+  url(r'^status/?$', PaymentStatus.as_view(), name="payment-status"),
+
+  # Pay an offer
+  url(r'^(?P<slug>\w+)/?$', PaymentOfferPay.as_view(), name="payment-offer"),
 )

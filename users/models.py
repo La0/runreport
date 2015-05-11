@@ -124,6 +124,7 @@ class Athlete(AthleteBase):
   # Payment
   paymill_id = models.CharField(max_length=50, null=True, blank=True)
 
+
   def search_category(self):
     if not self.birthday:
       return None
@@ -344,6 +345,11 @@ class Athlete(AthleteBase):
     self.save()
 
     return client
+
+  @property
+  def is_premium(self):
+    # helper to check if a user is premium
+    return self.subscriptions.filter(active=True).count() > 0
 
 class UserCategory(models.Model):
   code = models.CharField(max_length=10)
