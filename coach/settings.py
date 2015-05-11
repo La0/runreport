@@ -196,6 +196,7 @@ INSTALLED_APPS = (
     'events',
     'post',
     'api', # Api code
+    'payments', # Payments app
     'corsheaders', # CORS for api
     'vinaigrette', # Model translations
     'rest_framework', # Api provider
@@ -407,6 +408,9 @@ CORS_ORIGIN_WHITELIST = (
 # Club creation is allowed directly
 # No invite needed
 CLUB_CREATION_OPEN = True
+
+# Paymill integration
+PAYMILL_SECRET = None
 
 # Import local settings, if any
 try:
