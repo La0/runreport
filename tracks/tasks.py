@@ -18,7 +18,7 @@ def tracks_import(*args, **kwargs):
         continue
 
       # Start a subtask per import
-      provider.import_user()
+      provider_import.subtask((provider, )).apply_async()
 
 @task
 def provider_import(provider):

@@ -167,24 +167,24 @@ class TrackProvider:
     for activity in source:
       act = None
       try:
-        #with transaction.atomic():
-        act, updated = self.build_track(activity)
-        if act:
-          activities.append(act)
-          if updated:
-            updated_nb += 1
-          #else:
-          #  transaction.rollback()
+        with transaction.atomic():
+          act, updated = self.build_track(activity)
+          if act:
+            activities.append(act)
+            if updated:
+              updated_nb += 1
+            else:
+              transaction.rollback()
       except Exception, e:
         if settings.DEBUG:
           raise e
         logger.error('%s activity import failed: %s' % (self.NAME, str(e),))
 
-      if act:
-        try:
-          self.attach_splits(act, activity)
-        except Exception, e:
-          logger.error('%s activity splits failed: %s' % (self.NAME, str(e),))
+      #if act:
+      #  try:
+      #    self.attach_splits(act, activity)
+      #  except Exception, e:
+      #    logger.error('%s activity splits failed: %s' % (self.NAME, str(e),))
 
     # When not enough source activities, it's the end
     if len(source) < 10:
