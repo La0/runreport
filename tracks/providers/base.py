@@ -4,7 +4,7 @@ import json
 from django.db import transaction
 from django.db.models import Min, Max, Count
 import hashlib
-from tracks.models import Track, TrackSplit
+from tracks.models import Track, TrackSplit, TrackFile
 from sport.stats import StatsMonth
 
 logger = logging.getLogger('coach.sport.garmin')
@@ -89,11 +89,18 @@ class TrackProvider:
     self.files[activity_id][name] = data
 
   def get_file(self, activity, name, format_json=False):
-    # Get loccaly stored file
+    # Get localy stored file in memory
     activity_id = self.get_activity_id(activity)
     if activity_id in self.files and name in self.files[activity_id]:
       out = self.files[activity_id][name]
       return format_json and json.loads(out) or out
+
+    # Get file from disk
+    try:
+      tf = TrackFile.objects.get(track__provider_id=activity_id, name=name)
+      return tf.get_data(format_json)
+    except TrackFile.DoesNotExist:
+      pass
     return None
 
   def imported_stats(self):
@@ -129,7 +136,7 @@ class TrackProvider:
           m = (date.year, date.month)
           if m not in months:
             months.append(m)
-        nb += 1
+          nb += 1
       except TrackSkipUpdateException, e:
         if full:
           nb += 1
@@ -173,18 +180,10 @@ class TrackProvider:
             activities.append(act)
             if updated:
               updated_nb += 1
-            else:
-              transaction.rollback()
       except Exception, e:
         if settings.DEBUG:
           raise e
         logger.error('%s activity import failed: %s' % (self.NAME, str(e),))
-
-      #if act:
-      #  try:
-      #    self.attach_splits(act, activity)
-      #  except Exception, e:
-      #    logger.error('%s activity splits failed: %s' % (self.NAME, str(e),))
 
     # When not enough source activities, it's the end
     if len(source) < 10:
@@ -203,7 +202,6 @@ class TrackProvider:
     '''
     # Load existing activity
     #  or build a new one
-    created = False
     activity_id = self.get_activity_id(activity)
     activity_raw = json.dumps(activity)
     try:
@@ -255,6 +253,9 @@ class TrackProvider:
       track.add_file(name, data)
       logger.info("%s track #%d added file %s"% (self.NAME, track.pk, name))
 
+    # Finally, attach splits
+    self.attach_splits(track, activity)
+
     return track, True
 
   def attach_splits(self, track, activity):
@@ -262,7 +263,6 @@ class TrackProvider:
     Build & attach the splits outside
     of main track build
     '''
-    track.splits.all().delete() # cleanup
     splits = self.build_splits(activity)
     self.build_total(track, splits)
 
@@ -271,9 +271,15 @@ class TrackProvider:
     '''
     Build a total TrackSplit from a list of splits
     '''
-    total = TrackSplit(track=track, position=0)
+    total = TrackSplit(position=0)
+    total.track_id = track.pk
     total.distance = 0
     total.time = 0
+
+    # List all current splits per positions
+    positions = dict([(s['position'], s['pk']) for s in track.splits.values('pk', 'position')])
+    positions_updated = []
+
     for s in splits:
 
       # Update totals
@@ -282,10 +288,14 @@ class TrackProvider:
       s.distance_total = total.distance
       s.time_total = total.time
 
+      # Update existing split ?
+      if s.position in positions:
+        s.id = positions[s.position]
+      positions_updated.append(s.position)
+
       s.track_id = track.pk
-      print s.track_id  # heisenbug :'(
-      s.save_base(raw=True)
-      logger.debug("%s split #%d added split %d"% (self.NAME, s.track_id, s.position))
+      s.save()
+      logger.debug("%s track #%d added split %d"% (self.NAME, s.track_id, s.position))
 
     # Save main split
     nb = len(splits)
@@ -309,8 +319,20 @@ class TrackProvider:
       total.date_end = end.date_end
       total.position_end = end.position_end
 
+    # Update total split ?
+    total_pk = positions.get(0)
+    if total_pk:
+      total.pk = total_pk
+    positions_updated.append(0)
+
     total.save()
     track.split_total = total
     track.save()
+
+    # Cleanup useless splits
+    diff = set(positions_updated).difference(positions.keys())
+    if positions and diff:
+        logger.debug('Cleanup splits on positions %s' % diff)
+        track.splits.filter(position__in=diff).delete()
 
     return total
