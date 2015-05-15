@@ -330,7 +330,7 @@ class TrackProvider:
     track.save()
 
     # Cleanup useless splits
-    diff = set(positions_updated).difference(positions.keys())
+    diff = set(positions.keys()).difference(positions_updated)
     if positions and diff:
         logger.debug('Cleanup splits on positions %s' % diff)
         track.splits.filter(position__in=diff).delete()
