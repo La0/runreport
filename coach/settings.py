@@ -412,6 +412,7 @@ CLUB_CREATION_OPEN = True
 # Paymill integration
 PAYMILL_SECRET = None
 PAYMILL_PUBLIC = None
+PAYMILL_HOOK_EMAIL = None
 
 # Import local settings, if any
 try:
