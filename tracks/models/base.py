@@ -4,6 +4,13 @@ from .file import TrackFile
 from hashlib import md5
 from helpers import date_to_week
 from django.contrib.gis.geos import LineString
+from django.conf import settings
+import os
+import requests
+
+# Alias accessible from model field
+def build_image_path(instance, filename):
+  return instance.build_image_path()
 
 class Track(models.Model):
   session = models.OneToOneField(SportSession, related_name='track')
@@ -23,6 +30,9 @@ class Track(models.Model):
 
   # Total split, resumes all others splits
   split_total = models.OneToOneField('tracks.TrackSplit', null=True, blank=True, related_name='direct_track')
+
+  # Static render
+  image = models.ImageField(upload_to=build_image_path, null=True, blank=True)
 
   class Meta:
     unique_together = (
@@ -114,3 +124,74 @@ class Track(models.Model):
       return 'http://www.strava.com/activities/%s' % self.provider_id
 
     return None
+
+  def build_image_path(self):
+    # Build an image path for a track
+    # using his pk, and a secret hash
+    h = md5('track:%s:%d' % (settings.SECRET_KEY, self.pk)).hexdigest()
+    img_path = 'tracks/%s/%s.png' % (h[0:2], h[2:])
+
+    # Check the dir exists
+    full_path = os.path.join(settings.MEDIA_ROOT, img_path)
+    img_dir = os.path.dirname(full_path)
+    if not os.path.isdir(img_dir):
+      os.makedirs(img_dir)
+
+    return img_path
+
+  def build_image(self):
+    '''
+    Build a static image using OSM data & web service
+    Using geomap.nagvis.org
+    '''
+    # Setup
+    url = 'http://geomap.nagvis.org/'
+    params = {
+      'module' : 'map',
+      'type' : 'mapnik',
+      'imgType' : 'png',
+      'width' : 800,
+      'height' : 800,
+      'color' : '0,0,255',
+      'thickness' : 5,
+      'transparency' : 60,
+    }
+
+    # Search for min,max lon,lat
+    min_lat, max_lat, min_lon, max_lon = 180, -180, 180, -180
+    for lat, lon in self.simple.envelope[0]:
+      min_lat = min(lat, min_lat)
+      max_lat = max(lat, max_lat)
+      min_lon = min(lon, min_lon)
+      max_lon = max(lon, max_lon)
+
+    # Add offsets
+    offset = 0.001
+    min_lat -= offset
+    max_lat += offset
+    min_lon -= offset
+    max_lon += offset
+
+    # longitude of the left bound, latitude of the top bound, longitude of the right bound, latitude of bottom edge.
+    params['bbox'] = '%.4f,%.4f,%.4f,%.4f' % (min_lon, max_lat, max_lon, min_lat)
+
+    # Add path from simple polyline
+    params['paths'] = ','.join(['%.4f,%.4f' % (lon,lat) for lat,lon in self.simple])
+
+    # Request image
+    resp = requests.get(url, params=params)
+    if resp.status_code != 200:
+      raise Exception('Invalid response from OSM api')
+
+    # Save image file
+    path = self.build_image_path()
+    full_path = os.path.join(settings.MEDIA_ROOT, path)
+    with open(full_path, 'wb') as png:
+      for chunk in resp.iter_content(1024):
+        if chunk:
+          png.write(chunk)
+
+    # Add reference, but don't save here
+    self.image = path
+
+    return full_path
