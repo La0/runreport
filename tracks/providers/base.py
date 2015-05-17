@@ -240,6 +240,7 @@ class TrackProvider:
       track.session.name = identity['name']
       track.session.save()
 
+
     # Save full track
     track.save()
     logger.info("Saved %s track #%d"% (self.NAME, track.pk))
@@ -255,6 +256,13 @@ class TrackProvider:
 
     # Finally, attach splits
     self.attach_splits(track, activity)
+
+    # Build image (needs pk)
+    try:
+      track.build_image()
+      track.save()
+    except Exception, e:
+      logger.warn('No image: %s' % (str(e), ))
 
     return track, True
 
