@@ -165,6 +165,57 @@ msgstr "Français"
 msgid "English"
 msgstr "Anglais"
 
+msgid "Monthly stats"
+msgstr "Statistiques mensuelles"
+
+msgid "Desc."
+msgstr "Description."
+
+msgid "Share your sessions details"
+msgstr "Partager vos séances sportives "
+
+msgid "Join a club and communicate with your trainer"
+msgstr "Rejoindre un club et communiquer avec votre entraineur"
+
+msgid "Track your sport sessions"
+msgstr "Suivez efficacement vos séances sportives"
+
+msgid "Garmin Synchronisation"
+msgstr "Synchronisation Garmin"
+
+msgid "Strava Synchronisation"
+msgstr "Synchronisation Strava"
+
+msgid "Detailed privacy control"
+msgstr "Contrôle détaillé de vos publications"
+
+msgid "Google Calendar Export"
+msgstr "Export calendrier Google"
+
+msgid "Write blog posts"
+msgstr "Ecriver des articles"
+
+msgid "Detailed weekly stats"
+msgstr "Statistiques détaillées par semaine"
+
+msgid "Be notified of your athletes sessions"
+msgstr "Soyez notifié de la progression de vos athlètes"
+
+msgid "Manage your athletes with a powerful interface"
+msgstr "Gérez vos athlètes avec une interface puissante"
+
+msgid "Talk directly and privately with your athletes"
+msgstr "Parlez directement et de manière privée à vos athlètes"
+
+msgid "Manage multiple trainers in your club"
+msgstr "Gérer plusieurs entraineurs dans votre club"
+
+msgid "Send training plans to your athletes in one click"
+msgstr "Envoyez vos plans à vos athlètes en un clic"
+
+msgid "Easily create training plans"
+msgstr "Créer facilement des plans d'entrainement"
+
 msgid "Name"
 msgstr "Nom"
 
@@ -868,78 +919,22 @@ msgstr "Coureur"
 msgid "Features for runners"
 msgstr "Fonctionalités pour les athlètes"
 
-#| msgid "View Google Calendar"
-msgid "Google Calendar Export"
-msgstr "Export calendrier Google"
+#| msgid "Features"
+msgid "Feature"
+msgstr "Fonctionalité"
 
-#| msgid "News"
+#| msgid "Create an account"
+msgid "Free account"
+msgstr "Compte gratuit"
+
+msgid "Premium account"
+msgstr "Compte Premium"
+
 msgid "New"
 msgstr "Nouveau"
 
-msgid "Premium"
-msgstr "Premium"
-
-#| msgid "GPS Synchronisation"
-msgid "Strava Synchronisation"
-msgstr "Synchronisation Strava"
-
-#| msgid "GPS Synchronisation"
-msgid "Garmin Synchronisation"
-msgstr "Synchronisation Garmin"
-
-msgid "Detailed weekly stats"
-msgstr "Statistiques détaillées par semaine"
-
-#| msgid "My statistics"
-msgid "Monthly stats"
-msgstr "Statistiques mensuelles"
-
-#| msgid "Create a post"
-msgid "Write blog posts"
-msgstr "Ecriver des articles"
-
-#| msgid "on your session"
-msgid "Share your sessions details"
-msgstr "Partager vos séances sportives "
-
-msgid "Join a club and communicate with your trainer"
-msgstr "Rejoindre un club et communiquer avec votre entraineur"
-
-msgid "Detailed privacy control"
-msgstr "Contrôle détaillé de vos publications"
-
-#| msgid "Your sport sessions"
-msgid "Track your sport sessions"
-msgstr "Suivez efficacement vos séances sportives"
-
-#| msgid "Infos for trainers"
 msgid "Features for trainers"
 msgstr "Fonctionalités pour entraineurs"
-
-#| msgid "Send invites to your athletes"
-msgid "Send training plans to your athletes in one click"
-msgstr "Envoyez vos plans à vos athlètes en un clic"
-
-msgid "Easily create training plans"
-msgstr "Créer facilement des plans d'entrainement"
-
-#| msgid "Your athlete's sessions today"
-msgid "Be notified of your athletes sessions"
-msgstr "Soyez notifié de la progression de vos athlètes"
-
-msgid "Manage your athletes with a powerful interface"
-msgstr "Gérez vos athlètes avec une interface puissante"
-
-#| msgid "Send invites to your athletes"
-msgid "Talk directly and privately with your athletes"
-msgstr "Parlez directement et de manière privée à vos athlètes"
-
-msgid "Manage multiple trainers in your club"
-msgstr "Gérer plusieurs entraineurs dans votre club"
-
-#| msgid "Demo account"
-msgid "Premium account"
-msgstr "Compte Premium"
 
 msgid ""
 "All the above features with the tag Premium are only available to paying "
@@ -1037,7 +1032,6 @@ msgstr "Je suis un coureur"
 msgid "Want to know more"
 msgstr "En savoir plus"
 
-#| msgid "%s trainer"
 msgid "I'm a trainer"
 msgstr "Je suis un Entraîneur"
 
@@ -1467,6 +1461,60 @@ msgstr "formulaire de contact"
 
 msgid "Private"
 msgstr "Privé"
+
+#, python-format
+#| msgid "Year %s"
+msgid "Offer %s"
+msgstr "Offre %s"
+
+msgid "Name on Card"
+msgstr "Nom sur la carte"
+
+msgid "Card Holder's Name"
+msgstr "Nom du possesseur de la carte"
+
+msgid "Missing card holder's name"
+msgstr "Le nom du possesseur de la carte est manquant"
+
+msgid "Card Number"
+msgstr "Numéro de carte"
+
+msgid "Debit/Credit Card Number"
+msgstr "Numéro de carte de crédit"
+
+msgid "Invalid card number"
+msgstr "Numéro de carte invalide"
+
+msgid "Expiration Date"
+msgstr "Date d'expiration"
+
+msgid "Invalid expiry date"
+msgstr "Date d'expiration invalide"
+
+msgid "Card cvc"
+msgstr "Code de sécurité"
+
+msgid "Security Code"
+msgstr "Code de sécurité"
+
+msgid "Invalid card cvc"
+msgstr "Code de sécurité invalide"
+
+msgid "Pay Now"
+msgstr "Payer"
+
+msgid "You are a premium RunReport member !"
+msgstr "Vous êtes un membre Premium de RunReport"
+
+#| msgid "Fast club subscriptions"
+msgid "Cancel subscription"
+msgstr "Annuler l'abonnement"
+
+msgid "Buy monthly"
+msgstr "Acheter l'abonnement mensuel"
+
+msgid "Buy yearly"
+msgstr "Acheter l'abonnement annuel"
 
 #, python-format
 msgid "Remove plan %s"
@@ -2715,6 +2763,11 @@ msgstr "L'équipe"
 msgid "Source code on"
 msgstr "Code source sur"
 
+msgid "Premium"
+msgstr "Premium"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
 msgid "Training logbook & Athletes management"
 msgstr "Carnet d'entraînement & Gestion d'athlètes"
 

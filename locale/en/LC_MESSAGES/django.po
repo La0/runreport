@@ -164,6 +164,57 @@ msgstr ""
 msgid "English"
 msgstr ""
 
+msgid "Monthly stats"
+msgstr ""
+
+msgid "Desc."
+msgstr ""
+
+msgid "Share your sessions details"
+msgstr ""
+
+msgid "Join a club and communicate with your trainer"
+msgstr ""
+
+msgid "Track your sport sessions"
+msgstr ""
+
+msgid "Garmin Synchronisation"
+msgstr ""
+
+msgid "Strava Synchronisation"
+msgstr ""
+
+msgid "Detailed privacy control"
+msgstr ""
+
+msgid "Google Calendar Export"
+msgstr ""
+
+msgid "Write blog posts"
+msgstr ""
+
+msgid "Detailed weekly stats"
+msgstr ""
+
+msgid "Be notified of your athletes sessions"
+msgstr ""
+
+msgid "Manage your athletes with a powerful interface"
+msgstr ""
+
+msgid "Talk directly and privately with your athletes"
+msgstr ""
+
+msgid "Manage multiple trainers in your club"
+msgstr ""
+
+msgid "Send training plans to your athletes in one click"
+msgstr ""
+
+msgid "Easily create training plans"
+msgstr ""
+
 msgid "Name"
 msgstr ""
 
@@ -826,64 +877,19 @@ msgstr ""
 msgid "Features for runners"
 msgstr ""
 
-msgid "Google Calendar Export"
+msgid "Feature"
+msgstr ""
+
+msgid "Free account"
+msgstr ""
+
+msgid "Premium account"
 msgstr ""
 
 msgid "New"
 msgstr ""
 
-msgid "Premium"
-msgstr ""
-
-msgid "Strava Synchronisation"
-msgstr ""
-
-msgid "Garmin Synchronisation"
-msgstr ""
-
-msgid "Detailed weekly stats"
-msgstr ""
-
-msgid "Monthly stats"
-msgstr ""
-
-msgid "Write blog posts"
-msgstr ""
-
-msgid "Share your sessions details"
-msgstr ""
-
-msgid "Join a club and communicate with your trainer"
-msgstr ""
-
-msgid "Detailed privacy control"
-msgstr ""
-
-msgid "Track your sport sessions"
-msgstr ""
-
 msgid "Features for trainers"
-msgstr ""
-
-msgid "Send training plans to your athletes in one click"
-msgstr ""
-
-msgid "Easily create training plans"
-msgstr ""
-
-msgid "Be notified of your athletes sessions"
-msgstr ""
-
-msgid "Manage your athletes with a powerful interface"
-msgstr ""
-
-msgid "Talk directly and privately with your athletes"
-msgstr ""
-
-msgid "Manage multiple trainers in your club"
-msgstr ""
-
-msgid "Premium account"
 msgstr ""
 
 msgid ""
@@ -1372,6 +1378,58 @@ msgid "contact form"
 msgstr ""
 
 msgid "Private"
+msgstr ""
+
+#, python-format
+msgid "Offer %s"
+msgstr ""
+
+msgid "Name on Card"
+msgstr ""
+
+msgid "Card Holder's Name"
+msgstr ""
+
+msgid "Missing card holder's name"
+msgstr ""
+
+msgid "Card Number"
+msgstr ""
+
+msgid "Debit/Credit Card Number"
+msgstr ""
+
+msgid "Invalid card number"
+msgstr ""
+
+msgid "Expiration Date"
+msgstr ""
+
+msgid "Invalid expiry date"
+msgstr ""
+
+msgid "Card cvc"
+msgstr ""
+
+msgid "Security Code"
+msgstr ""
+
+msgid "Invalid card cvc"
+msgstr ""
+
+msgid "Pay Now"
+msgstr ""
+
+msgid "You are a premium RunReport member !"
+msgstr ""
+
+msgid "Cancel subscription"
+msgstr ""
+
+msgid "Buy monthly"
+msgstr ""
+
+msgid "Buy yearly"
 msgstr ""
 
 #, python-format

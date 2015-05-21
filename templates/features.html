@@ -10,232 +10,41 @@
     <div class="col-sm-10 col-xs-12">
       <h3>{{ _('Features for runners') }}</h3>
 
-      <ul>
-        <li>
-          <a href="#gcal" data-toggle="collapse">{{ _('Google Calendar Export') }}</a>
-          <span class="label label-info">{{ _('New') }}</span>
-          <span class="label label-success">{{ _('Premium') }}</span>
-          <div class="collapse" id="gcal">
-            <div class="well">
-              Description de l'offre ici
-            </div>
-          </div>
-        </li>
-        <li>
-          <a href="#strava" data-toggle="collapse">{{ _('Strava Synchronisation') }}</a>
-          <span class="label label-success">{{ _('Premium') }}</span>
-          <div class="collapse" id="strava">
-            <div class="well">
-              Description de l'offre ici
-            </div>
-          </div>
-        </li>
-        <li>
-          <a href="#garmin" data-toggle="collapse">{{ _('Garmin Synchronisation') }}</a>
-          <span class="label label-success">{{ _('Premium') }}</span>
-          <div class="collapse" id="garmin">
-            <div class="well">
-              Description de l'offre ici
-            </div>
-          </div>
-        </li>
-        <li>
-          <a href="#weeklystats" data-toggle="collapse">{{ _('Detailed weekly stats') }}</a>
-          <span class="label label-info">{{ _('New') }}</span>
-          <span class="label label-success">{{ _('Premium') }}</span>
-          <div class="collapse" id="weeklystats">
-            <div class="well">
-              Description de l'offre ici
-            </div>
-          </div>
-        </li>
-        <li>
-          <a href="#monthlystats" data-toggle="collapse">{{ _('Monthly stats') }}</a>
-          <div class="collapse" id="monthlystats">
-            <div class="well">
-              Description de l'offre ici
-            </div>
-          </div>
-        </li>
-        <li>
-          <a href="#blog" data-toggle="collapse">{{ _('Write blog posts') }}</a>
-          <span class="label label-info">{{ _('New') }}</span>
-          <span class="label label-success">{{ _('Premium') }}</span>
-          <div class="collapse" id="blog">
-            <div class="well">
-              Description de l'offre ici
-            </div>
-          </div>
-        </li>
-        <li>
-          <a href="#share" data-toggle="collapse">{{ _('Share your sessions details') }}</a>
-          <div class="collapse" id="share">
-            <div class="well">
-              Description de l'offre ici
-            </div>
-          </div>
-        </li>
-        <li>
-          <a href="#join" data-toggle="collapse">{{ _('Join a club and communicate with your trainer') }}</a>
-          <div class="collapse" id="join">
-            <div class="well">
-              Description de l'offre ici
-            </div>
-          </div>
-        </li>
-        <li>
-          <a href="#privacy" data-toggle="collapse">{{ _('Detailed privacy control') }}</a>
-          <span class="label label-success">{{ _('Premium') }}</span>
-          <div class="collapse" id="privacy">
-            <div class="well">
-              Description de l'offre ici
-            </div>
-          </div>
-        </li>
-        <li>
-          <a href="#track" data-toggle="collapse">{{ _('Track your sport sessions') }}</a>
-          <div class="collapse" id="track">
-            <div class="well">
-              Description de l'offre ici
-            </div>
-          </div>
-        </li>
-      </ul>
-
       <table class="table table-hover table-bordered">
         <thead>
           <tr>
-            <th>Fonctionalités</th>
-            <th>Compte Gratuit</th>
-            <th>Compte Premium</th>
+            <th>{{ _('Feature') }}</th>
+            <th class="text-center">{{ _('Free account') }}</th>
+            <th class="text-center">{{ _('Premium account') }}</th>
           </tr>
         </thead>
         <tbody>
+          {% for feature in features.runners %}
           <tr>
             <td>
-              <a href="#monthlystats-tab" data-toggle="collapse">{{ _('Monthly stats') }}</a>
-            </td>
-            <td class="text-center"><i class="icon-down-open"></i></td>
-            <td class="text-center"><i class="icon-down-open"></i></td>
-          </tr>
-          <tr class="collapse" id="monthlystats-tab">
-            <td colspan="3">
-              Description de l'offre ici
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <a href="#share-tab" data-toggle="collapse">{{ _('Share your sessions details') }}</a>
-            </td>
-            <td class="text-center"><i class="icon-down-open"></i></td>
-            <td class="text-center"><i class="icon-down-open"></i></td>
-          </tr>
-          <tr class="collapse" id="share-tab">
-            <td colspan="3">
-              Description de l'offre ici
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <a href="#join-tab" data-toggle="collapse">{{ _('Join a club and communicate with your trainer') }}</a>
-            </td>
-            <td class="text-center"><i class="icon-down-open"></i></td>
-            <td class="text-center"><i class="icon-down-open"></i></td>
-          </tr>
-          <tr class="collapse" id="join-tab">
-            <td colspan="3">
-              Description de l'offre ici
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <a href="#track-tab" data-toggle="collapse">{{ _('Track your sport sessions') }}</a>
-            </td>
-            <td class="text-center"><i class="icon-down-open"></i></td>
-            <td class="text-center"><i class="icon-down-open"></i></td>
-          </tr>
-          <tr class="collapse" id="track-tab">
-            <td colspan="3">
-              Description de l'offre ici
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <a href="#gcal-tab" data-toggle="collapse">{{ _('Google Calendar Export') }}</a>
+              <a href="#runner_{{ loop.index }}" data-toggle="collapse">{{ feature.name }}</a>
+              {% if feature.new %}
               <span class="pull-right label label-info">{{ _('New') }}</span>
+              {% endif %}
             </td>
-            <td></td>
-            <td class="text-center"><i class="icon-down-open"></i></td>
+            <td class="text-center">
+              {% if not feature.premium %}
+              <i class="icon-ok"></i>
+              {% endif %}
+            </td>
+            <td class="text-center">
+              <i class="icon-ok"></i>
+            </td>
           </tr>
-          <tr class="collapse" id="gcal-tab">
+          <tr class="collapse" id="runner_{{ loop.index }}">
             <td colspan="3">
-              Description de l'offre ici
+              {{ feature.description }}
             </td>
           </tr>
-          <tr>
-            <td>
-              <a href="#strava-tab" data-toggle="collapse">{{ _('Strava Synchronisation') }}</a>
-            </td>
-            <td></td>
-            <td class="text-center"><i class="icon-down-open"></i></td>
-          </tr>
-          <tr class="collapse" id="strava-tab">
-            <td colspan="3">
-              Description de l'offre ici
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <a href="#blog-tab" data-toggle="collapse">{{ _('Write blog posts') }}</a>
-              <span class="pull-right label label-info">{{ _('New') }}</span>
-            </td>
-            <td></td>
-            <td class="text-center"><i class="icon-down-open"></i></td>
-          </tr>
-          <tr class="collapse" id="blog-tab">
-            <td colspan="3">
-              Description de l'offre ici
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <a href="#garmin-tab" data-toggle="collapse">{{ _('Garmin Synchronisation') }}</a>
-            </td>
-            <td></td>
-            <td class="text-center"><i class="icon-down-open"></i></td>
-          </tr>
-          <tr class="collapse" id="garmin-tab">
-            <td colspan="3">
-              Description de l'offre ici
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <a href="#privacy-tab" data-toggle="collapse">{{ _('Detailed privacy control') }}</a>
-            </td>
-            <td></td>
-            <td class="text-center"><i class="icon-down-open"></i></td>
-          </tr>
-          <tr class="collapse" id="privacy-tab">
-            <td colspan="3">
-              Description de l'offre ici
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <a href="#weeklystats-tab" data-toggle="collapse">{{ _('Detailed weekly stats') }}</a>
-              <span class="pull-right label label-info">{{ _('New') }}</span>
-            </td>
-            <td></td>
-            <td class="text-center"><i class="icon-down-open"></i></td>
-          </tr>
-          <tr class="collapse" id="weeklystats-tab">
-            <td colspan="3">
-              Description de l'offre ici
-            </td>
-          </tr>
+          {% endfor %}
         </tbody>
       </table>
+
     </div>
   </div>
 
@@ -246,61 +55,41 @@
     <div class="col-sm-10 col-xs-12">
       <h3>{{ _('Features for trainers') }}</h3>
 
-      <ul>
-        <li>
-          <a href="#sendplans" data-toggle="collapse">{{ _('Send training plans to your athletes in one click') }}</a>
-          <span class="label label-info">{{ _('New') }}</span>
-          <span class="label label-success">{{ _('Premium') }}</span>
-          <div class="collapse" id="sendplans">
-            <div class="well">
-              Description de l'offre ici
-            </div>
-          </div>
-        </li>
-        <li>
-          <a href="#plans" data-toggle="collapse">{{ _('Easily create training plans') }}</a>
-          <span class="label label-info">{{ _('New') }}</span>
-          <span class="label label-success">{{ _('Premium') }}</span>
-          <div class="collapse" id="plans">
-            <div class="well">
-              Description de l'offre ici
-            </div>
-          </div>
-        </li>
-        <li>
-          <a href="#notify" data-toggle="collapse">{{ _('Be notified of your athletes sessions') }}</a>
-          <div class="collapse" id="notify">
-            <div class="well">
-              Description de l'offre ici
-            </div>
-          </div>
-        </li>
-        <li>
-          <a href="#manage" data-toggle="collapse">{{ _('Manage your athletes with a powerful interface') }}</a>
-          <div class="collapse" id="manage">
-            <div class="well">
-              Description de l'offre ici
-            </div>
-          </div>
-        </li>
-        <li>
-          <a href="#comments" data-toggle="collapse">{{ _('Talk directly and privately with your athletes') }}</a>
-          <div class="collapse" id="comments">
-            <div class="well">
-              Description de l'offre ici
-            </div>
-          </div>
-        </li>
-        <li>
-          <a href="#trainers" data-toggle="collapse">{{ _('Manage multiple trainers in your club') }}</a>
-          <span class="label label-success">{{ _('Premium') }}</span>
-          <div class="collapse" id="trainers">
-            <div class="well">
-              Description de l'offre ici
-            </div>
-          </div>
-        </li>
-      </ul>
+      <table class="table table-hover table-bordered">
+        <thead>
+          <tr>
+            <th>{{ _('Feature') }}</th>
+            <th class="text-center">{{ _('Free account') }}</th>
+            <th class="text-center">{{ _('Premium account') }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for feature in features.trainers %}
+          <tr>
+            <td>
+              <a href="#trainer_{{ loop.index }}" data-toggle="collapse">{{ feature.name }}</a>
+              {% if feature.new %}
+              <span class="pull-right label label-info">{{ _('New') }}</span>
+              {% endif %}
+            </td>
+            <td class="text-center">
+              {% if not feature.premium %}
+              <i class="icon-ok"></i>
+              {% endif %}
+            </td>
+            <td class="text-center">
+              <i class="icon-ok"></i>
+            </td>
+          </tr>
+          <tr class="collapse" id="trainer_{{ loop.index }}">
+            <td colspan="3">
+              {{ feature.description }}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
     </div>
   </div>
   <div class="row">
