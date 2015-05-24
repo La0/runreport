@@ -260,6 +260,7 @@ class TrackProvider:
     # Build image (needs pk)
     try:
       track.build_image()
+      track.build_thumb()
       track.save()
     except Exception, e:
       logger.warn('No image: %s' % (str(e), ))

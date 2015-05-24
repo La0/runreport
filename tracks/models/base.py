@@ -5,12 +5,16 @@ from hashlib import md5
 from helpers import date_to_week
 from django.contrib.gis.geos import LineString
 from django.conf import settings
+from PIL import Image
 import os
 import requests
 
 # Alias accessible from model field
 def build_image_path(instance, filename):
-  return instance.build_image_path()
+  return instance.build_image_path('source')
+
+def build_thumb_path(instance, filename):
+  return instance.build_image_path('thumb')
 
 class Track(models.Model):
   session = models.OneToOneField(SportSession, related_name='track')
@@ -33,6 +37,7 @@ class Track(models.Model):
 
   # Static render
   image = models.ImageField(upload_to=build_image_path, null=True, blank=True)
+  thumb = models.ImageField(upload_to=build_thumb_path, null=True, blank=True)
 
   class Meta:
     unique_together = (
@@ -125,10 +130,10 @@ class Track(models.Model):
 
     return None
 
-  def build_image_path(self):
+  def build_image_path(self, type):
     # Build an image path for a track
     # using his pk, and a secret hash
-    h = md5('track:%s:%d' % (settings.SECRET_KEY, self.pk)).hexdigest()
+    h = md5('track:%s:%s:%d' % (type, settings.SECRET_KEY, self.pk)).hexdigest()
     img_path = 'tracks/%s/%s.png' % (h[0:2], h[2:])
 
     # Check the dir exists
@@ -195,3 +200,33 @@ class Track(models.Model):
     self.image = path
 
     return full_path
+
+  def build_thumb(self):
+    '''
+    Build the thumbnail from source image
+    Source is always a square image
+    '''
+    if not self.image:
+      raise Exception('Missing source image')
+
+    # Config
+    img = Image.open(self.image.path)
+    w, h= img.size
+    resize = (256, 256)
+
+    box_offset = 0.2
+    box = ( w * box_offset, h * box_offset, w * (1.0 - box_offset), h * (1.0 - box_offset) )
+
+    # Resize & Crop source
+    img.crop(box)
+    img.thumbnail(resize)
+
+    # Add reference for saved image, but don't save
+    path = self.build_image_path('thumb')
+    full_path = os.path.join(settings.MEDIA_ROOT, path)
+    img.save(full_path)
+    self.thumb = path
+
+    return full_path
+
+
