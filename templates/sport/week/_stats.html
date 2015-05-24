@@ -5,22 +5,26 @@
         <th>{{ _('Sport') }}</th>
         <th>{{ _('Time') }}</th>
         <th>{{ _('Distance') }}</th>
+        <th>{{ _('Sessions') }}</th>
       </tr>
-      {% for sport, time, distance in stats %}
-      <tr class="{% if not sport %}info{% endif %}">
+      {% for stat in stats %}
+      <tr class="{% if not stat.sport %}info{% endif %}">
         <td>
-          {% if sport %}
-          <i class="icon-sport-{{ sport.slug }}"></i>
-          {{ _(sport.name) }}
+          {% if stat.sport %}
+          <i class="icon-sport-{{ stat.sport.slug }}"></i>
+          {{ _(stat.sport.name) }}
           {% else %}
           <strong>{{ _('Total') }}</strong>
           {% endif %}
         </td>
         <td>
-          {{ time|total_time() }}
+          {{ stat.time|total_time() }}
         </td>
         <td>
-          {{ distance|default(0)|floatformat(2) }} km.
+          {{ stat.distance|default(0)|floatformat(2) }} km.
+        </td>
+        <td>
+          {{ stat.sessions|default(0) }}
         </td>
       {% endfor %}
       </tr>

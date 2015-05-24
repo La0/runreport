@@ -70,12 +70,14 @@
           <th>{{ _('Sport') }}</th>
           <th>{{ _('Total time') }}</th>
           <th>{{ _('Total distance') }}</th>
+          <th>{{ _('Sessions') }}</th>
         </tr>
-        {% for sport, time, distance in report.get_sports_stats() %}
+        {% for stat in report.get_sports_stats() %}
         <tr>
-          <td>{% if sport %}{{sport.name}}{% else %}{{ _('Total') }}{% endif %}</td>
-          <td>{{time|total_time()}}</td>
-          <td>{{distance|default('0')}} km</td>
+          <td>{% if stat.sport %}{{stat.sport.name}}{% else %}{{ _('Total') }}{% endif %}</td>
+          <td>{{stat.time|total_time()}}</td>
+          <td>{{stat.distance|default('0')}} km</td>
+          <td>{{stat.sessions|default('0')}}</td>
         </tr>
         {% endfor %}
       </table>
