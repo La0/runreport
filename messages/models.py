@@ -40,6 +40,8 @@ class Conversation(models.Model):
 
     # View session
     session = self.get_session()
+    if not session:
+      return reverse('conversation-view', args=(self.pk, ))
     dt = session.day.date
     return reverse('user-calendar-day', args=(session.day.week.user.username, dt.year, dt.month, dt.day))
 
@@ -50,7 +52,7 @@ class Conversation(models.Model):
     # Check the session is attached
     name = self.type == TYPE_COMMENTS_PRIVATE and 'session_private' or 'session_public'
     if not hasattr(self, name):
-      raise Exception('Missing session %s' % name)
+      return None
 
     return getattr(self, name)
 
@@ -88,6 +90,8 @@ class Conversation(models.Model):
       trainers = []
       if self.type == TYPE_COMMENTS_PRIVATE:
         session = self.get_session()
+        if not session:
+          return []
         user = session.day.week.user
       else:
         user = self.week.user

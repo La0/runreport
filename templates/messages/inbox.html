@@ -51,9 +51,10 @@
           {{ _('On %(first_name)s %(last_name)s week from %(start)s') % {'first_name' : u.first_name, 'last_name' : u.last_name, 'start' : conversation.week.get_date_start()|date('l d E Y'), } }}
           {% endwith %}
         {% endif %}
-      {% else %}
+      {% elif conversation.type in ('comments_public', 'comments_private') %}
       <p>
         {% with session = conversation.get_session() %}
+        {% if session %}
           <i class="icon-comment"></i>
           {% with session_user = session.day.week.user %}
             {% if user == session_user %}
@@ -69,6 +70,9 @@
           </a>
           {{ _('on') }} {{ dt|date('l d E Y') }}
           {% endwith %}
+        {% else %}
+        <i class="text-muted">{{ _('Missing data') }}</i>
+        {% endif %}
         {% endwith %}
       </p>
       {% endif %}

@@ -22,6 +22,8 @@ class ConversationMixin(object):
     if self.conversation.type in (TYPE_COMMENTS_PRIVATE, TYPE_COMMENTS_PUBLIC):
       # A comment conversation has rights
       self.session = self.conversation.get_session()
+      if not self.session:
+        raise PermissionDenied
       self.privacy = self.session.day.week.user.get_privacy_rights(self.request.user)
       if self.conversation.type not in self.privacy:
         raise PermissionDenied
