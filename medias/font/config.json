@@ -193,6 +193,12 @@
       "src": "entypo"
     },
     {
+      "uid": "3a6f0140c3a390bdb203f56d1bfdefcb",
+      "css": "speed",
+      "code": 59442,
+      "src": "entypo"
+    },
+    {
       "uid": "d94334f23acba022bfd68e49d76b31bb",
       "css": "github",
       "code": 59393,
@@ -209,6 +215,12 @@
       "css": "sport-fitness_equipment",
       "code": 59400,
       "src": "typicons"
+    },
+    {
+      "uid": "97ylvmgyj79w96iwzdanwmf5o4cvo17w",
+      "css": "elevation",
+      "code": 59443,
+      "src": "modernpics"
     },
     {
       "uid": "7997220c4eb58edae98e04de570089c2",
@@ -277,6 +289,12 @@
       "src": "elusive"
     },
     {
+      "uid": "f8d887df13c5f95ede5fb0e2cdb042b1",
+      "css": "distance",
+      "code": 59441,
+      "src": "elusive"
+    },
+    {
       "uid": "dc73bee1d58539abe8c96b958bf4c931",
       "css": "fire",
       "code": 59407,
@@ -293,6 +311,12 @@
       "css": "sport-transition",
       "code": 59418,
       "src": "linecons"
+    },
+    {
+      "uid": "7b16b22168e762c88333f465da862098",
+      "css": "ok",
+      "code": 59440,
+      "src": "websymbols"
     }
   ]
 }

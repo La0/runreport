@@ -126,9 +126,9 @@ form.report div.actions.row div {
 }
 
 div.sport-session {
-  padding: 2px 0 10px 0;
+  padding: 0px 0 10px 0;
   border-bottom: 1px solid #E9E9E9;
-  margin-bottom: 18px;
+  margin-bottom: 10px;
 }
 
 div.sport-session div.comments {
