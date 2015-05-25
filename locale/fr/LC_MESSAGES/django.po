@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-08 10:35+0200\n"
-"PO-Revision-Date: 2015-05-08 10:36+0100\n"
+"POT-Creation-Date: 2015-05-25 15:43+0200\n"
+"PO-Revision-Date: 2015-05-25 15:47+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -616,7 +616,6 @@ msgstr "Tous les membres"
 msgid "Trainers"
 msgstr "Entraîneurs"
 
-#| msgid "Your trainer"
 msgid "Without trainer"
 msgstr "Sans entraîneur"
 
@@ -1298,6 +1297,9 @@ msgstr "Sur la séance de"
 msgid "on"
 msgstr "le"
 
+msgid "Missing data"
+msgstr "Données manquantes"
+
 msgid "Previous conversations"
 msgstr "Conversation précèdentes"
 
@@ -1636,6 +1638,44 @@ msgstr "Pas de distance"
 
 msgid "No sessions"
 msgstr "Pas de séances"
+
+msgid "GPS data available"
+msgstr "Données GPS"
+
+msgid "No GPS data"
+msgstr "Pas de données GPS"
+
+#| msgid "comments visibility"
+msgid "Comments available"
+msgstr "Commentaires"
+
+#| msgid "No comments"
+msgid "No Comments"
+msgstr "Pas de commentaires"
+
+#| msgid "Daily trainer mail"
+msgid "In a trainer plan"
+msgstr "Dans un plan d'entrainement"
+
+#| msgid "Your trainer"
+msgid "No trainer plan"
+msgstr "Pas de plan d'entrainement"
+
+#| msgid "Elevation gain"
+msgid "Elevation"
+msgstr "Dénivelé positif"
+
+#| msgid "No conversations"
+msgid "No elevation"
+msgstr "Pas de dénivelé"
+
+#| msgid "Average speed"
+msgid "Average Speed"
+msgstr "Vitesse moyenne"
+
+#| msgid "Average speed"
+msgid "No average speed"
+msgstr "Pas de vitesse moyenne"
 
 msgid "has planned a "
 msgstr "a prévu"

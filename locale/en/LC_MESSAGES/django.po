@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-08 10:35+0200\n"
+"POT-Creation-Date: 2015-05-25 15:43+0200\n"
 "PO-Revision-Date: 2015-02-09 17:42+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
@@ -1214,6 +1214,9 @@ msgstr ""
 msgid "on"
 msgstr ""
 
+msgid "Missing data"
+msgstr ""
+
 msgid "Previous conversations"
 msgstr ""
 
@@ -1550,6 +1553,38 @@ msgid "No Distance"
 msgstr ""
 
 msgid "No sessions"
+msgstr ""
+
+msgid "GPS data available"
+msgstr ""
+
+msgid "No GPS data"
+msgstr ""
+
+msgid "Comments available"
+msgstr ""
+
+msgid "No Comments"
+msgstr ""
+
+msgid "In a trainer plan"
+msgstr ""
+
+msgid "No trainer plan"
+msgstr ""
+
+msgid "Elevation"
+msgstr ""
+
+#, fuzzy
+#| msgid "Natation"
+msgid "No elevation"
+msgstr "Swimming"
+
+msgid "Average Speed"
+msgstr ""
+
+msgid "No average speed"
 msgstr ""
 
 msgid "has planned a "
