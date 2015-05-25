@@ -1,0 +1,178 @@
+{% set type_css = {
+  'training' : 'label-info',
+  'race' : 'label-success',
+  'rest' : 'label-danger',
+} %}
+
+<div class="col-sm-1">
+  <h4 class="date hidden-xs">
+    <a href="{{ url(pageday,  *pageargs + [day_date.year, day_date.month, day_date.day]) }}">
+      {{day_date|date('l')|title()}}
+    </a>
+  </h4>
+  <h6 class="date hidden-xs">
+    <a href="{{ url(pageday,  *pageargs + [day_date.year, day_date.month, day_date.day]) }}">
+      {{day_date|date('d E')|title()}}
+    </a>
+  </h6>
+  <h4 class="date visible-xs">
+    <a href="{{ url(pageday,  *pageargs + [day_date.year, day_date.month, day_date.day]) }}">
+      {{day_date|date('l')|title()}}
+    </a>
+  </h4>
+</div>
+
+<div class="col-sm-11">
+  {% if day and day.sessions.count() %}
+  {% for session in day.sessions.order_by('created') %}
+  {% with has_track = (session.track and session.track.thumb) %}
+  <div class="sport-session row">
+
+    {% if has_track %}
+    <div class="col-sm-8 col-xs-9">
+    {% else %}
+    <div class="col-sm-10 col-xs-12">
+    {% endif %}
+
+      <h4>
+        {% if session.name %}
+        <strong>{{session.name}}</strong>
+        {% else %}
+        <i>{{ _('No session name') }}</i>
+        {% endif %}
+      </h4>
+      <h5>
+        <i class="icon-sport-{{session.sport.slug}} do-tooltip" title="{{ session.sport.name }}"></i>
+
+        {% if session.track %}
+        <i class="icon-location do-tooltip" title="{{ _('GPS data available') }}"></i>
+        {% else %}
+        <i class="icon-location do-tooltip text-muted" title="{{ _('No GPS data') }}"></i>
+        {% endif %}
+
+        {% if session.comments_public or session.comments_private %}
+        <i class="icon-comment do-tooltip" title="{{ _('Comments available') }}"></i>
+        {% else %}
+        <i class="icon-comment do-tooltip text-muted" title="{{ _('No Comments') }}"></i>
+        {% endif %}
+
+        {% if session.plan_session %}
+        <i class="icon-plan-session do-tooltip" title="{{ _('In a trainer plan') }}"></i>
+        {% else %}
+        <i class="icon-plan-session do-tooltip text-muted" title="{{ _('No trainer plan') }}"></i>
+        {% endif %}
+
+        <span class="label {{type_css[session.type]}}">{{_(session.type)|title()}}</span>
+
+        {% if session.plan_session and session.type != 'rest' %}
+          {% if session.plan_session.status == 'done' %}
+          <span class="label label-success">{{ _('Done') }}</span>
+          {% elif session.plan_session.status == 'failed' %}
+          <span class="label label-danger">{{ _('Failed') }}</span>
+          {% endif %}
+        {% endif %}
+      </h5>
+
+      <div class="visible-xs">
+        {% if session.time %}
+          <i class="icon-chrono do-tooltip" title="{{ _('Time') }}"></i>
+          {{ session.time|total_time() }}
+        {% else %}
+          <i class="icon-chrono do-tooltip text-muted" title="{{ _('No time') }}"></i>
+        {% endif %}
+
+        {% if session.distance %}
+          <i class="icon-distance do-tooltip" title="{{ _('Distance') }}"></i>
+          {% if session.sport.get_category() == 'swimming' %}
+            {{ (session.distance * 1000)|floatformat(0) }} m
+          {% else %}
+            {{ session.distance|floatformat(2) }} km
+          {% endif %}
+        {% else %}
+          <i class="icon-distance do-tooltip text-muted" title="{{ _('No Distance') }}"></i>
+        {% endif %}
+
+        {% if has_track %}
+        {% with total = session.track.split_total %}
+          {% if total.elevation_gain %}
+          <i class="icon-elevation do-tooltip" title="{{ _('Elevation') }}"></i>
+          {{ (total.elevation_gain)|floatformat(0) }} m
+          {% else %}
+          <i class="icon-elevation do-tooltip text-muted" title="{{ _('No elevation') }}"></i>
+          {% endif %}
+
+          {% if total.elevation_gain %}
+          <i class="icon-speed do-tooltip" title="{{ _('Average Speed') }}"></i>
+          {{ total.speed|default(0)|convert_speed_kmh()|floatformat(2) }} km/h
+          {% else %}
+          <i class="icon-speed do-tooltip text-muted" title="{{ _('No average speed') }}"></i>
+          {% endif %}
+        {% endwith %}
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="col-sm-2 text-right hidden-xs">
+      <h4>
+      {% if session.time %}
+        {{ session.time|total_time() }}
+        <i class="icon-chrono do-tooltip" title="{{ _('Time') }}"></i>
+      {% else %}
+        <i class="icon-chrono do-tooltip text-muted" title="{{ _('No time') }}"></i>
+      {% endif %}
+      </h4>
+
+      <h4>
+      {% if session.distance %}
+        {% if session.sport.get_category() == 'swimming' %}
+          {{ (session.distance * 1000)|floatformat(0) }} m
+        {% else %}
+          {{ session.distance|floatformat(2) }} km
+        {% endif %}
+        <i class="icon-distance do-tooltip" title="{{ _('Distance') }}"></i>
+      {% else %}
+        <i class="icon-distance do-tooltip text-muted" title="{{ _('No Distance') }}"></i>
+      {% endif %}
+      </h4>
+
+      {% if has_track %}
+      {% with total = session.track.split_total %}
+      <h4>
+        {% if total.elevation_gain %}
+        {{ (total.elevation_gain)|floatformat(0) }} m
+        <i class="icon-elevation do-tooltip" title="{{ _('Elevation') }}"></i>
+        {% else %}
+        <i class="icon-elevation do-tooltip text-muted" title="{{ _('No elevation') }}"></i>
+        {% endif %}
+      </h4>
+
+      <h4>
+        {% if total.elevation_gain %}
+        {{ total.speed|default(0)|convert_speed_kmh()|floatformat(2) }} km/h
+        <i class="icon-speed do-tooltip" title="{{ _('Average Speed') }}"></i>
+        {% else %}
+        <i class="icon-speed do-tooltip text-muted" title="{{ _('No average speed') }}"></i>
+        {% endif %}
+      </h4>
+      {% endwith %}
+      {% endif %}
+    </div>
+
+    {% if has_track %}
+    <div class="col-sm-2 col-xs-3">
+      <img class="img-responsive" src="{{ session.track.thumb.url }}" alt="Track" />
+    </div>
+    {% endif %}
+  </div>
+
+  {% endwith %}
+  {% endfor %}
+  {% else %}
+  <div class="col-xs-12">
+    <h5>
+      <i class="text-muted">{{ _('No sessions') }}</i>
+    </h5>
+  </div>
+  {% endif %}
+
+</div>

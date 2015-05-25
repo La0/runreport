@@ -189,7 +189,7 @@ class Track(models.Model):
       raise Exception('Invalid response from OSM api')
 
     # Save image file
-    path = self.build_image_path()
+    path = self.build_image_path('source')
     full_path = os.path.join(settings.MEDIA_ROOT, path)
     with open(full_path, 'wb') as png:
       for chunk in resp.iter_content(1024):

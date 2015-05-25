@@ -102,17 +102,22 @@ div.week div.day {
   padding: 0 5px;
 }
 
-div.week div.day h4 a {
-  color: #2c3e50;
-}
-
 div.week div.day.today {
   background: rgb(245, 245, 245);
   border-radius: 5px 5px;
 }
 
-div.day ul.nav {
+div.week div.day ul.nav {
   margin-bottom: 20px;
+}
+
+div.week div.day h4.date a {
+  color: #666;
+  font-size: 0.9em;
+}
+
+div.day h6.date a {
+  color: #888;
 }
 
 form.report textarea {
