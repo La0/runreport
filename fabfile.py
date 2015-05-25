@@ -146,4 +146,4 @@ def submodules():
   run('git submodule update')
 
 def static():
-  run('./manage.py collectstatic --clear --noinput')
+  run('./manage.py collectstatic --clear --noinput --ignore "tracks" --ignore "posts" --ignore "avatars"')
