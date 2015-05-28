@@ -10,7 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 class UserForm(forms.ModelForm):
   class Meta:
     model = Athlete
-    fields = ('first_name', 'last_name', 'email', 'birthday', 'vma', 'frequency', 'frequency_rest', 'height', 'weight', 'comment', 'license', 'auto_send', 'nb_sessions', 'default_sport', 'avatar', 'privacy_avatar', 'privacy_records', 'privacy_races', 'privacy_stats', 'privacy_calendar', 'privacy_comments', 'privacy_tracks', 'language', 'daily_trainer_mail', 'display_help', )
+    fields = ('first_name', 'last_name', 'email', 'birthday', 'vma', 'frequency', 'frequency_rest', 'height', 'weight', 'comment', 'license', 'auto_send', 'nb_sessions', 'default_sport', 'avatar', 'privacy_avatar', 'privacy_records', 'privacy_races', 'privacy_stats', 'privacy_calendar', 'privacy_comments', 'privacy_tracks', 'language', 'daily_trainer_mail', 'display_help', 'phone', )
     widgets = {
       'nb_sessions' : forms.Select(choices=[(i,i) for i in range(0,21)]),
     }

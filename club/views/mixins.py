@@ -160,3 +160,15 @@ class ClubGroupMixin(object):
     self.group.save()
 
     return super(ClubGroupMixin, self).form_valid(form)
+
+
+class AdminMixin(object):
+
+  def dispatch(self, *args, **kwargs):
+    '''
+    Check the user is staff
+    '''
+    user = self.request.user
+    if not user.is_authenticated() or not user.is_staff:
+      raise PermissionDenied
+    return super(AdminMixin, self).dispatch(*args, **kwargs)

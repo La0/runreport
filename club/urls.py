@@ -49,6 +49,9 @@ urlpatterns = patterns('',
   # List to Join
   url(r'^join/?$', ClubList.as_view(), name="club-list"),
 
+  # List for admins
+  url(r'^admin/?$', ClubAdminListView.as_view(), name="club-admin-list"),
+
   # With an existing club
   url(r'^(?P<slug>[\w\_\-]+)', include(club_patterns)),
 

@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h1>{{ _('All the clubs') }}</h1>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>{{ _('Club') }}</th>
+        <th>{{ _('Members') }}</th>
+        <th>{{ _('Manager') }}</th>
+        <th>{{ _('Actions') }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for club in clubs %}
+      <tr>
+        <td>
+          {{ club.name }}
+          <br />
+          <span class="text-muted do-tooltip" title="{{ club.created|timesince }}">Crée le {{ club.created|date('d E Y') }}</span>
+        </td>
+        <td>
+          <p>
+            <span class="badge">{{ club.clubmembership_set.count() }}</span>
+            {{ _('athletes') }}
+          </p>
+          <p>
+            <span class="badge">{{ club.clubmembership_set.filter(role='trainer').count() }}</span>
+            {{ _('trainers') }}
+          </p>
+        </td>
+        <td>
+          <a href="{{ url('user-public-profile', club.manager.username) }}">
+            {{ club.manager.first_name }} {{ club.manager.last_name }}
+          </a>
+          <br />
+          {{ club.manager.email }}
+          <br />
+          {% if club.manager.phone %}
+            {{ club.manager.phone }}
+          {% else %}
+            <i class="text-muted">{{ _('No phone') }}</i>
+          {% endif %}
+        </td>
+        <td>
+          <a href="{{ url('club-members', club.slug) }}" class="btn btn-info btn-light">
+            <i class="icon-club"></i>
+            {{ _('View members') }}
+          </a>
+          <a href="{{ url('message-user-add', club.manager.username) }}" class="modal-action btn btn-primary btn-light">
+            <i class="icon-mail"></i>
+            {{ _('Contact manager') }}
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -29,6 +29,7 @@ function slugify(str){
 		{% csrf_token %}
 
 		{{ macros.input(form.name, _('Club name')) }}
+		{{ macros.input(form.phone, _('Your phone')) }}
 		{{ macros.input(form.slug, _('Slug'), _('Represents the club\'s name in urls')) }}
 		{{ macros.input_bool(form.private, _('Private club'), _('When private, a club is only accessible y its members')) }}
 		{{ macros.input(form.address, _('Adress')) }}

@@ -81,6 +81,7 @@ $(function(){
         {% if not user.demo %}
         {{ macros.input(form.email, None, false, 4, 8) }}
         {% endif %}
+        {{ macros.input(form.phone, None, false, 4, 8) }}
         {{ macros.input(form.birthday, None, false, 4, 8) }}
         {% if user.category %}
         <div class="form-group">

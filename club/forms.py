@@ -30,6 +30,8 @@ class UserModelChoiceField(forms.ModelMultipleChoiceField):
       return '-'
 
 class ClubCreateForm(forms.ModelForm):
+  phone = forms.CharField(required=True)
+
   class Meta:
     model = Club
     fields = ('name', 'slug', 'address', 'zipcode', 'city', 'private')

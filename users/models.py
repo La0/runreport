@@ -75,6 +75,7 @@ class Athlete(AthleteBase):
   height = models.IntegerField(_('height'), null=True, blank=True, validators=[MinValueValidator(0)], help_text=_('Unit: cm'))
   weight = models.IntegerField(_('weight'), null=True, blank=True, validators=[MinValueValidator(0)], help_text=_('Unit: kg'))
   comment = models.TextField(_('comment'), null=True, blank=True)
+  phone = models.CharField(_('Phone'), max_length=50, null=True, blank=True)
   nb_sessions = models.IntegerField(_('number of sessions per week'), null=True, blank=True, validators=[MinValueValidator(0)])
   license = models.CharField(_('license'), max_length=12, null=True, blank=True)
 

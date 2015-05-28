@@ -3,6 +3,8 @@ from django.core.urlresolvers import reverse
 from users.notification import UserNotifications
 from django.utils.translation import ugettext_lazy as _
 
+MENU_SEPARATOR = '__SEPARATOR__'
+
 def add_pages(request):
   '''
   List menu pages, with active status
@@ -17,13 +19,19 @@ def add_pages(request):
   def _ext(url, caption):
     return {'url' : url, 'caption' : caption, 'active' : False, 'external' : True}
 
-  def _build_club_generic():
+  def _build_club_generic(admin=False):
+    menu = [
+      _p('club-list', _('View clubs')),
+      _p('club-landing', _('Create a club')),
+    ]
+    if admin:
+      menu += [
+        MENU_SEPARATOR,
+        _p('club-admin-list', _('Administration')),
+      ]
     return {
       'caption' : _('Clubs'),
-      'menu': [
-        _p('club-list', _('View clubs')),
-        _p('club-landing', _('Create a club')),
-      ],
+      'menu': menu,
       'icon' : 'icon-star',
     }
 
@@ -49,7 +57,7 @@ def add_pages(request):
     members = request.user.memberships.exclude(role__in=('archive', 'prospect'))
 
     # Build generic club menu
-    menu.append(_build_club_generic())
+    menu.append(_build_club_generic(request.user.is_staff))
 
     # Build Club menu
     for m in members:
@@ -63,7 +71,7 @@ def add_pages(request):
       if m.role in ('athlete', ):
         submenu['menu'].append(_p(('club-members', m.club.slug), _('Members')))
         submenu['menu'].append(_p(('club-groups', m.club.slug, ), _('Groups')))
-        submenu['menu'].append('__SEPARATOR__')
+        submenu['menu'].append(MENU_SEPARATOR)
 
       # Add club admin links for trainers
       if m.role in ('trainer', 'staff') or request.user.is_superuser:
@@ -79,7 +87,7 @@ def add_pages(request):
           submenu['menu'].append(_p(('places', m.club.slug, ), _('Places'), lazy=True))
           submenu['menu'].append(_p(('club-manage', m.club.slug), _('Manage')))
 
-        submenu['menu'].append('__SEPARATOR__')
+        submenu['menu'].append(MENU_SEPARATOR)
 
       # Add public club links for everyone
       for link in m.club.links.all().order_by('position'):
@@ -112,7 +120,7 @@ def add_pages(request):
     submenu['menu'].append(_p('vma', _('My paces')))
     submenu['menu'].append(_p('user-races', _('My races')))
     submenu['menu'].append(_p('track-providers', _('My GPS services')))
-    submenu['menu'].append('__SEPARATOR__')
+    submenu['menu'].append(MENU_SEPARATOR)
     submenu['menu'].append(_p('logout', _('Logout')))
     menu.append(submenu)
   else:
