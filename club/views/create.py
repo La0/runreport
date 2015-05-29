@@ -32,4 +32,7 @@ class ClubCreate(ClubCreateMixin, CreateView):
     self.invite.use(club)
     del self.request.session['invite']
 
+    # Create the mailing list
+    club.create_mailing_list()
+
     return HttpResponseRedirect(reverse('club-manage', kwargs={'slug' : club.slug}))

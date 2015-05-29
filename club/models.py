@@ -2,6 +2,7 @@
 from django.db import models
 from users.models import Athlete
 from coach.mail import MailBuilder
+from coach.mailman import MailMan
 from datetime import datetime
 from club import ROLES
 from django.conf import settings
@@ -29,6 +30,9 @@ class Club(models.Model):
 
   # Private club ?
   private = models.BooleanField(default=False)
+
+  # Mailing list (does not change)
+  mailing_list = models.CharField(max_length=255, null=True, blank=True)
 
   # Dates
   created = models.DateTimeField(auto_now_add=True)
@@ -65,6 +69,30 @@ class Club(models.Model):
 
   def has_user(self, user):
     return self.clubmembership_set.filter(user=user).count() == 1
+
+  def create_mailing_list(self):
+    '''
+    Create a mailing list for the club group
+    '''
+    if self.mailing_list:
+      raise Exception('Already a registered mailing list')
+
+    # Create on mailman
+    try:
+      mm = MailMan()
+      mm.create_list(self.slug, self.name)
+    except Exception, e:
+      print 'Failed to create mailing list %s : %s' % (self.slug, str(e))
+      return False
+
+    # Save reference
+    self.mailing_list = self.slug
+    self.save()
+
+    # Add manager in mailing list
+    self.manager.subscribe_mailing(self.mailing_list)
+
+    return True
 
 class ClubMembership(models.Model):
   user = models.ForeignKey(Athlete, related_name="memberships")
@@ -234,6 +262,9 @@ class ClubGroup(models.Model):
   creator = models.ForeignKey(Athlete, related_name='groups_owned')
   members = models.ManyToManyField(ClubMembership, related_name='groups')
 
+  # Mailing list (does not change)
+  mailing_list = models.CharField(max_length=255, null=True, blank=True)
+
   # Dates
   created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
@@ -251,3 +282,26 @@ class ClubGroup(models.Model):
   def nb_members(self):
     # Helper for api
     return self.members.count()
+
+  def create_mailing_list(self):
+    '''
+    Create a mailing list for the club group
+    '''
+    if self.mailing_list:
+      raise Exception('Already a registered mailing list')
+
+    # Create on mailman
+    name = '%s.%s' % (self.slug, self.club.slug)
+    try:
+      mm = MailMan()
+      mm.create_list(name, self.name)
+    except Exception, e:
+      print 'Failed to create mailing list %s : %s' % (name, str(e))
+      return False
+
+    # Save reference
+    self.mailing_list = name
+    self.save()
+
+    return True
+

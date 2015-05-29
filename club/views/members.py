@@ -198,6 +198,14 @@ class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, Proces
 
         # Only send mail for new roles
         membership.mail_user(self.role_original)
+
+        # Handle club mailing list
+        if self.club.mailing_list:
+          if self.role_original in ('prospect', 'archive') and membership.role != 'archive':
+            membership.user.subscribe_mailing(self.club.mailing_list)
+          if membership.role == 'archive':
+            membership.user.unsubscribe_mailing(self.club.mailing_list)
+
     except Exception, e:
       print str(e)
       raise Exception("Failed to save")

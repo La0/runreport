@@ -11,6 +11,12 @@ class ClubGroupList(ClubGroupMixin, ListView):
 class ClubGroupCreate(ClubGroupMixin, CreateView):
   template_name = 'club/group/edit.html'
 
+  def form_valid(self, form):
+    # Create mailing list on group creation
+    out = super(ClubGroupCreate, self).form_valid(form)
+    self.group.create_mailing_list()
+    return out
+
 class ClubGroupEdit(ClubGroupMixin, UpdateView):
   template_name = 'club/group/edit.html'
 
@@ -30,8 +36,17 @@ class ClubGroupMembers(ClubGroupMixin, JsonResponseMixin, ListView):
     member = self.club.clubmembership_set.get(trainers=self.request.user, pk=self.request.POST['member'])
     if action == 'add':
       self.group.members.add(member)
+
+      # Add to mailing list
+      if self.group.mailing_list:
+        member.user.subscribe_mailing(self.group.mailing_list)
+
     elif action == 'remove':
       self.group.members.remove(member)
+
+      # Remove from mailing list
+      if self.group.mailing_list:
+        member.user.unsubscribe_mailing(self.group.mailing_list)
 
     return self.render_to_response(self.get_context_data())
 

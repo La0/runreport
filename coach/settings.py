@@ -369,8 +369,11 @@ CACHES = {
 # Test Engine
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
-# Mailman server (api url)
-MAILMAN_URL = ''
+# Mailman 3.0 api
+MAILMAN_URL = None
+MAILMAN_DOMAIN = None
+MAILMAN_USER = None
+MAILMAN_PASS = None
 
 # API Settings
 REST_FRAMEWORK = {
