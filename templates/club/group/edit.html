@@ -14,7 +14,9 @@
 
   <form class="form-horizontal" method="post" action="">
     {% csrf_token %}
-    {{ macros.input(form.name) }}
+    <div class="slugify" data-target="#id_slug">
+      {{ macros.input(form.name) }}
+    </div>
     {{ macros.input(form.slug) }}
     {{ macros.input(form.description) }}
     <div class="form-group">

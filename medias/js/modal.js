@@ -11,6 +11,9 @@ $(function(){
   // Popover show
   $('[data-toggle="popover"]').popover();
 
+  // Slugify inputs
+	$('div.slugify input[type=text]').keyup(slugify);
+
   // Load anchor urls if available
   var hash = window.location.hash.substring(1);
   if(hash){
@@ -311,4 +314,16 @@ function demo(login, password){
   $('input[name="password"]').val(password);
   $('form.form-signin').submit();
   return false;
+}
+
+// Slugify an input value and save it in a target input
+function slugify(event){
+  var target = $(this).parents('div.slugify').attr('data-target');
+  if(!target)
+    throw new Error("Missing slugify target");
+
+  var str = $(this).val();
+	str = str.toLowerCase();
+	str = str.replace(/\s/g, '_');
+  $(target).val(str);
 }

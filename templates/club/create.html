@@ -2,20 +2,6 @@
 
 {% block content %}
 
-<script type="text/javascript">
-$(function(){
-	$("#id_name").keyup(function(){
-		$("#id_slug").val(slugify($(this).val()));
-	});
-});
-
-function slugify(str){
-	str = str.toLowerCase();
-	str = str.replace(/\s/g, '_');
-	return str;
-}
-</script>
-
 <div class="container">
 
 	<h2>{{ _('Create a club') }}</h2>
@@ -28,9 +14,11 @@ function slugify(str){
 	<form action="" method="POST" class="form form-horizontal">
 		{% csrf_token %}
 
-		{{ macros.input(form.name, _('Club name')) }}
+    <div class="slugify" data-target="#id_slug">
+      {{ macros.input(form.name, _('Club name')) }}
+    </div>
 		{{ macros.input(form.phone, _('Your phone')) }}
-		{{ macros.input(form.slug, _('Slug'), _('Represents the club\'s name in urls')) }}
+    {{ macros.input(form.slug, _('Slug'), _('Represents the club\'s name in urls')) }}
 		{{ macros.input_bool(form.private, _('Private club'), _('When private, a club is only accessible y its members')) }}
 		{{ macros.input(form.address, _('Adress')) }}
 		{{ macros.input(form.zipcode, _('Zipcode')) }}
