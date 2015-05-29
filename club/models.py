@@ -84,15 +84,16 @@ class Club(models.Model):
       raise Exception('Already a registered mailing list')
 
     # Create on mailman
+    name = self.slug.lower()
     try:
       mm = MailMan()
-      mm.create_list(self.slug, self.name)
+      mm.create_list(name, self.name)
     except Exception, e:
-      print 'Failed to create mailing list %s : %s' % (self.slug, str(e))
+      print 'Failed to create mailing list %s : %s' % (name, str(e))
       return False
 
     # Save reference
-    self.mailing_list = self.slug
+    self.mailing_list = name
     self.save()
 
     # Add manager in mailing list
@@ -304,6 +305,7 @@ class ClubGroup(models.Model):
 
     # Create on mailman
     name = '%s.%s' % (self.slug, self.club.slug)
+    name = name.lower()
     try:
       mm = MailMan()
       mm.create_list(name, self.name)
