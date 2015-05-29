@@ -70,6 +70,12 @@ class Club(models.Model):
   def has_user(self, user):
     return self.clubmembership_set.filter(user=user).count() == 1
 
+  @property
+  def mailing_list_fqdn(self):
+    if not self.mailing_list:
+      return None
+    return '%s@%s' % (self.mailing_list, settings.MAILMAN_DOMAIN)
+
   def create_mailing_list(self):
     '''
     Create a mailing list for the club group
@@ -282,6 +288,12 @@ class ClubGroup(models.Model):
   def nb_members(self):
     # Helper for api
     return self.members.count()
+
+  @property
+  def mailing_list_fqdn(self):
+    if not self.mailing_list:
+      return None
+    return '%s@%s' % (self.mailing_list, settings.MAILMAN_DOMAIN)
 
   def create_mailing_list(self):
     '''

@@ -9,6 +9,19 @@
 <div class="container">
 
 	<h2>{{club.name}} : {{members|length()}} membres</h2>
+  <p>
+    {% if club.mailing_list %}
+    <span class="text-info do-tooltip" title="{{ _('Send an email to all the club members') }}">
+      <i class="icon-mail"></i>
+      {{ club.mailing_list_fqdn }}
+    </span>
+    {% else %}
+    <span class="text-muted">
+      <i class="icon-mail"></i>
+      {{ _('No mailing list.') }}
+    </span>
+    {% endif %}
+  </p>
 
 	{% if request.user == club.manager or request.user.is_staff %}
 	<ul class="breadcrumb">

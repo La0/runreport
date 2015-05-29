@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-25 15:43+0200\n"
+"POT-Creation-Date: 2015-05-29 15:29+0200\n"
 "PO-Revision-Date: 2015-02-09 17:42+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
@@ -38,13 +38,16 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
-msgid "Clubs"
-msgstr ""
-
 msgid "View clubs"
 msgstr ""
 
 msgid "Create a club"
+msgstr ""
+
+msgid "Administration"
+msgstr ""
+
+msgid "Clubs"
 msgstr ""
 
 msgid "Help"
@@ -264,6 +267,33 @@ msgstr ""
 msgid "Facebook"
 msgstr ""
 
+msgid "All the clubs"
+msgstr ""
+
+msgid "Club"
+msgstr ""
+
+msgid "Manager"
+msgstr ""
+
+msgid "Actions"
+msgstr ""
+
+msgid "athletes"
+msgstr ""
+
+msgid "trainers"
+msgstr ""
+
+msgid "No phone"
+msgstr ""
+
+msgid "View members"
+msgstr ""
+
+msgid "Contact manager"
+msgstr ""
+
 msgid "Manage all your athletes"
 msgstr ""
 
@@ -332,6 +362,12 @@ msgstr ""
 msgid "Create a new group"
 msgstr ""
 
+msgid "Send an email to all the group members"
+msgstr ""
+
+msgid "No mailing list."
+msgstr ""
+
 msgid "Cancel"
 msgstr ""
 
@@ -380,9 +416,6 @@ msgid "Each request is then validated (or not) by the club's manager."
 msgstr ""
 
 msgid "Private club"
-msgstr ""
-
-msgid "Manager"
 msgstr ""
 
 msgid "Refused"
@@ -532,9 +565,6 @@ msgstr ""
 msgid "Url"
 msgstr ""
 
-msgid "Actions"
-msgstr ""
-
 msgid "Delete"
 msgstr ""
 
@@ -545,6 +575,9 @@ msgid "Demo account"
 msgstr ""
 
 msgid "Edition is deactivated for the demo"
+msgstr ""
+
+msgid "Send an email to all the club members"
 msgstr ""
 
 msgid "Role"
@@ -1941,9 +1974,6 @@ msgid ""
 "Anyone can use this section (including a visitor without a RunReport account)"
 msgstr ""
 
-msgid "Club"
-msgstr ""
-
 msgid "Only users in your clubs can view this section."
 msgstr ""
 
@@ -2133,6 +2163,9 @@ msgid "Unit: kg"
 msgstr ""
 
 msgid "comment"
+msgstr ""
+
+msgid "Phone"
 msgstr ""
 
 msgid "number of sessions per week"
@@ -2426,6 +2459,9 @@ msgid "Swim"
 msgstr ""
 
 msgid "Walk"
+msgstr ""
+
+msgid "Multi Sport"
 msgstr ""
 
 #. Obsolete translation kept alive with Viniagrette

@@ -30,10 +30,25 @@
         <span class="badge">{{ group.members.count() }}</span> {{ _('Members') }}
       </div>
       <div class="col-sm-3 col-xs-6">
-        {{ _('Created by') }}
-        <a href="{{ url('user-public-profile', group.creator.username) }}">
-          {{ group.creator.first_name }} {{ group.creator.last_name }}
-        </a>
+        <p>
+          {% if group.mailing_list %}
+          <span class="text-info do-tooltip" title="{{ _('Send an email to all the group members') }}">
+            <i class="icon-mail"></i>
+            {{ group.mailing_list_fqdn }}
+          </span>
+          {% else %}
+          <span class="text-muted">
+            <i class="icon-mail"></i>
+            {{ _('No mailing list.') }}
+          </span>
+          {% endif %}
+        </p>
+        <p>
+          {{ _('Created by') }}
+          <a href="{{ url('user-public-profile', group.creator.username) }}">
+            {{ group.creator.first_name }} {{ group.creator.last_name }}
+          </a>
+        </p>
       </div>
       <div class="col-sm-3 col-xs-12 text-right">
         {% if editable and group_editable %}

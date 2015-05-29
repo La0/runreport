@@ -11,6 +11,19 @@
       {{ _('Create a new group') }}
     {% endif %}
   </h1>
+  <p>
+    {% if group.mailing_list %}
+    <span class="text-info do-tooltip" title="{{ _('Send an email to all the group members') }}">
+      <i class="icon-mail"></i>
+      {{ group.mailing_list_fqdn }}
+    </span>
+    {% else %}
+    <span class="text-muted">
+      <i class="icon-mail"></i>
+      {{ _('No mailing list.') }}
+    </span>
+    {% endif %}
+  </p>
 
   <form class="form-horizontal" method="post" action="">
     {% csrf_token %}

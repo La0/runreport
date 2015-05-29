@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-25 15:43+0200\n"
-"PO-Revision-Date: 2015-05-25 15:47+0100\n"
+"POT-Creation-Date: 2015-05-29 15:29+0200\n"
+"PO-Revision-Date: 2015-05-29 15:32+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -39,14 +39,18 @@ msgstr "Nom dans l'url"
 msgid "Description"
 msgstr "Description"
 
-msgid "Clubs"
-msgstr "Clubs"
-
 msgid "View clubs"
 msgstr "Voir les clubs"
 
 msgid "Create a club"
 msgstr "Créer un club"
+
+#| msgid "Ask an invitation"
+msgid "Administration"
+msgstr "Administration"
+
+msgid "Clubs"
+msgstr "Clubs"
 
 msgid "Help"
 msgstr "Aide"
@@ -268,6 +272,38 @@ msgstr "Github"
 msgid "Facebook"
 msgstr "Facebook"
 
+#| msgid "All the club"
+msgid "All the clubs"
+msgstr "Tous les club"
+
+msgid "Club"
+msgstr "Club"
+
+msgid "Manager"
+msgstr "Gérant"
+
+msgid "Actions"
+msgstr "Actions"
+
+#| msgid "My athletes"
+msgid "athletes"
+msgstr "athlètes"
+
+#| msgid "Trainers"
+msgid "trainers"
+msgstr "entraîneurs"
+
+msgid "No phone"
+msgstr "Pas de téléphone."
+
+#| msgid "No members"
+msgid "View members"
+msgstr "Voir les membres"
+
+#| msgid "Contact form"
+msgid "Contact manager"
+msgstr "Contacter le gérant du club"
+
 msgid "Manage all your athletes"
 msgstr "Gérez tous vos athlètes"
 
@@ -346,6 +382,12 @@ msgstr "Editer groupe: %s"
 msgid "Create a new group"
 msgstr "Créer un groupe"
 
+msgid "Send an email to all the group members"
+msgstr "Envoyer un email à tous les membres du groupe."
+
+msgid "No mailing list."
+msgstr "Pas de mailing list."
+
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -395,9 +437,6 @@ msgstr "Chaque demande est alors validée (ou non) par le gérant du club."
 
 msgid "Private club"
 msgstr "Club privé"
-
-msgid "Manager"
-msgstr "Gérant"
 
 msgid "Refused"
 msgstr "Refusé"
@@ -558,9 +597,6 @@ msgstr ""
 msgid "Url"
 msgstr "Url"
 
-msgid "Actions"
-msgstr "Actions"
-
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -572,6 +608,9 @@ msgstr "Compte de Démo"
 
 msgid "Edition is deactivated for the demo"
 msgstr "L'édition est désactivée pour la démo."
+
+msgid "Send an email to all the club members"
+msgstr "Envoyer un email à tous les membres du club."
 
 msgid "Role"
 msgstr "Rôle"
@@ -1645,35 +1684,27 @@ msgstr "Données GPS"
 msgid "No GPS data"
 msgstr "Pas de données GPS"
 
-#| msgid "comments visibility"
 msgid "Comments available"
 msgstr "Commentaires"
 
-#| msgid "No comments"
 msgid "No Comments"
 msgstr "Pas de commentaires"
 
-#| msgid "Daily trainer mail"
 msgid "In a trainer plan"
 msgstr "Dans un plan d'entrainement"
 
-#| msgid "Your trainer"
 msgid "No trainer plan"
 msgstr "Pas de plan d'entrainement"
 
-#| msgid "Elevation gain"
 msgid "Elevation"
 msgstr "Dénivelé positif"
 
-#| msgid "No conversations"
 msgid "No elevation"
 msgstr "Pas de dénivelé"
 
-#| msgid "Average speed"
 msgid "Average Speed"
 msgstr "Vitesse moyenne"
 
-#| msgid "Average speed"
 msgid "No average speed"
 msgstr "Pas de vitesse moyenne"
 
@@ -2064,9 +2095,6 @@ msgstr ""
 "Tout le monde peut voir cette partie (y compris des personnes sans compte "
 "RunReport)"
 
-msgid "Club"
-msgstr "Club"
-
 msgid "Only users in your clubs can view this section."
 msgstr "Uniquement les personnes dans vos clubs peuvent voir cette partie."
 
@@ -2260,6 +2288,9 @@ msgstr "En kg"
 
 msgid "comment"
 msgstr "Renseignements divers"
+
+msgid "Phone"
+msgstr "Téléphone"
 
 msgid "number of sessions per week"
 msgstr "nb séances hebdomadaires"
@@ -2576,6 +2607,10 @@ msgstr "Natation"
 
 msgid "Walk"
 msgstr " Marche"
+
+#| msgid "default sport"
+msgid "Multi Sport"
+msgstr "Multi Sport"
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0

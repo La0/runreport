@@ -7,6 +7,19 @@
 <div class="container">
 
 	<h2>{{club.name}} : {{members|length()}} {{ _('Members') }}</h2>
+  <p>
+    {% if club.mailing_list %}
+    <span class="text-info do-tooltip" title="{{ _('Send an email to all the club members') }}">
+      <i class="icon-mail"></i>
+      {{ club.mailing_list_fqdn }}
+    </span>
+    {% else %}
+    <span class="text-muted">
+      <i class="icon-mail"></i>
+      {{ _('No mailing list.') }}
+    </span>
+    {% endif %}
+  </p>
 
 	{% if members %}
 	<div class="athletes">

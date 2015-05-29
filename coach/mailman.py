@@ -79,6 +79,7 @@ class MailMan(object):
     # Configure mailing
     mls = ml.settings
     mls['default_member_action'] = 'accept'
+    mls['default_nonmember_action'] = 'accept'
     mls['send_welcome_message'] = False
     mls['display_name'] = full_name
     mls['subject_prefix'] = '[%s] ' % full_name
