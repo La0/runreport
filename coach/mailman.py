@@ -1,83 +1,87 @@
 from django.conf import settings
-import requests
+from mailmanclient import Client
+import logging
+
+logger = logging.getLogger('mailman')
 
 class MailMan(object):
   '''
-  Use mailman-api to talk to a mailman server
-  http://mailman-api.readthedocs.org/en/stable/api.html
+  Use official mailman 3.0 api client
   '''
+  client = None
+  connected = False
   lists = []
 
   def __init__(self):
+
+    # Create settings & check connection
     try:
-      self.get_lists()
-    except Exception, e:
-      print 'Failed to load mailman lists: %s' % (str(e), )
+      self.client = Client(settings.MAILMAN_URL, settings.MAILMAN_USER, settings.MAILMAN_PASS)
+      logger.debug('Connected to mailman %(mailman_version)s' % self.client.system)
+    except:
+      logger.error('Connection to mailman failed on %s' % settings.MAILMAN_URL)
+      return None
 
-  def get_lists(self):
+    self.connected = True
+
+
+  def get_list(self, list_name):
     '''
-    Retrieve all mailing lists
+    Retrieve a list using only its name
     '''
-    if not settings.MAILMAN_URL:
-      raise Exception('No mailman url defined')
+    if not self.connected:
+      raise Exception('No mailman connection')
 
-    resp = requests.get(settings.MAILMAN_URL)
-    if resp.status_code != 200:
-      raise Exception('Invalid mailman response %d : %s' % (resp.status_code, resp.content))
+    list_name += '@%s' % settings.MAILMAN_DOMAIN
+    ml = self.client.get_list(list_name)
+    if not ml:
+      raise Exception('Mailing list %s not found' % list_name)
 
-    self.lists = resp.json()
-    return self.lists
+    return ml
 
-  def get_members(self, list_name):
-    '''
-    List all members in a mailing list
-    '''
-    if list_name not in self.lists:
-      return False
-
-    resp = requests.get(settings.MAILMAN_URL + '/' + list_name)
-    if resp.status_code != 200:
-      raise Exception('Invalid mailman response %d : %s' % (resp.status_code, resp.content))
-
-    return resp.json()
-
-  def subscribe(self, list_name, email, full_name, digest=False):
+  def subscribe(self, list_name, email, full_name):
     '''
     Subscribe a member to a mailing list
+    With full approval directly
     '''
-    if list_name not in self.lists:
-      return False
+    if not self.connected:
+      raise Exception('No mailman connection')
 
-    data = {
-      'address' : email,
-      'fullname' : full_name,
-      'digest' : digest,
-    }
-    resp = requests.put(settings.MAILMAN_URL + '/' + list_name, data=data)
-    if resp.status_code == 409:
-      # Already a member
-      return False
-    if resp.status_code != 200:
-      raise Exception('Invalid mailman response %d : %s' % (resp.status_code, resp.content))
-
-    return resp.json()
+    ml = self.get_list(list_name)
+    return ml.subscribe(email, full_name, pre_verified=True, pre_confirmed=True, pre_approved=True)
 
   def unsubscribe(self, list_name, email):
     '''
     Unsubscribe a member from a mailing list
     '''
-    if list_name not in self.lists:
-      return False
+    if not self.connected:
+      raise Exception('No mailman connection')
 
-    data = {
-      'address' : email,
-    }
-    resp = requests.delete(settings.MAILMAN_URL + '/' + list_name, data=data)
-    if resp.status_code == 404:
-      # Not a member
-      return False
-    if resp.status_code != 200:
-      raise Exception('Invalid mailman response %d : %s' % (resp.status_code, resp.content))
+    ml = self.get_list(list_name)
+    return ml.unsubscribe(email)
 
-    return resp.json()
+  def create_list(self, list_name, full_name):
+    '''
+    Create a new mailing list properly configured
+    '''
 
+    # Retrieve domain
+    domain = self.client.get_domain(settings.MAILMAN_DOMAIN)
+    if not domain:
+      raise Exception('No mailman domain %s' % settings.MAILMAN_DOMAIN)
+
+    # Get or create list on domain
+    try:
+        ml = domain.create_list(list_name)
+    except:
+        ml = self.get_list(list_name)
+
+    # Configure mailing
+    mls = ml.settings
+    mls['default_member_action'] = 'accept'
+    mls['send_welcome_message'] = False
+    mls['display_name'] = full_name
+    mls['subject_prefix'] = '[%s] ' % full_name
+    mls.save()
+
+    return ml
