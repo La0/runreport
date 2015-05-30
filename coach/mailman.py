@@ -83,6 +83,7 @@ class MailMan(object):
     mls['send_welcome_message'] = False
     mls['display_name'] = full_name
     mls['subject_prefix'] = '[%s] ' % full_name
+    mls['reply_to_address'] = ml.fqdn_listname
     mls.save()
 
     return ml
