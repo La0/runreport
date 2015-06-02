@@ -80,10 +80,18 @@ class CurrentWeekMixin(object):
       'privacy' : week.user.get_privacy_rights(self.request.user),
     }
 
+  def get_maps_status(self):
+    from tracks.models import Track
+    has_maps = Track.objects.filter(session__day__week=self.object, simple__isnull=False).exists()
+    return {
+      'has_maps' : has_maps,
+    }
+
   def get_context_data(self, *args, **kwargs):
     context = super(CurrentWeekMixin, self).get_context_data(*args, **kwargs)
     context.update(self.get_links())
     context.update(self.get_privacy())
+    context.update(self.get_maps_status())
     return context
 
 class WeekPaginator(object):

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-29 15:29+0200\n"
+"POT-Creation-Date: 2015-06-02 23:32+0200\n"
 "PO-Revision-Date: 2015-02-09 17:42+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
@@ -1618,6 +1618,9 @@ msgid "Average Speed"
 msgstr ""
 
 msgid "No average speed"
+msgstr ""
+
+msgid "No maps"
 msgstr ""
 
 msgid "has planned a "

@@ -116,6 +116,11 @@ div.week div.day h4.date a {
   font-size: 0.9em;
 }
 
+div.week div.nomaps {
+  font-size: 1.1em;
+  margin-top: 9px;
+}
+
 div.day h6.date a {
   color: #888;
 }

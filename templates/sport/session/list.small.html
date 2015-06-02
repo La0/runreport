@@ -28,7 +28,7 @@
   {% with has_track = (session.track and session.track.thumb) %}
   <div class="sport-session row">
 
-    {% if has_track %}
+    {% if has_track or has_maps %}
     <div class="col-sm-8 col-xs-9">
     {% else %}
     <div class="col-sm-10 col-xs-12">
@@ -161,6 +161,11 @@
     {% if has_track %}
     <div class="col-sm-2 col-xs-3">
       <img class="img-responsive" src="{{ session.track.thumb.url }}" alt="Track" />
+    </div>
+    {% elif has_maps %}
+    <div class="col-sm-2 col-xs-3 text-muted text-center nomaps">
+      <i class="icon-location"></i>
+      {{ _('No maps') }}
     </div>
     {% endif %}
   </div>

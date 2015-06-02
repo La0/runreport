@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-29 15:29+0200\n"
-"PO-Revision-Date: 2015-05-29 15:32+0100\n"
+"POT-Creation-Date: 2015-06-02 23:32+0200\n"
+"PO-Revision-Date: 2015-06-02 23:35+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -45,7 +45,6 @@ msgstr "Voir les clubs"
 msgid "Create a club"
 msgstr "Créer un club"
 
-#| msgid "Ask an invitation"
 msgid "Administration"
 msgstr "Administration"
 
@@ -272,7 +271,6 @@ msgstr "Github"
 msgid "Facebook"
 msgstr "Facebook"
 
-#| msgid "All the club"
 msgid "All the clubs"
 msgstr "Tous les club"
 
@@ -285,22 +283,18 @@ msgstr "Gérant"
 msgid "Actions"
 msgstr "Actions"
 
-#| msgid "My athletes"
 msgid "athletes"
 msgstr "athlètes"
 
-#| msgid "Trainers"
 msgid "trainers"
 msgstr "entraîneurs"
 
 msgid "No phone"
 msgstr "Pas de téléphone."
 
-#| msgid "No members"
 msgid "View members"
 msgstr "Voir les membres"
 
-#| msgid "Contact form"
 msgid "Contact manager"
 msgstr "Contacter le gérant du club"
 
@@ -1708,6 +1702,9 @@ msgstr "Vitesse moyenne"
 msgid "No average speed"
 msgstr "Pas de vitesse moyenne"
 
+msgid "No maps"
+msgstr "Pas de carte"
+
 msgid "has planned a "
 msgstr "a prévu"
 
@@ -2608,7 +2605,6 @@ msgstr "Natation"
 msgid "Walk"
 msgstr " Marche"
 
-#| msgid "default sport"
 msgid "Multi Sport"
 msgstr "Multi Sport"
 
