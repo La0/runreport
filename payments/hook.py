@@ -3,18 +3,13 @@ import hashlib
 import logging
 import email
 from django.conf import settings
-from payments.models import PaymentEvent, PaymentSubscription
-from users.models import Athlete
+from payments.models import PaymentEvent
 import json
 
 logger = logging.getLogger('payments.hook')
 
 class PaymillHook(object):
   pop = None # Connection to mail server
-
-  def __init__(self):
-    pass
-
 
   def run(self):
     '''
@@ -77,7 +72,7 @@ class PaymillHook(object):
 
     # Unique hash from raw content
     event_id = hashlib.md5(content).hexdigest()
-    if PaymentEvent.objects.filter(event_id=event_id).count() > 0:
+    if PaymentEvent.objects.filter(event_id=event_id).exists():
       raise Exception('Event already saved.')
 
     # Load & check hook
@@ -88,7 +83,6 @@ class PaymillHook(object):
     event_type = event_data.get('event_type')
     if not event_type:
       raise Exception('No event type')
-    event_category = event_type[:event_type.index('.')]
     event_resource = event_data.get('event_resource')
     if not event_resource:
       raise Exception('No event resource')
@@ -97,19 +91,12 @@ class PaymillHook(object):
     data = {
       'event_id' : event_id,
       'type' : event_type,
-      'raw_data' : event_resource,
+      'raw_data' : json.dumps(event_resource),
     }
-    if event_category == 'client':
-      try:
-        data['user'] = Athlete.objects.get(paymill_id=event_resource['id'])
-      except Athlete.DoesNotExist:
-        pass
-    if event_category == 'subscription':
-      try:
-        data['user'] = PaymentSubscription.objects.get(paymill_id=event_resource['id'])
-      except PaymentSubscription.DoesNotExist:
-        pass
     event = PaymentEvent.objects.create(**data)
+
+    # Apply the event
+    event.apply()
 
     # Delete message from server
     self.pop.dele(msg_id)

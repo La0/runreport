@@ -1,6 +1,14 @@
 from django.db import models
 from django.conf import settings
+from django.utils.translation import ugettext_lazy as _
 import paymill
+
+SUBSCRIPTION_STATUS = (
+  ('active', _('Active')),
+  ('inactive', _('Inactive')),
+  ('expired', _('Expired')),
+  ('failed', _('Failed')),
+)
 
 class PaymentSubscription(models.Model):
   '''
@@ -11,13 +19,10 @@ class PaymentSubscription(models.Model):
   offer = models.ForeignKey('payments.PaymentOffer', related_name='subscriptions')
 
   # Status
-  active = models.BooleanField(default=False)
+  status = models.CharField(choices=SUBSCRIPTION_STATUS, max_length=20, default='inactive')
 
   # Paymill
-  paymill_id = models.CharField(max_length=50)
-
-  # TODO: replace with a transaction model
-  paymill_transaction_id = models.CharField(max_length=50)
+  paymill_id = models.CharField(max_length=50, unique=True)
 
   # Dates
   created = models.DateTimeField(auto_now_add=True)
@@ -75,10 +80,11 @@ class PaymentOffer(models.Model):
 
   def create_subscription(self, token, user):
     '''
-    Create a transaction for current offer
+    Create a payment for current offer
     with specified token from JS form
     and optional client
-    Then use link its payment to a subscription
+    Then link it to a subscription
+    No db Item created here, only from hook
     '''
     if not user.paymill_id:
       raise Exception('Missing client paymill id')
@@ -87,24 +93,21 @@ class PaymentOffer(models.Model):
     if self.subscriptions.filter(user=user).count() > 0:
       raise Exception('Already a subscription for this offer & user')
 
-    # Prepare data for transaction
+    # Prepare data for payment
     data = {
-      'amount' : self.amount_cents,
-      'currency' : self.currency,
-      'description' : self.name,
       'client_id' : user.paymill_id,
       'token' : token,
     }
 
     # Create the transaction in Paymill
     ctx = paymill.PaymillContext(settings.PAYMILL_SECRET)
-    service = ctx.get_transaction_service()
-    transaction = service.create_with_token(**data)
+    service = ctx.get_payment_service()
+    payment = service.create(**data)
 
     # Prepare data for subscription
     data = {
       'offer_id' : self.paymill_id,
-      'payment_id' : transaction.payment.id,
+      'payment_id' : payment.id,
       'client_id' : user.paymill_id,
       'name' : self.name,
     }
@@ -114,11 +117,4 @@ class PaymentOffer(models.Model):
     service = ctx.get_subscription_service()
     subscription = service.create_with_offer_id(**data)
 
-    # Save it in database
-    data = {
-      'user' : user,
-      'paymill_id' : transaction.id,
-      'paymill_transaction_id' : transaction.id,
-      'active' : subscription.status == 'active',
-    }
-    return self.subscriptions.create(**data)
+    return subscription

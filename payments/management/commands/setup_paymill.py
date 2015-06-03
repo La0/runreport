@@ -43,6 +43,10 @@ class Command(BaseCommand):
     # Check hooks
     valid = False
     for hook in hooks.data:
+      # Only email hooks
+      if 'email' not in hook:
+        continue
+
       # Only consider hooks for current address
       if hook['email'] != settings.PAYMILL_HOOK_EMAIL:
         continue
