@@ -19,4 +19,4 @@ class PaymentMixin(object):
     return super(PaymentMixin, self).dispatch(*args, **kwars)
 
   def has_active_subscription(self):
-    return self.request.user.subscriptions.filter(active=True).count() > 0
+    return self.request.user.subscriptions.filter(status='active').exists()

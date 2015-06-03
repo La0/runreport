@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.functional import cached_property
+from django.utils import timezone
 from datetime import datetime
 from users.models import Athlete
 import json
@@ -56,6 +57,7 @@ class PaymentEvent(models.Model):
       except Athlete.DoesNotExist:
         pass
 
+    # Apply typed operation
     ops = {
       'subscription.created' : self.__update_subscription,
       'subscription.succeeded' : self.__update_subscription,
@@ -74,7 +76,7 @@ class PaymentEvent(models.Model):
       self.subscription = out
 
     # Save application date
-    self.applied = datetime.now()
+    self.applied = timezone.datetime.now()
     self.save()
 
   def __update_subscription(self):
@@ -83,13 +85,15 @@ class PaymentEvent(models.Model):
     '''
     from payments.models import PaymentOffer, PaymentSubscription
     sub_data = 'subscription' in self.data and self.data['subscription'] or self.data
+    created_at = datetime.fromtimestamp(sub_data['created_at'], timezone.get_current_timezone())
     data = {
       'user' : self.user,
+      'created' : created_at,
       'status' : sub_data['status'],
       'offer' : PaymentOffer.objects.get(paymill_id=sub_data['offer']['id']),
     }
     sub, created = PaymentSubscription.objects.get_or_create(paymill_id=sub_data['id'], defaults=data)
-    if not created:
+    if not created and created_at >= sub.created:
       for k,v in data.items():
         setattr(sub, k, v)
       sub.save()
@@ -101,14 +105,16 @@ class PaymentEvent(models.Model):
     Create or update a Transaction
     '''
     from payments.models import PaymentTransaction
+    created_at = datetime.fromtimestamp(self.data['created_at'], timezone.get_current_timezone())
     data = {
       'user' : self.user,
+      'created' : created_at,
       'status' : self.data['status'],
       'amount' : float(self.data['amount']) / 100.0,
       'currency' : self.data['currency'],
     }
     transaction, created = PaymentTransaction.objects.get_or_create(paymill_id=self.data['id'], defaults=data)
-    if not created:
+    if not created and created_at >= transaction.created:
       for k,v in data.items():
         setattr(transaction, k, v)
       transaction.save()

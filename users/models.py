@@ -349,7 +349,7 @@ class Athlete(AthleteBase):
   @property
   def is_premium(self):
     # helper to check if a user is premium
-    return self.subscriptions.filter(active=True).count() > 0
+    return self.subscriptions.filter(status='active').exists()
 
 class UserCategory(models.Model):
   code = models.CharField(max_length=10)

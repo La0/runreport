@@ -233,14 +233,44 @@ msgstr ""
 msgid "New contact message"
 msgstr ""
 
+msgid "Active"
+msgstr ""
+
+msgid "Inactive"
+msgstr ""
+
+msgid "Expired"
+msgstr ""
+
+msgid "Failed"
+msgstr "Missed"
+
+msgid "Open"
+msgstr ""
+
+msgid "Pending"
+msgstr ""
+
+msgid "Closed"
+msgstr ""
+
+msgid "Partial Refund"
+msgstr ""
+
+msgid "Refunded"
+msgstr ""
+
+msgid "Pre-Authorize"
+msgstr ""
+
+msgid "Chargeback"
+msgstr ""
+
 msgid "Applied"
 msgstr "To Do"
 
 msgid "Done"
 msgstr ""
-
-msgid "Failed"
-msgstr "Missed"
 
 #, python-format
 msgid "Training plan : %s"
@@ -1421,6 +1451,27 @@ msgid "Pay Now"
 msgstr ""
 
 msgid "You are a premium RunReport member !"
+msgstr ""
+
+msgid "Payments"
+msgstr ""
+
+msgid "Payment"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Processing..."
+msgstr ""
+
+msgid "Processed"
+msgstr ""
+
+msgid "Cancel monthly subscription"
+msgstr ""
+
+msgid "Cancel yearly subscription"
 msgstr ""
 
 msgid "Cancel subscription"

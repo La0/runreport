@@ -234,14 +234,48 @@ msgstr "Votre message"
 msgid "New contact message"
 msgstr "Nouveau message de contact"
 
+#| msgid "active"
+msgid "Active"
+msgstr "Actif"
+
+#| msgid "active"
+msgid "Inactive"
+msgstr "Inactif"
+
+msgid "Expired"
+msgstr "Expiré"
+
+msgid "Failed"
+msgstr "Manqué"
+
+msgid "Open"
+msgstr "Ouvert"
+
+msgid "Pending"
+msgstr "En cours"
+
+#| msgid "Close"
+msgid "Closed"
+msgstr "Fermé"
+
+msgid "Partial Refund"
+msgstr "Remboursement partiel"
+
+#| msgid "Refused"
+msgid "Refunded"
+msgstr "Remboursé"
+
+msgid "Pre-Authorize"
+msgstr "Pre-Authorisation"
+
+msgid "Chargeback"
+msgstr "Chargeback"
+
 msgid "Applied"
 msgstr "A faire"
 
 msgid "Done"
 msgstr "Fait"
-
-msgid "Failed"
-msgstr "Manqué"
 
 #, python-format
 msgid "Training plan : %s"
@@ -919,11 +953,9 @@ msgstr "Coureur"
 msgid "Features for runners"
 msgstr "Fonctionalités pour les athlètes"
 
-#| msgid "Features"
 msgid "Feature"
 msgstr "Fonctionalité"
 
-#| msgid "Create an account"
 msgid "Free account"
 msgstr "Compte gratuit"
 
@@ -1463,7 +1495,6 @@ msgid "Private"
 msgstr "Privé"
 
 #, python-format
-#| msgid "Year %s"
 msgid "Offer %s"
 msgstr "Offre %s"
 
@@ -1506,7 +1537,31 @@ msgstr "Payer"
 msgid "You are a premium RunReport member !"
 msgstr "Vous êtes un membre Premium de RunReport"
 
-#| msgid "Fast club subscriptions"
+#| msgid "Comments"
+msgid "Payments"
+msgstr "Paiements"
+
+msgid "Payment"
+msgstr "Paiement"
+
+#| msgid "Stats"
+msgid "Status"
+msgstr "Status"
+
+msgid "Processing..."
+msgstr "En cours..."
+
+msgid "Processed"
+msgstr "Validé"
+
+#| msgid "Cancel subscription"
+msgid "Cancel monthly subscription"
+msgstr "Annuler l'abonnement mensuel"
+
+#| msgid "Cancel subscription"
+msgid "Cancel yearly subscription"
+msgstr "Annuler l'abonnement annuel"
+
 msgid "Cancel subscription"
 msgstr "Annuler l'abonnement"
 

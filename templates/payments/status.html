@@ -8,32 +8,70 @@
   <div class="alert alert-success">
     {{ _('You are a premium RunReport member !') }}
   </div>
+
+  {% if transactions %}
+  <h3>{{ _('Payments') }}</h3>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>{{ _('Date') }}</th>
+        <th>{{ _('Payment') }}</th>
+        <th>{{ _('Status') }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for transaction in transactions %}
+      <tr>
+        <td>
+          {{ transaction.created|date('d E Y') }}
+        </td>
+        <td>
+          {{ transaction.amount|floatformat(2) }}
+          {% if transaction.currency == 'EUR' %}
+            &euro;
+          {% else %}
+            {{ transaction.currency }}
+          {% endif %}
+        </td>
+        <td>
+          {% if transaction.status in ('open', 'pending') %}
+          <span class="label label-default">{{ _('Processing...') }}</span>
+          {% elif transaction.status in ('closed', ) %}
+          <span class="label label-success">{{ _('Processed') }}</span>
+          {% else %}
+          <span class="label label-danger">{{ _('Failed') }}</span> : {{ transaction.status }}
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
   {% endif %}
 
-  {% with subs = user.subscriptions.all() %}
-    {% for sub in subs %}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4>{{ sub.offer.name }}</h4>
-      </div>
-      <div class="panel-body">
-        Basic panel example
-      </div>
-      <div class="panel-footer text-right">
-        <a href="" class="btn btn-danger">
+  <div class="row">
+    <div class="col-xs-12 text-right">
+      {% for sub in subscriptions %}
+      <a href="" class="btn btn-danger">
+        {% if sub.offer.slug == 'monthly' %}
+          {{ _('Cancel monthly subscription') }}
+        {% elif sub.offer.slug == 'yearly' %}
+          {{ _('Cancel yearly subscription') }}
+        {% else %}
           {{ _('Cancel subscription') }}
-        </a>
-      </div>
+        {% endif %}
+      </a>
+      {% endfor %}
     </div>
-    {% endfor %}
-    <p>
-      <a href="{{ url('payment-offer', 'monthly') }}" class="btn btn-default">
-        {{ _('Buy monthly') }}
-      </a>
-      <a href="{{ url('payment-offer', 'yearly') }}" class="btn btn-default">
-        {{ _('Buy yearly') }}
-      </a>
-    </p>
-  {% endwith %}
+  </div>
+  {% else %}
+  <p>
+    <a href="{{ url('payment-offer', 'monthly') }}" class="btn btn-default">
+      {{ _('Buy monthly') }}
+    </a>
+    <a href="{{ url('payment-offer', 'yearly') }}" class="btn btn-default">
+      {{ _('Buy yearly') }}
+    </a>
+  </p>
+  {% endif %}
 </div>
 {% endblock %}

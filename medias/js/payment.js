@@ -59,10 +59,11 @@ $(function(){
           data: result,
           success : function(resp){
             console.info('Payment succeeded');
-            // TODO: go to subscriptions list
+            window.location.href = '/premium';
           },
           error : function(err){
             console.error("Payment error", err);
+            alert('Do some stuff, bad boy');
           },
           dataType: 'json',
         });
