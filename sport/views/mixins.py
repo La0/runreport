@@ -82,7 +82,10 @@ class CurrentWeekMixin(object):
 
   def get_maps_status(self):
     from tracks.models import Track
-    has_maps = Track.objects.filter(session__day__week=self.object, simple__isnull=False).exists()
+    try:
+      has_maps = Track.objects.filter(session__day__week=self.object, simple__isnull=False).exists()
+    except:
+      has_maps = False
     return {
       'has_maps' : has_maps,
     }
