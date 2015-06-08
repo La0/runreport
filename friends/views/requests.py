@@ -8,6 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 class FriendAdd(JsonResponseMixin, CreateView):
   model = FriendRequest
+  fields = ('sender', 'recipient', )
   template_name = 'friends/_add.btn.html'
 
   @csrf_exempt # needed for prod :(
