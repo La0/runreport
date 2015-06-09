@@ -7,13 +7,13 @@
 $(function(){
 
   // Setup data sets
-  var distances = [{% for m in months %}[{{m.timestamp()*1000}}, {{m.distance or '0'}}],{% endfor %}];
-  var hours     = [{% for m in months %}[{{m.timestamp()*1000}}, {{m.hours or '0'}}],{% endfor %}];
+  var distances = [{% for m in months %}[{{m.timestamp*1000}}, {{m.distance or '0'}}],{% endfor %}];
+  var hours     = [{% for m in months %}[{{m.timestamp*1000}}, {{m.hours or '0'}}],{% endfor %}];
   var sports    = [
     {% for sport in sports %}
     {
       label : '{{sport.name}}',
-      data : [{% for m in months %}[{{m.timestamp()*1000}}, {% if m.sports[sport.pk] %}{{m.sports[sport.pk]['nb'] or 0}}{% else %}0{% endif %}],{% endfor %}],
+      data : [{% for m in months %}[{{m.timestamp*1000}}, {% if m.sports[sport.pk] %}{{m.sports[sport.pk]['nb'] or 0}}{% else %}0{% endif %}],{% endfor %}],
     },
     {% endfor %}  
   ];

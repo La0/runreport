@@ -1,9 +1,10 @@
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from sport.models import SportDay
-from sport.stats import StatsMonth
+from sport.stats import StatsMonth, StatsWeek
 from users.models import Athlete
-from datetime import date, timedelta
+from datetime import date
 from optparse import make_option
+import calendar
 
 class Command(BaseCommand):
   option_list = BaseCommand.option_list + (
@@ -17,13 +18,14 @@ class Command(BaseCommand):
 
   def handle(self, *args, **options):
     today = date.today()
-    print today
 
     users = Athlete.objects.all()
     if options['username']:
       users = users.filter(username=options['username'])
 
     users = users.order_by('username')
+
+    cal = calendar.Calendar()
 
     for user in users:
       print user
@@ -36,6 +38,7 @@ class Command(BaseCommand):
 
       # Buil StatsMonth until now
       for year in range(first.date.year, today.year+1):
+        print year
         for month in range(1, 13):
 
           # Skip unecessary months (no data)
@@ -45,4 +48,13 @@ class Command(BaseCommand):
           # Build StatsMonth
           stats = StatsMonth(user, year, month)
           stats.build()
-          print ' >> %d / %d' % (year, month)
+
+          # Build weeks
+          weeks = cal.monthdatescalendar(year, month)
+          for w in weeks:
+            day = w[0]
+            if day.month != month:
+              continue
+            week = int(day.strftime('%W'))
+            stats = StatsWeek(user, year, week)
+            stats.build()
