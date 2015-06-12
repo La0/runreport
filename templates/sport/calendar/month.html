@@ -30,7 +30,7 @@
         <i class="icon-user"></i> {{ _('View his profile') }}
       </a>
 
-        {% if user.is_trainer_of(member) %}
+        {% if user.is_authenticated() and user.is_trainer_of(member) %}
         <a class="btn btn-info btn-light" href="{{ url('export-month-user', member.username, months.1.year, months.1.month) }}"><i class="icon-down-open"></i> {{ _('CSV Export') }}</a>
         {% endif %}
 
