@@ -8,6 +8,7 @@ from post.views import PostView
 user_patterns = patterns('',
   # Calendar for a user
   url(r'^year/(?P<year>[\d]{4})/?', AthleteCalendarYear.as_view(), name="user-calendar-year"),
+  url(r'^month/(?P<year>[\d]{4})/(?P<month>\d{1,2})/export/?$', login_required(AthleteExportMonth.as_view()), name="export-month-user"),
   url(r'^month/(?P<year>[\d]{4})/(?P<month>[\d]{1,2})/?', AthleteCalendarMonth.as_view(), name="user-calendar-month"),
   url(r'^week/(?P<year>[\d]{4})/(?P<week>[\d]{1,2})/?', AthleteCalendarWeek.as_view(), name="user-calendar-week"),
   url(r'^day/(?P<year>[\d]{4})/(?P<month>[\d]{1,2})/(?P<day>[\d]{1,2})/?', AthleteCalendarDay.as_view(), name="user-calendar-day"),

@@ -1,5 +1,5 @@
 from users.views.mixins import ProfilePrivacyMixin
-from sport.views import RunCalendarYear, RunCalendar, RunCalendarDay, WeeklyReport, SportSessionView
+from sport.views import RunCalendarYear, RunCalendar, RunCalendarDay, WeeklyReport, ExportMonth
 
 class AthleteCalendarMixin(ProfilePrivacyMixin):
   rights_needed = ('calendar', )
@@ -24,3 +24,6 @@ class AthleteCalendarWeek(AthleteCalendarMixin, WeeklyReport):
 
 class AthleteCalendarDay(AthleteCalendarMixin, RunCalendarDay):
   pass
+
+class AthleteExportMonth(ProfilePrivacyMixin, ExportMonth):
+  rights_needed = ('trainer', )

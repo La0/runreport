@@ -79,6 +79,9 @@ class ExportMonth(CsvResponseMixin, MonthMixin, YearMixin, View):
   '''
   Export a month sessions, in CSV format
   '''
+  def get_user(self):
+    return self.request.user
+
   def get(self, *args, **kwargs):
     # Get year and month
     month = int(self.get_month())
@@ -94,7 +97,7 @@ class ExportMonth(CsvResponseMixin, MonthMixin, YearMixin, View):
     # Load sessions
     day_format = '%A %d %B %Y'
     data = []
-    sessions = SportSession.objects.filter(day__week__user=self.request.user, day__date__in=days)
+    sessions = SportSession.objects.filter(day__week__user=self.get_user(), day__date__in=days)
     for day in days:
       day_sessions = sessions.filter(day__date=day)
       if day_sessions.count() > 0:

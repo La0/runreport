@@ -171,15 +171,12 @@ class Athlete(AthleteBase):
     Simple check to see if this user
     is the trainer of an athlete
     '''
-    for m in athlete.memberships.all():
-      if self in m.trainers.all():
-        return True
-    return False
+    return athlete.memberships.filter(role__in=('athlete', 'trainer'), trainers=self).exists()
 
   @property
   def is_trainer(self):
     # Current user is a trainer in any club ?
-    return self.memberships.filter(role='trainer').count() > 0
+    return self.memberships.filter(role='trainer').exists()
 
   def get_visitor_rights(self, visitor):
     '''
