@@ -1,6 +1,7 @@
 from users.models import Athlete
 from django.views.generic.edit import FormView
 from users.forms import SignUpForm
+from users.tasks import subscribe_mailing
 from django.contrib.auth import login as auth_login, authenticate
 from django.http import HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
@@ -39,7 +40,7 @@ class CreateUser(UserInviteMixin, FormView):
     url_name = self.invite and 'club-create' or 'club-list'
 
     # Subscribe user to mailing all
-    user.subscribe_mailing('all')
+    subscribe_mailing.delay(user, 'all')
 
     return HttpResponseRedirect(reverse(url_name))
 
@@ -85,7 +86,7 @@ class ActivateUser(UserInviteMixin, FormView):
       auth_login(self.request, valid_user)
 
     # Subscribe user to mailing all
-    user.subscribe_mailing('all')
+    subscribe_mailing.delay(user, 'all')
 
     # Mark invite as used
     self.invite.use()

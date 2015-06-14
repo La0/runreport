@@ -39,3 +39,10 @@ def send_related_races_mail():
     mb.subject = _('New friends races')
     mail = mb.build(context)
     mail.send()
+
+@shared_task
+def subscribe_mailing(user, mailing_name):
+  '''
+  Subscribe an user to a mailing list
+  '''
+  user.subscribe_mailing(mailing_name)
