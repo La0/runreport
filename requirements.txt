@@ -41,6 +41,7 @@ redis==2.8.0
 reportlab==3.1.44
 requests==2.6.0
 requests-oauthlib==0.4.2
+rjsmin==1.0.10
 simplejson==3.6.5
 six==1.9.0
 sqlparse==0.1.14

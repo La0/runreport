@@ -354,6 +354,9 @@ COMPRESS_CSS_FILTERS = [
   'compressor.filters.css_default.CssAbsoluteFilter', # default: absolute url()
   'compressor.filters.cssmin.CSSMinFilter', # css minifier
 ]
+COMPRESS_JS_FILTERS = [
+  'compressor.filters.jsmin.JSMinFilter',
+]
 
 # Dev cache in files
 CACHES = {
