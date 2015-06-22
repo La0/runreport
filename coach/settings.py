@@ -415,3 +415,15 @@ else:
 
   # Disable admin interface
   REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = ('rest_framework.renderers.JSONRenderer', )
+
+
+
+# Setup offline compression
+# through COMPRESS env variable
+if os.getenv('COMPRESS'):
+  def COMPRESS_JINJA2_GET_ENVIRONMENT():
+    from django.template import engines
+    return engines['jinja2'].env
+
+  COMPRESS_ENABLED = True
+  COMPRESS_OFFLINE = True

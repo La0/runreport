@@ -1,6 +1,6 @@
-from fabric.api import *
+from fabric.api import local, run, settings, env, cd, get, prefix, put
 from fabric.operations import prompt
-from coach.settings import FABRIC_HOSTS, DATABASES # Mandatory
+from coach.settings import HOME, FABRIC_HOSTS, DATABASES, STATIC_ROOT, COMPRESS_OUTPUT_DIR # Mandatory
 try:
   from coach.settings import FABRIC_ENV, FABRIC_BASE, FABRIC_SUPERVISORS # Optional
 except Exception:
@@ -9,8 +9,12 @@ except Exception:
 import os
 env.hosts = FABRIC_HOSTS
 from datetime import date
+import shutil
 
 def prod():
+
+  # Compress JS & CSS on dev station
+  compress_assets()
 
   # Stop services
   supervisors('stop')
@@ -28,6 +32,7 @@ def prod():
       submodules()
       migrate_db()
       static()
+      upload_assets()
 
   # Start again
   supervisors('start')
@@ -146,4 +151,43 @@ def submodules():
   run('git submodule update')
 
 def static():
-  run('./manage.py collectstatic --clear --noinput --ignore "tracks" --ignore "posts" --ignore "avatars"')
+  # Inores those static sub dirs
+  ignores = [
+    'tracks',
+    'posts',
+    'avatars',
+    'debug_toolbar',
+    'rest_framework',
+    'js', # from minified
+    'css', # from minified
+  ]
+
+  # Remove all bower_components dir
+  bower_dir = os.path.join(HOME, 'bower_components')
+  if os.path.exists(bower_dir):
+    ignores += os.listdir(bower_dir)
+
+  cmd = './manage.py collectstatic --clear --noinput '
+  cmd += ' '.join(['--ignore "%s"' % i for i in ignores])
+
+  run(cmd)
+
+def compress_assets():
+  '''
+  Locally compress CSS & JS through compressor
+  '''
+  # Cleanup previous compression
+  compress_dir = os.path.join(STATIC_ROOT, COMPRESS_OUTPUT_DIR[1:])
+  if os.path.exists(compress_dir):
+    shutil.rmtree(compress_dir)
+
+  # Build minified directory
+  local('COMPRESS=1 ./manage.py compress --engine jinja2')
+
+def upload_assets():
+  '''
+  Upload local assets
+  '''
+  compress_dir = os.path.join(STATIC_ROOT, COMPRESS_OUTPUT_DIR[1:])
+  with cd(FABRIC_BASE):
+    put(compress_dir, 'static')
