@@ -79,12 +79,10 @@ LOCALE_PATHS = (
 )
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
-# Example: "/home/media/media.lawrence.com/media/"
 MEDIA_ROOT = HOME + '/medias'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
-# Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
 MEDIA_URL = '/medias/'
 
 # Absolute path to the directory static files should be collected to.
@@ -94,12 +92,11 @@ MEDIA_URL = '/medias/'
 STATIC_ROOT = os.path.join(HOME, 'static')
 
 # URL prefix for static files.
-# Example: "http://media.lawrence.com/static/"
 STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-  os.path.join(HOME, 'medias'),
+  os.path.join(HOME, 'front'),
   os.path.join(HOME, 'bower_components'),
 )
 

@@ -10,9 +10,7 @@ gunicorn.socket
 db
 celerybeat-schedule
 cache
-medias/avatars
-medias/min
 bower_components
 static
-medias/posts
+medias
 templates_cached
