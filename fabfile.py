@@ -33,6 +33,7 @@ def prod():
       migrate_db()
       static()
       upload_assets()
+      cleanup_cache()
 
   # Start again
   supervisors('start')
@@ -195,3 +196,10 @@ def upload_assets():
   compress_dir = os.path.join(STATIC_ROOT, COMPRESS_OUTPUT_DIR[1:])
   with cd(FABRIC_BASE):
     put(compress_dir, 'static')
+
+def cleanup_cache():
+  '''
+  Cleanup template cache
+  '''
+  with settings(warn_only=True):
+    run('rm -rf templates_cached')

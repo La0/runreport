@@ -1,10 +1,11 @@
 # coding=utf-8
-from jinja2 import Environment, Template
+from jinja2 import Environment, Template, FileSystemBytecodeCache
 from importlib import import_module
 from django.conf import settings
 from coach.menu import add_pages
 from datetime import timedelta
 from helpers import seconds_humanize
+import os
 
 def environment(**options):
   '''
@@ -32,6 +33,15 @@ def environment(**options):
   # Setup translations
   translation = import_module('django.utils.translation')
   env.install_gettext_translations(translation, newstyle=False)
+
+  # In Prod, skip auto_reload
+  # and setup bytecode cache
+  if not settings.DEBUG:
+      env.auto_reload = False
+      cache_dir = os.path.join(settings.HOME, 'templates_cached')
+      if not os.path.exists(cache_dir):
+        os.mkdir(cache_dir)
+      env.bytecode_cache = FileSystemBytecodeCache(cache_dir, 'rr.%s.cache')
 
   return env
 
