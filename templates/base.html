@@ -20,8 +20,8 @@
 	<link href="{{ static('lightbox2/css/lightbox.css') }}" rel="stylesheet">
 	<link href="{{ static('css/runreport-embedded.css') }}" rel="stylesheet">
 	<link href="{{ static('css/style.css') }}" rel="stylesheet">
-	{% block style %}{% endblock %}
   {% endcompress %}
+	{% block style %}{% endblock %}
 </head>
 <body class="{% if user.demo %}demo{% endif %}">
 	<header class="navbar navbar-default navbar-fixed-top">
@@ -133,8 +133,8 @@
 	<script type="text/javascript" src="{{ static('js/csrf.js') }}" ></script>
 	<script type="text/javascript" src="{{ static('js/modal.js') }}" ></script>
 	<script type="text/javascript" src="{{ static('js/tracks.js') }}" ></script>
-	{% block js %}{% endblock %}
   {% endcompress %}
+	{% block js %}{% endblock %}
   {# Compress fails with this file :/ #}
 	<script type="text/javascript" src="{{ static('dropzone/downloads/dropzone.js') }}" ></script>
 
