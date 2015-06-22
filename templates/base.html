@@ -22,23 +22,6 @@
 	<link href="{{ static('css/style.css') }}" rel="stylesheet">
 	{% block style %}{% endblock %}
   {% endcompress %}
-
-  {% compress js %}
-	<script type="text/javascript" src="{{ static('jquery/dist/jquery.js') }}"></script>
-	<script type="text/javascript" src="{{ static('bootswatch-dist/js/bootstrap.js') }}"></script>
-	<script type="text/javascript" src="{{ static('bootstrap-modal/js/bootstrap-modalmanager.js') }}"></script>
-	<script type="text/javascript" src="{{ static('bootstrap-modal/js/bootstrap-modal.js') }}"></script>
-	<script type="text/javascript" src="{{ static('leaflet/dist/leaflet.js') }}"></script>
-	<script type="text/javascript" src="{{ static('bootstrap-datepicker/js/bootstrap-datepicker.js') }}"></script>
-	<script type="text/javascript" src="{{ static('quill/dist/quill.js') }}" ></script>
-	<script type="text/javascript" src="{{ static('lightbox2/js/lightbox.js') }}" ></script>
-	<script type="text/javascript" src="{{ static('js/csrf.js') }}" ></script>
-	<script type="text/javascript" src="{{ static('js/modal.js') }}" ></script>
-	<script type="text/javascript" src="{{ static('js/tracks.js') }}" ></script>
-	{% block js %}{% endblock %}
-  {% endcompress %}
-  {# Compress fails with this file :/ #}
-	<script type="text/javascript" src="{{ static('dropzone/downloads/dropzone.js') }}" ></script>
 </head>
 <body class="{% if user.demo %}demo{% endif %}">
 	<header class="navbar navbar-default navbar-fixed-top">
@@ -137,5 +120,23 @@
 			{% include '_piwik.html' %}
 		</div>
 	</footer>
+
+  {% compress js %}
+	<script type="text/javascript" src="{{ static('jquery/dist/jquery.js') }}"></script>
+	<script type="text/javascript" src="{{ static('bootswatch-dist/js/bootstrap.js') }}"></script>
+	<script type="text/javascript" src="{{ static('bootstrap-modal/js/bootstrap-modalmanager.js') }}"></script>
+	<script type="text/javascript" src="{{ static('bootstrap-modal/js/bootstrap-modal.js') }}"></script>
+	<script type="text/javascript" src="{{ static('leaflet/dist/leaflet.js') }}"></script>
+	<script type="text/javascript" src="{{ static('bootstrap-datepicker/js/bootstrap-datepicker.js') }}"></script>
+	<script type="text/javascript" src="{{ static('quill/dist/quill.js') }}" ></script>
+	<script type="text/javascript" src="{{ static('lightbox2/js/lightbox.js') }}" ></script>
+	<script type="text/javascript" src="{{ static('js/csrf.js') }}" ></script>
+	<script type="text/javascript" src="{{ static('js/modal.js') }}" ></script>
+	<script type="text/javascript" src="{{ static('js/tracks.js') }}" ></script>
+	{% block js %}{% endblock %}
+  {% endcompress %}
+  {# Compress fails with this file :/ #}
+	<script type="text/javascript" src="{{ static('dropzone/downloads/dropzone.js') }}" ></script>
+
 </body>
 </html>
