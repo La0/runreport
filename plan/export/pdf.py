@@ -141,7 +141,7 @@ class PlanPdfExporter(object):
     tableFrame = Frame(inch / 2, inch / 2, 10*inch, 7*inch)
 
     # RunReport logo
-    logo = Image('./medias/img/logo_ligne.png')
+    logo = Image('./front/img/logo_ligne.png')
     logo.drawHeight = 2.2*inch*logo.drawHeight / logo.drawWidth
     logo.drawWidth = 2.2*inch
 

@@ -447,7 +447,7 @@ header div.demo-warning {
 
 /* Club Landing */
 #landing-club header {
-  background: url(/medias/img/club_bg.png) repeat top left;
+  background: url(/static/img/club_bg.png) repeat top left;
   color: white !important;
 }
 

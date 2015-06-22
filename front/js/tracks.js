@@ -56,14 +56,14 @@ function show_point_map(){
   // Specific icon
   var LeafIcon = L.Icon.extend({
     options: {
-      shadowUrl: '/medias/img/leaflet/marker-shadow.png',
+      shadowUrl: '/static/img/leaflet/marker-shadow.png',
       iconSize:     [25, 41],
       shadowSize:   [41, 41],
     }
   });
 
   var icon = new LeafIcon({
-    iconUrl: '/medias/img/leaflet/marker-icon.png',
+    iconUrl: '/static/img/leaflet/marker-icon.png',
   });
 
   // Add point as a marker to map

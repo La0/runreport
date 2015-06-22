@@ -29,10 +29,10 @@
 			<div class="navbar-header">
         <a href="/" class="navbar-brand">
           {% if user.is_authenticated() %}
-          <img src="/medias/img/logo_bloc.svg" alt="Run Report" class="block" />
+          <img src="{{ static('img/logo_bloc.svg') }}" alt="Run Report" class="block" />
           {% else %}
-          <img src="/medias/img/logo_ligne.svg" alt="Run Report" class="line visible-lg"/>
-          <img src="/medias/img/logo_bloc.svg" alt="Run Report" class="block hidden-lg"/>
+          <img src="{{ static('img/logo_ligne.svg') }}" alt="Run Report" class="line visible-lg"/>
+          <img src="{{ static('img/logo_bloc.svg') }}" alt="Run Report" class="block hidden-lg"/>
           {% endif %}
         </a>
 				<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
@@ -74,7 +74,7 @@
               {% for lang_code, lang_name in LANGUAGES %}
                 {% if lang_code != LANGUAGE_CODE %}
                 <button type="submit" name="language" value="{{ lang_code }}" title="{{ _('Use RunReport in') }} {{ lang_name }}" class="btn btn-link do-tooltip navbar-btn" data-placement="bottom">
-                  <img src="/medias/img/lang_{{ lang_code }}.png" alt="{{ lang_code }}" />
+                  <img src="{{ static('img/lang_{{ lang_code }}.png') }}" alt="{{ lang_code }}" />
                 </button>
                 {% endif %}
               {% endfor %}

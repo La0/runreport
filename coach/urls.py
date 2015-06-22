@@ -42,7 +42,7 @@ urlpatterns = patterns('',
 dev_urls = patterns('',
   url(r'^admin/', include(admin.site.urls)),
   (r'^medias/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
-)
+) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 # Hide a little admin
 prod_urls = patterns('',
@@ -51,7 +51,4 @@ prod_urls = patterns('',
 )
 
 urlpatterns += settings.DEBUG and dev_urls or prod_urls
-
-# Add static files in dev
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

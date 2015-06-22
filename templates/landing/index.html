@@ -26,7 +26,7 @@ body {
 .intro-header {
 	padding-bottom: 50px;
 	color: #f8f8f8;
-	background: url(/medias/img/landing/runners.jpg) no-repeat center center;
+	background: url({{ static('img/landing/runners.jpg') }}) no-repeat center center;
 	background-size: cover;
 	text-align: center;
 }
@@ -111,7 +111,7 @@ body {
 .banner {
 	padding: 100px 0;
 	color: #f8f8f8;
-	background: url(/medias/img/landing/track.jpg) no-repeat bottom left;
+	background: url({{ static('img/landing/track.jpg') }}) no-repeat bottom left;
 	background-size: cover;
 }
 
@@ -164,7 +164,7 @@ body {
     <div class="intro-message">
       <div class="row">
         <div class="col-sm-4 col-sm-offset-4 col-xs-8 col-xs-offset-2">
-          <img class="im-responsive" src="/medias/img/logo_bloc.svg" alt="Run Report" />
+          <img class="im-responsive" src="{{ static('img/logo_bloc.svg') }}" alt="Run Report" />
         </div>
       </div>
       <div class="row">
@@ -205,7 +205,7 @@ body {
         <p class="lead">{{ _('You can freely create your training logbook, manage your sports sesssions, and clearly view your evolution across several month or years.') }}</p>
       </div>
       <div class="col-lg-5 col-lg-offset-2 col-sm-6">
-        <img class="img-responsive" src="/medias/img/landing/calendar.png" alt="">
+        <img class="img-responsive" src="{{ static('img/landing/calendar.png') }}" alt="">
       </div>
     </div>
 
@@ -235,7 +235,7 @@ body {
         <a href="{{ url('club-landing') }}" class="btn btn-success btn-lg"><span class="icon-club"></span> {{ _('Create a club') }}</a>
       </div>
       <div class="col-lg-5 col-sm-pull-6  col-sm-6">
-        <img class="img-responsive" src="/medias/img/landing/club.png" alt="">
+        <img class="img-responsive" src="{{ static('img/landing/club.png') }}" alt="">
       </div>
     </div>
 
@@ -261,7 +261,7 @@ body {
         <p class="lead">{{ _('RunReport displays nicely on every smartphones & tablets, automatically adapting to your screen size.') }}</p>
       </div>
       <div class="col-lg-5 col-lg-offset-2 col-sm-6">
-        <img class="img-responsive" src="/medias/img/landing/mobile.png" alt="">
+        <img class="img-responsive" src="{{ static('img/landing/mobile.png') }}" alt="">
       </div>
     </div>
 
@@ -287,7 +287,7 @@ body {
         {{ _('Run Report can automatically import your data from your Garmin Connect or Strava, and show them to your friends, trainers, ...') }}</p>
       </div>
       <div class="col-lg-5 col-sm-pull-6 col-sm-6">
-        <img class="img-responsive" src="/medias/img/landing/garmin.jpg" alt="">
+        <img class="img-responsive" src="{{ static('img/landing/garmin.jpg') }}" alt="">
       </div>
     </div>
 
