@@ -168,9 +168,11 @@ def static():
   if os.path.exists(bower_dir):
     ignores += os.listdir(bower_dir)
 
-  # Keep dropzone as it's served directly
-  if 'dropzone' in ignores:
-    ignores.remove('dropzone')
+  # Keep some components as it's served directly
+  keeps = ('dropzone', 'lightbox2')
+  for k in keeps:
+      if k in ignores:
+        ignores.remove(k)
 
   cmd = './manage.py collectstatic --clear --noinput '
   cmd += ' '.join(['--ignore "%s"' % i for i in ignores])
