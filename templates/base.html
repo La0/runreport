@@ -26,8 +26,8 @@
 	<header class="navbar navbar-default navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
-        <a href="/" class="navbar-brand">
-          <img src="/medias/img/logo_bloc.svg" alt="Run Report" class="block" />
+        <a href="{{ url('dashboard') }}" class="navbar-brand">
+          <img src="{{ static('img/logo_bloc.svg') }}" alt="Run Report" class="block" />
         </a>
 				<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
 					<span class="icon-bar"></span>
@@ -125,10 +125,12 @@
   <script type="text/javascript" src="{{ static('flot/jquery.flot.time.js') }}" ></script>
   <script type="text/javascript" src="{{ static('flot/jquery.flot.stack.js') }}" ></script>
 	<script type="text/javascript" src="{{ static('js/config.js') }}" ></script>
+	<script type="text/javascript" src="{{ static('raphael/raphael.js') }}" ></script>
 	<script type="text/javascript" src="{{ static('js/csrf.js') }}" ></script>
 	<script type="text/javascript" src="{{ static('js/modal.js') }}" ></script>
 	<script type="text/javascript" src="{{ static('js/tracks.js') }}" ></script>
   <script type="text/javascript" src="{{ static('js/stats.js') }}" ></script>
+	<script type="text/javascript" src="{{ static('js/dashboard.js') }}" ></script>
   {% endcompress %}
 	{% block js %}{% endblock %}
   {# Compress fails with this file :/ #}

@@ -49,14 +49,3 @@ class WeekPublish(JsonResponseMixin, CurrentWeekMixin, FormView):
 
 class WeeklyReport(CurrentWeekMixin, WeekPaginator, DetailView):
   template_name = 'sport/week/edit.html'
-
-  def get(self, request, *args, **kwargs):
-    # Render minimal response
-    # for visitors
-    if not request.user.is_authenticated():
-      self.object_list = []
-      self.template_name = "landing/index.html" # Use landing page
-      return self.render_to_response({})
-
-    return super(WeeklyReport, self).get(request, *args, **kwargs)
-

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block js %}
+<script type="text/javascript">
+  $('div.week_ring').ringify();
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <div class="row">
+    <h1>{{ _('Last 90 days') }}</h1>
+
+    <div class="col-xs-12" id="rings">
+    {% for week in weeks %}
+
+      {% with week_data = week.stats.data %}
+      <div class="week_ring" data-sessions="{{ week_data.sessions.total }}" data-hours="{{ week_data.hours }}" data-distance="{{ week_data.distance }}">
+        {{ week.date|date('l d E Y') }}
+      </div>
+      {% endwith %}
+
+    {% endfor %}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-6">
+      <h1>{{ _('Your friends') }}</h1>
+    </div>
+
+    <div class="col-xs-12 col-sm-6">
+      <h1>{{ _('Your activities') }}</h1>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
