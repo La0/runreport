@@ -427,3 +427,9 @@ if os.getenv('COMPRESS'):
 
   COMPRESS_ENABLED = True
   COMPRESS_OFFLINE = True
+
+  # Use prod cdn settings
+  STATIC_URL = 'https://cdn.nextcairn.com/rr/static/'
+  MEDIA_URL = 'https://cdn.nextcairn.com/rr/medias/'
+  COMPRESS_URL = 'https://cdn.nextcairn.com/rr/static/'
+
