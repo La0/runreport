@@ -17,7 +17,9 @@
 
       {% with week_data = week.stats.data %}
       <div class="week_ring" data-sessions="{{ week_data.sessions.total }}" data-hours="{{ week_data.hours }}" data-distance="{{ week_data.distance }}">
-        {{ week.date|date('l d E Y') }}
+        <span class="date">
+          {{ week.date|date('d E') }}
+        </span>
       </div>
       {% endwith %}
 
