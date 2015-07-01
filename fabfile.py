@@ -129,7 +129,7 @@ def pull():
   '''
   Pull from github
   '''
-  run('git pull')
+  run('git pull --rebase')
 
 def migrate_db():
   '''
