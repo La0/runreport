@@ -43,10 +43,10 @@ $font_2: Helvetica;
 $font_3: Arial;
 $font_4: sans-serif;
 
-//urls
-$url_0: url(/static/img/club_bg.png);
-$url_1: url(/static/img/landing/runners.jpg);
-$url_2: url(/static/img/landing/track.jpg);
+//urls should be conditional
+$url_0: url(https://cdn.nextcairn.com/rr/static/img/club_bg.png);
+$url_1: url(https://cdn.nextcairn.com/rr/static/img/landing/runners.jpg);
+$url_2: url(https://cdn.nextcairn.com/rr/static/img/landing/track.jpg);
 
 //@extend-elements
 //original selectors
