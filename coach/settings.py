@@ -354,6 +354,9 @@ COMPRESS_CSS_FILTERS = [
 COMPRESS_JS_FILTERS = [
   'compressor.filters.jsmin.JSMinFilter',
 ]
+COMPRESS_PRECOMPILERS = (
+  ('text/x-scss', 'sass --scss {infile} {outfile}'),
+)
 
 # Dev cache in files
 CACHES = {

@@ -10,16 +10,16 @@
   {% block meta %}{% endblock %}
 
   {% compress css %}
-	<link href="{{ static('bootswatch-dist/css/bootstrap.css') }}" rel="stylesheet">
-	<link href="{{ static('bootstrap-modal/css/bootstrap-modal-bs3patch.css') }}" rel="stylesheet">
-	<link href="{{ static('bootstrap-modal/css/bootstrap-modal.css') }}" rel="stylesheet">
-	<link href="{{ static('leaflet/dist/leaflet.css') }}" rel="stylesheet">
-	<link href="{{ static('bootstrap-datepicker/css/datepicker3.css') }}" rel="stylesheet">
-	<link href="{{ static('quill/dist/quill.base.css') }}" rel="stylesheet">
-	<link href="{{ static('dropzone/downloads/css/dropzone.css') }}" rel="stylesheet">
-	<link href="{{ static('lightbox2/css/lightbox.css') }}" rel="stylesheet">
-	<link href="{{ static('css/runreport-embedded.css') }}" rel="stylesheet">
-	<link href="{{ static('css/style.css') }}" rel="stylesheet">
+	<link type="text/css" href="{{ static('bootswatch-dist/css/bootstrap.css') }}" rel="stylesheet">
+	<link type="text/css" href="{{ static('bootstrap-modal/css/bootstrap-modal-bs3patch.css') }}" rel="stylesheet">
+	<link type="text/css" href="{{ static('bootstrap-modal/css/bootstrap-modal.css') }}" rel="stylesheet">
+	<link type="text/css" href="{{ static('leaflet/dist/leaflet.css') }}" rel="stylesheet">
+	<link type="text/css" href="{{ static('bootstrap-datepicker/css/datepicker3.css') }}" rel="stylesheet">
+	<link type="text/css" href="{{ static('quill/dist/quill.base.css') }}" rel="stylesheet">
+	<link type="text/css" href="{{ static('dropzone/downloads/css/dropzone.css') }}" rel="stylesheet">
+	<link type="text/css" href="{{ static('lightbox2/css/lightbox.css') }}" rel="stylesheet">
+	<link type="text/css" href="{{ static('css/runreport-embedded.css') }}" rel="stylesheet">
+	<link type="text/x-scss" href="{{ static('scss/main.scss') }}" rel="stylesheet">
   {% endcompress %}
 </head>
 <body class="{% if user.demo %}demo{% endif %}">
