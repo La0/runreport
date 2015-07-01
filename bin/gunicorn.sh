@@ -1,8 +1,8 @@
 #!/bin/bash
  
 NAME="coach" # Name of the application
-DJANGODIR=/var/prod/runreport
-SOCKFILE=/var/prod/runreport/gunicorn.socket
+DJANGODIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )
+SOCKFILE=$DJANGODIR/gunicorn.socket
 USER=lao
 GROUP=lao
 NUM_WORKERS=3 # how many worker processes should Gunicorn spawn
