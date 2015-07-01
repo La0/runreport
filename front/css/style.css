@@ -180,6 +180,13 @@ table.calendar td.other-month {
   background: #F1F1F1;
 }
 
+#calendar .head a {
+  width: 100%;
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
 button.training, button.race, button.rest {
 	color: #fff;
 }
@@ -794,4 +801,196 @@ div.plan-status label {
 div.popover div.popover-content {
   font-weight: normal !important;
   font-size: 14px !important;
+}
+
+/* Homepage (old) to Trash  */
+.lead {
+	font-size: 18px;
+	font-weight: 400;
+}
+
+.jump {
+  font-size: 3em;
+}
+
+.jump a {
+  color: white;
+}
+
+.jump a:hover {
+  text-shadow: 0 0 10px #CCC;
+}
+
+.intro-header {
+	padding-bottom: 50px;
+	color: #f8f8f8;
+	background: url(/static/img/landing/runners.jpg) no-repeat center center;
+	background-size: cover;
+	text-align: center;
+  margin-top: -20px;
+}
+
+.intro-message {
+	position: relative;
+	padding-top: 15%;
+	padding-bottom: 15%;
+  text-align: center;
+}
+
+.intro-message img {
+  margin: auto 0 !important;
+}
+
+.intro-divider {
+	width: 400px;
+	border-top: 1px solid #f8f8f8;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.intro-message > h3 {
+	text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6);
+}
+
+@media (max-width: 767px) {
+	.intro-message {
+		padding-bottom: 15%;
+	}
+
+	.intro-message > h1 {
+		font-size: 3em;
+	}
+
+	ul.intro-social-buttons > li {
+		display: block;
+		margin-bottom: 20px;
+		padding: 0;
+	}
+
+	ul.intro-social-buttons > li:last-child {
+		margin-bottom: 0;
+	}
+
+	.intro-divider {
+		width: 100%;
+	}
+}
+
+.main-action {
+	text-transform: uppercase;
+	font-size: 14px;
+	font-weight: 400;
+	letter-spacing: 2px;
+}
+
+.demo {
+  margin-top: 15px;
+}
+
+.content-section-a {
+	background-color: #f8f8f8;
+	padding: 50px 0;
+}
+
+.content-section-b {
+	border-top: 1px solid #e7e7e7;
+	border-bottom: 1px solid #e7e7e7;
+	padding: 50px 0;
+}
+
+.section-heading {
+	margin-bottom: 30px;
+}
+
+.section-heading-spacer {
+	border-top: 3px solid #e7e7e7;
+	width: 200px;
+	float: left;
+}
+
+.banner {
+	padding: 100px 0;
+	color: #f8f8f8;
+	background: url(/static/img/landing/track.jpg) no-repeat bottom left;
+	background-size: cover;
+}
+
+.banner h2 {
+	margin: 0;
+	text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6);
+	font-size: 3em;
+}
+
+.banner ul {
+	margin-bottom: 0;
+}
+
+.banner-social-buttons {
+	float: right;
+	margin-top: 0;
+}
+
+@media (max-width: 1199px) {
+	ul.banner-social-buttons {
+		float: left;
+		margin-top: 15px;
+	}
+}
+
+@media (max-width: 767px) {
+	.banner h2 {
+		margin: 0;
+		text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6);
+		font-size: 3em;
+	}
+
+	ul.banner-social-buttons > li {
+		display: block;
+		margin-bottom: 20px;
+		padding: 0;
+	}
+
+	ul.banner-social-buttons > li:last-child {
+		margin-bottom: 0;
+	}
+}
+
+/* Glossary */
+#glossary dt {
+	border-top: 1px solid #ddd;
+	padding: 5px 5px 0 5px;
+}
+
+#glossary dd {
+	padding: 0 5px 5px 5px;
+}
+
+#glossary dt:nth-of-type(odd), #glossary dd:nth-of-type(odd) {
+	background: #f6f6f6;
+}
+
+#glossary dd:last-of-type {
+	border-bottom: 1px solid #ddd;
+	margin-bottom: 21px;
+}
+
+/* VMA */
+#vma table.table th, #vma table.table td {
+	text-align: right;
+	font-size: 0.9em;
+}
+
+#vma .table-responsive {
+	border: 1px solid #ECF0F1;
+	margin-bottom: 15.75px;
+	overflow-x: scroll;
+	overflow-y: hidden;
+	width: 100%;
+}
+
+#vma .table-responsive > .table-bordered {
+	border: 0 none;
+}
+
+#vma .table-responsive > .table {
+	margin-bottom: 0;
 }

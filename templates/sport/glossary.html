@@ -2,30 +2,8 @@
 
 {% set page_title = 'Glossaire' %}
 
-{% block style %}
-<style>
-dt {
-	border-top: 1px solid #ddd;
-	padding: 5px 5px 0 5px;
-}
-
-dd {
-	padding: 0 5px 5px 5px;
-}
-
-dt:nth-of-type(odd), dd:nth-of-type(odd) {
-	background: #f6f6f6;
-}
- 
-dd:last-of-type {
-	border-bottom: 1px solid #ddd;
-	margin-bottom: 21px;
-}
-</style>
-{% endblock %}
-
 {% block content %}
-<div class="container">
+<div class="container" id="glossary">
   <h2>{{ _('Sport icons') }}</h2>
 	<dl>
     {% for sport in sports %}

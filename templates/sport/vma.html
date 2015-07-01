@@ -2,34 +2,9 @@
 
 {% set page_title = 'Mes allures' %}
 
-
-{% block style %}
-<style>
-table.table th, table.table td {
-	text-align: right;
-	font-size: 0.9em;
-}
-
-.table-responsive {
-	border: 1px solid #ECF0F1;
-	margin-bottom: 15.75px;
-	overflow-x: scroll;
-	overflow-y: hidden;
-	width: 100%;
-}
-
-.table-responsive > .table-bordered {
-	border: 0 none;
-}
-.table-responsive > .table {
-	margin-bottom: 0;
-}
-</style>
-{% endblock %}
-
 {% block content %}
 
-<div class="container">
+<div class="container" id="vma">
 
 	{% if user.vma and vma %}
 
