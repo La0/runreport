@@ -74,7 +74,7 @@
               {% for lang_code, lang_name in LANGUAGES %}
                 {% if lang_code != LANGUAGE_CODE %}
                 <button type="submit" name="language" value="{{ lang_code }}" title="{{ _('Use RunReport in') }} {{ lang_name }}" class="btn btn-link do-tooltip navbar-btn" data-placement="bottom">
-                  <img src="{{ static('img/lang_{{ lang_code }}.png') }}" alt="{{ lang_code }}" />
+                  <img src="{{ static('img/lang_%s.png' % lang_code) }}" alt="{{ lang_code }}" />
                 </button>
                 {% endif %}
               {% endfor %}
