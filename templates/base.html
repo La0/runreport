@@ -130,9 +130,13 @@
 	<script type="text/javascript" src="{{ static('bootstrap-datepicker/js/bootstrap-datepicker.js') }}"></script>
 	<script type="text/javascript" src="{{ static('quill/dist/quill.js') }}" ></script>
 	<script type="text/javascript" src="{{ static('lightbox2/js/lightbox.js') }}" ></script>
+  <script type="text/javascript" src="{{ static('flot/jquery.flot.js') }}" ></script>
+  <script type="text/javascript" src="{{ static('flot/jquery.flot.time.js') }}" ></script>
+  <script type="text/javascript" src="{{ static('flot/jquery.flot.stack.js') }}" ></script>
 	<script type="text/javascript" src="{{ static('js/csrf.js') }}" ></script>
 	<script type="text/javascript" src="{{ static('js/modal.js') }}" ></script>
 	<script type="text/javascript" src="{{ static('js/tracks.js') }}" ></script>
+  <script type="text/javascript" src="{{ static('js/stats.js') }}" ></script>
   {% endcompress %}
 	{% block js %}{% endblock %}
   {# Compress fails with this file :/ #}

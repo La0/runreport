@@ -2,15 +2,6 @@
 
 {% set page_title = '%s %s' % (member.first_name, member.last_name) %}
 
-{% if 'stats' in privacy %}
-  {% block js %}
-  <script type="text/javascript" src="{{ static('flot/jquery.flot.js') }}" ></script>
-  <script type="text/javascript" src="{{ static('flot/jquery.flot.time.js') }}" ></script>
-  <script type="text/javascript" src="{{ static('flot/jquery.flot.stack.js') }}" ></script>
-  <script type="text/javascript" src="{{ static('js/stats.js') }}" ></script>
-  {% endblock %}
-{% endif %}
-
 {% block content %}
 
 {% set role_css = {
