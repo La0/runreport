@@ -35,6 +35,8 @@ $color_desert_storm_approx: #f8f8f8;
 $black_20: rgba(0, 0, 0, 0.2);
 $color_mercury_approx: #e7e7e7;
 $color_athens_gray_approx: #ecf0f1;
+$color_tapa_approx: #777;
+
 
 //fonts
 $font_0: Lato;
@@ -968,3 +970,59 @@ td.avatar {
 		background: $color_gallery_approx;
 	}
 }
+#home {
+  .carousel {
+    margin-top: -15px;
+    height: 500px;
+    margin-bottom: 20px;
+    .item {
+      height: 500px;
+      background-color: $color_tapa_approx;
+      background-position: top center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    img.logo {
+      width: 200px;
+    }
+  }
+  .carousel-caption {
+    z-index: 10;
+  }
+  .marketing {
+    .actions {
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid $color_desert_storm_approx;
+    }
+    .col-lg-4 {
+      margin-bottom: 20px;
+      text-align: center;
+      img {
+        margin: 0 auto;
+        max-width: 175px;
+      }
+      p {
+        margin-right: 10px;
+        margin-left: 10px;
+        font-size: 1.1em;
+      }
+    }
+    h2 {
+      font-weight: normal;
+    }
+  }
+}
+#features {
+  line-height: 1.6em;
+  p {
+    font-size: 1.2em;
+  }
+  ul a {
+    font-size: 1.2em;
+  }
+}
+#rings .week_ring .date {
+  display: none;
+}
+
