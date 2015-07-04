@@ -1616,10 +1616,10 @@ msgid "Publish last week"
 msgstr "Publier la semaine précèdente"
 
 msgid "Last week's report not published !"
-msgstr "Semaine précèdente pas publiée !"
+msgstr "Semaine précèdente non publiée !"
 
 msgid "Your comments from last week have not been published"
-msgstr "Vos commentaires de la semaine précèdente n'ont pas été publié"
+msgstr "Vos commentaires de la semaine précèdente n'ont pas été publiés"
 
 msgid "Sport icons"
 msgstr "Icones de sport"
