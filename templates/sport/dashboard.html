@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
 
+{% set type_css = {
+  'training' : 'label-info',
+  'race' : 'label-success',
+  'rest' : 'label-danger',
+} %}
+
 {% block js %}
 <script type="text/javascript">
   $('div.week_ring').ringify();
@@ -7,7 +13,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container" id="dashboard">
 
   <div class="row">
     <h1>{{ _('Last 90 days') }}</h1>
@@ -38,6 +44,47 @@
 
     <div class="col-xs-12 col-sm-6">
       <h1>{{ _('Your activities') }}</h1>
+
+      {% for session in sessions %}
+      <div class="session">
+        <h4>
+          <i class="icon-sport-{{session.sport.slug}} do-tooltip" title="{{ session.sport.name }}"></i>
+          {{ session.name }}
+        </h4>
+        <div class="row">
+          <div class="col-xs-10">
+            <span class="label {{type_css[session.type]}}">{{_(session.type)|title()}}</span>
+
+            <span class="do-tooltip" title="{{ session.day.date|date('l d E Y') }}">
+            {% if session.day.date > today %}
+              {{ _('In %s') % session.day.date|timeuntil() }}
+            {% elif session.day.date < today %}
+              {{ _('%s ago') % session.day.date|timesince() }}
+            {% else %}
+              <strong>{{ _('Today') }}</strong>
+            {% endif %}
+            </span>
+          </div>
+          <div class="col-xs-2 text-right">
+            <a href="{{ url('report-day', session.day.date.year, session.day.date.month, session.day.date.day) }}" class="btn btn-light btn-primary">
+              {{ _('View') }}
+              <i class="icon-right-open"></i>
+            </a>
+          </div>
+        </div>
+
+      </div>
+      {% else %}
+      <p class="text-info">
+        {{ _('You don\'t have any recent sessions.') }}
+        <br />
+        {{ _('Use the following button to add a session for') }}
+        <a class="btn btn-primary" href="{{ url('report-day', today.year, today.month, today.day) }}">
+          Today
+          <i class="icon-right-open"></i>
+        </a>
+      </p>
+      {% endfor %}
     </div>
   </div>
 

@@ -1,5 +1,8 @@
 from django.views.generic import TemplateView
-
+from sport.stats import StatsWeek
+from sport.models import SportSession
+from helpers import date_to_day
+from datetime import timedelta, date
 
 class DashBoardView(TemplateView):
   '''
@@ -21,19 +24,18 @@ class DashBoardView(TemplateView):
 
   def get_context_data(self):
     context = super(DashBoardView, self).get_context_data()
+    self.today = date.today()
+    context['today'] = self.today
     context.update(self.load_weeks())
+    context.update(self.load_sessions())
     return context
 
   def load_weeks(self):
     '''
     Load previous weeks
     '''
-    from sport.stats import StatsWeek
-    from helpers import date_to_day
-    from datetime import timedelta, date
-
     # List 12 previous weeks
-    start = date_to_day(date.today())
+    start = date_to_day(self.today)
     weeks_future = 3
     weeks_past = 6
     weeks = []
@@ -56,4 +58,21 @@ class DashBoardView(TemplateView):
 
     return {
       'weeks' : weeks,
+    }
+
+  def load_sessions(self):
+    '''
+    Load sessions close to today
+    '''
+    filters = {
+      'day__week__user' : self.request.user,
+      'day__date__gte' : self.today - timedelta(days=7),
+      'day__date__lte' : self.today + timedelta(days=4),
+    }
+    sessions = SportSession.objects.filter(**filters)
+    sessions = sessions.select_related('day', 'track')
+    sessions = sessions.order_by('-day__date')
+
+    return {
+      'sessions' : sessions,
     }
