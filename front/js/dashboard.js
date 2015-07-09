@@ -1,10 +1,13 @@
 var RING_MAX_SIZE = 400;
 
 // Colors
-var RING_COLOR_SESSIONS = '#F00';
-var RING_COLOR_DISTANCE = '#0F0';
-var RING_COLOR_HOURS = '#00F';
+var RING_COLOR_SESSIONS = '#0B486B';
+var RING_COLOR_NB = '#CFF09E';
+var RING_COLOR_CURRENT = '#F0F0F0';
+var RING_COLOR_DISTANCE = '#79BD9A';
+var RING_COLOR_HOURS = '#3B8686';
 var RING_COLOR_DATE = '#000';
+var RING_COLOR_OVERLAY = '#FFF';
 
 // Helper to draw a raphel slice of a circle
 var slice = function (canvas, cx, cy, r, startAngle, percent, params) {
@@ -50,6 +53,8 @@ var display_week_rings = function(){
       distance : parseFloat(week_elt.attr('data-distance')) || 0,
       hours : parseFloat(week_elt.attr('data-hours')) || 0,
       element : week_elt,
+      state : week_elt.attr('data-state'),
+      href : week_elt.attr('data-href'),
     };
     weeks.push(week);
 
@@ -69,18 +74,26 @@ var display_week_rings = function(){
     var x = ring_size * (week.index + 0.5);
     var y = ring_size / 2.0;
 
+    // Draw background for current week
+    if(week.state == 'current'){
+      r.rect(x - ring_size / 2, 0, ring_size, ring_size).attr({
+        stroke : 'none',
+        fill : RING_COLOR_CURRENT,
+      });
+    }
+
     // Draw slice for distance
     slice(r, x, y, radius, 90, week.distance / max.distance, {
       stroke : 'none',
       fill : RING_COLOR_DISTANCE,
-      opacity : 0.4,
+      opacity : 0.9,
     });
 
     // Draw slice for hours
     slice(r, x, y, radius, 270, week.hours / max.hours, {
       stroke : 'none',
       fill : RING_COLOR_HOURS,
-      opacity : 0.4,
+      opacity : 0.9,
     });
 
     // Draw main rings for sessions
@@ -88,6 +101,7 @@ var display_week_rings = function(){
       stroke: "none",
       fill: RING_COLOR_SESSIONS,
       opacity : 1.0,
+      cursor: 'pointer',
     });
 
     // Draw date on bottom of ring
@@ -100,7 +114,7 @@ var display_week_rings = function(){
     // Draw sessions nb
     if(week.sessions > 0){
       r.text(x, ring_size / 2.0, week.sessions).attr({
-        fill : RING_COLOR_SESSIONS,
+        fill : RING_COLOR_NB,
         'font-size' : 18,
         'font-family' : 'Arial, Helvetica, sans-serif',
       });
@@ -124,10 +138,39 @@ var display_week_rings = function(){
       });
     }
 
+    // Draw opacifier
+    // Draw main rings for sessions
+    week.overlay = r.rect(x - ring_size / 2, 0, ring_size, ring_size + margin_y).attr({
+      stroke : 'none',
+      fill : RING_COLOR_OVERLAY,
+      opacity: 0.0,
+    }).toBack();
+
+
+    // Overlay all the others rings
     ring[0].onmouseover = function(){
-      console.info('Mouse over', week);
+      $.each(weeks, function(i, w){
+        if(w == week)
+          return;
+        w.overlay.animate({
+          opacity: 0.8,
+        }, 200).toFront();
+      });
     };
 
+    // Overlay all the others rings
+    ring[0].onmouseleave = function(){
+      $.each(weeks, function(i, w){
+        w.overlay.animate({
+          opacity: 0.0,
+        }, 200).toBack();
+      });
+    };
+
+    // Go to week
+    ring[0].onclick = function(){
+      window.location.href = week.href;
+    };
   });
 };
 

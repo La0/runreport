@@ -28,26 +28,31 @@ class DashBoardView(TemplateView):
     '''
     Load previous weeks
     '''
-
     from sport.stats import StatsWeek
     from helpers import date_to_day
     from datetime import timedelta, date
 
     # List 12 previous weeks
     start = date_to_day(date.today())
-    weeks_nb = 12
+    weeks_future = 3
+    weeks_past = 6
     weeks = []
-    for w in range(0, weeks_nb):
-      day = start - timedelta(days=w*7)
+    for w in range(-weeks_past * 7, weeks_future * 7, 7):
+      day = start + timedelta(days=w)
       week, year = int(day.strftime('%W')), day.year
+      if w > 0:
+        state = 'future'
+      elif w < 0:
+        state = 'past'
+      else:
+        state = 'current'
       weeks.append({
         'date' : day,
         'year' : year,
         'week' : week,
         'stats' : StatsWeek(self.request.user, year, week),
+        'state' : state,
       })
-
-    weeks.reverse()
 
     return {
       'weeks' : weeks,

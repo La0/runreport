@@ -16,9 +16,13 @@
     {% for week in weeks %}
 
       {% with week_data = week.stats.data %}
-      <div class="week_ring" data-sessions="{{ week_data.sessions.total }}" data-hours="{{ week_data.hours }}" data-distance="{{ week_data.distance }}">
+      <div class="week_ring" data-state="{{ week.state }}" data-sessions="{% if week_data.sessions %}{{ week_data.sessions.total }}{% else %}0{% endif %}" data-hours="{{ week_data.hours }}" data-distance="{{ week_data.distance }}" data-href="{{ url('report-week', week.year, week.week) }}">
         <span class="date">
-          {{ week.date|date('d E') }}
+          {% if week.state == 'current' %}
+            {{ _('Current week') }}
+          {% else %}
+            {{ week.date|date('d E') }}
+          {% endif %}
         </span>
       </div>
       {% endwith %}
