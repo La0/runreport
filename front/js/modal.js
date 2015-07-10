@@ -365,3 +365,19 @@ function slugify(event){
 	str = str.replace(/\s/g, '_');
   $(target).val(str);
 }
+
+// Move a plan session to another date
+$('.plan-session-move').datepicker({
+  language : 'fr',
+  todayHighlight : true,
+  weekStart : 1,
+}).on('changeDate', function(evt){
+  if(!evt.date)
+    return;
+  var btn = $(evt.target);
+  var data = {
+    psa : btn.attr('data-psa'),
+    date : Math.floor(evt.date.getTime() / 1000),
+  };
+  load_box(btn.attr('data-href'), 'POST', data);
+});

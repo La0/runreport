@@ -49,6 +49,7 @@ class SportSession(models.Model):
   race_category = models.ForeignKey('RaceCategory', verbose_name=_('Race category'), null=True, blank=True)
   created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
+  note = models.IntegerField(null=True, blank=True)
 
   # Google Calendar
   gcal_id = models.CharField(max_length=255, null=True, blank=True)

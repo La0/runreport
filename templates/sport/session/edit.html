@@ -30,6 +30,7 @@
   {% endif %}
 
   {{ macros.session_types_name(form, session_types) }}
+  {{ macros.rating(form.note) }}
   {{ macros.input(form.comment) }}
   {{ macros.race_category(form) }}
 

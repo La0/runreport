@@ -1035,3 +1035,34 @@ td.avatar {
     font-size: 1em;
   }
 }
+
+/* Rating */
+div.rating {
+  div.star {
+    font-size: 1.5em;
+    display: inline-block;
+    cursor: pointer;
+    color: #888;
+    
+    &.active {
+      // From easy (green)
+      &.star-1 {
+        color: #57cf28;
+      }
+      &.star-2 {
+        color: #75a223;
+      }
+      &.star-3 {
+        color: #937420;
+      }
+      &.star-4 {
+        color: #b5401b;
+      }
+      // .. to hard (red)
+      &.star-5 {
+        color: #d01818;
+      }
+    }
+  }
+}
+

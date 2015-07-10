@@ -185,3 +185,21 @@
   </button>
   {% endif %}
 {%- endmacro %}
+
+{% macro rating(field, max=5) %}
+<div class="form-group row rating {% if field.errors %}has-error{% endif %}">
+	<label class="col-sm-2 control-label" for="id_{{field.html_name}}">
+    {{ field.label }}
+  </label>
+  {% with val = field.value() %}
+  <div class="col-sm-10 {% if val %}locked{% endif %}">
+    {% for star in range(0, max) %}
+    <div class="star star-{{ loop.index }} {% if loop.index <= val|int() %}active{% endif %}" data-star="{{ loop.index }}">
+      <i class="icon-star"></i>
+    </div>
+    {% endfor %}
+  </div>
+  {% endwith %}
+  {{ field|safe }}
+</div>
+{%- endmacro %}
