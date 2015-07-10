@@ -1037,10 +1037,13 @@ td.avatar {
 }
 
 /* Rating */
-div.rating {
-  div.star {
+.rating {
+  .star {
     font-size: 1.5em;
-    float: left;
+    &.small {
+      font-size: 1.1em;
+    }
+    display: inline-block;
     cursor: pointer;
     color: #EEE;
     margin: 0;
@@ -1057,7 +1060,7 @@ div.rating {
         color: #f1da1a;
       }
       &.star-4 {
-        color: #b5401b;
+        color: #fd9854;
       }
       // .. to hard (red)
       &.star-5 {

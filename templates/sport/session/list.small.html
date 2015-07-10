@@ -62,6 +62,14 @@
         <i class="icon-plan-session do-tooltip text-muted" title="{{ _('No trainer plan') }}"></i>
         {% endif %}
 
+        <span class="rating">
+          {% if session.note %}
+          <i class="star icon-star star-{{ session.note }} active small do-tooltip" title="{{ _('Difficulty note %d' % session.note) }}"></i>
+          {% else %}
+          <i class="star icon-star" title="{{ _('No difficulty note') }}"></i>
+          {% endif %}
+        </span>
+
         <span class="label {{type_css[session.type]}}">{{_(session.type)|title()}}</span>
 
         {% if session.plan_session and session.type != 'rest' %}

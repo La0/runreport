@@ -348,6 +348,24 @@ msgstr ""
 msgid "Session"
 msgstr ""
 
+msgid "Difficulty"
+msgstr ""
+
+msgid "Difficulty note 1"
+msgstr "Very Easy session"
+
+msgid "Difficulty note 2"
+msgstr "Easy session"
+
+msgid "Difficulty note 3"
+msgstr "Normal session"
+
+msgid "Difficulty note 4"
+msgstr "Hard session"
+
+msgid "Difficulty note 5"
+msgstr "Very Hard session"
+
 msgid "Use RunReport in"
 msgstr ""
 
@@ -1673,6 +1691,25 @@ msgstr ""
 msgid "View this month"
 msgstr ""
 
+msgid "Last 90 days"
+msgstr ""
+
+msgid "Current week"
+msgstr ""
+
+msgid "Your activities"
+msgstr ""
+
+#, python-format
+msgid "In %s"
+msgstr ""
+
+msgid "You don't have any recent sessions."
+msgstr ""
+
+msgid "Use the following button to add a session for"
+msgstr ""
+
 msgid "Are you sure to delete this day ?"
 msgstr ""
 
@@ -1793,6 +1830,11 @@ msgstr ""
 
 msgid "No trainer plan"
 msgstr ""
+
+#, fuzzy
+#| msgid "Difficulty note 1"
+msgid "No difficulty note"
+msgstr "Very Easy session"
 
 msgid "Elevation"
 msgstr ""
@@ -2260,10 +2302,6 @@ msgid "parts"
 msgstr ""
 
 msgid "No races"
-msgstr ""
-
-#, python-format
-msgid "In %s"
 msgstr ""
 
 msgid "No future races"

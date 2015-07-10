@@ -234,11 +234,9 @@ msgstr "Votre message"
 msgid "New contact message"
 msgstr "Nouveau message de contact"
 
-#| msgid "active"
 msgid "Active"
 msgstr "Actif"
 
-#| msgid "active"
 msgid "Inactive"
 msgstr "Inactif"
 
@@ -254,14 +252,12 @@ msgstr "Ouvert"
 msgid "Pending"
 msgstr "En cours"
 
-#| msgid "Close"
 msgid "Closed"
 msgstr "Fermé"
 
 msgid "Partial Refund"
 msgstr "Remboursement partiel"
 
-#| msgid "Refused"
 msgid "Refunded"
 msgstr "Remboursé"
 
@@ -354,6 +350,24 @@ msgstr ""
 
 msgid "Session"
 msgstr "Séance"
+
+msgid "Difficulty"
+msgstr "Difficulté"
+
+msgid "Difficulty note 1"
+msgstr "Séance Très Facile"
+
+msgid "Difficulty note 2"
+msgstr "Séance Facile"
+
+msgid "Difficulty note 3"
+msgstr "Séance Moyenne"
+
+msgid "Difficulty note 4"
+msgstr "Séance Dure"
+
+msgid "Difficulty note 5"
+msgstr "Séance Très Dure"
 
 msgid "Use RunReport in"
 msgstr "Utiliser RunReport en"
@@ -1537,14 +1551,12 @@ msgstr "Payer"
 msgid "You are a premium RunReport member !"
 msgstr "Vous êtes un membre Premium de RunReport"
 
-#| msgid "Comments"
 msgid "Payments"
 msgstr "Paiements"
 
 msgid "Payment"
 msgstr "Paiement"
 
-#| msgid "Stats"
 msgid "Status"
 msgstr "Status"
 
@@ -1554,11 +1566,9 @@ msgstr "En cours..."
 msgid "Processed"
 msgstr "Validé"
 
-#| msgid "Cancel subscription"
 msgid "Cancel monthly subscription"
 msgstr "Annuler l'abonnement mensuel"
 
-#| msgid "Cancel subscription"
 msgid "Cancel yearly subscription"
 msgstr "Annuler l'abonnement annuel"
 
@@ -1761,6 +1771,25 @@ msgstr "Année %s"
 msgid "View this month"
 msgstr "Voir ce mois"
 
+msgid "Last 90 days"
+msgstr "Vos dernières semaines"
+
+msgid "Current week"
+msgstr "Cette semaine"
+
+msgid "Your activities"
+msgstr "Vos activités"
+
+#, python-format
+msgid "In %s"
+msgstr "Dans %s"
+
+msgid "You don't have any recent sessions."
+msgstr "Vous n'avez aucune séances récentes."
+
+msgid "Use the following button to add a session for"
+msgstr "Utilisez le bouton suivant pour ajouter une séance"
+
 msgid "Are you sure to delete this day ?"
 msgstr "Etes vous sûr de vouloir supprimer cette journée ?"
 
@@ -1882,6 +1911,10 @@ msgstr "Dans un plan d'entrainement"
 
 msgid "No trainer plan"
 msgstr "Pas de plan d'entrainement"
+
+#| msgid "Difficulty note 1"
+msgid "No difficulty note"
+msgstr "Pas de note de difficulté"
 
 msgid "Elevation"
 msgstr "Dénivelé positif"
@@ -2383,10 +2416,6 @@ msgstr "parties"
 
 msgid "No races"
 msgstr "Pas de course"
-
-#, python-format
-msgid "In %s"
-msgstr "Dans %s"
 
 msgid "No future races"
 msgstr "Pas de courses à venir"

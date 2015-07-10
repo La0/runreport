@@ -58,8 +58,8 @@ var save_rating = function(){
 };
 
 // Handle hover
-$(document.body).on('mouseover', 'div.rating .star', init_ratings);
-$(document.body).on('mouseleave', 'div.rating div.stars', clear_ratings);
+$(document.body).on('mouseover', 'div.rating.form-group .star', init_ratings);
+$(document.body).on('mouseleave', 'div.rating.form-group div.stars', clear_ratings);
 
 // Handle click to update note
-$(document.body).on('click', 'div.rating .star', save_rating);
+$(document.body).on('click', 'div.rating.form-group .star', save_rating);

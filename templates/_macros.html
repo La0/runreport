@@ -189,7 +189,7 @@
 {% macro rating(field, max=5) %}
 <div class="form-group row rating {% if field.errors %}has-error{% endif %}">
 	<label class="col-sm-2 control-label" for="id_{{field.html_name}}">
-    {{ field.label }}
+    {{ _('Difficulty') }}
   </label>
   {% with val = field.value() %}
   <div class="stars col-sm-3 col-xs-12 {% if val %}locked{% endif %}">

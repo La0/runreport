@@ -81,6 +81,15 @@
     </h4>
   </div>
 
+
+  {% if session.note %}
+  <div class="col-sm-12 rating text-right">
+    {% for i in range(0, 5) %}
+    <i class="icon-star star star-{{ i+1 }} {% if i+1 <= session.note %}active{% endif %}"></i>
+    {% endfor %}
+  </div>
+  {% endif %}
+
   {% if session.comment%}
   <div class="col-sm-12 comment">
     {{session.comment|linebreaksbr()}}
