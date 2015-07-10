@@ -192,7 +192,7 @@
     {{ field.label }}
   </label>
   {% with val = field.value() %}
-  <div class="col-sm-10 {% if val %}locked{% endif %}">
+  <div class="stars col-sm-3 col-xs-12 {% if val %}locked{% endif %}">
     {% for star in range(0, max) %}
     <div class="star star-{{ loop.index }} {% if loop.index <= val|int() %}active{% endif %}" data-star="{{ loop.index }}">
       <i class="icon-star"></i>
@@ -200,6 +200,13 @@
     {% endfor %}
   </div>
   {% endwith %}
+  <div class="help col-sm-7 hidden-xs text-muted">
+    <span class="level level-1">{{ _('Difficulty note 1') }}</span>
+    <span class="level level-2">{{ _('Difficulty note 2') }}</span>
+    <span class="level level-3">{{ _('Difficulty note 3') }}</span>
+    <span class="level level-4">{{ _('Difficulty note 4') }}</span>
+    <span class="level level-5">{{ _('Difficulty note 5') }}</span>
+  </div>
   {{ field|safe }}
 </div>
 {%- endmacro %}

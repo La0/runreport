@@ -1040,9 +1040,10 @@ td.avatar {
 div.rating {
   div.star {
     font-size: 1.5em;
-    display: inline-block;
+    float: left;
     cursor: pointer;
-    color: #888;
+    color: #EEE;
+    margin: 0;
     
     &.active {
       // From easy (green)
@@ -1053,7 +1054,7 @@ div.rating {
         color: #75a223;
       }
       &.star-3 {
-        color: #937420;
+        color: #f1da1a;
       }
       &.star-4 {
         color: #b5401b;
@@ -1063,6 +1064,14 @@ div.rating {
         color: #d01818;
       }
     }
+  }
+  div.help {
+    span.level {
+      display: none;
+      &.active {
+        display: block;
+      }
+    }   
   }
 }
 

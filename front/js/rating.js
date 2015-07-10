@@ -16,14 +16,30 @@ var init_ratings = function(){
       star.siblings('.star-'+i).removeClass('active');
     }
   }
+
+  // Show current help
+  var help = star.parent().siblings('div.help');
+  help.children('.level').removeClass('active');
+  help.find('.level-'+current).addClass('active');
 };
 
-// Cleanup
+// Restore & Cleanup
 var clear_ratings = function(){
-  var star = $(this);
-  if(star.parent().hasClass('locked'))
+  var block = $(this);
+
+  if(block.hasClass('locked')){
+
+    // Restore locked value
+    var saved = parseInt(block.siblings('input').val()) ;
+    if(saved)
+      $.proxy(init_ratings, block.find('.star-'+saved))();
+
     return;
+  }
+
+  // Cleanup when not locked
   star.removeClass('active').siblings('.star').removeClass('active');
+  star.parent().siblings('div.help').children('.level').removeClass('active');
 };
 
 // Save a new rating
@@ -43,9 +59,7 @@ var save_rating = function(){
 
 // Handle hover
 $(document.body).on('mouseover', 'div.rating .star', init_ratings);
-$(document.body).on('mouseout', 'div.rating .star', clear_ratings);
-//$('div.rating .star').hover(init_ratings, clear_ratings);
+$(document.body).on('mouseleave', 'div.rating div.stars', clear_ratings);
 
 // Handle click to update note
 $(document.body).on('click', 'div.rating .star', save_rating);
-//$('div.rating .star').on('click', save_rating);
