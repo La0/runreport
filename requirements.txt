@@ -17,6 +17,7 @@ django-cors-headers==1.1.0
 git+git://github.com/sodastsai/django-compressor.git@94ba0b5ee201a88432f66333bee01d46f01b6dec
 django-debug-toolbar==1.3.0
 django-jinja==1.3.2
+django-redis-cache==1.1.0
 django-redis-sessions==0.4.0
 django-transadmin==0.2.7
 django-vinaigrette==0.4.0
