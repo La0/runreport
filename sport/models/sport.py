@@ -41,8 +41,6 @@ vinaigrette.register(Sport, ['name', ])
 class SportSession(models.Model):
   day = models.ForeignKey('SportDay', related_name="sessions")
   sport = models.ForeignKey(Sport)
-  time = models.DurationField(null=True, blank=True)
-  distance = models.FloatField(null=True, blank=True)
   name = models.CharField(max_length=255, null=True, blank=True)
   comment = models.TextField(_('session comment'), null=True, blank=True)
   type = models.CharField(max_length=12, default='training', choices=SESSION_TYPES)
@@ -50,6 +48,12 @@ class SportSession(models.Model):
   created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
   note = models.IntegerField(null=True, blank=True)
+
+  # Performances
+  time = models.DurationField(null=True, blank=True)
+  distance = models.FloatField(null=True, blank=True)
+  elevation_gain = models.FloatField(null=True, blank=True)
+  elevation_loss = models.FloatField(null=True, blank=True)
 
   # Google Calendar
   gcal_id = models.CharField(max_length=255, null=True, blank=True)
