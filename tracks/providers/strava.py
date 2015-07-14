@@ -112,6 +112,8 @@ class StravaProvider(TrackProvider, OauthProvider):
       'distance' : details['distance'] / 1000.0,
       'date' : parse(details['start_date']).date(),
       'time' : timedelta(seconds=details['elapsed_time']),
+      'elevation_gain' : 0.0,
+      'elevation_loss' : 0.0,
       'sport' : sport,
     }
 

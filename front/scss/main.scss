@@ -330,16 +330,33 @@ div {
 		}
 	}
 	&.plan-status {
+    label.btn {
+      &.applied {
+        color: $color_boston_blue_approx;
+        &.active {
+          color: white;
+          background: $color_boston_blue_approx;
+        }
+      }
+      &.done {
+        color: $color_fern_approx;
+        &.active {
+          color: white;
+          background: $color_fern_approx;
+        }
+      }
+      &.failed {
+        color: $color_cinnabar_approx;
+        &.active {
+          color: white;
+          background: $color_cinnabar_approx;
+        }
+      }
+    }
 		div {
-			&.dropdown {
-				padding-top: 6px;
-			}
 			&.details > p {
 				margin: 0;
 			}
-		}
-		label {
-			padding-top: 2px !important;
 		}
 	}
 	&.week div {
@@ -480,17 +497,6 @@ form {
 		height: 10px;
 	}
 }
-button {
-	&.training {
-		color: $white;
-	}
-	&.race {
-		color: $white;
-	}
-	&.rest {
-		color: $white;
-	}
-}
 .session {
 	//Instead of the line below you could use @includeborder-radius($radius, $vertical-radius)
 	border-radius: 3px;
@@ -541,8 +547,20 @@ button {
 	background: $color_fern_approx;
 }
 .rest {
-	background: $color_casablanca_approx;
+	background: $color_cinnabar_approx;
 }
+.types-name {
+  button.training {
+    color: $color_boston_blue_approx;
+  }
+  button.race {
+    color: $color_fern_approx;
+  }
+  button.rest {
+    color: $color_casablanca_approx;
+  }
+}
+
 img {
 	&.sport {
 		width: 22px;
@@ -904,6 +922,12 @@ tr.member ul.trainers {
 td.avatar {
 	width: 60px;
 }
+
+.btn.btn-clear {
+	background: none;
+	transition: background 0.5s, color 0.5s, border-color 0.5s;
+	border-color: transparent;
+}
 .btn.btn-light {
 	background: none;
 	//Instead of the line below you could use @includetransition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
@@ -950,9 +974,9 @@ td.avatar {
 	}
 }
 .report .track {
-	margin-top: 20px;
+	margin-top: 10px;
 	.labels {
-		text-align: right;
+		text-align: left;
 		.dropdown ul {
 			text-align: left;
 		}
@@ -1038,6 +1062,10 @@ td.avatar {
 
 /* Rating */
 .rating {
+  > label, > div {
+    display: inline-block;
+  }
+
   .star {
     font-size: 1.5em;
     &.small {

@@ -311,6 +311,9 @@ msgstr "Titre de l'article"
 msgid "Post content"
 msgstr "Contenu de l'article"
 
+msgid "session comment"
+msgstr "Commentaire"
+
 msgid "You must select a status for your training plan."
 msgstr "Vous devez choisir un status pour votre plan d'entraînement."
 
@@ -320,11 +323,21 @@ msgstr "Vous devez valider votre plan d'entraînement (Fait ou Manqué)"
 msgid "Rest"
 msgstr "Repos"
 
-msgid "session comment"
-msgstr "Commentaire"
-
 msgid "Race category"
 msgstr "Type de course"
+
+msgid "Time"
+msgstr "Temps"
+
+msgid "Distance"
+msgstr "Distance"
+
+msgid "Elevation gain"
+msgstr "Dénivelé positif"
+
+#| msgid "Elevation"
+msgid "Elevation loss"
+msgstr "Dénivelé négatif"
 
 msgid "Forbidden"
 msgstr "Interdit"
@@ -347,9 +360,6 @@ msgid ""
 msgstr ""
 "Une erreur grave s'est produite sur cette page, l'administrateur du site a "
 "reçu un email à ce propos. "
-
-msgid "Session"
-msgstr "Séance"
 
 msgid "Difficulty"
 msgstr "Difficulté"
@@ -1033,18 +1043,6 @@ msgstr ""
 
 msgid "Your friends"
 msgstr "Vos amis"
-
-msgid "Supported formats for times are : HH:MM, HH:MM:SS, 1h, 1h20"
-msgstr "Formats supportés pour les temps :  HH:MM, HH:MM:SS, 1h, 1h20"
-
-msgid "Time"
-msgstr "Temps"
-
-msgid "Supported formats for distances are : Xkm or X.Y"
-msgstr "Formats supportés pour les distances :  Xkm ou X.Y"
-
-msgid "Distance"
-msgstr "Distance"
 
 msgid ""
 "On this page, you can view all your sport sessions in a week. Click on a "
@@ -1912,7 +1910,6 @@ msgstr "Dans un plan d'entrainement"
 msgid "No trainer plan"
 msgstr "Pas de plan d'entrainement"
 
-#| msgid "Difficulty note 1"
 msgid "No difficulty note"
 msgstr "Pas de note de difficulté"
 
@@ -2050,9 +2047,6 @@ msgstr "Vitesse moyenne"
 
 msgid "Calories"
 msgstr "Calories"
-
-msgid "Elevation gain"
-msgstr "Dénivelé positif"
 
 msgid "Splits"
 msgstr "Circuits"
@@ -2837,16 +2831,21 @@ msgstr " Marche"
 msgid "Multi Sport"
 msgstr "Multi Sport"
 
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "The team"
-msgstr "L'équipe"
+msgid "Session"
+msgstr "Séance"
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0
-msgid "Source code on"
-msgstr "Code source sur"
+msgid "Supported formats for times are : HH:MM, HH:MM:SS, 1h, 1h20"
+msgstr "Formats supportés pour les temps :  HH:MM, HH:MM:SS, 1h, 1h20"
 
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Supported formats for distances are : Xkm or X.Y"
+msgstr "Formats supportés pour les distances :  Xkm ou X.Y"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
 msgid "Premium"
 msgstr "Premium"
 

@@ -310,6 +310,9 @@ msgstr ""
 msgid "Post content"
 msgstr ""
 
+msgid "session comment"
+msgstr ""
+
 msgid "You must select a status for your training plan."
 msgstr ""
 
@@ -319,11 +322,22 @@ msgstr ""
 msgid "Rest"
 msgstr ""
 
-msgid "session comment"
-msgstr ""
-
 msgid "Race category"
 msgstr ""
+
+msgid "Time"
+msgstr ""
+
+msgid "Distance"
+msgstr ""
+
+msgid "Elevation gain"
+msgstr ""
+
+#, fuzzy
+#| msgid "Natation"
+msgid "Elevation loss"
+msgstr "Swimming"
 
 msgid "Forbidden"
 msgstr ""
@@ -343,9 +357,6 @@ msgstr ""
 msgid ""
 "A severe error has occured on this page, the administrator has been emailed "
 "about this issue."
-msgstr ""
-
-msgid "Session"
 msgstr ""
 
 msgid "Difficulty"
@@ -982,18 +993,6 @@ msgid ""
 msgstr ""
 
 msgid "Your friends"
-msgstr ""
-
-msgid "Supported formats for times are : HH:MM, HH:MM:SS, 1h, 1h20"
-msgstr ""
-
-msgid "Time"
-msgstr ""
-
-msgid "Supported formats for distances are : Xkm or X.Y"
-msgstr ""
-
-msgid "Distance"
 msgstr ""
 
 msgid ""
@@ -1963,9 +1962,6 @@ msgid "Average speed"
 msgstr ""
 
 msgid "Calories"
-msgstr ""
-
-msgid "Elevation gain"
 msgstr ""
 
 msgid "Splits"

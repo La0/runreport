@@ -50,10 +50,10 @@ class SportSession(models.Model):
   note = models.IntegerField(null=True, blank=True)
 
   # Performances
-  time = models.DurationField(null=True, blank=True)
-  distance = models.FloatField(null=True, blank=True)
-  elevation_gain = models.FloatField(null=True, blank=True)
-  elevation_loss = models.FloatField(null=True, blank=True)
+  time = models.DurationField(null=True, blank=True, verbose_name=_('Time'))
+  distance = models.FloatField(null=True, blank=True, verbose_name=_('Distance'))
+  elevation_gain = models.FloatField(null=True, blank=True, verbose_name=_('Elevation gain'))
+  elevation_loss = models.FloatField(null=True, blank=True, verbose_name=_('Elevation loss'))
 
   # Google Calendar
   gcal_id = models.CharField(max_length=255, null=True, blank=True)

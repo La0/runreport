@@ -15,11 +15,20 @@ class SportSessionForm(forms.ModelForm):
 
   class Meta:
     model = SportSession
-    fields = ('sport', 'distance', 'time', 'name', 'comment', 'type', 'race_category', 'note')
+    fields = (
+      'type', 'sport', 'name',
+      'race_category',
+      'comment',
+      'distance', 'time', 'elevation_gain', 'elevation_loss',
+      'note',
+    )
     widgets = {
       'sport' : forms.HiddenInput(),
       'type' : forms.HiddenInput(),
       'note' : forms.HiddenInput(),
+      'comment': forms.Textarea(attrs={
+        'placeholder' : _('session comment'),
+      }),
     }
 
   def __init__(self, default_sport=None, day_date=None, *args, **kwargs):

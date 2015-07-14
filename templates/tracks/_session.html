@@ -2,17 +2,15 @@
 {% with track = session.track %}
 
 {% if track.simple %}
-<div class="col-xs-12">
-  <div id="track_{{ track.id }}" class="track_map" data-src="{{ url('track-coords', track.id) }}">
-    Loading map...
-    <a target="_blank" href="{{ track.get_url() }}" class="btn btn-info btn-sm">
-      {{ _('View on') }} {{ track.provider|title() }} <i class="icon-right-open"></i>
-    </a>
-  </div>
+<div id="track_{{ track.id }}" class="track_map" data-src="{{ url('track-coords', track.id) }}">
+  Loading map...
+  <a target="_blank" href="{{ track.get_url() }}" class="btn btn-info btn-sm">
+    {{ _('View on') }} {{ track.provider|title() }} <i class="icon-right-open"></i>
+  </a>
 </div>
 {% endif %}
 
-<div class="panel-group col-xs-12" id="accordion">
+<div class="panel-group" id="accordion">
   {% if track.split_total %}
   <div class="panel panel-default total">
     <div class="panel-heading">

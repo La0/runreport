@@ -1,29 +1,15 @@
 {% with psess = session.plan_session.plan_session %}
 <div class="form-group row plan-status ">
-  <label class="control-label col-sm-2 hidden-xs">
-    {{ _('Training plan') }}
-    <a href="{{ url('plan', psess.plan.pk) }}">
-      {{ psess.plan.name }}
-    </a>
-  </label>
-  <div class="col-xs-4 col-sm-1">
+  <div class="col-xs-4 col-sm-3">
+    <i class="icon-plan-session do-tooltip" title="{{ _('Training plan') }}"></i>
     {% with status = session.plan_session.status %}
-    <div class="dropdown">
-      <button class="btn btn-sm btn-primary dropdown-toggle {{ status }}" data-toggle="dropdown">
-        <span class="name">
-          {{ _(status|title()) }}
-        </span>
-        <span class="caret"></span>
-      </button>
+    <div class="btn-group" data-toggle="buttons">
       {% with choices = form.plan_status.field.choices %}
-      <ul class="dropdown-menu plan-status">
-        {% for k, name in choices %}
-        <li{% if status == k %} class="active"{% endif %}>
-          <a href="#" value="{{k}}">{{ _(name) }}</a>
-        </li>
-        {% endfor %}
-        {{ form.plan_status|safe }}
-      </ul>
+      {% for k, name in choices %}
+      <label class="btn {{ k }} {% if status == k %}active{% endif %}">
+        <input name="plan_status" value="{{ k }}" type="radio" autocomplete="off" {% if status == k %}checked{% endif %}> {{ name }}
+      </label>
+      {% endfor %}
       {% endwith %}
     </div>
     {% endwith %}
@@ -32,7 +18,7 @@
     <p>
       <strong>{{ psess.name }}</strong>
     </p>
-    <p>
+    <p class="text-muted">
       <i class="icon-sport-{{ psess.sport.slug }}"></i>
       {% with trainer = psess.plan.creator %}
       <a href="{{ url('user-public-profile', trainer.username) }}" target="_blank">
@@ -41,6 +27,11 @@
       {% endwith %}
       {{ _('has planned a ') }} {{ _(psess.type|title) }}
       {{ _(psess.sport.name) }}
+
+      {{ _('in plan') }}
+      <a href="{{ url('plan', psess.plan.pk) }}">
+        {{ psess.plan.name }}
+      </a>
 
       {% if psess.time and psess.time != session.time %}
       <span class="text-muted">&bull;</span>
@@ -59,10 +50,10 @@
       {{ _('Change date') }}
     </button>
   </div>
-  {% if form.plan_status.errors %}
-  <div class="alert alert-danger col-sm-offset-2 col-xs-12 col-sm-10">
-    {{form.plan_status.errors|safe}}
-  </div>
-  {% endif %}
 </div>
+{% if form.plan_status.errors %}
+<div class="alert alert-danger">
+  {{form.plan_status.errors|safe}}
+</div>
+{% endif %}
 {% endwith %}

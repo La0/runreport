@@ -63,9 +63,6 @@ $(function(){
   // Sport choice dropdown
   $(document).on('click', 'form ul.sports li a', dropdown);
 
-  // Plan Session status dropdown
-  $(document).on('click', 'form ul.plan-status li a', dropdown);
-
   // Session types dropdown
   $(document).on('click', 'form ul.types li a', function(){
 

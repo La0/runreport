@@ -8,7 +8,7 @@
 {% for session in day.sessions.order_by('created') %}
 <div class="sport-session">
 <div class="row hidden-xs">
-  <div class="col-sm-6 col-md-8">
+  <div class="col-xs-12">
     <h4>
       <i class="icon-sport-{{session.sport.slug}} do-tooltip" title="{{ session.sport.name }}"></i>
 
@@ -54,42 +54,60 @@
     {% endif %}
     {% endwith %}
   </div>
+</div>
 
-  <div class="col-sm-3 col-md-2">
-    <h4>
+<div class="row">
+  <div class="col-xs-6 col-sm-3">
+    <h5>
     {% if session.time %}
-      <span class="label {{type_css[session.type]}}">{{ _('Time') }}</span>
+      <i class="icon-chrono do-tooltip" title="{{ _('Time') }}"></i>
       {{ session.time|total_time() }}
     {% else %}
-      <span class="label label-warning">{{ _('No time') }}</span>
+      <i class="icon-chrono do-tooltip text-muted" title="{{ _('No time') }}"></i>
     {% endif %}
-    </h4>
+    </h5>
   </div>
 
-  <div class="col-sm-3 col-md-2">
-    <h4>
+  <div class="col-xs-6 col-sm-3">
+    <h5>
     {% if session.distance %}
-      <span class="label {{type_css[session.type]}}">{{ _('Distance') }}</span>
+      <i class="icon-distance do-tooltip" title="{{ _('Distance') }}"></i>
       {% if session.sport.get_category() == 'swimming' %}
         {{ (session.distance * 1000)|floatformat(0) }} m
       {% else %}
         {{ session.distance|floatformat(2) }} km
       {% endif %}
     {% else %}
-      <span class="label label-warning">{{ _('No Distance') }}</span>
+      <i class="icon-distance do-tooltip text-muted" title="{{ _('No Distance') }}"></i>
     {% endif %}
-    </h4>
+    </h5>
   </div>
 
-
-  {% if session.note %}
-  <div class="col-sm-12 rating text-right">
-    {% for i in range(0, 5) %}
-    <i class="icon-star star star-{{ i+1 }} {% if i+1 <= session.note %}active{% endif %}"></i>
-    {% endfor %}
+  <div class="col-xs-6 col-sm-3">
+    <h5>
+    {% if session.elevation_gain or session.elevation_loss %}
+      <i class="icon-elevation do-tooltip" title="{{ _('Elevation') }}"></i>
+      +{{ session.elevation_gain|floatformat(0)|default(0) }}m <span class="text-muted">/</span> -{{ session.elevation_loss|floatformat(0)|default(0) }}m
+    {% else %}
+      <i class="icon-elevation do-tooltip text-muted" title="{{ _('No elevation') }}"></i>
+    {% endif %}
+    </h5>
   </div>
-  {% endif %}
 
+  <div class="col-xs-6 col-sm-3">
+    <h5 class="rating">
+    {% if session.note %}
+      {% for i in range(0, 5) %}
+      <i class="do-tooltip icon-star star star-{{ i+1 }} {% if i+1 <= session.note %}active{% endif %}" title="{{ _('Difficulty note %d' % session.note)}}"></i>
+      {% endfor %}
+    {% else %}
+      <i class="icon-star do-tooltip text-muted" title="{{ _('No difficulty note') }}"></i>
+    {% endif %}
+    </h5>
+  </div>
+</div>
+
+<div class="row">
   {% if session.comment%}
   <div class="col-sm-12 comment">
     {{session.comment|linebreaksbr()}}
