@@ -50,6 +50,22 @@ class PaymentOffer(models.Model):
     return '%s : %f %s every %s' % (self.name, self.amount, self.currency, self.interval)
 
   @property
+  def amount_monthly(self):
+    import re
+    matches = re.match('(\d+) (MONTH|YEAR)', self.interval)
+    if not matches:
+      return 0
+
+    nb = int(matches.group(1))
+    factor = matches.group(2)
+    if factor == 'MONTH' and nb > 0:
+      return self.amount / nb
+    if factor == 'YEAR':
+      return self.amount / (12 * nb)
+    return 0
+
+
+  @property
   def amount_cents(self):
     # paymill needs amounts in cents
     return int(self.amount * 100)

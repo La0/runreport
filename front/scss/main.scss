@@ -1121,3 +1121,15 @@ td.avatar {
   margin-bottom: 5px;
   padding-bottom: 8px;
 }
+#premium_status {
+  .price {
+    text-align: center;
+    font-size: 1.6em;
+    &.monthly {
+      font-size: 1.3em;
+      color: #888;
+
+    }
+  }
+}
+

@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
+{% set page_title = _('Premium Membership') %}
+
 {% block content %}
-<div class="container">
+<div class="container" id="premium_status">
   <h1>{{ _('Premium Membership') }}</h1>
 
   {% if user.is_premium %}
@@ -63,15 +65,82 @@
       {% endfor %}
     </div>
   </div>
+
   {% else %}
-  <p>
-    <a href="{{ url('payment-offer', 'trimester') }}" class="btn btn-default">
-      {{ _('Buy trimester') }}
-    </a>
-    <a href="{{ url('payment-offer', 'yearly') }}" class="btn btn-default">
-      {{ _('Buy yearly') }}
-    </a>
+
+  <p class="lead">
+    {{ _('You can get all the premium features using 2 payment offers :') }}
   </p>
+
+  {# Show the prices #}
+  <div class="col-sm-4 col-sm-offset-1 col-xs-12 offer">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          {{ _('3 months payment') }}
+        </h3>
+      </div>
+      <div class="panel-body">
+        
+        <p class="price">
+          {{ offers.trimester.amount|floatformat(2) }} &euro; {{ _('every 3 months') }}
+        </p>
+        <p class="price monthly">
+          {{ _('Costs you') }} {{ offers.trimester.amount_monthly|floatformat(2) }} &euro; {{ _('per month') }}
+        </p>
+        <hr />
+
+        {% for f in features.runners %}
+        <p class="feature">
+          <i class="icon-ok"></i>
+          {{ f.name }}
+        </p>
+        {% endfor %}
+
+        <p class="text-center">
+          <a href="{{ url('payment-offer', 'trimester') }}" class="btn btn-default">
+            <i class="icon-premium"></i>
+            {{ _('Buy this premium offer') }}
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-4 col-sm-offset-2 col-xs-12 offer">
+    <div class="panel panel-default panel-success">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          {{ _('Yearly payment') }}
+        </h3>
+      </div>
+      <div class="panel-body">
+        
+        <p class="price">
+          {{ offers.yearly.amount|floatformat(2) }} &euro; {{ _('every year') }}
+        </p>
+        <p class="price monthly">
+          {{ _('Costs you') }} {{ offers.yearly.amount_monthly|floatformat(2) }} &euro; {{ _('per month') }}
+        </p>
+        <hr />
+
+        {% for f in features.runners %}
+        <p class="feature">
+          <i class="icon-ok"></i>
+          {{ f.name }}
+        </p>
+        {% endfor %}
+
+        <p class="text-center">
+          <a href="{{ url('payment-offer', 'yearly') }}" class="btn btn-success">
+            <i class="icon-premium"></i>
+            {{ _('Buy this premium offer') }}
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+
   {% endif %}
 </div>
 {% endblock %}
