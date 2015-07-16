@@ -84,6 +84,14 @@
       {% endif %}
 	</header>
 
+  {# Display an ad for premium 1/3 page load #}
+  {% if [True, False, False, ]|random() and user.is_authenticated() and not user.is_premium %}
+  <div id="premium_ad">
+    <i class="icon-premium"></i>
+    {{ _('You can get a ')}} <a href="{{ url('payment-status') }}">{{ _('premium RunReport account') }}</a> {{ _('to get all the ') }} <a href="{{ url('features') }}">{{ _('features') }}</a>.
+  </div>
+  {% endif %}
+
 	<div id="main" role="main">
 		{% import '_macros.html' as macros %}
 		{% block content %}{% endblock %}

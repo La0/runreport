@@ -11,12 +11,14 @@ class FeaturesView(TemplateView):
 
   def list_features(self):
 
-    def _add(name, description, premium=False, new=False):
+    def _add(name, description, free=None, premium=False, new=False, comparison=False):
       return {
         'name' : name,
         'description' : description,
+        'free' : free,
         'premium' : premium,
         'new' : new,
+        'comparison': comparison,
       }
 
     runners = [
@@ -35,9 +37,12 @@ class FeaturesView(TemplateView):
       _add(_('Be notified of your athletes sessions'), _('Desc.')),
       _add(_('Manage your athletes with a powerful interface'), _('Desc.')),
       _add(_('Talk directly and privately with your athletes'), _('Desc.')),
-      _add(_('Manage multiple trainers in your club'), _('Desc.'), premium=True),
-      _add(_('Send training plans to your athletes in one click'), _('Desc.'), new=True, premium=True),
-      _add(_('Easily create training plans'), _('Desc.'), new=True, premium=True),
+      _add(_('Easily create training plans'), _('Desc.'), new=True),
+      _add(_('Send training plans to your athletes in one click'), _('Desc.'), new=True),
+      _add(_('Maximum Athletes in a club'), _('Desc.'), free=10, premium=_('Unlimited'), comparison=True),
+      _add(_('Maximum Trainers in a club'), _('Desc.'), free=1, premium=_('Unlimited'), comparison=True),
+      _add(_('Create mailing lists for your club & athletes groups.'), _('Desc.'), premium=True, new=True),
+      _add(_('Add your club logo on your pages'), _('Desc.'), premium=True, new=True),
     ]
 
     return {

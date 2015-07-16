@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% set page_title = _('Premium Payment') %}
+
 {% block js %}
 <script type="text/javascript">
   var PAYMILL_PUBLIC_KEY = '{{ PAYMILL_PUBLIC }}';
@@ -9,64 +11,93 @@
 
 {% block content %}
 <div class="container">
+  <div class="row">
 
-  <h1>{{ _('Offer %s') % offer.name }}</h1>
+    {% if offer.slug == 'trimester' %}
+    <h1>{{ _('Premium Trimestrial offer') }}</h1>
 
-  <form class="form-horizontal" id="payment" action="#" method="POST">
-    <input type="hidden" name="offer" value="{{ offer.slug }}"/>
-    <input type="hidden" name="amount" value="{{ offer.amount_cents }}"/>
-    <input type="hidden" name="currency" value="{{ offer.currency }}"/>
-    <fieldset>
-      <div class="form-group">
-        <label class="col-sm-3 control-label" for="card-name">{{ _('Name on Card') }}</label>
-        <div class="col-sm-9">
-          <input type="text" class="form-control" name="card-name" id="card-name" placeholder="{{ _('Card Holder\'s Name') }}">
-          <p class="help-block hidden">{{ _('Missing card holder\'s name') }}</p>
+    <div class="col-sm-6">
+Cras mattis, dui a varius volutpat, tellus nisi dignissim magna, id posuere lectus est sed libero. Phasellus tristique a nisl at lacinia. Donec scelerisque elit vitae orci tincidunt, id sollicitudin mauris malesuada. Etiam sit amet rhoncus est. In maximus pellentesque felis, sit amet maximus ipsum ultrices vitae. Ut vehicula nulla eu elit interdum, eu commodo magna feugiat. Vestibulum facilisis semper nisl, quis consequat libero accumsan vitae. Vestibulum at leo efficitur, interdum turpis quis, posuere neque. Phasellus semper lorem in fringilla imperdiet. Suspendisse vestibulum sapien quis consectetur rutrum. Proin vitae massa tristique, suscipit orci non, ultricies urna. Donec at velit tempus, ultrices mauris quis, eleifend felis. Duis dapibus, urna a dictum consequat, lorem nisi auctor urna, tristique scelerisque turpis dolor ut nisi. Suspendisse lacinia fringilla molestie. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Suspendisse nec mollis ipsum.
+    </div>
+
+    {% elif offer.slug == 'yearly' %}
+    <h1>{{ _('Premium Annual offer') }}</h1>
+    <div class="col-sm-6">
+Nulla metus tellus, tristique et urna efficitur, pellentesque mattis odio. Aenean at finibus sem, at iaculis nisl. In at mauris id odio tempor placerat a in lorem. Maecenas efficitur hendrerit risus nec ultricies. Suspendisse nec augue sit amet justo imperdiet scelerisque. Pellentesque elementum egestas facilisis. Suspendisse dignissim, turpis facilisis cursus ultricies, tortor justo posuere lorem, et dictum nunc sem a ipsum. Vestibulum consequat, massa a egestas finibus, quam ante rutrum lectus, ut iaculis risus odio eget mauris. Ut consequat metus id tellus lacinia hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer lacus orci, tincidunt et dolor quis, rhoncus imperdiet enim
+    </div>
+    {% endif %}
+
+    <form class="col-xs-12 col-sm-4 col-sm-offset-2" action="#" method="POST" id="payment">
+      <h3>{{ _('I want the premium features') }}</h3>
+      <div class="row cards">
+        <div class="col-xs-3">
+          <img class="img-responsive do-tooltip" src="{{ static('img/cards/mastercard.png') }}" title="Mastercard"/>
+        </div>
+        <div class="col-xs-3">
+          <img class="img-responsive do-tooltip" src="{{ static('img/cards/visa.png') }}" title="Visa"/>
+        </div>
+        <div class="col-xs-3">
+          <img class="img-responsive do-tooltip" src="{{ static('img/cards/amex.png') }}" title="American Express"/>
+        </div>
+        <div class="col-xs-3">
+          <img class="img-responsive do-tooltip" src="{{ static('img/cards/maestro.png') }}" title="Maestro"/>
         </div>
       </div>
-      <div class="form-group">
-        <label class="col-sm-3 control-label" for="card-number">{{ _('Card Number') }}</label>
-        <div class="col-sm-9">
+
+      <input type="hidden" name="offer" value="{{ offer.slug }}"/>
+      <input type="hidden" name="amount" value="{{ offer.amount_cents }}"/>
+      <input type="hidden" name="currency" value="{{ offer.currency }}"/>
+      <fieldset>
+        <div class="form-group">
+          <label class="control-label" for="card-name">{{ _('Name on Card') }}</label>
+          <input type="text" class="form-control" name="card-name" id="card-name" placeholder="{{ _('Card Holder\'s Name') }}" autofocus>
+          <p class="help-block hidden">{{ _('Missing card holder\'s name') }}</p>
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="card-number">{{ _('Card Number') }}</label>
           <input type="text" class="form-control" name="card-number" id="card-number" placeholder="{{ _('Debit/Credit Card Number') }}">
           <p class="help-block hidden">{{ _('Invalid card number') }}</p>
         </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-3 control-label" for="expiry-month">{{ _('Expiration Date') }}</label>
-        <div class="col-sm-9" id="expiry">
+        <div class="form-group">
+          <label class="control-label" for="expiry-month">{{ _('Expiration Date') }}</label>
           <div class="row">
-            <div class="col-xs-3">
+            <div class="col-xs-6">
               <select class="form-control col-sm-2" name="expiry-month" id="expiry-month">
                 {% for month in months %}
                 <option value="{{ month|date('m') }}">{{ month|date('E') }}</option>
                 {% endfor %}
               </select>
             </div>
-            <div class="col-xs-3">
+            <div class="col-xs-6">
               <select class="form-control" name="expiry-year">
                 {% for year in years %}
                 <option value="{{ year|date('Y') }}">{{ year|date('Y') }}</option>
                 {% endfor %}
               </select>
             </div>
+            <p class="help-block hidden">{{ _('Invalid expiry date') }}</p>
           </div>
-          <p class="help-block hidden">{{ _('Invalid expiry date') }}</p>
         </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-3 control-label" for="cvc">{{ _('Card cvc') }}</label>
-        <div class="col-sm-3">
+        <div class="form-group">
+          <label class="control-label" for="cvc">{{ _('Card cvc') }}</label>
           <input type="text" class="form-control" name="cvc" id="cvc" placeholder="{{ _('Security Code') }}">
           <p class="help-block hidden">{{ _('Invalid card cvc') }}</p>
         </div>
-      </div>
-      <div class="form-group">
-        <div class="col-sm-offset-3 col-sm-9">
-          <button type="submit" class="btn btn-success">{{ _('Pay Now') }}</button>
+        <div class="form-group text-center">
+          <a href="{{ url('features') }}" class="btn btn-default btn-lg" tabindex="-1">
+            Annuler
+          </a>
+          <button type="submit" class="btn btn-success btn-lg">
+            {{ _('Pay Now') }} {{ offer.amount|floatformat(2) }} &euro;
+          </button>
         </div>
-      </div>
-    </fieldset>
-  </form>
+      </fieldset>
+      <p class="text-center text-muted">
+        {{ _('Secured & processed with') }}
+        <a href="https://paymill.com" target="_blank">Paymill</a>
+      </p>
+    </form>
+  </div>
 
 </div>
 {% endblock %}

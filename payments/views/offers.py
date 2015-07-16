@@ -9,7 +9,15 @@ class PaymentOfferPay(PaymentMixin, DetailView):
   context_object_name = 'offer'
   template_name = 'payments/offer.pay.html'
   no_active_subscriptions = True
-  queryset = PaymentOffer.objects.exclude(paymill_id__isnull=True) # only paying offers
+
+  def get_queryset(self):
+    # Only paying offers
+    offers = PaymentOffer.objects.exclude(paymill_id__isnull=True)
+
+    # Not club offer
+    offers = offers.exclude(slug='club')
+
+    return offers
 
   def get_context_data(self, *args, **kwargs):
     context = super(PaymentOfferPay, self).get_context_data(*args, **kwargs)

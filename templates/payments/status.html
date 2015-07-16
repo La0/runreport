@@ -52,8 +52,8 @@
     <div class="col-xs-12 text-right">
       {% for sub in subscriptions %}
       <a href="" class="btn btn-danger">
-        {% if sub.offer.slug == 'monthly' %}
-          {{ _('Cancel monthly subscription') }}
+        {% if sub.offer.slug == 'trimester' %}
+          {{ _('Cancel trimester subscription') }}
         {% elif sub.offer.slug == 'yearly' %}
           {{ _('Cancel yearly subscription') }}
         {% else %}
@@ -65,8 +65,8 @@
   </div>
   {% else %}
   <p>
-    <a href="{{ url('payment-offer', 'monthly') }}" class="btn btn-default">
-      {{ _('Buy monthly') }}
+    <a href="{{ url('payment-offer', 'trimester') }}" class="btn btn-default">
+      {{ _('Buy trimester') }}
     </a>
     <a href="{{ url('payment-offer', 'yearly') }}" class="btn btn-default">
       {{ _('Buy yearly') }}

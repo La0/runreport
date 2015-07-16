@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% set page_title = _('Features') %}
+
 {% block content %}
 <div class="container" id="features">
 
@@ -9,6 +11,12 @@
     </div>
     <div class="col-sm-10 col-xs-12">
       <h3>{{ _('Features for runners') }}</h3>
+      <p>
+        {{ _('All the features below with the tag Premium are only available to paying members of RunReport') }}
+      </p>
+      <p>
+        {{ _('A premium membership costs 3.50 euros per month, or 35 euros per year, without any engagement whatsoever.') }}
+      </p>
 
       <table class="table table-hover table-bordered">
         <thead>
@@ -44,7 +52,20 @@
           {% endfor %}
         </tbody>
       </table>
-
+      <p class="text-right">
+        {% if user.is_authenticated() %}
+        <a href="{{ url('payment-status') }}" class="btn btn-success">
+          <i class="icon-premium"></i>
+          {{ _('I want the premium features') }}
+        </a>
+        {% else %}
+          <i class="icon-premium"></i>
+          {{ _('To get all those premium features :') }}
+          <a href="{{ url('login') }}">{{ _('Login') }}</a>
+          {{ _('or') }}
+          <a href="{{ url('user-create') }}">{{ _('Sign up') }}</a>
+        {% endif %}
+      </p>
     </div>
   </div>
 
@@ -53,7 +74,8 @@
       <img class="img-circle img-responsive" src="{{ static('img/home/trainer.jpg') }}" alt="{{ _('Trainer') }}">
     </div>
     <div class="col-sm-10 col-xs-12">
-      <h3>{{ _('Features for trainers') }}</h3>
+      <h3>{{ _('Features for trainers & clubs') }}</h3>
+      {{ _('You can get extra features for your club, with our specific premium club status') }}
 
       <table class="table table-hover table-bordered">
         <thead>
@@ -73,12 +95,18 @@
               {% endif %}
             </td>
             <td class="text-center">
-              {% if not feature.premium %}
+              {% if feature.comparison %}
+              {{ feature.free }}
+              {% elif not feature.premium %}
               <i class="icon-ok"></i>
               {% endif %}
             </td>
             <td class="text-center">
+              {% if feature.comparison %}
+              {{ feature.premium }}
+              {% else %}
               <i class="icon-ok"></i>
+              {% endif %}
             </td>
           </tr>
           <tr class="collapse" id="trainer_{{ loop.index }}">
@@ -89,23 +117,20 @@
           {% endfor %}
         </tbody>
       </table>
-
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-2 col-xs-12">
-      <img class="img-circle img-responsive" src="{{ static('img/home/win.jpg') }}" alt="{{ _('Trainer') }}">
-    </div>
-    <div class="col-sm-10 col-xs-12">
-      <h3>{{ _('Premium account') }}</h3>
-
-      <p>
-        {{ _('All the above features with the tag Premium are only available to paying members of RunReport') }}
+      <p class="text-right">
+        {% if user.is_authenticated() %}
+        <a href="{{ url('payment-status') }}" class="btn btn-success">
+          <i class="icon-premium"></i>
+          {{ _('I want the premium features') }}
+        </a>
+        {% else %}
+          <i class="icon-premium"></i>
+          {{ _('To get all those premium features :') }}
+          <a href="{{ url('login') }}">{{ _('Login') }}</a>
+          {{ _('or') }}
+          <a href="{{ url('user-create') }}">{{ _('Sign up') }}</a>
+        {% endif %}
       </p>
-      <p>
-        {{ _('A premium membership costs 3.50 euros per month, or 35 euros per year, without any engagement whatsoever.') }}
-      </p>
-
     </div>
   </div>
 </div>
