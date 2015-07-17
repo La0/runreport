@@ -2,6 +2,26 @@
 
 {% set page_title = '%s %s' % (member.first_name, member.last_name) %}
 
+
+{% block js %}
+{% if 'stats' in privacy %}
+<script type="text/javascript">
+$(function(){
+
+  // Setup data sets
+  var distances = [{% for m in months %}[{{m.timestamp()*1000}}, {{m.distance or 0}}],{% endfor %}];
+  var hours     = [{% for m in months %}[{{m.timestamp()*1000}}, {{m.hours or 0}}],{% endfor %}];
+
+  // Build months urls
+  var urls = [{% for m in months %}'{{ url('user-calendar-month', member.username, m.year, m.month) }}',{% endfor %}];
+
+  // Plot charts
+  plot_hours_distances(hours, distances, urls);
+});
+</script>
+{% endif %}
+{% endblock %}
+
 {% block content %}
 
 {% set role_css = {
