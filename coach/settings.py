@@ -342,6 +342,10 @@ CELERYBEAT_SCHEDULE = {
     'task': 'users.tasks.send_related_races_mail',
     'schedule': crontab(hour=7, minute=50),
   },
+  'track-paymill-events-every-10min': {
+    'task': 'payments.tasks.payments_hook',
+    'schedule': timedelta(minutes=10),
+  },
 }
 CELERY_ROUTES = {
   'tracks.tasks.tracks_import' : {
