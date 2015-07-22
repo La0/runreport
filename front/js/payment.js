@@ -76,7 +76,8 @@ $(function(){
 
             // Display error message in form
             danger.removeClass('hidden');
-            danger.find('p').html(err.responseJSON.detail);
+            var msg = err.responseJSON ? err.responseJSON.detail : err;
+            danger.find('p').html(msg);
 
             // Re-enable submit
             waiter.addClass('hidden');

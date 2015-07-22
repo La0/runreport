@@ -14,6 +14,7 @@
   <div class="row">
 
     <form class="col-xs-12 col-sm-4 col-sm-offset-4" action="#" method="POST" id="payment">
+      {% csrf_token %}
       <h3>{{ _('I want the premium features') }}</h3>
       <div class="row cards">
         <div class="col-xs-3">
