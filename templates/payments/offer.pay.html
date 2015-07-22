@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container" id="pay">
   <div class="row">
 
     <form class="col-xs-12 col-sm-4 col-sm-offset-4" action="#" method="POST" id="payment">
@@ -46,9 +46,9 @@
         </div>
         <div class="form-group">
           <label class="control-label" for="expiry-month">{{ _('Expiration Date') }}</label>
-          <div class="row">
+          <div class="row" id="expiry">
             <div class="col-xs-6">
-              <select class="form-control col-sm-2" name="expiry-month" id="expiry-month">
+              <select class="form-control col-sm-2" name="expiry-month">
                 {% for month in months %}
                 <option value="{{ month|date('m') }}">{{ month|date('E') }}</option>
                 {% endfor %}
@@ -61,7 +61,9 @@
                 {% endfor %}
               </select>
             </div>
-            <p class="help-block hidden">{{ _('Invalid expiry date') }}</p>
+            <div class="col-xs-12">
+              <p class="help-block hidden">{{ _('Invalid expiry date') }}</p>
+            </div>
           </div>
         </div>
         <div class="form-group">
@@ -69,12 +71,22 @@
           <input type="text" class="form-control" name="cvc" id="cvc" placeholder="{{ _('Security Code') }}">
           <p class="help-block hidden">{{ _('Invalid card cvc') }}</p>
         </div>
+        <div class="alert alert-danger hidden">
+          <h4>{{ _('Error') }}</h4>
+          <p>
+            Error message here.
+          </p>
+        </div>
         <div class="form-group text-center">
-          <a href="{{ url('features') }}" class="btn btn-default btn-lg" tabindex="-1">
+          <a href="{{ url('features') }}" class="btn btn-default btn-lg action" tabindex="-1">
             Annuler
           </a>
-          <button type="submit" class="btn btn-success btn-lg">
+          <button type="submit" class="btn btn-success btn-lg action">
             {{ _('Pay Now') }} {{ offer.amount|floatformat(2) }} &euro;
+          </button>
+          <button class="btn btn-success btn-lg waiter hidden" disabled="disabled">
+            <i class="icon-loading animate-spin"></i>
+            {{ _('Processing') }}
           </button>
         </div>
       </fieldset>
@@ -83,6 +95,19 @@
         <a href="https://paymill.com" target="_blank">Paymill</a>
       </p>
     </form>
+    <div class="alert alert-success hidden">
+      <h4>{{ _('Valid payment') }}</h4>
+      <p>
+        {{ _('Thanks for your subscription to RunReport !') }}
+        <br />
+        {{ _('You can enjoy immediately all the premium features') }}
+      </p>
+      <p class="text-right">
+        <a href="{{ url('payment-status') }}" class="btn btn-primary">
+          {{ _('Continue') }}
+        </a>
+      </p>
+    </div>
   </div>
 
 </div>

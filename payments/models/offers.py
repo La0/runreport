@@ -4,6 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 import paymill
 
 SUBSCRIPTION_STATUS = (
+  ('created', _('Created')), # Awaiting validation
   ('active', _('Active')),
   ('inactive', _('Inactive')),
   ('expired', _('Expired')),
@@ -19,7 +20,7 @@ class PaymentSubscription(models.Model):
   offer = models.ForeignKey('payments.PaymentOffer', related_name='subscriptions')
 
   # Status
-  status = models.CharField(choices=SUBSCRIPTION_STATUS, max_length=20, default='inactive')
+  status = models.CharField(choices=SUBSCRIPTION_STATUS, max_length=20, default='created')
 
   # Paymill
   paymill_id = models.CharField(max_length=50, unique=True)
@@ -106,7 +107,7 @@ class PaymentOffer(models.Model):
       raise Exception('Missing client paymill id')
 
     # Check there is not already a subscription for this user
-    if self.subscriptions.filter(user=user).count() > 0:
+    if self.subscriptions.filter(user=user).exists():
       raise Exception('Already a subscription for this offer & user')
 
     # Prepare data for payment
@@ -132,5 +133,8 @@ class PaymentOffer(models.Model):
     ctx = paymill.PaymillContext(settings.PAYMILL_SECRET)
     service = ctx.get_subscription_service()
     subscription = service.create_with_offer_id(**data)
+
+    # Save the subscription as awaiting validation
+    user.subscriptions.create(offer=self, paymill_id=subscription.id)
 
     return subscription

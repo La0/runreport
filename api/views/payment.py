@@ -1,6 +1,9 @@
 from rest_framework import views, response, exceptions
 from django.core.exceptions import PermissionDenied
 from payments.models import PaymentOffer
+import logging
+
+logger = logging.getLogger('payments')
 
 
 class PaymentTokenView(views.APIView):
@@ -11,19 +14,27 @@ class PaymentTokenView(views.APIView):
     if not request.user.is_authenticated():
       raise PermissionDenied
 
-    # Load offer
     try:
+      # Load offer
       offer_slug = request.POST.get('offer')
       offer = PaymentOffer.objects.get(slug=offer_slug)
+
+      # Create client on user
+      if not request.user.paymill_id:
+        request.user.sync_paymill()
+
+      # Create subscription with client & offer
+      offer.create_subscription(request.POST.get('token'), request.user)
+
     except Exception, e:
-      raise exceptions.APIException(e.message)
+      logger.error('Payment error for %s: %s' % (request.user, e.message))
 
-    # Create client on user
-    if not request.user.paymill_id:
-      request.user.sync_paymill()
-
-    # Create subscription with client & offer
-    offer.create_subscription(request.POST.get('token'), request.user)
+      # Handle paymill errors
+      if isinstance(e.message, dict) and 'error' in e.message:
+        msg = e.message['error']
+      else:
+        msg = e.message
+      raise exceptions.APIException(msg)
 
     # Return dummy status
     return response.Response({'payment' : True})

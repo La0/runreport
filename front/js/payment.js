@@ -22,7 +22,7 @@ $(function(){
 
     // Apply errors
     if(errors.length > 0){
-      console.warn('errors', errors);
+      console.warn('Payment errors', errors);
       $.each(errors, function(index, err){
         var group = $('form#payment #'+err).parents('div.form-group');
         group.addClass('has-error');
@@ -32,8 +32,15 @@ $(function(){
       return false;
     }
 
-    // Lock submit button to prevent further clicks
-    $('form#payment button[type="submit"]').attr('disabled', 'disabled');
+    // Lock waiter & actions states
+    var actions = $('form#payment .action');
+    var waiter = $('form#payment .waiter');
+    waiter.removeClass('hidden');
+    actions.addClass('hidden');
+
+    // Hide danger
+    var danger = $('#pay form div.alert-danger');
+    danger.addClass('hidden');
 
     // Create Paymill token
     var token_data = {
@@ -59,11 +66,21 @@ $(function(){
           data: result,
           success : function(resp){
             console.info('Payment succeeded');
-            window.location.href = '/premium';
+
+            // Display success message
+            $('#pay form').hide();
+            $('#pay div.alert-success').removeClass('hidden');
           },
           error : function(err){
             console.error("Payment error", err);
-            alert('Do some stuff, bad boy');
+
+            // Display error message in form
+            danger.removeClass('hidden');
+            danger.find('p').html(err.responseJSON.detail);
+
+            // Re-enable submit
+            waiter.addClass('hidden');
+            actions.removeClass('hidden');
           },
           dataType: 'json',
         });
