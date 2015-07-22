@@ -346,10 +346,18 @@ class Athlete(AthleteBase):
 
     return client
 
-  @property
-  def is_premium(self):
+  def _is_premium(self):
     # helper to check if a user is premium
     return self.subscriptions.filter(status__in=('active', 'created')).exists()
+
+  # Django disallows direct property
+  # use in list displays
+  # Cf https://stackoverflow.com/questions/12842095/how-to-display-a-boolean-property-in-the-django-admin
+  _is_premium.boolean = True # for admin display
+
+  @property
+  def is_premium(self):
+    return self._is_premium()
 
 class UserCategory(models.Model):
   code = models.CharField(max_length=10)
