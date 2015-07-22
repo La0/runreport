@@ -13,6 +13,8 @@ def tracks_import(*args, **kwargs):
   users = Athlete.objects.all()
   users = users.order_by('pk')
   for user in users:
+    if not user.is_premium:
+      continue
     for provider in all_providers(user):
       if not provider.is_connected():
         continue

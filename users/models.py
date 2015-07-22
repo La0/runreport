@@ -106,12 +106,12 @@ class Athlete(AthleteBase):
   avatar = models.ImageField(_('profile picture'), upload_to=build_avatar_path)
 
   # Profile privacy
-  privacy_avatar = models.CharField(_('profile picture visibility'), max_length=50, choices=PRIVACY_LEVELS, default='club')
-  privacy_races = models.CharField(_('races visibility'), max_length=50, choices=PRIVACY_LEVELS, default='club')
-  privacy_records = models.CharField(_('records visibility'), max_length=50, choices=PRIVACY_LEVELS, default='club')
-  privacy_stats = models.CharField(_('stats visibility'), max_length=50, choices=PRIVACY_LEVELS, default='club')
+  privacy_avatar = models.CharField(_('avatar visibility'), max_length=50, choices=PRIVACY_LEVELS, default='public')
+  privacy_races = models.CharField(_('races visibility'), max_length=50, choices=PRIVACY_LEVELS, default='public')
+  privacy_records = models.CharField(_('records visibility'), max_length=50, choices=PRIVACY_LEVELS, default='public')
+  privacy_stats = models.CharField(_('stats visibility'), max_length=50, choices=PRIVACY_LEVELS, default='public')
   privacy_calendar = models.CharField(_('calendar visibility'), max_length=50, choices=PRIVACY_LEVELS, default='private')
-  privacy_comments = models.CharField(_('comments visibility'), max_length=50, choices=PRIVACY_LEVELS, default='club')
+  privacy_comments = models.CharField(_('comments visibility'), max_length=50, choices=PRIVACY_LEVELS, default='public')
   privacy_tracks = models.CharField(_('tracks visibility'), max_length=50, choices=PRIVACY_LEVELS, default='club')
 
   # Direct friendships
@@ -205,12 +205,20 @@ class Athlete(AthleteBase):
     # By default, public
     return ('public', )
 
+  @property
+  def local_privacy(self):
+    # Helper to retrieve all privacy
+    # settings in one command
+    # Used mainly by templates
+    fields = [k[8:] for k in dir(self) if k.startswith('privacy')] # all the current privacy fields
+    return dict([(f, getattr(self, 'privacy_%s' % f)) for f in fields])
+
   def get_privacy_rights(self, visitor):
     '''
     Load privacy rights for a visitor toward this user
     '''
     privacy = []
-    fields = [k[8:] for k in dir(self) if k.startswith('privacy')] # all the current privacy fields
+    fields = self.local_privacy.keys()
 
     # Super user views everything
     if visitor.is_superuser:

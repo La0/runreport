@@ -5,6 +5,7 @@
 {% block content %}
 <div class="container">
   <h1>{{ _('GPS Services') }}</h1>
+  {% if user.is_premium %}
   <p>
     {{ _('You can use several GPS services to automatically import your sessions.') }}
   </p>
@@ -55,6 +56,12 @@
     {% endwith %}
   </div>
   {% endfor %}
+  {% else %}
+  <p class="text-info">
+    <i class="icon-premium"></i>
+    {{ _('This feature is only available with a premium account.') }}
+  </p>
+  {% endif %}
 
 </div>
 {% endblock %}
