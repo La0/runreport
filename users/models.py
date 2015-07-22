@@ -9,6 +9,7 @@ from django.core import validators
 from django.utils import timezone
 from django.core.validators import MinValueValidator
 from django.conf import settings
+from django.utils.functional import cached_property
 from hashlib import md5
 from datetime import datetime
 from avatar_generator import Avatar
@@ -363,7 +364,7 @@ class Athlete(AthleteBase):
   # Cf https://stackoverflow.com/questions/12842095/how-to-display-a-boolean-property-in-the-django-admin
   _is_premium.boolean = True # for admin display
 
-  @property
+  @cached_property
   def is_premium(self):
     return self._is_premium()
 
