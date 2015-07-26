@@ -2,10 +2,10 @@ from django.views.generic import DetailView
 from payments.models import PaymentOffer
 from datetime import date, timedelta
 from helpers import week_to_date
-from .mixins import PaymentMixin
+from .mixins import PaymentAthleteMixin
 
 
-class PaymentOfferPay(PaymentMixin, DetailView):
+class PaymentOfferPay(PaymentAthleteMixin, DetailView):
   context_object_name = 'offer'
   template_name = 'payments/offer.pay.html'
   no_active_subscriptions = True
@@ -14,8 +14,8 @@ class PaymentOfferPay(PaymentMixin, DetailView):
     # Only paying offers
     offers = PaymentOffer.objects.exclude(paymill_id__isnull=True)
 
-    # Not club offer
-    offers = offers.exclude(slug='club')
+    # No welcome offer
+    offers = offers.exclude(slug='athlete_welcome')
 
     return offers
 

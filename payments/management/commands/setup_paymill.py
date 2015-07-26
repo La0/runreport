@@ -10,12 +10,15 @@ class Command(BaseCommand):
     Init paymill offers & hooks
     '''
 
+    # Free athlete offer
+    self.build_offer('athlete_welcome', paymill=False, name='RR athlete Welcome', amount=0, interval='2 MONTH')
+
     # Athlete offers
-    self.build_offer('trimester', name='RR Trimestre', amount=14, currency='EUR', interval='3 MONTH')
-    self.build_offer('yearly', name='RR Annuel', amount=35.0, currency='EUR', interval='1 YEAR')
+    self.build_offer('athlete', name='RR athlete premium', amount=14.99, currency='EUR', interval='1 YEAR')
 
     # Club offers
-    self.build_offer('club', name='RR Club', amount=99.0, currency='EUR', interval='1 YEAR')
+    self.build_offer('club_small', name='RR Club Small', amount=90.0, currency='EUR', interval='1 YEAR')
+    self.build_offer('club_big', name='RR Club Big', amount=150.0, currency='EUR', interval='1 YEAR')
 
     event_types = [
       'subscription.created',

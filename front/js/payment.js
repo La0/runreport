@@ -50,8 +50,9 @@ $(function(){
       cvc:            form_data['cvc'],
       amount_int:     form_data['amount'],
       currency:       form_data['currency'],
-      cardholder:     form_data['name'],
+      cardholder:     form_data['card-name'],
     };
+
     paymill.createToken(token_data, function(error, result){
       if(error){
         // Display errors

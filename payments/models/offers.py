@@ -1,7 +1,14 @@
 from django.db import models
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
+from django.core.urlresolvers import reverse
+from django.utils import timezone
+from datetime import datetime
+import time
 import paymill
+import logging
+
+logger = logging.getLogger('payments')
 
 SUBSCRIPTION_STATUS = (
   ('created', _('Created')), # Awaiting validation
@@ -23,16 +30,35 @@ class PaymentSubscription(models.Model):
   status = models.CharField(choices=SUBSCRIPTION_STATUS, max_length=20, default='created')
 
   # Paymill
-  paymill_id = models.CharField(max_length=50, unique=True)
+  paymill_id = models.CharField(max_length=50, unique=True, null=True, blank=True)
 
   # Dates
   created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
+  start = models.DateTimeField()
+  end = models.DateTimeField(null=True, blank=True)
 
   class Meta:
     unique_together = (
       ('user', 'offer'),
     )
+
+  @property
+  def remaining_days(self):
+    '''
+    Calc remaining days in subscription
+    until end
+    '''
+    if not self.end:
+      return None
+
+    diff = self.end - timezone.now()
+    return diff.days
+
+OFFERS_TARGET = (
+  ('club', _('Club')),
+  ('athlete', _('Athlete')),
+)
 
 class PaymentOffer(models.Model):
   '''
@@ -40,6 +66,7 @@ class PaymentOffer(models.Model):
   through Paymill
   '''
   paymill_id = models.CharField(null=True, blank=True, max_length=50)
+  target = models.CharField(max_length=10, choices=OFFERS_TARGET, default='athlete')
   slug = models.SlugField(unique=True, max_length=20)
   name = models.CharField(max_length=250)
   amount = models.FloatField()
@@ -49,6 +76,9 @@ class PaymentOffer(models.Model):
 
   def __unicode__(self):
     return '%s : %f %s every %s' % (self.name, self.amount, self.currency, self.interval)
+
+  def get_absolute_url(self):
+    return reverse('payment-offer', args=(self.slug, ))
 
   @property
   def amount_monthly(self):
@@ -129,12 +159,24 @@ class PaymentOffer(models.Model):
       'name' : self.name,
     }
 
+    # Remaining free days ?
+    try:
+      sub = user.subscriptions.get(offer__slug='athlete_welcome', status='active')
+      if not sub.end:
+        raise Exception('Missing end date')
+      start = sub.end # Paying subscription start at the end of welcome
+
+    except PaymentSubscription.DoesNotExist:
+      logger.warn('No welcome subscription for user %s' % user)
+      start = datetime.now()
+    data['start_at'] = time.mktime(start.timetuple())
+
     # Create the subscription in Paymill
     ctx = paymill.PaymillContext(settings.PAYMILL_SECRET)
     service = ctx.get_subscription_service()
     subscription = service.create_with_offer_id(**data)
 
     # Save the subscription as awaiting validation
-    user.subscriptions.create(offer=self, paymill_id=subscription.id)
+    user.subscriptions.create(offer=self, paymill_id=subscription.id, start=start)
 
     return subscription

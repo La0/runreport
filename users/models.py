@@ -9,6 +9,7 @@ from django.core import validators
 from django.utils import timezone
 from django.core.validators import MinValueValidator
 from django.conf import settings
+from django.db.models.signals import post_save
 from django.utils.functional import cached_property
 from hashlib import md5
 from datetime import datetime
@@ -355,9 +356,10 @@ class Athlete(AthleteBase):
 
     return client
 
+
   def _is_premium(self):
     # helper to check if a user is premium
-    return self.subscriptions.filter(status__in=('active', 'created')).exists()
+    return self.subscriptions.filter(offer__target='athlete', status__in=('active', 'created')).exists()
 
   # Django disallows direct property
   # use in list displays
@@ -367,6 +369,35 @@ class Athlete(AthleteBase):
   @cached_property
   def is_premium(self):
     return self._is_premium()
+
+  def add_welcome_offer(self):
+    '''
+    Build a subscription to the athlete welcome offer
+    Valid for 2 months
+    Only once
+    '''
+    from payments.models import PaymentOffer
+    start = timezone.now()
+    offer = PaymentOffer.objects.get(slug='athlete_welcome')
+    defaults = {
+      'status' : 'active',
+      'start' : start,
+      'end' : start + timedelta(days=60),
+    }
+    sub, _ = self.subscriptions.get_or_create(offer=offer, defaults=defaults)
+    return sub
+
+
+def user_initial_subscription(sender, instance, created=False, **kwargs):
+    '''
+    Every new user has 2 months of welcome premium
+    '''
+    if created:
+      instance.add_welcome_offer()
+
+# register the Welcome offer signal
+post_save.connect(user_initial_subscription, sender=Athlete)
+
 
 class UserCategory(models.Model):
   code = models.CharField(max_length=10)

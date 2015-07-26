@@ -6,8 +6,9 @@
 <div class="container" id="premium_status">
   <h1>{{ _('Premium Membership') }}</h1>
 
-  {% if user.is_premium %}
-  <div class="lead">
+  {# Premium status #}
+  {% if 'athlete' in subscriptions %}
+  <div class="lead text-success">
     <i class="icon-premium"></i>
     {{ _('You are a premium RunReport member !') }}
   </div>
@@ -16,10 +17,10 @@
   <div class="subscription">
     <blockquote>
       <strong>
-      {% if subscription.offer.slug == 'yearly' %}
-        {{ _('Yearly subscription') }}
-      {% elif subscription.offer.slug == 'trimester' %}
-        {{ _('Trimestrial subscription') }}
+      {% if subscription.offer.slug == 'athlete_welcome' %}
+        {{ _('Welcome offer') }}
+      {% elif subscription.offer.slug == 'athlete' %}
+        {{ _('Premium offer') }}
       {% endif %}
       </strong>
       {% if subscription.status == 'created' %}
@@ -30,10 +31,31 @@
       <span class="label label-danger">{{ _('Inactive') }}</span>
       {% endif %}
       <br />
+
+      {% if subscription.offer.amount > 0 %}
       {{ _('Costs you') }}
       {{ subscription.offer.amount }} &euro; <span class="text-muted">(or {{ subscription.offer.amount_monthly|floatformat(2) }} &euro; {{ _('per month') }})</span>
+      {% else %}
+      {{ _('Free') }}
+      {% endif %}
       <br />
-      {{ _('Started on') }} {{ subscription.created|date('l d E Y') }}
+
+      {% if subscription.start > now %}
+      {{ _('Will start on') }} {{ subscription.start|date('l d E Y') }}
+      {% else %}
+      {{ _('Started on') }} {{ subscription.start|date('l d E Y') }}
+      {% endif %}
+
+      {% if subscription.end %}
+        <span class="text-muted">&bull;</span>
+        {% if subscription.end > now %}
+        {{ _('Will end on') }} {{ subscription.end|date('l d E Y') }}
+        {% else %}
+        {{ _('Ended on') }} {{ subscription.end|date('l d E Y') }}
+        {% endif %}
+      {% endif %}
+
+      
     </blockquote>
   </div>
   {% endfor %}
@@ -101,25 +123,21 @@
 
   {% else %}
 
-  <p class="lead">
-    {{ _('You can get all the premium features using 2 payment offers :') }}
-  </p>
-
-  {# Show the prices #}
-  <div class="col-sm-4 col-sm-offset-1 col-xs-12 offer">
+  {# Show welcome offer status #}
+  <div class="col-sm-4 col-sm-offset-2 col-xs-12 offer">
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">
-          {{ _('3 months payment') }}
+          {{ _('Welcome offer') }}
         </h3>
       </div>
       <div class="panel-body">
-        
+
         <p class="price">
-          {{ offers.trimester.amount|floatformat(2) }} &euro; {{ _('every 3 months') }}
+          {{ _('Free') }}
         </p>
         <p class="price monthly">
-          {{ _('Costs you') }} {{ offers.trimester.amount_monthly|floatformat(2) }} &euro; {{ _('per month') }}
+          {{ _('During 2 months') }}
         </p>
         <hr />
 
@@ -130,18 +148,36 @@
         </p>
         {% endfor %}
 
-        <p class="text-center">
-          <a href="{{ url('payment-offer', 'trimester') }}" class="btn btn-default">
-            <i class="icon-premium"></i>
-            {{ _('Buy this premium offer') }}
-          </a>
-        </p>
+        <div class="text-center">
+          {% with welcome = subscriptions.athlete_welcome %}
+          {% if welcome %}
+            {% if welcome.remaining_days > 0 %}
+            <p class="text-success">
+              {{ _('Your welcome offer is valid for') }} 
+              <span class="do-tooltip" title="{{ welcome.end|date('l d E Y') }}">
+                {{ welcome.end|timeuntil }}
+              </span>
+            </p>
+            {% else %}
+            <p class="text-warning">
+              {{ _('Your welcome offer has expired.') }}
+            </p>
+            {% endif %}
+          {% else %}
+          <p class="text-danger">
+            {{ _('No welcome subscription found. Please contact the support.') }}
+          </p>
+          {% endif %}
+          {% endwith %}
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="col-sm-4 col-sm-offset-2 col-xs-12 offer">
-    <div class="panel panel-default panel-success">
+
+  {# Show the offer #}
+  <div class="col-sm-4 col-xs-12 offer">
+    <div class="panel panel-success">
       <div class="panel-heading">
         <h3 class="panel-title">
           {{ _('Yearly payment') }}
@@ -150,10 +186,10 @@
       <div class="panel-body">
         
         <p class="price">
-          {{ offers.yearly.amount|floatformat(2) }} &euro; {{ _('every year') }}
+          {{ offer.amount|floatformat(2) }} &euro; {{ _('every year') }}
         </p>
         <p class="price monthly">
-          {{ _('Costs you') }} {{ offers.yearly.amount_monthly|floatformat(2) }} &euro; {{ _('per month') }}
+          {{ _('Costs you') }} {{ offer.amount_monthly|floatformat(2) }} &euro; {{ _('per month') }}
         </p>
         <hr />
 
@@ -165,9 +201,9 @@
         {% endfor %}
 
         <p class="text-center">
-          <a href="{{ url('payment-offer', 'yearly') }}" class="btn btn-success">
+          <a href="{{ offer.get_absolute_url() }}" class="btn btn-success">
             <i class="icon-premium"></i>
-            {{ _('Buy this premium offer') }}
+            {{ _('Buy RunReport premium') }}
           </a>
         </p>
       </div>
