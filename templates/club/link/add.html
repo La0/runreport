@@ -1,7 +1,7 @@
 {% extends 'modal.html' %}
 
 {% set modal_title = _('Add a link') %}
-{% set form_url = 'club-link-add'|url(club.slug) %}
+{% set form_url = url('club-link-add', club.slug) %}
 
 {% block body %}
   {% csrf_token %}

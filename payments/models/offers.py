@@ -23,7 +23,8 @@ class PaymentSubscription(models.Model):
   A subscription between a user and an offer
   '''
   # M2M links
-  user = models.ForeignKey('users.Athlete', related_name='subscriptions')
+  user = models.ForeignKey('users.Athlete', related_name='subscriptions', null=True, blank=True)
+  club = models.ForeignKey('club.Club', related_name='subscriptions', null=True, blank=True)
   offer = models.ForeignKey('payments.PaymentOffer', related_name='subscriptions')
 
   # Status
@@ -41,6 +42,7 @@ class PaymentSubscription(models.Model):
   class Meta:
     unique_together = (
       ('user', 'offer'),
+      ('club', 'offer'),
     )
 
   @property
@@ -73,11 +75,14 @@ class PaymentOffer(models.Model):
   currency = models.CharField(max_length=10)
   interval = models.CharField(max_length=20)
   clients = models.ManyToManyField('users.Athlete', through=PaymentSubscription, related_name='offers')
+  clubs = models.ManyToManyField('club.Club', through=PaymentSubscription, related_name='offers')
 
   def __unicode__(self):
     return '%s : %f %s every %s' % (self.name, self.amount, self.currency, self.interval)
 
-  def get_absolute_url(self):
+  def get_absolute_url(self, club=None):
+    if club and self.target == 'club':
+      return reverse('payment-offer-club', args=(self.slug, club.slug))
     return reverse('payment-offer', args=(self.slug, ))
 
   @property
@@ -125,20 +130,26 @@ class PaymentOffer(models.Model):
     self.paymill_id = str(offer['id'])
     self.save()
 
-  def create_subscription(self, token, user):
+  def create_subscription(self, token, user, club=None):
     '''
     Create a payment for current offer
     with specified token from JS form
     and optional client
     Then link it to a subscription
-    No db Item created here, only from hook
     '''
     if not user.paymill_id:
       raise Exception('Missing client paymill id')
 
     # Check there is not already a subscription for this user
-    if self.subscriptions.filter(user=user).exists():
+    if self.target == 'athlete' and self.subscriptions.filter(user=user).exists():
       raise Exception('Already a subscription for this offer & user')
+
+    # Same check but for clubs
+    if self.target == 'club':
+      if not club:
+        raise Exception('Missing club instance')
+      if club.subscriptions.filter(user=user).exists():
+        raise Exception('Already a subscription for this offer & user')
 
     # Prepare data for payment
     data = {
@@ -159,24 +170,35 @@ class PaymentOffer(models.Model):
       'name' : self.name,
     }
 
-    # Remaining free days ?
-    try:
-      sub = user.subscriptions.get(offer__slug='athlete_welcome', status='active')
-      if not sub.end:
-        raise Exception('Missing end date')
-      start = sub.end # Paying subscription start at the end of welcome
-
-    except PaymentSubscription.DoesNotExist:
-      logger.warn('No welcome subscription for user %s' % user)
-      start = datetime.now()
-    data['start_at'] = time.mktime(start.timetuple())
-
-    # Create the subscription in Paymill
+    # Paymill subscription service
     ctx = paymill.PaymillContext(settings.PAYMILL_SECRET)
     service = ctx.get_subscription_service()
-    subscription = service.create_with_offer_id(**data)
 
-    # Save the subscription as awaiting validation
-    user.subscriptions.create(offer=self, paymill_id=subscription.id, start=start)
+    if self.target == 'athlete':
+      # Remaining free days ?
+      try:
+        sub = user.subscriptions.get(offer__slug='athlete_welcome', status='active')
+        if not sub.end:
+          raise Exception('Missing end date')
+        start = sub.end # Paying subscription start at the end of welcome
+
+      except PaymentSubscription.DoesNotExist:
+        logger.warn('No welcome subscription for user %s' % user)
+        start = datetime.now()
+      data['start_at'] = time.mktime(start.timetuple())
+
+      # Create the subscription in Paymill
+      subscription = service.create_with_offer_id(**data)
+
+      # Save the subscription as awaiting validation
+      user.subscriptions.create(offer=self, paymill_id=subscription.id, start=start)
+
+    if self.target == 'club' and club:
+      # Create the subscription in Paymill
+      subscription = service.create_with_offer_id(**data)
+
+      # Save the subscription as awaiting validation
+      start = datetime.now()
+      club.subscriptions.create(offer=self, paymill_id=subscription.id, start=start)
 
     return subscription

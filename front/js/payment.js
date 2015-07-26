@@ -61,6 +61,8 @@ $(function(){
         // Send token to Backend
         console.info('Paymill token created', error, result);
         result['offer'] = form_data['offer'];
+        if(form_data['club'])
+          result['club'] = form_data['club'];
         result['csrfmiddlewaretoken'] = form_data['csrfmiddlewaretoken'];
         $.ajax({
           type: "POST",

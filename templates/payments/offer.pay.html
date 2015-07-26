@@ -34,6 +34,9 @@
       <input type="hidden" name="offer" value="{{ offer.slug }}"/>
       <input type="hidden" name="amount" value="{{ offer.amount_cents }}"/>
       <input type="hidden" name="currency" value="{{ offer.currency }}"/>
+      {% if club %}
+      <input type="hidden" name="club" value="{{ club.pk }}"/>
+      {% endif %}
       <fieldset>
         <div class="form-group">
           <label class="control-label" for="card-name">{{ _('Name on Card') }}</label>
@@ -104,9 +107,15 @@
         {{ _('You can enjoy immediately all the premium features') }}
       </p>
       <p class="text-right">
+        {% if club %}
+        <a href="{{ url('club-manage', club.slug) }}" class="btn btn-primary">
+          {{ _('Continue') }}
+        </a>
+        {% else %}
         <a href="{{ url('payment-status') }}" class="btn btn-primary">
           {{ _('Continue') }}
         </a>
+        {% endif %}
       </p>
     </div>
   </div>

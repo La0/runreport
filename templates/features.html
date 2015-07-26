@@ -50,6 +50,13 @@
             </td>
           </tr>
           {% endfor %}
+  
+          {# Costs #}
+          <tr class="info">
+            <td>{{ _('Yearly cost') }}</td>
+            <td class="text-center">{{ _('Free') }}</td>
+            <td class="text-center">14,99 &euro;</td>
+          </tr>
         </tbody>
       </table>
       <p class="text-right">
@@ -82,7 +89,8 @@
           <tr>
             <th>{{ _('Feature') }}</th>
             <th class="text-center">{{ _('Free account') }}</th>
-            <th class="text-center">{{ _('Premium account') }}</th>
+            <th class="text-center">{{ _('Premium small account') }}</th>
+            <th class="text-center">{{ _('Premium big account') }}</th>
           </tr>
         </thead>
         <tbody>
@@ -94,20 +102,26 @@
               <span class="pull-right label label-info">{{ _('New') }}</span>
               {% endif %}
             </td>
+
+            {% if feature.offers %}
+              {% for offer in feature.offers %}
+              <td class="text-center">
+                {{ offer }}
+              </td>
+              {% endfor %}
+            {% else %}
             <td class="text-center">
-              {% if feature.comparison %}
-              {{ feature.free }}
-              {% elif not feature.premium %}
+              {% if not feature.premium %}
               <i class="icon-ok"></i>
               {% endif %}
             </td>
             <td class="text-center">
-              {% if feature.comparison %}
-              {{ feature.premium }}
-              {% else %}
               <i class="icon-ok"></i>
-              {% endif %}
             </td>
+            <td class="text-center">
+              <i class="icon-ok"></i>
+            </td>
+            {% endif %}
           </tr>
           <tr class="collapse" id="trainer_{{ loop.index }}">
             <td colspan="3">
@@ -115,6 +129,12 @@
             </td>
           </tr>
           {% endfor %}
+          <tr class="info">
+            <td>{{ _('Yearly cost') }}</td>
+            <td class="text-center">{{ _('Free') }}</td>
+            <td class="text-center">90 &euro;</td>
+            <td class="text-center">150 &euro;</td>
+          </tr>
         </tbody>
       </table>
       <p class="text-right">

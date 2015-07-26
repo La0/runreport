@@ -17,8 +17,8 @@ class Command(BaseCommand):
     self.build_offer('athlete', name='RR athlete premium', amount=14.99, currency='EUR', interval='1 YEAR')
 
     # Club offers
-    self.build_offer('club_small', name='RR Club Small', amount=90.0, currency='EUR', interval='1 YEAR')
-    self.build_offer('club_big', name='RR Club Big', amount=150.0, currency='EUR', interval='1 YEAR')
+    self.build_offer('club_small', name='RR Club Small', amount=90.0, currency='EUR', interval='1 YEAR', target='club')
+    self.build_offer('club_big', name='RR Club Big', amount=150.0, currency='EUR', interval='1 YEAR', target='club')
 
     event_types = [
       'subscription.created',

@@ -8,38 +8,216 @@
 
 	<h2>{{ _('Manage') }} {{club.name}}</h2>
 
-	<h3>{{ _('Users') }}</h3>
-	<div class="alert alert-info">
-		<h4>{{ _('Help') }}</h4>
-		{{ _('You are limited in the number of accounts linked to the club, depending on the type of users') }}
-	</div>
-	<div class="table-responsive">
-		<table class="table table-striped">
-			<tr>
-				<th>{{ _('Users type') }}</th>
-				<th>{{ _('Maximum') }}</th>
-				<th>{{ _('Used') }}</th>
-				<th>{{ _('Available') }}</th>
-			</tr>
-			{% for stat in stats %}
-			<tr>
-				<td>{{roles[stat.type]}}</td>
-				<td>{{stat.max}}</td>
-				<td>{{stat.used}}</td>
-				<td>
-					{% if stat.percent >= 50 %}
-					<span class="badge badge-success">{{stat.diff}}</span>
-					{% elif stat.percent >= 25 %}
-					<span class="badge badge-warning">{{stat.diff}}</span>
-					{% else %}
-					<span class="badge badge-important">{{stat.diff}}</span>
-					{% endif %}
-				</td>
-			</tr>
-			{% endfor %}
-		</table>
-	</div>
+  <ul class="nav nav-tabs" role="tablist">
+    <li class="active">
+      <a href="#users" role="tab" data-toggle="tab">
+        <i class="icon-club"></i>
+        {{ _('Users') }}
+      </a>
+    </li>
+    <li>
+      <a href="#premium_status" role="tab" data-toggle="tab">
+        <i class="icon-premium"></i>
+        {{ _('Premium') }}
+      </a>
+    </li>
+    <li>
+      <a href="#edit" role="tab" data-toggle="tab">
+        <i class="icon-edit"></i>
+        {{ _('Preferences') }}
+      </a>
+    </li>
+    <li>
+      <a href="#links" role="tab" data-toggle="tab">
+        <i class="icon-link"></i>
+        {{ _('Links') }}
+      </a>
+    </li>
+  </ul>
 
+  <div class="tab-content">
+    <div class="tab-pane active" id="users">
+      <div class="alert alert-info">
+        <h4>{{ _('Help') }}</h4>
+        {{ _('You are limited in the number of accounts linked to the club, depending on the type of users') }}
+        <br />
+        {{ _('To get more accounts available in your club, your club must be Premium') }}
+      </div>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <tr>
+            <th>{{ _('Users type') }}</th>
+            <th>{{ _('Maximum') }}</th>
+            <th>{{ _('Used') }}</th>
+            <th>{{ _('Available') }}</th>
+          </tr>
+          {% for stat in stats %}
+          <tr>
+            <td>{{roles[stat.type]}}</td>
+            <td>{{stat.max}}</td>
+            <td>{{stat.used}}</td>
+            <td>
+              {% if stat.percent >= 50 %}
+              <span class="badge badge-success">{{stat.diff}}</span>
+              {% elif stat.percent >= 25 %}
+              <span class="badge badge-warning">{{stat.diff}}</span>
+              {% else %}
+              <span class="badge badge-important">{{stat.diff}}</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+
+    {# Display offers #}
+    <div class="tab-pane" id="premium_status">
+
+      {% if club.is_premium %}
+        {% for subscription in subscriptions %}
+          {% include 'payments/_subscription.html' %}
+        {% endfor %}
+      {% else %}
+
+      {# free club #}
+      <div class="col-sm-4 col-xs-12 offer">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              {{ _('Free club') }}
+            </h3>
+          </div>
+          <div class="panel-body">
+            
+            <p class="price">
+              {{ _('Free') }}
+            </p>
+            <p class="price monthly">
+              {{ _('Forever') }}
+            </p>
+            <hr />
+
+            {% for f in features.trainers %}
+              {% if f.offers %}
+              <p class="feature">
+                <strong>{{ f.offers[0] }}</strong>
+                {{ f.name }}
+              </p>
+              {% endif %}
+            {% endfor %}
+
+          </div>
+        </div>
+      </div>
+
+      {% for offer in offers %}
+      <div class="col-sm-4 col-xs-12 offer">
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              {{ _(offer.name) }}
+            </h3>
+          </div>
+          <div class="panel-body">
+            
+            <p class="price">
+              {{ offer.amount|floatformat(2) }} &euro; {{ _('every year') }}
+            </p>
+            <p class="price monthly">
+              {{ _('Costs you') }} {{ offer.amount_monthly|floatformat(2) }} &euro; {{ _('per month') }}
+            </p>
+            <hr />
+
+            {% set offerLoop = loop %}
+            {% for f in features.trainers %}
+              {% if f.premium or f.offers %}
+              <p class="feature">
+                {% if f.offers %}
+                <strong>{{ f.offers[offerLoop.index] }}</strong>
+                {% else %}
+                  <i class="icon-ok"></i>
+                {% endif %}
+                {{ f.name }}
+              </p>
+              {% endif %}
+            {% endfor %}
+
+            <p class="text-center">
+              <a href="{{ offer.get_absolute_url(club) }}" class="btn btn-success">
+                <i class="icon-premium"></i>
+                {{ _('Buy RunReport premium') }}
+              </a>
+            </p>
+
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      {% endif %}
+
+    </div>
+
+    <div class="tab-pane" id="edit">
+      <form action="" method="POST" class="form form-horizontal">
+        {% csrf_token %}
+        {{ macros.input(form.name) }}
+        {{ macros.input(form.slug) }}
+        {{ macros.input(form.address) }}
+        {{ macros.input(form.zipcode) }}
+        {{ macros.input(form.city) }}
+
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            {% if user.demo %}
+            <div class="alert alert-warning">
+              <h4>{{ _('Demo account') }}</h4>
+              {{ _('Edition is deactivated for the demo') }}
+            </div>
+            {% else %}
+            <input type="submit" value="{{ _('Edit') }}" class="btn btn-primary" />
+            {% endif %}
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="tab-pane" id="links">
+      <div class="alert alert-info">
+        <h4>{{ _('Help') }}</h4>
+        {{ _('Public links are shown in the Club menu, on top of the page, for all the users of the club.') }}<br />
+        {{ _('They are useful to show external websites: Facebook groups, official website of the club, ...') }}
+      </div>
+      {% if links %}
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <tr>
+            <th>{{ _('Name') }}</th>
+            <th>{{ _('Url') }}</th>
+            <th>{{ _('Actions') }}</th>
+          </tr>
+          {% for link in links %}
+          <tr>
+            <td>{{link.name}}</td>
+            <td><a href="{{link.url}}" target="_blank">{{link.url}}</a></td>
+            <td>
+              <a href="{{ url('club-link-delete', club.slug, link.id) }}" class="modal-action modal-post btn btn-danger btn-xs">{{ _('Delete') }}</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+      {% else %}
+      <p class="alert alert-warning">
+        {{ _('There are no public link for your club.') }}
+      </p>
+      {% endif %}
+      <a href="{{ url('club-link-add', club.slug) }}" class="modal-action btn btn-info pull-right">{{ _('Add a link') }}</a>
+    </div>
+  </div>
+
+
+{#
   {% if club.private %}
   <div class="text-danger">
     <h4>{{ _('Subscriptions for a private club') }}</h4>
@@ -66,63 +244,7 @@
       <a href="{{ url('club-subscriptions-upload', club.slug) }}" class="btn btn-sm btn-primary">{{ _('Subscribe athletes') }}</a>
   </p>
   {% endif %}
-
-	<h3>{{ _('Public links') }}</h3>
-	<div class="alert alert-info">
-		<h4>{{ _('Help') }}</h4>
-		{{ _('Public links are shown in the Club menu, on top of the page, for all the users of the club.') }}<br />
-		{{ _('They are useful to show external websites: Facebook groups, official website of the club, ...') }}
-	</div>
-	{% if links %}
-	<div class="table-responsive">
-		<table class="table table-striped">
-			<tr>
-				<th>{{ _('Name') }}</th>
-				<th>{{ _('Url') }}</th>
-				<th>{{ _('Actions') }}</th>
-			</tr>
-			{% for link in links %}
-			<tr>
-				<td>{{link.name}}</td>
-				<td><a href="{{link.url}}" target="_blank">{{link.url}}</a></td>
-				<td>
-					<a href="{{ url('club-link-delete', club.slug, link.id) }}" class="modal-action modal-post btn btn-danger btn-xs">{{ _('Delete') }}</a>
-				</td>
-			</tr>
-			{% endfor %}
-		</table>
-	</div>
-	{% else %}
-	<p class="alert alert-warning">
-		{{ _('There are no public link for your club.') }}
-	</p>
-	{% endif %}
-	<a href="{{ url('club-link-add', club.slug) }}" class="modal-action btn btn-info pull-right">{{ _('Add a link') }}</a>
-	<div class="clearfix">&nbsp;</div>
-
-	<h3>Edition</h3>
-	<form action="" method="POST" class="form form-horizontal">
-		{% csrf_token %}
-		{{ macros.input(form.name) }}
-		{{ macros.input(form.slug) }}
-		{{ macros.input(form.address) }}
-		{{ macros.input(form.zipcode) }}
-		{{ macros.input(form.city) }}
-
-		<div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
-        {% if user.demo %}
-        <div class="alert alert-warning">
-          <h4>{{ _('Demo account') }}</h4>
-          {{ _('Edition is deactivated for the demo') }}
-        </div>
-        {% else %}
-				<input type="submit" value="{{ _('Edit') }}" class="btn btn-primary" />
-        {% endif %}
-			</div>
-		</div>
-	</form>
-
+#}
 </div>
 
 {% endblock %}

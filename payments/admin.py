@@ -1,5 +1,9 @@
 from django.contrib import admin
-from models import PaymentEvent, PaymentSubscription, PaymentTransaction
+from models import PaymentEvent, PaymentSubscription, PaymentTransaction, PaymentOffer
+
+class PaymentOfferAdmin(admin.ModelAdmin):
+  list_display = ('name', 'slug', 'target', 'amount', )
+admin.site.register(PaymentOffer, PaymentOfferAdmin)
 
 class PaymentEventAdmin(admin.ModelAdmin):
   list_display = ('event_id', 'type', 'user', 'subscription', 'transaction', 'created', 'applied')
