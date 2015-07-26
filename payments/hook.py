@@ -55,7 +55,6 @@ class PaymillHook(object):
     # Load it
     _, raw_msg, __ = self.pop.retr(msg_id)
 
-    #print raw_msg
     msg = email.message_from_string('\r\n'.join(raw_msg))
 
     content = None
@@ -72,7 +71,12 @@ class PaymillHook(object):
 
     # Unique hash from raw content
     event_id = hashlib.md5(content).hexdigest()
-    if PaymentEvent.objects.filter(event_id=event_id).exists():
+    events = PaymentEvent.objects.filter(event_id=event_id)
+    if events.exists():
+
+      # Try to apply missed ones
+      for evt in events.filter(applied__isnull=True):
+        evt.apply()
       raise Exception('Event already saved.')
 
     # Load & check hook

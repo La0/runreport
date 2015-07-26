@@ -61,6 +61,8 @@ class PaymentEvent(models.Model):
     ops = {
       'subscription.created' : self.__update_subscription,
       'subscription.succeeded' : self.__update_subscription,
+      'subscription.canceled' : self.__update_subscription,
+      'subscription.deleted' : self.__update_subscription,
       'transaction.created' : self.__update_transaction,
       'transaction.succeeded' : self.__update_transaction,
     }
@@ -86,12 +88,21 @@ class PaymentEvent(models.Model):
     from payments.models import PaymentOffer, PaymentSubscription
     sub_data = 'subscription' in self.data and self.data['subscription'] or self.data
     created_at = datetime.fromtimestamp(sub_data['created_at'], timezone.get_current_timezone())
+
+    # Check the offer
+    if not sub_data.get('offer'):
+      raise Exception('Missing offer in subscription update event %s' % self.event_id)
+    offer = PaymentOffer.objects.get(paymill_id=sub_data['offer']['id'])
     data = {
-      'user' : self.user,
       'created' : created_at,
       'status' : sub_data['status'],
-      'offer' : PaymentOffer.objects.get(paymill_id=sub_data['offer']['id']),
+      'offer' : offer,
     }
+    if offer.target == 'user':
+      data['user'] = self.user
+    elif offer.target == 'club':
+      data['club'] = self.user.club_manager.first() # dirty :/
+
     sub, created = PaymentSubscription.objects.get_or_create(paymill_id=sub_data['id'], defaults=data)
     if not created and created_at >= sub.created:
       for k,v in data.items():
