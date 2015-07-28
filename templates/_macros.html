@@ -191,10 +191,10 @@
 	<label class="control-label" for="id_{{field.html_name}}">
     {{ _('Difficulty') }}
   </label>
-  {% with val = field.value() %}
+  {% with val = field.value()|int() %}
   <div class="stars {% if val %}locked{% endif %}">
     {% for star in range(0, max) %}
-    <div class="star star-{{ loop.index }} {% if loop.index <= val|int() %}active{% endif %}" data-star="{{ loop.index }}">
+    <div class="star {% if loop.index <= val %}star-{{ val }}{% endif %}" data-star="{{ loop.index }}">
       <i class="icon-star"></i>
     </div>
     {% endfor %}

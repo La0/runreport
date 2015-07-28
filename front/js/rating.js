@@ -1,21 +1,29 @@
 var MAX_STARS = 5;
 
-var init_ratings = function(){
+// List all the css class for stars
+// used to remove
+var all_stars = function(){
+  var stars = [];
+  for(var i = 1; i <= MAX_STARS; i++)
+    stars.push('star-'+i);
+  return stars.join(' '); // space separated
+};
+
+var init_ratings = function(current){
 
   // Get current star nb
   var star = $(this);
-  var current = parseInt(star.attr('data-star'));
+  if(!current || typeof current === "object")
+    current = parseInt(star.attr('data-star'));
 
   // Activate stars <= current count
-  for(var i = 1; i <= MAX_STARS; i++){
-    if(i < current){
-      star.siblings('.star-'+i).addClass('active');
-    }else if(i == current){
-      star.addClass('active');
-    }else{
-      star.siblings('.star-'+i).removeClass('active');
-    }
-  }
+  var stars = star.parent().children('.star');
+  $.each(stars, function(i, s){
+    var index = i + 1; // offset by 1
+    $(s).removeClass(all_stars);
+    if(index <= current)
+      $(s).addClass('star-'+current);
+  });
 
   // Show current help
   var help = star.parent().siblings('div.help');
@@ -31,15 +39,16 @@ var clear_ratings = function(){
 
     // Restore locked value
     var saved = parseInt(block.siblings('input').val()) ;
-    if(saved)
-      $.proxy(init_ratings, block.find('.star-'+saved))();
+    if(saved){
+      $.proxy(init_ratings, block.find('.star').first())(saved);
+    }
 
     return;
   }
 
   // Cleanup when not locked
-  star.removeClass('active').siblings('.star').removeClass('active');
-  star.parent().siblings('div.help').children('.level').removeClass('active');
+  block.children('.star').removeClass(all_stars);
+  block.siblings('div.help').children('.level').removeClass('active');
 };
 
 // Save a new rating

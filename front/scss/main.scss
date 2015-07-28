@@ -1076,24 +1076,22 @@ td.avatar {
     color: #EEE;
     margin: 0;
     
-    &.active {
-      // From easy (green)
-      &.star-1 {
-        color: #57cf28;
-      }
-      &.star-2 {
-        color: #75a223;
-      }
-      &.star-3 {
-        color: #f1da1a;
-      }
-      &.star-4 {
-        color: #fd9854;
-      }
-      // .. to hard (red)
-      &.star-5 {
-        color: #d01818;
-      }
+    // From easy (green)
+    &.star-1 {
+      color: #57cf28;
+    }
+    &.star-2 {
+      color: #75a223;
+    }
+    &.star-3 {
+      color: #f1da1a;
+    }
+    &.star-4 {
+      color: #fd9854;
+    }
+    // .. to hard (red)
+    &.star-5 {
+      color: #d01818;
     }
   }
   div.help {
