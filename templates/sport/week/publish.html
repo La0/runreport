@@ -47,11 +47,11 @@
 {% block footer %}
 <button class="btn" data-dismiss="modal">{{ _('Cancel') }}</button>
 {% if not report.published and not report.task %}
-  {% for m in user.memberships.all() %}
+  {% for m in user.memberships.filter(trainers__isnull=False) %}
     <button {% if not report.is_publiable() or user.demo %}disabled="disabled"{% endif %} type="submit" name="publish" value="{{m.club.pk}}" class="btn btn-success">
       {{ _('Send to') }}
       {% for t in m.trainers.all() %}
-      {{ t.first_name|default(t.username) }}{% if not loop.last %}, {% endif %}
+        {{ t.first_name|default(t.username) }}{% if not loop.last %}, {% endif %}
       {% endfor %}
     </button>
   {% endfor %}

@@ -52,7 +52,7 @@
           <i class="icon-list"></i> {{ _('Week published') }}
         </a>
         {% else %}
-        <a href="{{ url('report-week-publish', report.year, report.week) }}" class="{% if not report.is_publiable() %}disabled{% endif %} modal-action btn btn-info btn-light">
+        <a href="{{ url('report-week-publish', report.year, report.week) }}" class="{% if report.is_publiable() %}modal-action{% else %}disabled{% endif %} btn btn-info btn-light">
           {{ _('Publish this week') }} <i class="icon-right-open"></i>
         </a>
         {% endif %}
