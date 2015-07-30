@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="panel panel-info"> 
+    {% if modal_title %}
+    <div class="panel-heading">
+      <h3>{{modal_title}}</h3>
+    </div>
+    {% endif %}
+
+    {% if form_url %}
+    <form method="POST" action="{{form_url}}" class="{{form_class}}">
+    {% endif %}
+
+      <div class="panel-body">
+        {% block body %}{% endblock %}
+      </div>
+
+      <div class="panel-footer">
+        {% block footer %}{% endblock %}
+      </div>
+
+    {% if form_url %}
+    </form>
+    {% endif %}
+  </div>
+
+</div>
+{% endblock %}

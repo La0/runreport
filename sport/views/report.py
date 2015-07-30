@@ -2,11 +2,12 @@ from django.views.generic import FormView, DetailView
 from sport.tasks import publish_report
 from sport.forms import SportWeekPublish
 from mixins import CurrentWeekMixin, WeekPaginator
-from coach.mixins import JsonResponseMixin, JSON_OPTION_CLOSE, JSON_OPTION_NO_HTML, JSON_OPTION_BODY_RELOAD
+from coach.mixins import JsonResponseMixin, JSON_OPTION_CLOSE, JSON_OPTION_NO_HTML, JSON_OPTION_BODY_RELOAD, JSON_OPTION_ONLY_AJAX
 
 class WeekPublish(JsonResponseMixin, CurrentWeekMixin, FormView):
   template_name = 'sport/week/publish.html'
   form_class = SportWeekPublish
+  json_options = [JSON_OPTION_ONLY_AJAX, ]
 
   def get_context_data(self, *args, **kwargs):
     # FormView does not embed local object

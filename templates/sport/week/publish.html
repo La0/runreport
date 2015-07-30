@@ -1,11 +1,13 @@
-{% extends 'modal.html' %}
+{% extends base %}
 
 {% set modal_title = _('Week %s') % report %}
 
 {% set form_url = url('report-week-publish', report.year, report.week) %}
 {% set form_class = 'week-publish' %}
 
+
 {% block body %}
+
   <h4>{{ _('Send to trainers') }}</h4>
   {% if report.published or report.task %}
     <p class="text-info">

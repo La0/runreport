@@ -106,10 +106,12 @@ class JsonResponseMixin(object):
 
     ajax = self.request.is_ajax()
     context['ajax'] = ajax
+    context['base'] = 'modal.html' # base modal template to extend
 
     if JSON_OPTION_ONLY_AJAX in self.json_options:
       # Skip when not Ajax
       if not ajax:
+        context['base'] = 'modal.base.html' # Render template in full page
         return super(JsonResponseMixin, self).render_to_response(context)
 
       # Load valid template
