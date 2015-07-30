@@ -15,6 +15,37 @@ $(function(){
     },
   });
   {% endif %}
+
+  // Setup quill editor
+  var editor = new Quill('#text_editor', {
+    formats: ['bold', 'italic', 'strike', 'underline', 'bullet', 'list', 'link'],
+    styles : false,
+    pollInterval : 50,
+    modules : {
+      'toolbar': { container: '#toolbar' },
+      'link-tooltip': true
+    }
+  });
+  editor.setHTML('{{ form.html.value()|default('')|safe }}');
+
+  // Focus on box click
+  $(document).on('click', '#text_editor', function(){
+    editor.focus();
+  });
+
+  // Submit with html content
+  $(document).on('click', 'button#edit', function(evt){
+
+    // Load form data
+    var data = serialize_form($('#post_editor'), evt);
+
+    // Add editor html
+    data['html'] = editor.getHTML();
+
+    // Submit form
+    load_box(this.getAttribute('action'), 'POST', data, $('#edit'));
+  });
+
 });
 </script>
 {% endblock %}
