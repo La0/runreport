@@ -308,6 +308,7 @@ CELERY_TIMEZONE = 'Europe/Paris'
 # Celery Periodic tasks
 from datetime import timedelta
 from celery.schedules import crontab
+CELERY_DEFAULT_QUEUE = 'base'
 CELERYBEAT_SCHEDULE = {
   'auto-send-reports-on-sunday': {
     'task': 'sport.tasks.auto_publish_reports',
