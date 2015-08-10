@@ -1,8 +1,9 @@
 from django.views.generic import FormView, DetailView
+from django.http import HttpResponseRedirect
 from sport.tasks import publish_report
 from sport.forms import SportWeekPublish
 from mixins import CurrentWeekMixin, WeekPaginator
-from coach.mixins import JsonResponseMixin, JSON_OPTION_CLOSE, JSON_OPTION_NO_HTML, JSON_OPTION_BODY_RELOAD, JSON_OPTION_ONLY_AJAX
+from coach.mixins import JsonResponseMixin, JSON_OPTION_CLOSE, JSON_OPTION_NO_HTML, JSON_OPTION_BODY_RELOAD, JSON_OPTION_ONLY_AJAX, JSON_OPTION_REDIRECT_SKIP
 
 class WeekPublish(JsonResponseMixin, CurrentWeekMixin, FormView):
   template_name = 'sport/week/publish.html'
@@ -38,8 +39,13 @@ class WeekPublish(JsonResponseMixin, CurrentWeekMixin, FormView):
     report.save()
 
     # Reload parent
-    self.json_options = [JSON_OPTION_CLOSE, JSON_OPTION_NO_HTML, JSON_OPTION_BODY_RELOAD]
-    return self.render_to_response({})
+    if self.request.is_ajax():
+      self.json_options = [JSON_OPTION_CLOSE, JSON_OPTION_NO_HTML, JSON_OPTION_BODY_RELOAD]
+      return self.render_to_response({})
+
+    # Transition to week view when not ajax
+    self.json_options = [JSON_OPTION_REDIRECT_SKIP, ]
+    return HttpResponseRedirect(report.get_absolute_url())
 
 class WeeklyReport(CurrentWeekMixin, WeekPaginator, DetailView):
   template_name = 'sport/week/edit.html'

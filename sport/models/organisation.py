@@ -81,7 +81,7 @@ class SportWeek(models.Model):
 
   def is_publiable(self):
     today = date.today()
-    return not self.published and today >= self.get_date_start()
+    return today >= self.get_date_start()
 
   @models.permalink
   def get_absolute_url(self):
@@ -138,9 +138,6 @@ class SportWeek(models.Model):
     '''
     Publish this report
     '''
-    if self.published:
-      raise Exception('This report is already published')
-
     # Build xls
     xls = open(self.build_xls(), 'r')
     xls_name = '%s_semaine_%d.xls' % (self.user.username, self.week+1)

@@ -11,6 +11,7 @@
 
     {% if form_url %}
     <form method="POST" action="{{form_url}}" class="{{form_class}}">
+      {% csrf_token %}
     {% endif %}
 
       <div class="panel-body">
