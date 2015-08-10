@@ -197,6 +197,7 @@ INSTALLED_APPS = (
     'post',
     'api', # Api code
     'payments', # Payments app
+    'badges', # Badges app
     'corsheaders', # CORS for api
     'vinaigrette', # Model translations
     'rest_framework', # Api provider

@@ -1,0 +1,147 @@
+[
+{
+    "fields": {
+        "name": "time"
+    },
+    "model": "badges.badgecategory",
+    "pk": 1
+},
+{
+    "fields": {
+        "name": "distance"
+    },
+    "model": "badges.badgecategory",
+    "pk": 2
+},
+{
+    "fields": {
+        "name": "age"
+    },
+    "model": "badges.badgecategory",
+    "pk": 3
+},
+{
+    "fields": {
+        "name": "premium"
+    },
+    "model": "badges.badgecategory",
+    "pk": 4
+},
+{
+    "fields": {
+        "name": "trainer"
+    },
+    "model": "badges.badgecategory",
+    "pk": 5
+},
+{
+    "fields": {
+        "category": 3,
+        "position": 1,
+        "name": "1 year",
+        "value": "1"
+    },
+    "model": "badges.badge",
+    "pk": 1
+},
+{
+    "fields": {
+        "category": 3,
+        "position": 2,
+        "name": "2 years",
+        "value": "2"
+    },
+    "model": "badges.badge",
+    "pk": 2
+},
+{
+    "fields": {
+        "category": 3,
+        "position": 3,
+        "name": "3 years",
+        "value": "3"
+    },
+    "model": "badges.badge",
+    "pk": 3
+},
+{
+    "fields": {
+        "category": 3,
+        "position": 4,
+        "name": "4 years",
+        "value": "4"
+    },
+    "model": "badges.badge",
+    "pk": 4
+},
+{
+    "fields": {
+        "category": 3,
+        "position": 5,
+        "name": "5 years",
+        "value": "5"
+    },
+    "model": "badges.badge",
+    "pk": 5
+},
+{
+    "fields": {
+        "category": 2,
+        "position": 1,
+        "name": "100 km",
+        "value": "100"
+    },
+    "model": "badges.badge",
+    "pk": 6
+},
+{
+    "fields": {
+        "category": 2,
+        "position": 2,
+        "name": "500 km",
+        "value": "500"
+    },
+    "model": "badges.badge",
+    "pk": 7
+},
+{
+    "fields": {
+        "category": 2,
+        "position": 3,
+        "name": "1000 km",
+        "value": "1000"
+    },
+    "model": "badges.badge",
+    "pk": 8
+},
+{
+    "fields": {
+        "category": 2,
+        "position": 4,
+        "name": "5000 km",
+        "value": "5000"
+    },
+    "model": "badges.badge",
+    "pk": 9
+},
+{
+    "fields": {
+        "category": 2,
+        "position": 5,
+        "name": "10000 km",
+        "value": "10000"
+    },
+    "model": "badges.badge",
+    "pk": 10
+},
+{
+    "fields": {
+        "category": 4,
+        "position": 1,
+        "name": "Premium Athlete",
+        "value": ""
+    },
+    "model": "badges.badge",
+    "pk": 11
+}
+]

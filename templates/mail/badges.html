@@ -1,0 +1,18 @@
+{% extends 'mail/base.html' %}
+
+{% set title = _('New badges') %}
+
+{% block mail %}
+<p>
+{{ _('Hello %s') % user.first_name }},
+</p>
+
+<p>
+{{ _('You have some new badges:') }}
+</p>
+<ul>
+{% for b in badges %}
+  <li>{{ b.name }}</li>
+{% endfor %}
+</ul>
+{% endblock %}

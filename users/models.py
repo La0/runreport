@@ -387,6 +387,34 @@ class Athlete(AthleteBase):
     sub, _ = self.subscriptions.get_or_create(offer=offer, defaults=defaults)
     return sub
 
+  def find_badges(self, save=False):
+    '''
+    Find all the best badges for a user
+    '''
+    from badges.models import BadgeCategory
+    from coach.mail import MailBuilder
+
+    all_added = []
+    for cat in BadgeCategory.objects.all():
+      badges, added = cat.find_badges(self, save)
+      if added:
+        all_added += added
+
+    # Notify a user about new badges
+    # in one mail
+    if all_added:
+      data = {
+        'user' : self,
+        'badges' : all_added,
+      }
+      mb = MailBuilder('mail/badges.html')
+      mb.language = self.language
+      mb.subject = _('New badges')
+      mb.to = [self.email, ]
+      mail = mb.build(data)
+      mail.send()
+
+    return all_added
 
 def user_initial_subscription(sender, instance, created=False, **kwargs):
     '''
