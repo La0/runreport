@@ -62,6 +62,69 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
+msgid "Monthly stats"
+msgstr ""
+
+msgid "Desc."
+msgstr ""
+
+msgid "Share your sessions details"
+msgstr ""
+
+msgid "Join a club and communicate with your trainer"
+msgstr ""
+
+msgid "Track your sport sessions"
+msgstr ""
+
+msgid "Garmin Synchronisation"
+msgstr ""
+
+msgid "Strava Synchronisation"
+msgstr ""
+
+msgid "Detailed privacy control"
+msgstr ""
+
+msgid "Google Calendar Export"
+msgstr ""
+
+msgid "Write blog posts"
+msgstr ""
+
+msgid "Detailed weekly stats"
+msgstr ""
+
+msgid "Be notified of your athletes sessions"
+msgstr ""
+
+msgid "Manage your athletes with a powerful interface"
+msgstr ""
+
+msgid "Talk directly and privately with your athletes"
+msgstr ""
+
+msgid "Easily create training plans"
+msgstr ""
+
+msgid "Send training plans to your athletes in one click"
+msgstr ""
+
+msgid "Maximum Athletes in a club"
+msgstr ""
+
+msgid "Maximum Trainers in a club"
+msgstr ""
+
+msgid "Create mailing lists for your club & athletes groups."
+msgstr ""
+
+msgid "Add your club logo on your pages"
+msgstr ""
+
+msgid "Manage your athletes subscriptions"
+msgstr ""
+
 msgid "View clubs"
 msgstr ""
 
@@ -146,6 +209,9 @@ msgstr ""
 msgid "My GPS services"
 msgstr ""
 
+msgid "My subscription"
+msgstr ""
+
 msgid "Logout"
 msgstr ""
 
@@ -162,57 +228,6 @@ msgid "French"
 msgstr ""
 
 msgid "English"
-msgstr ""
-
-msgid "Monthly stats"
-msgstr ""
-
-msgid "Desc."
-msgstr ""
-
-msgid "Share your sessions details"
-msgstr ""
-
-msgid "Join a club and communicate with your trainer"
-msgstr ""
-
-msgid "Track your sport sessions"
-msgstr ""
-
-msgid "Garmin Synchronisation"
-msgstr ""
-
-msgid "Strava Synchronisation"
-msgstr ""
-
-msgid "Detailed privacy control"
-msgstr ""
-
-msgid "Google Calendar Export"
-msgstr ""
-
-msgid "Write blog posts"
-msgstr ""
-
-msgid "Detailed weekly stats"
-msgstr ""
-
-msgid "Be notified of your athletes sessions"
-msgstr ""
-
-msgid "Manage your athletes with a powerful interface"
-msgstr ""
-
-msgid "Talk directly and privately with your athletes"
-msgstr ""
-
-msgid "Manage multiple trainers in your club"
-msgstr ""
-
-msgid "Send training plans to your athletes in one click"
-msgstr ""
-
-msgid "Easily create training plans"
 msgstr ""
 
 msgid "Name"
@@ -233,6 +248,9 @@ msgstr ""
 msgid "New contact message"
 msgstr ""
 
+msgid "Created"
+msgstr ""
+
 msgid "Active"
 msgstr ""
 
@@ -244,6 +262,12 @@ msgstr ""
 
 msgid "Failed"
 msgstr "Missed"
+
+msgid "Club"
+msgstr ""
+
+msgid "Athlete"
+msgstr ""
 
 msgid "Open"
 msgstr ""
@@ -310,7 +334,10 @@ msgstr ""
 msgid "Post content"
 msgstr ""
 
-msgid "session comment"
+msgid "Content of the session (training type, race name, ...)"
+msgstr ""
+
+msgid "How did you feel about this session ?"
 msgstr ""
 
 msgid "You must select a status for your training plan."
@@ -319,7 +346,22 @@ msgstr ""
 msgid "You must validate your training plan (select Done or Missed)."
 msgstr ""
 
+msgid "You must specify a name."
+msgstr ""
+
+msgid "You must specify a distance or time to add a session."
+msgstr ""
+
+msgid "You must specify a difficulty note or a comment."
+msgstr ""
+
+msgid "Pick a race category."
+msgstr ""
+
 msgid "Rest"
+msgstr ""
+
+msgid "session comment"
 msgstr ""
 
 msgid "Race category"
@@ -362,25 +404,28 @@ msgstr ""
 msgid "Difficulty"
 msgstr ""
 
-msgid "Difficulty note 1"
-msgstr "Very Easy session"
+msgid "Your badges"
+msgstr ""
 
-msgid "Difficulty note 2"
-msgstr "Easy session"
-
-msgid "Difficulty note 3"
-msgstr "Normal session"
-
-msgid "Difficulty note 4"
-msgstr "Hard session"
-
-msgid "Difficulty note 5"
-msgstr "Very Hard session"
+msgid "No badges attributed yet !"
+msgstr ""
 
 msgid "Use RunReport in"
 msgstr ""
 
 msgid "You are ussing a demo account, some features will not be available."
+msgstr ""
+
+msgid "You can get a "
+msgstr ""
+
+msgid "premium RunReport account"
+msgstr ""
+
+msgid "to get all the "
+msgstr ""
+
+msgid "features"
 msgstr ""
 
 msgid "Built by"
@@ -393,9 +438,6 @@ msgid "Facebook"
 msgstr ""
 
 msgid "All the clubs"
-msgstr ""
-
-msgid "Club"
 msgstr ""
 
 msgid "Manager"
@@ -642,9 +684,21 @@ msgstr ""
 msgid "Users"
 msgstr ""
 
+msgid "Premium"
+msgstr ""
+
+msgid "Preferences"
+msgstr ""
+
+msgid "Links"
+msgstr ""
+
 msgid ""
 "You are limited in the number of accounts linked to the club, depending on "
 "the type of users"
+msgstr ""
+
+msgid "To get more accounts available in your club, your club must be Premium"
 msgstr ""
 
 msgid "Users type"
@@ -657,6 +711,49 @@ msgid "Used"
 msgstr ""
 
 msgid "Available"
+msgstr ""
+
+msgid "Free club"
+msgstr ""
+
+msgid "Free"
+msgstr ""
+
+msgid "Forever"
+msgstr ""
+
+msgid "every year"
+msgstr ""
+
+msgid "Costs you"
+msgstr ""
+
+msgid "per month"
+msgstr ""
+
+msgid "Buy RunReport premium"
+msgstr ""
+
+msgid "Demo account"
+msgstr ""
+
+msgid "Edition is deactivated for the demo"
+msgstr ""
+
+msgid ""
+"Public links are shown in the Club menu, on top of the page, for all the "
+"users of the club."
+msgstr ""
+
+msgid ""
+"They are useful to show external websites: Facebook groups, official website "
+"of the club, ..."
+msgstr ""
+
+msgid "Url"
+msgstr ""
+
+msgid "There are no public link for your club."
 msgstr ""
 
 msgid "Subscriptions for a private club"
@@ -690,31 +787,6 @@ msgstr ""
 msgid "Subscribe athletes"
 msgstr ""
 
-msgid "Public links"
-msgstr ""
-
-msgid ""
-"Public links are shown in the Club menu, on top of the page, for all the "
-"users of the club."
-msgstr ""
-
-msgid ""
-"They are useful to show external websites: Facebook groups, official website "
-"of the club, ..."
-msgstr ""
-
-msgid "Url"
-msgstr ""
-
-msgid "There are no public link for your club."
-msgstr ""
-
-msgid "Demo account"
-msgstr ""
-
-msgid "Edition is deactivated for the demo"
-msgstr ""
-
 msgid "Send an email to all the club members"
 msgstr ""
 
@@ -728,9 +800,6 @@ msgid "Trainer"
 msgstr ""
 
 msgid "Staff"
-msgstr ""
-
-msgid "Athlete"
 msgstr ""
 
 msgid "Friend"
@@ -936,6 +1005,16 @@ msgstr ""
 msgid "Features for runners"
 msgstr ""
 
+msgid ""
+"All the features below with the tag Premium are only available to paying "
+"members of RunReport"
+msgstr ""
+
+msgid ""
+"A premium membership costs 14,99 euros per year, without any engagement "
+"whatsoever."
+msgstr ""
+
 msgid "Feature"
 msgstr ""
 
@@ -948,17 +1027,30 @@ msgstr ""
 msgid "New"
 msgstr ""
 
-msgid "Features for trainers"
+msgid "Yearly cost"
+msgstr ""
+
+msgid "I want the premium features"
+msgstr ""
+
+msgid "To get all those premium features :"
+msgstr ""
+
+msgid "Sign up"
+msgstr ""
+
+msgid "Features for trainers & clubs"
 msgstr ""
 
 msgid ""
-"All the above features with the tag Premium are only available to paying "
-"members of RunReport"
+"You can get extra features for your club, with our specific premium club "
+"status"
 msgstr ""
 
-msgid ""
-"A premium membership costs 3.50 euros per month, or 35 euros per year, "
-"without any engagement whatsoever."
+msgid "Premium small account"
+msgstr ""
+
+msgid "Premium big account"
 msgstr ""
 
 #, python-format
@@ -1033,8 +1125,34 @@ msgstr ""
 msgid "Premium Membership"
 msgstr ""
 
+msgid ""
+"Developper, Entrepreneur and athlete, I have create in 2013 this website to "
+"fulfill my running club needs to enhance communication"
+msgstr ""
+
+msgid ""
+"Main trainer at the CS Ternes (running club), I bring my sport expertise to "
+"enhance this website."
+msgstr ""
+
+msgid ""
+"Triathlete, computer science coach and designer, I've made the current "
+"design of RunReport."
+msgstr ""
+
+msgid ""
+"Really big into hiking and moutaineering, I continously test RunReport, "
+"looking around for its bugs & possible enhancements."
+msgstr ""
+
+msgid "New badges"
+msgstr ""
+
 #, python-format
 msgid "Hello %s"
+msgstr ""
+
+msgid "You have some new badges:"
 msgstr ""
 
 msgid "Hello"
@@ -1427,8 +1545,34 @@ msgstr ""
 msgid "Private"
 msgstr ""
 
-#, python-format
-msgid "Offer %s"
+msgid "Welcome offer"
+msgstr ""
+
+msgid "Premium offer"
+msgstr ""
+
+msgid "Premium small club"
+msgstr ""
+
+msgid "Premium big club"
+msgstr ""
+
+msgid "Awaiting first payment"
+msgstr ""
+
+msgid "Will start on"
+msgstr ""
+
+msgid "Started on"
+msgstr ""
+
+msgid "Will end on"
+msgstr ""
+
+msgid "Ended on"
+msgstr ""
+
+msgid "Premium Payment"
 msgstr ""
 
 msgid "Name on Card"
@@ -1467,6 +1611,24 @@ msgstr ""
 msgid "Pay Now"
 msgstr ""
 
+msgid "Processing"
+msgstr ""
+
+msgid "Secured & processed with"
+msgstr ""
+
+msgid "Valid payment"
+msgstr ""
+
+msgid "Thanks for your subscription to RunReport !"
+msgstr ""
+
+msgid "You can enjoy immediately all the premium features"
+msgstr ""
+
+msgid "Continue"
+msgstr ""
+
 msgid "You are a premium RunReport member !"
 msgstr ""
 
@@ -1485,7 +1647,10 @@ msgstr ""
 msgid "Processed"
 msgstr ""
 
-msgid "Cancel monthly subscription"
+msgid "No payment transactions processed yet."
+msgstr ""
+
+msgid "Cancel trimester subscription"
 msgstr ""
 
 msgid "Cancel yearly subscription"
@@ -1494,10 +1659,19 @@ msgstr ""
 msgid "Cancel subscription"
 msgstr ""
 
-msgid "Buy monthly"
+msgid "During 2 months"
 msgstr ""
 
-msgid "Buy yearly"
+msgid "Your welcome offer is valid for"
+msgstr ""
+
+msgid "Your welcome offer has expired."
+msgstr ""
+
+msgid "No welcome subscription found. Please contact the support."
+msgstr ""
+
+msgid "Yearly payment"
 msgstr ""
 
 #, python-format
@@ -1609,6 +1783,9 @@ msgid "Not published"
 msgstr ""
 
 msgid "You do not have written any post yet."
+msgstr ""
+
+msgid "This feature is only available with a premium account."
 msgstr ""
 
 msgid "Delete media"
@@ -1809,6 +1986,19 @@ msgstr ""
 msgid "No Distance"
 msgstr ""
 
+msgid "Elevation"
+msgstr ""
+
+#, fuzzy
+#| msgid "Natation"
+msgid "No elevation"
+msgstr "Swimming"
+
+#, fuzzy
+#| msgid "Difficulty note 1"
+msgid "No difficulty note"
+msgstr "Very Easy session"
+
 msgid "No sessions"
 msgstr ""
 
@@ -1830,19 +2020,6 @@ msgstr ""
 msgid "No trainer plan"
 msgstr ""
 
-#, fuzzy
-#| msgid "Difficulty note 1"
-msgid "No difficulty note"
-msgstr "Very Easy session"
-
-msgid "Elevation"
-msgstr ""
-
-#, fuzzy
-#| msgid "Natation"
-msgid "No elevation"
-msgstr "Swimming"
-
 msgid "Average Speed"
 msgstr ""
 
@@ -1853,6 +2030,9 @@ msgid "No maps"
 msgstr ""
 
 msgid "has planned a "
+msgstr ""
+
+msgid "in plan"
 msgstr ""
 
 msgid "Change date"
@@ -1901,9 +2081,6 @@ msgstr ""
 msgid ""
 "You need to specify your top speed in your preferences to enable this data "
 "tables."
-msgstr ""
-
-msgid "Preferences"
 msgstr ""
 
 #, python-format
@@ -2217,6 +2394,9 @@ msgstr ""
 msgid "View your public profile"
 msgstr ""
 
+msgid "Your current privacy settings are:"
+msgstr ""
+
 #, python-format
 msgid "%s trainer"
 msgstr ""
@@ -2428,7 +2608,7 @@ msgstr ""
 msgid "profile picture"
 msgstr ""
 
-msgid "profile picture visibility"
+msgid "avatar visibility"
 msgstr ""
 
 msgid "races visibility"
@@ -2506,6 +2686,54 @@ msgstr ""
 msgid ""
 "%(first_name)s %(last_name)s has removed your plan %(plan_name)s from his "
 "calendar"
+msgstr ""
+
+msgid "1 year"
+msgstr ""
+
+msgid "2 years"
+msgstr ""
+
+msgid "3 years"
+msgstr ""
+
+msgid "4 years"
+msgstr ""
+
+msgid "5 years"
+msgstr ""
+
+msgid "100 km"
+msgstr ""
+
+msgid "500 km"
+msgstr ""
+
+msgid "1000 km"
+msgstr ""
+
+msgid "5000 km"
+msgstr ""
+
+msgid "10000 km"
+msgstr ""
+
+msgid "Premium Athlete"
+msgstr ""
+
+msgid "time"
+msgstr ""
+
+msgid "distance"
+msgstr ""
+
+msgid "age"
+msgstr ""
+
+msgid "premium"
+msgstr ""
+
+msgid "trainer"
 msgstr ""
 
 msgid "Any Activity Type"
@@ -2693,6 +2921,31 @@ msgstr ""
 
 msgid "Multi Sport"
 msgstr ""
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Difficulty note 1"
+msgstr "Very Easy session"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Difficulty note 2"
+msgstr "Easy session"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Difficulty note 3"
+msgstr "Normal session"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Difficulty note 4"
+msgstr "Hard session"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Difficulty note 5"
+msgstr "Very Hard session"
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0

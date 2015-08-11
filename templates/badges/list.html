@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% set page_title = user == member and _('Your badges') or _('%s %s Badges' % (member.first_name, member.last_name)) %}
+
+{% block content %}
+<div class="container">
+  <h1>
+    {% if user == member %}
+      {{ _('Your badges') }}
+    {% else %}
+      {{ _('%s %s Badges' % (member.first_name, member.last_name)) }}
+    {% endif %}
+  </h1>
+
+  {% for cat, cat_badges in badges.items() %}
+  <h2>{{ _('Badges') }} {{ _(cat)|title() }}</h2>
+  <div class="row">
+
+    {% for badge in cat_badges %}
+    <div class="col-sm-3 col-xs-6 text-center">
+      <img class="img-responsive" src="{{ badge.image.url }}" />
+
+      <h5>
+        {{ badge.name }}
+      </h5>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="alert alert-info">
+    {{ _('No badges attributed yet !') }}
+  </p>
+  {% endfor %}
+</div>
+{% endblock %}

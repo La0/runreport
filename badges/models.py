@@ -1,6 +1,9 @@
 from django.db import models
 from django.utils import timezone
 from django.db.utils import IntegrityError
+import hashlib
+from django.conf import settings
+import vinaigrette
 
 class BadgeCategory(models.Model):
   '''
@@ -68,6 +71,12 @@ class BadgeCategory(models.Model):
 
     return badges, added_badges
 
+# Translation
+vinaigrette.register(BadgeCategory, ['name', ])
+
+def badge_image_path(instance, filename):
+  return instance.build_image_path()
+
 class Badge(models.Model):
   '''
   Badge earned by users after some events
@@ -76,6 +85,7 @@ class Badge(models.Model):
   value = models.CharField(max_length=250, blank=True, null=True)
   category = models.ForeignKey(BadgeCategory, related_name='badges')
   position = models.IntegerField()
+  image = models.ImageField(upload_to=badge_image_path, default='badges/default.png')
   users = models.ManyToManyField('users.Athlete', through='badges.BadgeUser', related_name='badges')
 
   def __unicode__(self):
@@ -86,6 +96,16 @@ class Badge(models.Model):
     unique_together = (
       ('category', 'position'),
     )
+
+  def build_image_path(self):
+    '''
+    Helper to build the image path for the badge
+    '''
+    h = hashlib.md5('%s:%s:%s' % (self.pk, settings.SECRET_KEY, timezone.now())).hexdigest()
+    return 'badges/%s.%s.%s.png' % (self.category.name, self.position, h[0:4])
+
+# Translation
+vinaigrette.register(Badge, ['name', ])
 
 class BadgeUser(models.Model):
   '''

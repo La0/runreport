@@ -19,6 +19,7 @@ urlpatterns = patterns('',
   url(r'^track/', include('tracks.urls')),
   url(r'^friends/', include('friends.urls')),
   url(r'^premium/', include('payments.urls')),
+  url(r'^badges/', include('badges.urls')),
   url(r'^(?P<type>help|news)/', include('page.urls')),
 
   # Invite
