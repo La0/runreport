@@ -21,6 +21,9 @@ user_patterns = patterns('',
   # View post
   url(r'^post/(?P<slug>[\w_]+)/?$', PostView.as_view(), name='post'),
 
+  # View badges
+  url(r'badges/?', UserBadgesView.as_view(), name='badges-user'),
+
   url(r'^/?', PublicProfile.as_view(), name="user-public-profile"),
 )
 

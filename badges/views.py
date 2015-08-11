@@ -1,4 +1,5 @@
 from django.views.generic import ListView
+from django.core.exceptions import PermissionDenied
 
 class BadgesView(ListView):
   '''
@@ -9,6 +10,8 @@ class BadgesView(ListView):
   context_object_name = 'badges'
 
   def get_user(self):
+    if not self.request.user.is_authenticated():
+      raise PermissionDenied
     return self.request.user
 
   def get_context_data(self):
