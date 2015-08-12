@@ -182,7 +182,15 @@ class CsvResponseMixin(object):
     response.write(u'\ufeff'.encode('utf8'))
 
     # Add data in response
-    writer = csv.writer(response, delimiter=';', dialect='excel')
+    if 'csv_headers' in context:
+      # From dict
+       writer = csv.DictWriter(response, fieldnames=context['csv_headers'], delimiter=';', dialect='excel')
+       writer.writeheader()
+
+    else:
+      # From list
+      writer = csv.writer(response, delimiter=';', dialect='excel')
+
     for line in context['csv_data']:
       writer.writerow(line)
 

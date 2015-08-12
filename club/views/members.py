@@ -1,4 +1,5 @@
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, View
+from django.utils.translation import ugettext as _
 from django.views.generic.edit import ModelFormMixin, ProcessFormView
 from django.http import Http404
 from users.models import Athlete
@@ -9,7 +10,7 @@ from club.forms import ClubMembershipForm
 from club import ROLES
 from club.tasks import mail_member_role
 from datetime import date, timedelta, MINYEAR
-from coach.mixins import JsonResponseMixin, JSON_STATUS_ERROR
+from coach.mixins import JsonResponseMixin, JSON_STATUS_ERROR, CsvResponseMixin
 
 import logging
 logger = logging.getLogger('club')
@@ -232,3 +233,46 @@ class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, Proces
     self.object = self.membership # needed for inherited classes
     return self.object
 
+
+class ClubMembersExport(ClubMixin, CsvResponseMixin, View):
+  '''
+  Export the list of members
+  as a CSV file
+  '''
+  def get(self, *args, **kwargs):
+
+    # Headers with trainers
+    headers = [
+      _('Lastname'),
+      _('Firstname'),
+      _('Email'),
+      _('Role'),
+      _('VMA'),
+      _('Birthday'),
+      _('Trainers'),
+    ]
+
+    # Add all data for members
+    data = []
+    members = self.club.clubmembership_set.filter(role__in=('athlete', 'trainer', 'staff'))
+    members = members.order_by('user__last_name', 'user__first_name')
+    for m in members:
+      # Base data
+      mdata = {
+        _('Lastname') : m.user.last_name,
+        _('Firstname') : m.user.first_name,
+        _('Email') : m.user.email,
+        _('Role') : m.role,
+        _('VMA') : m.user.vma,
+        _('Birthday') : m.user.birthday,
+        _('Trainers') : ' - '.join(m.trainers.values_list('first_name', flat=True)),
+      }
+      data.append(mdata)
+
+    # Render CSV
+    context = {
+      'csv_filename' : '%s.csv' % self.club.slug,
+      'csv_headers' : headers,
+      'csv_data' : data,
+    }
+    return self.render_to_response(context)
