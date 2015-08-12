@@ -1,5 +1,21 @@
 {% extends 'base.html' %}
 
+{% block js %}
+<script type="text/javascript">
+$(function(){
+  // Switch central texts
+  setInterval(function(){
+    var h = $('#switch_h2 h2.hid');
+    var v = $('#switch_h2 h2.vis');
+    v.fadeOut(function(){
+      h.removeClass('hid').addClass('vis').fadeIn();
+      v.removeClass('vis').addClass('hid');
+    });
+  }, 5000);
+});
+</script>
+{% endblock %}
+
 {% block content %}
 <div id="home">
 
@@ -72,9 +88,10 @@
           </a>
         </p>
       </div>
-      <div class="col-lg-4">
+      <div class="col-lg-4" id="switch_h2">
         <img class="img-circle img-responsive" src="{{ static('img/home/trainer.jpg') }}" alt="{{ _('Trainer') }}">
-        <h2>{{ _("I'm a trainer") }}</h2>
+        <h2 class="vis">{{ _("I'm a trainer") }}</h2>
+        <h2 class="hid" style="display: none">{{ _("I'm a coach") }}</h2>
         <p>RunReport est la plateforme idéale pour entraîner, suivre et motiver vos athlètes. <a href="{{ url('login') }}">Connectez vous</a>, créez et partagez vos plans d'entraînement .</p>
         <p>
           <a class="btn btn-info btn-light" href="{{ url('features') }}" role="button">
@@ -85,9 +102,9 @@
       </div>
       <div class="col-lg-4">
         <img class="img-circle img-responsive" src="{{ static('img/home/win.jpg') }}" alt="{{ _('Challenge') }}">
-        <h2>{{ _('Premium Membership') }}</h2>
+        <h2>{{ _('Club features') }}</h2>
         <p>
-          RunReport est (et restera) gratuit, mais un abonnement premium existe pour diposer de fonctionalités avancées. Améliorez votre suivi sportif en vous abonnant !
+          RunReport dispose de fonctionalités avancées pour une gestion simplifiée de votre club d'athlètes (inscriptions, listes, exports, mailing lists, ...)
         </p>
         <p>
           <a class="btn btn-info btn-light" href="{{ url('features') }}" role="button">
