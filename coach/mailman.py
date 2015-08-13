@@ -81,6 +81,7 @@ class MailMan(object):
     mls['default_member_action'] = 'accept'
     mls['default_nonmember_action'] = 'accept'
     mls['send_welcome_message'] = False
+    mls['advertised'] = False
     mls['display_name'] = full_name
     mls['subject_prefix'] = '[%s] ' % full_name
     mls['reply_to_address'] = ml.fqdn_listname
