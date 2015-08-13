@@ -9,10 +9,10 @@
 	<h2>{{club.name}} : {{members|length()}} {{ _('Members') }}</h2>
   <p>
     {% if club.mailing_list %}
-    <span class="text-info do-tooltip" title="{{ _('Send an email to all the club members') }}">
+    <a href="mailto:{{ club.mailing_list_fqdn }}" class="do-tooltip" title="{{ _('Send an email to all the club members') }}">
       <i class="icon-mail"></i>
       {{ club.mailing_list_fqdn }}
-    </span>
+    </a>
     {% else %}
     <span class="text-muted">
       <i class="icon-mail"></i>

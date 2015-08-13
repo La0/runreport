@@ -13,10 +13,10 @@
   </h1>
   <p>
     {% if group.mailing_list %}
-    <span class="text-info do-tooltip" title="{{ _('Send an email to all the group members') }}">
+    <a href="mailto:{{ group.mailing_list_fqdn }}" class="do-tooltip" title="{{ _('Send an email to all the group members') }}">
       <i class="icon-mail"></i>
       {{ group.mailing_list_fqdn }}
-    </span>
+    </a>
     {% else %}
     <span class="text-muted">
       <i class="icon-mail"></i>
