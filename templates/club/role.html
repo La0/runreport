@@ -6,7 +6,20 @@
 	<form method="POST" action="{{ url('club-member-role', club.slug, member.username) }}">
 		<p class="text-info">
       {{ member.first_name }} {{ member.last_name }} {{ _('is a %s in club') % _(membership.role|title()) }} : {{ club.name }}
+      <br />
+      {{ _('Member since') }}
+      <span class="do-tooltip" title="{{ membership.created|date('l d E Y') }}">
+        {{ membership.created|timesince() }}
+      </span>
 		</p>
+    <p>
+      <a href="{{ url('message-user-add', member.username ) }}" class="btn btn-sm btn-light btn-primary modal-action">
+        <i class="icon-mail"></i>
+        {{ _('Send a message') }}
+      </a>
+    </p>
+    <hr />
+
 		{% csrf_token %}
 		<input class="role_value" type="hidden" name="role" value="{{membership.role}}"/>
 

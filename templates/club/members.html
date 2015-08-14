@@ -65,15 +65,30 @@
                 <td>
                     {% with role = member.membership.role %}
                     {% if role == 'athlete' %}
-                        <a href="{{ url('club-member-role', club.slug, member.username) }}" class="modal-action btn btn-default btn-xs">{{ _('Athlete') }}</a>
+                        <a href="{{ url('club-member-role', club.slug, member.username) }}" class="modal-action btn btn-default btn-xs">
+                          <i class="icon-edit"></i>
+                          {{ _('Athlete') }}
+                        </a>
                     {% elif role == 'trainer' %}
-                        <a href="{{ url('club-member-role', club.slug, member.username) }}" class="modal-action btn btn-xs btn-info">{{ _('Trainer') }}</a>
+                        <a href="{{ url('club-member-role', club.slug, member.username) }}" class="modal-action btn btn-xs btn-info">
+                          <i class="icon-edit"></i>
+                          {{ _('Trainer') }}
+                        </a>
                     {% elif role == 'staff' %}
-                        <a href="{{ url('club-member-role', club.slug, member.username) }}" class="modal-action btn btn-xs btn-primary">{{ _('Staff') }}</a>
+                        <a href="{{ url('club-member-role', club.slug, member.username) }}" class="modal-action btn btn-xs btn-primary">
+                          <i class="icon-edit"></i>
+                          {{ _('Staff') }}
+                        </a>
                     {% elif role == 'archive' %}
-                        <a href="{{ url('club-member-role', club.slug, member.username) }}" class="modal-action btn btn-xs btn-danger">{{ _('Archived') }}</a>
+                        <a href="{{ url('club-member-role', club.slug, member.username) }}" class="modal-action btn btn-xs btn-danger">
+                          <i class="icon-edit"></i>
+                          {{ _('Archived') }}
+                        </a>
                     {% elif role == 'prospect' %}
-                        <a href="{{ url('club-member-role', club.slug, member.username) }}" class="modal-action btn btn-xs btn-success">{{ _('Newcomer') }}</a>
+                        <a href="{{ url('club-member-role', club.slug, member.username) }}" class="modal-action btn btn-xs btn-success">
+                          <i class="icon-edit"></i>
+                          {{ _('Newcomer') }}
+                        </a>
                     {% endif %}
                     {% endwith %}
                 </td>
@@ -106,12 +121,17 @@
                     {% endif %}
                 </td>
                 <td>
-                    <a class="btn btn-default btn-xs" href="{{ url('user-public-profile', member.username) }}">{{ _('Profile') }}</a>
+                    <a class="btn btn-light btn-info btn-xs" href="{{ url('user-public-profile', member.username) }}">{{ _('Profile') }}</a>
                     {% if member.membership.role not in ('archive', 'prospect') %}
-                    <a class="btn btn-danger btn-xs" href="{{ url('club-member-races', club.slug, member.username) }}">{{ _('Records') }}</a>
-                    <a class="btn btn-success btn-xs" href="{{ url('athlete-stats', member.username) }}">{{ _('Stats') }}</a>
-                    <a class="btn btn-primary btn-xs" href="{{ url('user-calendar-month', member.username, today|date('Y'), today|date('m')) }}">{{ _('Sessions') }}</a>
+                    <a class="btn btn-light btn-danger btn-xs" href="{{ url('club-member-races', club.slug, member.username) }}">{{ _('Results') }}</a>
+                    <a class="btn btn-light btn-success btn-xs" href="{{ url('athlete-stats', member.username) }}">{{ _('Stats') }}</a>
+                    <a class="btn btn-light btn-primary btn-xs" href="{{ url('user-calendar-month', member.username, today|date('Y'), today|date('m')) }}">{{ _('Sessions') }}</a>
                     {% endif %}
+                    <br />
+                    <a class="btn btn-xs btn-light btn-info modal-action" href="{{ url('message-user-add', member.username) }}">
+                      <i class="icon-mail"></i>
+                      {{ _('Send a message') }}
+                    </a>
                 </td>
             </tr>
 			{% endfor %}
