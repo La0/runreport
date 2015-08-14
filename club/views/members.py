@@ -200,7 +200,9 @@ class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, Proces
           membership.user.trainees.clear()
 
         # Only send mail for new roles
-        mail_member_role.delay(membership, self.role_original)
+        # When send_mail is valid
+        if form.cleaned_data['send_mail']:
+          mail_member_role.delay(membership, self.role_original)
 
         # Handle club mailing list
         if self.club.mailing_list:

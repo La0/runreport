@@ -21,6 +21,7 @@
     <hr />
 
 		{% csrf_token %}
+
 		<input class="role_value" type="hidden" name="role" value="{{membership.role}}"/>
 
 		{% for stat in stats %}
@@ -40,6 +41,14 @@
 		</div>
 		{% endif %}
 		{% endfor %}
+
+    <div class="form-group">
+      <div class="clearfix">&nbsp;</div>
+      <label class="control-label">
+        {{ form.send_mail }}
+        {{ _('Send an automatic email to the user when updating its role.') }}
+      </label>
+    </div>
 
 		{% if membership.role in ('athlete', 'trainer') %}
 		<hr />

@@ -9,6 +9,10 @@ from club.models import ClubGroup
 from django.utils.translation import ugettext_lazy as _
 
 class ClubMembershipForm(forms.ModelForm):
+  # Add a boolean to cancel mail sending
+  # When changing a role
+  send_mail = forms.BooleanField(required=False, initial=True)
+
   def __init__(self, *args, **kwargs):
     super(ClubMembershipForm, self).__init__(*args, **kwargs)
 
