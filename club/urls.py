@@ -35,11 +35,12 @@ club_patterns = patterns('',
   url(r'^/subscriptions/(?P<csv_name>[\w]+)/?$', ClubSubscriptionsEditor.as_view(), name="club-subscriptions-editor"),
 
   # Groups
-  url(r'^/groups/?', ClubGroupList.as_view(), name="club-groups"),
   url(r'^/group/new/?', ClubGroupCreate.as_view(), name="club-group-create"),
   url(r'^/group/(?P<group_slug>[\w\-\_]+)/members/?', ClubGroupMembers.as_view(), name="club-group-members"),
   url(r'^/group/(?P<group_slug>[\w\-\_]+)/edit/?', ClubGroupEdit.as_view(), name="club-group-edit"),
+  url(r'^/group/(?P<group_slug>[\w\-\_]+)/delete/?', ClubGroupDelete.as_view(), name="club-group-delete"),
   url(r'^/group/(?P<group_slug>[\w\-\_]+)/?', ClubGroupView.as_view(), name="club-group"),
+  url(r'^/group/?', ClubGroupList.as_view(), name="club-groups"),
 )
 
 urlpatterns = patterns('',

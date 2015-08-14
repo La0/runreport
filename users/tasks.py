@@ -46,3 +46,10 @@ def subscribe_mailing(user, mailing_name):
   Subscribe an user to a mailing list
   '''
   user.subscribe_mailing(mailing_name)
+
+@shared_task
+def unsubscribe_mailing(user, mailing_name):
+  '''
+  Unsubscribe an user to a mailing list
+  '''
+  user.unsubscribe_mailing(mailing_name)

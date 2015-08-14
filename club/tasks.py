@@ -62,3 +62,10 @@ def group_create_ml(group):
   Create a mailing list for a group
   '''
   group.create_mailing_list()
+
+@shared_task
+def group_delete_ml(group):
+  '''
+  Delete a mailing list for a group
+  '''
+  group.delete_mailing_list()

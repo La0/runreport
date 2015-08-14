@@ -319,3 +319,22 @@ class ClubGroup(models.Model):
 
     return True
 
+  def delete_mailing_list(self):
+    '''
+    Delete a mailing list for the club group
+    '''
+    if not self.mailing_list:
+      raise Exception('Missing a mailing list')
+
+    try:
+      mm = MailMan()
+      mm.delete_list(self.mailing_list)
+    except Exception, e:
+      print 'Failed to delete mailing list %s : %s' % (self.mailing_list, str(e))
+      return False
+
+    # Kill reference
+    # No save here, it kills the delete from task
+    self.mailing_list = None
+
+    return True

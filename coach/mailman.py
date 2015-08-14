@@ -88,3 +88,13 @@ class MailMan(object):
     mls.save()
 
     return ml
+
+  def delete_list(self, list_name):
+    '''
+    Delete a mailing list
+    '''
+    if not self.connected:
+      raise Exception('No mailman connection')
+
+    ml = self.get_list(list_name)
+    return ml.delete()

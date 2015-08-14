@@ -70,14 +70,14 @@ def add_pages(request):
       # Add club list for athletes
       if m.role in ('athlete', ):
         submenu['menu'].append(_p(('club-members', m.club.slug), _('Members')))
-        submenu['menu'].append(_p(('club-groups', m.club.slug, ), _('Groups')))
+        submenu['menu'].append(_p(('club-groups', m.club.slug, ), _('Groups'), lazy=True))
         submenu['menu'].append(MENU_SEPARATOR)
 
       # Add club admin links for trainers
       if m.role in ('trainer', 'staff') or request.user.is_superuser:
         submenu['menu'].append(_p(('club-members-name', m.club.slug, 'athletes', 'name'), _('My athletes')))
-        submenu['menu'].append(_p(('club-races', m.club.slug, ), _('Races'), lazy=True))
-        submenu['menu'].append(_p(('club-groups', m.club.slug, ), _('Groups')))
+        submenu['menu'].append(_p(('club-races', m.club.slug, ), _('Races')))
+        submenu['menu'].append(_p(('club-groups', m.club.slug, ), _('Groups'), lazy=True))
         submenu['menu'].append(_p(('club-members-name', m.club.slug, 'all', 'name'), _('All the club')))
 
         # Manage links

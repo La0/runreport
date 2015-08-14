@@ -1,7 +1,10 @@
 from .mixins import ClubGroupMixin
-from django.views.generic import ListView, CreateView, UpdateView, DetailView
+from django.views.generic import ListView, CreateView, UpdateView, DetailView, DeleteView
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from coach.mixins import JsonResponseMixin
-from club.tasks import group_create_ml
+from club.tasks import group_create_ml, group_delete_ml
+from users.tasks import subscribe_mailing, unsubscribe_mailing
 
 
 class ClubGroupList(ClubGroupMixin, ListView):
@@ -26,6 +29,21 @@ class ClubGroupView(ClubGroupMixin, DetailView):
   public = True
   template_name = 'club/group/view.html'
 
+class ClubGroupDelete(ClubGroupMixin, JsonResponseMixin, DeleteView):
+  template_name = 'club/group/delete.html'
+
+  def post(self, *args, **kwargs):
+
+    # Kill mailing list
+    if self.group.mailing_list:
+      group_delete_ml.delay(self.group)
+
+    # Delete
+    super(ClubGroupDelete, self).post(*args, **kwargs)
+
+    # After deletion, go to group list
+    return HttpResponseRedirect(reverse('club-groups', args=(self.club.slug, )))
+
 class ClubGroupMembers(ClubGroupMixin, JsonResponseMixin, ListView):
   template_name = 'club/group/members.html'
 
@@ -41,14 +59,14 @@ class ClubGroupMembers(ClubGroupMixin, JsonResponseMixin, ListView):
 
       # Add to mailing list
       if self.group.mailing_list:
-        member.user.subscribe_mailing(self.group.mailing_list)
+        subscribe_mailing.delay(member.user, self.group.mailing_list)
 
     elif action == 'remove':
       self.group.members.remove(member)
 
       # Remove from mailing list
       if self.group.mailing_list:
-        member.user.unsubscribe_mailing(self.group.mailing_list)
+        unsubscribe_mailing.delay(member.user, self.group.mailing_list)
 
     return self.render_to_response(self.get_context_data())
 

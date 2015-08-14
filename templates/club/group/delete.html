@@ -1,0 +1,14 @@
+{% extends 'modal.html' %}
+
+{% set modal_title = _('Remove group %s') % group.name %}
+
+{% block body %}
+{{ _('Are you sure to remove this group from your club ?') }}
+{% endblock %}
+
+{% block footer %}
+<button class="btn" data-dismiss="modal">{{ _('Cancel') }}</button>
+<a class="btn btn-danger modal-action modal-post" href="{{ url('club-group-delete', club.slug, group.slug) }}">
+  {{ _('Delete') }}
+</a>
+{% endblock %}

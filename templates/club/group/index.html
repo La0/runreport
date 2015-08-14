@@ -52,6 +52,9 @@
       </div>
       <div class="col-sm-3 col-xs-12 text-right">
         {% if editable and group_editable %}
+        <a class="btn btn-danger modal-action" href="{{ url('club-group-delete', club.slug, group.slug) }}">
+          {{ _('Delete') }}
+        </a>
         <a href="{{ url('club-group-edit', club.slug, group.slug) }}" class="btn btn-info">
           {{ _('Edit') }}
         </a>
