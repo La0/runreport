@@ -240,6 +240,14 @@ function load_box(url, method, data, output){
         return;
       }
       console.error("Failed to load box from "+url+" : "+err);
+
+      // Try to show some errors in open modals
+      if(output == 'modal'){
+        var modals = $('body').modalmanager('getOpenModals');
+        $.each(modals, function(i, m){
+          $(m).find('.modal-error').show();
+        });
+      }
     }
   });
 }

@@ -6,6 +6,7 @@
 	{% import '_macros.html' as macros %}
 	{% if form_url %}
 	<form method="POST" action="{{form_url}}" class="{{form_class}}">
+    {% csrf_token %}
 		{% endif %}
 		<div class="modal-body">
 			{% block body %}{% endblock %}

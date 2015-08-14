@@ -44,6 +44,11 @@
   {% else %}
     <p class="alert alert-info">{{ _('This week is not yet ready to be sent.') }}</p>
   {% endif %}
+
+  <div class="alert alert-danger modal-error" style="display: none">
+    <h4>{{ _('Erreur') }}</h4>
+    {{ _('An error occured while sending this report, please retry after reloading the page, or contact an administrator') }}
+  </div>
 {% endblock %}
 
 {% block footer %}

@@ -260,6 +260,9 @@ LOGGING = {
 SESSION_COOKIE_NAME = 'runreport'
 SESSION_COOKIE_AGE = 7776000 # 3 months in seconds
 
+# Csrf cookie settings
+CSRF_COOKIE_NAME = 'runreport.csrf'
+
 # Redirect urls
 LOGIN_URL = '/user/login'
 LOGIN_REDIRECT_URL = '/'
@@ -420,6 +423,8 @@ else:
   # Disable admin interface
   REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = ('rest_framework.renderers.JSONRenderer', )
 
+  # Secure csrf
+  CSRF_COOKIE_SECURE = True
 
 
 # Setup offline compression
