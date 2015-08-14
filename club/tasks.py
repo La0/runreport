@@ -69,3 +69,10 @@ def group_delete_ml(group):
   Delete a mailing list for a group
   '''
   group.delete_mailing_list()
+
+@shared_task
+def mail_member_role(membership, role):
+  '''
+  On role change, send an email to user
+  '''
+  membership.mail_user(role)

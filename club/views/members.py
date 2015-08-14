@@ -4,12 +4,15 @@ from django.http import Http404
 from users.models import Athlete
 from django.db.models import Count, Max
 from mixins import ClubMixin, ClubManagerMixin
-from sport.models import SportWeek
 from club.models import ClubMembership
 from club.forms import ClubMembershipForm
 from club import ROLES
+from club.tasks import mail_member_role
 from datetime import date, timedelta, MINYEAR
 from coach.mixins import JsonResponseMixin, JSON_STATUS_ERROR
+
+import logging
+logger = logging.getLogger('club')
 
 class ClubMembers(ClubMixin, ListView):
   template_name = 'club/members.html'
@@ -197,7 +200,7 @@ class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, Proces
           membership.user.trainees.clear()
 
         # Only send mail for new roles
-        membership.mail_user(self.role_original)
+        mail_member_role.delay(membership, self.role_original)
 
         # Handle club mailing list
         if self.club.mailing_list:
@@ -207,7 +210,7 @@ class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, Proces
             membership.user.unsubscribe_mailing(self.club.mailing_list)
 
     except Exception, e:
-      print str(e)
+      logger.error('Failed to save role update for %s : %s' % (membership.user, str(e)))
       raise Exception("Failed to save")
 
     return self.render_to_response(self.get_context_data(**{'form' : form}))

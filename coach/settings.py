@@ -253,6 +253,10 @@ LOGGING = {
           'handlers' : ['console'],
           'level': 'DEBUG',
         },
+        'club' : {
+          'handlers' : ['console'],
+          'level': 'DEBUG',
+        },
     }
 }
 

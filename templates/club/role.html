@@ -63,4 +63,11 @@
   {{ _('Edition is disabled for the demo.') }}
 </div>
 {% endif %}
+
+<div class="clearfix">&nbsp;</div>
+<div class="alert alert-danger modal-error" style="display: none">
+  <h4>{{ _('Error') }}</h4>
+  {{ _('An error occured while updating the athlete membership. Please retry after reloading the page.') }}
+</div>
+
 {% endblock %}
