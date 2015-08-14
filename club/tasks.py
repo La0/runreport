@@ -55,3 +55,10 @@ def subscribe_athlete(club, email, first_name, last_name):
   }
   invite = ClubInvite.objects.create(**data)
   invite.send()
+
+@shared_task
+def group_create_ml(group):
+  '''
+  Create a mailing list for a group
+  '''
+  group.create_mailing_list()

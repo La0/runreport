@@ -1,4 +1,5 @@
 <div id="members">
+  {% csrf_token %}
   <h2>{{ group_members|count() }}/{{ memberships.count() }} {{ _('Members') }}</h2>
   <div class="row">
     {% for member in memberships %}

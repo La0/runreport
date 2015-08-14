@@ -110,6 +110,11 @@ class ClubGroupMixin(object):
   def get_object(self):
     return self.get_queryset().get(slug=self.kwargs['group_slug'])
 
+  def get_form_kwargs(self, *args, **kwargs):
+    out = super(ClubGroupMixin, self).get_form_kwargs(*args, **kwargs)
+    out['club'] = self.club
+    return out
+
   def dispatch(self, request, *args, **kwargs):
     '''
     Check user is:

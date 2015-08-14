@@ -89,6 +89,18 @@ class ClubGroupForm(forms.ModelForm):
     model = ClubGroup
     fields = ('name', 'slug', 'description')
 
+  def __init__(self, club=None, *args, **kwargs):
+    super(ClubGroupForm, self).__init__(*args, **kwargs)
+    self.club = club
+
+  def clean_slug(self):
+    '''
+    Check the slug is not already used
+    '''
+    slug = self.cleaned_data['slug']
+    if self.club.groups.filter(slug=slug).exists():
+      raise forms.ValidationError(_('A group with this slug already exists.'))
+    return slug
 
 class CSVSubscriptionsForm(forms.Form):
   csv = forms.FileField()

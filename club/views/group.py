@@ -1,6 +1,7 @@
 from .mixins import ClubGroupMixin
 from django.views.generic import ListView, CreateView, UpdateView, DetailView
 from coach.mixins import JsonResponseMixin
+from club.tasks import group_create_ml
 
 
 class ClubGroupList(ClubGroupMixin, ListView):
@@ -13,8 +14,9 @@ class ClubGroupCreate(ClubGroupMixin, CreateView):
 
   def form_valid(self, form):
     # Create mailing list on group creation
+    # Through a delayed task
     out = super(ClubGroupCreate, self).form_valid(form)
-    self.group.create_mailing_list()
+    group_create_ml.delay(self.group)
     return out
 
 class ClubGroupEdit(ClubGroupMixin, UpdateView):

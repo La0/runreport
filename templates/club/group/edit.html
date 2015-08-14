@@ -11,6 +11,7 @@
       {{ _('Create a new group') }}
     {% endif %}
   </h1>
+  {% if group %}
   <p>
     {% if group.mailing_list %}
     <a href="mailto:{{ group.mailing_list_fqdn }}" class="do-tooltip" title="{{ _('Send an email to all the group members') }}">
@@ -24,6 +25,7 @@
     </span>
     {% endif %}
   </p>
+  {% endif %}
 
   <form class="form-horizontal" method="post" action="">
     {% csrf_token %}
