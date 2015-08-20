@@ -15,7 +15,7 @@
   {% endif %}
 {% else %}
   {% if new_role == 'archive' %}
-  {{ _('Sorry, but you are no longer in the club %s') % club.name }}
+  {{ _('Your role in club %s has changed, you are no longer followed by a trainer. You are in the Open Runners group.') % club.name }}
   {% elif new_role == 'trainer' %}
   {{ _('Your role in club %s has changed, you are now a trainer') % club.name }}
   {% elif new_role == 'staff' %}

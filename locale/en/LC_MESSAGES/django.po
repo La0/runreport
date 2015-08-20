@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-02 23:32+0200\n"
+"POT-Creation-Date: 2015-08-20 15:16+0200\n"
 "PO-Revision-Date: 2015-02-09 17:42+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
@@ -16,6 +16,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.4\n"
+
+msgid "A group with this slug already exists."
+msgstr ""
 
 msgid "The CSV file has not 3 columns."
 msgstr ""
@@ -255,12 +258,6 @@ msgstr ""
 msgid "Built by"
 msgstr ""
 
-msgid "The team"
-msgstr ""
-
-msgid "Source code on"
-msgstr ""
-
 msgid "Github"
 msgstr ""
 
@@ -356,6 +353,19 @@ msgid "Create the club"
 msgstr ""
 
 #, python-format
+msgid "Remove group %s"
+msgstr ""
+
+msgid "Are you sure to remove this group from your club ?"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+#, python-format
 msgid "Edit group: %s"
 msgstr ""
 
@@ -366,9 +376,6 @@ msgid "Send an email to all the group members"
 msgstr ""
 
 msgid "No mailing list."
-msgstr ""
-
-msgid "Cancel"
 msgstr ""
 
 msgid "Edit the group"
@@ -565,9 +572,6 @@ msgstr ""
 msgid "Url"
 msgstr ""
 
-msgid "Delete"
-msgstr ""
-
 msgid "There are no public link for your club."
 msgstr ""
 
@@ -641,10 +645,13 @@ msgstr ""
 msgid "Profile"
 msgstr ""
 
-msgid "Records"
+msgid "Results"
 msgstr ""
 
 msgid "Stats"
+msgstr ""
+
+msgid "Send a message"
 msgstr ""
 
 msgid "No members"
@@ -674,10 +681,16 @@ msgstr ""
 msgid "is a %s in club"
 msgstr ""
 
+msgid "Member since"
+msgstr ""
+
 msgid "Become"
 msgstr ""
 
 msgid "Available places"
+msgstr ""
+
+msgid "Send an automatic email to the user when updating its role."
 msgstr ""
 
 msgid "Save"
@@ -690,6 +703,14 @@ msgid "Archive this account"
 msgstr ""
 
 msgid "Edition is disabled for the demo."
+msgstr ""
+
+msgid "Error"
+msgstr ""
+
+msgid ""
+"An error occured while updating the athlete membership. Please retry after "
+"reloading the page."
 msgstr ""
 
 msgid "Send invites to your athletes"
@@ -888,26 +909,6 @@ msgid ""
 msgstr ""
 
 msgid "Discover RunReport:"
-msgstr ""
-
-msgid ""
-"Developper, Entrepreneur and athlete, I have create in 2013 this website to "
-"fulfill my running club needs to enhance communication"
-msgstr ""
-
-msgid ""
-"Main trainer at the CS Ternes (running club), I bring my sport expertise to "
-"enhance this website."
-msgstr ""
-
-msgid ""
-"Triathlete, computer science coach and designer, I've made the current "
-"design of RunReport."
-msgstr ""
-
-msgid ""
-"Really big into hiking and moutaineering, I continously test RunReport, "
-"looking around for its bugs & possible enhancements."
 msgstr ""
 
 #, python-format
@@ -1112,7 +1113,9 @@ msgid "Congrats, your subscription to club %s has been accepted !"
 msgstr ""
 
 #, python-format
-msgid "Sorry, but you are no longer in the club %s"
+msgid ""
+"Your role in club %s has changed, you are no longer followed by a trainer. "
+"You are in the Open Runners group."
 msgstr ""
 
 #, python-format
@@ -1263,6 +1266,13 @@ msgid "No conversations"
 msgstr ""
 
 msgid "You did not receive or send any message."
+msgstr ""
+
+#, python-format
+msgid "Conversations with %s %s"
+msgstr ""
+
+msgid "No conversations with this user"
 msgstr ""
 
 msgid "Written by"
@@ -1711,6 +1721,14 @@ msgstr ""
 msgid "This week is not yet ready to be sent."
 msgstr ""
 
+msgid "Erreur"
+msgstr ""
+
+msgid ""
+"An error occured while sending this report, please retry after reloading the "
+"page, or contact an administrator"
+msgstr ""
+
 msgid "Send to"
 msgstr ""
 
@@ -1830,9 +1848,6 @@ msgstr ""
 msgid ""
 "For a maximum level of security, we strongly suggest that you use a unique "
 "password for Garmin Connect (that should not be used for any other account)"
-msgstr ""
-
-msgid "Error"
 msgstr ""
 
 msgid "Connect to your Google Calendar"
@@ -1996,9 +2011,6 @@ msgstr ""
 msgid "this page"
 msgstr ""
 
-msgid "Send a message"
-msgstr ""
-
 msgid "Trained by"
 msgstr ""
 
@@ -2022,6 +2034,9 @@ msgstr ""
 
 #, python-format
 msgid "%s has no future races planned"
+msgstr ""
+
+msgid "Records"
 msgstr ""
 
 #, python-format

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-02 23:32+0200\n"
-"PO-Revision-Date: 2015-06-02 23:35+0100\n"
+"POT-Creation-Date: 2015-08-20 15:16+0200\n"
+"PO-Revision-Date: 2015-08-20 15:29+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -17,6 +17,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 1.5.4\n"
+
+msgid "A group with this slug already exists."
+msgstr "Un groupe avec ce nom existe déja."
 
 msgid "The CSV file has not 3 columns."
 msgstr "Le fichier CSV n'a pas 3 colonnes."
@@ -259,12 +262,6 @@ msgstr ""
 msgid "Built by"
 msgstr "Construit par"
 
-msgid "The team"
-msgstr "L'équipe"
-
-msgid "Source code on"
-msgstr "Code source sur"
-
 msgid "Github"
 msgstr "Github"
 
@@ -370,6 +367,21 @@ msgid "Create the club"
 msgstr "Créer un club"
 
 #, python-format
+#| msgid "Remove plan %s"
+msgid "Remove group %s"
+msgstr "Supprimer groupe %s"
+
+#| msgid "Are you sure to remove this plan from your calendar ?"
+msgid "Are you sure to remove this group from your club ?"
+msgstr "Etes vous sûr de vouloir supprimer ce groupe de votre club  ?"
+
+msgid "Cancel"
+msgstr "Annuler"
+
+msgid "Delete"
+msgstr "Supprimer"
+
+#, python-format
 msgid "Edit group: %s"
 msgstr "Editer groupe: %s"
 
@@ -381,9 +393,6 @@ msgstr "Envoyer un email à tous les membres du groupe."
 
 msgid "No mailing list."
 msgstr "Pas de mailing list."
-
-msgid "Cancel"
-msgstr "Annuler"
 
 msgid "Edit the group"
 msgstr "Editer le groupe"
@@ -591,9 +600,6 @@ msgstr ""
 msgid "Url"
 msgstr "Url"
 
-msgid "Delete"
-msgstr "Supprimer"
-
 msgid "There are no public link for your club."
 msgstr "Aucun lien public pour votre club."
 
@@ -667,11 +673,15 @@ msgstr "Nouveau"
 msgid "Profile"
 msgstr "Profil"
 
-msgid "Records"
-msgstr "Records"
+#| msgid "Results of"
+msgid "Results"
+msgstr "Résultats"
 
 msgid "Stats"
 msgstr "Statistiques"
+
+msgid "Send a message"
+msgstr "Envoyer un message"
 
 msgid "No members"
 msgstr "Pas de membres"
@@ -700,11 +710,19 @@ msgstr "Pas de courses pour vos athlètes"
 msgid "is a %s in club"
 msgstr "est un %s dans le club"
 
+#| msgid "Members"
+msgid "Member since"
+msgstr "Membre depuis"
+
 msgid "Become"
 msgstr "Devenir"
 
 msgid "Available places"
 msgstr "Places disponibles"
+
+msgid "Send an automatic email to the user when updating its role."
+msgstr ""
+"Envoyer un mail automatique à l'utilisateur lors du changement de son rôle."
 
 msgid "Save"
 msgstr "Sauver"
@@ -717,6 +735,16 @@ msgstr "Archiver ce compte"
 
 msgid "Edition is disabled for the demo."
 msgstr "L'édition est désactivée pour la démo."
+
+msgid "Error"
+msgstr "Erreur"
+
+msgid ""
+"An error occured while updating the athlete membership. Please retry after "
+"reloading the page."
+msgstr ""
+"Une erreur s'est produite lors de la mise à jour du rôle de l'athlète. "
+"Veuillez essayer après avoir rechargé la page."
 
 msgid "Send invites to your athletes"
 msgstr "Envoyez des invitations à vos athlètes"
@@ -943,34 +971,6 @@ msgstr ""
 msgid "Discover RunReport:"
 msgstr "Découvrir RunReport:"
 
-msgid ""
-"Developper, Entrepreneur and athlete, I have create in 2013 this website to "
-"fulfill my running club needs to enhance communication"
-msgstr ""
-"Développeur, Entrepreneur et athlète, j'ai crée en 2013 RunReport pour "
-"améliorer la communication au sein de mon club de course à pied."
-
-msgid ""
-"Main trainer at the CS Ternes (running club), I bring my sport expertise to "
-"enhance this website."
-msgstr ""
-"Entraineur principal au CS Ternes (club de course à pied), j'apporte mon "
-"expertise sportive pour améliorer le site."
-
-msgid ""
-"Triathlete, computer science coach and designer, I've made the current "
-"design of RunReport."
-msgstr ""
-"Triathlète, formateur informatique et designer, j'ai crée le design actuel "
-"de RunReport."
-
-msgid ""
-"Really big into hiking and moutaineering, I continously test RunReport, "
-"looking around for its bugs & possible enhancements."
-msgstr ""
-"Grand randonneur et montagnard, je test en continu RunReport, à la recherche "
-"de bug ou d'améliorations potentielles."
-
 #, python-format
 msgid "Hello %s"
 msgstr "Bonjour %s"
@@ -1189,8 +1189,13 @@ msgid "Congrats, your subscription to club %s has been accepted !"
 msgstr "Félicitations, votre inscription au club %s a été acceptée !"
 
 #, python-format
-msgid "Sorry, but you are no longer in the club %s"
-msgstr "Désolé, mais vous n'êtes plus dans le club %s"
+#| msgid "Your role in club %s has changed, you are now a trainer"
+msgid ""
+"Your role in club %s has changed, you are no longer followed by a trainer. "
+"You are in the Open Runners group."
+msgstr ""
+"Votre rôle au sein du club %s a changé, vous n'êtes plus suivi par un "
+"entraineur. Vous êtes dans le groupe \"Libre\" ou \"Open Runner\"."
 
 #, python-format
 msgid "Your role in club %s has changed, you are now a trainer"
@@ -1347,6 +1352,15 @@ msgstr "Pas de conversations"
 
 msgid "You did not receive or send any message."
 msgstr "Vous n'avez reçu ou envoyé aucun message."
+
+#, python-format
+#| msgid "Conversation with"
+msgid "Conversations with %s %s"
+msgstr "Conversations avec %s %s"
+
+#| msgid "No conversations"
+msgid "No conversations with this user"
+msgstr "Pas de conversations avec cet utilisateur"
 
 msgid "Written by"
 msgstr "Ecrit par"
@@ -1799,6 +1813,16 @@ msgstr "Vous pouvez indiquer vos sensations pour cette semaine (optionel)."
 msgid "This week is not yet ready to be sent."
 msgstr "Cette semaine n'est pas encore disponible à la publication."
 
+msgid "Erreur"
+msgstr "Erreur"
+
+msgid ""
+"An error occured while sending this report, please retry after reloading the "
+"page, or contact an administrator"
+msgstr ""
+"Une erreur s'est produite lors de l'envoi du rapport hebdomadaire. Veuillez "
+"reessayer après avoir rechargé la page, ou contacté un administrateur."
+
 msgid "Send to"
 msgstr "Envoyer à "
 
@@ -1931,9 +1955,6 @@ msgstr ""
 "Pour un niveau de sécurité maximum, nous vous recommandons d'utiliser un mot "
 "de passe unique pour Garmin Connect (qui ne serait pas utilisé pour un autre "
 "compte)"
-
-msgid "Error"
-msgstr "Erreur"
 
 msgid "Connect to your Google Calendar"
 msgstr "Connectez votre calendrier Google"
@@ -2111,9 +2132,6 @@ msgstr "Vous pouvez changer votre mot de passe en utilisant"
 msgid "this page"
 msgstr "cette page"
 
-msgid "Send a message"
-msgstr "Envoyer un message"
-
 msgid "Trained by"
 msgstr "Entraîné par"
 
@@ -2138,6 +2156,9 @@ msgstr "Courses à venir"
 #, python-format
 msgid "%s has no future races planned"
 msgstr "%s n'a aucune course à venir"
+
+msgid "Records"
+msgstr "Records"
 
 #, python-format
 msgid "%s has no records."
@@ -2607,6 +2628,57 @@ msgstr " Marche"
 
 msgid "Multi Sport"
 msgstr "Multi Sport"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "The team"
+msgstr "L'équipe"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Source code on"
+msgstr "Code source sur"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid ""
+"Developper, Entrepreneur and athlete, I have create in 2013 this website to "
+"fulfill my running club needs to enhance communication"
+msgstr ""
+"Développeur, Entrepreneur et athlète, j'ai crée en 2013 RunReport pour "
+"améliorer la communication au sein de mon club de course à pied."
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid ""
+"Main trainer at the CS Ternes (running club), I bring my sport expertise to "
+"enhance this website."
+msgstr ""
+"Entraineur principal au CS Ternes (club de course à pied), j'apporte mon "
+"expertise sportive pour améliorer le site."
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid ""
+"Triathlete, computer science coach and designer, I've made the current "
+"design of RunReport."
+msgstr ""
+"Triathlète, formateur informatique et designer, j'ai crée le design actuel "
+"de RunReport."
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid ""
+"Really big into hiking and moutaineering, I continously test RunReport, "
+"looking around for its bugs & possible enhancements."
+msgstr ""
+"Grand randonneur et montagnard, je test en continu RunReport, à la recherche "
+"de bug ou d'améliorations potentielles."
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Sorry, but you are no longer in the club %s"
+msgstr "Désolé, mais vous n'êtes plus dans le club %s"
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0
