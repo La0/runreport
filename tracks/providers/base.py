@@ -5,7 +5,8 @@ from django.db import transaction
 from django.db.models import Min, Max, Count
 import hashlib
 from tracks.models import Track, TrackSplit, TrackFile
-from sport.stats import StatsMonth
+from sport.stats import StatsMonth, StatsWeek
+from helpers import date_to_week
 
 logger = logging.getLogger('coach.sport.garmin')
 
@@ -125,17 +126,21 @@ class TrackProvider:
     # Import tracks !
     nb = 0
     months = [] # to build stats cache
+    weeks = []
     while True:
       tracks = []
       try:
         tracks = self.check_tracks(nb)
 
-        # Get the months to refresh stats
+        # Get the months & weeks to refresh stats
         for t in tracks:
           date = t.session.day.date
           m = (date.year, date.month)
+          w = date_to_week(date)
           if m not in months:
             months.append(m)
+          if w not in weeks:
+            weeks.append(m)
           nb += 1
       except TrackSkipUpdateException, e:
         if full:
@@ -155,10 +160,16 @@ class TrackProvider:
       if not len(tracks):
         break
 
-    # Refresh stats cache
+    # Refresh months stats cache
     for year,month in months:
-      logger.info("Refresh stats %d/%d for %s" % (month, year, self.user))
+      logger.info("Refresh month stats %d/%d for %s" % (month, year, self.user))
       st = StatsMonth(self.user, year, month, preload=False)
+      st.build()
+
+    # Refresh weeks stats cache
+    for year,week in weeks:
+      logger.info("Refresh week stats %d/%d for %s" % (week, year, self.user))
+      st = StatsWeek(self.user, week, month, preload=False)
       st.build()
 
   def import_activities(self, source=None):

@@ -9,7 +9,7 @@ import tempfile
 from django.conf import settings
 from coach.mail import MailBuilder
 from helpers import date_to_day, week_to_date
-from sport.stats import StatsMonth
+from sport.stats import StatsMonth, StatsWeek
 from .sport import SportSession
 from collections import OrderedDict
 from messages.models import Conversation, TYPE_COMMENTS_WEEK
@@ -204,8 +204,12 @@ class SportWeek(models.Model):
     return stats
 
   def rebuild_cache(self):
-    # Rebuild the stats cache
+    # Rebuild the monthly stats cache
     st = StatsMonth(self.user, self.year, self.get_date_start().month, preload=False)
+    st.build()
+
+    # Rebuild the weekly stats cache
+    st = StatsWeek(self.user, self.year, self.week, preload=False)
     st.build()
 
   def add_comment(self, message, writer):
@@ -268,8 +272,7 @@ class SportDay(models.Model):
 
   def rebuild_cache(self):
     # Rebuild the stats cache
-    st = StatsMonth(self.week.user, self.date.year, self.date.month, preload=False)
-    st.build()
+    self.week.rebuild_cache()
 
 class RaceCategory(models.Model):
   name = models.CharField(max_length=250)
