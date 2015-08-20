@@ -44,6 +44,14 @@
   <div class="row">
     <div class="col-xs-12 col-sm-6">
       <h1>{{ _('Your friends') }}</h1>
+
+      {% for session in friends %}
+        {% include 'dashboard/session.html' %}
+      {% else %}
+      <p class="text-info">
+        {{ _('No recent sessions from your friends') }}
+      </p>
+      {% endfor %}
     </div>
 
     <div class="col-xs-12 col-sm-6">

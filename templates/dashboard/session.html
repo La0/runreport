@@ -4,28 +4,28 @@
   'rest' : 'label-danger',
 } %}
 
+{% with member = session.day.week.user %}
+{% with is_stranger = member != user %}
 <div class="session">
   <h4>
     <i class="icon-sport-{{session.sport.slug}} do-tooltip" title="{{ session.sport.name }}"></i>
     {{ session.name }}
   </h4>
   <div class="row">
-    {% if mode == 'trainer' %}
+    {% if is_stranger %}
     <div class="col-xs-2">
-      <img src="{{ session.day.week.user.avatar.url }}" class="img-responsive img-rounded" alt="" />
+      <img src="{{ member.avatar.url }}" class="img-responsive img-rounded" alt="" />
     </div>
     <div class="col-xs-8">
     {% else %}
     <div class="col-xs-10">
     {% endif %}
 
-      {% if mode == 'trainer' %}
+      {% if is_stranger %}
         {{ _('By') }}
-        {% with member = session.day.week.user %}
         <a href="{{ url('user-public-profile', member.username) }}">
           {{ member.first_name }} {{ member.last_name }}
         </a>
-        {% endwith %}
         <br />
       {% endif %}
 
@@ -41,8 +41,8 @@
       </span>
     </div>
     <div class="col-xs-2 text-right">
-      {% if mode == 'trainer' %}
-      <a href="{{ url('user-calendar-day', session.day.week.user.username, session.day.date.year, session.day.date.month, session.day.date.day) }}" class="btn btn-light btn-primary">
+      {% if is_stranger %}
+      <a href="{{ url('user-calendar-day', member.username, session.day.date.year, session.day.date.month, session.day.date.day) }}" class="btn btn-light btn-primary">
       {% else %}
       <a href="{{ url('report-day', session.day.date.year, session.day.date.month, session.day.date.day) }}" class="btn btn-light btn-primary">
       {% endif %}
@@ -52,3 +52,5 @@
     </div>
   </div>
 </div>
+{% endwith %}
+{% endwith %}

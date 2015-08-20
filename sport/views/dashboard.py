@@ -50,6 +50,7 @@ class DashBoardView(TemplateView):
     if self.mode == 'athlete':
       context.update(self.load_weeks())
       context.update(self.load_sessions())
+      context.update(self.load_friends_sessions())
 
     # Load trainer data
     if self.mode == 'trainer':
@@ -105,6 +106,24 @@ class DashBoardView(TemplateView):
 
     return {
       'sessions' : sessions,
+    }
+
+  def load_friends_sessions(self):
+    '''
+    Load athlete friends sessions
+    close to today
+    '''
+    filters = {
+      'day__week__user__in' : self.request.user.friends.all(),
+      'day__date__gte' : self.today,
+      'day__date__lte' : self.today + timedelta(days=30),
+    }
+    sessions = SportSession.objects.filter(**filters)
+    sessions = sessions.select_related('day', 'track')
+    sessions = sessions.order_by('day__date')
+
+    return {
+      'friends' : sessions,
     }
 
   def load_prospects(self):
