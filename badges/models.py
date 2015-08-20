@@ -1,9 +1,12 @@
 from django.db import models
 from django.utils import timezone
 from django.db.utils import IntegrityError
-import hashlib
 from django.conf import settings
+from PIL import Image, ImageOps, ImageDraw
+from helpers import nameize
+import hashlib
 import vinaigrette
+import os
 
 class BadgeCategory(models.Model):
   '''
@@ -102,7 +105,52 @@ class Badge(models.Model):
     Helper to build the image path for the badge
     '''
     h = hashlib.md5('%s:%s:%s' % (self.pk, settings.SECRET_KEY, timezone.now())).hexdigest()
-    return 'badges/%s.%s.%s.png' % (self.category.name, self.position, h[0:4])
+    return 'badges/%s.%s.%s.png' % (self.category.name, self.position, h[0:6])
+
+  def build_image(self):
+    '''
+    Build a Badge image, using a source
+    Cropped as a centered circle, with
+    custom background
+    '''
+
+    # Files
+    img_dir = os.path.join(settings.HOME, 'badges/images')
+    bg_path = os.path.join(img_dir, 'background.png')
+    if not os.path.exists(bg_path):
+      raise Exception('Missing background %s' % bg_path)
+
+    src_path = os.path.join(img_dir, '%s/%s.jpg' % (self.category.name, nameize(self.name)))
+    if not os.path.exists(src_path):
+      raise Exception('Missing source image %s' % src_path)
+
+    # Images config
+    img_size = (360, 360)
+    mask_size = (300, 300)
+
+    # Draw mask
+    mask = Image.new('L', img_size, 0)
+    draw = ImageDraw.Draw(mask)
+    x = (img_size[0] - mask_size[0]) / 2.0
+    y = (img_size[1] - mask_size[1]) / 2.0
+    draw.ellipse((x, y, mask_size[0] + x, mask_size[1] + y), fill=255)
+
+    # Apply mask to image
+    src = Image.open(src_path)
+    circle = ImageOps.fit(src, mask.size, centering=(0.5, 0.5))
+    circle.putalpha(mask)
+
+    # Composite mask & background
+    bg = Image.open(bg_path)
+    output = Image.alpha_composite(bg, circle)
+    output_path = self.build_image_path()
+    output.save(os.path.join(settings.MEDIA_ROOT, output_path))
+
+    # Save new image reference
+    self.image = output_path
+    self.save()
+
+    return output
 
 # Translation
 vinaigrette.register(Badge, ['name', ])
