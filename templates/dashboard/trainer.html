@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% set type_css = {
+  'training' : 'label-info',
+  'race' : 'label-success',
+  'rest' : 'label-danger',
+} %}
+
+{% block content %}
+<div class="container" id="dashboard">
+  <h1>{{ _('Trainer dashboard') }}</h1>
+
+  <ol class="breadcrumb">
+
+    {% for m in memberships %}
+      {# Athletes list #}
+      <li>
+        <i class="icon-club text-muted"></i>
+        <a href="{{ url('club-members', m.club.slug) }}">{{ _('%s Athletes') % m.club.name }}</a>
+      </li>
+
+      {# Club Admin #}
+      {% if m.club.manager == user %}
+      <li>
+        <i class="icon-edit text-muted"></i>
+        <a href="{{ url('club-manage', m.club.slug) }}">{{ _('%s Admin.') % m.club.name }}</a>
+      </li>
+      {% endif %}
+
+    {% endfor %}
+
+    {# Plans #}
+    <li>
+      <i class="icon-plan-session text-muted"></i>
+      <a href="https://plans.runreport.fr">{{ _('Training plans') }}</a>
+    </li>
+
+    {# Athlete Dashboard #}
+    <li>
+      <i class="icon-right-open text-muted"></i>
+      <a href="{{ url('dashboard-type', 'athlete') }}">{{ _('Your athlete dashboard') }}</a>
+    </li>
+
+  </ol>
+
+  {% if prospects %}
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>{{ _('%d Prospects in your clubs') % prospects.count() }}</h4>
+
+      {% for p in prospects %}
+      <div class="col-xs-2 col-sm-1">
+        <img class="img-rounded img-responsive" src="{{ p.user.avatar.url }}" />
+      </div>
+      <div class="col-xs-10 col-sm-3">
+        <span class="lead">{{ p.user.first_name }} {{ p.user.last_name }}</span>
+        <br />
+        <a href="{{ url('club-member-role', p.club.slug, p.user.username) }}" class="modal-action btn btn-info btn-xs">
+          <i class="icon-edit"></i>
+          {{ _('Accept or refuse') }}
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+
+  </div>
+  {% endif %}
+
+  <div class="row">
+    {# Last sessions by athletes #}
+    <div class="col-xs-12 col-sm-6">
+      <h3>{{ _('Your athletes sessions') }}</h3>
+      {% for session in sessions %}
+        {% include 'dashboard/session.html' %}
+      {% else %}
+      <p class="text-info">
+        {{ _('No recent sessions from your athletes.') }}
+      </p>
+      {% endfor %}
+    </div>
+
+    {# Future races #}
+    <div class="col-xs-12 col-sm-6">
+      <h3>{{ _('Your athletes races') }}</h3>
+      {% for session in races %}
+        {% include 'dashboard/session.html' %}
+      {% else %}
+      <p class="text-info">
+        {{ _('No futures races from your athletes.') }}
+      </p>
+      {% endfor %}
+    </div>
+  </div>
+
+</div>
+{% endblock %}

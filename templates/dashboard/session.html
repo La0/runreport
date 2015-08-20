@@ -1,0 +1,54 @@
+{% set type_css = {
+  'training' : 'label-info',
+  'race' : 'label-success',
+  'rest' : 'label-danger',
+} %}
+
+<div class="session">
+  <h4>
+    <i class="icon-sport-{{session.sport.slug}} do-tooltip" title="{{ session.sport.name }}"></i>
+    {{ session.name }}
+  </h4>
+  <div class="row">
+    {% if mode == 'trainer' %}
+    <div class="col-xs-2">
+      <img src="{{ session.day.week.user.avatar.url }}" class="img-responsive img-rounded" alt="" />
+    </div>
+    <div class="col-xs-8">
+    {% else %}
+    <div class="col-xs-10">
+    {% endif %}
+
+      {% if mode == 'trainer' %}
+        {{ _('By') }}
+        {% with member = session.day.week.user %}
+        <a href="{{ url('user-public-profile', member.username) }}">
+          {{ member.first_name }} {{ member.last_name }}
+        </a>
+        {% endwith %}
+        <br />
+      {% endif %}
+
+      <span class="label {{type_css[session.type]}}">{{_(session.type)|title()}}</span>
+      <span class="do-tooltip" title="{{ session.day.date|date('l d E Y') }}">
+      {% if session.day.date > today %}
+        {{ _('In %s') % session.day.date|timeuntil() }}
+      {% elif session.day.date < today %}
+        {{ _('%s ago') % session.day.date|timesince() }}
+      {% else %}
+        <strong>{{ _('Today') }}</strong>
+      {% endif %}
+      </span>
+    </div>
+    <div class="col-xs-2 text-right">
+      {% if mode == 'trainer' %}
+      <a href="{{ url('user-calendar-day', session.day.week.user.username, session.day.date.year, session.day.date.month, session.day.date.day) }}" class="btn btn-light btn-primary">
+      {% else %}
+      <a href="{{ url('report-day', session.day.date.year, session.day.date.month, session.day.date.day) }}" class="btn btn-light btn-primary">
+      {% endif %}
+        {{ _('View') }}
+        <i class="icon-right-open"></i>
+      </a>
+    </div>
+  </div>
+</div>

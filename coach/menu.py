@@ -89,6 +89,15 @@ def add_pages(request):
           submenu['menu'].append(_p(('places', m.club.slug, ), _('Places'), lazy=True))
           submenu['menu'].append(_p(('club-manage', m.club.slug), _('Manage')))
 
+        # Add plans
+        submenu['menu'].append(MENU_SEPARATOR)
+        submenu['menu'].append({
+          'url' : 'https://plans.runreport.fr',
+          'caption' : _('Training plans'),
+          'active' : False,
+          'icon': None,
+        })
+
         submenu['menu'].append(MENU_SEPARATOR)
 
       # Add public club links for everyone
