@@ -10,6 +10,7 @@ def syncdb():
   '''
 
   # Import dump from server
+  local_encrypted = 'current_prod.gpg.tar'
   local_dump = 'current_prod.tar'
   if os.path.exists(local_dump):
     # Adk for reuse of local_dump
@@ -18,8 +19,16 @@ def syncdb():
       os.unlink(local_dump)
 
   if not os.path.exists(local_dump):
-      prod_dump = '~/db/current.tar'
-      get(prod_dump, local_dump)
+    # Download
+    prod_dump = '~/backups/current'
+    get(prod_dump, local_encrypted)
+
+    # Decrypt
+    decrypt = 'gpg --decrypt %s > %s' % (local_encrypted, local_dump)
+    local(decrypt)
+
+    # Cleanup
+    os.remove(local_encrypted)
 
   # Re create db
   createdb()
