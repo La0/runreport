@@ -36,6 +36,13 @@
 },
 {
     "fields": {
+        "name": "denivele"
+    },
+    "model": "badges.badgecategory",
+    "pk": 6
+},
+{
+    "fields": {
         "category": 3,
         "position": 1,
         "name": "1 year",
@@ -143,5 +150,45 @@
     },
     "model": "badges.badge",
     "pk": 11
+},
+{
+    "fields": {
+        "category": 6,
+        "position": 3,
+        "name": "Mont Blanc",
+        "value": "4810"
+    },
+    "model": "badges.badge",
+    "pk": 12
+},
+{
+    "fields": {
+        "category": 6,
+        "position": 4,
+        "name": "Everest",
+        "value": "8848"
+    },
+    "model": "badges.badge",
+    "pk": 13
+},
+{
+    "fields": {
+        "category": 6,
+        "position": 1,
+        "name": "Ben Nevis",
+        "value": "1344"
+    },
+    "model": "badges.badge",
+    "pk": 14
+},
+{
+    "fields": {
+        "category": 6,
+        "position": 2,
+        "name": "Pic du Midi d'Ossau",
+        "value": "2885"
+    },
+    "model": "badges.badge",
+    "pk": 15
 }
 ]

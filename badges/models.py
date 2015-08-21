@@ -29,6 +29,11 @@ class BadgeCategory(models.Model):
       agg = sessions.aggregate(total=models.Sum('distance'))
       return agg['total']
 
+    if self.name == 'denivele':
+      # Sum of elevation for user
+      agg = sessions.aggregate(total=models.Sum('elevation_gain'))
+      return agg['total']
+
     if self.name == 'time':
       # Sum of time for user, as days
       agg = sessions.aggregate(total=models.Sum('time'))
