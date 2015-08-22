@@ -155,7 +155,7 @@
       </h4>
 
       <h4>
-        {% if total.elevation_gain %}
+        {% if total.speed %}
         {{ total.speed|default(0)|convert_speed_kmh()|floatformat(2) }} km/h
         <i class="icon-speed do-tooltip" title="{{ _('Average Speed') }}"></i>
         {% else %}

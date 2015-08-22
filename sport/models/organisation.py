@@ -179,17 +179,20 @@ class SportWeek(models.Model):
     sports = set([s.sport for s in sessions])
 
     for sport in sports:
-      t, d = 0.0, 0.0
+      t, d, e = 0.0, 0.0, 0.0
       sport_sessions = sessions.filter(sport=sport)
       for s in sport_sessions :
         if s.time:
           t += s.time.total_seconds()
         if s.distance:
           d += s.distance
+        if s.elevation_gain:
+          e += s.elevation_gain
       stats.append({
         'sport' : sport,
         'time' : t,
         'distance' : d,
+        'elevation' : e,
         'sessions' : sport_sessions.count(),
       })
 
@@ -198,6 +201,7 @@ class SportWeek(models.Model):
       'sport' : None, # Total
       'time' : sum([s['time'] for s in stats]),
       'distance' : sum([s['distance'] for s in stats]),
+      'elevation' : sum([s['elevation'] for s in stats]),
       'sessions' : sum([s['sessions'] for s in stats]),
     })
 
