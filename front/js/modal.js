@@ -145,8 +145,21 @@ function serialize_form(form, evt){
   }
 
   var data = {};
-  $(formData).each(function(k, v){
-    data[v.name] = v.value;
+  $(formData).each(function(i, v){
+    var k = v.name;
+    if(data[k]){
+      // Support multiple values
+      if($.isArray(data[k])){
+        // Append to array
+        data[k].push(v.value);
+      }else{
+        // New array
+        data[k] = [ data[k], v.value];
+      }
+    }else{
+      // Direct usage
+      data[k] = v.value;
+    }
   });
 
   return data;
@@ -178,6 +191,7 @@ function load_box(url, method, data, output){
     method : method,
     data : data ? data : null,
     dataType : 'json',
+    traditional : true, // Avoid dumb serialization with [] appended on arrays !
     success : function(data){
 
       // Load a page
