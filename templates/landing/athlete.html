@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+
+{% set page_title = _('Features for athletes') %}
+
+{% block content %}
+<div id="features" class="athletes">
+  <div class="container-fluid jumbotron">
+    <h1>{{ _('Features for athletes') }}</h1>
+
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 text-center">
+        <a class="btn btn-info btn-light" href="{{ url('features-trainer') }}">
+          {{ _('View features for trainers') }}
+          <i class="icon-right-open"></i>
+        </a>
+      </div>
+
+      <div class="col-sm-3 col-xs-12 text-center">
+        <h3>{{ _('Monthly stats') }}</h3>
+        <img class="img-thumbnail" src="{{ static('img/landing/garmin.jpg') }}" />
+        <p>
+          {{ _('View all your personal stats about distance, time, sports, elevation, ...') }}
+        </p>
+      </div>
+
+      <div class="col-sm-3 col-xs-12 text-center">
+        <h3>{{ _('Monthly stats') }}</h3>
+        <img class="img-thumbnail" src="{{ static('img/landing/garmin.jpg') }}" />
+        <p>
+          {{ _('View all your personal stats about distance, time, sports, elevation, ...') }}
+        </p>
+      </div>
+
+      <div class="col-sm-3 col-xs-12 text-center">
+        <h3>{{ _('Monthly stats') }}</h3>
+        <img class="img-thumbnail" src="{{ static('img/landing/garmin.jpg') }}" />
+        <p>
+          {{ _('View all your personal stats about distance, time, sports, elevation, ...') }}
+        </p>
+      </div>
+
+      <div class="col-sm-3 col-xs-12 text-center">
+        <h3>{{ _('Monthly stats') }}</h3>
+        <img class="img-thumbnail" src="{{ static('img/landing/garmin.jpg') }}" />
+        <p>
+          {{ _('View all your personal stats about distance, time, sports, elevation, ...') }}
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row actions">
+      <div class="col-xs-12 text-center">
+        <a href="{{ url('user-create') }}" class="btn btn-primary btn-lg">
+          <i class="icon-plus"></i>
+          {{ _('Create an account') }}
+        </a>
+        <a href="{{ url('login') }}" class="btn btn-primary btn-lg">
+          <i class="icon-user"></i>
+          {{ _('Sign in') }}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 text-center">
+        <a class="btn btn-info btn-light" href="{{ url('features') }}">
+          {{ _('Read more about our premium features') }}
+          <i class="icon-right-open"></i>
+        </a>
+      </div>
+
+      <div class="col-sm-3 col-xs-12 text-center">
+        <h3>{{ _('Monthly stats') }}</h3>
+        <h4>
+          <span class="label label-warning">
+            <i class="icon-premium"></i>
+            {{ _('Premium') }}
+          </span>
+        </h4>
+        <img class="img-thumbnail" src="{{ static('img/landing/garmin.jpg') }}" />
+        <p>
+          {{ _('View all your personal stats about distance, time, sports, elevation, ...') }}
+        </p>
+      </div>
+
+      <div class="col-sm-3 col-xs-12 text-center">
+        <h3>{{ _('Monthly stats') }}</h3>
+        <h4>
+          <span class="label label-warning">
+            <i class="icon-premium"></i>
+            {{ _('Premium') }}
+          </span>
+        </h4>
+        <img class="img-thumbnail" src="{{ static('img/landing/garmin.jpg') }}" />
+        <p>
+          {{ _('View all your personal stats about distance, time, sports, elevation, ...') }}
+        </p>
+      </div>
+
+      <div class="col-sm-3 col-xs-12 text-center">
+        <h3>{{ _('Monthly stats') }}</h3>
+        <h4>
+          <span class="label label-warning">
+            <i class="icon-premium"></i>
+            {{ _('Premium') }}
+          </span>
+        </h4>
+        <img class="img-thumbnail" src="{{ static('img/landing/garmin.jpg') }}" />
+        <p>
+          {{ _('View all your personal stats about distance, time, sports, elevation, ...') }}
+        </p>
+      </div>
+
+      <div class="col-sm-3 col-xs-12 text-center">
+        <h3>{{ _('Monthly stats') }}</h3>
+        <h4>
+          <span class="label label-warning">
+            <i class="icon-premium"></i>
+            {{ _('Premium') }}
+          </span>
+        </h4>
+        <img class="img-thumbnail" src="{{ static('img/landing/garmin.jpg') }}" />
+        <p>
+          {{ _('View all your personal stats about distance, time, sports, elevation, ...') }}
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+{% endblock %}

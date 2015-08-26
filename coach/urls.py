@@ -26,6 +26,8 @@ urlpatterns = patterns('',
   url(r'^invite/(?P<slug>.*)', ClubInviteCheck.as_view(), name="club-invite"),
 
   # Landing pages
+  url(r'^features/athlete/?', TemplateView.as_view(template_name='landing/athlete.html'), name="features-athlete"),
+  url(r'^features/trainer/?', TemplateView.as_view(template_name='landing/trainer.html'), name="features-trainer"),
   url(r'^features/?', FeaturesView.as_view(), name="features"),
 
   # Contact Form

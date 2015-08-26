@@ -45,10 +45,15 @@ $font_2: Helvetica;
 $font_3: Arial;
 $font_4: sans-serif;
 
+// Load env defined variables
+@import "local_settings.scss";
+
 //urls should be conditional
-$url_0: url(https://cdn.nextcairn.com/rr/static/img/club_bg.png);
-$url_1: url(https://cdn.nextcairn.com/rr/static/img/landing/runners.jpg);
-$url_2: url(https://cdn.nextcairn.com/rr/static/img/landing/track.jpg);
+$url_0: url(#{$cdn_url}/static/img/club_bg.png);
+$url_1: url(#{$cdn_url}/static/img/landing/runners.jpg);
+$url_2: url(#{$cdn_url}/static/img/landing/track.jpg);
+$url_runners_2: url(#{$cdn_url}/static/img/landing/runners2.jpg);
+$url_trainers: url(#{$cdn_url}/static/img/landing/track.jpg);
 
 //@extend-elements
 //original selectors
@@ -998,7 +1003,6 @@ td.avatar {
   .carousel {
     margin-top: -15px;
     height: 500px;
-    margin-bottom: 20px;
     .item {
       height: 500px;
       background-color: $color_tapa_approx;
@@ -1013,6 +1017,14 @@ td.avatar {
   .carousel-caption {
     z-index: 10;
   }
+
+  .actions {
+    background: #FCFCFC;
+    border-bottom: 1px solid #EEE;
+    padding: 15px 0;
+    margin-bottom: 20px;
+  }
+
   .marketing {
     .actions {
       margin-bottom: 20px;
@@ -1038,6 +1050,7 @@ td.avatar {
   }
 }
 #features {
+  // Generic
   line-height: 1.6em;
   p {
     font-size: 1.2em;
@@ -1045,6 +1058,42 @@ td.avatar {
   ul a {
     font-size: 1.2em;
   }
+
+  // Jumbo
+  div.jumbotron {
+    text-align: center;
+    background-size: cover;
+    background-position: top center;
+    background-repeat: no-repeat;
+    margin-top: -30px;
+
+    h1 {
+      color: white;
+      text-shadow: 5px 5px black;
+    }
+  }
+
+  &.athletes {
+    div.jumbotron {
+      background-image: $url_runners_2;
+    }
+  }
+
+  &.trainers {
+    div.jumbotron {
+      background-image: $url_trainers;
+    }
+  }
+
+  .actions {
+    background: #FCFCFC;
+    border-bottom: 1px solid #EEE;
+    border-top: 1px solid #EEE;
+    padding: 15px 0;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
 }
 #rings .week_ring .date {
   display: none;

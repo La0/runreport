@@ -60,54 +60,51 @@ $(function(){
     </a>
   </div>
 
-  {# Marketing choices #}
-  <div class="container marketing">
+  {# Call to actions #}
+  <div class="container-fluid">
     <div class="row actions">
-      <div class="col-sm-offset-3 col-sm-3 col-xs-12 text-center">
+      <div class="col-xs-12 text-center">
         <a href="{{ url('user-create') }}" class="btn btn-primary btn-lg">
           <i class="icon-plus"></i>
           {{ _('Create an account') }}
         </a>
-      </div>
-      <div class="col-sm-3 col-xs-12 text-center">
         <a href="{{ url('login') }}" class="btn btn-primary btn-lg">
           <i class="icon-user"></i>
           {{ _('Sign in') }}
         </a>
       </div>
     </div>
+  </div>
+
+  {# Marketing choices #}
+  <div class="container marketing">
     <div class="row">
-      <div class="col-lg-4">
+      <div class="col-lg-4 col-lg-offset-2 col-sm-6 col-xs-12">
         <img class="img-circle img-responsive" src="{{ static('img/home/runner.jpg') }}" alt="{{ _('Runner') }}" >
-        <h2>{{ _("I'm a runner") }}</h2>
-        <p>RunReport est votre nouveau partenaire running : <a href="{{ url('login') }}">connectez vous</a>, planifiez vos séances, suivez vos performances et partagez-les avec votre entraîneur et vos amis</p>
+        <h2>{{ _("I'm an athlete") }}</h2>
         <p>
-          <a class="btn btn-info btn-light" href="{{ url('features') }}" role="button">
+          {{ _('RunReport is your new sport partner') }} :
+          <a href="{{ url('login') }}">{{ _('Sign in') }}</a>, 
+          {{ _('plan your sessions, track your performances and share them with your trainer & friends.') }}
+        </p>
+        <p>
+          <a class="btn btn-info btn-light" href="{{ url('features-athlete') }}" role="button">
             {{ _('Want to know more') }}
             <i class="icon-right-open"></i>
           </a>
         </p>
       </div>
-      <div class="col-lg-4" id="switch_h2">
+      <div class="col-lg-4 col-sm-6 col-xs-12" id="switch_h2">
         <img class="img-circle img-responsive" src="{{ static('img/home/trainer.jpg') }}" alt="{{ _('Trainer') }}">
         <h2 class="vis">{{ _("I'm a trainer") }}</h2>
         <h2 class="hid" style="display: none">{{ _("I'm a coach") }}</h2>
-        <p>RunReport est la plateforme idéale pour entraîner, suivre et motiver vos athlètes. <a href="{{ url('login') }}">Connectez vous</a>, créez et partagez vos plans d'entraînement .</p>
         <p>
-          <a class="btn btn-info btn-light" href="{{ url('features') }}" role="button">
-            {{ _('Want to know more') }}
-            <i class="icon-right-open"></i>
-          </a>
-        </p>
-      </div>
-      <div class="col-lg-4">
-        <img class="img-circle img-responsive" src="{{ static('img/home/win.jpg') }}" alt="{{ _('Challenge') }}">
-        <h2>{{ _('Club features') }}</h2>
-        <p>
-          RunReport dispose de fonctionalités avancées pour une gestion simplifiée de votre club d'athlètes (inscriptions, listes, exports, mailing lists, ...)
+          {{ _('RunReport is the ideal tool to train, track and motivate your athletes.') }}
+          <a href="{{ url('login') }}">{{ _('Sign in') }}</a>, 
+          {{ _('create, share your training plans and manage your club.') }}
         </p>
         <p>
-          <a class="btn btn-info btn-light" href="{{ url('features') }}" role="button">
+          <a class="btn btn-info btn-light" href="{{ url('features-trainer') }}" role="button">
             {{ _('Want to know more') }}
             <i class="icon-right-open"></i>
           </a>
