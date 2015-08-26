@@ -392,6 +392,9 @@ MAILMAN_DOMAIN = None
 MAILMAN_USER = None
 MAILMAN_PASS = None
 
+# Help pages
+HELP_URL = 'https://help.runreport.fr'
+
 # API Settings
 REST_FRAMEWORK = {
   'DEFAULT_AUTHENTICATION_CLASSES': (
