@@ -1,4 +1,6 @@
 from django.views.generic import DetailView
+from django.core.exceptions import PermissionDenied
+from django.conf import settings
 from payments.models import PaymentOffer
 from datetime import date, timedelta
 from helpers import week_to_date
@@ -11,6 +13,10 @@ class PaymentOfferPay(PaymentAthleteMixin, DetailView):
   no_active_subscriptions = True
 
   def get_queryset(self):
+    # Check payments are enabled
+    if not settings.PAYMENTS_ENABLED:
+      raise PermissionDenied
+
     # Only paying offers
     offers = PaymentOffer.objects.exclude(paymill_id__isnull=True)
 

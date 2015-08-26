@@ -158,10 +158,16 @@
         {% endfor %}
 
         <p class="text-center">
+          {% if PAYMENTS_ENABLED %}
           <a href="{{ offer.get_absolute_url() }}" class="btn btn-success">
             <i class="icon-premium"></i>
             {{ _('Buy RunReport premium') }}
           </a>
+          {% else %}
+          <span class="text-warning">
+            {{ _('Sorry, but payments are not available at this moment. Come back later !') }}
+          </span>
+          {% endif %}
         </p>
       </div>
     </div>

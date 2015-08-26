@@ -3,6 +3,7 @@ from payments.models import PaymentOffer
 from coach.features import list_features
 from django.utils import timezone
 from django.views.generic import TemplateView
+from django.shortcuts import get_object_or_404
 
 
 class PaymentStatus(PaymentAthleteMixin, TemplateView):
@@ -17,7 +18,7 @@ class PaymentStatus(PaymentAthleteMixin, TemplateView):
     context['now'] = timezone.now()
 
     # Load athlete offer
-    context['offer'] = PaymentOffer.objects.get(slug='athlete')
+    context['offer'] = get_object_or_404(PaymentOffer, slug='athlete')
 
     # Load subscriptions & transactions
     subs = self.request.user.subscriptions.all()
