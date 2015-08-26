@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 from users.notification import UserNotifications
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
+from datetime import datetime
 
 MENU_SEPARATOR = '__SEPARATOR__'
 
@@ -52,8 +53,20 @@ def add_pages(request):
 
   menu = []
   if request.user.is_authenticated():
-    menu.append(_p('report-current', _('My Week'), 'icon-list'))
-    menu.append(_p('report-current-month', _('My Calendar'), icon='icon-calendar', lazy=True))
+    # Dashboard
+    menu.append(_p('dashboard', _('Home'), 'icon-home'))
+
+    # Logbook submenu
+    n = datetime.now()
+    submenu = {
+      'caption' : _('My Calendar'),
+      'menu' : [],
+      'icon' : 'icon-calendar',
+    }
+    submenu['menu'].append(_p('report-current', _('My Week'), 'icon-list'))
+    submenu['menu'].append(_p('report-current-month', _('My Month')))
+    submenu['menu'].append(_p(('report-year', n.year), _('My year')))
+    menu.append(submenu)
 
     # Load memberships
     members = request.user.memberships.exclude(role__in=('archive', 'prospect'))
