@@ -31,7 +31,6 @@ $(document).ajaxSend(function(event, xhr, settings) {
     }
 
     if (!safeMethod(settings.type) && sameOrigin(settings.url)) {
-        // TODO: support different cookies names
-        xhr.setRequestHeader("X-CSRFToken", getCookie('runreport.prod.csrf'));
+        xhr.setRequestHeader("X-CSRFToken", getCookie(rr_config.csrf_cookie));
     }
 });

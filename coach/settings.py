@@ -265,7 +265,7 @@ SESSION_COOKIE_NAME = 'runreport'
 SESSION_COOKIE_AGE = 7776000 # 3 months in seconds
 
 # Csrf cookie settings
-CSRF_COOKIE_NAME = 'runreport.csrf'
+CSRF_COOKIE_NAME = 'runreport.dev.csrf'
 
 # Redirect urls
 LOGIN_URL = '/user/login'
