@@ -131,6 +131,22 @@ $(function(){
     btn.hide();
     btn.siblings('button').show();
   });
+
+  // Change date
+  $('button.move_plan_session').datepicker({
+    language : 'fr',
+    todayHighlight : true,
+    weekStart : 1,
+  }).on('changeDate', function(evt){
+    if(!evt.date)
+      return;
+    var btn = $(evt.target);
+    var data = {
+      psa : btn.attr('data-psa'),
+      date : Math.floor(evt.date.getTime() / 1000),
+    };
+    load_box(btn.attr('data-url'), 'POST', data);
+  });
 });
 
 // Helper to add submit button data
