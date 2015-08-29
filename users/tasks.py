@@ -37,8 +37,11 @@ def send_related_races_mail():
     mb = MailBuilder('mail/related_races.html', a.language)
     mb.to = [a.email, ]
     mb.subject = _('New friends races')
-    mail = mb.build(context)
-    mail.send()
+    try:
+      mail = mb.build(context)
+      mail.send()
+    except Exception, e:
+      print 'Mail for races failed: %s' % str(e)
 
 @shared_task
 def subscribe_mailing(user, mailing_name):
