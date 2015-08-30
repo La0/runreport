@@ -105,18 +105,21 @@ var display_week_rings = function(){
     });
 
     // Draw date on bottom of ring
-    r.text(x, ring_size + 20, week.element.find('.date').text()).attr({
+    var text = r.text(x, ring_size + 20, week.element.find('.date').text()).attr({
       fill : RING_COLOR_DATE,
       'font-size' : 14,
       'font-family' : 'Arial, Helvetica, sans-serif',
+      cursor : 'pointer',
     });
 
     // Draw sessions nb
+    var nb = null;
     if(week.sessions > 0){
-      r.text(x, ring_size / 2.0, week.sessions).attr({
+      nb = r.text(x, ring_size / 2.0, week.sessions).attr({
         fill : RING_COLOR_NB,
         'font-size' : 18,
         'font-family' : 'Arial, Helvetica, sans-serif',
+        cursor: 'pointer',
       });
     }
 
@@ -168,9 +171,13 @@ var display_week_rings = function(){
     };
 
     // Go to week
-    ring[0].onclick = function(){
+    var open_link = function(){
       window.location.href = week.href;
     };
+    ring[0].onclick = open_link;
+    text[0].onclick = open_link;
+    if(nb)
+      nb[0].onclick = open_link;
   });
 };
 
