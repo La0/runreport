@@ -21,14 +21,14 @@
         {{ _('Your sport weeks') }}
       </h1>
     </div>
-    {% if is_trainer %}
     <div class="col-xs-12 col-sm-4 text-right">
+      {% if is_trainer %}
       <a class="btn btn-info btn-light" href="{{ url('dashboard-type', 'trainer') }}">
         {{ _('Your trainer dashboard') }}
         <i class="icon-right-open"></i>
       </a>
+      {% endif %}
     </div>
-    {% endif %}
 
     <div class="col-xs-12" id="rings">
     {% for week in weeks %}
@@ -47,6 +47,9 @@
 
     {% endfor %}
     </div>
+    <p class="pull-right">
+      {{ macros.help(user, _('You can quickly view the number of sessions per weeks, and the mileage & time.'), _('Your sport weeks')) }}
+    </p>
   </div>
 
   <div class="row">
