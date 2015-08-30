@@ -1185,3 +1185,15 @@ td.avatar {
 .badges {
   margin-top: 15px;
 }
+
+/* Sessions type mini box */
+span.session-type {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+}
+
+// Link with normal color
+a.text-link {
+  color: $color_pickled_bluewood_approx !important;
+}

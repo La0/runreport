@@ -5,6 +5,7 @@ from sport.models import SportSession
 from club.models import ClubMembership
 from helpers import date_to_day
 from datetime import timedelta, date
+from collections import OrderedDict
 
 class DashBoardView(TemplateView):
   '''
@@ -111,7 +112,8 @@ class DashBoardView(TemplateView):
   def load_friends_sessions(self):
     '''
     Load athlete friends sessions
-    close to today
+    * close to today
+    * grouped by athletes
     '''
     filters = {
       'day__week__user__in' : self.request.user.friends.all(),
@@ -120,10 +122,21 @@ class DashBoardView(TemplateView):
     }
     sessions = SportSession.objects.filter(**filters)
     sessions = sessions.select_related('day', 'track')
-    sessions = sessions.order_by('day__date')
+    sessions = sessions.order_by('day__week__user__first_name', 'day__date')
+
+    # Group
+    friends = OrderedDict()
+    for s in sessions:
+      user = s.day.week.user
+      if user.pk not in friends:
+        friends[user.pk] = {
+          'user' : user,
+          'sessions' : [],
+        }
+      friends[user.pk]['sessions'].append(s)
 
     return {
-      'friends' : sessions,
+      'friends' : friends,
     }
 
   def load_prospects(self):
