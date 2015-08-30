@@ -50,6 +50,7 @@ class DashBoardView(TemplateView):
     # Load athlete datas
     if self.mode == 'athlete':
       context.update(self.load_weeks())
+      context.update(self.load_races())
       context.update(self.load_sessions())
       context.update(self.load_friends_sessions())
 
@@ -107,6 +108,23 @@ class DashBoardView(TemplateView):
 
     return {
       'sessions' : sessions,
+    }
+
+  def load_races(self):
+    '''
+    Load all future races
+    '''
+    filters = {
+      'day__week__user' : self.request.user,
+      'day__date__gte' : self.today - timedelta(days=7),
+      'type' : 'race',
+    }
+    races = SportSession.objects.filter(**filters)
+    races = races.select_related('day', 'track')
+    races = races.order_by('day__date')
+
+    return {
+      'races' : races,
     }
 
   def load_friends_sessions(self):
