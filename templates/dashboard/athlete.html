@@ -69,6 +69,43 @@
         </a>
       </p>
       {% endfor %}
+
+      <h1>{{ _('Your speeds') }}</h1>
+      {% if vma %}
+        <p class="text-info">
+          {{ _('These speeds are calculated with your current VMA of %s km/h' % user.vma) }}
+        </p>
+        <table class="table table-bordered">
+          <tr>
+            <th>% VMA</th>
+            {% for d in vma.distances %}
+            <th>{{ d }} m</th>
+            {% endfor %}
+          </tr>
+          {% for p in vma.paces %}
+          {% with parent = loop %}
+          <tr>
+            <th>{{ p }}</th>
+            {% for d in vma.distances %}
+            <td>
+              {% with t = vma.speeds[loop.index0][parent.index0] %}
+                {% if t.hour > 0 %}
+                  {{t|date("g\hi's\"")}}
+                {% else %}
+                  {{t|date("i's\"")}}
+                {% endif %}
+              {% endwith %}
+            </td>
+            {% endfor %}
+          </tr>
+          {% endwith %}
+          {% endfor %}
+        </table>
+      {% else %}
+      <p class="text-info">
+        {{ _("You don't have any VMA (indicative top speed) specified in your preferences. We cannot give you any personalised speeds") }}
+      </p>
+      {% endif %}
     </div>
 
     <div class="col-xs-12 col-sm-6">

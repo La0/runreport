@@ -2,6 +2,7 @@ from django.views.generic import TemplateView
 from django.core.exceptions import PermissionDenied
 from sport.stats import StatsWeek
 from sport.models import SportSession
+from sport.vma import VmaCalc
 from club.models import ClubMembership
 from helpers import date_to_day
 from datetime import timedelta, date
@@ -53,6 +54,7 @@ class DashBoardView(TemplateView):
       context.update(self.load_races())
       context.update(self.load_sessions())
       context.update(self.load_friends_sessions())
+      context.update(self.load_vma())
 
     # Load trainer data
     if self.mode == 'trainer':
@@ -209,4 +211,32 @@ class DashBoardView(TemplateView):
 
     return {
       'races' : races,
+    }
+
+  def load_vma(self):
+    '''
+    Load some vma speeds for current user
+    '''
+    vma = self.request.user.vma
+    if not vma:
+      return {
+        'vma': None,
+      }
+
+    # Calc some times
+    vc = VmaCalc(vma)
+    paces = (60, 80, 90, 100)
+    distances = (100, 200, 400, 500, 1000)
+    speeds = []
+    for i,d in enumerate(distances):
+      speeds.append([])
+      for p in paces:
+        speeds[i].append(vc.get_time(p, d))
+
+    return {
+      'vma' : {
+        'paces' : paces,
+        'distances' : distances,
+        'speeds' : speeds,
+      }
     }
