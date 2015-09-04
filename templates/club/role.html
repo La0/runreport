@@ -60,9 +60,15 @@
 		{% endif %}
 
     {% if user == club.manager %}
-		<hr />
-		<h4>{{ _('Danger zone') }}</h4>
-		<button type="submit" name="role_local" value="archive" class="role btn btn-danger pull-right {% if membership.role == "archive" or user.demo %}disabled{% endif %}">{{ _('Archive this account') }}</button>
+      <hr />
+      <h4>{{ _('Danger zone') }}</h4>
+      <button type="submit" name="role_local" value="archive" class="role btn btn-danger pull-right {% if membership.role == "archive" or user.demo %}disabled{% endif %}">
+        {% if membership.role == 'prospect' %}
+          {{ _('Refuse this prospect') }}
+        {% else %}
+          {{ _('Archive this account') }}
+        {% endif %}
+      </button>
     {% endif %}
 	</form>
 </div>

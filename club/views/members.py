@@ -10,7 +10,7 @@ from club.forms import ClubMembershipForm
 from club import ROLES
 from club.tasks import mail_member_role
 from datetime import date, timedelta, MINYEAR
-from coach.mixins import JsonResponseMixin, JSON_STATUS_ERROR, CsvResponseMixin
+from coach.mixins import JsonResponseMixin, JSON_STATUS_ERROR, CsvResponseMixin, JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE
 
 import logging
 logger = logging.getLogger('club')
@@ -186,6 +186,20 @@ class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, Proces
       membership = form.save(commit=False)
       membership.trainers = form.cleaned_data['trainers'] # Weird :/
 
+      # Special case for deletion of prospect
+      if membership.role == 'archive' and self.role_original == 'prospect':
+
+        # Send email
+        if form.cleaned_data['send_mail']:
+          mail_member_role.delay(membership, self.role_original)
+
+        # Delete
+        membership.delete()
+
+        # Close & reload parent
+        self.json_options = [JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE, ]
+        return self.render_to_response({})
+
       # Check club has a place available
       if membership.role != 'archive':
         stat = [s for s in self.stats if membership.role == s['type']][0]
@@ -211,6 +225,9 @@ class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, Proces
             membership.user.subscribe_mailing(self.club.mailing_list)
           if membership.role == 'archive':
             membership.user.unsubscribe_mailing(self.club.mailing_list)
+
+        # Reload page for roles updates
+        self.json_options = [JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE, ]
 
     except Exception, e:
       logger.error('Failed to save role update for %s : %s' % (membership.user, str(e)))
