@@ -219,8 +219,12 @@ function load_box(url, method, data, output){
       });
 
       // Close modal
-      if($.inArray('close', data.options) != -1 && modal != null){
-        modal.modal('hide');
+      if($.inArray('close', data.options) != -1){
+        if(modal == null){
+          $('body').modalmanager('loading');
+        }else{
+          modal.modal('hide');
+        }
       }
 
       // Reload parent
