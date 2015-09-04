@@ -1,29 +1,14 @@
-{% extends 'modal.html' %}
+<form method="POST" action="{{ url('message-post-add', post.pk) }}">
+  <div class="add-comment">
+    {% csrf_token %}
 
-{% set modal_title = _('Start a post conversation') %}
-
-{% set form_url = url('message-post-add', post.pk) %}
-
-{% block body %}
-<div class="add-comment">
-
-  <i class="icon-edit"></i>
-  <strong>{{ post.title }}</strong> {{ _('written by') }} 
-  <a href="{{ url('user-public-profile', post.writer.username) }}">
-    {{ post.writer.first_name }} {{ post.writer.last_name }}
-  </a>
-  {% csrf_token %}
-
-  {{ form.message|safe }}
-  {% if form.message.errors %}
-  <div class="alert alert-danger">
-    {{ form.message.errors|safe }}
+    {{ form.message|safe }}
+    {% if form.message.errors %}
+    <div class="alert alert-danger">
+      {{ form.message.errors|safe }}
+    </div>
+    {% endif %}
   </div>
-  {% endif %}
-</div>
-{% endblock %}
 
-{% block footer %}
-<button class="btn" data-dismiss="modal">{{ _('Cancel') }}</button>
-<button type="submit" class="btn btn-primary">{{ _('Send') }}</button>
-{% endblock %}
+  <button type="submit" class="btn btn-primary">{{ _('Send') }}</button>
+</form>

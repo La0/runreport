@@ -10,13 +10,13 @@
   {% else %}
 
     {% if 'comments_private' in privacy %}
-    <a href="{{ url('message-session-add', session.pk, 'private') }}" class="modal-action btn btn-sm btn-warning btn-light">
+    <a href="{{ url('message-session-add', session.pk, 'private') }}" class="modal-action btn btn-sm btn-warning btn-light" data-replaces="messages-{{session.pk}}">
       <i class="icon-comment"></i> {{ _('Start a private conversation') }}
     </a>
     {% endif %}
 
     {% if 'comments_public' in privacy %}
-    <a href="{{ url('message-session-add', session.pk, 'public') }}" class="modal-action btn btn-sm btn-success btn-light">
+    <a href="{{ url('message-session-add', session.pk, 'public') }}" class="modal-action btn btn-sm btn-success btn-light" data-replaces="messages-{{session.pk}}">
       <i class="icon-comment"></i> {{ _('Start a public conversation') }}
     </a>
     {% endif %}

@@ -1,57 +1,26 @@
-{% extends 'modal.html' %}
+<form method="POST" action="{{ url('message-session-add', session.pk, type) }}">
+  <div class="add-comment">
+    {% csrf_token %}
 
-{% set modal_title = _('Add a comment') %}
-
-{% set form_url = url('message-session-add', session.pk, type) %}
-
-{% block body %}
-<div class="add-comment">
-  <h4>
-    {% if session.type == 'training' %}
-    <span class="label label-info">{{ _('Training') }}</span>
-    {% elif session.type == 'race' %}
-    <span class="label label-success">{{ _('Race') }}</span>
-    {% elif session.type == 'rest' %}
-    <span class="label label-danger">{{ _('Rest') }}</span>
+    {{ form.message|safe }}
+    {% if form.message.errors %}
+    <div class="alert alert-danger">
+      {{ form.message.errors|safe }}
+    </div>
     {% endif %}
-    {{ session.name }}
-  </h4>
 
-  <i class="icon-sport-{{session.sport.slug}}"></i> {{ session.sport.name }}
+    {% if type == 'private' %}
+    <p class="text-warning">
+      <i class="icon-lock"></i>
+      {{ _('This comment will be private, only the athlete and his trainers will see it.') }}
+    </p>
+    {% else %}
+    <p class="text-success">
+      <i class="icon-club"></i>
+      {{ _('This comment will be public, anyone can see it.') }}
+    </p>
+    {% endif %}
 
-  <i class="icon-calendar"></i>
-  {{ session.day.date|date('l d E Y') }}
-
-  {% with user = session.day.week.user %}
-  <i class="icon-user"></i>
-  <a href="{{ url('user-public-profile', user.username) }}">{{ user.first_name }} {{ user.last_name }}</a>
-  {% endwith %}
-
-  {% csrf_token %}
-
-  {{ form.message|safe }}
-  {% if form.message.errors %}
-  <div class="alert alert-danger">
-    {{ form.message.errors|safe }}
   </div>
-  {% endif %}
-
-  {% if type == 'private' %}
-  <p class="text-warning">
-    <i class="icon-lock"></i>
-    {{ _('This comment will be private, only the athlete and his trainers will see it.') }}
-  </p>
-  {% else %}
-  <p class="text-success">
-    <i class="icon-club"></i>
-    {{ _('This comment will be public, anyone can see it.') }}
-  </p>
-  {% endif %}
-
-</div>
-{% endblock %}
-
-{% block footer %}
-<button class="btn" data-dismiss="modal">{{ _('Cancel') }}</button>
-<button type="submit" class="btn btn-primary">{{ _('Comment') }}</button>
-{% endblock %}
+  <button type="submit" class="btn btn-primary">{{ _('Comment') }}</button>
+</form>

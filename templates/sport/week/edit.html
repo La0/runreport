@@ -68,7 +68,7 @@
           {{ _('Loading week comments...') }}
         </div>
         {% else %}
-        <a href="{{ url('message-week-add', report.pk) }}" class="modal-action btn btn-success btn-light">
+        <a href="{{ url('message-week-add', report.pk) }}" class="modal-action btn btn-success btn-light" data-replaces="messages-{{report.pk}}">
           <i class="icon-comment"></i> {{ _('Start a conversation') }}
         </a>
         {% endif %}

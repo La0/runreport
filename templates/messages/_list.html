@@ -71,9 +71,9 @@
 </div>
 
 <div class="row">
-  <div class="col-xs-12 actions">
+  <div class="col-xs-12 actions" id="reply-{{ conversation.pk }}">
     {% if user.is_authenticated() %}
-      <a href="{{ url('conversation-add', conversation.pk) }}" class="btn btn-light btn-sm {% if conversation.type == 'comments_private' %}btn-warning{% else %}btn-success{% endif %} modal-action">
+      <a href="{{ url('conversation-add', conversation.pk) }}" class="btn btn-light btn-sm {% if conversation.type == 'comments_private' %}btn-warning{% else %}btn-success{% endif %} modal-action" data-replaces="reply-{{ conversation.pk }}">
         <i class="icon-plus"></i>
         {% if conversation.type == 'comments_private' %}
           {{ _('Add a private comment') }}
@@ -86,18 +86,13 @@
         {% endif %}
       </a>
       {% if session and 'comments_public' in privacy and not session.comments_public %}
-      <a href="{{ url('message-session-add', session.pk, 'public') }}" class="btn btn-sm btn-success modal-action btn-light">
+      <a href="{{ url('message-session-add', session.pk, 'public') }}" class="btn btn-sm btn-success modal-action btn-light" data-replaces="reply-{{ conversation.pk }}">
         <i class="icon-comment"></i> {{ _('Start a public conversation') }}
       </a>
       {% endif %}
       {% if session and 'comments_private' in privacy and not session.comments_private %}
-      <a href="{{ url('message-session-add', session.pk, 'private') }}" class="btn btn-sm btn-warning modal-action btn-light">
+      <a href="{{ url('message-session-add', session.pk, 'private') }}" class="btn btn-sm btn-warning modal-action btn-light" data-replaces="reply-{{ conversation.pk }}">
         <i class="icon-comment"></i> {{ _('Start a private conversation') }}
-      </a>
-      {% endif %}
-      {% if conversation.type == 'comments_week' and 'comments_weeks' in privacy %}
-      <a href="" class="btn btn-sm btn-success modal-action btn-light">
-        <i class="icon-comment"></i> {{ _('Start a public conversation') }}
       </a>
       {% endif %}
     {% else %}

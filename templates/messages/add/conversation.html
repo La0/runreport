@@ -1,86 +1,34 @@
-{% extends 'modal.html' %}
+<form method="POST" action="{{ url('conversation-add', conversation.pk) }}">
 
-{% set modal_title = conversation.type == 'mail' and _('Reply to message') or _('Add a comment') %}
+  <div class="add-comment">
+    {% csrf_token %}
 
-{% set form_url = url('conversation-add', conversation.pk) %}
+    {{ form.message|safe }}
+    {% if form.message.errors %}
+    <div class="alert alert-danger">
+      {{ form.message.errors|safe }}
+    </div>
+    {% endif %}
 
-{% block body %}
-<div class="add-comment">
-  {% if conversation.type == 'mail' %}
-    <p>
-      {% for r in conversation.get_recipients() %}
-      <a href="{{ url('user-public-profile', r.username) }}" class="recipient">
-        <img src="{{ r.avatar.url }}" class="img-responsive img-rounded"/>
-        {{ r.first_name }}
-        </a>
-      {% endfor %}
+    {% if conversation.type == 'comments_private' %}
+    <p class="text-warning">
+      <i class="icon-lock"></i>
+      {{ _('This comment will be private, only the athlete and his trainers will see it.') }}
     </p>
-  {% elif conversation.type == 'comments_week' %}
-    <p>
-      <i class="icon-calendar"></i>
-      {{ _('Week from %(start)s to %(end)s') % { 'start' : conversation.week.get_date_start()|date('l d E Y'), 'end' : conversation.week.get_date_end()|date('l d E Y')} }}
+    {% elif conversation.type == 'comments_public' %}
+    <p class="text-success">
+      <i class="icon-club"></i>
+      Ce commentaire sera <strong>public</strong>, et donc visible par les membres autorisés de vos clubs.
+      {{ _('This comment will be public, anyone can see it.') }}
     </p>
-  {% elif conversation.type == 'post' %}
-    <p>
-      <i class="icon-edit"></i>
-      <strong>{{ conversation.post.title }}</strong> {{ _('written by') }} 
-      <a href="{{ url('user-public-profile', conversation.post.writer.username) }}">
-        {{ conversation.post.writer.first_name }} {{ conversation.post.writer.last_name }}
-      </a>
-    </p>
-  {% else %}
-    {% with session = conversation.get_session() %}
-      <h4>
-        {% if session.type == 'training' %}
-        <span class="label label-info">{{ _('Training') }}</span>
-        {% elif session.type == 'race' %}
-        <span class="label label-success">{{ _('Race') }}</span>
-        {% elif session.type == 'rest' %}
-        <span class="label label-danger">{{ _('Rest') }}</span>
-        {% endif %}
-        {{ session.name }}
-      </h4>
+    {% endif %}
 
-      <i class="icon-sport-{{session.sport.slug}}"></i> {{ session.sport.name }}
-
-      <i class="icon-calendar"></i>
-      {{ session.day.date|date('l d E Y') }}
-
-      {% with user = session.day.week.user %}
-      <i class="icon-user"></i>
-      <a href="{{ url('user-public-profile', user.username) }}">{{ user.first_name }} {{ user.last_name }}</a>
-      {% endwith %}
-    {% endwith %}
-  {% endif %}
-
-  {% csrf_token %}
-
-  {{ form.message|safe }}
-  {% if form.message.errors %}
-  <div class="alert alert-danger">
-    {{ form.message.errors|safe }}
   </div>
-  {% endif %}
 
-  {% if conversation.type == 'comments_private' %}
-  <p class="text-warning">
-    <i class="icon-lock"></i>
-    {{ _('This comment will be private, only the athlete and his trainers will see it.') }}
-  </p>
-  {% elif conversation.type == 'comments_public' %}
-  <p class="text-success">
-    <i class="icon-club"></i>
-    Ce commentaire sera <strong>public</strong>, et donc visible par les membres autorisés de vos clubs.
-    {{ _('This comment will be public, anyone can see it.') }}
-  </p>
-  {% endif %}
+  <div class="text-right">
+    <button type="submit" class="btn btn-primary">
+      {% if conversation.type == 'mail' %}{{ _('Reply') }}{% else %}{{ _('Comment') }}{% endif %}
+    </button>
+  </div>
 
-</div>
-{% endblock %}
-
-{% block footer %}
-<button class="btn" data-dismiss="modal">{{ _('Cancel') }}</button>
-<button type="submit" class="btn btn-primary">
-{% if conversation.type == 'mail' %}{{ _('Reply') }}{% else %}{{ _('Comment') }}{% endif %}
-</button>
-{% endblock %}
+</form>

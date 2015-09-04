@@ -77,14 +77,13 @@
     {% endwith %}
   </div>
   {% endif %}
-
-  {% if session.pk %}
-  <div>
-    {% with privacy = ('comments', 'comments_public', 'comments_private') %}
-    <label class="control-label hidden-xs">{{ _('Comments') }}</label>
-    {% include 'sport/session/_comments.html' %}
-    {% endwith %}
-  </div>
-  {% endif %}
-
 </form>
+
+{% if session.pk %}
+<div>
+  {% with privacy = ('comments', 'comments_public', 'comments_private') %}
+  <label class="control-label hidden-xs">{{ _('Comments') }}</label>
+  {% include 'sport/session/_comments.html' %}
+  {% endwith %}
+</div>
+{% endif %}

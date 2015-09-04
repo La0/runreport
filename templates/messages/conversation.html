@@ -32,16 +32,18 @@
     {% endfor %}
   </div>
 
-  <div class="row">
-    <div class="col-xs-12 text-right">
-      <a href="{{ url('message-inbox') }}" class="btn btn-default">{{ _('Back to conversations') }}</a>
-      <a href="{{ url('conversation-add', conversation.pk) }}" class="modal-action btn btn-default btn-primary">
-        {% if conversation.type == 'mail' %}
-          {{ _('Reply') }}
-        {% else %}
-          {{ _('Comment') }}
-        {% endif %}
-      </a>
+  <div id="reply">
+    <div class="row">
+      <div class="col-xs-12 text-right">
+        <a href="{{ url('message-inbox') }}" class="btn btn-default">{{ _('Back to conversations') }}</a>
+        <a href="{{ url('conversation-add', conversation.pk) }}" class="modal-action btn btn-default btn-primary" data-replaces="reply">
+          {% if conversation.type == 'mail' %}
+            {{ _('Reply') }}
+          {% else %}
+            {{ _('Comment') }}
+          {% endif %}
+        </a>
+      </div>
     </div>
   </div>
 

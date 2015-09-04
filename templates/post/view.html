@@ -131,7 +131,7 @@
           {{ _('Loading post comments...') }}
         </div>
         {% else %}
-        <a href="{{ url('message-post-add', post.pk) }}" class="modal-action btn btn-success btn-light">
+        <a href="{{ url('message-post-add', post.pk) }}" class="modal-action btn btn-success btn-light" data-replaces="messages-{{post.pk}}">
           <i class="icon-comment"></i> {{ _('Start a conversation') }}
         </a>
         {% endif %}
