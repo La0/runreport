@@ -22,6 +22,12 @@
 
 		{% csrf_token %}
 
+    {% if saved %}
+    <p class="alert alert-success">
+      {{ _('Your changes have been saved.') }}
+    </p>
+    {% endif %}
+
 		<input class="role_value" type="hidden" name="role" value="{{membership.role}}"/>
 
 		{% for stat in stats %}

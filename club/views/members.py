@@ -233,7 +233,7 @@ class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, Proces
       logger.error('Failed to save role update for %s : %s' % (membership.user, str(e)))
       raise Exception("Failed to save")
 
-    return self.render_to_response(self.get_context_data(**{'form' : form}))
+    return self.render_to_response(self.get_context_data(**{'form' : form, 'saved': True}))
 
   def form_invalid(self, form):
     self.json_status = JSON_STATUS_ERROR
