@@ -67,14 +67,6 @@
   </div>
 
   <div class="col-sm-2 text-right">
-    <a href="{{ url('conversation-add', conversation.pk) }}" class="modal-action btn btn-default btn-sm">
-      {% if conversation.type == 'mail' %}
-      {{ _('Reply') }}
-      {% else %}
-      {{ _('Comment') }}
-      {% endif %}
-    </a>
-
     <a href="{{ conversation.get_absolute_url() }}" class="btn btn-primary btn-sm">
       {{ _('View') }} <i class="icon-right-open"></i>
     </a>
