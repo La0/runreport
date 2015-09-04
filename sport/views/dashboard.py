@@ -101,8 +101,8 @@ class DashBoardView(TemplateView):
     '''
     filters = {
       'day__week__user' : self.request.user,
-      'day__date__gte' : self.today - timedelta(days=7),
-      'day__date__lte' : self.today + timedelta(days=4),
+      'day__date__gte' : self.today,
+      'day__date__lte' : self.today + timedelta(days=10),
     }
     sessions = SportSession.objects.filter(**filters)
     sessions = sessions.select_related('day', 'track')
@@ -118,7 +118,7 @@ class DashBoardView(TemplateView):
     '''
     filters = {
       'day__week__user' : self.request.user,
-      'day__date__gte' : self.today - timedelta(days=7),
+      'day__date__gte' : self.today,
       'type' : 'race',
     }
     races = SportSession.objects.filter(**filters)
