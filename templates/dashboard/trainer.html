@@ -81,8 +81,32 @@
       {% endfor %}
     </div>
 
-    {# Future races #}
     <div class="col-xs-12 col-sm-6">
+      {# Plans #}
+      <h3>{{ _('Your last plans') }}</h3>
+      {% for plan in plans %}
+      <div class="plan">
+        <i class="icon-plan-session"></i>
+        <a href="https://plans.runreport.fr/#/plan/{{ plan.pk }}">
+          {{ plan.name }}
+        </a>
+        <span class="text-muted">
+          &bull;
+          {{ plan.weeks_nb }} {{ _('weeks') }}
+        </span>
+      </div>
+      {% else %}
+      <p class="text-info">
+        {{ _("You don't have any plans for your athletes yet.") }}
+      </p>
+      {% endfor %}
+  
+      <a href="https://plans.runreport.fr" target="_blank" class="btn btn-success btn-light">
+        <i class="icon-plus"></i>
+        {{ _('Create a new plan') }}
+      </a>
+
+      {# Future races #}
       <h3>{{ _('Your athletes races') }}</h3>
       {% for session in races %}
         {% include 'dashboard/session.html' %}

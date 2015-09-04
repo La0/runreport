@@ -62,6 +62,7 @@ class DashBoardView(TemplateView):
       context.update(self.load_prospects())
       context.update(self.load_trained_sessions())
       context.update(self.load_trained_races())
+      context.update(self.load_plans())
 
     return context
 
@@ -239,4 +240,13 @@ class DashBoardView(TemplateView):
         'distances' : distances,
         'speeds' : speeds,
       }
+    }
+
+  def load_plans(self):
+    '''
+    Load last created plans
+    '''
+    plans = self.request.user.plans.order_by('-created')[0:3]
+    return {
+      'plans' : plans,
     }
