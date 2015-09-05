@@ -16,7 +16,7 @@
 {% with dt = race.day.date %}
 <div style="text-align: left ; border-bottom: 1px solid #CCC; height: 60px; margin-bottom: 10px;">
   
-  <img src="https://{{ site.domain }}{{ friend.avatar.url }}" style="height: 60px; width: 60px; float: left;"/>
+  <img src="{{ friend.avatar.url }}" style="height: 60px; width: 60px; float: left;"/>
   
   <a href="https://{{ site.domain}}{{ url('user-calendar-day', friend.username, dt.year, dt.month, dt.day) }}">
     {{ friend.first_name }} {{ friend.last_name }}
