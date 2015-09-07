@@ -75,6 +75,7 @@ class DashBoardView(TemplateView):
     weeks_future = 3
     weeks_past = 6
     weeks = []
+    empty = True # Check if there are some data to display
     for w in range(-weeks_past * 7, weeks_future * 7, 7):
       day = start + timedelta(days=w)
       week, year = int(day.strftime('%W')), day.year
@@ -84,15 +85,19 @@ class DashBoardView(TemplateView):
         state = 'past'
       else:
         state = 'current'
+      st = StatsWeek(self.request.user, year, week)
       weeks.append({
         'date' : day,
         'year' : year,
         'week' : week,
-        'stats' : StatsWeek(self.request.user, year, week),
+        'stats' : st,
         'state' : state,
       })
+      if empty:
+        empty = st.data is None
 
     return {
+      'weeks_empty' : empty,
       'weeks' : weeks,
     }
 

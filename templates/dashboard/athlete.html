@@ -15,6 +15,7 @@
 {% block content %}
 <div class="container" id="dashboard">
 
+  {% if not weeks_empty %}
   <div class="row">
     <div class="col-xs-12 col-sm-8">
       <h1>
@@ -51,6 +52,7 @@
       {{ macros.help(user, _('You can quickly view the number of sessions per weeks, and the mileage & time.'), _('Your sport weeks')) }}
     </p>
   </div>
+  {% endif %}
 
   <div class="row">
     <div class="col-xs-12 col-sm-6">
@@ -65,13 +67,14 @@
       {% for session in sessions %}
         {% include 'dashboard/session.html' %}
       {% else %}
-      <p class="text-info">
+      <p class="text-info text-center">
         {{ _('You don\'t have any future sessions.') }}
         <br />
-        {{ _('Use the following button to add a session for') }}
-        <a class="btn btn-primary" href="{{ url('report-day', today.year, today.month, today.day) }}">
-          Today
-          <i class="icon-right-open"></i>
+        {{ _('Use the following button to add a session.') }}
+        <br />
+        <a class="btn btn-warning btn-sm" href="{{ url('report-day', today.year, today.month, today.day) }}">
+          <i class="icon-calendar"></i>
+          {{ _('Today') }}
         </a>
       </p>
       {% endfor %}
@@ -108,8 +111,13 @@
           {% endfor %}
         </table>
       {% else %}
-      <p class="text-info">
+      <p class="text-info text-center">
         {{ _("You don't have any VMA (indicative top speed) specified in your preferences. We cannot give you any personalised speeds") }}
+        <br />
+        <a href="{{ url('user-preferences') }}" class="btn btn-warning btn-sm">
+          <i class="icon-user"></i>
+          {{ _('Preferences') }}
+        </a>
       </p>
       {% endif %}
     </div>
@@ -125,8 +133,14 @@
       {% for session in races %}
         {% include 'dashboard/session.small.html' %}
       {% else %}
-      <p class="text-info">
+      <p class="text-info text-center">
         {{ _("You don't have any future race planned. You can add a new one by selecting 'Race' instead of 'Training' on a new session") }}
+        <br />
+        <a class="btn btn-warning btn-sm" href="{{ url('report-day', today.year, today.month, today.day) }}">
+          <i class="icon-calendar"></i>
+          {{ _('Today') }}
+        </a>
+      </p>
       </p>
       {% endfor %}
 
@@ -146,8 +160,15 @@
       </div>
       <hr />
       {% else %}
-      <p class="text-info">
+      <p class="text-info text-center">
         {{ _('No recent sessions from your friends') }}
+        <br />
+        {{ _('You can add some friends by visiting their public profile and using the button "Add as a friend"') }}
+        <br />
+        <a class="btn btn-warning btn-sm" href="{{ url('user-public-profile', 'bastien_abadie') }}">
+          <i class="icon-club"></i>
+          {{ _('Example of public profile') }}
+        </a>
       </p>
       {% endfor %}
     </div>
