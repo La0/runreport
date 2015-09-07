@@ -1,21 +1,5 @@
 {% extends 'base.html' %}
 
-{% block js %}
-<script type="text/javascript">
-$(function(){
-  // Switch central texts
-  setInterval(function(){
-    var h = $('#switch_h2 h2.hid');
-    var v = $('#switch_h2 h2.vis');
-    v.fadeOut(function(){
-      h.removeClass('hid').addClass('vis').fadeIn();
-      v.removeClass('vis').addClass('hid');
-    });
-  }, 5000);
-});
-</script>
-{% endblock %}
-
 {% block content %}
 <div id="home">
 
@@ -80,8 +64,14 @@ $(function(){
   <div class="container marketing">
     <div class="row">
       <div class="col-lg-4 col-lg-offset-2 col-sm-6 col-xs-12">
-        <img class="img-circle img-responsive" src="{{ static('img/home/runner.jpg') }}" alt="{{ _('Runner') }}" >
-        <h2>{{ _("I'm an athlete") }}</h2>
+        <a href="{{ url('features-athlete') }}">
+          <img class="img-circle img-responsive" src="{{ static('img/home/runner.jpg') }}" alt="{{ _('Runner') }}" >
+        </a>
+        <h2>
+          <a class="text-link" href="{{ url('features-athlete') }}">
+            {{ _("I'm an athlete") }}
+          </a>
+        </h2>
         <p>
           {{ _('RunReport is your new sport partner') }} :
           <a href="{{ url('login') }}">{{ _('Sign in') }}</a>, 
@@ -95,9 +85,14 @@ $(function(){
         </p>
       </div>
       <div class="col-lg-4 col-sm-6 col-xs-12" id="switch_h2">
-        <img class="img-circle img-responsive" src="{{ static('img/home/trainer.jpg') }}" alt="{{ _('Trainer') }}">
-        <h2 class="vis">{{ _("I'm a trainer") }}</h2>
-        <h2 class="hid" style="display: none">{{ _("I'm a coach") }}</h2>
+        <a href="{{ url('features-trainer') }}">
+          <img class="img-circle img-responsive" src="{{ static('img/home/trainer.jpg') }}" alt="{{ _('Trainer') }}">
+        </a>
+        <h2>
+          <a class="text-link" href="{{ url('features-trainer') }}">
+            {{ _("I'm a coach") }}
+          </a>
+        </h2>
         <p>
           {{ _('RunReport is the ideal tool to train, track and motivate your athletes.') }}
           <a href="{{ url('login') }}">{{ _('Sign in') }}</a>, 
