@@ -46,8 +46,9 @@ class CurrentWeekMixin(object):
   def check_limits(self, check=True):
     # Min date is oldest user sport week
     # or first day of current year by default
-    oldest = SportDay.objects.filter(week__user=self.request.user).order_by('date').first()
-    if oldest:
+    olds = SportDay.objects.filter(week__user=self.get_user()).order_by('date')
+    if olds.exists():
+      oldest = olds.first()
       self.min_date = oldest.week.get_date_start()
     else:
       self.min_date = date(self._today.year, 1, 1)
