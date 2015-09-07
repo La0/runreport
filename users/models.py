@@ -50,6 +50,8 @@ class AthleteBase(AbstractBaseUser, PermissionsMixin):
     'active. Unselect this instead of deleting accounts.'))
   date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
 
+  updated = models.DateTimeField(auto_now=True)
+
   objects = UserManager()
 
   def get_username(self):

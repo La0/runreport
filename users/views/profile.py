@@ -64,6 +64,8 @@ class PublicProfile(ProfilePrivacyMixin, DetailView, SportStatsMixin, AthleteRac
     # Load only the best badges of a user per category
     badges = self.member.badges.all()
     top_badges = badges.order_by().values('category_id').distinct().annotate(max_position=Max('position'))
+    if not top_badges:
+      return {}
     filters = reduce(operator.or_, [(Q(category_id=b['category_id']) & Q(position=b['max_position'])) for b in top_badges])
     badges = badges.filter(filters)
 
