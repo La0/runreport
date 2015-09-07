@@ -101,6 +101,7 @@ class DashBoardView(TemplateView):
     Load sessions close to today
     '''
     filters = {
+      'type' : 'training',
       'day__week__user' : self.request.user,
       'day__date__gte' : self.today,
       'day__date__lte' : self.today + timedelta(days=10),
