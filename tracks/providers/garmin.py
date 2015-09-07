@@ -316,6 +316,15 @@ class GarminProvider(TrackProvider):
             identity['speed'] = time(0, minutes, int((s - minutes) * 60.0))
     logger.debug('Speed : %s' % identity['speed'])
 
+    # Elevation gain/loss
+    identity['elevation_gain'] = 0.0
+    if 'gainElevation' in activity:
+      identity['elevation_gain'] = float(activity['gainElevation']['value'])
+    identity['elevation_loss'] = 0.0
+    if 'lossElevation' in activity:
+      identity['elevation_loss'] = float(activity['lossElevation']['value'])
+    logger.debug('Elevation: +%f / -%f' % (identity['elevation_gain'], identity['elevation_loss']))
+
     # update name
     skip_titles = ('Sans titre', 'No title', )
     name = activity['activityName']['value']

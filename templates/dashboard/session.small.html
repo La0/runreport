@@ -1,0 +1,14 @@
+<div class="session">
+  <i class="icon-sport-{{ session.sport.slug }} do-tooltip" title="{{ _(session.sport.name ) }}"></i>
+  <span class="session-type {{ session.type }} do-tooltip" title="{{ _(session.type) }}"></span>
+
+  {% if friend %}
+  <a href="{{ url('user-calendar-day', friend.user.username, session.day.date.year, session.day.date.month, session.day.date.day) }}" class="text-link">
+  {% else %}
+  <a href="{{ url('report-day', session.day.date.year, session.day.date.month, session.day.date.day) }}" class="text-link">
+  {% endif %}
+    {{ session.name|truncatechars(40) }}
+  </a>
+  <span class="text-muted">&bull;</span>
+  <small class="text-muted">{{ session.day.date|date('l d E Y') }}</small>
+</div>

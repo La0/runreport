@@ -5,3 +5,4 @@ from report import WeeklyReport, WeekPublish
 from year import RunCalendarYear
 from session import SportSessionView, SportSessionDelete
 from stats import SportStats
+from dashboard import DashBoardView

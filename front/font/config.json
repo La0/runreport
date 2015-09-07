@@ -7,6 +7,12 @@
   "ascent": 850,
   "glyphs": [
     {
+      "uid": "9bc2902722abb366a213a052ade360bc",
+      "css": "loading",
+      "code": 59446,
+      "src": "fontelico"
+    },
+    {
       "uid": "ccc2329632396dc096bb638d4b46fb98",
       "css": "mail",
       "code": 59419,
@@ -187,9 +193,21 @@
       "src": "entypo"
     },
     {
+      "uid": "bc64550dd022ce21604f97309b346cea",
+      "css": "version",
+      "code": 59448,
+      "src": "entypo"
+    },
+    {
       "uid": "489090690d8bd1745e365485946e20a8",
       "css": "plan-session",
       "code": 59439,
+      "src": "entypo"
+    },
+    {
+      "uid": "9c7fd7637a41b59a358cb70893f945a5",
+      "css": "premium",
+      "code": 59445,
       "src": "entypo"
     },
     {
@@ -214,6 +232,12 @@
       "uid": "3b00728aa97ad1a2581d414bd9d650bc",
       "css": "sport-fitness_equipment",
       "code": 59400,
+      "src": "typicons"
+    },
+    {
+      "uid": "w3nzesrlbezu6f30q7ytyq919p6gdlb6",
+      "css": "home",
+      "code": 59447,
       "src": "typicons"
     },
     {

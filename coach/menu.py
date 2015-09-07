@@ -2,6 +2,8 @@
 from django.core.urlresolvers import reverse
 from users.notification import UserNotifications
 from django.utils.translation import ugettext_lazy as _
+from django.conf import settings
+from datetime import datetime
 
 MENU_SEPARATOR = '__SEPARATOR__'
 
@@ -20,9 +22,10 @@ def add_pages(request):
     return {'url' : url, 'caption' : caption, 'active' : False, 'external' : True}
 
   def _build_club_generic(admin=False):
+    club_creation = settings.CLUB_CREATION_OPEN and 'club-create' or 'club-landing'
     menu = [
       _p('club-list', _('View clubs')),
-      _p('club-landing', _('Create a club')),
+      _p(club_creation, _('Create a club')),
     ]
     if admin:
       menu += [
@@ -42,16 +45,27 @@ def add_pages(request):
       'menu' : [],
       'icon' : 'icon-help-circled',
     }
-    submenu['menu'].append(_p(('page-list', 'help'), _('Help'), lazy=True))
-    submenu['menu'].append(_p('vma-glossary', _('Glossary')))
+    submenu['menu'].append(_ext(settings.HELP_URL, _('Help')))
     submenu['menu'].append(_p(('page-list', 'news'), _('News'), lazy=True))
     submenu['menu'].append(_p(('contact',), _('Contact'), lazy=True))
     return submenu
 
   menu = []
   if request.user.is_authenticated():
-    menu.append(_p('report-current', _('My Week'), 'icon-list'))
-    menu.append(_p('report-current-month', _('My Calendar'), icon='icon-calendar', lazy=True))
+    # Dashboard
+    menu.append(_p('dashboard', _('Home'), 'icon-home'))
+
+    # Logbook submenu
+    n = datetime.now()
+    submenu = {
+      'caption' : _('My Calendar'),
+      'menu' : [],
+      'icon' : 'icon-calendar',
+    }
+    submenu['menu'].append(_p('report-current', _('My Week'), 'icon-list'))
+    submenu['menu'].append(_p('report-current-month', _('My Month')))
+    submenu['menu'].append(_p(('report-year', n.year), _('My year')))
+    menu.append(submenu)
 
     # Load memberships
     members = request.user.memberships.exclude(role__in=('archive', 'prospect'))
@@ -87,6 +101,15 @@ def add_pages(request):
           submenu['menu'].append(_p(('places', m.club.slug, ), _('Places'), lazy=True))
           submenu['menu'].append(_p(('club-manage', m.club.slug), _('Manage')))
 
+        # Add plans
+        submenu['menu'].append(MENU_SEPARATOR)
+        submenu['menu'].append({
+          'url' : 'https://plans.runreport.fr',
+          'caption' : _('Training plans'),
+          'active' : False,
+          'icon': None,
+        })
+
         submenu['menu'].append(MENU_SEPARATOR)
 
       # Add public club links for everyone
@@ -119,14 +142,16 @@ def add_pages(request):
     submenu['menu'].append(_p('stats', _('My statistics'), lazy=True))
     submenu['menu'].append(_p('vma', _('My paces')))
     submenu['menu'].append(_p('user-races', _('My races')))
+    submenu['menu'].append(_p('badges', _('My badges')))
     submenu['menu'].append(_p('track-providers', _('My GPS services')))
+    submenu['menu'].append(_p('payment-status', _('My subscription')))
     submenu['menu'].append(MENU_SEPARATOR)
     submenu['menu'].append(_p('logout', _('Logout')))
     menu.append(submenu)
   else:
-    menu.append(_p('user-create', _('Create an account'), 'icon-plus'))
-    menu.append(_build_club_generic())
+    menu.append(_p('features', _('Features'), 'icon-star', lazy=True))
     menu.append(_build_help())
+    menu.append(_p('user-create', _('Create an account'), 'icon-plus'))
     menu.append(_p('login', _('Login'), 'icon-user'))
 
   # Search for active main menu

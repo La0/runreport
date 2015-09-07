@@ -1,33 +1,70 @@
-<div class="row">
-  <div class="col-xs-12">
-    <table class="table table-condensed table-striped">
-      <tr>
-        <th>{{ _('Sport') }}</th>
-        <th>{{ _('Time') }}</th>
-        <th>{{ _('Distance') }}</th>
-        <th>{{ _('Sessions') }}</th>
-      </tr>
-      {% for stat in stats %}
-      <tr class="{% if not stat.sport %}info{% endif %}">
-        <td>
-          {% if stat.sport %}
-          <i class="icon-sport-{{ stat.sport.slug }}"></i>
-          {{ _(stat.sport.name) }}
-          {% else %}
-          <strong>{{ _('Total') }}</strong>
-          {% endif %}
-        </td>
-        <td>
-          {{ stat.time|total_time() }}
-        </td>
-        <td>
-          {{ stat.distance|default(0)|floatformat(2) }} km.
-        </td>
-        <td>
-          {{ stat.sessions|default(0) }}
-        </td>
-      {% endfor %}
-      </tr>
-    </table>
-  </div>
+{% with stats = report.get_sports_stats() %}
+<div class="col-xs-9">
+  <h4>{{ _('Stats') }}</h4>
+  <table class="table table-condensed table-striped">
+    <tr>
+      <th>{{ _('Sport') }}</th>
+      <th>{{ _('Time') }}</th>
+      <th>{{ _('Distance') }}</th>
+      <th>{{ _('Elevation gain') }}</th>
+      <th>{{ _('Sessions') }}</th>
+    </tr>
+    {% for stat in stats %}
+    {% if stat.sport %}
+    <tr class="{% if not stat.sport %}info{% endif %}">
+      <td>
+        <i class="icon-sport-{{ stat.sport.slug }}"></i>
+        {{ _(stat.sport.name) }}
+      </td>
+      <td>
+        {{ stat.time|total_time() }}
+      </td>
+      <td>
+        {{ stat.distance|default(0)|floatformat(2) }} km.
+      </td>
+      <td>
+        {{ stat.elevation|default(0)|floatformat(0) }} m.
+      </td>
+      <td>
+        {{ stat.sessions|default(0) }}
+      </td>
+    {% endif %}
+    {% endfor %}
+    </tr>
+  </table>
 </div>
+
+<div class="col-xs-3 text-primary">
+  {% with total = stats|last() %}
+  <h4>{{ _('Total') }}</h4>
+
+  <h4>
+  {% if total.time %}
+    {{ total.time|total_time() }}
+    <i class="icon-chrono do-tooltip" title="{{ _('Time') }}"></i>
+  {% else %}
+    <i class="icon-chrono do-tooltip text-muted" title="{{ _('No time') }}"></i>
+  {% endif %}
+  </h4>
+
+  <h4>
+  {% if total.distance %}
+    {{ total.distance|floatformat(2) }} km
+    <i class="icon-distance do-tooltip" title="{{ _('Distance') }}"></i>
+  {% else %}
+    <i class="icon-distance do-tooltip text-muted" title="{{ _('No Distance') }}"></i>
+  {% endif %}
+  </h4>
+
+  <h4>
+    {% if total.elevation %}
+    {{ (total.elevation)|floatformat(0) }} m
+    <i class="icon-elevation do-tooltip" title="{{ _('Elevation') }}"></i>
+    {% else %}
+    <i class="icon-elevation do-tooltip text-muted" title="{{ _('No elevation') }}"></i>
+    {% endif %}
+  </h4>
+
+  {% endwith %}
+</div>
+{% endwith %}

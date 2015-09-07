@@ -35,6 +35,6 @@ class ClubInviteAdmin(admin.ModelAdmin):
 admin.site.register(ClubInvite, ClubInviteAdmin)
 
 class ClubAdmin(admin.ModelAdmin):
-  list_display = ('name',)
+  list_display = ('name', 'manager', '_is_premium')
   inlines = [ClubLinkAdmin, ClubMembershipAdmin, ]
 admin.site.register(Club, ClubAdmin)

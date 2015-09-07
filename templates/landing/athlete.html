@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+
+{% set page_title = _('Features for athletes') %}
+
+{% block content %}
+<div id="features" class="athletes">
+  <div class="container-fluid jumbotron">
+    <h1>{{ _('Features for athletes') }}</h1>
+
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 text-center">
+        <a class="btn btn-info btn-light" href="{{ url('features-trainer') }}">
+          {{ _('View features for trainers') }}
+          <i class="icon-right-open"></i>
+        </a>
+      </div>
+
+      <div class="col-sm-3 col-xs-12 text-center">
+        <h3>{{ _('Detailled sessions') }}</h3>
+        <img class="img-thumbnail" src="{{ static('img/landing/athlete.map.png') }}" />
+        <p>
+          {{ _('Easily track your time, distance, elevation and maps for all your sessions.') }}
+        </p>
+      </div>
+
+      <div class="col-sm-3 col-xs-12 text-center">
+        <h3>{{ _('Your sport calendar') }}</h3>
+        <img class="img-thumbnail" src="{{ static('img/landing/athlete.month.png') }}" />
+        <p>
+          {{ _('Organize your sport sessions in an efficient calendar.') }}
+        </p>
+      </div>
+
+      <div class="col-sm-3 col-xs-12 text-center">
+        <h3>{{ _('Public profile') }}</h3>
+        <img class="img-thumbnail" src="{{ static('img/landing/athlete.profile.png') }}" />
+        <p>
+          {{ _('Share with your friends your latest race results and statistics.') }}
+        </p>
+      </div>
+
+      <div class="col-sm-3 col-xs-12 text-center">
+        <h3>{{ _('Stats') }}</h3>
+        <img class="img-thumbnail" src="{{ static('img/landing/athlete.stats.png') }}" />
+        <p>
+          {{ _('View all your personal stats about distance, time, sports, elevation, ...') }}
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row actions">
+      <div class="col-xs-12 text-center">
+        <a href="{{ url('user-create') }}" class="btn btn-primary btn-lg">
+          <i class="icon-plus"></i>
+          {{ _('Create an account') }}
+        </a>
+        <a href="{{ url('login') }}" class="btn btn-primary btn-lg">
+          <i class="icon-user"></i>
+          {{ _('Sign in') }}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 text-center">
+        <a class="btn btn-info btn-light" href="{{ url('features') }}">
+          {{ _('Read more about our premium features') }}
+          <i class="icon-right-open"></i>
+        </a>
+      </div>
+
+      <div class="col-sm-3 col-xs-12 text-center">
+        <h3>{{ _('Join a club & train with a coach') }}</h3>
+        <img class="img-thumbnail" src="{{ static('img/landing/athlete.club.png') }}" />
+        <p>
+          {{ _('Be trained by a coach, follow his plans, and get immediate feedback about your sessions.') }}
+        </p>
+      </div>
+
+      <div class="col-sm-3 col-xs-12 text-center">
+        <h3>{{ _('Garmin Synchronisation') }}</h3>
+        <img class="img-thumbnail" src="{{ static('img/landing/athlete.garmin.png') }}" />
+        <h4>
+          <span class="label label-warning">
+            <i class="icon-premium"></i>
+            {{ _('Premium') }}
+          </span>
+        </h4>
+        <p>
+          {{ _('Get all your data from Garmin Connect directly into your RunReport sessions.') }}
+        </p>
+      </div>
+
+      <div class="col-sm-3 col-xs-12 text-center">
+        <h3>{{ _('Strava Synchronisation') }}</h3>
+        <img class="img-thumbnail" src="{{ static('img/landing/athlete.strava.png') }}" />
+        <h4>
+          <span class="label label-warning">
+            <i class="icon-premium"></i>
+            {{ _('Premium') }}
+          </span>
+        </h4>
+        <p>
+          {{ _('Get all your data from Strava directly into your RunReport sessions.') }}
+        </p>
+      </div>
+
+      <div class="col-sm-3 col-xs-12 text-center">
+        <h3>{{ _('Calendar Synchronisation') }}</h3>
+        <img class="img-thumbnail" src="{{ static('img/landing/athlete.gcal.png') }}" />
+        <h4>
+          <span class="label label-warning">
+            <i class="icon-premium"></i>
+            {{ _('Premium') }}
+          </span>
+        </h4>
+        <p>
+          {{ _('Synchronize your sport calendar with a Google Calendar.') }}
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+{% endblock %}

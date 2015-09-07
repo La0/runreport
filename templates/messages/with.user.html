@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% set page_title = _('Conversations with %s %s') % (target.first_name, target.last_name) %}
+
+{% block content %}
+<div class="container">
+  <h1>{{ _('Conversations with %s %s') % (target.first_name, target.last_name) }}</h1>
+
+  {% for conversation in conversations %}
+    {% include 'messages/_conversation.html' %}
+  {% else %}
+  <p class="alert alert-info">
+    {{ _('No conversations with this user') }}
+  <p>
+  {% endfor %}
+
+</div>
+{% endblock %}

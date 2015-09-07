@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+
+{% if is_trainer %}
+  {% set page_title = _('Athlete Dashboard') %}
+{% else %}
+  {% set page_title = _('Dashboard') %}
+{% endif %}
+
+{% block js %}
+<script type="text/javascript">
+  $('div.week_ring').ringify();
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="container" id="dashboard">
+
+  {% if not weeks_empty %}
+  <div class="row">
+    <div class="col-xs-12 col-sm-8">
+      <h1>
+        {{ _('Your sport weeks') }}
+      </h1>
+    </div>
+    <div class="col-xs-12 col-sm-4 text-right">
+      {% if is_trainer %}
+      <a class="btn btn-info btn-light" href="{{ url('dashboard-type', 'trainer') }}">
+        {{ _('Your trainer dashboard') }}
+        <i class="icon-right-open"></i>
+      </a>
+      {% endif %}
+    </div>
+
+    <div class="col-xs-12" id="rings">
+    {% for week in weeks %}
+
+      {% with week_data = week.stats.data %}
+      <div class="week_ring" data-state="{{ week.state }}" data-sessions="{% if week_data.sessions %}{{ week_data.sessions.total }}{% else %}0{% endif %}" data-hours="{{ week_data.hours }}" data-distance="{{ week_data.distance }}" data-href="{{ url('report-week', week.year, week.week) }}">
+        <span class="date">
+          {% if week.state == 'current' %}
+            {{ _('Current week') }}
+          {% else %}
+            {{ week.date|date('d E') }}
+          {% endif %}
+        </span>
+      </div>
+      {% endwith %}
+
+    {% endfor %}
+    </div>
+    <p class="pull-right">
+      {{ macros.help(user, _('You can quickly view the number of sessions per weeks, and the mileage & time.'), _('Your sport weeks')) }}
+    </p>
+  </div>
+  {% endif %}
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-6">
+      <h1>{{ _('Your future sessions') }}</h1>
+
+      {% if sessions %}
+      <p class="text-info">
+        {{ _('These are your training sessions for the next 10 days.') }}
+      </p>
+      {% endif %}
+
+      {% for session in sessions %}
+        {% include 'dashboard/session.html' %}
+      {% else %}
+      <p class="text-info text-center">
+        {{ _('You don\'t have any future sessions.') }}
+        <br />
+        {{ _('Use the following button to add a session.') }}
+        <br />
+        <a class="btn btn-warning btn-sm" href="{{ url('report-day', today.year, today.month, today.day) }}">
+          <i class="icon-calendar"></i>
+          {{ _('Today') }}
+        </a>
+      </p>
+      {% endfor %}
+
+      <h1>{{ _('Your speeds') }}</h1>
+      {% if vma %}
+        <p class="text-info">
+          {{ _('These speeds are calculated with your current VMA of %s km/h' % user.vma) }}
+        </p>
+        <table class="table table-bordered">
+          <tr>
+            <th>% VMA</th>
+            {% for d in vma.distances %}
+            <th>{{ d }} m</th>
+            {% endfor %}
+          </tr>
+          {% for p in vma.paces %}
+          {% with parent = loop %}
+          <tr>
+            <th>{{ p }}</th>
+            {% for d in vma.distances %}
+            <td>
+              {% with t = vma.speeds[loop.index0][parent.index0] %}
+                {% if t.hour > 0 %}
+                  {{t|date("g\hi's\"")}}
+                {% else %}
+                  {{t|date("i's\"")}}
+                {% endif %}
+              {% endwith %}
+            </td>
+            {% endfor %}
+          </tr>
+          {% endwith %}
+          {% endfor %}
+        </table>
+      {% else %}
+      <p class="text-info text-center">
+        {{ _("You don't have any VMA (indicative top speed) specified in your preferences. We cannot give you any personalised speeds") }}
+        <br />
+        <a href="{{ url('user-preferences') }}" class="btn btn-warning btn-sm">
+          <i class="icon-user"></i>
+          {{ _('Preferences') }}
+        </a>
+      </p>
+      {% endif %}
+    </div>
+
+    <div class="col-xs-12 col-sm-6">
+      <h1>{{ _('Your future races') }}</h1>
+      {% if races %}
+      <p class="text-info">
+        {{ _('These are all your future races.') }}
+      </p>
+      {% endif %}
+
+      {% for session in races %}
+        {% include 'dashboard/session.small.html' %}
+      {% else %}
+      <p class="text-info text-center">
+        {{ _("You don't have any future race planned. You can add a new one by selecting 'Race' instead of 'Training' on a new session") }}
+        <br />
+        <a class="btn btn-warning btn-sm" href="{{ url('report-day', today.year, today.month, today.day) }}">
+          <i class="icon-calendar"></i>
+          {{ _('Today') }}
+        </a>
+      </p>
+      </p>
+      {% endfor %}
+
+      <h1>{{ _('Your friends') }}</h1>
+
+      {% for friend in friends.values() %}
+      <div class="friend">
+        <h4>{{ friend.user.first_name }} {{ friend.user.last_name }}</h4>
+        <div class="col-xs-2">
+          <img src="{{ friend.user.avatar.url }}" alt="" class="img-responsive img-rounded"/>
+        </div> 
+        <div class="col-xs-10">
+          {% for session in friend.sessions %}
+            {% include 'dashboard/session.small.html' %}
+          {% endfor %}
+        </div>
+      </div>
+      <hr />
+      {% else %}
+      <p class="text-info text-center">
+        {{ _('No recent sessions from your friends') }}
+        <br />
+        {{ _('You can add some friends by visiting their public profile and using the button "Add as a friend"') }}
+        <br />
+        <a class="btn btn-warning btn-sm" href="{{ url('user-public-profile', 'bastien_abadie') }}">
+          <i class="icon-club"></i>
+          {{ _('Example of public profile') }}
+        </a>
+      </p>
+      {% endfor %}
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}

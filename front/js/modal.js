@@ -63,9 +63,6 @@ $(function(){
   // Sport choice dropdown
   $(document).on('click', 'form ul.sports li a', dropdown);
 
-  // Plan Session status dropdown
-  $(document).on('click', 'form ul.plan-status li a', dropdown);
-
   // Session types dropdown
   $(document).on('click', 'form ul.types li a', function(){
 
@@ -222,8 +219,12 @@ function load_box(url, method, data, output){
       });
 
       // Close modal
-      if($.inArray('close', data.options) != -1 && modal != null){
-        modal.modal('hide');
+      if($.inArray('close', data.options) != -1){
+        if(modal == null){
+          $('body').modalmanager('loading');
+        }else{
+          modal.modal('hide');
+        }
       }
 
       // Reload parent
@@ -365,3 +366,19 @@ function slugify(event){
 	str = str.replace(/\s/g, '_');
   $(target).val(str);
 }
+
+// Move a plan session to another date
+$('.plan-session-move').datepicker({
+  language : 'fr',
+  todayHighlight : true,
+  weekStart : 1,
+}).on('changeDate', function(evt){
+  if(!evt.date)
+    return;
+  var btn = $(evt.target);
+  var data = {
+    psa : btn.attr('data-psa'),
+    date : Math.floor(evt.date.getTime() / 1000),
+  };
+  load_box(btn.attr('data-href'), 'POST', data);
+});

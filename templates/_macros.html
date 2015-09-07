@@ -1,11 +1,13 @@
 
 
-{% macro input(field, label=None, help=False, colLabel=2, colField=10) -%}
-<div class="form-group row {% if field.errors %}has-error{% endif %}">
-	<label class="col-sm-{{colLabel}} control-label" for="id_{{field.html_name}}">
+{% macro input(field, label=None, help=False, colLabel=2, colField=10, horizontal=True) -%}
+<div class="form-group {% if horizontal %}row{% endif %} {% if field.errors %}has-error{% endif %}">
+  {% if label != False %}
+	<label class="{% if horizontal %}col-sm-{{colLabel}}{% endif %} control-label" for="id_{{field.html_name}}">
     {{ label or field.label }}
   </label>
-	<div class="col-sm-{{colField}}">
+  {% endif %}
+	<div class="{% if horizontal %}col-sm-{{colField}}{% endif %}">
 		{{field|addcss("form-control")|safe}}
 		{% if field.errors %}
 		<div class="help-block">{{field.errors|safe}}</div>
@@ -76,63 +78,61 @@
 {%- endmacro %}
 
 
-{% macro sport_session(form) -%}
-<div class="sport dropdown">
-  <button class="btn btn-sm btn-warning dropdown-toggle" data-toggle="dropdown">
-    <span class="name">
-      {% with sport = form.instance.sport %}
-        <i class="{{sport.icon}}"></i> {{sport.name}}
-      {% endwith %}
-    </span>
-    <span class="caret"></span>
-  </button>
-
-  <ul class="dropdown-menu sports">
-    {% for sport in form.sports %}
-    <li class="{% if sport == form.instance.sport %}active{% endif %}">
-      <a href="#" value="{{sport.pk}}">
-        <i class="{{sport.icon}}"></i> {{ _(sport.name) }}
-      </a>
-    </li>
-    {% endfor %}
-  </ul>
-  {{ form.sport|safe }}
-	{% if form.sport.errors %}
-	<div class="help-block">{{form.sport.errors|safe}}</div>
-	{% endif %}
-</div>
-{%- endmacro %}
-
 {% macro session_types_name(form, types) -%}
 
 {% with type = form.instance.type %}
 {% with field = form.name %}
-<div class="types-name form-group row {% if field.errors %}error{% elif field.value() %}success{% endif %}">
+<div class="types-name form-group {% if field.errors %}error{% elif field.value() %}success{% endif %}">
 	{% if field.errors %}
 	<span class="help-inline">{{field.errors|safe}}</span>
 	{% endif %}
-	<label class="col-sm-2 control-label" for="id_{{field.name}}">{{ _('Session') }}</label>
-	<div class="col-sm-10 {{form.instance.sport|default('running')}}">
-		<div class="input-group">
-			<div class="input-group-btn dropdown">
-				<button class="btn dropdown-toggle {{ type }}" data-toggle="dropdown">
-					<span class="name">
-            {{ _(type|title()) }}
-					</span>
-					<span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu types">
-					{% for k, name in types %}
-					<li{% if type == k %} class="active"{% endif %}>
-					<a href="#" value="{{k}}">{{ name }}</a>
-				</li>
-				{% endfor %}
-			</ul>
+  <div class="input-group">
+
+    {# Types #}
+    <div class="input-group-btn dropdown">
+      <button class="btn btn-clear dropdown-toggle {{ type }}" data-toggle="dropdown">
+        <span class="name">
+          {{ _(type|title()) }}
+        </span>
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu types">
+        {% for k, name in types %}
+        <li{% if type == k %} class="active"{% endif %}>
+          <a href="#" value="{{k}}">{{ name }}</a>
+        </li>
+        {% endfor %}
+      </ul>
       {{ form.type|safe }}
-		</div>
-		{{ form.name|addcss("form-control")|safe }}
-	</div>
-</div>
+    </div>
+
+    {# Sport #}
+    <div class="input-group-btn dropdown">
+      <button class="btn btn-primary btn-light dropdown-toggle" data-toggle="dropdown">
+        <span class="name">
+          {% with sport = form.instance.sport %}
+            <i class="{{sport.icon}}"></i> {{sport.name}}
+          {% endwith %}
+        </span>
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu sports">
+        {% for sport in form.sports %}
+        <li class="{% if sport == form.instance.sport %}active{% endif %}">
+          <a href="#" value="{{sport.pk}}">
+            <i class="{{sport.icon}}"></i> {{ _(sport.name) }}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+      {{ form.sport|safe }}
+      {% if form.sport.errors %}
+      <div class="help-block">{{form.sport.errors|safe}}</div>
+      {% endif %}
+    </div>
+
+    {{ form.name|addcss("form-control")|safe }}
+  </div>
 </div>
 {% endwith %}
 {% endwith %}
@@ -184,4 +184,29 @@
     <i class="icon-help-circled"></i> {{ _('Help') }}
   </button>
   {% endif %}
+{%- endmacro %}
+
+{% macro rating(field, max=5) %}
+<div class="form-group col-xs-12 col-sm-8 rating {% if field.errors %}has-error{% endif %}">
+	<label class="control-label" for="id_{{field.html_name}}">
+    {{ _('Difficulty') }}
+  </label>
+  {% with val = field.value()|int() %}
+  <div class="stars {% if val %}locked{% endif %}">
+    {% for star in range(0, max) %}
+    <div class="star {% if loop.index <= val %}star-{{ val }}{% endif %}" data-star="{{ loop.index }}">
+      <i class="icon-star"></i>
+    </div>
+    {% endfor %}
+  </div>
+  <div class="help hidden-xs text-muted">
+    {% for i in range(0, max) %}
+    <span class="level level-{{ loop.index }} {% if val|int() == loop.index %}active{% endif %}">
+      {{ _('Difficulty note %d' % loop.index) }}
+    </span>
+    {% endfor %}
+  </div>
+  {% endwith %}
+  {{ field|safe }}
+</div>
 {%- endmacro %}

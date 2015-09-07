@@ -1,4 +1,5 @@
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, View
+from django.utils.translation import ugettext as _
 from django.views.generic.edit import ModelFormMixin, ProcessFormView
 from django.http import Http404
 from users.models import Athlete
@@ -9,7 +10,7 @@ from club.forms import ClubMembershipForm
 from club import ROLES
 from club.tasks import mail_member_role
 from datetime import date, timedelta, MINYEAR
-from coach.mixins import JsonResponseMixin, JSON_STATUS_ERROR
+from coach.mixins import JsonResponseMixin, JSON_STATUS_ERROR, CsvResponseMixin, JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE
 
 import logging
 logger = logging.getLogger('club')
@@ -185,6 +186,20 @@ class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, Proces
       membership = form.save(commit=False)
       membership.trainers = form.cleaned_data['trainers'] # Weird :/
 
+      # Special case for deletion of prospect
+      if membership.role == 'archive' and self.role_original == 'prospect':
+
+        # Send email
+        if form.cleaned_data['send_mail']:
+          mail_member_role.delay(membership, self.role_original)
+
+        # Delete
+        membership.delete()
+
+        # Close & reload parent
+        self.json_options = [JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE, ]
+        return self.render_to_response({})
+
       # Check club has a place available
       if membership.role != 'archive':
         stat = [s for s in self.stats if membership.role == s['type']][0]
@@ -211,11 +226,14 @@ class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, Proces
           if membership.role == 'archive':
             membership.user.unsubscribe_mailing(self.club.mailing_list)
 
+        # Reload page for roles updates
+        self.json_options = [JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE, ]
+
     except Exception, e:
       logger.error('Failed to save role update for %s : %s' % (membership.user, str(e)))
       raise Exception("Failed to save")
 
-    return self.render_to_response(self.get_context_data(**{'form' : form}))
+    return self.render_to_response(self.get_context_data(**{'form' : form, 'saved': True}))
 
   def form_invalid(self, form):
     self.json_status = JSON_STATUS_ERROR
@@ -232,3 +250,46 @@ class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, Proces
     self.object = self.membership # needed for inherited classes
     return self.object
 
+
+class ClubMembersExport(ClubMixin, CsvResponseMixin, View):
+  '''
+  Export the list of members
+  as a CSV file
+  '''
+  def get(self, *args, **kwargs):
+
+    # Headers with trainers
+    headers = [
+      _('Lastname'),
+      _('Firstname'),
+      _('Email'),
+      _('Role'),
+      _('VMA'),
+      _('Birthday'),
+      _('Trainers'),
+    ]
+
+    # Add all data for members
+    data = []
+    members = self.club.clubmembership_set.filter(role__in=('athlete', 'trainer', 'staff'))
+    members = members.order_by('user__last_name', 'user__first_name')
+    for m in members:
+      # Base data
+      mdata = {
+        _('Lastname') : m.user.last_name,
+        _('Firstname') : m.user.first_name,
+        _('Email') : m.user.email,
+        _('Role') : m.role,
+        _('VMA') : m.user.vma,
+        _('Birthday') : m.user.birthday,
+        _('Trainers') : ' - '.join(m.trainers.values_list('first_name', flat=True)),
+      }
+      data.append(mdata)
+
+    # Render CSV
+    context = {
+      'csv_filename' : '%s.csv' % self.club.slug,
+      'csv_headers' : headers,
+      'csv_data' : data,
+    }
+    return self.render_to_response(context)

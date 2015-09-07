@@ -1,0 +1,24 @@
+{% extends 'mail/base.html' %}
+
+{% set title = _('New badges') %}
+
+{% block mail %}
+<p>
+{{ _('Hello %s') % user.first_name }},
+</p>
+
+<p>
+{{ _('You have some new badges on RunReport !') }}
+</p>
+
+{% for b in badges %}
+<div style="text-align: center">
+  <img src="{{ b.image.url }}" alt="Image {{ b.name }}" />
+  <br />
+  <strong>{{ b.name }}</strong>
+</div>
+{% endfor %}
+
+{{ _('You can view all your badges on ') }} <a href="https://{{ site.domain }}{{ url('badges') }}">https://{{ site.domain }}{{ url('badges') }}</a>
+
+{% endblock %}

@@ -9,8 +9,8 @@
 $(function(){
 
   // Setup data sets
-  var distances = [{% for m in months %}[{{m.timestamp()*1000}}, {{m.distance or 0}}],{% endfor %}];
-  var hours     = [{% for m in months %}[{{m.timestamp()*1000}}, {{m.hours or 0}}],{% endfor %}];
+  var distances = [{% for m in months %}[{{m.timestamp*1000}}, {{m.distance or 0}}],{% endfor %}];
+  var hours     = [{% for m in months %}[{{m.timestamp*1000}}, {{m.hours or 0}}],{% endfor %}];
 
   // Build months urls
   var urls = [{% for m in months %}'{{ url('user-calendar-month', member.username, m.year, m.month) }}',{% endfor %}];
@@ -89,6 +89,20 @@ $(function(){
       {% endif %}
       {% endwith %}
       {% endfor %}
+
+      {# Badges #}
+      {% if badges %}
+      <div class="row badges">
+        {% for badge in badges %}
+        <div class="col-sm-1 col-xs-3 text-center">
+          <a href="{{ url('badges-user', member.username) }}">
+            <img class="img-responsive" src="{{ badge.image.url }}" />
+            {{ badge.name }}
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
 
       {% if 'calendar' in privacy %}
 

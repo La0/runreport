@@ -7,29 +7,30 @@ from datetime import datetime
 from club import ROLES
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
+from django.utils.functional import cached_property
 
 class Club(models.Model):
-  name = models.CharField(max_length=250)
-  slug = models.SlugField(unique=True, max_length=20)
+  name = models.CharField(_('Club name'), max_length=250)
+  slug = models.SlugField(_('Slug'), help_text="Represents the club's name in urls", unique=True, max_length=20)
   members = models.ManyToManyField(Athlete, through='ClubMembership')
   main_trainer = models.ForeignKey(Athlete, null=True, blank=True, related_name="club_main_trainer")
   manager = models.ForeignKey(Athlete, related_name="club_manager")
 
   # Users limits
   max_staff = models.IntegerField(default=1)
-  max_trainer = models.IntegerField(default=2)
-  max_athlete = models.IntegerField(default=20)
+  max_trainer = models.IntegerField(default=1)
+  max_athlete = models.IntegerField(default=10)
 
   # Extra infos
-  address = models.CharField(max_length=250)
-  zipcode = models.CharField(max_length=10)
-  city = models.CharField(max_length=250)
+  address = models.CharField(_('Address'), max_length=250)
+  zipcode = models.CharField(_('Zip code'), max_length=10)
+  city = models.CharField(_('City'), max_length=250)
 
   # Demo dummy club ?
   demo = models.BooleanField(default=False)
 
   # Private club ?
-  private = models.BooleanField(default=False)
+  private = models.BooleanField(_('Private club'), help_text=_('When private, a club is only accessible y its members'), default=False)
 
   # Mailing list (does not change)
   mailing_list = models.CharField(max_length=255, null=True, blank=True)
@@ -100,6 +101,20 @@ class Club(models.Model):
     self.manager.subscribe_mailing(self.mailing_list)
 
     return True
+
+  def _is_premium(self):
+    # helper to check if a user is premium
+    return self.subscriptions.filter(offer__target='club', status__in=('active', 'created')).exists()
+
+  # Django disallows direct property
+  # use in list displays
+  # Cf https://stackoverflow.com/questions/12842095/how-to-display-a-boolean-property-in-the-django-admin
+  _is_premium.boolean = True # for admin display
+
+  @cached_property
+  def is_premium(self):
+    return self._is_premium()
+
 
 class ClubMembership(models.Model):
   user = models.ForeignKey(Athlete, related_name="memberships")

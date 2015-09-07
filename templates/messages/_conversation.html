@@ -1,0 +1,74 @@
+<div class="row conversation">
+
+  <div class="col-sm-2 col-xs-4">
+    {% for r in conversation.get_recipients(exclude=user) %}
+    <a class="recipient" href="{{ url('conversations-user', r.username) }}">
+      <img src="{{ r.avatar.url }}" class="img-responsive img-rounded do-tootip" title="{{ r.first_name }} {{ r.last_name }}" />
+      {{ r.first_name }}
+    </a>
+    {% endfor %}
+  </div>
+
+  <div class="col-sm-2 col-xs-4">
+    <span class="badge">
+      {{ conversation.messages.count() }}
+    </span>
+    messages
+    <br />
+    {{ _('%s ago') % conversation.last_message|timesince() }}
+  </div>
+
+  <div class="col-sm-6 col-xs-12">
+    {% if conversation.type == 'mail' %}
+    <i class="icon-mail"></i> {{ _('Private message') }}
+    {% elif conversation.type == 'post' %}
+      <i class="icon-post"></i>
+      {% if conversation.post.writer == user %}
+        {{ _('On your post: %s') % conversation.post.title }}
+      {% else %}
+        {% with u = conversation.post.writer %}
+        {{ _('On %(first_name)s %(last_name)s post: %(title)s') % {'first_name' : u.first_name, 'last_name' : u.last_name, 'title' : conversation.post.title, } }}
+        {% endwith %}
+      {% endif %}
+    {% elif conversation.type == 'comments_week' %}
+      <i class="icon-calendar"></i>
+      {% if conversation.week.user == user %}
+        {{ _('On your week from %s') % conversation.week.get_date_start()|date('l d E Y') }}
+      {% else %}
+        {% with u = conversation.week.user %}
+        {{ _('On %(first_name)s %(last_name)s week from %(start)s') % {'first_name' : u.first_name, 'last_name' : u.last_name, 'start' : conversation.week.get_date_start()|date('l d E Y'), } }}
+        {% endwith %}
+      {% endif %}
+    {% elif conversation.type in ('comments_public', 'comments_private') %}
+    <p>
+      {% with session = conversation.get_session() %}
+      {% if session %}
+        <i class="icon-comment"></i>
+        {% with session_user = session.day.week.user %}
+          {% if user == session_user %}
+          {{ _('On your session') }}
+          {% else %}
+          {{ _('On the session of') }} <a href="{{ url('user-public-profile', session_user.username) }}">{{ session_user.first_name }} {{ session_user.last_name }}</a>
+          {% endif %}
+        {% endwith %}
+        <i class="{{session.sport.icon}}"></i>
+        {% with dt = session.day.date %}
+        <a href="{{ url('report-day', dt.year, dt.month, dt.day) }}">
+          {{ session.name }}
+        </a>
+        {{ _('on') }} {{ dt|date('l d E Y') }}
+        {% endwith %}
+      {% else %}
+      <i class="text-muted">{{ _('Missing data') }}</i>
+      {% endif %}
+      {% endwith %}
+    </p>
+    {% endif %}
+  </div>
+
+  <div class="col-sm-2 text-right">
+    <a href="{{ conversation.get_absolute_url() }}" class="btn btn-primary btn-sm">
+      {{ _('View') }} <i class="icon-right-open"></i>
+    </a>
+  </div>
+</div>

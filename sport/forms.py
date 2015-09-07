@@ -15,10 +15,23 @@ class SportSessionForm(forms.ModelForm):
 
   class Meta:
     model = SportSession
-    fields = ('sport', 'distance', 'time', 'name', 'comment', 'type', 'race_category')
+    fields = (
+      'type', 'sport', 'name',
+      'race_category',
+      'comment',
+      'distance', 'time', 'elevation_gain', 'elevation_loss',
+      'note',
+    )
     widgets = {
       'sport' : forms.HiddenInput(),
       'type' : forms.HiddenInput(),
+      'note' : forms.HiddenInput(),
+      'name': forms.TextInput(attrs={
+        'placeholder' : _('Content of the session (training type, race name, ...)'),
+      }),
+      'comment': forms.Textarea(attrs={
+        'placeholder' : _('How did you feel about this session ?'),
+      }),
     }
 
   def __init__(self, default_sport=None, day_date=None, *args, **kwargs):
@@ -58,6 +71,10 @@ class SportSessionForm(forms.ModelForm):
     if data['type'] == 'rest':
       return self.cleaned_data
 
+    # Alert user about missing name
+    if not self.cleaned_data.get('name', None):
+      raise forms.ValidationError(_('You must specify a name.'))
+
     # Check we have time or distance for
     # * all trainings
     # * past sessions
@@ -69,11 +86,11 @@ class SportSessionForm(forms.ModelForm):
       and data.get('plan_status') != 'failed' \
       and 'distance' in data and data['distance'] is None \
       and 'time' in data and data['time'] is None:
-      raise forms.ValidationError(u'Spécifiez une distance ou un temps pour ajouter une séance.')
+      raise forms.ValidationError(_('You must specify a distance or time to add a session.'))
 
-    # Alert user about missing comment & name
-    if not self.cleaned_data.get('name', None) and not self.cleaned_data.get('comment', None):
-      raise forms.ValidationError(u'Vous devez spécifier un nom de séance et/ou un commentaire.')
+    # Alert user about missing comment or difficulty
+    if not self.cleaned_data.get('note', None) and not self.cleaned_data.get('comment', None):
+      raise forms.ValidationError(_('You must specify a difficulty note or a comment.'))
 
     # Only for race
     if data['type'] == 'race':
@@ -85,7 +102,7 @@ class SportSessionForm(forms.ModelForm):
 
       # Check race category
       if not data['race_category']:
-        raise forms.ValidationError(u"Sélectionnez un type de course.")
+        raise forms.ValidationError(_('Pick a race category.'))
 
     return self.cleaned_data
 

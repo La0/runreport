@@ -7,6 +7,12 @@ class MessageTextForm(forms.ModelForm):
     model = Message
     fields = ('message', )
 
+  def __init__(self, *args, **kwargs):
+    super(MessageTextForm, self).__init__(*args, **kwargs)
+
+    # Add placeholder to message
+    self.fields['message'].widget.attrs['placeholder'] = _('Write your message here...')
+
 class ContactForm(forms.Form):
   email = forms.EmailField(label=_('Your email'))
   name = forms.CharField(label=_('Your name'))

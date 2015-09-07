@@ -148,12 +148,12 @@ class WeekPaginator(object):
     # Search current
     current_pos = 0
     i = 0
-    for w in self.weeks:
-      if w['display'] == 'week' and w['start'] == page_date:
-        current_pos = i
-      i += 1
-
     useful_weeks = [w for w in self.weeks if w['display'] == 'week'] # skip spacers
+    for i, w in enumerate(useful_weeks):
+      if w['start'] == page_date:
+        current_pos = i
+        break
+
     week_previous = current_pos - 1 > 0 and useful_weeks[current_pos - 1] or None
     week_next = current_pos + 1 < len(useful_weeks) and useful_weeks[current_pos + 1] or None
 

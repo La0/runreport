@@ -31,6 +31,8 @@ kombu==3.0.21
 mailmanclient==1.0.0
 oauthlib==0.7.2
 paramiko==1.10.1
+paymill-jsonobject==0.7.1beta
+paymill-wrapper==2.1.0
 psutil==1.0.1
 psycopg2==2.5.3
 pycrypto==2.6

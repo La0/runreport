@@ -1,164 +1,112 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="intro-header">
+<div id="home">
 
-  <div class="container">
-    <div class="intro-message">
-      <div class="row">
-        <div class="col-sm-4 col-sm-offset-4 col-xs-8 col-xs-offset-2">
-          <img class="im-responsive" src="{{ static('img/logo_bloc.svg') }}" alt="Run Report" />
+  {# Carousel #}
+  <div id="homeCarousel" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#homeCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#homeCarousel" data-slide-to="1"></li>
+      <li data-target="#homeCarousel" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner" role="listbox">
+      <div class="item active" style="background-image: url({{ static('img/home/carousel_1.jpg') }})">
+        <div class="container">
+          <div class="carousel-caption">
+            <img class="logo" src="{{ static('img/logo_bloc.svg') }}" alt="RunReport" />
+            <h3>{{ _('The website of your running success') }}</h3>
+          </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-lg-12">
-          <h3>{{ _('Training logbook & Athletes management') }}</h3>
-          <hr class="intro-divider">
-          <ul class="list-inline intro-social-buttons">
-            <li><a href="{{ url('user-create') }}" class="btn btn-primary btn-lg"><span class="icon-plus"></span> <span class="main-action">{{ _('Create an account') }}</span></a></li>
-            <li><a href="{{ url('login') }}" class="btn btn-info btn-lg"><i class="icon-sport-running"></i> <span class="main-action">{{ _('Sign in') }}</span></a></li>
-          </ul>
-          <div class="col-sm-4 col-sm-offset-4 demo">
-            <a href="{{ url('login') }}" class="btn btn-default"><i class="icon-fire"></i> <span class="">{{ _('Try the demo') }}</span></a>
+      <div class="item" style="background-image: url({{ static('img/home/carousel_2.jpg') }})">
+        <div class="container">
+          <div class="carousel-caption">
+            <img class="logo" src="{{ static('img/logo_bloc.svg') }}" alt="RunReport" />
+            <h3>{{ _('Track precisely your progression') }}</h3>
           </div>
-
-          <div class="col-xs-12 text-center jump">
-            <a href="#marketing" class="do-tooltip" title="{{ _('More information') }}">
-              <i class="icon-down-open"></i>
-            </a>
+        </div>
+      </div>
+      <div class="item" style="background-image: url({{ static('img/home/carousel_3.jpg') }})">
+        <div class="container">
+          <div class="carousel-caption">
+            <img class="logo" src="{{ static('img/logo_bloc.svg') }}" alt="RunReport" />
+            <h3>{{ _('Communicate with your sport friends & clubs') }}</h3>
           </div>
         </div>
       </div>
     </div>
+    <a class="left carousel-control" href="#homeCarousel" role="button" data-slide="prev">
+      <span class="sr-only">{{ _('Previous') }}</span>
+    </a>
+    <a class="right carousel-control" href="#homeCarousel" role="button" data-slide="next">
+      <span class="sr-only">{{ _('Next') }}</span>
+    </a>
   </div>
-  <!-- /.container -->
 
-</div>
-<!-- /.intro-header -->
-
-<div class="content-section-a">
-  <a name="marketing"></a>
-  <div class="container">
-
-    <div class="row" >
-      <div class="col-lg-5 col-sm-6">
-        <hr class="section-heading-spacer">
-        <div class="clearfix"></div>
-        <h2 class="section-heading">{{ _('Sport logbook') }}</h2>
-        <p class="lead">{{ _('You can freely create your training logbook, manage your sports sesssions, and clearly view your evolution across several month or years.') }}</p>
-      </div>
-      <div class="col-lg-5 col-lg-offset-2 col-sm-6">
-        <img class="img-responsive" src="{{ static('img/landing/calendar.png') }}" alt="">
+  {# Call to actions #}
+  <div class="container-fluid">
+    <div class="row actions">
+      <div class="col-xs-12 text-center">
+        <a href="{{ url('user-create') }}" class="btn btn-primary btn-lg">
+          <i class="icon-plus"></i>
+          {{ _('Create an account') }}
+        </a>
+        <a href="{{ url('login') }}" class="btn btn-primary btn-lg">
+          <i class="icon-user"></i>
+          {{ _('Sign in') }}
+        </a>
       </div>
     </div>
-
   </div>
-  <!-- /.container -->
 
-</div>
-<!-- /.content-section-a -->
-
-<div class="content-section-b">
-
-  <div class="container">
-
+  {# Marketing choices #}
+  <div class="container marketing">
     <div class="row">
-      <div class="col-lg-5 col-lg-offset-1 col-sm-push-6 col-sm-6">
-        <hr class="section-heading-spacer">
-        <div class="clearfix"></div>
-        <h2 class="section-heading">
-          {{ _('Athlete management') }}
-          <br/>{{ _('for a club or an enterprise') }}
+      <div class="col-lg-4 col-lg-offset-2 col-sm-6 col-xs-12">
+        <a href="{{ url('features-athlete') }}">
+          <img class="img-circle img-responsive" src="{{ static('img/home/runner.jpg') }}" alt="{{ _('Runner') }}" >
+        </a>
+        <h2>
+          <a class="text-link" href="{{ url('features-athlete') }}">
+            {{ _("I'm an athlete") }}
+          </a>
         </h2>
-        <p class="lead">
-          {{ _('This website will allow you to easily manage all your athletes, using or one several trainers.') }}
-          <br/>
-          {{ _('Every trainer can view his athletes\' sessions, create his training plans, and efficiently communicate with them.') }}
+        <p>
+          {{ _('RunReport is your new sport partner') }} :
+          <a href="{{ url('login') }}">{{ _('Sign in') }}</a>, 
+          {{ _('plan your sessions, track your performances and share them with your trainer & friends.') }}
         </p>
-        <a href="{{ url('club-landing') }}" class="btn btn-success btn-lg"><span class="icon-club"></span> {{ _('Create a club') }}</a>
+        <p>
+          <a class="btn btn-info btn-light" href="{{ url('features-athlete') }}" role="button">
+            {{ _('Want to know more') }}
+            <i class="icon-right-open"></i>
+          </a>
+        </p>
       </div>
-      <div class="col-lg-5 col-sm-pull-6  col-sm-6">
-        <img class="img-responsive" src="{{ static('img/landing/club.png') }}" alt="">
-      </div>
-    </div>
-
-  </div>
-  <!-- /.container -->
-
-</div>
-<!-- /.content-section-b -->
-
-<div class="content-section-a">
-
-  <div class="container">
-
-    <div class="row">
-      <div class="col-lg-5 col-sm-6">
-        <hr class="section-heading-spacer">
-        <div class="clearfix"></div>
-        <h2 class="section-heading">
-          {{ _('Phone display') }}
-          <br />
-          {{ _('Apple, Android, ...') }}
-          </h2>
-        <p class="lead">{{ _('RunReport displays nicely on every smartphones & tablets, automatically adapting to your screen size.') }}</p>
-      </div>
-      <div class="col-lg-5 col-lg-offset-2 col-sm-6">
-        <img class="img-responsive" src="{{ static('img/landing/mobile.png') }}" alt="">
-      </div>
-    </div>
-
-  </div>
-  <!-- /.container -->
-
-</div>
-
-<div class="content-section-b">
-
-  <div class="container">
-
-    <div class="row">
-      <div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
-        <hr class="section-heading-spacer">
-        <div class="clearfix"></div>
-        <h2 class="section-heading">
-          {{ _('GPS Synchronisation') }}
-          <br/>
-          {{ _('Garmin, Strava, ...') }}
+      <div class="col-lg-4 col-sm-6 col-xs-12" id="switch_h2">
+        <a href="{{ url('features-trainer') }}">
+          <img class="img-circle img-responsive" src="{{ static('img/home/trainer.jpg') }}" alt="{{ _('Trainer') }}">
+        </a>
+        <h2>
+          <a class="text-link" href="{{ url('features-trainer') }}">
+            {{ _("I'm a coach") }}
+          </a>
         </h2>
-        <p class="lead">
-        {{ _('Run Report can automatically import your data from your Garmin Connect or Strava, and show them to your friends, trainers, ...') }}</p>
-      </div>
-      <div class="col-lg-5 col-sm-pull-6 col-sm-6">
-        <img class="img-responsive" src="{{ static('img/landing/garmin.jpg') }}" alt="">
-      </div>
-    </div>
-
-  </div>
-  <!-- /.container -->
-
-</div>
-<!-- /.content-section-a -->
-
-<div class="banner">
-
-  <div class="container">
-
-    <div class="row">
-      <div class="col-lg-6">
-        <h2>{{ _('Discover RunReport:') }}</h2>
-      </div>
-      <div class="col-lg-6">
-        <ul class="list-inline banner-social-buttons">
-          <li><a href="{{ url('user-create') }}" class="btn btn-primary btn-lg"><i class="icon-plus"></i> <span class="main-action">{{ _('Create an account') }}</span></a></li>
-          <li><a href="{{ url('login') }}" class="btn btn-info btn-lg"><i class="icon-sport-running"></i> <span class="main-action">{{ _('Sign in') }}</span></a></li>
-        </ul>
+        <p>
+          {{ _('RunReport is the ideal tool to train, track and motivate your athletes.') }}
+          <a href="{{ url('login') }}">{{ _('Sign in') }}</a>, 
+          {{ _('create, share your training plans and manage your club.') }}
+        </p>
+        <p>
+          <a class="btn btn-info btn-light" href="{{ url('features-trainer') }}" role="button">
+            {{ _('Want to know more') }}
+            <i class="icon-right-open"></i>
+          </a>
+        </p>
       </div>
     </div>
 
   </div>
-  <!-- /.container -->
-
 </div>
-<!-- /.banner -->
 {% endblock %}

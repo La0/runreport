@@ -5,6 +5,7 @@ from django.contrib.gis import admin
 from django.views.generic.base import RedirectView, TemplateView
 from club.views import ClubInviteCheck
 from messages.views import ContactView
+from coach.views import FeaturesView
 
 admin.autodiscover()
 
@@ -17,13 +18,17 @@ urlpatterns = patterns('',
   url(r'^message/', include('messages.urls')),
   url(r'^track/', include('tracks.urls')),
   url(r'^friends/', include('friends.urls')),
+  url(r'^premium/', include('payments.urls')),
+  url(r'^badges/', include('badges.urls')),
   url(r'^(?P<type>help|news)/', include('page.urls')),
 
   # Invite
   url(r'^invite/(?P<slug>.*)', ClubInviteCheck.as_view(), name="club-invite"),
 
   # Landing pages
-  url(r'^features/?', TemplateView.as_view(template_name='landing/features.html'), name="landing-features"),
+  url(r'^features/athlete/?', TemplateView.as_view(template_name='landing/athlete.html'), name="features-athlete"),
+  url(r'^features/trainer/?', TemplateView.as_view(template_name='landing/trainer.html'), name="features-trainer"),
+  url(r'^features/?', FeaturesView.as_view(), name="features"),
 
   # Contact Form
   url(r'^contact/(?P<sent>sent)?', ContactView.as_view(), name='contact'),

@@ -9,7 +9,7 @@ import tempfile
 from django.conf import settings
 from coach.mail import MailBuilder
 from helpers import date_to_day, week_to_date
-from sport.stats import StatsMonth
+from sport.stats import StatsMonth, StatsWeek
 from .sport import SportSession
 from collections import OrderedDict
 from messages.models import Conversation, TYPE_COMMENTS_WEEK
@@ -179,17 +179,20 @@ class SportWeek(models.Model):
     sports = set([s.sport for s in sessions])
 
     for sport in sports:
-      t, d = 0.0, 0.0
+      t, d, e = 0.0, 0.0, 0.0
       sport_sessions = sessions.filter(sport=sport)
       for s in sport_sessions :
         if s.time:
           t += s.time.total_seconds()
         if s.distance:
           d += s.distance
+        if s.elevation_gain:
+          e += s.elevation_gain
       stats.append({
         'sport' : sport,
         'time' : t,
         'distance' : d,
+        'elevation' : e,
         'sessions' : sport_sessions.count(),
       })
 
@@ -198,14 +201,19 @@ class SportWeek(models.Model):
       'sport' : None, # Total
       'time' : sum([s['time'] for s in stats]),
       'distance' : sum([s['distance'] for s in stats]),
+      'elevation' : sum([s['elevation'] for s in stats]),
       'sessions' : sum([s['sessions'] for s in stats]),
     })
 
     return stats
 
   def rebuild_cache(self):
-    # Rebuild the stats cache
+    # Rebuild the monthly stats cache
     st = StatsMonth(self.user, self.year, self.get_date_start().month, preload=False)
+    st.build()
+
+    # Rebuild the weekly stats cache
+    st = StatsWeek(self.user, self.year, self.week, preload=False)
     st.build()
 
   def add_comment(self, message, writer):
@@ -268,8 +276,7 @@ class SportDay(models.Model):
 
   def rebuild_cache(self):
     # Rebuild the stats cache
-    st = StatsMonth(self.week.user, self.date.year, self.date.month, preload=False)
-    st.build()
+    self.week.rebuild_cache()
 
 class RaceCategory(models.Model):
   name = models.CharField(max_length=250)

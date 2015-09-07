@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, url, include
+from django.conf.urls import patterns, url
 from django.contrib.auth.decorators import login_required
 from messages.views import *
 
@@ -25,6 +25,9 @@ urlpatterns = patterns('',
   # List messages from a Conversation
   url(r'^list/(?P<conversation_id>\d+)/full/?', ConversationList.as_view(), {'full' : True, },  name="conversation-list-full"),
   url(r'^list/(?P<conversation_id>\d+)/?', ConversationList.as_view(), {'full' : False, }, name="conversation-list"),
+
+  # List conversations with another user
+  url(r'^with/(?P<username>[\w_-]+)/?', login_required(ConversationsUserView.as_view()), name="conversations-user"),
 
   # User inbox
   url(r'^(?P<conversation_id>\d+)/?$', login_required(ConversationView.as_view()), name="conversation-view"),

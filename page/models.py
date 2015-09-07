@@ -4,7 +4,6 @@ from helpers import nameize
 from markdown import markdown
 
 PAGE_TYPES = (
-  ('help', 'Help'),
   ('news', 'News'),
 )
 

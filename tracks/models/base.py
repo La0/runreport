@@ -114,13 +114,25 @@ class Track(models.Model):
           min_ratio = ratio
           self.session = s
 
-        # Update title
-        if identity['name'] and not self.session.name:
-          self.session.name = identity['name']
-          self.session.save()
+        # Update performances & name
+        keys = ('name', 'time', 'distance', 'elevation_gain', 'elevation_loss')
+        for key in keys:
+          identity_value = identity.get(key)
+          if identity_value and not getattr(self.session, key):
+            setattr(self.session, key, identity_value)
+            self.session.save()
     else:
       # Create new session
-      self.session = SportSession.objects.create(sport=identity['sport'].get_parent(), day=day, time=identity['time'], distance=identity['distance'], name=identity['name'])
+      data = {
+        'sport' : identity['sport'].get_parent(),
+        'day' : day,
+        'time' : identity['time'],
+        'distance' : identity['distance'],
+        'name' : identity['name'],
+        'elevation_gain' : identity['elevation_gain'],
+        'elevation_loss' : identity['elevation_loss'],
+      }
+      self.session = SportSession.objects.create(**data)
 
   def get_url(self):
     if self.provider == 'garmin':

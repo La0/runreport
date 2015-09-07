@@ -10,12 +10,11 @@
       <h3>
         {{ _('Your week %s') % report }}
       </h3>
-      {{ macros.help(user, _('On this page, you can view all your sport sessions in a week. Click on a session to edit it.'), _('Your week')) }}
       {% endif %}
-
     </div>
     <div class="actions col-sm-3 col-xs-12 text-right hidden-xs">
     {% if not member  %}
+      {{ macros.help(user, _('On this page, you can view all your sport sessions in a week. Click on a session to edit it.'), _('Your week')) }}
       {% if report.published or report.task %}
       <a href="{{ url('report-week-publish', report.year, report.week) }}" class="modal-action btn btn-success btn-light">
         <i class="icon-list"></i> {{ _('Week published') }}
@@ -27,13 +26,17 @@
       {% endif %}
     {% endif %}
     </div>
-  </div>
 
-  {% if trainer %}
-  <p class="alert alert-success">
-    {{ _('This week report has been sent to %s') % trainer.first_name|default(trainer.username) }}
-  </p>
-  {% endif %}
+    {% if trainer %}
+    <p class="alert alert-success">
+      {{ _('This week report has been sent to %s') % trainer.first_name|default(trainer.username) }}
+    </p>
+    {% endif %}
+
+    {% if report.days.exists() %}
+      {% include 'sport/week/_stats.html' %}
+    {% endif %}
+  </div>
 
   {% for day_date, day in report.get_days_per_date().items() %}
   <div class="row day actions-hover link" href="{{ url(pageday, *pageargs + [day_date.year, day_date.month, day_date.day]) }}">
@@ -65,19 +68,13 @@
           {{ _('Loading week comments...') }}
         </div>
         {% else %}
-        <a href="{{ url('message-week-add', report.pk) }}" class="modal-action btn btn-success btn-light">
+        <a href="{{ url('message-week-add', report.pk) }}" class="modal-action btn btn-success btn-light" data-replaces="messages-{{report.pk}}">
           <i class="icon-comment"></i> {{ _('Start a conversation') }}
         </a>
         {% endif %}
       {% endif %}
     </div>
 
-    <div class="col-xs-12">
-      <h4>{{ _('Stats') }}</h4>
-      {% with stats = report.get_sports_stats() %}
-        {% include 'sport/week/_stats.html' %}
-      {% endwith %}
-    </div>
   </div>
 
   {% include '_weeks.html' %}

@@ -1,7 +1,10 @@
 from datetime import timedelta
-from django.forms import TextInput, Field
+from django.forms import TextInput, Field, ValidationError
 from helpers import seconds_humanize
 import re
+from django.utils.translation import ugettext_lazy as _
+
+
 TIME_FORMATS = [
   '(?P<hour>\d+):(?P<min>\d+):(?P<sec>\d+)',
   '(?P<hour>\d+)(:|h|H)(\s?)(?P<min>\d+)',
@@ -40,11 +43,10 @@ class IntervalFormField(Field):
       matches = re.match(time_format, value)
       if matches:
         seconds = 0.0
-        parsed = matches.groupdict()
 
         # Build timedelta from seconds
-        seconds = sum([float(value) * TIME_MULTIPLES[name] for name, value in matches.groupdict().items()])
+        seconds = sum([float(v) * TIME_MULTIPLES[name] for name, v in matches.groupdict().items()])
         return timedelta(seconds=seconds)
 
-    raise forms.ValidationError('Format de temps non reconnu.')
+    raise ValidationError(_('Unsupported time format'))
 

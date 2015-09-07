@@ -19,6 +19,7 @@
 	<link type="text/css" href="{{ static('dropzone/downloads/css/dropzone.css') }}" rel="stylesheet">
 	<link type="text/css" href="{{ static('lightbox2/dist/css/lightbox.css') }}" rel="stylesheet">
 	<link type="text/css" href="{{ static('css/runreport-embedded.css') }}" rel="stylesheet">
+	<link type="text/css" href="{{ static('css/animation.css') }}" rel="stylesheet">
 	<link type="text/x-scss" href="{{ static('scss/main.scss') }}" rel="stylesheet">
   {% endcompress %}
 </head>
@@ -26,13 +27,8 @@
 	<header class="navbar navbar-default navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
-        <a href="/" class="navbar-brand">
-          {% if user.is_authenticated() %}
+        <a href="{{ url('dashboard') }}" class="navbar-brand">
           <img src="{{ static('img/logo_bloc.svg') }}" alt="Run Report" class="block" />
-          {% else %}
-          <img src="{{ static('img/logo_ligne.svg') }}" alt="Run Report" class="line visible-lg"/>
-          <img src="{{ static('img/logo_bloc.svg') }}" alt="Run Report" class="block hidden-lg"/>
-          {% endif %}
         </a>
 				<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
 					<span class="icon-bar"></span>
@@ -89,6 +85,14 @@
       {% endif %}
 	</header>
 
+  {# Display an ad for premium #}
+  {% if user.is_authenticated() and not user.is_premium %}
+  <div id="premium_ad">
+    <i class="icon-premium"></i>
+    {{ _('You can get a ')}} <a href="{{ url('payment-status') }}">{{ _('premium RunReport account') }}</a> {{ _('to get all the ') }} <a href="{{ url('features') }}">{{ _('features') }}</a>.
+  </div>
+  {% endif %}
+
 	<div id="main" role="main">
 		{% import '_macros.html' as macros %}
 		{% block content %}{% endblock %}
@@ -97,6 +101,10 @@
 	<footer>
 		<div class="container">
       {{ _('Built by') }} <a target="_blank" href="http://basyc.fr">BaSyC</a>
+      <span class="text-muted">&bull;</span>
+
+      <i class="icon-version do-tooltip" title="{{ _('Version') }}"></i>
+      {{ VERSION }}
       <span class="text-muted">&bull;</span>
 
 			<a href="http://github.com/La0/coach"><i class="icon-github"></i> {{ _('Github') }}</a>
@@ -108,7 +116,7 @@
 			<a href="{{ url('page-list', 'news') }}"><i class="icon-mail"></i> {{ _('News') }}</a>
       <span class="text-muted">&bull;</span>
 
-			<a href="{{ url('page-list', 'help') }}"><i class="icon-help-circled"></i> {{ _('Help') }}</a>
+			<a href="{{ HELP_URL }}" target="_blank"><i class="icon-help-circled"></i> {{ _('Help') }}</a>
       <span class="text-muted">&bull;</span>
 
 			<a href="/contact"><i class="icon-user"></i> {{ _('Contact') }}</a>
@@ -130,10 +138,14 @@
   <script type="text/javascript" src="{{ static('flot/jquery.flot.time.js') }}" ></script>
   <script type="text/javascript" src="{{ static('flot/jquery.flot.stack.js') }}" ></script>
 	<script type="text/javascript" src="{{ static('js/config.js') }}" ></script>
+	<script type="text/javascript" src="{{ static('raphael/raphael.js') }}" ></script>
 	<script type="text/javascript" src="{{ static('js/csrf.js') }}" ></script>
 	<script type="text/javascript" src="{{ static('js/modal.js') }}" ></script>
 	<script type="text/javascript" src="{{ static('js/tracks.js') }}" ></script>
   <script type="text/javascript" src="{{ static('js/stats.js') }}" ></script>
+	<script type="text/javascript" src="{{ static('js/dashboard.js') }}" ></script>
+  <script type="text/javascript" src="{{ static('js/payment.js') }}"></script>
+  <script type="text/javascript" src="{{ static('js/rating.js') }}"></script>
   {% endcompress %}
 	{% block js %}{% endblock %}
   {# Compress fails with this file :/ #}

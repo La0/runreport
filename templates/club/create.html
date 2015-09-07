@@ -6,6 +6,8 @@
 
 	<h2>{{ _('Create a club') }}</h2>
 
+  {% if user.is_authenticated() %}
+
 	<div class="alert alert-info">
 		<h4>{{ _('Warning') }}</h4>
 		{{ _('You can create and administer only one club.') }}
@@ -15,14 +17,13 @@
 		{% csrf_token %}
 
     <div class="slugify" data-target="#id_slug">
-      {{ macros.input(form.name, _('Club name')) }}
+      {{ macros.input(form.name) }}
     </div>
-		{{ macros.input(form.phone, _('Your phone')) }}
-    {{ macros.input(form.slug, _('Slug'), _('Represents the club\'s name in urls')) }}
-		{{ macros.input_bool(form.private, _('Private club'), _('When private, a club is only accessible y its members')) }}
-		{{ macros.input(form.address, _('Adress')) }}
-		{{ macros.input(form.zipcode, _('Zipcode')) }}
-		{{ macros.input(form.city, _('Town')) }}
+		{{ macros.input(form.phone) }}
+		{{ macros.input(form.slug) }}
+		{{ macros.input(form.address) }}
+		{{ macros.input(form.zipcode) }}
+		{{ macros.input(form.city) }}
 
 		<div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
@@ -30,6 +31,21 @@
 			</div>
 		</div>
 	</form>
+
+  {% else %}
+	<div class="alert alert-warning">
+		<h4>{{ _('Logged out user') }}</h4>
+		{{ _('You need to sign in or create an account in order to create a club.') }}
+	</div>
+  <p class="text-right">
+    <a href="{{ url('login') }}" class="btn btn-primary">
+      {{ _('Sign in') }}
+    </a>
+    <a href="{{ url('user-create') }}" class="btn btn-default">
+      {{ _('Create an account') }}
+    </a>
+  </p>
+  {% endif %}
 
 </div>
 

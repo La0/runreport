@@ -1,0 +1,46 @@
+<div class="subscription">
+  <blockquote>
+    <strong>
+    {% if subscription.offer.slug == 'athlete_welcome' %}
+      {{ _('Welcome offer') }}
+    {% elif subscription.offer.slug == 'athlete' %}
+      {{ _('Premium offer') }}
+    {% elif subscription.offer.slug == 'club_small' %}
+      {{ _('Premium small club') }}
+    {% elif subscription.offer.slug == 'club_big' %}
+      {{ _('Premium big club') }}
+    {% endif %}
+    </strong>
+    {% if subscription.status == 'created' %}
+    <span class="label label-warning">{{ _('Awaiting first payment') }}</span>
+    {% elif subscription.status == 'active' %}
+    <span class="label label-success">{{ _('Active') }}</span>
+    {% else %}
+    <span class="label label-danger">{{ _('Inactive') }}</span>
+    {% endif %}
+    <br />
+
+    {% if subscription.offer.amount > 0 %}
+    {{ _('Costs you') }}
+    {{ subscription.offer.amount }} &euro; <span class="text-muted">(or {{ subscription.offer.amount_monthly|floatformat(2) }} &euro; {{ _('per month') }})</span>
+    {% else %}
+    {{ _('Free') }}
+    {% endif %}
+    <br />
+
+    {% if subscription.start > now %}
+    {{ _('Will start on') }} {{ subscription.start|date('l d E Y') }}
+    {% else %}
+    {{ _('Started on') }} {{ subscription.start|date('l d E Y') }}
+    {% endif %}
+
+    {% if subscription.end %}
+      <span class="text-muted">&bull;</span>
+      {% if subscription.end > now %}
+      {{ _('Will end on') }} {{ subscription.end|date('l d E Y') }}
+      {% else %}
+      {{ _('Ended on') }} {{ subscription.end|date('l d E Y') }}
+      {% endif %}
+    {% endif %}
+  </blockquote>
+  </div>

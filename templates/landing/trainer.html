@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% set page_title = _('Features for trainers') %}
+
+{% block content %}
+<div id="features" class="trainers">
+  <div class="container-fluid jumbotron">
+    <h1>{{ _('Features for trainers') }}</h1>
+
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 text-center">
+        <a class="btn btn-info btn-light" href="{{ url('features-athlete') }}">
+          {{ _('View features for athletes') }}
+          <i class="icon-right-open"></i>
+        </a>
+      </div>
+
+      <div class="col-sm-3 col-xs-12 text-center">
+        <h3>{{ _('Create your own training plans') }}</h3>
+        <img class="img-thumbnail" src="{{ static('img/landing/trainer.plans.png') }}" />
+        <p>
+          {{ _('Create training plans with a powerful web interface, spanning over several weeks.') }}
+        </p>
+      </div>
+
+      <div class="col-sm-3 col-xs-12 text-center">
+        <h3>{{ _('Send your plans to your athletes') }}</h3>
+        <img class="img-thumbnail" src="{{ static('img/landing/trainer.users.png') }}" />
+        <p>
+          {{ _('Easily send plans to your athletes calendars.') }}
+        </p>
+      </div>
+
+      <div class="col-sm-3 col-xs-12 text-center">
+        <h3>{{ _('Track your athletes results') }}</h3>
+        <img class="img-thumbnail" src="{{ static('img/landing/trainer.follow.png') }}" />
+        <p>
+          {{ _('Get immediate feedback and notifications about your athletes sessions.') }}
+        </p>
+      </div>
+
+      <div class="col-sm-3 col-xs-12 text-center">
+        <h3>{{ _('Organize your athletes in groups') }}</h3>
+        <img class="img-thumbnail" src="{{ static('img/landing/trainer.groups.png') }}" />
+        <p>
+          {{ _('Group your athletes for every race, event, speed, ...') }}
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row actions">
+      <div class="col-xs-12 text-center">
+        <a href="{{ url('user-create') }}" class="btn btn-primary btn-lg">
+          <i class="icon-plus"></i>
+          {{ _('Create an account') }}
+        </a>
+        <a href="{{ url('login') }}" class="btn btn-primary btn-lg">
+          <i class="icon-user"></i>
+          {{ _('Sign in') }}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 text-center">
+        <a class="btn btn-info btn-light" href="{{ url('features') }}">
+          {{ _('Read more about our premium features') }}
+          <i class="icon-right-open"></i>
+        </a>
+      </div>
+
+      <div class="col-sm-3 col-xs-12 text-center">
+        <h3>{{ _('View your athletes calendar') }}</h3>
+        <img class="img-thumbnail" src="{{ static('img/landing/trainer.calendar.png') }}" />
+        <p>
+          {{ _('Get the same views as your athletes over their sport sessions.') }}
+        </p>
+      </div>
+
+      <div class="col-sm-3 col-xs-12 text-center">
+        <h3>{{ _('Manage your club subscriptions') }}</h3>
+        <img class="img-thumbnail" src="{{ static('img/landing/trainer.club.png') }}" />
+        <p>
+          {{ _('Organize your club using powerful listings & different roles.') }}
+        </p>
+      </div>
+
+      <div class="col-sm-3 col-xs-12 text-center">
+        <h3>{{ _('Automatic mailing lists') }}</h3>
+        <img class="img-thumbnail" src="{{ static('img/landing/trainer.mail.png') }}" />
+        <h4>
+          <span class="label label-warning">
+            <i class="icon-premium"></i>
+            {{ _('Premium') }}
+          </span>
+        </h4>
+        <p>
+          {{ _('Get a mailing list, compatible with any mail address for every group and your whole club.') }}
+        </p>
+      </div>
+
+      <div class="col-sm-3 col-xs-12 text-center">
+        <h3>{{ _('Get more athletes in your club') }}</h3>
+        <img class="img-thumbnail" src="{{ static('img/landing/trainer.more.png') }}" />
+        <h4>
+          <span class="label label-warning">
+            <i class="icon-premium"></i>
+            {{ _('Premium') }}
+          </span>
+        </h4>
+        <p>
+          {{ _('More than 10 athletes ? Buy a premium access for your club and unlock the potential of your club !') }}
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+{% endblock %}

@@ -12,7 +12,7 @@
 <div style="text-align: left ; border-bottom: 1px solid #CCC; height: 60px; margin-bottom: 10px;">
   {% with athlete = session.day.week.user %}
   
-  <img src="https://{{ site.domain }}{{ athlete.avatar.url }}" style="height: 60px; width: 60px; float: left;"/>
+  <img src="{{ athlete.avatar.url }}" style="height: 60px; width: 60px; float: left;"/>
 
   <div style="margin-left: 10px; line-height: 25px"> 
     <a style="font-size: 1.2em; font-weight: bold;" href="https://{{ site.domain }}{{ url('user-calendar-day', athlete.username, session.day.date.year, session.day.date.month, session.day.date.day) }}">

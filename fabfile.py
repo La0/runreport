@@ -1,47 +1,17 @@
-from fabric.api import local, run, settings, env, cd, get, prefix, put
+from fabric.api import local, env, get, prefix
 from fabric.operations import prompt
-from coach.settings import HOME, FABRIC_HOSTS, DATABASES, STATIC_ROOT, COMPRESS_OUTPUT_DIR # Mandatory
-try:
-  from coach.settings import FABRIC_ENV, FABRIC_BASE, FABRIC_SUPERVISORS # Optional
-except Exception:
-  FABRIC_SUPERVISORS = []
-  pass
+from coach.settings import FABRIC_HOSTS, DATABASES
 import os
 env.hosts = FABRIC_HOSTS
-from datetime import date
-import shutil
 
-def prod():
-
-  # Compress JS & CSS on dev station
-  compress_assets()
-
-  # Stop services
-  supervisors('stop')
-
-  # Brutally kill celery workers as supervisor
-  # doesn't do its job :(
-  if 'runreport_celery' in FABRIC_SUPERVISORS:
-    with settings(warn_only=True):
-      run("ps auxww | grep 'celery -A coach worker' | grep -v grep | awk '{print $2}' |xargs kill -9")
-
-  with cd(FABRIC_BASE):
-    pull()
-    with virtualenv(FABRIC_ENV):
-      update_requirements()
-      submodules()
-      migrate_db()
-      static()
-      upload_assets()
-      cleanup_cache()
-
-  # Start again
-  supervisors('start')
-
-def syncdb(update=False):
+def syncdb():
+  '''
+  For dev only, passwords will be reset !
+  '''
 
   # Import dump from server
-  local_dump = 'prod.json'
+  local_encrypted = 'current_prod.gpg.tar'
+  local_dump = 'current_prod.tar'
   if os.path.exists(local_dump):
     # Adk for reuse of local_dump
     keep_dump = prompt('Found a local dump (%s). Use it [y/n] ?' % local_dump)
@@ -49,25 +19,38 @@ def syncdb(update=False):
       os.unlink(local_dump)
 
   if not os.path.exists(local_dump):
-    if update:
-      print 'Try to update Database dump'
-      prod_dump = '/tmp/runreport.json'
-      apps = ('sport', 'users', 'club', 'page', 'messages', 'friends', 'plan')
-      with cd(FABRIC_BASE):
-        with virtualenv(FABRIC_ENV):
-          run('./manage.py dumpdata --indent=4 -e sessions %s > %s' % (' '.join(apps), prod_dump))
-          get(prod_dump, local_dump)
-    else:
-      print 'Use today dump on server'
-      prod_dump = '~/db/%s.json' % date.today().strftime('%Y%m%d')
-      get(prod_dump, local_dump)
+    # Download
+    prod_dump = '~/backups/current'
+    get(prod_dump, local_encrypted)
 
-  # Re create db & load dump
-  createdb(False) # no fixtures here
-  local('./manage.py loaddata %s' % local_dump)
+    # Decrypt
+    decrypt = 'gpg --decrypt %s > %s' % (local_encrypted, local_dump)
+    local(decrypt)
+
+    # Cleanup
+    os.remove(local_encrypted)
+
+  # Re create db
+  createdb()
+
+  # Restore db from dump
+  cmd = pg(command='pg_restore')
+  cmd += ' -n public --no-owner %s' % local_dump
+  local(cmd)
+
+  # Run migrations
+  local('./manage.py migrate')
+
+  # Reset passwords
+  local('./manage.py reset_passwords')
+
+  # Build stats cache
+  local('./manage.py build_stats')
+
+  # Cleanup
   os.remove(local_dump)
 
-def createdb(use_fixtures=True):
+def createdb():
   '''
   Create the Pgsql database
    * delete old database if exists
@@ -75,133 +58,34 @@ def createdb(use_fixtures=True):
   '''
   # Drop old database manually
   db = DATABASES['default']
-  psql('drop database if exists %s' % db['NAME'], 'postgres')
+  pg('drop database if exists %s' % db['NAME'], 'postgres')
 
   # Create new database
-  psql('create database %(NAME)s with owner = %(USER)s' % db, 'postgres')
+  pg('create database %(NAME)s with owner = %(USER)s' % db, 'postgres')
 
   # Init Postgis on database
-  psql('create extension postgis')
+  pg('create extension postgis')
 
-  # Create structure
-  local('./manage.py migrate')
-
-  if use_fixtures:
-    # Load some basic fixtures
-    fixtures = (
-      'sport/data/sports.json',
-      'users/data/categories.json',
-      'users/data/demo.json',
-      'club/data/demo.json',
-    )
-    for f in fixtures:
-      local('./manage.py loaddata %s' % f)
-
-def psql(sql, dbname=None):
+def pg(sql=None, dbname=None, command='psql'):
   '''
   Run a pgsql command through cli
   '''
   db = DATABASES['default']
-  print db
   suffix = db['ENGINE'][db['ENGINE'].rindex('.') + 1:]
   if suffix not in ('postgis',):
     raise Exception('Only PostGis is supported')
+  db['COMMAND'] = command
+  print db
 
-  cmd = 'PGPASSWORD="%(PASSWORD)s" psql --username=%(USER)s --host=%(HOST)s' % db
+  cmd = 'PGPASSWORD="%(PASSWORD)s" %(COMMAND)s --username=%(USER)s --host=%(HOST)s' % db
   cmd += ' --dbname=%s' % (dbname or db['NAME'])
-  cmd += ' --command="%s"' % sql
-  local(cmd)
+  if sql:
+    cmd += ' --command="%s"' % sql
+    local(cmd)
+  return cmd
 
 def virtualenv(name='django'):
   '''
   Source a virtualenv on prefix
   '''
   return prefix('source %s/bin/activate' % name)
-
-def update_requirements():
-  '''
-  Update through pip & bower
-  '''
-  run('pip install -r requirements.txt')
-  run('bower install')
-
-def pull():
-  '''
-  Pull from github
-  '''
-  run('git pull --rebase')
-
-def migrate_db():
-  '''
-  Update db using South migrations
-  '''
-  run('./manage.py migrate')
-
-def supervisors(cmd):
-  for s in FABRIC_SUPERVISORS:
-    supervisor(cmd, s)
-
-def supervisor(cmd, process):
-  '''
-  Control processes through supervisor
-  '''
-  run('supervisorctl %s %s' % (cmd, process))
-
-def submodules():
-  run('git submodule init')
-  run('git submodule update')
-
-def static():
-  # Inores those static sub dirs
-  ignores = [
-    'tracks',
-    'posts',
-    'avatars',
-    'debug_toolbar',
-    'rest_framework',
-    'js', # from minified
-    'css', # from minified
-  ]
-
-  # Remove all bower_components dir
-  bower_dir = os.path.join(HOME, 'bower_components')
-  if os.path.exists(bower_dir):
-    ignores += os.listdir(bower_dir)
-
-  # Keep some components as it's served directly
-  keeps = ('dropzone', 'lightbox2')
-  for k in keeps:
-      if k in ignores:
-        ignores.remove(k)
-
-  cmd = './manage.py collectstatic --clear --noinput '
-  cmd += ' '.join(['--ignore "%s"' % i for i in ignores])
-
-  run(cmd)
-
-def compress_assets():
-  '''
-  Locally compress CSS & JS through compressor
-  '''
-  # Cleanup previous compression
-  compress_dir = os.path.join(STATIC_ROOT, COMPRESS_OUTPUT_DIR[1:])
-  if os.path.exists(compress_dir):
-    shutil.rmtree(compress_dir)
-
-  # Build minified directory
-  local('COMPRESS=1 ./manage.py compress --engine jinja2')
-
-def upload_assets():
-  '''
-  Upload local assets
-  '''
-  compress_dir = os.path.join(STATIC_ROOT, COMPRESS_OUTPUT_DIR[1:])
-  with cd(FABRIC_BASE):
-    put(compress_dir, 'static')
-
-def cleanup_cache():
-  '''
-  Cleanup template cache
-  '''
-  with settings(warn_only=True):
-    run('rm -rf templates_cached')

@@ -196,6 +196,8 @@ INSTALLED_APPS = (
     'events',
     'post',
     'api', # Api code
+    'payments', # Payments app
+    'badges', # Badges app
     'corsheaders', # CORS for api
     'vinaigrette', # Model translations
     'rest_framework', # Api provider
@@ -341,6 +343,10 @@ CELERYBEAT_SCHEDULE = {
     'task': 'users.tasks.send_related_races_mail',
     'schedule': crontab(hour=7, minute=50),
   },
+  'track-paymill-events-every-10min': {
+    'task': 'payments.tasks.payments_hook',
+    'schedule': timedelta(minutes=10),
+  },
 }
 CELERY_ROUTES = {
   'tracks.tasks.tracks_import' : {
@@ -386,6 +392,9 @@ MAILMAN_DOMAIN = None
 MAILMAN_USER = None
 MAILMAN_PASS = None
 
+# Help pages
+HELP_URL = 'https://help.runreport.fr'
+
 # API Settings
 REST_FRAMEWORK = {
   'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -403,6 +412,18 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_WHITELIST = (
   'localhost:8100',
 )
+
+# Club creation is allowed directly
+# No invite needed
+CLUB_CREATION_OPEN = True
+
+# Paymill integration
+PAYMENTS_ENABLED = False
+PAYMILL_SECRET = None
+PAYMILL_PUBLIC = None
+PAYMILL_HOOK_EMAIL = None
+PAYMILL_HOOK_PASSWORD = None
+PAYMILL_HOOK_SERVER = None
 
 # Import local settings, if any
 try:
@@ -446,3 +467,5 @@ if os.getenv('COMPRESS'):
   MEDIA_URL = '%s/medias/' % CDN_URL
   COMPRESS_URL = '%s/static/' % CDN_URL
 
+# Define Version
+VERSION = '1.0'

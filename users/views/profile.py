@@ -1,11 +1,13 @@
 from django.views.generic import DetailView, RedirectView
 from django.core.urlresolvers import reverse
-from django.db.models import Count
+from django.db.models import Count, Max, Q
 from users.views.mixins import ProfilePrivacyMixin
 from sport.views.mixins import AthleteRaces
 from sport.views.stats import SportStatsMixin
 from sport.models import SportSession
 from datetime import date
+import operator
+
 
 class PublicProfile(ProfilePrivacyMixin, DetailView, SportStatsMixin, AthleteRaces):
   template_name = 'users/profile/index.html'
@@ -16,6 +18,9 @@ class PublicProfile(ProfilePrivacyMixin, DetailView, SportStatsMixin, AthleteRac
 
   def get_context_data(self, *args, **kwargs):
     context = super(PublicProfile, self).get_context_data(*args, **kwargs)
+
+    # Always add badges
+    context.update(self.get_last_badges())
 
     # Load calendar recent stats
     if 'calendar' in self.privacy:
@@ -53,6 +58,19 @@ class PublicProfile(ProfilePrivacyMixin, DetailView, SportStatsMixin, AthleteRac
       'today' : today,
       'last_sessions' : last_sessions,
       'commented_sessions' : commented_sessions,
+    }
+
+  def get_last_badges(self):
+    # Load only the best badges of a user per category
+    badges = self.member.badges.all()
+    top_badges = badges.order_by().values('category_id').distinct().annotate(max_position=Max('position'))
+    if not top_badges:
+      return {}
+    filters = reduce(operator.or_, [(Q(category_id=b['category_id']) & Q(position=b['max_position'])) for b in top_badges])
+    badges = badges.filter(filters)
+
+    return {
+      'badges' : badges,
     }
 
 class OwnProfile(RedirectView):

@@ -6,7 +6,24 @@
 
 <div class="container">
 
-	<h2>{{club.name}} : {{members|length()}} membres</h2>
+  <div class="row">
+    <div class="col-sm-8 col-xs-12">
+      <h2>{{club.name}} : {{members|length()}} membres</h2>
+    </div>
+    <div class="col-sm-4 col-xs-12 text-right">
+      {% if club.is_premium %}
+      <a href="{{ url('club-members-export', club.slug) }}" class="btn btn-info">
+        <i class="icon-down-open"></i>
+        {{ _('CSV Export') }}
+      </a>
+      {% else %}
+      <span class="btn btn-info disabled do-tooltip" title="{{ _('This is a premium feature for clubs.') }}">
+        <i class="icon-down-open"></i>
+        {{ _('CSV Export') }}
+      </span>
+      {% endif %}
+    </div>
+  </div>
   <p>
     {% if club.mailing_list %}
     <a href="mailto:{{ club.mailing_list_fqdn }}" class="do-tooltip" title="{{ _('Send an email to all the club members') }}">

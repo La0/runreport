@@ -6,7 +6,11 @@ from club import ROLES
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from coach.mixins import JsonResponseMixin, JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE
+from coach.features import list_features
 from django.db.models import Max
+from django.utils import timezone
+from payments.models import PaymentOffer
+
 
 class ClubManage(ClubManagerMixin, UpdateView):
   model = Club
@@ -24,6 +28,10 @@ class ClubManage(ClubManagerMixin, UpdateView):
     context['stats'] = self.club.load_stats()
     context['links'] = self.club.links.all().order_by('name')
     context['roles'] = dict(ROLES)
+    context.update(list_features())
+    context['now'] = timezone.now()
+    context['offers'] = PaymentOffer.objects.filter(target='club').order_by('amount')
+    context['subscriptions'] = self.club.subscriptions.all()
     return context
 
 class ClubLinkAdd(ClubManagerMixin, JsonResponseMixin, CreateView):

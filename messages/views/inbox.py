@@ -1,7 +1,9 @@
 from django.views.generic import ListView
 from django.db.models import Q, Max
-from messages.models import Conversation, TYPE_PLAN_SESSION
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.shortcuts import get_object_or_404
+from messages.models import Conversation, TYPE_PLAN_SESSION
+from users.models import Athlete
 
 
 class MessageInbox(ListView):
@@ -35,3 +37,30 @@ class MessageInbox(ListView):
       conversations = paginator.page(paginator.num_pages)
 
     return conversations
+
+
+class ConversationsUserView(ListView):
+  '''
+  List conversations between a target
+  and the current user
+  '''
+  template_name = 'messages/with.user.html'
+  context_object_name = 'conversations'
+
+  def get_context_data(self):
+    context = super(ConversationsUserView, self).get_context_data()
+    context['target'] = self.target
+    return context
+
+  def get_queryset(self):
+    # Check the targetted use exists
+    self.target = get_object_or_404(Athlete, username=self.kwargs['username'])
+
+    # Load the conversations with these two
+    qs = Conversation.objects.filter(messages__writer=self.request.user)
+    qs = qs.filter(messages__writer=self.target)
+    qs = qs.prefetch_related('messages', 'messages__writer')
+    qs = qs.annotate(last_message=Max('messages__created'))
+    qs = qs.distinct().order_by('-last_message')
+
+    return qs

@@ -9,12 +9,15 @@ from django.core import validators
 from django.utils import timezone
 from django.core.validators import MinValueValidator
 from django.conf import settings
+from django.db.models.signals import post_save
+from django.utils.functional import cached_property
 from hashlib import md5
 from datetime import datetime
 from avatar_generator import Avatar
 from coach.mailman import MailMan
 from friends.models import FriendRequest
 from helpers import crop_image
+import paymill
 
 PRIVACY_LEVELS = (
   ('public', _('Public')),
@@ -46,6 +49,8 @@ class AthleteBase(AbstractBaseUser, PermissionsMixin):
     help_text=_('Designates whether this user should be treated as '
     'active. Unselect this instead of deleting accounts.'))
   date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
+
+  updated = models.DateTimeField(auto_now=True)
 
   objects = UserManager()
 
@@ -105,12 +110,12 @@ class Athlete(AthleteBase):
   avatar = models.ImageField(_('profile picture'), upload_to=build_avatar_path)
 
   # Profile privacy
-  privacy_avatar = models.CharField(_('profile picture visibility'), max_length=50, choices=PRIVACY_LEVELS, default='club')
-  privacy_races = models.CharField(_('races visibility'), max_length=50, choices=PRIVACY_LEVELS, default='club')
-  privacy_records = models.CharField(_('records visibility'), max_length=50, choices=PRIVACY_LEVELS, default='club')
-  privacy_stats = models.CharField(_('stats visibility'), max_length=50, choices=PRIVACY_LEVELS, default='club')
+  privacy_avatar = models.CharField(_('avatar visibility'), max_length=50, choices=PRIVACY_LEVELS, default='public')
+  privacy_races = models.CharField(_('races visibility'), max_length=50, choices=PRIVACY_LEVELS, default='public')
+  privacy_records = models.CharField(_('records visibility'), max_length=50, choices=PRIVACY_LEVELS, default='public')
+  privacy_stats = models.CharField(_('stats visibility'), max_length=50, choices=PRIVACY_LEVELS, default='public')
   privacy_calendar = models.CharField(_('calendar visibility'), max_length=50, choices=PRIVACY_LEVELS, default='private')
-  privacy_comments = models.CharField(_('comments visibility'), max_length=50, choices=PRIVACY_LEVELS, default='club')
+  privacy_comments = models.CharField(_('comments visibility'), max_length=50, choices=PRIVACY_LEVELS, default='public')
   privacy_tracks = models.CharField(_('tracks visibility'), max_length=50, choices=PRIVACY_LEVELS, default='club')
 
   # Direct friendships
@@ -119,6 +124,10 @@ class Athlete(AthleteBase):
 
   # Display contextual help
   display_help = models.BooleanField(_('Display contextual help'), default=True)
+
+  # Payment
+  paymill_id = models.CharField(max_length=50, null=True, blank=True)
+
 
   def search_category(self):
     if not self.birthday:
@@ -200,12 +209,20 @@ class Athlete(AthleteBase):
     # By default, public
     return ('public', )
 
+  @property
+  def local_privacy(self):
+    # Helper to retrieve all privacy
+    # settings in one command
+    # Used mainly by templates
+    fields = [k[8:] for k in dir(self) if k.startswith('privacy')] # all the current privacy fields
+    return dict([(f, getattr(self, 'privacy_%s' % f)) for f in fields])
+
   def get_privacy_rights(self, visitor):
     '''
     Load privacy rights for a visitor toward this user
     '''
     privacy = []
-    fields = [k[8:] for k in dir(self) if k.startswith('privacy')] # all the current privacy fields
+    fields = self.local_privacy.keys()
 
     # Super user views everything
     if visitor.is_superuser:
@@ -320,6 +337,97 @@ class Athlete(AthleteBase):
   def has_gcal(self):
     # Gcal enabled ?
     return self.gcal_token and self.gcal_id
+
+  def sync_paymill(self):
+    '''
+    Create user on paymill
+    '''
+    # Check we don't already have an id
+    if self.paymill_id:
+      raise Exception('Already have a paymill id')
+
+    # Get paymill service
+    paymill_name = '#%d %s %s' % (self.id, self.first_name, self.last_name)
+    ctx = paymill.PaymillContext(settings.PAYMILL_SECRET)
+    service = ctx.get_client_service()
+    client = service.create(email=self.email, description=paymill_name)
+
+    # Save paymill id
+    self.paymill_id = client.id
+    self.save()
+
+    return client
+
+
+  def _is_premium(self):
+    # helper to check if a user is premium
+    return self.subscriptions.filter(offer__target='athlete', status__in=('active', 'created')).exists()
+
+  # Django disallows direct property
+  # use in list displays
+  # Cf https://stackoverflow.com/questions/12842095/how-to-display-a-boolean-property-in-the-django-admin
+  _is_premium.boolean = True # for admin display
+
+  @cached_property
+  def is_premium(self):
+    return self._is_premium()
+
+  def add_welcome_offer(self):
+    '''
+    Build a subscription to the athlete welcome offer
+    Valid for 2 months
+    Only once
+    '''
+    from payments.models import PaymentOffer
+    start = timezone.now()
+    offer = PaymentOffer.objects.get(slug='athlete_welcome')
+    defaults = {
+      'status' : 'active',
+      'start' : start,
+      'end' : start + timedelta(days=60),
+    }
+    sub, _ = self.subscriptions.get_or_create(offer=offer, defaults=defaults)
+    return sub
+
+  def find_badges(self, save=False):
+    '''
+    Find all the best badges for a user
+    '''
+    from badges.models import BadgeCategory
+    from coach.mail import MailBuilder
+
+    all_added = []
+    for cat in BadgeCategory.objects.all():
+      badges, added = cat.find_badges(self, save)
+      if added:
+        all_added += added
+
+    # Notify a user about new badges
+    # in one mail
+    if all_added:
+      data = {
+        'user' : self,
+        'badges' : all_added,
+      }
+      mb = MailBuilder('mail/badges.html')
+      mb.language = self.language
+      mb.subject = _('New badges')
+      mb.to = [self.email, ]
+      mail = mb.build(data)
+      mail.send()
+
+    return all_added
+
+def user_initial_subscription(sender, instance, created=False, **kwargs):
+    '''
+    Every new user has 2 months of welcome premium
+    '''
+    if created:
+      instance.add_welcome_offer()
+
+# register the Welcome offer signal
+post_save.connect(user_initial_subscription, sender=Athlete)
+
 
 class UserCategory(models.Model):
   code = models.CharField(max_length=10)

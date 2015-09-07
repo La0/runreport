@@ -1,0 +1,56 @@
+{% set type_css = {
+  'training' : 'label-info',
+  'race' : 'label-success',
+  'rest' : 'label-danger',
+} %}
+
+{% with member = session.day.week.user %}
+{% with is_stranger = member != user %}
+
+{% if is_stranger %}
+<div class="session link" href="{{ url('user-calendar-day', member.username, session.day.date.year, session.day.date.month, session.day.date.day) }}">
+{% else %}
+<div class="session link" href="{{ url('report-day', session.day.date.year, session.day.date.month, session.day.date.day) }}">
+{% endif %}
+  <h5>
+    <i class="icon-sport-{{session.sport.slug}} do-tooltip" title="{{ session.sport.name }}"></i>
+    {{ session.name|truncatechars(50) }}
+  </h5>
+  <div class="row">
+    {% if is_stranger %}
+    <div class="col-xs-2">
+      <img src="{{ member.avatar.url }}" class="img-responsive img-rounded" alt="" />
+    </div>
+    <div class="col-xs-10">
+    {% else %}
+    <div class="col-xs-12">
+    {% endif %}
+
+      {% if is_stranger %}
+        {{ _('By') }}
+        <a href="{{ url('user-public-profile', member.username) }}">
+          {{ member.first_name }} {{ member.last_name }}
+        </a>
+        <br />
+      {% endif %}
+
+      <span class="label {{type_css[session.type]}}">{{_(session.type)|title()}}</span>
+      {% if not is_stranger and session.plan_session %}
+        {% if session.plan_session and session.type != 'rest' %}
+          {% if session.plan_session.status == 'done' %}
+          <span class="label label-success">{{ _('Done') }}</span>
+          {% elif session.plan_session.status == 'failed' %}
+          <span class="label label-danger">{{ _('Failed') }}</span>
+          {% else %}
+          <span class="label label-info">{{ _('To do') }}</span>
+          {% endif %}
+        {% endif %}
+      {% endif %}
+      <span class="do-tooltip" title="{% if session.day.date > today %}{{ _('In %s') % session.day.date|timeuntil() }}{% elif session.day.date < today %}{{ _('%s ago') % session.day.date|timesince() }}{% else %}{{ _('Today') }}{% endif %}">
+        {{ session.day.date|date('l d E Y') }}
+      </span>
+    </div>
+  </div>
+</div>
+{% endwith %}
+{% endwith %}

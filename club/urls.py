@@ -30,6 +30,9 @@ club_patterns = patterns('',
   url(r'^/by-(?P<sort>[\w-]+)/?$', ClubMembers.as_view(), name="club-members-sort"),
   url(r'^/?$', ClubMembers.as_view(), name="club-members"),
 
+  # Members export
+  url(r'^/export/?$', ClubMembersExport.as_view(), name="club-members-export"),
+
   # Subscriptions
   url(r'^/subscriptions/upload/?$', ClubSubscriptionsUpload.as_view(), name="club-subscriptions-upload"),
   url(r'^/subscriptions/(?P<csv_name>[\w]+)/?$', ClubSubscriptionsEditor.as_view(), name="club-subscriptions-editor"),

@@ -35,7 +35,10 @@ class VmaCalc:
     '''
     Get the speed in km/h at a pace
     '''
-    return self._vma * pace.percent / 100.0
+    p = pace
+    if isinstance(pace, Pace):
+      p = pace.percent
+    return self._vma * p / 100.0
 
   def get_time(self, pace, distance):
     '''

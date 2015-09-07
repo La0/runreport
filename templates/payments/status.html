@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+
+{% set page_title = _('Premium Membership') %}
+
+{% block content %}
+<div class="container" id="premium_status">
+  <h1>{{ _('Premium Membership') }}</h1>
+
+  {# Premium status #}
+  {% if 'athlete' in subscriptions %}
+  <div class="lead text-success">
+    <i class="icon-premium"></i>
+    {{ _('You are a premium RunReport member !') }}
+  </div>
+
+  {% for subscription in user.subscriptions.all() %}
+    {% include 'payments/_subscription.html' %}
+  {% endfor %}
+
+  {% if transactions %}
+  <h3>{{ _('Payments') }}</h3>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>{{ _('Date') }}</th>
+        <th>{{ _('Payment') }}</th>
+        <th>{{ _('Status') }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for transaction in transactions %}
+      <tr>
+        <td>
+          {{ transaction.created|date('d E Y') }}
+        </td>
+        <td>
+          {{ transaction.amount|floatformat(2) }}
+          {% if transaction.currency == 'EUR' %}
+            &euro;
+          {% else %}
+            {{ transaction.currency }}
+          {% endif %}
+        </td>
+        <td>
+          {% if transaction.status in ('open', 'pending') %}
+          <span class="label label-default">{{ _('Processing...') }}</span>
+          {% elif transaction.status in ('closed', ) %}
+          <span class="label label-success">{{ _('Processed') }}</span>
+          {% else %}
+          <span class="label label-danger">{{ _('Failed') }}</span> : {{ transaction.status }}
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p class="text-warning">
+    {{ _('No payment transactions processed yet.') }}
+  </p>
+  {% endif %}
+
+  {# TODO 
+  <div class="row">
+    <div class="col-xs-12 text-right">
+      {% for sub in subscriptions %}
+      <a href="" class="btn btn-danger">
+        {% if sub.offer.slug == 'trimester' %}
+          {{ _('Cancel trimester subscription') }}
+        {% elif sub.offer.slug == 'yearly' %}
+          {{ _('Cancel yearly subscription') }}
+        {% else %}
+          {{ _('Cancel subscription') }}
+        {% endif %}
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+  #}
+
+  {% else %}
+
+  {# Show welcome offer status #}
+  <div class="col-sm-4 col-sm-offset-2 col-xs-12 offer">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          {{ _('Welcome offer') }}
+        </h3>
+      </div>
+      <div class="panel-body">
+
+        <p class="price">
+          {{ _('Free') }}
+        </p>
+        <p class="price monthly">
+          {{ _('During 2 months') }}
+        </p>
+        <hr />
+
+        {% for f in features.runners %}
+        <p class="feature">
+          <i class="icon-ok"></i>
+          {{ f.name }}
+        </p>
+        {% endfor %}
+
+        <div class="text-center">
+          {% with welcome = subscriptions.athlete_welcome %}
+          {% if welcome %}
+            {% if welcome.remaining_days > 0 %}
+            <p class="text-success">
+              {{ _('Your welcome offer is valid for') }} 
+              <span class="do-tooltip" title="{{ welcome.end|date('l d E Y') }}">
+                {{ welcome.end|timeuntil }}
+              </span>
+            </p>
+            {% else %}
+            <p class="text-warning">
+              {{ _('Your welcome offer has expired.') }}
+            </p>
+            {% endif %}
+          {% else %}
+          <p class="text-danger">
+            {{ _('No welcome subscription found. Please contact the support.') }}
+          </p>
+          {% endif %}
+          {% endwith %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  {# Show the offer #}
+  <div class="col-sm-4 col-xs-12 offer">
+    <div class="panel panel-success">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          {{ _('Yearly payment') }}
+        </h3>
+      </div>
+      <div class="panel-body">
+        
+        <p class="price">
+          {{ offer.amount|floatformat(2) }} &euro; {{ _('every year') }}
+        </p>
+        <p class="price monthly">
+          {{ _('Costs you') }} {{ offer.amount_monthly|floatformat(2) }} &euro; {{ _('per month') }}
+        </p>
+        <hr />
+
+        {% for f in features.runners %}
+        <p class="feature">
+          <i class="icon-ok"></i>
+          {{ f.name }}
+        </p>
+        {% endfor %}
+
+        <p class="text-center">
+          {% if PAYMENTS_ENABLED %}
+          <a href="{{ offer.get_absolute_url() }}" class="btn btn-success">
+            <i class="icon-premium"></i>
+            {{ _('Buy RunReport premium') }}
+          </a>
+          {% else %}
+          <span class="text-warning">
+            {{ _('Sorry, but payments are not available at this moment. Come back later !') }}
+          </span>
+          {% endif %}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  {% endif %}
+</div>
+{% endblock %}

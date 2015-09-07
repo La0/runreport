@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+
+{% set page_title = _('Premium Payment') %}
+
+{% block js %}
+<script type="text/javascript">
+  var PAYMILL_PUBLIC_KEY = '{{ PAYMILL_PUBLIC }}';
+</script>
+<script type="text/javascript" src="https://bridge.paymill.com/"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container" id="pay">
+  <div class="row">
+
+    <form class="col-xs-12 col-sm-4 col-sm-offset-4" action="#" method="POST" id="payment">
+      {% csrf_token %}
+      <h3>{{ _('I want the premium features') }}</h3>
+      <div class="row cards">
+        <div class="col-xs-3">
+          <img class="img-responsive do-tooltip" src="{{ static('img/cards/mastercard.png') }}" title="Mastercard"/>
+        </div>
+        <div class="col-xs-3">
+          <img class="img-responsive do-tooltip" src="{{ static('img/cards/visa.png') }}" title="Visa"/>
+        </div>
+        <div class="col-xs-3">
+          <img class="img-responsive do-tooltip" src="{{ static('img/cards/amex.png') }}" title="American Express"/>
+        </div>
+        <div class="col-xs-3">
+          <img class="img-responsive do-tooltip" src="{{ static('img/cards/maestro.png') }}" title="Maestro"/>
+        </div>
+      </div>
+
+      <input type="hidden" name="offer" value="{{ offer.slug }}"/>
+      <input type="hidden" name="amount" value="{{ offer.amount_cents }}"/>
+      <input type="hidden" name="currency" value="{{ offer.currency }}"/>
+      {% if club %}
+      <input type="hidden" name="club" value="{{ club.pk }}"/>
+      {% endif %}
+      <fieldset>
+        <div class="form-group">
+          <label class="control-label" for="card-name">{{ _('Name on Card') }}</label>
+          <input type="text" class="form-control" name="card-name" id="card-name" placeholder="{{ _('Card Holder\'s Name') }}" autofocus>
+          <p class="help-block hidden">{{ _('Missing card holder\'s name') }}</p>
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="card-number">{{ _('Card Number') }}</label>
+          <input type="text" class="form-control" name="card-number" id="card-number" placeholder="{{ _('Debit/Credit Card Number') }}">
+          <p class="help-block hidden">{{ _('Invalid card number') }}</p>
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="expiry-month">{{ _('Expiration Date') }}</label>
+          <div class="row" id="expiry">
+            <div class="col-xs-6">
+              <select class="form-control col-sm-2" name="expiry-month">
+                {% for month in months %}
+                <option value="{{ month|date('m') }}">{{ month|date('E') }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-xs-6">
+              <select class="form-control" name="expiry-year">
+                {% for year in years %}
+                <option value="{{ year|date('Y') }}">{{ year|date('Y') }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-xs-12">
+              <p class="help-block hidden">{{ _('Invalid expiry date') }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="cvc">{{ _('Card cvc') }}</label>
+          <input type="text" class="form-control" name="cvc" id="cvc" placeholder="{{ _('Security Code') }}">
+          <p class="help-block hidden">{{ _('Invalid card cvc') }}</p>
+        </div>
+        <div class="alert alert-danger hidden">
+          <h4>{{ _('Error') }}</h4>
+          <p>
+            Error message here.
+          </p>
+        </div>
+        <div class="form-group text-center">
+          <a href="{{ url('features') }}" class="btn btn-default btn-lg action" tabindex="-1">
+            Annuler
+          </a>
+          <button type="submit" class="btn btn-success btn-lg action">
+            {{ _('Pay Now') }} {{ offer.amount|floatformat(2) }} &euro;
+          </button>
+          <button class="btn btn-success btn-lg waiter hidden" disabled="disabled">
+            <i class="icon-loading animate-spin"></i>
+            {{ _('Processing') }}
+          </button>
+        </div>
+      </fieldset>
+      <p class="text-center text-muted">
+        {{ _('Secured & processed with') }}
+        <a href="https://paymill.com" target="_blank">Paymill</a>
+      </p>
+    </form>
+    <div class="alert alert-success hidden">
+      <h4>{{ _('Valid payment') }}</h4>
+      <p>
+        {{ _('Thanks for your subscription to RunReport !') }}
+        <br />
+        {{ _('You can enjoy immediately all the premium features') }}
+      </p>
+      <p class="text-right">
+        {% if club %}
+        <a href="{{ url('club-manage', club.slug) }}" class="btn btn-primary">
+          {{ _('Continue') }}
+        </a>
+        {% else %}
+        <a href="{{ url('payment-status') }}" class="btn btn-primary">
+          {{ _('Continue') }}
+        </a>
+        {% endif %}
+      </p>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
