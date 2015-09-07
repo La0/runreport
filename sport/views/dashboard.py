@@ -179,6 +179,7 @@ class DashBoardView(TemplateView):
     '''
     Load past sessions close to today
     for all the trainer's athletes
+    Grouped by dates
     '''
     filters = {
       'day__date__gte' : self.today - timedelta(days=7),
@@ -190,8 +191,16 @@ class DashBoardView(TemplateView):
     sessions = sessions.exclude(day__week__user=self.request.user)
     sessions = sessions.order_by('-day__date')
 
+    # Group by dates
+    groups = OrderedDict()
+    for s in sessions:
+      d = s.day.date
+      if d not in groups:
+        groups[d] = []
+      groups[d].append(s)
+
     return {
-      'sessions' : sessions,
+      'sessions' : groups,
     }
 
   def load_trained_races(self):

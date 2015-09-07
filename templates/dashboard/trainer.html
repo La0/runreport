@@ -72,8 +72,23 @@
     {# Last sessions by athletes #}
     <div class="col-xs-12 col-sm-6">
       <h3>{{ _('Your athletes sessions') }}</h3>
-      {% for session in sessions %}
-        {% include 'dashboard/session.html' %}
+      {% for day, day_sessions in sessions.items() %}
+        {% if day == today %}
+          <h4 class="text-primary">
+            <i class="icon-calendar"></i>
+            {{ _('Today') }}
+          </h4>
+        {% else %}
+          <h4 class="text-primary">
+            <i class="icon-calendar"></i>
+            {{ day|date('l d E Y') }}
+          </h4>
+        {% endif %}
+        <div class="group-day">
+          {% for session in day_sessions %}
+            {% include 'dashboard/session.html' %}
+          {% endfor %}
+        </div>
       {% else %}
       <p class="text-info">
         {{ _('No recent sessions from your athletes.') }}
