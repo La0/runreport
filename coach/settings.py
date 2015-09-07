@@ -467,3 +467,5 @@ if os.getenv('COMPRESS'):
   MEDIA_URL = '%s/medias/' % CDN_URL
   COMPRESS_URL = '%s/static/' % CDN_URL
 
+# Define Version
+VERSION = '1.0-RC'
