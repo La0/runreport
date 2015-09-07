@@ -169,7 +169,7 @@ class TrackProvider:
     # Refresh weeks stats cache
     for year,week in weeks:
       logger.info("Refresh week stats %d/%d for %s" % (week, year, self.user))
-      st = StatsWeek(self.user, week, month, preload=False)
+      st = StatsWeek(self.user, year, week, preload=False)
       st.build()
 
   def import_activities(self, source=None):
