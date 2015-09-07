@@ -8,11 +8,17 @@
 </p>
 
 <p>
-{{ _('You have some new badges:') }}
+{{ _('You have some new badges on RunReport !') }}
 </p>
-<ul>
+
 {% for b in badges %}
-  <li>{{ b.name }}</li>
+<div style="text-align: center">
+  <img src="{{ b.image.url }}" alt="Image {{ b.name }}" />
+  <br />
+  <strong>{{ b.name }}</strong>
+</div>
 {% endfor %}
-</ul>
+
+{{ _('You can view all your badges on ') }} <a href="https://{{ site.domain }}{{ url('badges') }}">https://{{ site.domain }}{{ url('badges') }}</a>
+
 {% endblock %}
