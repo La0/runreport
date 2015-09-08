@@ -60,7 +60,7 @@ class MailMan(object):
     ml = self.get_list(list_name)
     return ml.unsubscribe(email)
 
-  def create_list(self, list_name, full_name):
+  def create_list(self, list_name, full_name, extra_settings=None):
     '''
     Create a new mailing list properly configured
     '''
@@ -85,6 +85,13 @@ class MailMan(object):
     mls['display_name'] = full_name
     mls['subject_prefix'] = '[%s] ' % full_name
     mls['reply_to_address'] = ml.fqdn_listname
+
+    # Override
+    if extra_settings:
+      # No update on mls
+      for k,v in extra_settings.items():
+        mls[k] = v
+
     mls.save()
 
     return ml

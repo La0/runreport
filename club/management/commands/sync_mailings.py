@@ -8,6 +8,17 @@ class Command(BaseCommand):
   def handle(self, *args, **kwargs):
     self.mm = MailMan()
 
+    # Global mailing
+    global_ml = 'all'
+    extra = {
+      'default_member_action' : 'discard', # members can't send messages
+      'default_nonmember_action' : 'discard', # non-members can't send messages
+    }
+    self.mm.create_list(global_ml, 'Membres RunReport', extra_settings=extra)
+    for u in Athlete.objects.filter(is_active=True):
+      u.subscribe_mailing(global_ml)
+      print '[%s] %s' % (global_ml, u)
+
     # Sync all clubs
     for club in Club.objects.order_by('name'):
       print 'Club %s' % club
