@@ -1,13 +1,12 @@
 from datetime import timedelta, date
 from django.http import Http404
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
+from coach.mixins import LoginRequired
 from helpers import week_to_date, date_to_day, date_to_week
 from sport.models import SportWeek, SportDay, SportSession, SESSION_TYPES, RaceCategory
 from sport.forms import SportSessionForm
 from django.db.models import Sum, Count
 
-class CurrentWeekMixin(object):
+class CurrentWeekMixin(LoginRequired):
   '''
   Gives the current year & week or
   uses the one from kwargs (url)
@@ -20,10 +19,6 @@ class CurrentWeekMixin(object):
   def __init__(self):
     self._today = date.today()
     self._week, self._year = date_to_week(date.today())
-
-  @method_decorator(login_required)
-  def dispatch(self, *args, **kwargs):
-    return super(CurrentWeekMixin, self).dispatch(*args, **kwargs)
 
   def get_year(self):
     return int(self.kwargs.get('year', self._year))

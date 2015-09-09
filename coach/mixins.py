@@ -2,11 +2,19 @@
 # Gist : https://gist.github.com/michelts/1029336
 from django.views.generic.base import TemplateResponseMixin
 from django.views.generic.edit import ModelFormMixin, ProcessFormView
-import json
 from django.http import HttpResponse, HttpResponseRedirect
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 import csv
+import json
 
+
+class LoginRequired(object):
+
+  @method_decorator(login_required)
+  def dispatch(self, *args, **kwargs):
+    return super(LoginRequired, self).dispatch(*args, **kwargs)
 
 class MultipleFormsMixin(ModelFormMixin):
     """

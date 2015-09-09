@@ -5,8 +5,9 @@ from club.forms import ClubCreateForm
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from mixins import ClubCreateMixin
+from coach.mixins import LoginRequired
 
-class ClubCreate(ClubCreateMixin, CreateView):
+class ClubCreate(LoginRequired, ClubCreateMixin, CreateView):
   model = Club
   template_name = 'club/create.html'
   form_class = ClubCreateForm
