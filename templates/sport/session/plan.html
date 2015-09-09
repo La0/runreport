@@ -15,9 +15,11 @@
     {% endwith %}
   </div>
   <div class="col-xs-8 col-sm-7 details">
+    {% if psess.name != session.name %}
     <p>
       <strong>{{ psess.name }}</strong>
     </p>
+    {% endif %}
     <p class="text-muted">
       <i class="icon-sport-{{ psess.sport.slug }}"></i>
       {% with trainer = psess.plan.creator %}
