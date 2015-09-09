@@ -79,6 +79,7 @@ class SportSessionForm(forms.ModelForm):
     # * all trainings
     # * past sessions
     # * skip failed plans
+
     if ( \
         data['type'] == 'training' or \
         ( data['type'] == 'race' and self.day_date <= date.today() ) \
@@ -89,7 +90,8 @@ class SportSessionForm(forms.ModelForm):
       raise forms.ValidationError(_('You must specify a distance or time to add a session.'))
 
     # Alert user about missing comment or difficulty
-    if not self.cleaned_data.get('note', None) and not self.cleaned_data.get('comment', None):
+    # For past sessions
+    if self.day_date <= date.today() and not self.cleaned_data.get('note', None) and not self.cleaned_data.get('comment', None):
       raise forms.ValidationError(_('You must specify a difficulty note or a comment.'))
 
     # Only for race
