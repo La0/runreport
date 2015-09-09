@@ -113,7 +113,7 @@ class DashBoardView(TemplateView):
     }
     sessions = SportSession.objects.filter(**filters)
     sessions = sessions.select_related('day', 'track')
-    sessions = sessions.order_by('-day__date')
+    sessions = sessions.order_by('day__date')
 
     return {
       'sessions' : sessions,
