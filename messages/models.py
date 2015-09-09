@@ -79,6 +79,9 @@ class Conversation(models.Model):
     elif self.type == TYPE_COMMENTS_PUBLIC:
       # Send to all writers + session user
       session = self.get_session()
+      if not session:
+        return []
+
       session_user = session.day.week.user
       if session_user != exclude and session_user not in writers:
         writers += [ session_user, ]
