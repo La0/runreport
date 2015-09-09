@@ -153,9 +153,28 @@
           <img src="{{ friend.user.avatar.url }}" alt="" class="img-responsive img-rounded"/>
         </div> 
         <div class="col-xs-10">
-          {% for session in friend.sessions %}
-            {% include 'dashboard/session.small.html' %}
-          {% endfor %}
+
+          <div role="tablist" class="panel-group">
+            <div class="panel panel-default">
+              <div role="tab" class="panel-heading">
+                <h4 class="panel-title">
+                  <a href="#friend-{{ friend.user.pk }}" data-toggle="collapse" role="button" class="">
+                    <i class="icon-down-open"></i>
+                    {{ _('View') }} {{ friend.sessions|length }} {{ _('Sessions') }}
+                  </a>
+                </h4>
+              </div>
+              <div role="tabpanel" class="panel-collapse collapse" id="friend-{{ friend.user.pk }}">
+                <ul class="list-group">
+                  {% for session in friend.sessions %}
+                  <li>
+                    {% include 'dashboard/session.small.html' %}
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <hr />
