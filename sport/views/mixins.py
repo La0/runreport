@@ -1,8 +1,7 @@
-from datetime import datetime, timedelta, date
-from coach.mixins import JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE
+from datetime import timedelta, date
 from django.http import Http404
-from django.shortcuts import get_object_or_404
-from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from helpers import week_to_date, date_to_day, date_to_week
 from sport.models import SportWeek, SportDay, SportSession, SESSION_TYPES, RaceCategory
 from sport.forms import SportSessionForm
@@ -22,6 +21,10 @@ class CurrentWeekMixin(object):
     self._today = date.today()
     self._week, self._year = date_to_week(date.today())
 
+  @method_decorator(login_required)
+  def dispatch(self, *args, **kwargs):
+    return super(CurrentWeekMixin, self).dispatch(*args, **kwargs)
+
   def get_year(self):
     return int(self.kwargs.get('year', self._year))
 
@@ -37,7 +40,7 @@ class CurrentWeekMixin(object):
     try:
       week = SportWeek.objects.get(year=self.get_year(), week=self.get_week(), user=self.get_user())
       self.check_limits(False) # no checks for existing
-    except SportWeek.DoesNotExist, e:
+    except SportWeek.DoesNotExist:
       week = SportWeek.objects.create(year=self.get_year(), week=self.get_week(), user=self.get_user())
       self.check_limits(False) # don't create any future week
 
