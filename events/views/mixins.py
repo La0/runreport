@@ -20,7 +20,7 @@ class PlaceClubMixin(ClubMixin):
     try:
       place.geocode()
     except Exception, e:
-      print 'Geocoding place #%d failed : %s' % (place.pk, e.message)
+      print 'Geocoding place #%s failed : %s' % (place.pk or 'nopk', e.message)
 
     # Finally save
     place.save()
