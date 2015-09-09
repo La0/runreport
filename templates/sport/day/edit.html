@@ -102,11 +102,22 @@
     {% for form in forms %}
       {% with session = form.instance %}
         {% include 'sport/session/edit.html' %}
+
+        {% if session.pk %}
+        <div class="comments">
+          {% with privacy = ('comments', 'comments_public', 'comments_private') %}
+          <label class="control-label hidden-xs">{{ _('Comments') }}</label>
+          {% include 'sport/session/_comments.html' %}
+          {% endwith %}
+        </div>
+        {% endif %}
       {% endwith %}
       <hr />
     {% endfor %}
   {% endif %}
   </div>
+
+
 
   {% if not member %}
     {% if report.task %}
