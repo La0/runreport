@@ -5,6 +5,32 @@
 {% block content %}
 <div class="container" id="friendships">
 
+  <h1>Demandes</h1>
+  {% for req in user.requests_received.order_by('created') %}
+  <div class="row">
+    <div class="col-xs-1">
+      <img class="img-rounded img-responsive" src="{{ req.sender.avatar.url }}" alt="" />
+    </div>
+    <div class="col-xs-7">
+      <a href="{{ url('user-public-profile', req.sender.username) }}">
+        {{ req.sender.first_name }} {{ req.sender.last_name }}
+      </a>
+    </div>
+    <div class="col-xs-4 text-right">
+      <a href="{{ url('friend-request', req.sender.username, 'refuse') }}" class="btn btn-danger modal-action">
+        {{ _('Refuse') }}
+      </a>
+      <a href="{{ url('friend-request', req.sender.username, 'accept') }}" class="btn btn-success modal-action">
+        {{ _('Accept') }}
+      </a>
+    </div>
+  </div>
+  {% else %}
+  <div class="alert alert-info">
+    {{ _('You don\'t have any friend request to validate.') }}
+  </div>
+  {% endfor %}
+
   <h1>{{ _('My friends') }}</h1>
   <div class="row">
   {% for friend in friends %}
@@ -36,32 +62,5 @@
   </div>
   {% endfor %}
   </div>
-
-  <h1>Demandes</h1>
-  {% for req in user.requests_received.order_by('created') %}
-  <div class="row">
-    <div class="col-xs-1">
-      <img class="img-rounded img-responsive" src="{{ req.sender.avatar.url }}" alt="" />
-    </div>
-    <div class="col-xs-7">
-      <a href="{{ url('user-public-profile', req.sender.username) }}">
-        {{ req.sender.first_name }} {{ req.sender.last_name }}
-      </a>
-    </div>
-    <div class="col-xs-4 text-right">
-      <a href="{{ url('friend-request', req.sender.username, 'refuse') }}" class="btn btn-danger modal-action">
-        {{ _('Refuse') }}
-      </a>
-      <a href="{{ url('friend-request', req.sender.username, 'accept') }}" class="btn btn-success modal-action">
-        {{ _('Accept') }}
-      </a>
-    </div>
-  </div>
-  {% else %}
-  <div class="alert alert-info">
-    {{ _('You don\'t have any friend request to validate.') }}
-  </div>
-  {% endfor %}
-
 </div>
 {% endblock %}
