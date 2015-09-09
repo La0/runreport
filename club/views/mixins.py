@@ -1,4 +1,4 @@
-from club.models import Club, ClubMembership, ClubInvite
+from club.models import Club, ClubMembership, ClubInvite, ClubGroup
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import PermissionDenied
 from django.http import Http404
@@ -140,7 +140,7 @@ class ClubGroupMixin(object):
 
     # Load group
     if 'group_slug' in self.kwargs:
-      self.group = self.club.groups.get(slug=self.kwargs['group_slug'])
+      self.group = get_object_or_404(ClubGroup, slug=self.kwargs['group_slug'], club=self.club)
       if not self.public and self.group.creator != self.request.user:
         raise PermissionDenied
 
