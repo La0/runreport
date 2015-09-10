@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-07 15:29+0200\n"
+"POT-Creation-Date: 2015-09-10 09:01+0200\n"
 "PO-Revision-Date: 2015-02-09 17:42+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
@@ -849,6 +849,9 @@ msgstr ""
 msgid "Buy RunReport premium"
 msgstr ""
 
+msgid "Sorry, but payments are not available at this moment. Come back later !"
+msgstr ""
+
 msgid "Demo account"
 msgstr ""
 
@@ -1018,6 +1021,9 @@ msgid "Save"
 msgstr ""
 
 msgid "Danger zone"
+msgstr ""
+
+msgid "This athlete is already archived, you can now delete it from your club."
 msgstr ""
 
 msgid "Refuse this prospect"
@@ -1312,12 +1318,6 @@ msgstr ""
 msgid "Delete this friendship"
 msgstr ""
 
-msgid "View this profile"
-msgstr ""
-
-msgid "You can add friends from your club, for example."
-msgstr ""
-
 msgid "Refuse"
 msgstr ""
 
@@ -1325,6 +1325,12 @@ msgid "Accept"
 msgstr ""
 
 msgid "You don't have any friend request to validate."
+msgstr ""
+
+msgid "View this profile"
+msgstr ""
+
+msgid "You can add friends from your club, for example."
 msgstr ""
 
 msgid ""
@@ -2009,9 +2015,6 @@ msgid "No welcome subscription found. Please contact the support."
 msgstr ""
 
 msgid "Yearly payment"
-msgstr ""
-
-msgid "Sorry, but payments are not available at this moment. Come back later !"
 msgstr ""
 
 #, python-format

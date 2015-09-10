@@ -206,7 +206,12 @@ class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, Proces
         if stat['diff'] <= 0:
           raise Exception('No place available')
 
-      membership.save()
+      # Delete or save
+      if 'delete' in self.request.POST:
+        membership.delete()
+        self.json_options = [JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE, ]
+      else:
+        membership.save()
 
       if self.role_original != membership.role:
         # When losing trainer role
