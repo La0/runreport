@@ -98,7 +98,11 @@
     <h5 class="rating">
     {% if session.note %}
       {% for i in range(0, 5) %}
-      <i class="do-tooltip icon-star star star-{{ i+1 }} {% if i+1 <= session.note %}active{% endif %}" title="{{ _('Difficulty note %d' % session.note)}}"></i>
+        {% if i < session.note %}
+        <i class="do-tooltip icon-star star star-{{ session.note }} active" title="{{ _('Difficulty note %d' % session.note)}}"></i>
+        {% else %}
+        <i class="do-tooltip icon-star star inactive" title="{{ _('Difficulty note %d' % session.note)}}"></i>
+        {% endif %}
       {% endfor %}
     {% else %}
       <i class="icon-star do-tooltip text-muted" title="{{ _('No difficulty note') }}"></i>
