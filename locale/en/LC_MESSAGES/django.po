@@ -2822,6 +2822,9 @@ msgstr ""
 msgid "An account already uses this email."
 msgstr ""
 
+msgid "You must be at least 13 years old to create an account."
+msgstr ""
+
 msgid "Please repeat the same password"
 msgstr ""
 

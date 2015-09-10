@@ -2991,6 +2991,9 @@ msgstr "Répétez votre mot de passe"
 msgid "An account already uses this email."
 msgstr "Un compte utilise déjà cet email."
 
+msgid "You must be at least 13 years old to create an account."
+msgstr "Vous devez au moins avoir 13 ans pour créer un compte."
+
 msgid "Please repeat the same password"
 msgstr "Veuillez répéter le même mot de passe."
 

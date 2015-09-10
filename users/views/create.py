@@ -27,7 +27,9 @@ class CreateUser(UserInviteMixin, FormView):
     user = Athlete.objects.create_user(form.cleaned_data['username'], form.cleaned_data['email'], form.cleaned_data['password'], last_login=datetime.now())
     user.first_name = form.cleaned_data['firstname']
     user.last_name = form.cleaned_data['lastname']
+    user.birthday = form.cleaned_data['birthday']
     user.build_avatar()
+    user.search_category()
     user.save()
 
     # Auto login
