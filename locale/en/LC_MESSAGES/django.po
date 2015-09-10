@@ -1023,6 +1023,9 @@ msgstr ""
 msgid "Danger zone"
 msgstr ""
 
+msgid "This athlete is already archived, you can now delete it from your club."
+msgstr ""
+
 msgid "Refuse this prospect"
 msgstr ""
 

@@ -1076,6 +1076,11 @@ msgstr "Sauver"
 msgid "Danger zone"
 msgstr "Zone dangereuse"
 
+msgid "This athlete is already archived, you can now delete it from your club."
+msgstr ""
+"Cet athlète est déja archivé, vous pouvez maintenant le supprimer de votre "
+"club."
+
 msgid "Refuse this prospect"
 msgstr "Refuser ce nouveau"
 
