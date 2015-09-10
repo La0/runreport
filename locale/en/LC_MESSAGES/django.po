@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-10 09:01+0200\n"
+"POT-Creation-Date: 2015-09-10 10:16+0200\n"
 "PO-Revision-Date: 2015-02-09 17:42+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
@@ -2808,6 +2808,9 @@ msgid "Repeat your password"
 msgstr ""
 
 msgid "An account already uses this email."
+msgstr ""
+
+msgid "You must be at least 13 years old to create an account."
 msgstr ""
 
 msgid "Please repeat the same password"
