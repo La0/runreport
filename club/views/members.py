@@ -227,7 +227,9 @@ class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, Proces
             membership.user.unsubscribe_mailing(self.club.mailing_list)
 
         # Reload page for roles updates
-        self.json_options = [JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE, ]
+        # When some trainers are specified
+        if not (membership.role == 'athlete' and membership.trainers.count() == 0):
+          self.json_options = [JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE, ]
 
     except Exception, e:
       logger.error('Failed to save role update for %s : %s' % (membership.user, str(e)))
