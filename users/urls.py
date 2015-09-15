@@ -39,6 +39,9 @@ urlpatterns = patterns('',
   url(r'^activate/?$', ActivateUser.as_view(), name='user-activate'),
   url(r'^logout/?$', LogoutUser.as_view(), name='logout'),
 
+  # Delete user account
+  url(r'^delete/?$', login_required(UserDelete.as_view()), name='user-delete'),
+
   # Races
   url(r'^races/?$', login_required(RacesView.as_view()), name='user-races'),
 
