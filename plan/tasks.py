@@ -3,10 +3,14 @@ from __future__ import absolute_import
 from celery import shared_task
 
 @shared_task
-def publish_plan(plan, users):
+def publish_plan(plan_pk, users_pk):
   '''
   Publish a plan to specified users
   '''
+  from plan.models import Plan
+  from users.models import Athlete
+  plan = Plan.objects.get(pk=plan_pk)
+  users = Athlete.objects.filter(pk__in=users_pk)
   plan.publish(users)
 
 @shared_task

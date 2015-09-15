@@ -42,7 +42,7 @@ class PlanPublishView(PlanMixin, views.APIView):
       raise PermissionDenied
 
     # Start task to publish the plan
-    publish_plan.delay(self.plan, users)
+    publish_plan.delay(self.plan.pk, users.values_list('pk', flat=True))
 
     # Return dummy status
     return response.Response({'published' : True})
