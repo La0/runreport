@@ -39,7 +39,7 @@
     {{ macros.rating(form.note) }}
 
     <div class="col-sm-4 col-xs-12 actions">
-      <button type="submit" class="pull-right btn btn-sm btn-primary" >{{ _('Save') }}<span class="hidden-xs">{{ _('this session') }}</span><i class="icon-right-open"></i></button>
+      <button type="submit" class="pull-right btn btn-sm btn-primary" >{{ _('Save') }} <span class="hidden-xs">{{ _('this session') }}</span><i class="icon-right-open"></i></button>
       {% if session.pk %}
       <a href="{{ url('sport-session-delete', day_date.year, day_date.month, day_date.day, form.instance.pk) }}" class="modal-action pull-right btn btn-sm btn-danger"><i class="icon-trash"></i><span class="hidden-xs">{{ _('Delete') }}</span></a>
       {% endif %}
