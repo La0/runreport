@@ -1243,3 +1243,20 @@ a.text-link {
     }
   }
 }
+
+/* Legal texts */
+#legal {
+  > ol {
+    padding-left: 10px;
+  }
+
+  p.P3 {
+    margin-left: 15px;
+  }
+
+  a {
+    color: $color_pickled_bluewood_approx;
+    text-decoration: underline;
+  }
+
+}

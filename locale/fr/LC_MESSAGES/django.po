@@ -578,6 +578,13 @@ msgstr "Github"
 msgid "Facebook"
 msgstr "Facebook"
 
+msgid "ToS"
+msgstr "CGU"
+
+#| msgid "Actions"
+msgid "Mentions"
+msgstr "Mentions"
+
 msgid "All the clubs"
 msgstr "Tous les club"
 
@@ -1610,6 +1617,12 @@ msgid ""
 msgstr ""
 "Plus de 10 athlètes ? Achetez un accès premium pour votre club et débloquez "
 "le potentiel de votre club !"
+
+msgid "Terms of service"
+msgstr "Conditions Générales d'Utilisation"
+
+msgid "Legal mentions"
+msgstr "Mentions légales"
 
 msgid "New badges"
 msgstr "Nouveaux badges"
@@ -2682,6 +2695,25 @@ msgid ""
 msgstr ""
 "Bienvenue ! Vous devez créer un compte personel afin de créer votre club."
 
+#| msgid "Activate your account"
+msgid "Delete your own account"
+msgstr "Supprimer votre compte"
+
+msgid ""
+"This is extremely dangerous, you will lose all your data on RunReport by "
+"deleting your account."
+msgstr ""
+"Cette opération est extrêmement dangereuse, vous perdrez l'intégralité de "
+"vos données sur RunReport en supprimant votre compte."
+
+#| msgid "Are you sure to delete this day ?"
+msgid "Are you sure to proceed anyway ?"
+msgstr "Etes vous sûr de vouloir supprimer votre compte ?"
+
+#| msgid "Create my account"
+msgid "Delete my account"
+msgstr "Supprimer mon compte"
+
 msgid "Valid connection"
 msgstr "Connection validée"
 
@@ -3237,10 +3269,9 @@ msgstr "Athlète Premium"
 msgid "Mont Blanc"
 msgstr ""
 
-#, fuzzy
 #| msgid "rest"
 msgid "Everest"
-msgstr "repos"
+msgstr "Everest"
 
 msgid "Ben Nevis"
 msgstr ""

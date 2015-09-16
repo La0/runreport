@@ -120,6 +120,12 @@
       <span class="text-muted">&bull;</span>
 
 			<a href="/contact"><i class="icon-user"></i> {{ _('Contact') }}</a>
+      <span class="text-muted">&bull;</span>
+
+			<a href="{{ url('legal', 'cgu') }}"><i class="icon-legal"></i>{{ _('ToS') }}</a>
+      <span class="text-muted">&bull;</span>
+
+			<a href="{{ url('legal', 'mentions') }}"><i class="icon-legal"></i>{{ _('Mentions') }}</a>
 
 			{% include '_piwik.html' %}
 		</div>

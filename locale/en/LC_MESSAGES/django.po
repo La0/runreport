@@ -552,6 +552,12 @@ msgstr ""
 msgid "Facebook"
 msgstr ""
 
+msgid "ToS"
+msgstr ""
+
+msgid "Mentions"
+msgstr ""
+
 msgid "All the clubs"
 msgstr ""
 
@@ -1500,6 +1506,12 @@ msgstr ""
 msgid ""
 "More than 10 athletes ? Buy a premium access for your club and unlock the "
 "potential of your club !"
+msgstr ""
+
+msgid "Terms of service"
+msgstr ""
+
+msgid "Legal mentions"
 msgstr ""
 
 msgid "New badges"
@@ -2538,6 +2550,20 @@ msgstr ""
 
 msgid ""
 "Welcome ! You must create a personal account in order to create your club."
+msgstr ""
+
+msgid "Delete your own account"
+msgstr ""
+
+msgid ""
+"This is extremely dangerous, you will lose all your data on RunReport by "
+"deleting your account."
+msgstr ""
+
+msgid "Are you sure to proceed anyway ?"
+msgstr ""
+
+msgid "Delete my account"
 msgstr ""
 
 msgid "Valid connection"
