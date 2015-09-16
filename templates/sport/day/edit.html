@@ -135,14 +135,16 @@
       <a href="{{ url('sport-session-add', day_date.year, day_date.month, day_date.day) }}" class="modal-action btn btn-light btn-primary extra-sport-add" data-append="sessions-{{day_date}}">
         <i class="icon-plus"></i> {{ _('Add a session') }}
       </a>
-      {% if report.published or report.task %}
-      <a href="{{ url('report-week-publish', report.year, report.week) }}" class="modal-action btn btn-light btn-success">
-        <i class="icon-list"></i> {{ _('Week published') }}
-      </a>
-      {% else %}
-      <a href="{{ url('report-week-publish', report.year, report.week) }}" class="modal-action btn btn-light btn-info">
-        {{ _('Publish this week') }} <i class="icon-right-open"></i>
-      </a>
+      {% if user.is_trained %}
+        {% if report.published or report.task %}
+        <a href="{{ url('report-week-publish', report.year, report.week) }}" class="modal-action btn btn-light btn-success">
+          <i class="icon-list"></i> {{ _('Week published') }}
+        </a>
+        {% else %}
+        <a href="{{ url('report-week-publish', report.year, report.week) }}" class="modal-action btn btn-light btn-info">
+          {{ _('Publish this week') }} <i class="icon-right-open"></i>
+        </a>
+        {% endif %}
       {% endif %}
     </p>
   </div>

@@ -187,6 +187,11 @@ class Athlete(AthleteBase):
     # Current user is a trainer in any club ?
     return self.memberships.filter(role='trainer').exists()
 
+  @property
+  def is_trained(self):
+    # Current user is trained by someone
+    return self.memberships.filter(role__in=('athlete', 'trainer'), trainers__isnull=False).exists()
+
   def get_visitor_rights(self, visitor):
     '''
     Load the visitor rights for connected visitor

@@ -30,7 +30,7 @@ class WeekPublish(JsonResponseMixin, CurrentWeekMixin, FormView):
 
     # Publish new report to all memberships
     uri = self.request.build_absolute_uri('/')[:-1] # remove trailing /
-    for m in self.request.user.memberships.all():
+    for m in self.request.user.memberships.filter(role__in=('athlete', 'trainer')):
       task = publish_report.delay(report, m, uri)
 
     # Save last task id in report
