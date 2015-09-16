@@ -152,6 +152,15 @@ $(function(){
     {% endif %}
   </div>
 
+  {% if not user.is_authenticated() %}
+  <div class="alert alert-info">
+    <h4>{{ _('You are not connected !') }}</h4>
+    {{ _('To read more about %s, and become his friend, you must be connected on RunReport.') % member.first_name }}
+    <br />
+    {{ _('You can create an account, or sign in by using the menu on top.') }}
+  </div>
+  {% endif %}
+
   {% if 'trainer' in privacy %}
   {% include 'users/profile/trainer.html' %}
   {% endif %}

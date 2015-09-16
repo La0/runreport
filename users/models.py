@@ -265,6 +265,10 @@ class Athlete(AthleteBase):
       privacy += ['comments_public', ]
       privacy += visitor == self and ['comments_private', 'comments_week', ] or []
 
+    # Only premium members can hide avatar
+    if 'avatar' not in privacy and not self.is_premium:
+      privacy += ['avatar', ]
+
     return privacy
 
   def subscribe_mailing(self, mailing, email=None):
