@@ -117,14 +117,18 @@ class UserNotifications(object):
 
   def add_friend_request(self, req, accepted=False):
     # Add a friend request notification
-    context = {
-      'first_name' : req.recipient.first_name,
-      'last_name' : req.recipient.last_name,
-    }
     if accepted:
+      context = {
+        'first_name' : req.recipient.first_name,
+        'last_name' : req.recipient.last_name,
+      }
       msg = _('%(first_name)s %(last_name)s is now your friend on RunReport')
       link = reverse('user-public-profile', args=(req.recipient.username, ))
     else:
+      context = {
+        'first_name' : req.sender.first_name,
+        'last_name' : req.sender.last_name,
+      }
       msg = _('%(first_name)s %(last_name)s wants to add you as a friend.')
       link = reverse('friends')
 
