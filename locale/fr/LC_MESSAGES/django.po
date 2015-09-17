@@ -581,7 +581,6 @@ msgstr "Facebook"
 msgid "ToS"
 msgstr "CGU"
 
-#| msgid "Actions"
 msgid "Mentions"
 msgstr "Mentions"
 
@@ -2044,7 +2043,7 @@ msgid "Premium big club"
 msgstr "Premium pour grand club"
 
 msgid "Awaiting first payment"
-msgstr "Prmeier paiement en attente"
+msgstr "Premier paiement en attente"
 
 msgid "Will start on"
 msgstr "Démarre le"
@@ -2057,6 +2056,21 @@ msgstr "Finira le"
 
 msgid "Ended on"
 msgstr "Fini le"
+
+#| msgid "Cancel subscription"
+msgid "Cancel my subscription"
+msgstr "Annuler mon abonnement"
+
+#| msgid "Cancel subscription"
+msgid "Cancel premium subscription"
+msgstr "Annuler l'abonnement premium"
+
+#| msgid "Are you sure to delete this media %s ?"
+msgid "Are you sure to delete your premium membership ?"
+msgstr "Etes vous sûr de vouloir supprimer votre abonnement premium ?"
+
+msgid "You will be refunded on your payment card account."
+msgstr "Vous serez remboursé sur votre carte de paiement."
 
 msgid "Premium Payment"
 msgstr "Paiement Premium"
@@ -2138,15 +2152,6 @@ msgstr "Validé"
 
 msgid "No payment transactions processed yet."
 msgstr "Pas de transactions validées pour le moment."
-
-msgid "Cancel trimester subscription"
-msgstr "Annuler l'abonnement trimestriel"
-
-msgid "Cancel yearly subscription"
-msgstr "Annuler l'abonnement annuel"
-
-msgid "Cancel subscription"
-msgstr "Annuler l'abonnement"
 
 msgid "During 2 months"
 msgstr "Durant 2 mois"
@@ -2695,7 +2700,6 @@ msgid ""
 msgstr ""
 "Bienvenue ! Vous devez créer un compte personel afin de créer votre club."
 
-#| msgid "Activate your account"
 msgid "Delete your own account"
 msgstr "Supprimer votre compte"
 
@@ -2706,11 +2710,9 @@ msgstr ""
 "Cette opération est extrêmement dangereuse, vous perdrez l'intégralité de "
 "vos données sur RunReport en supprimant votre compte."
 
-#| msgid "Are you sure to delete this day ?"
 msgid "Are you sure to proceed anyway ?"
 msgstr "Etes vous sûr de vouloir supprimer votre compte ?"
 
-#| msgid "Create my account"
 msgid "Delete my account"
 msgstr "Supprimer mon compte"
 
@@ -3269,7 +3271,6 @@ msgstr "Athlète Premium"
 msgid "Mont Blanc"
 msgstr ""
 
-#| msgid "rest"
 msgid "Everest"
 msgstr "Everest"
 
@@ -3494,6 +3495,16 @@ msgstr " Marche"
 
 msgid "Multi Sport"
 msgstr "Multi Sport"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Cancel trimester subscription"
+msgstr "Annuler l'abonnement trimestriel"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Cancel yearly subscription"
+msgstr "Annuler l'abonnement annuel"
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0

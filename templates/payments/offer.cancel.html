@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% set page_title = _('Cancel premium subscription') %}
+
+{% block content %}
+<div class="container">
+  <h1>{{ _('Cancel premium subscription') }}</h1>
+
+  <p class="lead">
+    {{ _('Are you sure to delete your premium membership ?') }}
+    <br />
+    {{ _('You will be refunded on your payment card account.') }}
+  </p>
+
+  <form method="POST" action="">
+    {% csrf_token %}
+    <a href="{{ url('payment-status') }}" class="btn btn-default">
+      {{ _('Cancel') }}
+    </a>
+    <button type="submit" class="btn btn-danger">
+      <i class="icon-trash"></i>
+      {{ _('Cancel my subscription') }}
+    </button>
+  </form>
+</div>
+{% endblock %}

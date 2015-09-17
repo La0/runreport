@@ -42,5 +42,14 @@
       {{ _('Ended on') }} {{ subscription.end|date('l d E Y') }}
       {% endif %}
     {% endif %}
+
+    {% if subscription.offer.slug != 'athlete_welcome' and subscription.status in ('active', 'created') %}
+    <p>
+      <a href="{{ url('payment-sub-delete', subscription.offer.slug) }}" class="btn btn-danger btn-sm btn-light">
+        <i class="icon-trash"></i>
+        {{ _('Cancel my subscription') }}
+      </a>
+    </p>
+    {% endif %}
   </blockquote>
-  </div>
+</div>
