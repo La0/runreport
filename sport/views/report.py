@@ -10,10 +10,16 @@ class WeekPublish(JsonResponseMixin, CurrentWeekMixin, FormView):
   form_class = SportWeekPublish
   json_options = [JSON_OPTION_ONLY_AJAX, ]
 
+  def get_memberships(self):
+    m = self.request.user.memberships.filter(trainers__isnull=False)
+    m = m.exclude(role__in=('prospect', 'archive'))
+    return m
+
   def get_context_data(self, *args, **kwargs):
     # FormView does not embed local object
     context = super(WeekPublish, self).get_context_data(*args, **kwargs)
     context['report'] = self.get_object()
+    context['memberships'] = self.get_memberships()
     return context
 
   def form_valid(self, form):
@@ -30,7 +36,7 @@ class WeekPublish(JsonResponseMixin, CurrentWeekMixin, FormView):
 
     # Publish new report to all memberships
     uri = self.request.build_absolute_uri('/')[:-1] # remove trailing /
-    for m in self.request.user.memberships.filter(role__in=('athlete', 'trainer')):
+    for m in self.get_memberships():
       task = publish_report.delay(report, m, uri)
 
     # Save last task id in report

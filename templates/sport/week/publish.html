@@ -53,7 +53,7 @@
 
 {% block footer %}
   <button class="btn" data-dismiss="modal">{{ _('Cancel') }}</button>
-  {% for m in user.memberships.filter(trainers__isnull=False) %}
+  {% for m in memberships %}
     <button {% if not report.is_publiable() or user.demo %}disabled="disabled"{% endif %} type="submit" name="publish" value="{{m.club.pk}}" class="btn btn-success">
       {{ _('Send to') }}
       {% for t in m.trainers.all() %}
