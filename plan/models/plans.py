@@ -155,6 +155,7 @@ class PlanSession(models.Model):
   # Dummy data, should be later specified
   # using a collections of PlanPart
   name = models.CharField(max_length=250)
+  comment = models.TextField(null=True, blank=True)
   time = models.DurationField(null=True, blank=True)
   distance = models.FloatField(null=True, blank=True)
 
@@ -231,6 +232,7 @@ class PlanSession(models.Model):
       # Update applied session
       if psa.status == 'applied':
         psa.sport_session.name = self.name
+        psa.sport_session.comment = self.comment
         psa.sport_session.distance = self.distance
         psa.sport_session.time = self.time
         psa.sport_session.save()
@@ -238,6 +240,7 @@ class PlanSession(models.Model):
       # Load session
       defaults = {
           'name' : self.name,
+          'comment' : self.comment,
           'distance' : self.distance,
           'time' : self.time,
       }
