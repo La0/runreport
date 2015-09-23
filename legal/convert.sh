@@ -2,7 +2,7 @@
 
 function convert {
   NAME=$1
-  SOURCE=$NAME.docx
+  SOURCE=$NAME.odt
   if [[ ! -f $SOURCE ]] ; then
     echo "Missing source to convert $SOURCE"
     exit 1

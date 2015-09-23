@@ -1246,10 +1246,6 @@ a.text-link {
 
 /* Legal texts */
 #legal {
-  > ol {
-    padding-left: 10px;
-  }
-
   p.P3 {
     margin-left: 15px;
   }
@@ -1257,6 +1253,12 @@ a.text-link {
   a {
     color: $color_pickled_bluewood_approx;
     text-decoration: underline;
+  }
+
+  ol {
+    list-style-type: none;
+    font-weight: bold;
+    padding-left: 10px;
   }
 
 }
