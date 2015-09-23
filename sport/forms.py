@@ -89,10 +89,12 @@ class SportSessionForm(forms.ModelForm):
       and 'time' in data and data['time'] is None:
       raise forms.ValidationError(_('You must specify a distance or time to add a session.'))
 
-    # Alert user about missing comment or difficulty
+    # Alert user about missing difficulty
     # For past sessions
-    if self.day_date <= date.today() and not self.cleaned_data.get('note', None) and not self.cleaned_data.get('comment', None):
-      raise forms.ValidationError(_('You must specify a difficulty note or a comment.'))
+    # Not on rest
+    # Not on missed plan session
+    if self.day_date <= date.today() and not data.get('note') and data['type'] != 'rest' and data.get('plan_status') in ('applied', 'done'):
+      raise forms.ValidationError(_('You must specify a difficulty note.'))
 
     # Only for race
     if data['type'] == 'race':
