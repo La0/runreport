@@ -33,6 +33,10 @@
             {% if s.distance %}
             <span class="label">{{ _('Distance') }}</span> {{s.distance|floatformat(2)}} km
             {% endif %}
+            {% if s.note %}
+            &bull;
+            <span class="label">{{ _('Note') }}</span> {{ _('Difficulty note %d' % s.note) }}
+            {% endif %}
 
             {% with psa = s.plan_session %}
             {% if psa %}
