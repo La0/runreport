@@ -1,4 +1,5 @@
 from mixins import ClubManagerMixin
+from django.core.exceptions import PermissionDenied
 from django.views.generic.edit import UpdateView, CreateView, BaseDeleteView
 from club.models import Club, ClubLink
 from club.forms import ClubCreateForm, ClubLinkForm
@@ -18,10 +19,23 @@ class ClubManage(ClubManagerMixin, UpdateView):
   form_class = ClubCreateForm
 
   def form_valid(self, form):
-    if not self.request.user.demo:
-      club = form.save()
-      self.club = club
+    if self.request.user.demo:
+      raise PermissionDenied
+
+    # Save club
+    club = form.save()
+    self.club = club
+
+    # Save phone
+    self.club.manager.phone = form.cleaned_data['phone']
+    self.club.manager.save()
+
     return HttpResponseRedirect(reverse('club-manage', kwargs={'slug' : self.club.slug}))
+
+  def get_initial(self):
+    return {
+      'phone' : self.club.manager.phone,
+    }
 
   def get_context_data(self, *args, **kwargs):
     context = super(ClubManage, self).get_context_data(*args, **kwargs)

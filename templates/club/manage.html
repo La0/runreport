@@ -166,10 +166,12 @@
 
     <div class="tab-pane" id="edit">
       <form action="" method="POST" class="form form-horizontal">
+{{ form.errors }}
         {% csrf_token %}
         {{ macros.input(form.name) }}
         {{ macros.input(form.slug) }}
         {{ macros.input(form.address) }}
+        {{ macros.input(form.phone) }}
         {{ macros.input(form.zipcode) }}
         {{ macros.input(form.city) }}
 
