@@ -28,7 +28,7 @@ $(function(){
 
 
 
-<div class="container">
+<div class="container" id="user">
 	
 	<h2>{{ _('My preferences') }}</h2>
   <ul class="nav nav-tabs" role="tablist">
@@ -82,7 +82,9 @@ $(function(){
         {{ macros.input(form.email, None, false, 4, 8) }}
         {% endif %}
         {{ macros.input(form.phone, None, false, 4, 8) }}
-        {{ macros.input(form.birthday, None, false, 4, 8) }}
+        <div class="birthday">
+          {{ macros.input(form.birthday, None, false, 4, 8) }}
+        </div>
         {% if user.category %}
         <div class="form-group">
           <label class="col-sm-4 control-label">{{ _('Category') }}</label>

@@ -20,6 +20,9 @@ class ClubMembershipForm(forms.ModelForm):
     trainers = Athlete.objects.filter(memberships__club=self.instance.club, memberships__role='trainer')
     self.fields['trainers'] = UserModelChoiceField(queryset=trainers, widget=forms.CheckboxSelectMultiple(), required=False)
 
+    # Role is hidden
+    self.fields['role'].widget = forms.HiddenInput()
+
   class Meta:
     model = ClubMembership
     fields = ('role', 'trainers', )

@@ -1234,3 +1234,31 @@ span.session-type {
 a.text-link {
   color: $color_pickled_bluewood_approx !important;
 }
+
+#signup, #user {
+  .birthday {
+    select {
+      width: 33%;
+      display: inline-block;
+    }
+  }
+}
+
+/* Legal texts */
+#legal {
+  p.P3 {
+    margin-left: 15px;
+  }
+
+  a {
+    color: $color_pickled_bluewood_approx;
+    text-decoration: underline;
+  }
+
+  ol {
+    list-style-type: none;
+    font-weight: bold;
+    padding-left: 10px;
+  }
+
+}

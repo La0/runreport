@@ -60,24 +60,6 @@
   </p>
   {% endif %}
 
-  {# TODO 
-  <div class="row">
-    <div class="col-xs-12 text-right">
-      {% for sub in subscriptions %}
-      <a href="" class="btn btn-danger">
-        {% if sub.offer.slug == 'trimester' %}
-          {{ _('Cancel trimester subscription') }}
-        {% elif sub.offer.slug == 'yearly' %}
-          {{ _('Cancel yearly subscription') }}
-        {% else %}
-          {{ _('Cancel subscription') }}
-        {% endif %}
-      </a>
-      {% endfor %}
-    </div>
-  </div>
-  #}
-
   {% else %}
 
   {# Show welcome offer status #}

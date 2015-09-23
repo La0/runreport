@@ -1,2 +1,2 @@
-from .offers import PaymentOfferPay
+from .offers import PaymentOfferPay, PaymentOfferCancel
 from .status import PaymentStatus

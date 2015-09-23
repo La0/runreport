@@ -425,6 +425,9 @@ PAYMILL_HOOK_EMAIL = None
 PAYMILL_HOOK_PASSWORD = None
 PAYMILL_HOOK_SERVER = None
 
+# Archives dir
+ARCHIVES_DIR = os.path.join(HOME, 'archives')
+
 # Import local settings, if any
 try:
   from coach.local_settings import *

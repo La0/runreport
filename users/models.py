@@ -427,6 +427,27 @@ class Athlete(AthleteBase):
 
     return all_added
 
+  def backup(self):
+    '''
+    Backup all dependents models
+    '''
+    from django.db.models.deletion import Collector
+    from django.core import serializers
+
+    # Fetch all related instances
+    # Including self
+    collector = Collector(using='default')
+    collector.collect([self, ])
+    instances = [i for _, i in collector.instances_with_model()]
+
+    # Dump serialized model
+    serialized = serializers.serialize('json', instances)
+    path = os.path.join(settings.ARCHIVES_DIR, '%s.json' % self.email)
+    with open(path, 'w') as f:
+      f.write(serialized)
+
+    return path
+
 def user_initial_subscription(sender, instance, created=False, **kwargs):
     '''
     Every new user has 2 months of welcome premium

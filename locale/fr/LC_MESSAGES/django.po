@@ -578,6 +578,12 @@ msgstr "Github"
 msgid "Facebook"
 msgstr "Facebook"
 
+msgid "ToS"
+msgstr "CGU"
+
+msgid "Mentions"
+msgstr "Mentions"
+
 msgid "All the clubs"
 msgstr "Tous les club"
 
@@ -1075,6 +1081,11 @@ msgstr "Sauver"
 
 msgid "Danger zone"
 msgstr "Zone dangereuse"
+
+msgid "This athlete is already archived, you can now delete it from your club."
+msgstr ""
+"Cet athlète est déja archivé, vous pouvez maintenant le supprimer de votre "
+"club."
 
 msgid "Refuse this prospect"
 msgstr "Refuser ce nouveau"
@@ -1606,6 +1617,12 @@ msgstr ""
 "Plus de 10 athlètes ? Achetez un accès premium pour votre club et débloquez "
 "le potentiel de votre club !"
 
+msgid "Terms of service"
+msgstr "Conditions Générales d'Utilisation"
+
+msgid "Legal mentions"
+msgstr "Mentions légales"
+
 msgid "New badges"
 msgstr "Nouveaux badges"
 
@@ -2026,7 +2043,7 @@ msgid "Premium big club"
 msgstr "Premium pour grand club"
 
 msgid "Awaiting first payment"
-msgstr "Prmeier paiement en attente"
+msgstr "Premier paiement en attente"
 
 msgid "Will start on"
 msgstr "Démarre le"
@@ -2039,6 +2056,21 @@ msgstr "Finira le"
 
 msgid "Ended on"
 msgstr "Fini le"
+
+#| msgid "Cancel subscription"
+msgid "Cancel my subscription"
+msgstr "Annuler mon abonnement"
+
+#| msgid "Cancel subscription"
+msgid "Cancel premium subscription"
+msgstr "Annuler l'abonnement premium"
+
+#| msgid "Are you sure to delete this media %s ?"
+msgid "Are you sure to delete your premium membership ?"
+msgstr "Etes vous sûr de vouloir supprimer votre abonnement premium ?"
+
+msgid "You will be refunded on your payment card account."
+msgstr "Vous serez remboursé sur votre carte de paiement."
 
 msgid "Premium Payment"
 msgstr "Paiement Premium"
@@ -2120,15 +2152,6 @@ msgstr "Validé"
 
 msgid "No payment transactions processed yet."
 msgstr "Pas de transactions validées pour le moment."
-
-msgid "Cancel trimester subscription"
-msgstr "Annuler l'abonnement trimestriel"
-
-msgid "Cancel yearly subscription"
-msgstr "Annuler l'abonnement annuel"
-
-msgid "Cancel subscription"
-msgstr "Annuler l'abonnement"
 
 msgid "During 2 months"
 msgstr "Durant 2 mois"
@@ -2677,6 +2700,22 @@ msgid ""
 msgstr ""
 "Bienvenue ! Vous devez créer un compte personel afin de créer votre club."
 
+msgid "Delete your own account"
+msgstr "Supprimer votre compte"
+
+msgid ""
+"This is extremely dangerous, you will lose all your data on RunReport by "
+"deleting your account."
+msgstr ""
+"Cette opération est extrêmement dangereuse, vous perdrez l'intégralité de "
+"vos données sur RunReport en supprimant votre compte."
+
+msgid "Are you sure to proceed anyway ?"
+msgstr "Etes vous sûr de vouloir supprimer votre compte ?"
+
+msgid "Delete my account"
+msgstr "Supprimer mon compte"
+
 msgid "Valid connection"
 msgstr "Connection validée"
 
@@ -2986,6 +3025,9 @@ msgstr "Répétez votre mot de passe"
 msgid "An account already uses this email."
 msgstr "Un compte utilise déjà cet email."
 
+msgid "You must be at least 13 years old to create an account."
+msgstr "Vous devez au moins avoir 13 ans pour créer un compte."
+
 msgid "Please repeat the same password"
 msgstr "Veuillez répéter le même mot de passe."
 
@@ -3229,10 +3271,8 @@ msgstr "Athlète Premium"
 msgid "Mont Blanc"
 msgstr ""
 
-#, fuzzy
-#| msgid "rest"
 msgid "Everest"
-msgstr "repos"
+msgstr "Everest"
 
 msgid "Ben Nevis"
 msgstr ""
@@ -3455,6 +3495,16 @@ msgstr " Marche"
 
 msgid "Multi Sport"
 msgstr "Multi Sport"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Cancel trimester subscription"
+msgstr "Annuler l'abonnement trimestriel"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Cancel yearly subscription"
+msgstr "Annuler l'abonnement annuel"
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0

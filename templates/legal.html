@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% if type == 'cgu' %}
+  {% set page_title = _('Terms of service') %}
+{% elif type == 'mentions' %}
+  {% set page_title = _('Legal mentions') %}
+{% endif %}
+
+{% block content %}
+<div class="container {{ type }}" id="legal">
+  {{ legal_html|safe }}
+</div>
+{% endblock %}

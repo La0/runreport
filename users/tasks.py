@@ -56,3 +56,11 @@ def unsubscribe_mailing(user, mailing_name):
   Unsubscribe an user to a mailing list
   '''
   user.unsubscribe_mailing(mailing_name)
+
+@shared_task
+def delete_user(user):
+  '''
+  Backup and delete a user
+  '''
+  user.backup()
+  user.delete()

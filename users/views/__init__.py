@@ -9,3 +9,4 @@ from stats import AthleteStats
 from notifications import UserNotificationsList, UserNotificationsClear
 from gcal import GCalOauthView
 from badges import UserBadgesView
+from delete import UserDelete

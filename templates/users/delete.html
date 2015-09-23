@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% set page_title = _('Delete your own account') %}
+
+{% block content %}
+<div class="container">
+  <h1>{{ _('Delete your own account') }}</h1>
+
+  <div class="text-danger lead">
+    {{ _('This is extremely dangerous, you will lose all your data on RunReport by deleting your account.') }}
+    <br />
+    {{ _('Are you sure to proceed anyway ?') }}
+  </div>
+
+  <hr />
+
+  <form method="POST" action="">
+    {% csrf_token %}
+    <a class="btn btn-default" href="{{ url('dashboard') }}">
+      {{ _('Cancel') }}
+    </a>
+    <button class="btn btn-danger" type="submit">
+      <i class="icon-trash"></i>
+      {{ _('Delete my account') }}
+    </button>
+  </form>
+</div>
+{% endblock %}
