@@ -16,6 +16,11 @@ class GearMixin(LoginRequired):
   def get_success_url(self):
     return reverse('gear')
 
+  def get_form_kwargs(self):
+    out = super(GearMixin, self).get_form_kwargs()
+    out['user'] = self.request.user
+    return out
+
   def form_valid(self, form):
     # Save with user
     gear = form.save(commit=False)
