@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from coach.settings import HOME
+from runreport.settings import HOME
 from sport.models import Sport
 import os
 import json

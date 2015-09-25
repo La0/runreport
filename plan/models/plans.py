@@ -5,7 +5,7 @@ from users.models import Athlete
 from sport.models import Sport, SportWeek, SportDay, SportSession, SESSION_TYPES
 from datetime import date, timedelta
 from helpers import date_to_week
-from coach.mail import MailBuilder
+from runreport.mail import MailBuilder
 from plan.export import PlanPdfExporter
 from .apps import PlanApplied, PlanSessionApplied
 

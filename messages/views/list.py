@@ -1,5 +1,5 @@
 from django.views.generic import ListView, DetailView
-from coach.mixins import JsonResponseMixin
+from runreport.mixins import JsonResponseMixin
 from mixins import ConversationMixin
 
 class ConversationView(ConversationMixin, DetailView):

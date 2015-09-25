@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from messages.forms import ContactForm
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-from coach.mail import MailBuilder
+from runreport.mail import MailBuilder
 
 class ContactView(FormView):
   template_name = 'contact.html'

@@ -1,7 +1,7 @@
 from django.views.generic import View
 from django.http import HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
-from coach.mixins import JsonResponseMixin
+from runreport.mixins import JsonResponseMixin
 from plan.models import PlanSessionApplied
 from datetime import datetime
 

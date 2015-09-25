@@ -2,7 +2,7 @@
 from jinja2 import Environment, Template, FileSystemBytecodeCache
 from importlib import import_module
 from django.conf import settings
-from coach.menu import add_pages
+from runreport.menu import add_pages
 from datetime import timedelta
 from helpers import seconds_humanize
 import os

@@ -1,6 +1,6 @@
 from datetime import timedelta, date
 from django.http import Http404
-from coach.mixins import LoginRequired
+from runreport.mixins import LoginRequired
 from helpers import week_to_date, date_to_day, date_to_week
 from sport.models import SportWeek, SportDay, SportSession, SESSION_TYPES, RaceCategory
 from sport.forms import SportSessionForm

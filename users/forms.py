@@ -1,7 +1,7 @@
 from django import forms
 from users.models import Athlete
 from django.core.exceptions import ValidationError
-from coach.settings import GPG_HOME, GPG_KEY
+from runreport.settings import GPG_HOME, GPG_KEY
 from helpers import nameize
 import gnupg
 from tracks.providers.garmin import GarminProvider, GarminAuthException

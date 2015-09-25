@@ -8,7 +8,7 @@ from tracks.models import Track, TrackSplit, TrackFile
 from sport.stats import StatsMonth, StatsWeek
 from helpers import date_to_week
 
-logger = logging.getLogger('coach.sport.garmin')
+logger = logging.getLogger('runreport.sport.garmin')
 
 class TrackSkipUpdateException(Exception):
   '''

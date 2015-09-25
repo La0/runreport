@@ -3,7 +3,7 @@ from django.views.generic.edit import DeleteView
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from .mixins import PlanMixin
-from coach.mixins import JsonResponseMixin
+from runreport.mixins import JsonResponseMixin
 from users.notification import UserNotifications
 
 class PlanDetails(PlanMixin, DetailView):

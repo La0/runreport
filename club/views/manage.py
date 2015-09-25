@@ -6,8 +6,8 @@ from club.forms import ClubCreateForm, ClubLinkForm
 from club import ROLES
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from coach.mixins import JsonResponseMixin, JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE
-from coach.features import list_features
+from runreport.mixins import JsonResponseMixin, JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE
+from runreport.features import list_features
 from django.db.models import Max
 from django.utils import timezone
 from payments.models import PaymentOffer

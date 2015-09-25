@@ -2,7 +2,7 @@ from .mixins import ClubGroupMixin
 from django.views.generic import ListView, CreateView, UpdateView, DetailView, DeleteView
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from coach.mixins import JsonResponseMixin
+from runreport.mixins import JsonResponseMixin
 from club.tasks import group_create_ml, group_delete_ml
 from users.tasks import subscribe_mailing, unsubscribe_mailing
 

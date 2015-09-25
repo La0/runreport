@@ -1,6 +1,6 @@
 from django.views.generic import CreateView, DetailView, DeleteView
 from friends.models import FriendRequest
-from coach.mixins import JsonResponseMixin, JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE
+from runreport.mixins import JsonResponseMixin, JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE
 from users.models import Athlete
 from django.shortcuts import get_object_or_404
 from django.http import Http404

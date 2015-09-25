@@ -84,7 +84,7 @@ def race_mail(*args, **kwargs):
   '''
   from sport.models import SportSession
   from datetime import date, timedelta
-  from coach.mail import MailBuilder
+  from runreport.mail import MailBuilder
 
   # Setup mail builder
   builder = MailBuilder('mail/race.html')

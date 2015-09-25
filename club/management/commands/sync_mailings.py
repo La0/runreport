@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 from club.models import Club
 from users.models import Athlete
-from coach.mailman import MailMan
+from runreport.mailman import MailMan
 
 class Command(BaseCommand):
 

@@ -1,6 +1,6 @@
 from django.views.generic.detail import BaseDetailView
 from mixins import TrackMixin
-from coach.mixins import JsonResponseMixin, JSON_OPTION_RAW, JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML
+from runreport.mixins import JsonResponseMixin, JSON_OPTION_RAW, JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML
 from sport.models import SportSession
 
 

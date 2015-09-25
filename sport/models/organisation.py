@@ -7,7 +7,7 @@ from datetime import datetime, date, time
 import xlwt
 import tempfile
 from django.conf import settings
-from coach.mail import MailBuilder
+from runreport.mail import MailBuilder
 from helpers import date_to_day, week_to_date
 from sport.stats import StatsMonth, StatsWeek
 from .sport import SportSession

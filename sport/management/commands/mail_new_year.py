@@ -4,7 +4,7 @@ from sport.stats import StatsMonth
 from sport.models import Sport
 from users.models import Athlete
 from datetime import date
-from coach.mail import MailBuilder
+from runreport.mail import MailBuilder
 
 class Command(BaseCommand):
   def handle(self, *args, **options):

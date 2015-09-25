@@ -10,7 +10,7 @@ from club.forms import ClubMembershipForm
 from club import ROLES
 from club.tasks import mail_member_role
 from datetime import date, timedelta, MINYEAR
-from coach.mixins import JsonResponseMixin, JSON_STATUS_ERROR, CsvResponseMixin, JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE
+from runreport.mixins import JsonResponseMixin, JSON_STATUS_ERROR, CsvResponseMixin, JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE
 
 import logging
 logger = logging.getLogger('club')

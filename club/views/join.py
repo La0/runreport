@@ -2,7 +2,7 @@ from django.views.generic import TemplateView
 from django.views.generic.list import ListView
 from django.shortcuts import get_object_or_404
 from club.models import Club, ClubMembership
-from coach.mixins import JsonResponseMixin, JSON_OPTION_NO_HTML, JSON_OPTION_BODY_RELOAD, JSON_OPTION_ONLY_AJAX
+from runreport.mixins import JsonResponseMixin, JSON_OPTION_NO_HTML, JSON_OPTION_BODY_RELOAD, JSON_OPTION_ONLY_AJAX
 from django.core.exceptions import PermissionDenied
 
 class ClubList(ListView):

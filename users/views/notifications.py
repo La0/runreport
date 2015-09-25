@@ -1,4 +1,4 @@
-from coach.mixins import JsonResponseMixin, JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML, JSON_OPTION_REDIRECT_SKIP
+from runreport.mixins import JsonResponseMixin, JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML, JSON_OPTION_REDIRECT_SKIP
 from django.views.generic import TemplateView, View
 from django.http import HttpResponseRedirect
 from users.notification import UserNotifications

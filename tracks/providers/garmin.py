@@ -13,7 +13,7 @@ from sport.models import Sport
 from tracks.models import TrackSplit
 from django.utils.timezone import make_aware
 
-logger = logging.getLogger('coach.sport.garmin')
+logger = logging.getLogger('runreport.sport.garmin')
 
 class GarminAuthException(Exception):
   '''

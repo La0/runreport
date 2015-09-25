@@ -1,7 +1,7 @@
 from django.views.generic import TemplateView
 from django.views.generic.edit import DeletionMixin
 from tracks.providers import all_providers, get_provider
-from coach.mixins import JsonResponseMixin, JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE
+from runreport.mixins import JsonResponseMixin, JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE
 from django.http import Http404
 
 class TrackProviders(TemplateView):

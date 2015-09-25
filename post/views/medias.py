@@ -1,6 +1,6 @@
 from django.views.generic import DetailView, DeleteView
 from .mixins import PostWriterMixin, PostMediaMixin
-from coach.mixins import JsonResponseMixin, JSON_OPTION_NO_HTML
+from runreport.mixins import JsonResponseMixin, JSON_OPTION_NO_HTML
 from django.http import HttpResponse
 from post.models import PostMedia
 

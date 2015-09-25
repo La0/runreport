@@ -1,6 +1,6 @@
 from django.views.generic import UpdateView, CreateView, ListView, DetailView
 from .mixins import PostWriterMixin
-from coach.mixins import JsonResponseMixin, JSON_OPTION_ONLY_AJAX
+from runreport.mixins import JsonResponseMixin, JSON_OPTION_ONLY_AJAX
 from sport.models import SportSession
 from post.forms import YearMonthForm
 from datetime import date

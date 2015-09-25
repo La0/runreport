@@ -1,5 +1,5 @@
 from django.views.generic import TemplateView
-from coach.features import list_features
+from runreport.features import list_features
 from django.conf import settings
 from django.http import Http404
 import os

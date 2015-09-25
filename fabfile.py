@@ -1,6 +1,6 @@
 from fabric.api import local, env, get, prefix
 from fabric.operations import prompt
-from coach.settings import FABRIC_HOSTS, DATABASES
+from runreport.settings import FABRIC_HOSTS, DATABASES
 import os
 env.hosts = FABRIC_HOSTS
 

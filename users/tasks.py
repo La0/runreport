@@ -20,7 +20,7 @@ def send_related_races_mail():
   and club members races
   '''
   from users.models import Athlete
-  from coach.mail import MailBuilder
+  from runreport.mail import MailBuilder
 
   for a in Athlete.objects.all():
 

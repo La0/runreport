@@ -22,7 +22,7 @@ def athletes_daily_sessions():
   from django.utils.translation import ugettext_lazy as _
   from club.models import ClubMembership
   from sport.models import SportSession
-  from coach.mail import MailBuilder
+  from runreport.mail import MailBuilder
   from datetime import date
 
   today = date.today()

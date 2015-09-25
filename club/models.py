@@ -1,8 +1,8 @@
 #!coding=utf-8
 from django.db import models
 from users.models import Athlete
-from coach.mail import MailBuilder
-from coach.mailman import MailMan
+from runreport.mail import MailBuilder
+from runreport.mailman import MailMan
 from datetime import datetime
 from club import ROLES
 from django.conf import settings

@@ -1,6 +1,6 @@
 from .mixins import PaymentAthleteMixin
 from payments.models import PaymentOffer
-from coach.features import list_features
+from runreport.features import list_features
 from django.utils import timezone
 from django.views.generic import TemplateView
 from django.shortcuts import get_object_or_404

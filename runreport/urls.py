@@ -5,7 +5,7 @@ from django.contrib.gis import admin
 from django.views.generic.base import RedirectView, TemplateView
 from club.views import ClubInviteCheck
 from messages.views import ContactView
-from coach.views import FeaturesView, LegalView
+from runreport.views import FeaturesView, LegalView
 
 admin.autodiscover()
 

@@ -1,4 +1,4 @@
-# Django settings for coach project.
+# Django settings for runreport project.
 from __future__ import absolute_import
 
 DEBUG = True
@@ -142,7 +142,7 @@ TEMPLATES = [
         ],
         'APP_DIRS': False,
         'OPTIONS': {
-            'environment' : 'coach.jinja.environment',
+            'environment' : 'runreport.jinja.environment',
             'extensions' : [
                 'jinja2.ext.i18n',
                 'jinja2.ext.with_',
@@ -163,7 +163,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     #'django.middleware.csrf.CsrfViewMiddleware',
-    'coach.csrf.SubDomainCSRFMiddleware',
+    'runreport.csrf.SubDomainCSRFMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.locale.LocaleMiddleware',
@@ -171,10 +171,10 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'coach.urls'
+ROOT_URLCONF = 'runreport.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'coach.wsgi.application'
+WSGI_APPLICATION = 'runreport.wsgi.application'
 
 
 INSTALLED_APPS = (
@@ -251,7 +251,7 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
-        'coach.sport.garmin' : {
+        'runreport.sport.garmin' : {
           'handlers' : ['console'],
           'level': 'DEBUG',
         },
@@ -430,7 +430,7 @@ ARCHIVES_DIR = os.path.join(HOME, 'archives')
 
 # Import local settings, if any
 try:
-  from coach.local_settings import *
+  from runreport.local_settings import *
 except ImportError, e:
   pass
 

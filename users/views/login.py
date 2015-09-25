@@ -3,7 +3,7 @@ from django.views.generic.edit import FormView
 from django.core.urlresolvers import reverse
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponseRedirect
-from coach.settings import LOGIN_REDIRECT_URL, LOGOUT_REDIRECT_URL
+from runreport.settings import LOGIN_REDIRECT_URL, LOGOUT_REDIRECT_URL
 from django.contrib.auth import login as auth_login, logout as auth_logout
 from .mixins import UserInviteMixin
 

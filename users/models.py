@@ -14,7 +14,7 @@ from django.utils.functional import cached_property
 from hashlib import md5
 from datetime import datetime
 from avatar_generator import Avatar
-from coach.mailman import MailMan
+from runreport.mailman import MailMan
 from friends.models import FriendRequest
 from helpers import crop_image
 import paymill
@@ -403,7 +403,7 @@ class Athlete(AthleteBase):
     Find all the best badges for a user
     '''
     from badges.models import BadgeCategory
-    from coach.mail import MailBuilder
+    from runreport.mail import MailBuilder
 
     all_added = []
     for cat in BadgeCategory.objects.all():

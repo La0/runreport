@@ -9,7 +9,7 @@ def notify_friend_request(sender, recipient, accepted=False):
   Notify a user he has a new or accepted friend request
   by sending him an email
   '''
-  from coach.mail import MailBuilder
+  from runreport.mail import MailBuilder
 
   builder = MailBuilder('mail/friend.request.html')
 

@@ -6,7 +6,7 @@ from sport.models import SportSession, SportDay
 from datetime import datetime, date
 import calendar
 import collections
-from coach.mixins import CsvResponseMixin
+from runreport.mixins import CsvResponseMixin
 
 class RunCalendar(MonthArchiveView):
   template_name = 'sport/calendar/month.html'

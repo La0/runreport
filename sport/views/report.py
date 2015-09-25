@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from sport.tasks import publish_report
 from sport.forms import SportWeekPublish
 from mixins import CurrentWeekMixin, WeekPaginator
-from coach.mixins import JsonResponseMixin, JSON_OPTION_CLOSE, JSON_OPTION_NO_HTML, JSON_OPTION_BODY_RELOAD, JSON_OPTION_ONLY_AJAX, JSON_OPTION_REDIRECT_SKIP
+from runreport.mixins import JsonResponseMixin, JSON_OPTION_CLOSE, JSON_OPTION_NO_HTML, JSON_OPTION_BODY_RELOAD, JSON_OPTION_ONLY_AJAX, JSON_OPTION_REDIRECT_SKIP
 
 class WeekPublish(JsonResponseMixin, CurrentWeekMixin, FormView):
   template_name = 'sport/week/publish.html'

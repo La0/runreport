@@ -1,4 +1,4 @@
-from coach.mixins import JsonResponseMixin, JSON_OPTION_CLOSE, JSON_OPTION_NO_HTML, JSON_OPTION_BODY_RELOAD
+from runreport.mixins import JsonResponseMixin, JSON_OPTION_CLOSE, JSON_OPTION_NO_HTML, JSON_OPTION_BODY_RELOAD
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
 from messages.models import Message, Conversation, TYPE_COMMENTS_PRIVATE, TYPE_COMMENTS_PUBLIC, TYPE_MAIL, TYPE_COMMENTS_WEEK, TYPE_POST
