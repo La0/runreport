@@ -1,0 +1,132 @@
+[
+{
+    "fields": {
+        "updated": "2015-09-25T08:07:49.915Z",
+        "official": true,
+        "name": "Chaussure",
+        "created": "2015-09-25T08:07:47.766Z"
+    },
+    "model": "gear.gearcategory",
+    "pk": 1
+},
+{
+    "fields": {
+        "updated": "2015-09-25T08:08:00.561Z",
+        "official": true,
+        "name": "Montre",
+        "created": "2015-09-25T08:08:00.561Z"
+    },
+    "model": "gear.gearcategory",
+    "pk": 2
+},
+{
+    "fields": {
+        "updated": "2015-09-25T08:08:06.549Z",
+        "official": true,
+        "name": "Sac \u00e0 dos",
+        "created": "2015-09-25T08:08:06.549Z"
+    },
+    "model": "gear.gearcategory",
+    "pk": 3
+},
+{
+    "fields": {
+        "updated": "2015-09-25T08:08:24.043Z",
+        "official": true,
+        "name": "Chapeau",
+        "created": "2015-09-25T08:08:24.043Z"
+    },
+    "model": "gear.gearcategory",
+    "pk": 4
+},
+{
+    "fields": {
+        "updated": "2015-09-25T08:08:47.055Z",
+        "official": true,
+        "name": "Maillot",
+        "created": "2015-09-25T08:08:47.055Z"
+    },
+    "model": "gear.gearcategory",
+    "pk": 5
+},
+{
+    "fields": {
+        "updated": "2015-09-25T08:08:59.813Z",
+        "official": true,
+        "name": "V\u00e9lo",
+        "created": "2015-09-25T08:08:59.813Z"
+    },
+    "model": "gear.gearcategory",
+    "pk": 6
+},
+{
+    "fields": {
+        "updated": "2015-09-25T08:09:20.135Z",
+        "official": true,
+        "name": "Patinage",
+        "created": "2015-09-25T08:09:20.135Z"
+    },
+    "model": "gear.gearcategory",
+    "pk": 7
+},
+{
+    "fields": {
+        "updated": "2015-09-25T08:05:11.914Z",
+        "official": true,
+        "name": "Salomon",
+        "created": "2015-09-25T08:05:11.914Z"
+    },
+    "model": "gear.gearbrand",
+    "pk": 1
+},
+{
+    "fields": {
+        "updated": "2015-09-25T08:05:22.904Z",
+        "official": true,
+        "name": "D\u00e9cathlon",
+        "created": "2015-09-25T08:05:22.904Z"
+    },
+    "model": "gear.gearbrand",
+    "pk": 2
+},
+{
+    "fields": {
+        "updated": "2015-09-25T08:05:32.602Z",
+        "official": true,
+        "name": "La sportiva",
+        "created": "2015-09-25T08:05:32.602Z"
+    },
+    "model": "gear.gearbrand",
+    "pk": 3
+},
+{
+    "fields": {
+        "updated": "2015-09-25T08:05:42.977Z",
+        "official": false,
+        "name": "La pierre",
+        "created": "2015-09-25T08:05:42.977Z"
+    },
+    "model": "gear.gearbrand",
+    "pk": 4
+},
+{
+    "fields": {
+        "updated": "2015-09-25T08:16:37.704Z",
+        "official": true,
+        "name": "Garmin",
+        "created": "2015-09-25T08:16:37.704Z"
+    },
+    "model": "gear.gearbrand",
+    "pk": 5
+},
+{
+    "fields": {
+        "updated": "2015-09-25T08:17:29.565Z",
+        "official": true,
+        "name": "New Balance",
+        "created": "2015-09-25T08:17:29.565Z"
+    },
+    "model": "gear.gearbrand",
+    "pk": 6
+}
+]
