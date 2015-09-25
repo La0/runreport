@@ -1,7 +1,6 @@
 from django.contrib import admin
 from models import GearCategory, GearBrand, GearItem
 
-
 class GearCategoryAdmin(admin.ModelAdmin):
   list_display = ('name', 'official', )
 admin.site.register(GearCategory, GearCategoryAdmin)

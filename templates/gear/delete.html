@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% set page_title = _('Delete gear %s') % gear.name %}
+
+{% block content %}
+<div class="container">
+  <h1>{{ _('Delete gear %s') % gear.name }}</h1>
+  <p class="text-danger">
+    {{ _('Are you sure to delete this equipment ?') }}
+  </p>
+  <form method="POST" action="">
+    {% csrf_token %}
+    <a href="{{ url('gear') }}" class="btn btn-default">
+      {{ _('Cancel') }}
+    </a>
+    <button type="submit" class="btn btn-danger">
+      <i class="icon-trash"></i>
+      {{ _('Delete') }}
+    </button>
+  </form>
+</div>
+{% endblock %}
