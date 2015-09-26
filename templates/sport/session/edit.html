@@ -46,6 +46,12 @@
     </div>
   </div>
 
+  {% if session.pk %}
+  <div class="form-group row" id="gear-{{ session.pk }}">
+    {% include 'gear/_items.html' %}
+  </div>
+  {% endif %}
+
   {% if session.track %}
   <div class="track">
     <div class="hidden-xs labels">

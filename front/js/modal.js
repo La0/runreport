@@ -207,6 +207,10 @@ function load_box(url, method, data, output){
     traditional : true, // Avoid dumb serialization with [] appended on arrays !
     success : function(data){
 
+      // Override output from response
+      if(data.output)
+        output = $('#' + data.output);
+
       // Load a page
       if(data.status == 'load' && data.url){
         window.location = data.url;

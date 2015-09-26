@@ -51,7 +51,6 @@ class GearItem(models.Model):
   brand = models.ForeignKey(GearBrand, related_name='items', verbose_name=_('Brand'))
   user = models.ForeignKey('users.Athlete', related_name='items')
   sports = models.ManyToManyField('sport.Sport', blank=True, verbose_name=_('Default sports'))
-  sessions = models.ManyToManyField('sport.SportSession', blank=True)
 
   # Date
   start = models.DateTimeField(null=True, blank=True, verbose_name=_('Start usage date'))

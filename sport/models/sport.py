@@ -62,6 +62,9 @@ class SportSession(models.Model):
   comments_public = models.OneToOneField('messages.Conversation', null=True, blank=True, related_name='session_public')
   comments_private = models.OneToOneField('messages.Conversation', null=True, blank=True, related_name='session_private')
 
+  # Gear items
+  gear = models.ManyToManyField('gear.GearItem', related_name='sessions')
+
   class Meta:
     db_table = 'sport_session'
     app_label = 'sport'

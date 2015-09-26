@@ -2,7 +2,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.db.models import Q
 from django import forms
 from gear.models import GearItem, GearCategory, GearBrand
-from sport.models import Sport
+from sport.models import Sport, SportSession
 
 
 class GearItemForm(forms.ModelForm):
@@ -58,3 +58,25 @@ class GearItemForm(forms.ModelForm):
     _check_moderated('brand', GearBrand)
 
     return self.cleaned_data
+
+
+class GearSessionForm(forms.ModelForm):
+  '''
+  Select the gear items for a sport session
+  '''
+  class Meta:
+    model = SportSession
+    fields = ('gear', )
+    widgets = {
+        # Gear are using checkbox
+        'gear' : forms.CheckboxSelectMultiple(),
+    }
+
+  def __init__(self, user, *args, **kwargs):
+    super(GearSessionForm, self).__init__(*args, **kwargs)
+
+    # Save user
+    self.user = user
+
+    # Limit gear items to user's
+    self.fields['gear'].queryset = GearItem.objects.filter(user=self.user)

@@ -17,11 +17,10 @@ class GearItemAdmin(admin.ModelAdmin):
       'fields' : ('name', 'description'),
     }),
     ('Links', {
-      'fields' : ('category', 'brand', 'user', 'sessions', ),
+      'fields' : ('category', 'brand', 'user', ),
     }),
     ('Dates', {
       'fields' : ('start', 'end', ),
     }),
   )
-  readonly_fields = ('sessions', )
 admin.site.register(GearItem, GearItemAdmin)
