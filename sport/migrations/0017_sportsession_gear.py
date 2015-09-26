@@ -7,7 +7,7 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('gear', '0005_remove_gearitem_sessions'),
+        ('gear', '0001_initial_squashed'),
         ('sport', '0016_auto_20150722_1630'),
     ]
 
