@@ -80,3 +80,6 @@ class GearSessionForm(forms.ModelForm):
 
     # Limit gear items to user's
     self.fields['gear'].queryset = GearItem.objects.filter(user=self.user)
+
+    # Gear is not required
+    self.fields['gear'].required = False
