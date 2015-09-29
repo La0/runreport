@@ -318,6 +318,7 @@ CELERY_TIMEZONE = 'Europe/Paris'
 from datetime import timedelta
 from celery.schedules import crontab
 CELERY_DEFAULT_QUEUE = 'base'
+CELERY_IGNORE_RESULT = True
 CELERYBEAT_SCHEDULE = {
   'auto-send-reports-on-sunday': {
     'task': 'sport.tasks.auto_publish_reports',

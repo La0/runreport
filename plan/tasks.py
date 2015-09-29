@@ -13,6 +13,8 @@ def publish_plan(plan_pk, users_pk):
   users = Athlete.objects.filter(pk__in=users_pk)
   plan.publish(users)
 
+  return plan.pk # Avoid pickle issues
+
 @shared_task
 def athletes_daily_sessions():
   '''
