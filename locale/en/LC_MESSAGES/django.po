@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-23 17:50+0200\n"
+"POT-Creation-Date: 2015-09-30 15:12+0200\n"
 "PO-Revision-Date: 2015-02-09 17:42+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
@@ -81,6 +81,146 @@ msgid "Birthday"
 msgstr ""
 
 msgid "Trainers"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Zip Code"
+msgstr ""
+
+msgid "New category"
+msgstr ""
+
+msgid "New brand"
+msgstr ""
+
+msgid "Name of the new category"
+msgstr ""
+
+msgid "Name of the new brand"
+msgstr ""
+
+msgid "Empty category or brand"
+msgstr ""
+
+msgid "Equipment name"
+msgstr ""
+
+msgid "Category"
+msgstr ""
+
+msgid "Brand"
+msgstr ""
+
+msgid "Default sports"
+msgstr ""
+
+msgid "Start usage date"
+msgstr ""
+
+msgid "End usage date"
+msgstr ""
+
+msgid "Write your message here..."
+msgstr ""
+
+msgid "Your email"
+msgstr ""
+
+msgid "Your name"
+msgstr ""
+
+msgid "Your message"
+msgstr ""
+
+msgid "New contact message"
+msgstr ""
+
+msgid "Created"
+msgstr ""
+
+msgid "Active"
+msgstr ""
+
+msgid "Inactive"
+msgstr ""
+
+msgid "Expired"
+msgstr ""
+
+msgid "Failed"
+msgstr "Missed"
+
+msgid "Club"
+msgstr ""
+
+msgid "Athlete"
+msgstr ""
+
+msgid "Open"
+msgstr ""
+
+msgid "Pending"
+msgstr ""
+
+msgid "Closed"
+msgstr ""
+
+msgid "Partial Refund"
+msgstr ""
+
+msgid "Refunded"
+msgstr ""
+
+msgid "Pre-Authorize"
+msgstr ""
+
+msgid "Chargeback"
+msgstr ""
+
+msgid "Applied"
+msgstr "To Do"
+
+msgid "Done"
+msgstr ""
+
+#, python-format
+msgid "Training plan : %s"
+msgstr ""
+
+#, python-format
+msgid "Training plan - %s.pdf"
+msgstr ""
+
+msgid "Your athlete's sessions today"
+msgstr ""
+
+msgid "Race"
+msgstr ""
+
+msgid "Training"
+msgstr ""
+
+msgid "Blog"
+msgstr ""
+
+msgid "Source Image"
+msgstr ""
+
+msgid "Thumbnail Image"
+msgstr ""
+
+msgid "Cropped Image"
+msgstr ""
+
+msgid "Post Type"
+msgstr ""
+
+msgid "Post title"
+msgstr ""
+
+msgid "Post content"
 msgstr ""
 
 msgid "Monthly stats"
@@ -315,6 +455,11 @@ msgstr ""
 msgid "My subscription"
 msgstr ""
 
+#, fuzzy
+#| msgid "fitness_equipment"
+msgid "My equipment"
+msgstr "Fitness"
+
 msgid "Logout"
 msgstr ""
 
@@ -331,113 +476,6 @@ msgid "French"
 msgstr ""
 
 msgid "English"
-msgstr ""
-
-msgid "Name"
-msgstr ""
-
-msgid "Zip Code"
-msgstr ""
-
-msgid "Write your message here..."
-msgstr ""
-
-msgid "Your email"
-msgstr ""
-
-msgid "Your name"
-msgstr ""
-
-msgid "Your message"
-msgstr ""
-
-msgid "New contact message"
-msgstr ""
-
-msgid "Created"
-msgstr ""
-
-msgid "Active"
-msgstr ""
-
-msgid "Inactive"
-msgstr ""
-
-msgid "Expired"
-msgstr ""
-
-msgid "Failed"
-msgstr "Missed"
-
-msgid "Club"
-msgstr ""
-
-msgid "Athlete"
-msgstr ""
-
-msgid "Open"
-msgstr ""
-
-msgid "Pending"
-msgstr ""
-
-msgid "Closed"
-msgstr ""
-
-msgid "Partial Refund"
-msgstr ""
-
-msgid "Refunded"
-msgstr ""
-
-msgid "Pre-Authorize"
-msgstr ""
-
-msgid "Chargeback"
-msgstr ""
-
-msgid "Applied"
-msgstr "To Do"
-
-msgid "Done"
-msgstr ""
-
-#, python-format
-msgid "Training plan : %s"
-msgstr ""
-
-#, python-format
-msgid "Training plan - %s.pdf"
-msgstr ""
-
-msgid "Your athlete's sessions today"
-msgstr ""
-
-msgid "Race"
-msgstr ""
-
-msgid "Training"
-msgstr ""
-
-msgid "Blog"
-msgstr ""
-
-msgid "Source Image"
-msgstr ""
-
-msgid "Thumbnail Image"
-msgstr ""
-
-msgid "Cropped Image"
-msgstr ""
-
-msgid "Post Type"
-msgstr ""
-
-msgid "Post title"
-msgstr ""
-
-msgid "Post content"
 msgstr ""
 
 msgid "Unsupported time format"
@@ -916,9 +954,6 @@ msgstr ""
 msgid "Send an email to all the club members"
 msgstr ""
 
-msgid "Category"
-msgstr ""
-
 msgid "Trainer"
 msgstr ""
 
@@ -1341,6 +1376,87 @@ msgstr ""
 msgid "You can add friends from your club, for example."
 msgstr ""
 
+#, fuzzy
+#| msgid "fitness_equipment"
+msgid "Equipment"
+msgstr "Fitness"
+
+#, fuzzy
+#| msgid "fitness_equipment"
+msgid "Add a new equipment"
+msgstr "Fitness"
+
+#, fuzzy
+#| msgid "fitness_equipment"
+msgid "Create a new equipment"
+msgstr "Fitness"
+
+#, python-format
+msgid "Delete gear %s"
+msgstr ""
+
+msgid "Are you sure to delete this equipment ?"
+msgstr ""
+
+#, python-format
+msgid "Edit gear %s"
+msgstr ""
+
+msgid "Create a gear"
+msgstr ""
+
+msgid "Add a category"
+msgstr ""
+
+msgid "Use existing category"
+msgstr ""
+
+msgid "Add a brand"
+msgstr ""
+
+msgid "Use existing brand"
+msgstr ""
+
+msgid ""
+"Sessions with matching sports will automatically get this equipment "
+"attributed."
+msgstr ""
+
+msgid "Create"
+msgstr ""
+
+msgid "All your gear"
+msgstr ""
+
+msgid "Add some gear"
+msgstr ""
+
+msgid "sessions"
+msgstr ""
+
+msgid "No sports"
+msgstr ""
+
+msgid "No gear"
+msgstr ""
+
+msgid "You can add some gear by using the button 'Add some gear'"
+msgstr ""
+
+#, fuzzy
+#| msgid "fitness_equipment"
+msgid "Select equipment"
+msgstr "Fitness"
+
+msgid "Select one or more equipment used in your session"
+msgstr ""
+
+msgid "Manage all your equipment"
+msgstr ""
+
+msgid "Validate"
+msgstr ""
+
 msgid ""
 "You can quickly view the number of sessions per weeks, and the mileage & "
 "time."
@@ -1685,6 +1801,9 @@ msgid "will race"
 msgstr ""
 
 msgid "View week"
+msgstr ""
+
+msgid "Note"
 msgstr ""
 
 msgid "Plan"
@@ -3112,6 +3231,45 @@ msgstr ""
 msgid "denivele"
 msgstr ""
 
+msgid "Chaussure"
+msgstr ""
+
+msgid "Montre"
+msgstr ""
+
+msgid "Sac à dos"
+msgstr ""
+
+msgid "Chapeau"
+msgstr ""
+
+msgid "Maillot"
+msgstr ""
+
+msgid "Vélo"
+msgstr "Cycling"
+
+msgid "Patinage"
+msgstr ""
+
+msgid "plop"
+msgstr ""
+
+msgid "aaaaaaaaa"
+msgstr ""
+
+msgid "BBBBB"
+msgstr ""
+
+msgid "aaaazerty"
+msgstr ""
+
+msgid "a"
+msgstr ""
+
+msgid "azaza"
+msgstr ""
+
 msgid "Any Activity Type"
 msgstr ""
 
@@ -3132,9 +3290,6 @@ msgstr ""
 
 msgid "Treadmill Running"
 msgstr ""
-
-msgid "Vélo"
-msgstr "Cycling"
 
 msgid "Cyclocross"
 msgstr ""
@@ -3327,8 +3482,3 @@ msgstr "Very Hard session"
 #: obsolete:0
 msgid "Development Version"
 msgstr "Development Version"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "fitness_equipment"
-msgstr "Fitness"
