@@ -47,7 +47,6 @@ class Migration(migrations.Migration):
                 ('updated', models.DateTimeField(auto_now=True)),
                 ('brand', models.ForeignKey(related_name='items', to='gear.GearBrand')),
                 ('category', models.ForeignKey(related_name='items', to='gear.GearCategory')),
-                ('sessions', models.ManyToManyField(to=b'sport.SportSession', blank=True)),
                 ('sports', models.ManyToManyField(to=b'sport.Sport', blank=True)),
                 ('user', models.ForeignKey(related_name='items', to=settings.AUTH_USER_MODEL)),
             ],
@@ -110,9 +109,5 @@ class Migration(migrations.Migration):
             model_name='gearitem',
             name='start',
             field=models.DateTimeField(null=True, verbose_name='Start usage date', blank=True),
-        ),
-        migrations.RemoveField(
-            model_name='gearitem',
-            name='sessions',
         ),
     ]
