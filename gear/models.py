@@ -64,3 +64,15 @@ class GearItem(models.Model):
   def __unicode__(self):
     return self.name
 
+  def calc_stats(self):
+    '''
+    Calc all the useful stats for this items
+     * nb of sessions
+     * total hours
+     * total distance
+    '''
+    return {
+      'nb' : self.sessions.count(),
+      'distance' : self.sessions.aggregate(d=models.Sum('distance'))['d'],
+      'time' : self.sessions.aggregate(t=models.Sum('time'))['t'],
+    }

@@ -187,7 +187,7 @@
 {%- endmacro %}
 
 {% macro rating(field, max=5) %}
-<div class="form-group col-xs-12 col-sm-8 rating {% if field.errors %}has-error{% endif %}">
+<div class="col-xs-12 col-sm-8 rating {% if field.errors %}has-error{% endif %}">
 	<label class="control-label" for="id_{{field.html_name}}">
     {{ _('Difficulty') }}
   </label>

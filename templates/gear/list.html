@@ -19,16 +19,32 @@
 
   {% for gear in gears %}
   <div class="row">
-    <div class="col-xs-4">
+    <div class="col-xs-3">
       <a href="{{ url('gear-edit', gear.pk) }}">{{ gear.name }}</a>
       <br />
       {{ gear.category.name }} &bull; {{ gear.brand.name }}
     </div>
-    <div class="col-xs-4">
+    <div class="col-xs-3">
+      {% with stats = gear.calc_stats() %}
+      <h5>Used in</h5>
       <p>
-        <span class="badge">{{ gear.sessions.count() }}</span>
-        {{ _('sessions with this gear') }}
+        <span class="badge">{{ stats.nb }}</span>
+        {{ _('sessions') }}
       </p>
+      <p>
+        {% if stats.distance %}
+          {{ stats.distance|floatformat(0) }} km
+        {% endif %}
+        {% if stats.distance and stats.time %}
+          <span class="text-muted">&bull;</span>
+        {% endif %}
+        {% if stats.time %}
+          {{ stats.time }}
+        {% endif %}
+      </p>
+      {% endwith %}
+    </div>
+    <div class="col-xs-2">
       {% for sport in gear.sports.all() %}
       <p>
         <i class="icon-sport-{{ sport.slug }}"></i>
