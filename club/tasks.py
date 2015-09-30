@@ -76,3 +76,27 @@ def mail_member_role(membership, role):
   On role change, send an email to user
   '''
   membership.mail_user(role)
+
+@shared_task
+def sync_mailing_membership(membership, add):
+  '''
+  Sync the mailing list usage
+  for a user's membership
+  '''
+  if add:
+    # Add to main
+    if membership.club.mailing_list:
+      membership.user.subscribe_mailing(membership.club.mailing_list)
+
+    # Add to groups
+    for g in membership.groups.filter(mailing_list__isnull=False):
+      membership.user.subscribe_mailing(g.club.mailing_list)
+
+  else:
+    # Remove from main
+    if membership.club.mailing_list:
+      membership.user.unsubscribe_mailing(membership.club.mailing_list)
+
+    # Remove from groups
+    for g in membership.groups.filter(mailing_list__isnull=False):
+      membership.user.unsubscribe_mailing(g.club.mailing_list)

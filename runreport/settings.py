@@ -358,6 +358,15 @@ CELERY_ROUTES = {
   },
 }
 
+# Retry celery failed tasks
+CELERY_TASK_PUBLISH_RETRY = True
+CELERY_TASK_PUBLISH_RETRY_POLICY = {
+  'max_retries': 5,
+  'interval_start': 0.1,
+  'interval_step': 0.2,
+  'interval_max': 0.5,
+}
+
 # Js/Css Compressor
 COMPRESS_ROOT = STATIC_ROOT
 COMPRESS_URL = STATIC_URL

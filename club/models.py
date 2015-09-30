@@ -5,6 +5,7 @@ from runreport.mail import MailBuilder
 from runreport.mailman import MailMan
 from datetime import datetime
 from club import ROLES
+from club.tasks import sync_mailing_membership
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.utils.functional import cached_property
@@ -126,6 +127,30 @@ class ClubMembership(models.Model):
 
   class Meta:
     unique_together = (('user', 'club'),)
+
+  def save(self, *args, **kwargs):
+    '''
+    Sync mailing list on save
+    '''
+    out = super(ClubMembership, self).save(*args, **kwargs)
+
+    if self.role == 'archive':
+      # Remove from mailings
+      sync_mailing_membership.delay(self, False)
+
+    elif self.role != 'prospect':
+      # Add to mailings
+      sync_mailing_membership.delay(self, True)
+
+    return out
+
+  def delete(self, *args, **kwargs):
+    '''
+    Remove from mailing lists on delete
+    '''
+    sync_mailing_membership.delay(self, False)
+
+    return super(ClubMembership, self).delete(*args, **kwargs)
 
   @property
   def groups_owned(self):

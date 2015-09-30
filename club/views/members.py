@@ -224,13 +224,6 @@ class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, Proces
         if form.cleaned_data['send_mail']:
           mail_member_role.delay(membership, self.role_original)
 
-        # Handle club mailing list
-        if self.club.mailing_list:
-          if self.role_original in ('prospect', 'archive') and membership.role != 'archive':
-            membership.user.subscribe_mailing(self.club.mailing_list)
-          if membership.role == 'archive':
-            membership.user.unsubscribe_mailing(self.club.mailing_list)
-
         # Reload page for roles updates
         # When some trainers are specified
         if not (membership.role == 'athlete' and membership.trainers.count() == 0):
