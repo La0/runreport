@@ -2,6 +2,9 @@ from __future__ import absolute_import
 
 from celery import shared_task, task
 
+import logging
+logger = logging.getLogger('tracks.tasks')
+
 @shared_task
 def tracks_import(*args, **kwargs):
   '''
@@ -29,7 +32,8 @@ def provider_import(provider):
   between locks
   '''
   if provider.is_locked:
-    raise Exception('Provider is locked')
+    logger.warning('Provider %s for %s is locked' % (provider.NAME, provider.user) )
+    return
 
   # Lock this provider
   provider.lock()
