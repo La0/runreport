@@ -16,7 +16,7 @@ def tracks_import(*args, **kwargs):
     if not user.is_premium:
       continue
     for provider in all_providers(user):
-      if not provider.is_connected():
+      if not provider.is_connected() or provider.is_locked:
         continue
 
       # Start a subtask per import
@@ -24,5 +24,18 @@ def tracks_import(*args, **kwargs):
 
 @task
 def provider_import(provider):
-  # Helper to run a provider import
+  '''
+  Run a task for one specific import
+  between locks
+  '''
+  if provider.is_locked:
+    raise Exception('Provider is locked')
+
+  # Lock this provider
+  provider.lock()
+
+  # Run the import
   provider.import_user()
+
+  # Unlock this provider
+  provider.unlock()

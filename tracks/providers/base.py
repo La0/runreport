@@ -2,6 +2,7 @@ from django.conf import settings
 import logging
 import json
 from django.db import transaction
+from django.core.cache import cache
 from django.db.models import Min, Max, Count
 import hashlib
 from tracks.models import Track, TrackSplit, TrackFile
@@ -37,6 +38,29 @@ class TrackProvider:
       if not hasattr(settings, s):
         raise Exception("Missing setting %s" % s)
       setattr(self, s, getattr(settings, s))
+
+  @property
+  def lock_name(self):
+    # Build unique lock name
+    return 'track:lock:%s:%d' % (self.NAME, self.user.pk)
+
+  def lock(self, ttl=31200):
+    '''
+    Mark provider locked for this user
+    in cache
+    By default, locks for 6 hours
+    '''
+    cache.set(self.lock_name, True, ttl)
+
+  def unlock(self):
+    '''
+    Remove lock
+    '''
+    cache.delete(self.lock_name)
+
+  @property
+  def is_locked(self):
+    return cache.get(self.lock_name) is not None
 
   # Abtract methods to implement
   def is_connected(self):
