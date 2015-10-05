@@ -10,7 +10,7 @@ anyjson==0.3.3
 arrow==0.5.4
 avatar-generator==0.0.13
 billiard==3.3.0.18
-celery==3.1.10
+celery==3.1.18
 django-appconf==1.0.1
 django-cors-headers==1.1.0
 ## Django compressor patch for Jinja2
