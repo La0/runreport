@@ -9,6 +9,9 @@ from runreport.mail import MailBuilder
 from plan.export import PlanPdfExporter
 from .apps import PlanApplied, PlanSessionApplied
 
+import logging
+logger = logging.getLogger('plan.models')
+
 class Plan(models.Model):
   name = models.CharField(max_length=250)
   creator = models.ForeignKey(Athlete, related_name='plans')
@@ -20,6 +23,25 @@ class Plan(models.Model):
 
   def __unicode__(self):
     return u'Plan: "%s" from %s' % (self.name, self.creator.username)
+
+  def __init__(self, *args, **kwargs):
+    # Save original start date
+    super(Plan, self).__init__(*args, **kwargs)
+    self.__original_start = self.start
+
+
+  def save(self, *args, **kwargs):
+
+    # Check start is on monday
+    if self.start and self.start.weekday() != 0:
+      raise Exception('Start date must be a Monday')
+
+    # Save data
+    super(Plan, self).save(*args, **kwargs)
+
+    # Update plan applications if start date changed
+    if self.__original_start != self.start:
+      self.update_applications()
 
   @property
   def end(self):
@@ -64,9 +86,14 @@ class Plan(models.Model):
     are still consecutive, starting from 0
     '''
     weeks = self.sessions.order_by('week').values_list('week', flat=True).distinct()
+    update_apps = False
     for pos, week in enumerate(weeks):
       if pos != week:
         self.sessions.filter(week=week).update(week=pos)
+        update_apps = True
+
+    if update_apps:
+      self.update_applications()
 
   def calc_date(self, week, day):
     '''
@@ -100,11 +127,24 @@ class Plan(models.Model):
           s.apply(pa)
           nb_applied += 1
         except Exception, e:
-          print 'Failed to apply plan session #%d : %s' % (s.pk, e)
+          logger.warning('Failed to apply plan session #%d : %s' % (s.pk, e))
 
       # Send an email to each user
       if nb_applied > 0:
         self.notify_athlete(u, pdf)
+
+  def update_applications(self):
+    '''
+    Update all the plan applications
+     * on date change
+    '''
+    order = ('-week', '-day')
+    for app in self.applications.all():
+      for s in self.sessions.order_by(*order):
+        try:
+          s.apply(app)
+        except Exception, e:
+          logger.warning('Failed to apply plan session #%d : %s' % (s.pk, e))
 
   def notify_athlete(self, user, pdf):
     '''
@@ -178,10 +218,30 @@ class PlanSession(models.Model):
   def date(self):
     return self.plan.calc_date(self.week, self.day)
 
+  def save(self, *args, **kwargs):
+
+    # Save session
+    out = super(PlanSession, self).save(*args, **kwargs)
+
+    # Re-Apply on existing applications
+    for app in self.plan.applications.all():
+      self.apply(app)
+
+    return out
+
   def delete(self, *args, **kwargs):
+    # Delete all plan applications & sessions
+    for psa in self.applications.all():
+      if psa.status == 'applied':
+        psa.sport_session.delete()
+      psa.delete()
+
     plan = self.plan # backup plan reference
     out = super(PlanSession, self).delete(*args, **kwargs) # actually delete the session
-    plan.update_weeks() # Check weeks are still consecutive
+
+    # Check weeks are still consecutive
+    plan.update_weeks()
+
     return out
 
   def copy(self, plan):
@@ -221,33 +281,60 @@ class PlanSession(models.Model):
 
     # Check a session does not already have this plan session
     try:
-      psa = PlanSessionApplied.objects.get(plan_session=self, sport_session__day=day)
+      psa = self.applications.get(application=application)
     except PlanSessionApplied.DoesNotExist:
       psa = None
 
-    if psa:
-      # retrieve sport session
-      session = psa.sport_session
-
-      # Update applied session
-      if psa.status == 'applied':
-        psa.sport_session.name = self.name
-        psa.sport_session.comment = self.comment
-        psa.sport_session.distance = self.distance
-        psa.sport_session.time = self.time
-        psa.sport_session.save()
-    else:
+    def __create():
       # Load session
       defaults = {
           'name' : self.name,
           'comment' : self.comment,
           'distance' : self.distance,
           'time' : self.time,
+          'sport' : self.sport,
+          'day' : day,
+          'type' : self.type,
       }
-      session,_ = SportSession.objects.get_or_create(sport=self.sport, day=day, type=self.type, defaults=defaults)
+      session = SportSession.objects.create(**defaults)
 
       # Apply plan session
-      PlanSessionApplied.objects.create(plan_session=self, sport_session=session, application=application)
+      psa, created = PlanSessionApplied.objects.get_or_create(plan_session=self, application=application, defaults={'sport_session' : session, })
+      if not created:
+        psa.sport_session_id = session.pk
+        psa.save()
+
+      return session
+
+    if psa:
+      # retrieve sport session
+      session = psa.sport_session
+
+      if session.day.date == self.date:
+        # Same date
+        # Just update applied session
+        if psa.status == 'applied':
+          psa.sport_session.name = self.name
+          psa.sport_session.comment = self.comment
+          psa.sport_session.distance = self.distance
+          psa.sport_session.time = self.time
+          psa.sport_session.save()
+
+      else:
+        # This is a new session, on a different date
+        # Remove sport session when not used yet
+        if psa.status == 'applied':
+          session.delete()
+
+        # Always remove the plan session
+        psa.delete()
+
+        # Then create a new sport session
+        session = __create()
+
+    else:
+      # Create new session
+      session = __create()
 
     # Copy all comments
     if self.comments:
