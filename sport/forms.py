@@ -93,7 +93,7 @@ class SportSessionForm(forms.ModelForm):
     # For past sessions
     # Not on rest
     # Not on missed plan session
-    if self.day_date <= date.today() and not data.get('note') and data['type'] != 'rest' and data.get('plan_status') in ('applied', 'done'):
+    if self.day_date <= date.today() and not data.get('note') and data['type'] != 'rest' and data.get('plan_status') in ('', 'applied', 'done', ):
       raise forms.ValidationError(_('You must specify a difficulty note.'))
 
     # Only for race
