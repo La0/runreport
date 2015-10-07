@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container">
+<div class="container-fluid">
   <h1>{{ _('All the clubs') }}</h1>
 
   <table class="table table-striped">
@@ -9,27 +9,30 @@
       <tr>
         <th>{{ _('Club') }}</th>
         <th>{{ _('Members') }}</th>
+        <th>{{ _('Plans') }}</th>
+        <th>{{ _('Sessions') }}</th>
         <th>{{ _('Manager') }}</th>
-        <th>{{ _('Actions') }}</th>
+        <th class="text-right">{{ _('Actions') }}</th>
       </tr>
     </thead>
     <tbody>
       {% for club in clubs %}
       <tr>
+        {% with stats = club.load_usage_stats() %}
         <td>
           {{ club.name }}
           <br />
           <span class="text-muted do-tooltip" title="{{ club.created|timesince }}">Crée le {{ club.created|date('d E Y') }}</span>
         </td>
         <td>
-          <p>
-            <span class="badge">{{ club.clubmembership_set.count() }}</span>
-            {{ _('athletes') }}
-          </p>
-          <p>
-            <span class="badge">{{ club.clubmembership_set.filter(role='trainer').count() }}</span>
-            {{ _('trainers') }}
-          </p>
+          {{ macros.stat(stats.athletes, 'athlètes') }}
+          {{ macros.stat(stats.trainers, 'entraineurs') }}
+        </td>
+        <td>
+          {{ macros.stat(stats.plans, 'plans') }}
+          {{ macros.stat(stats.plans_applied, 'applications') }}
+        <td>
+          {{ macros.stat(stats.sessions, 'séances') }}
         </td>
         <td>
           <a href="{{ url('user-public-profile', club.manager.username) }}">
@@ -44,7 +47,7 @@
             <i class="text-muted">{{ _('No phone') }}</i>
           {% endif %}
         </td>
-        <td>
+        <td class="text-right">
           <a href="{{ url('club-members', club.slug) }}" class="btn btn-info btn-light">
             <i class="icon-club"></i>
             {{ _('View members') }}
@@ -55,6 +58,7 @@
           </a>
         </td>
       </tr>
+      {% endwith %}
       {% endfor %}
     </tbody>
   </table>

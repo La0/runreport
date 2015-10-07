@@ -69,6 +69,32 @@ class Club(models.Model):
       })
     return stats
 
+  def load_usage_stats(self):
+    '''
+    Calc usage statistics for this club
+    '''
+
+    # Nb of plans by trainers of this club
+    from plan.models import Plan, PlanApplied
+    from sport.models import SportSession
+    plans = Plan.objects.filter(creator__memberships__club=self, creator__memberships__role='trainer').count()
+
+    # Nb of plan applied for athletes
+    applied = PlanApplied.objects.filter(user__memberships__club=self, user__memberships__role='athlete').count()
+
+    # Nb of sessions
+    sessions = SportSession.objects.filter(day__week__user__memberships__club=self).count()
+
+    return {
+      'plans' : plans,
+      'plans_applied' : applied,
+      'sessions' : sessions,
+
+      # Base roles nb
+      'athletes' : self.clubmembership_set.filter(role='athlete').count(),
+      'trainers' : self.clubmembership_set.filter(role='trainer').count(),
+    }
+
   def has_user(self, user):
     return self.clubmembership_set.filter(user=user).count() == 1
 
@@ -115,6 +141,7 @@ class Club(models.Model):
   @cached_property
   def is_premium(self):
     return self._is_premium()
+
 
 
 class ClubMembership(models.Model):

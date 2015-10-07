@@ -210,3 +210,13 @@
   {{ field|safe }}
 </div>
 {%- endmacro %}
+
+{% macro stat(nb, label) %}
+<p>
+  {% if nb <= 0 %}
+  <span class="text-danger">{{ nb }} {{ label }}</span>
+  {% else %}
+  <span class="text-primary">{{ nb }} {{ label }}</span>
+  {% endif %}
+</p>
+{%- endmacro %}
