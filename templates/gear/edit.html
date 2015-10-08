@@ -90,11 +90,6 @@
       </div>
     </div>
 
-    {% if gear %}
-      {{ macros.input(form.start) }}
-      {{ macros.input(form.end) }}
-    {% endif %}
-
     <div class="col-sm-10 col-sm-offset-2">
       <a href="{{ url('gear') }}" class="btn btn-default">
         {{ _('Cancel') }}

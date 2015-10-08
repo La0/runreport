@@ -14,7 +14,7 @@ class GearItemForm(forms.ModelForm):
 
   class Meta:
     model = GearItem
-    fields = ('name', 'description', 'brand', 'category', 'sports', 'start', 'end')
+    fields = ('name', 'description', 'brand', 'category', 'sports', )
     widgets = {
         # Placeholders
         'new_category' : forms.TextInput(attrs={'placeholder' : _('Name of the new category')}),
