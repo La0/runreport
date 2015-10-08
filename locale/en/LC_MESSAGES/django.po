@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-30 15:12+0200\n"
+"POT-Creation-Date: 2015-10-08 11:27+0200\n"
 "PO-Revision-Date: 2015-02-09 17:42+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
@@ -601,16 +601,16 @@ msgstr ""
 msgid "All the clubs"
 msgstr ""
 
+msgid "Plans"
+msgstr ""
+
+msgid "Sessions"
+msgstr ""
+
 msgid "Manager"
 msgstr ""
 
 msgid "Actions"
-msgstr ""
-
-msgid "athletes"
-msgstr ""
-
-msgid "trainers"
 msgstr ""
 
 msgid "No phone"
@@ -995,9 +995,6 @@ msgid "Without trainer"
 msgstr ""
 
 msgid "Top speed"
-msgstr ""
-
-msgid "Sessions"
 msgstr ""
 
 msgid "Archived"
@@ -2477,6 +2474,16 @@ msgstr ""
 msgid "No trainer plan"
 msgstr ""
 
+#, fuzzy
+#| msgid "fitness_equipment"
+msgid "Equipment used"
+msgstr "Fitness"
+
+#, fuzzy
+#| msgid "fitness_equipment"
+msgid "No equipment"
+msgstr "Fitness"
+
 msgid "Average Speed"
 msgstr ""
 
@@ -3268,6 +3275,9 @@ msgid "a"
 msgstr ""
 
 msgid "azaza"
+msgstr ""
+
+msgid "ploper"
 msgstr ""
 
 msgid "Any Activity Type"

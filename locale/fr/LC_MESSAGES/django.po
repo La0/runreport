@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-23 17:50+0200\n"
-"PO-Revision-Date: 2015-10-07 18:29+0100\n"
+"POT-Creation-Date: 2015-10-08 11:27+0200\n"
+"PO-Revision-Date: 2015-10-08 11:30+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -624,17 +624,18 @@ msgstr "Mentions"
 msgid "All the clubs"
 msgstr "Tous les club"
 
+#| msgid "Plan"
+msgid "Plans"
+msgstr "Plans"
+
+msgid "Sessions"
+msgstr "Séances"
+
 msgid "Manager"
 msgstr "Gérant"
 
 msgid "Actions"
 msgstr "Actions"
-
-msgid "athletes"
-msgstr "athlètes"
-
-msgid "trainers"
-msgstr "entraîneurs"
 
 msgid "No phone"
 msgstr "Pas de téléphone."
@@ -1045,9 +1046,6 @@ msgstr "Sans entraîneur"
 
 msgid "Top speed"
 msgstr "VMA"
-
-msgid "Sessions"
-msgstr "Séances"
 
 msgid "Archived"
 msgstr "Archivé"
@@ -2599,6 +2597,14 @@ msgstr "Dans un plan d'entrainement"
 msgid "No trainer plan"
 msgstr "Pas de plan d'entrainement"
 
+#| msgid "Equipment name"
+msgid "Equipment used"
+msgstr "Matériel utilisé"
+
+#| msgid "My equipment"
+msgid "No equipment"
+msgstr "Pas de matériel"
+
 msgid "Average Speed"
 msgstr "Vitesse moyenne"
 
@@ -3451,6 +3457,9 @@ msgstr ""
 msgid "azaza"
 msgstr ""
 
+msgid "ploper"
+msgstr ""
+
 msgid "Any Activity Type"
 msgstr "Tous sports"
 
@@ -3645,6 +3654,16 @@ msgstr " Marche"
 
 msgid "Multi Sport"
 msgstr "Multi Sport"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "athletes"
+msgstr "athlètes"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "trainers"
+msgstr "entraîneurs"
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0
