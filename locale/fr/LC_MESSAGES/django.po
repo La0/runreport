@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-23 17:50+0200\n"
-"PO-Revision-Date: 2015-10-07 18:29+0100\n"
+"POT-Creation-Date: 2015-10-08 11:27+0200\n"
+"PO-Revision-Date: 2015-10-08 11:30+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -83,6 +83,146 @@ msgstr "Date de naissance"
 
 msgid "Trainers"
 msgstr "Entraîneurs"
+
+msgid "Name"
+msgstr "Nom"
+
+msgid "Zip Code"
+msgstr "Code Postal"
+
+msgid "New category"
+msgstr "Nouvelle catégorie"
+
+msgid "New brand"
+msgstr "Nouvelle marque"
+
+msgid "Name of the new category"
+msgstr "Nom de la nouvelle catégorie"
+
+msgid "Name of the new brand"
+msgstr "Nom de la nouvelle marque"
+
+msgid "Empty category or brand"
+msgstr "Catégorie ou Marque vide"
+
+msgid "Equipment name"
+msgstr "Nom du matériel"
+
+msgid "Category"
+msgstr "Catégorie"
+
+msgid "Brand"
+msgstr "Marque"
+
+msgid "Default sports"
+msgstr "Sports par défaut"
+
+msgid "Start usage date"
+msgstr "Date de début d'utilisation"
+
+msgid "End usage date"
+msgstr "Date de fin d'utilisation"
+
+msgid "Write your message here..."
+msgstr "Écrivez votre message ici..."
+
+msgid "Your email"
+msgstr "Votre email"
+
+msgid "Your name"
+msgstr "Votre nom"
+
+msgid "Your message"
+msgstr "Votre message"
+
+msgid "New contact message"
+msgstr "Nouveau message de contact"
+
+msgid "Created"
+msgstr "Crée"
+
+msgid "Active"
+msgstr "Actif"
+
+msgid "Inactive"
+msgstr "Inactif"
+
+msgid "Expired"
+msgstr "Expiré"
+
+msgid "Failed"
+msgstr "Manqué"
+
+msgid "Club"
+msgstr "Club"
+
+msgid "Athlete"
+msgstr "Athlète"
+
+msgid "Open"
+msgstr "Ouvert"
+
+msgid "Pending"
+msgstr "En cours"
+
+msgid "Closed"
+msgstr "Fermé"
+
+msgid "Partial Refund"
+msgstr "Remboursement partiel"
+
+msgid "Refunded"
+msgstr "Remboursé"
+
+msgid "Pre-Authorize"
+msgstr "Pre-Authorisation"
+
+msgid "Chargeback"
+msgstr "Chargeback"
+
+msgid "Applied"
+msgstr "A faire"
+
+msgid "Done"
+msgstr "Fait"
+
+#, python-format
+msgid "Training plan : %s"
+msgstr "Plan d'entraînement : %s"
+
+#, python-format
+msgid "Training plan - %s.pdf"
+msgstr "Plan d'entraînement - %s.pdf"
+
+msgid "Your athlete's sessions today"
+msgstr "Les séances du jour de vos athlètes"
+
+msgid "Race"
+msgstr "Course"
+
+msgid "Training"
+msgstr "Entraînement"
+
+msgid "Blog"
+msgstr "Blog"
+
+msgid "Source Image"
+msgstr "Image source"
+
+msgid "Thumbnail Image"
+msgstr "Image Aperçu"
+
+msgid "Cropped Image"
+msgstr "Image Carrée"
+
+msgid "Post Type"
+msgstr "Type d'article"
+
+msgid "Post title"
+msgstr "Titre de l'article"
+
+msgid "Post content"
+msgstr "Contenu de l'article"
 
 msgid "Monthly stats"
 msgstr "Statistiques mensuelles"
@@ -340,6 +480,9 @@ msgstr "Mes services GPS"
 msgid "My subscription"
 msgstr "Mon abonnement"
 
+msgid "My equipment"
+msgstr "Mon matériel"
+
 msgid "Logout"
 msgstr "Se déconnecter"
 
@@ -357,113 +500,6 @@ msgstr "Français"
 
 msgid "English"
 msgstr "Anglais"
-
-msgid "Name"
-msgstr "Nom"
-
-msgid "Zip Code"
-msgstr "Code Postal"
-
-msgid "Write your message here..."
-msgstr "Écrivez votre message ici..."
-
-msgid "Your email"
-msgstr "Votre email"
-
-msgid "Your name"
-msgstr "Votre nom"
-
-msgid "Your message"
-msgstr "Votre message"
-
-msgid "New contact message"
-msgstr "Nouveau message de contact"
-
-msgid "Created"
-msgstr "Crée"
-
-msgid "Active"
-msgstr "Actif"
-
-msgid "Inactive"
-msgstr "Inactif"
-
-msgid "Expired"
-msgstr "Expiré"
-
-msgid "Failed"
-msgstr "Manqué"
-
-msgid "Club"
-msgstr "Club"
-
-msgid "Athlete"
-msgstr "Athlète"
-
-msgid "Open"
-msgstr "Ouvert"
-
-msgid "Pending"
-msgstr "En cours"
-
-msgid "Closed"
-msgstr "Fermé"
-
-msgid "Partial Refund"
-msgstr "Remboursement partiel"
-
-msgid "Refunded"
-msgstr "Remboursé"
-
-msgid "Pre-Authorize"
-msgstr "Pre-Authorisation"
-
-msgid "Chargeback"
-msgstr "Chargeback"
-
-msgid "Applied"
-msgstr "A faire"
-
-msgid "Done"
-msgstr "Fait"
-
-#, python-format
-msgid "Training plan : %s"
-msgstr "Plan d'entraînement : %s"
-
-#, python-format
-msgid "Training plan - %s.pdf"
-msgstr "Plan d'entraînement - %s.pdf"
-
-msgid "Your athlete's sessions today"
-msgstr "Les séances du jour de vos athlètes"
-
-msgid "Race"
-msgstr "Course"
-
-msgid "Training"
-msgstr "Entraînement"
-
-msgid "Blog"
-msgstr "Blog"
-
-msgid "Source Image"
-msgstr "Image source"
-
-msgid "Thumbnail Image"
-msgstr "Image Aperçu"
-
-msgid "Cropped Image"
-msgstr "Image Carrée"
-
-msgid "Post Type"
-msgstr "Type d'article"
-
-msgid "Post title"
-msgstr "Titre de l'article"
-
-msgid "Post content"
-msgstr "Contenu de l'article"
 
 msgid "Unsupported time format"
 msgstr "Format de temps non supporté"
@@ -487,7 +523,6 @@ msgstr "Vous venez renseigner un nom."
 msgid "You must specify a distance or time to add a session."
 msgstr "Vous devez spécifier une distance ou un temps pour ajouter une séance."
 
-#| msgid "You must specify a difficulty note or a comment."
 msgid "You must specify a difficulty note."
 msgstr "Vous devez renseigner un indice de difficulté."
 
@@ -589,17 +624,18 @@ msgstr "Mentions"
 msgid "All the clubs"
 msgstr "Tous les club"
 
+#| msgid "Plan"
+msgid "Plans"
+msgstr "Plans"
+
+msgid "Sessions"
+msgstr "Séances"
+
 msgid "Manager"
 msgstr "Gérant"
 
 msgid "Actions"
 msgstr "Actions"
-
-msgid "athletes"
-msgstr "athlètes"
-
-msgid "trainers"
-msgstr "entraîneurs"
 
 msgid "No phone"
 msgstr "Pas de téléphone."
@@ -968,9 +1004,6 @@ msgstr "Inscription d'athlètes"
 msgid "Send an email to all the club members"
 msgstr "Envoyer un email à tous les membres du club."
 
-msgid "Category"
-msgstr "Catégorie"
-
 msgid "Trainer"
 msgstr "Entraîneur"
 
@@ -1013,9 +1046,6 @@ msgstr "Sans entraîneur"
 
 msgid "Top speed"
 msgstr "VMA"
-
-msgid "Sessions"
-msgstr "Séances"
 
 msgid "Archived"
 msgstr "Archivé"
@@ -1423,6 +1453,82 @@ msgstr "Voir ce profil public"
 msgid "You can add friends from your club, for example."
 msgstr "Vous pouvez ajouter des amis de votre club, par exemple."
 
+msgid "Equipment"
+msgstr "Matériel"
+
+msgid "Add a new equipment"
+msgstr "Ajouter un nouvel équipement"
+
+msgid "Create a new equipment"
+msgstr "Créer un nouvel équipement"
+
+#, python-format
+msgid "Delete gear %s"
+msgstr "Supprimer équipement %s"
+
+msgid "Are you sure to delete this equipment ?"
+msgstr "Etes vous sûr de vouloir supprimer ce matériel ?"
+
+#, python-format
+msgid "Edit gear %s"
+msgstr "Editer matériel %s"
+
+msgid "Create a gear"
+msgstr "Créer un nouveau matériel"
+
+msgid "Add a category"
+msgstr "Ajouter une catégorie"
+
+msgid "Use existing category"
+msgstr "Utiliser une categorie existante "
+
+msgid "Add a brand"
+msgstr "Ajouter une marque"
+
+msgid "Use existing brand"
+msgstr "Utiliser une marque existante"
+
+msgid ""
+"Sessions with matching sports will automatically get this equipment "
+"attributed."
+msgstr ""
+"Les séances avec des sports correspondants auront ce materiel "
+"automatiquement attribué."
+
+msgid "Create"
+msgstr "Créer"
+
+msgid "All your gear"
+msgstr "Tout votre matériel"
+
+msgid "Add some gear"
+msgstr "Ajouter du matériel"
+
+msgid "sessions"
+msgstr "séances"
+
+msgid "No sports"
+msgstr "Pas de sports"
+
+msgid "No gear"
+msgstr "Pas de matériel"
+
+msgid "You can add some gear by using the button 'Add some gear'"
+msgstr ""
+"Vous pouvez ajouter du matériel en utilisant le bouton 'Ajouter du matériel'"
+
+msgid "Select equipment"
+msgstr "Sélectionner du matériel"
+
+msgid "Select one or more equipment used in your session"
+msgstr "Sélectionnez un ou plusieurs équipements utilisés dans votre séance"
+
+msgid "Manage all your equipment"
+msgstr "Gérez tout votre matériel"
+
+msgid "Validate"
+msgstr "Valider"
+
 msgid ""
 "You can quickly view the number of sessions per weeks, and the mileage & "
 "time."
@@ -1811,6 +1917,9 @@ msgstr "participera à"
 
 msgid "View week"
 msgstr "Voir semaine"
+
+msgid "Note"
+msgstr "Note"
 
 msgid "Plan"
 msgstr "Plan"
@@ -2487,6 +2596,14 @@ msgstr "Dans un plan d'entrainement"
 
 msgid "No trainer plan"
 msgstr "Pas de plan d'entrainement"
+
+#| msgid "Equipment name"
+msgid "Equipment used"
+msgstr "Matériel utilisé"
+
+#| msgid "My equipment"
+msgid "No equipment"
+msgstr "Pas de matériel"
 
 msgid "Average Speed"
 msgstr "Vitesse moyenne"
@@ -3297,6 +3414,52 @@ msgstr "entraîneur"
 msgid "denivele"
 msgstr ""
 
+msgid "Chaussure"
+msgstr ""
+
+msgid "Montre"
+msgstr ""
+
+msgid "Sac à dos"
+msgstr ""
+
+msgid "Chapeau"
+msgstr ""
+
+#, fuzzy
+#| msgid "Mails"
+msgid "Maillot"
+msgstr "Mails"
+
+msgid "Vélo"
+msgstr ""
+
+#, fuzzy
+#| msgid "Manage"
+msgid "Patinage"
+msgstr "Administrer"
+
+msgid "plop"
+msgstr ""
+
+msgid "aaaaaaaaa"
+msgstr ""
+
+msgid "BBBBB"
+msgstr ""
+
+msgid "aaaazerty"
+msgstr ""
+
+msgid "a"
+msgstr ""
+
+msgid "azaza"
+msgstr ""
+
+msgid "ploper"
+msgstr ""
+
 msgid "Any Activity Type"
 msgstr "Tous sports"
 
@@ -3317,9 +3480,6 @@ msgstr "Trail"
 
 msgid "Treadmill Running"
 msgstr "Course sur tapis"
-
-msgid "Vélo"
-msgstr ""
 
 msgid "Cyclocross"
 msgstr "Cyclocross"
@@ -3494,6 +3654,16 @@ msgstr " Marche"
 
 msgid "Multi Sport"
 msgstr "Multi Sport"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "athletes"
+msgstr "athlètes"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "trainers"
+msgstr "entraîneurs"
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0

@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% set page_title = _('All your gear') %}
+
+{% block content %}
+<div class="container" id="gear">
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-9">
+      <h1>{{ _('All your gear') }}</h1>
+    </div>
+    <div class="col-xs-12 col-sm-3 text-right">
+      <a class="btn btn-success" href="{{ url('gear-create') }}">
+        <i class="icon-plus"></i>
+        {{ _('Add some gear') }}
+      </a>
+    </div>
+  </div>
+
+  {% for gear in gears %}
+  <div class="row">
+    <div class="col-xs-3">
+      <a href="{{ url('gear-edit', gear.pk) }}">{{ gear.name }}</a>
+      <br />
+      {{ gear.category.name }} &bull; {{ gear.brand.name }}
+    </div>
+    <div class="col-xs-3">
+      {% with stats = gear.calc_stats() %}
+      <h5>Used in</h5>
+      <p>
+        <span class="badge">{{ stats.nb }}</span>
+        {{ _('sessions') }}
+      </p>
+      <p>
+        {% if stats.distance %}
+          {{ stats.distance|floatformat(0) }} km
+        {% endif %}
+        {% if stats.distance and stats.time %}
+          <span class="text-muted">&bull;</span>
+        {% endif %}
+        {% if stats.time %}
+          {{ stats.time }}
+        {% endif %}
+      </p>
+      {% endwith %}
+    </div>
+    <div class="col-xs-2">
+      {% for sport in gear.sports.all() %}
+      <p>
+        <i class="icon-sport-{{ sport.slug }}"></i>
+        {{ sport.name }}
+      </p>
+      {% else %}
+      <em class="text-muted">{{ _('No sports') }}</em>
+      {% endfor %}
+    </div>
+    <div class="col-xs-4">
+      <a href="{{ url('gear-delete', gear.pk) }}" class="btn btn-sm btn-light btn-danger">
+        <i class="icon-trash"></i>
+        {{ _('Delete') }}
+      </a>
+      <a href="{{ url('gear-edit', gear.pk) }}" class="btn btn-sm btn-light btn-primary">
+        <i class="icon-edit"></i>
+        {{ _('Edit') }}
+      </a>
+    </div>
+  </div>
+  <hr />
+  {% else %}
+  <div class="alert alert-info">
+    <h4>{{ _('No gear') }}</h4>
+    {{ _("You can add some gear by using the button 'Add some gear'") }}
+  </div>
+  {% endfor %}
+
+</div>
+{% endblock %}

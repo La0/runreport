@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% if gear %}
+  {% set page_title = _('Edit gear %s') % gear.name %}
+{% else %}
+  {% set page_title = _('Create a gear') %}
+{% endif %}
+
+{% block content %}
+<div class="container" id="gear">
+
+  {% if gear %}
+    <h1>{{ _('Edit gear %s') % gear.name }}</h1>
+  {% else %}
+    <h1>{{ _('Create a gear') }}</h1>
+  {% endif %}
+
+
+  <form class="form-horizontal" method="POST" action="">
+    {% csrf_token %}
+
+    {% with err = form.non_field_errors() %}
+    {% if err %}
+    <div class="alert alert-danger">
+      {{ err }}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    {{ macros.input(form.name) }}
+
+    <div class="category moderated">
+      <div class="list">
+        {{ macros.input(form.category) }}
+        <div class="col-sm-10 col-sm-offset-2">
+          <span class="btn btn-sm btn-light btn-info">
+            <i class="icon-plus"></i>
+            {{ _('Add a category') }}
+          </span>
+        </div>
+      </div>
+      <div class="add" style="display: none">
+        {{ macros.input(form.new_category) }}
+        <div class="col-sm-10 col-sm-offset-2">
+          <span class="btn btn-sm btn-light btn-info">
+            <i class="icon-list"></i>
+            {{ _('Use existing category') }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="brand moderated">
+      <div class="list">
+        {{ macros.input(form.brand) }}
+        <div class="col-sm-10 col-sm-offset-2">
+          <span class="btn btn-sm btn-light btn-info">
+            <i class="icon-plus"></i>
+            {{ _('Add a brand') }}
+          </span>
+        </div>
+      </div>
+      <div class="add" style="display: none">
+        {{ macros.input(form.new_brand) }}
+        <div class="col-sm-10 col-sm-offset-2">
+          <span class="btn btn-sm btn-light btn-info">
+            <i class="icon-list"></i>
+            {{ _('Use existing brand') }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    {{ macros.input(form.description) }}
+
+    <div class="form-group">
+      <label class="control-label col-sm-2">
+        {{ _('Default sports') }}
+      </label>
+      <div class="col-sm-10">
+        <p class="text-info">
+          <i class="icon-help-circled"></i>
+          {{ _('Sessions with matching sports will automatically get this equipment attributed.') }}
+        </p>
+        {% for sport in form.sports %}
+        <div>
+          {{ sport }}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="col-sm-10 col-sm-offset-2">
+      <a href="{{ url('gear') }}" class="btn btn-default">
+        {{ _('Cancel') }}
+      </a>
+      <button type="submit" class="btn btn-primary">
+        {% if gear %}
+          {{ _('Edit') }}
+        {% else %}
+          {{ _('Create') }}
+        {% endif %}
+      </button>
+    </div>
+
+  </form>
+
+</div>
+{% endblock %}

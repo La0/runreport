@@ -133,7 +133,7 @@ class JsonResponseMixin(object):
       html = parent.rendered_content
     return self.build_response(html=html)
 
-  def build_response(self, html=None, message=None, url=None):
+  def build_response(self, html=None, message=None, url=None, output=None):
     # Base output
     data = {
       'status' : self.json_status,
@@ -148,6 +148,8 @@ class JsonResponseMixin(object):
       data['html'] = html
     if message is not None:
       data['message'] = message
+    if output is not None:
+      data['output'] = output
     return HttpResponse(self.jsonify(data), content_type='application/json')
 
   def dispatch(self, *args, **kwargs):

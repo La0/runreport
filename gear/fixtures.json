@@ -1,0 +1,211 @@
+[
+{
+    "fields": {
+        "owner": 1,
+        "updated": "2015-09-25T08:07:49.915Z",
+        "official": true,
+        "name": "Chaussure",
+        "created": "2015-09-25T08:07:47.766Z"
+    },
+    "model": "gear.gearcategory",
+    "pk": 1
+},
+{
+    "fields": {
+        "owner": 1,
+        "updated": "2015-09-25T08:08:00.561Z",
+        "official": true,
+        "name": "Montre",
+        "created": "2015-09-25T08:08:00.561Z"
+    },
+    "model": "gear.gearcategory",
+    "pk": 2
+},
+{
+    "fields": {
+        "owner": 1,
+        "updated": "2015-09-25T08:08:06.549Z",
+        "official": true,
+        "name": "Sac \u00e0 dos",
+        "created": "2015-09-25T08:08:06.549Z"
+    },
+    "model": "gear.gearcategory",
+    "pk": 3
+},
+{
+    "fields": {
+        "owner": 1,
+        "updated": "2015-09-25T08:08:24.043Z",
+        "official": true,
+        "name": "Chapeau",
+        "created": "2015-09-25T08:08:24.043Z"
+    },
+    "model": "gear.gearcategory",
+    "pk": 4
+},
+{
+    "fields": {
+        "owner": 1,
+        "updated": "2015-09-25T08:08:47.055Z",
+        "official": true,
+        "name": "Maillot",
+        "created": "2015-09-25T08:08:47.055Z"
+    },
+    "model": "gear.gearcategory",
+    "pk": 5
+},
+{
+    "fields": {
+        "owner": 1,
+        "updated": "2015-09-25T08:08:59.813Z",
+        "official": true,
+        "name": "V\u00e9lo",
+        "created": "2015-09-25T08:08:59.813Z"
+    },
+    "model": "gear.gearcategory",
+    "pk": 6
+},
+{
+    "fields": {
+        "owner": 1,
+        "updated": "2015-10-08T09:55:25.576Z",
+        "official": true,
+        "name": "S\u00e9curit\u00e9",
+        "created": "2015-09-25T08:09:20.135Z"
+    },
+    "model": "gear.gearcategory",
+    "pk": 7
+},
+{
+    "fields": {
+        "owner": 1,
+        "updated": "2015-09-25T08:05:11.914Z",
+        "official": true,
+        "name": "Salomon",
+        "created": "2015-09-25T08:05:11.914Z"
+    },
+    "model": "gear.gearbrand",
+    "pk": 1
+},
+{
+    "fields": {
+        "owner": 1,
+        "updated": "2015-09-25T08:05:22.904Z",
+        "official": true,
+        "name": "D\u00e9cathlon",
+        "created": "2015-09-25T08:05:22.904Z"
+    },
+    "model": "gear.gearbrand",
+    "pk": 2
+},
+{
+    "fields": {
+        "owner": 1,
+        "updated": "2015-09-25T08:05:32.602Z",
+        "official": true,
+        "name": "La sportiva",
+        "created": "2015-09-25T08:05:32.602Z"
+    },
+    "model": "gear.gearbrand",
+    "pk": 3
+},
+{
+    "fields": {
+        "owner": 1,
+        "updated": "2015-09-25T08:16:37.704Z",
+        "official": true,
+        "name": "Garmin",
+        "created": "2015-09-25T08:16:37.704Z"
+    },
+    "model": "gear.gearbrand",
+    "pk": 5
+},
+{
+    "fields": {
+        "owner": 1,
+        "updated": "2015-09-25T08:17:29.565Z",
+        "official": true,
+        "name": "New Balance",
+        "created": "2015-09-25T08:17:29.565Z"
+    },
+    "model": "gear.gearbrand",
+    "pk": 6
+},
+{
+    "fields": {
+        "owner": 1,
+        "updated": "2015-10-08T09:56:26.423Z",
+        "official": true,
+        "name": "Nike",
+        "created": "2015-10-08T09:56:26.423Z"
+    },
+    "model": "gear.gearbrand",
+    "pk": 7
+},
+{
+    "fields": {
+        "owner": 1,
+        "updated": "2015-10-08T09:56:34.366Z",
+        "official": true,
+        "name": "Adidas",
+        "created": "2015-10-08T09:56:34.366Z"
+    },
+    "model": "gear.gearbrand",
+    "pk": 8
+},
+{
+    "fields": {
+        "owner": 1,
+        "updated": "2015-10-08T09:57:10.759Z",
+        "official": true,
+        "name": "Asics",
+        "created": "2015-10-08T09:57:10.759Z"
+    },
+    "model": "gear.gearbrand",
+    "pk": 9
+},
+{
+    "fields": {
+        "owner": 1,
+        "updated": "2015-10-08T09:57:49.828Z",
+        "official": true,
+        "name": "The North Face",
+        "created": "2015-10-08T09:57:49.828Z"
+    },
+    "model": "gear.gearbrand",
+    "pk": 10
+},
+{
+    "fields": {
+        "owner": 1,
+        "updated": "2015-10-08T09:58:36.732Z",
+        "official": true,
+        "name": "Hoka",
+        "created": "2015-10-08T09:58:36.732Z"
+    },
+    "model": "gear.gearbrand",
+    "pk": 11
+},
+{
+    "fields": {
+        "owner": 1,
+        "updated": "2015-10-08T09:59:28.362Z",
+        "official": true,
+        "name": "Mizuno",
+        "created": "2015-10-08T09:59:28.362Z"
+    },
+    "model": "gear.gearbrand",
+    "pk": 12
+},
+{
+    "fields": {
+        "owner": 1,
+        "updated": "2015-10-08T09:59:41.096Z",
+        "official": true,
+        "name": "Raid Light",
+        "created": "2015-10-08T09:59:41.096Z"
+    },
+    "model": "gear.gearbrand",
+    "pk": 13
+}
+]

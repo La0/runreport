@@ -1,0 +1,41 @@
+{% extends 'modal.html' %}
+
+{% set modal_title = _('Select equipment') %}
+
+{% set form_url = url('gear-session', session.pk) %}
+
+{% block body %}
+  <p class="text-info">
+    <i class="icon-help-circled"></i>
+    {{ _('Select one or more equipment used in your session') }}
+     : <strong>{{ session.name }}</strong>
+  </p>
+
+  {% if form.gear.errors %}
+  <p class="text-info">
+    {{ form.gear.errors }}
+  </p>
+  {% endif %}
+
+  {% for gear in form.gear %}
+  <div>
+    {{ gear }}
+  </div>
+  {% endfor %}
+
+
+
+{% endblock %}
+
+{% block footer %}
+  <p class="pull-left">
+    <i class="icon-equipment"></i>
+    <a href="{{ url('gear') }}">
+      {{ _('Manage all your equipment') }}
+    </a>
+  </p>
+  <button class="btn" data-dismiss="modal">{{ _('Cancel') }}</button>
+  <button type="submit" class="btn btn-success">
+    {{ _('Validate') }}
+  </button>
+{% endblock %}

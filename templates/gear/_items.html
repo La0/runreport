@@ -1,0 +1,16 @@
+<div class="col-xs-12">
+  <i class="icon-equipment do-tooltip" title="{{ _('Equipment') }}"></i>
+  {% if session.day.week.user.items.count() %}
+    {% for item in session.gear.all() %}
+      {{ item.name }}
+      <span class="text-muted">&bull;</span>
+    {% endfor %}
+    <a href="{{ url('gear-session', session.pk) }}" class="modal-action">
+      {{ _('Add a new equipment') }}
+    </a>
+  {% else %}
+  <a href="{{ url('gear-create') }}">
+    {{ _('Create a new equipment') }}
+  </a>
+  {% endif %}
+</div>

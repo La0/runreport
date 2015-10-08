@@ -62,11 +62,16 @@ class SportSession(models.Model):
   comments_public = models.OneToOneField('messages.Conversation', null=True, blank=True, related_name='session_public')
   comments_private = models.OneToOneField('messages.Conversation', null=True, blank=True, related_name='session_private')
 
+  # Gear items
+  gear = models.ManyToManyField('gear.GearItem', related_name='sessions')
+
   class Meta:
     db_table = 'sport_session'
     app_label = 'sport'
 
   def save(self, *args, **kwargs):
+    created = self.pk is None
+
     # No race category when we are not in race
     if self.type != 'race':
       self.race_category = None
@@ -80,6 +85,14 @@ class SportSession(models.Model):
     # Sync event in Google Calendar
     if self.gcal_id or self.day.week.user.has_gcal:
       sync_session_gcal.delay(self)
+
+    # Add default gear per sport
+    if created and not self.gear.exists():
+      try:
+        self.gear = self.day.week.user.items.filter(sports=self.sport)
+      except Exception, e:
+        print 'Failed to apply default gear', e
+
 
   def delete(self, *args, **kwargs):
 
