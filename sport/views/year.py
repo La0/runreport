@@ -26,7 +26,7 @@ class RunCalendarYear(YearArchiveView):
     date_start = d = date(year, 1, 1)
     date_end = date(year, 12, 31)
     days_raw = SportDay.objects.filter(week__user=self.get_user(), date__gte=date_start, date__lte=date_end)
-    days_raw = days_raw.prefetch_related('sessions', 'sessions__sport')
+    days_raw = days_raw.prefetch_related('sessions', 'sessions__sport', 'sessions__plan_session')
     days_raw = days_raw.order_by('date')
 
     # Map days in months
