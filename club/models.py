@@ -384,6 +384,9 @@ class ClubGroup(models.Model):
     self.mailing_list = name
     self.save()
 
+    # Add creator to mailing list
+    self.creator.subscribe_mailing(self.mailing_list)
+
     return True
 
   def delete_mailing_list(self):

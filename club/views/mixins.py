@@ -104,6 +104,7 @@ class ClubGroupMixin(object):
   # Models instances
   club = None
   group = None
+  membership = None
 
   def get_queryset(self):
     return self.club.groups.all().order_by('name')
@@ -129,10 +130,10 @@ class ClubGroupMixin(object):
     self.club = Club.objects.get(slug=self.kwargs['slug'])
 
     # Check user role in club
-    if not self.request.user.is_staff:
-      try:
-        self.club.clubmembership_set.get(user=self.request.user, role__in=('trainer', 'staff'))
-      except:
+    try:
+      self.membership = self.club.clubmembership_set.get(user=self.request.user, role__in=('trainer', 'staff'))
+    except:
+      if not self.request.user.is_staff:
         if self.public:
           self.editable = False
         else:

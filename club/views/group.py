@@ -20,6 +20,11 @@ class ClubGroupCreate(ClubGroupMixin, CreateView):
     # Through a delayed task
     out = super(ClubGroupCreate, self).form_valid(form)
     group_create_ml.delay(self.group)
+
+    # Add manager to group members
+    if self.membership:
+      self.group.members.add(self.membership)
+
     return out
 
 class ClubGroupEdit(ClubGroupMixin, UpdateView):
