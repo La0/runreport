@@ -6,21 +6,16 @@ class PaymentOfferAdmin(admin.ModelAdmin):
 admin.site.register(PaymentOffer, PaymentOfferAdmin)
 
 class PaymentEventAdmin(admin.ModelAdmin):
-  list_display = ('event_id', 'type', 'user', 'subscription', 'transaction', 'created', 'applied')
+  list_display = ('event_id', 'type', 'subscription', 'transaction', 'created', 'applied')
 admin.site.register(PaymentEvent, PaymentEventAdmin)
 
 class PaymentSubscriptionAdmin(admin.ModelAdmin):
-  list_display = ('user', 'offer', 'paymill_id', 'created')
+  list_display = ('club', 'offer', 'paymill_id', 'created')
 admin.site.register(PaymentSubscription, PaymentSubscriptionAdmin)
 
 class PaymentTransactionAdmin(admin.ModelAdmin):
-  list_display = ('user', 'created', 'paymill_id', 'amount')
+  list_display = ('created', 'paymill_id', 'amount')
 admin.site.register(PaymentTransaction, PaymentTransactionAdmin)
-
-# Inlines used from users admin
-class PaymentSubscriptionInline(admin.TabularInline):
-  model = PaymentSubscription
-  extra = 0
 
 class PaymentTransactionInline(admin.TabularInline):
   model = PaymentTransaction

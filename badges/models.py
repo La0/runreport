@@ -45,10 +45,6 @@ class BadgeCategory(models.Model):
       diff = timezone.now() - user.date_joined
       return diff.days / 365 # cast to int
 
-    if self.name == 'premium':
-      # Is user a premium paying member ?
-      return user.subscriptions.filter(offer__slug='athlete', status='active').count()
-
     if self.name == 'trainer':
       # Nb of trained athletes, in all clubs
       from club.models import ClubMembership

@@ -56,6 +56,11 @@
   <div class="container-fluid">
     <div class="row actions">
       <div class="col-xs-12 text-center">
+        {% if user.is_authenticated() %}
+        <p class="text-primary">
+          {{ user.first_name }}, {{ _('You can enjoy all these features right now !') }}
+        </p>
+        {% else %}
         <a href="{{ url('user-create') }}" class="btn btn-primary btn-lg">
           <i class="icon-plus"></i>
           {{ _('Create an account') }}
@@ -64,19 +69,13 @@
           <i class="icon-user"></i>
           {{ _('Sign in') }}
         </a>
+        {% endif %}
       </div>
     </div>
   </div>
 
   <div class="container">
     <div class="row">
-      <div class="col-xs-12 text-center">
-        <a class="btn btn-info btn-light" href="{{ url('features') }}">
-          {{ _('Read more about our premium features') }}
-          <i class="icon-right-open"></i>
-        </a>
-      </div>
-
       <div class="col-sm-3 col-xs-12 text-center">
         <h3>{{ _('Join a club & train with a coach') }}</h3>
         <img class="img-thumbnail" src="{{ static('img/landing/athlete.club.png') }}" />
@@ -88,12 +87,6 @@
       <div class="col-sm-3 col-xs-12 text-center">
         <h3>{{ _('Garmin Synchronisation') }}</h3>
         <img class="img-thumbnail" src="{{ static('img/landing/athlete.garmin.png') }}" />
-        <h4>
-          <span class="label label-warning">
-            <i class="icon-premium"></i>
-            {{ _('Premium') }}
-          </span>
-        </h4>
         <p>
           {{ _('Get all your data from Garmin Connect directly into your RunReport sessions.') }}
         </p>
@@ -102,12 +95,6 @@
       <div class="col-sm-3 col-xs-12 text-center">
         <h3>{{ _('Strava Synchronisation') }}</h3>
         <img class="img-thumbnail" src="{{ static('img/landing/athlete.strava.png') }}" />
-        <h4>
-          <span class="label label-warning">
-            <i class="icon-premium"></i>
-            {{ _('Premium') }}
-          </span>
-        </h4>
         <p>
           {{ _('Get all your data from Strava directly into your RunReport sessions.') }}
         </p>
@@ -116,12 +103,6 @@
       <div class="col-sm-3 col-xs-12 text-center">
         <h3>{{ _('Calendar Synchronisation') }}</h3>
         <img class="img-thumbnail" src="{{ static('img/landing/athlete.gcal.png') }}" />
-        <h4>
-          <span class="label label-warning">
-            <i class="icon-premium"></i>
-            {{ _('Premium') }}
-          </span>
-        </h4>
         <p>
           {{ _('Synchronize your sport calendar with a Google Calendar.') }}
         </p>

@@ -144,7 +144,6 @@ def add_pages(request):
     submenu['menu'].append(_p('user-races', _('My races')))
     submenu['menu'].append(_p('badges', _('My badges')))
     submenu['menu'].append(_p('track-providers', _('My GPS services')))
-    submenu['menu'].append(_p('payment-status', _('My subscription')))
     submenu['menu'].append(_p('gear', _('My equipment')))
     submenu['menu'].append(MENU_SEPARATOR)
     submenu['menu'].append(_p('logout', _('Logout')))

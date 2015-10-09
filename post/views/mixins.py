@@ -1,7 +1,6 @@
 from post.models import Post, PostMedia
 from post.forms import PostForm
 from django.core.urlresolvers import reverse
-from django.core.exceptions import PermissionDenied
 
 
 class PostWriterMixin(object):
@@ -23,10 +22,6 @@ class PostWriterMixin(object):
 
   def get_context_data(self, *args, **kwargs):
     context = super(PostWriterMixin, self).get_context_data(*args, **kwargs)
-
-    # Premium feature
-    if not self.request.user.is_premium:
-      raise PermissionDenied
 
     # Add crops
     if hasattr(self, 'object') and hasattr(self.object, 'medias'):

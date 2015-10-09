@@ -9,17 +9,14 @@
     <div class="col-xs-8">
       <h1>{{ _('My posts') }}</h1>
     </div>
-    {% if user.is_premium %}
     <div class="col-xs-4 text-right">
       <a class="btn btn-success" href="{{ url('post-create') }}">
         <i class="icon-plus"></i>
         {{ _('Add a new post') }}
       </a>
     </div>
-    {% endif %}
   </div>
   
-  {% if user.is_premium %}
   {% for post in posts %}
   <div class="row">
     <div class="col-xs-5">
@@ -52,11 +49,5 @@
     {{ _('You do not have written any post yet.') }}
   </div>
   {% endfor %}
-  {% else %}
-  <p class="text-info">
-    <i class="icon-premium"></i>
-    {{ _('This feature is only available with a premium account.') }}
-  </p>
-  {% endif %}
 </div>
 {% endblock %}

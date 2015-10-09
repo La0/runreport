@@ -265,8 +265,8 @@ class Athlete(AthleteBase):
       privacy += ['comments_public', ]
       privacy += visitor == self and ['comments_private', 'comments_week', ] or []
 
-    # Only premium members can hide avatar
-    if 'avatar' not in privacy and not self.is_premium:
+    # Anyone can hide avatar
+    if 'avatar' not in privacy:
       privacy += ['avatar', ]
 
     return privacy
@@ -367,37 +367,6 @@ class Athlete(AthleteBase):
 
     return client
 
-
-  def _is_premium(self):
-    # helper to check if a user is premium
-    return self.subscriptions.filter(offer__target='athlete', status__in=('active', 'created')).exists()
-
-  # Django disallows direct property
-  # use in list displays
-  # Cf https://stackoverflow.com/questions/12842095/how-to-display-a-boolean-property-in-the-django-admin
-  _is_premium.boolean = True # for admin display
-
-  @cached_property
-  def is_premium(self):
-    return self._is_premium()
-
-  def add_welcome_offer(self):
-    '''
-    Build a subscription to the athlete welcome offer
-    Valid for 2 months
-    Only once
-    '''
-    from payments.models import PaymentOffer
-    start = timezone.now()
-    offer = PaymentOffer.objects.get(slug='athlete_welcome')
-    defaults = {
-      'status' : 'active',
-      'start' : start,
-      'end' : start + timedelta(days=60),
-    }
-    sub, _ = self.subscriptions.get_or_create(offer=offer, defaults=defaults)
-    return sub
-
   def find_badges(self, save=False):
     '''
     Find all the best badges for a user
@@ -447,17 +416,6 @@ class Athlete(AthleteBase):
       f.write(serialized)
 
     return path
-
-def user_initial_subscription(sender, instance, created=False, **kwargs):
-    '''
-    Every new user has 2 months of welcome premium
-    '''
-    if created:
-      instance.add_welcome_offer()
-
-# register the Welcome offer signal
-post_save.connect(user_initial_subscription, sender=Athlete)
-
 
 class UserCategory(models.Model):
   code = models.CharField(max_length=10)

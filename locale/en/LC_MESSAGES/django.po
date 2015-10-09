@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-08 11:27+0200\n"
+"POT-Creation-Date: 2015-10-09 11:41+0200\n"
 "PO-Revision-Date: 2015-02-09 17:42+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
@@ -452,9 +452,6 @@ msgstr ""
 msgid "My GPS services"
 msgstr ""
 
-msgid "My subscription"
-msgstr ""
-
 #, fuzzy
 #| msgid "fitness_equipment"
 msgid "My equipment"
@@ -566,18 +563,6 @@ msgid "Use RunReport in"
 msgstr ""
 
 msgid "You are ussing a demo account, some features will not be available."
-msgstr ""
-
-msgid "You can get a "
-msgstr ""
-
-msgid "premium RunReport account"
-msgstr ""
-
-msgid "to get all the "
-msgstr ""
-
-msgid "features"
 msgstr ""
 
 msgid "Built by"
@@ -1319,15 +1304,6 @@ msgstr ""
 msgid "Yearly cost"
 msgstr ""
 
-msgid "I want the premium features"
-msgstr ""
-
-msgid "To get all those premium features :"
-msgstr ""
-
-msgid "Sign up"
-msgstr ""
-
 msgid "Features for trainers & clubs"
 msgstr ""
 
@@ -1345,6 +1321,12 @@ msgid "Premium small account"
 msgstr ""
 
 msgid "Premium big account"
+msgstr ""
+
+msgid "To get all those premium features :"
+msgstr ""
+
+msgid "Sign up"
 msgstr ""
 
 #, python-format
@@ -1501,7 +1483,7 @@ msgid ""
 "View all your personal stats about distance, time, sports, elevation, ..."
 msgstr ""
 
-msgid "Read more about our premium features"
+msgid "You can enjoy all these features right now !"
 msgstr ""
 
 msgid "Join a club & train with a coach"
@@ -1595,6 +1577,9 @@ msgstr ""
 msgid "Group your athletes for every race, event, speed, ..."
 msgstr ""
 
+msgid "Read more about our premium features"
+msgstr ""
+
 msgid "View your athletes calendar"
 msgstr ""
 
@@ -1619,7 +1604,7 @@ msgid "Get more athletes in your club"
 msgstr ""
 
 msgid ""
-"More than 10 athletes ? Buy a premium access for your club and unlock the "
+"More than 5 athletes ? Buy a premium access for your club and unlock the "
 "potential of your club !"
 msgstr ""
 
@@ -2057,6 +2042,9 @@ msgstr ""
 msgid "Premium Payment"
 msgstr ""
 
+msgid "I want the premium features"
+msgstr ""
+
 msgid "Name on Card"
 msgstr ""
 
@@ -2259,9 +2247,6 @@ msgid "Not published"
 msgstr ""
 
 msgid "You do not have written any post yet."
-msgstr ""
-
-msgid "This feature is only available with a premium account."
 msgstr ""
 
 msgid "Delete media"
@@ -2872,9 +2857,6 @@ msgstr ""
 msgid "View your public profile"
 msgstr ""
 
-msgid "Your current privacy settings are:"
-msgstr ""
-
 #, python-format
 msgid "%s trainer"
 msgstr ""
@@ -3256,28 +3238,7 @@ msgstr ""
 msgid "Vélo"
 msgstr "Cycling"
 
-msgid "Patinage"
-msgstr ""
-
-msgid "plop"
-msgstr ""
-
-msgid "aaaaaaaaa"
-msgstr ""
-
-msgid "BBBBB"
-msgstr ""
-
-msgid "aaaazerty"
-msgstr ""
-
-msgid "a"
-msgstr ""
-
-msgid "azaza"
-msgstr ""
-
-msgid "ploper"
+msgid "Sécurité"
 msgstr ""
 
 msgid "Any Activity Type"

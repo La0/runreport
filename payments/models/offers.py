@@ -23,7 +23,6 @@ class PaymentSubscription(models.Model):
   A subscription between a user and an offer
   '''
   # M2M links
-  user = models.ForeignKey('users.Athlete', related_name='subscriptions', null=True, blank=True)
   club = models.ForeignKey('club.Club', related_name='subscriptions', null=True, blank=True)
   offer = models.ForeignKey('payments.PaymentOffer', related_name='subscriptions')
 
@@ -41,7 +40,6 @@ class PaymentSubscription(models.Model):
 
   class Meta:
     unique_together = (
-      ('user', 'offer'),
       ('club', 'offer'),
     )
 
@@ -84,7 +82,7 @@ class PaymentSubscription(models.Model):
       remains = 0.5
     service = ctx.get_refund_service()
 
-    for t in self.user.transactions.filter(status='closed'):
+    for t in self.club.transactions.filter(status='closed'):
       amount = t.amount * remains * 100
       service.refund_transaction(t.paymill_id, amount)
 
@@ -111,7 +109,6 @@ class PaymentOffer(models.Model):
   amount = models.FloatField()
   currency = models.CharField(max_length=10)
   interval = models.CharField(max_length=20)
-  clients = models.ManyToManyField('users.Athlete', through=PaymentSubscription, related_name='offers')
   clubs = models.ManyToManyField('club.Club', through=PaymentSubscription, related_name='offers')
 
   def __unicode__(self):

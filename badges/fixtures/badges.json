@@ -22,13 +22,6 @@
 },
 {
     "fields": {
-        "name": "premium"
-    },
-    "model": "badges.badgecategory",
-    "pk": 4
-},
-{
-    "fields": {
         "name": "trainer"
     },
     "model": "badges.badgecategory",
@@ -140,16 +133,6 @@
     },
     "model": "badges.badge",
     "pk": 10
-},
-{
-    "fields": {
-        "category": 4,
-        "position": 1,
-        "name": "Premium Athlete",
-        "value": ""
-    },
-    "model": "badges.badge",
-    "pk": 11
 },
 {
     "fields": {

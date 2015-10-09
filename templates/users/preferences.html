@@ -145,7 +145,6 @@ $(function(){
           </ul>
         </div>
 
-        {% if user.is_premium %}
           {% with btn_classes = ('btn-success', 'btn-warning', 'btn-danger', )  %}
           {{ macros.input_choices(form.privacy_avatar, None, False, btn_classes) }}
           {{ macros.input_choices(form.privacy_calendar, None, False, btn_classes) }}
@@ -161,32 +160,6 @@ $(function(){
               <a class="btn btn-success" target="_blank" href="{{ url('user-public-profile', user.username) }}">{{ _('View your public profile') }} <i class="icon-right-open"></i></a>
             </div>
           </div>
-        {% else %}
-          <p class="text-info">
-            <i class="icon-premium"></i>
-            {{ _('This feature is only available with a premium account.') }}
-          </p>
-          
-          <p>
-            {{ _('Your current privacy settings are:') }}
-          </p>
-
-          <ul>
-            {% for k,v in user.local_privacy.items() %}
-            <li>
-              <strong>{{ _('%s visibility' % k) }}</strong>
-              {% if v == 'public' %}
-              <span class="label label-success">{{ _('Public') }}</span>
-              {% elif v == 'club' %}
-              <span class="label label-warning">{{ _('Club') }}</span>
-              {% else %}
-              <span class="label label-danger">{{ _('Private') }}</span>
-              {% endif %}
-            </li>
-            {% endfor %}
-          </ul>
-
-        {% endif %}
       </div>
 
       <div class="tab-pane" id="mails">

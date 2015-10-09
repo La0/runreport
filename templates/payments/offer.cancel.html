@@ -14,9 +14,6 @@
 
   <form method="POST" action="">
     {% csrf_token %}
-    <a href="{{ url('payment-status') }}" class="btn btn-default">
-      {{ _('Cancel') }}
-    </a>
     <button type="submit" class="btn btn-danger">
       <i class="icon-trash"></i>
       {{ _('Cancel my subscription') }}

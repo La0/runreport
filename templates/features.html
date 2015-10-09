@@ -59,20 +59,6 @@
           </tr>
         </tbody>
       </table>
-      <p class="text-right">
-        {% if user.is_authenticated() %}
-        <a href="{{ url('payment-status') }}" class="btn btn-success">
-          <i class="icon-premium"></i>
-          {{ _('I want the premium features') }}
-        </a>
-        {% else %}
-          <i class="icon-premium"></i>
-          {{ _('To get all those premium features :') }}
-          <a href="{{ url('login') }}">{{ _('Login') }}</a>
-          {{ _('or') }}
-          <a href="{{ url('user-create') }}">{{ _('Sign up') }}</a>
-        {% endif %}
-      </p>
     </div>
   </div>
 
@@ -142,12 +128,7 @@
         </tbody>
       </table>
       <p class="text-right">
-        {% if user.is_authenticated() %}
-        <a href="{{ url('payment-status') }}" class="btn btn-success">
-          <i class="icon-premium"></i>
-          {{ _('I want the premium features') }}
-        </a>
-        {% else %}
+        {% if not user.is_authenticated() %}
           <i class="icon-premium"></i>
           {{ _('To get all those premium features :') }}
           <a href="{{ url('login') }}">{{ _('Login') }}</a>
