@@ -9,15 +9,12 @@ from django.core import validators
 from django.utils import timezone
 from django.core.validators import MinValueValidator
 from django.conf import settings
-from django.db.models.signals import post_save
-from django.utils.functional import cached_property
 from hashlib import md5
 from datetime import datetime
 from avatar_generator import Avatar
 from runreport.mailman import MailMan
 from friends.models import FriendRequest
 from helpers import crop_image
-import paymill
 
 PRIVACY_LEVELS = (
   ('public', _('Public')),
@@ -124,10 +121,6 @@ class Athlete(AthleteBase):
 
   # Display contextual help
   display_help = models.BooleanField(_('Display contextual help'), default=True)
-
-  # Payment
-  paymill_id = models.CharField(max_length=50, null=True, blank=True)
-
 
   def search_category(self):
     if not self.birthday:
@@ -346,26 +339,6 @@ class Athlete(AthleteBase):
   def has_gcal(self):
     # Gcal enabled ?
     return self.gcal_token and self.gcal_id
-
-  def sync_paymill(self):
-    '''
-    Create user on paymill
-    '''
-    # Check we don't already have an id
-    if self.paymill_id:
-      raise Exception('Already have a paymill id')
-
-    # Get paymill service
-    paymill_name = '#%d %s %s' % (self.id, self.first_name, self.last_name)
-    ctx = paymill.PaymillContext(settings.PAYMILL_SECRET)
-    service = ctx.get_client_service()
-    client = service.create(email=self.email, description=paymill_name)
-
-    # Save paymill id
-    self.paymill_id = client.id
-    self.save()
-
-    return client
 
   def find_badges(self, save=False):
     '''

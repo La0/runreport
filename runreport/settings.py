@@ -424,13 +424,12 @@ CORS_ORIGIN_WHITELIST = (
 # No invite needed
 CLUB_CREATION_OPEN = True
 
-# Paymill integration
+# Payments integration
 PAYMENTS_ENABLED = False
-PAYMILL_SECRET = None
-PAYMILL_PUBLIC = None
-PAYMILL_HOOK_EMAIL = None
-PAYMILL_HOOK_PASSWORD = None
-PAYMILL_HOOK_SERVER = None
+MANGOPAY_ID = None
+MANGOPAY_SECRET = None
+MANGOPAY_PROD = False
+MANGOPAY_CACHE = os.path.join(HOME, '.mangopay')
 
 # Archives dir
 ARCHIVES_DIR = os.path.join(HOME, 'archives')

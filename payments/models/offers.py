@@ -5,7 +5,6 @@ from django.core.urlresolvers import reverse
 from django.utils import timezone
 from datetime import datetime
 import time
-import paymill
 import logging
 
 logger = logging.getLogger('payments')
@@ -29,7 +28,7 @@ class PaymentSubscription(models.Model):
   # Status
   status = models.CharField(choices=SUBSCRIPTION_STATUS, max_length=20, default='created')
 
-  # Paymill
+  # Mangopay Id
   paymill_id = models.CharField(max_length=50, unique=True, null=True, blank=True)
 
   # Dates
