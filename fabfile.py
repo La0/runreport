@@ -20,7 +20,7 @@ def syncdb():
 
   if not os.path.exists(local_dump):
     # Download
-    prod_dump = '~/backups/current'
+    prod_dump = '~/backups/current/db.tar.gpg'
     get(prod_dump, local_encrypted)
 
     # Decrypt
