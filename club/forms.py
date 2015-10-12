@@ -7,6 +7,7 @@ from django.forms.formsets import formset_factory
 from django.core.exceptions import ValidationError
 from club.models import ClubGroup
 from django.utils.translation import ugettext_lazy as _
+from django_countries.widgets import CountrySelectWidget
 
 class ClubMembershipForm(forms.ModelForm):
   # Add a boolean to cancel mail sending
@@ -37,11 +38,19 @@ class UserModelChoiceField(forms.ModelMultipleChoiceField):
       return '-'
 
 class ClubCreateForm(forms.ModelForm):
-  phone = forms.CharField(required=True)
+  phone = forms.CharField(required=True, label=_('Phone'))
+
+  # Setup countries dict
+  from django_countries import Countries
+  countries = [(k, v) for k,v in Countries().countries.items()]
+  countries.sort(key=lambda x:x[1])
+
+  manager_country = forms.ChoiceField(choices=countries, required=True, label=_('Your country of residence'))
+  manager_nationality = forms.ChoiceField(choices=countries, required=True, label=_('Your nationality'))
 
   class Meta:
     model = Club
-    fields = ('name', 'slug', 'address', 'zipcode', 'city',)
+    fields = ('name', 'slug', 'address', 'zipcode', 'city', 'country', )
 
   def clean_slug(self):
     # Check the slug is not already taken

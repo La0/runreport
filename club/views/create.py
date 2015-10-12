@@ -15,6 +15,8 @@ class ClubCreate(LoginRequired, ClubCreateMixin, CreateView):
   def get_initial(self):
     return {
       'phone' : self.request.user.phone,
+      'manager_country' : self.request.user.country,
+      'manager_nationality' : self.request.user.nationality,
     }
 
   def form_valid(self, form):
@@ -23,8 +25,10 @@ class ClubCreate(LoginRequired, ClubCreateMixin, CreateView):
     club.manager = self.request.user
     club.save()
 
-    # Set phone on user
+    # Set manager
     self.request.user.phone = form.cleaned_data['phone']
+    self.request.user.nationality = form.cleaned_data['manager_nationality']
+    self.request.user.country = form.cleaned_data['manager_country']
     self.request.user.save()
 
     # Setup user as staff member

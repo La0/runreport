@@ -15,6 +15,7 @@ from avatar_generator import Avatar
 from runreport.mailman import MailMan
 from friends.models import FriendRequest
 from helpers import crop_image
+from django_countries.fields import CountryField
 
 PRIVACY_LEVELS = (
   ('public', _('Public')),
@@ -80,6 +81,10 @@ class Athlete(AthleteBase):
   phone = models.CharField(_('Phone'), max_length=50, null=True, blank=True)
   nb_sessions = models.IntegerField(_('number of sessions per week'), null=True, blank=True, validators=[MinValueValidator(0)])
   license = models.CharField(_('license'), max_length=12, null=True, blank=True)
+
+  # Countries, used for club creation
+  nationality = CountryField(default='FR')
+  country = CountryField(default='FR')
 
   # Sport
   default_sport = models.ForeignKey('sport.Sport', verbose_name=_('default sport'), default=3, limit_choices_to={'depth': 1,}) # default to running

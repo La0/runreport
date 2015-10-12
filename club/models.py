@@ -9,6 +9,12 @@ from club.tasks import sync_mailing_membership
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.utils.functional import cached_property
+from payments import get_api
+from mangopaysdk.entities.userlegal import UserLegal
+from mangopaysdk.entities.wallet import Wallet
+from mangopaysdk.types.address import Address
+from django_countries.fields import CountryField
+import time
 
 class Club(models.Model):
   name = models.CharField(_('Club name'), max_length=250)
@@ -26,6 +32,11 @@ class Club(models.Model):
   address = models.CharField(_('Address'), max_length=250)
   zipcode = models.CharField(_('Zip code'), max_length=10)
   city = models.CharField(_('City'), max_length=250)
+  country = CountryField(default='FR', verbose_name=_('Country'))
+
+  # Payment
+  mangopay_id = models.CharField(max_length=50, null=True, blank=True)
+  wallet_id = models.CharField(max_length=50, null=True, blank=True)
 
   # Demo dummy club ?
   demo = models.BooleanField(default=False)
@@ -142,6 +153,56 @@ class Club(models.Model):
   def is_premium(self):
     return self._is_premium()
 
+  def sync_mangopay(self):
+    '''
+    Create user & wallet on mangopay
+    '''
+
+    if self.mangopay_id and self.wallet_id:
+      raise Exception('Mangopay account & wallet exist')
+
+    # Sync Mangopay account
+    if not self.mangopay_id:
+      # Build address
+      address = Address()
+      address.AddressLine1 = self.address
+      address.City = self.city
+      address.Country = self.country.code
+      address.PostalCode = self.zipcode
+
+      # Build legal user
+      rr_user = UserLegal()
+      rr_user.Name = self.name
+      rr_user.LegalPersonType = 'ORGANIZATION' # Support ORGANIZATION ?
+      rr_user.LegalRepresentativeFirstName = self.manager.first_name
+      rr_user.LegalRepresentativeLastName = self.manager.last_name
+      rr_user.LegalRepresentativeAddress = address
+      rr_user.LegalRepresentativeEmail = self.manager.email
+      bday = self.manager.birthday
+      rr_user.LegalRepresentativeBirthday = int(time.mktime((bday.year, bday.month, bday.day, 0, 0, 0, -1, -1, -1)))
+      rr_user.LegalRepresentativeNationality = self.manager.nationality.code
+      rr_user.LegalRepresentativeCountryOfResidence = self.manager.country.code
+      rr_user.Email = self.manager.email
+
+      # Finally create the user
+      api = get_api()
+      u = api.users.Create(rr_user)
+      self.mangopay_id = u.Id
+
+    # Sync Mangopay wallet
+    if not self.wallet_id:
+      wallet = Wallet()
+      wallet.Owners = [self.mangopay_id, ]
+      wallet.Description = 'Club %s wallet' % (self.name, )
+      wallet.Currency = 'EUR' # always in euros
+
+      # Create the wallet
+      api = get_api()
+      w = api.wallets.Create(wallet)
+      self.wallet_id = w.Id
+
+    # Save changes
+    self.save()
 
 
 class ClubMembership(models.Model):

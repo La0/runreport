@@ -171,9 +171,15 @@
         {{ macros.input(form.name) }}
         {{ macros.input(form.slug) }}
         {{ macros.input(form.address) }}
-        {{ macros.input(form.phone) }}
         {{ macros.input(form.zipcode) }}
         {{ macros.input(form.city) }}
+        {{ macros.input(form.country) }}
+
+        <hr />
+        <h4>{{ _('Your personal information') }}</h4>
+        {{ macros.input(form.phone) }}
+        {{ macros.input(form.manager_country) }}
+        {{ macros.input(form.manager_nationality) }}
 
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">

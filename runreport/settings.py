@@ -201,6 +201,7 @@ INSTALLED_APPS = (
     'corsheaders', # CORS for api
     'vinaigrette', # Model translations
     'rest_framework', # Api provider
+    'django_countries', # Countries selection
     'compressor',
 )
 

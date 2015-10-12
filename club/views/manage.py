@@ -26,8 +26,10 @@ class ClubManage(ClubManagerMixin, UpdateView):
     club = form.save()
     self.club = club
 
-    # Save phone
+    # Save manager
     self.club.manager.phone = form.cleaned_data['phone']
+    self.club.manager.nationality = form.cleaned_data['manager_nationality']
+    self.club.manager.country = form.cleaned_data['manager_country']
     self.club.manager.save()
 
     return HttpResponseRedirect(reverse('club-manage', kwargs={'slug' : self.club.slug}))
@@ -35,6 +37,8 @@ class ClubManage(ClubManagerMixin, UpdateView):
   def get_initial(self):
     return {
       'phone' : self.club.manager.phone,
+      'manager_country' : self.request.user.country,
+      'manager_nationality' : self.request.user.nationality,
     }
 
   def get_context_data(self, *args, **kwargs):

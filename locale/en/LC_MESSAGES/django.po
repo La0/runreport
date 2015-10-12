@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-09 11:41+0200\n"
+"POT-Creation-Date: 2015-10-12 22:23+0200\n"
 "PO-Revision-Date: 2015-02-09 17:42+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
@@ -16,6 +16,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.4\n"
+
+msgid "Phone"
+msgstr ""
+
+msgid "Your country of residence"
+msgstr ""
+
+msgid "Your nationality"
+msgstr ""
 
 msgid "A group with this slug already exists."
 msgstr ""
@@ -36,6 +45,9 @@ msgid "Zip code"
 msgstr ""
 
 msgid "City"
+msgstr ""
+
+msgid "Country"
 msgstr ""
 
 msgid "Private club"
@@ -663,6 +675,9 @@ msgid "Warning"
 msgstr ""
 
 msgid "You can create and administer only one club."
+msgstr ""
+
+msgid "Your personal information"
 msgstr ""
 
 msgid "Create the club"
@@ -3042,9 +3057,6 @@ msgid "Unit: kg"
 msgstr ""
 
 msgid "comment"
-msgstr ""
-
-msgid "Phone"
 msgstr ""
 
 msgid "number of sessions per week"
