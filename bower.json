@@ -18,7 +18,8 @@
     "quill": "~0.19.8",
     "dropzone": "~3.12.0",
     "lightbox2": "~2.7.1",
-    "raphael": "~2.1.4"
+    "raphael": "~2.1.4",
+    "mangopay-cardregistration-js-kit": "*"
   },
   "resolutions": {
     "bootstrap": ">=3.0 <4.0",

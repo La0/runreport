@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% set page_title = _('Premium 3D secure') %}
+
+{% block content %}
+<div class="container">
+  <div class="alert alert-success">
+    <h4>{{ _('Valid payment') }}</h4>
+    <p>
+      {{ _('Thanks for your trust in RunReport !') }}
+      <br />
+      {{ _('You can immediately add new members to your club.') }}
+    </p>
+    <p class="text-right">
+      <a href="{{ url('club-manage', club.slug) }}" class="btn btn-primary">
+        {{ _('Continue') }}
+      </a>
+    </p>
+  </div>
+</div>
+{% endblock %}

@@ -1,11 +1,11 @@
 from django.conf.urls import patterns, url
-from payments.views import *
+from payments.views import PaymentCardView, Payment3DsView
 
 urlpatterns = patterns('',
-  # Cancel a subscription
-  url(r'^(?P<slug>\w+)/cancel/?$', PaymentOfferCancel.as_view(), name="payment-sub-delete"),
 
-  # Pay an offer
-  url(r'^(?P<slug>\w+)/?$', PaymentOfferPay.as_view(), name="payment-offer"),
-  url(r'^(?P<slug>\w+)/(?P<club_slug>[\w\-\_]+)/?$', PaymentOfferPay.as_view(), name="payment-offer-club"),
+    # Add a credit card for a club
+    url(r'^card/(?P<slug>[\w\_\-]+)/?', PaymentCardView.as_view(), name='payment-card'),
+
+    # 3D secure validation return
+    url(r'^3ds/(?P<slug>[\w\_\-]+)/(?P<card_id>\d+)/(?P<hash>\w+)/?', Payment3DsView.as_view(), name='payment-3ds'),
 )

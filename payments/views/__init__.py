@@ -1,1 +1,1 @@
-from .offers import PaymentOfferPay, PaymentOfferCancel
+from .card import PaymentCardView, Payment3DsView

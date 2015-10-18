@@ -37,41 +37,67 @@
 
   <div class="tab-content">
     <div class="tab-pane active" id="users">
-      <div class="alert alert-info">
-        <h4>{{ _('Help') }}</h4>
-        {{ _('You are limited in the number of accounts linked to the club, depending on the type of users') }}
-        <br />
-        {{ _('To get more accounts available in your club, your club must be Premium') }}
+      <div class="text-info">
+        <blockquote>
+          <h5><i class="icon-help-circled"></i> {{ _('Help') }}</h5>
+          <strong>{{ _('A club is free until it reaches 5 members.') }}</strong>
+          <br />
+          {{ _('Above 5 members, every member is billed to you (manager of the club).') }}
+        </blockquote>
       </div>
       <div class="table-responsive">
         <table class="table table-striped">
           <tr>
             <th>{{ _('Users type') }}</th>
-            <th>{{ _('Maximum') }}</th>
-            <th>{{ _('Used') }}</th>
-            <th>{{ _('Available') }}</th>
+            <th>{{ _('Total') }}</th>
+            <th>{{ _('Free') }}</th>
+            <th>{{ _('Paying') }}</th>
+            <th>{{ _('Unit Cost') }}</th>
+            <th>{{ _('Total') }}</th>
           </tr>
-          {% for stat in stats %}
+          {% for stat in bill.stats %}
           <tr>
             <td>{{roles[stat.type]}}</td>
-            <td>{{stat.max}}</td>
-            <td>{{stat.used}}</td>
+            <td>{{stat.total}}</td>
+            <td>{{stat.free}}</td>
+            <td>{{stat.paying}}</td>
             <td>
-              {% if stat.percent >= 50 %}
-              <span class="badge badge-success">{{stat.diff}}</span>
-              {% elif stat.percent >= 25 %}
-              <span class="badge badge-warning">{{stat.diff}}</span>
+              {{ stat.unit|floatformat(2) }} &euro;
+            </td>
+            <td>
+              {% if stat.price == 0 %}
+              <span class="label label-success">
+                {{ _('Free') }}
+              </span>
               {% else %}
-              <span class="badge badge-important">{{stat.diff}}</span>
+              <strong>
+                {{ stat.price|floatformat(2) }} &euro;
+              </strong>
               {% endif %}
             </td>
           </tr>
           {% endfor %}
+          <tr>
+            <td class="text-right" colspan="5">
+              <strong>{{ _('Total') }}</strong>
+            </td>
+            <td>
+              {% if bill.total == 0 %}
+              <span class="label label-success">
+                {{ _('Free') }}
+              </span>
+              {% else %}
+              <strong>
+                {{ bill.total|floatformat(2) }} &euro;
+              </strong>
+              {% endif %}
+            </td>
+          </tr>
         </table>
       </div>
     </div>
 
-    {# Display offers #}
+    {# Display subscriptions #}
     <div class="tab-pane" id="premium_status">
 
       {% if club.is_premium %}
@@ -79,95 +105,24 @@
           {% include 'payments/_subscription.html' %}
         {% endfor %}
       {% else %}
-
-      {# free club #}
-      <div class="col-sm-4 col-xs-12 offer">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">
-              {{ _('Free club') }}
-            </h3>
-          </div>
-          <div class="panel-body">
-            
-            <p class="price">
-              {{ _('Free') }}
-            </p>
-            <p class="price monthly">
-              {{ _('Forever') }}
-            </p>
-            <hr />
-
-            {% for f in features.trainers %}
-              {% if f.offers %}
-              <p class="feature">
-                <strong>{{ f.offers[0] }}</strong>
-                {{ f.name }}
-              </p>
-              {% endif %}
-            {% endfor %}
-
-          </div>
-        </div>
-      </div>
-
-      {% for offer in offers %}
-      <div class="col-sm-4 col-xs-12 offer">
-        <div class="panel panel-success">
-          <div class="panel-heading">
-            <h3 class="panel-title">
-              {{ _(offer.name) }}
-            </h3>
-          </div>
-          <div class="panel-body">
-            
-            <p class="price">
-              {{ offer.amount|floatformat(2) }} &euro; {{ _('every year') }}
-            </p>
-            <p class="price monthly">
-              {{ _('Costs you') }} {{ offer.amount_monthly|floatformat(2) }} &euro; {{ _('per month') }}
-            </p>
-            <hr />
-
-            {% set offerLoop = loop %}
-            {% for f in features.trainers %}
-              {% if f.premium or f.offers %}
-              <p class="feature">
-                {% if f.offers %}
-                <strong>{{ f.offers[offerLoop.index] }}</strong>
-                {% else %}
-                  <i class="icon-ok"></i>
-                {% endif %}
-                {{ f.name }}
-              </p>
-              {% endif %}
-            {% endfor %}
-
-            <p class="text-center">
-              {% if PAYMENTS_ENABLED %}
-              <a href="{{ offer.get_absolute_url(club) }}" class="btn btn-success">
-                <i class="icon-premium"></i>
-                {{ _('Buy RunReport premium') }}
-              </a>
-              {% else %}
-              <span class="text-warning">
-                {{ _('Sorry, but payments are not available at this moment. Come back later !') }}
-              </span>
-              {% endif %}
-            </p>
-
-          </div>
-        </div>
-      </div>
-      {% endfor %}
+      <p class="text-info lead">
+        {{ _('You do not have any paying subscriptions at the moment.') }}
+      </p>
       {% endif %}
 
     </div>
 
     <div class="tab-pane" id="edit">
       <form action="" method="POST" class="form form-horizontal">
-{{ form.errors }}
         {% csrf_token %}
+
+        {% if form.errors %}
+        <div class="alert alert-danger">
+          <h4>{{ _('Error') }}</h4>
+          {{ form.errors }}
+        </div>
+        {% endif %}
+
         {{ macros.input(form.name) }}
         {{ macros.input(form.slug) }}
         {{ macros.input(form.address) }}

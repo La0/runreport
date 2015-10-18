@@ -1,8 +1,6 @@
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404
 from club.models import Club
-from django.conf import settings
-from payments.models import PaymentOffer
 
 
 class PaymentAthleteMixin(object):
@@ -35,20 +33,3 @@ class PaymentAthleteMixin(object):
 
   def has_active_subscription(self):
     return self.request.user.subscriptions.filter(status='active').exists()
-
-
-class PaymentOfferActionMixin(PaymentAthleteMixin):
-  context_object_name = 'offer'
-
-  def get_queryset(self):
-    # Check payments are enabled
-    if not settings.PAYMENTS_ENABLED:
-      raise PermissionDenied
-
-    # Only paying offers
-    offers = PaymentOffer.objects.exclude(paymill_id__isnull=True)
-
-    # No welcome offer
-    offers = offers.exclude(slug='athlete_welcome')
-
-    return offers

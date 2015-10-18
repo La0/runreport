@@ -10,7 +10,7 @@ from runreport.mixins import JsonResponseMixin, JSON_OPTION_BODY_RELOAD, JSON_OP
 from runreport.features import list_features
 from django.db.models import Max
 from django.utils import timezone
-from payments.models import PaymentOffer
+from payments.bill import Bill
 
 
 class ClubManage(ClubManagerMixin, UpdateView):
@@ -43,13 +43,17 @@ class ClubManage(ClubManagerMixin, UpdateView):
 
   def get_context_data(self, *args, **kwargs):
     context = super(ClubManage, self).get_context_data(*args, **kwargs)
-    context['stats'] = self.club.load_stats()
     context['links'] = self.club.links.all().order_by('name')
     context['roles'] = dict(ROLES)
     context.update(list_features())
     context['now'] = timezone.now()
-    context['offers'] = PaymentOffer.objects.filter(target='club').order_by('amount')
     context['subscriptions'] = self.club.subscriptions.all()
+
+    # Add bill
+    bill = Bill(self.club)
+    bill.calc()
+    context['bill'] = bill
+
     return context
 
 class ClubLinkAdd(ClubManagerMixin, JsonResponseMixin, CreateView):

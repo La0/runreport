@@ -1,4 +1,5 @@
-from members import ClubMembers, ClubMemberRole, ClubMembersExport
+from members import ClubMembers, ClubMembersExport
+from role import ClubMemberRole
 from create import ClubCreate
 from manage import ClubManage, ClubLinkAdd, ClubLinkDelete
 from invite import ClubInviteCheck, ClubInviteAsk

@@ -144,6 +144,14 @@ $(function(){
     };
     load_box(btn.attr('data-url'), 'POST', data);
   });
+
+  // Lock button during submit (on click)
+  $('button[data-lock]').on('click', function(){
+    var btn = $(this);
+    var icon = $('<i>').addClass('icon-loading animate-spin');
+    var msg = $('<span>').text(btn.attr('data-lock'));
+    btn.html('').append(icon).append(msg).addClass('disabled');
+  });
 });
 
 // Helper to add submit button data

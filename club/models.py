@@ -1,5 +1,6 @@
 #!coding=utf-8
 from django.db import models
+from django.utils import timezone
 from users.models import Athlete
 from runreport.mail import MailBuilder
 from runreport.mailman import MailMan
@@ -23,11 +24,6 @@ class Club(models.Model):
   main_trainer = models.ForeignKey(Athlete, null=True, blank=True, related_name="club_main_trainer")
   manager = models.ForeignKey(Athlete, related_name="club_manager")
 
-  # Users limits
-  max_staff = models.IntegerField(default=1)
-  max_trainer = models.IntegerField(default=1)
-  max_athlete = models.IntegerField(default=10)
-
   # Extra infos
   address = models.CharField(_('Address'), max_length=250)
   zipcode = models.CharField(_('Zip code'), max_length=10)
@@ -37,6 +33,7 @@ class Club(models.Model):
   # Payment
   mangopay_id = models.CharField(max_length=50, null=True, blank=True)
   wallet_id = models.CharField(max_length=50, null=True, blank=True)
+  card_id = models.CharField(max_length=50, null=True, blank=True)
 
   # Demo dummy club ?
   demo = models.BooleanField(default=False)
@@ -61,24 +58,6 @@ class Club(models.Model):
     from hashlib import md5
     contents = '%s:club:%d' % (settings.SECRET_KEY, self.pk)
     return md5(contents).hexdigest()[0:10]
-
-  def load_stats(self):
-    '''
-    Count available and used accounts
-    '''
-    stats = []
-    types = ('staff', 'trainer', 'athlete')
-    for t in types:
-      max = getattr(self, 'max_%s' % t)
-      used = self.clubmembership_set.filter(role=t).count()
-      stats.append({
-        'type' : t,
-        'max' : max,
-        'used' : used,
-        'diff' : max - used,
-        'percent' : round(100 * (max - used) / max)
-      })
-    return stats
 
   def load_usage_stats(self):
     '''
@@ -140,9 +119,19 @@ class Club(models.Model):
 
     return True
 
+  @property
+  def current_subscription(self):
+    # Helper to access current subscription
+    now = timezone.now()
+    try:
+      return self.subscriptions.get(start__lte=now, end__gt=now)
+    except:
+      return None
+
   def _is_premium(self):
-    # helper to check if a user is premium
-    return self.subscriptions.filter(offer__target='club', status__in=('active', 'created')).exists()
+    # helper to check if a club is premium
+    sub = self.current_subscription
+    return bool(sub and sub.mangopay_id)
 
   # Django disallows direct property
   # use in list displays
@@ -152,6 +141,14 @@ class Club(models.Model):
   @cached_property
   def is_premium(self):
     return self._is_premium()
+
+  @property
+  def has_valid_card(self):
+    '''
+    Club can pay for its premium actions ?
+    # TODO: regularly check card validity
+    '''
+    return self.mangopay_id is not None and self.card_id is not None
 
   def sync_mangopay(self):
     '''
@@ -204,6 +201,14 @@ class Club(models.Model):
     # Save changes
     self.save()
 
+  def build_card_hash(self, card_id):
+    '''
+    Build a secure hash for 3DS transactions
+    '''
+    import hashlib
+    contents = '3ds:%s:%d:%s' % (settings.SECRET_KEY, self.id, card_id)
+    h = hashlib.md5(contents)
+    return unicode(h.hexdigest()[0:8])
 
 class ClubMembership(models.Model):
   user = models.ForeignKey(Athlete, related_name="memberships")

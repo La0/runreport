@@ -3,10 +3,16 @@
 {% set page_title = _('Premium Payment') %}
 
 {% block js %}
+{% if registration %}
 <script type="text/javascript">
-  var PAYMILL_PUBLIC_KEY = '{{ PAYMILL_PUBLIC }}';
+  mangopay_init('{{ mangopay_id }}', {% if DEBUG %}true{% else %}false{% endif %}, {
+    'url' : '{{ registration.CardRegistrationURL }}',
+    'key' : '{{ registration.AccessKey }}',
+    'id' : '{{ registration.Id }}',
+    'data' : '{{ registration.PreregistrationData }}',
+  });
 </script>
-<script type="text/javascript" src="https://bridge.paymill.com/"></script>
+{% endif %}
 {% endblock %}
 
 {% block content %}
@@ -29,39 +35,30 @@
         <div class="col-xs-3">
           <img class="img-responsive do-tooltip" src="{{ static('img/cards/maestro.png') }}" title="Maestro"/>
         </div>
+        <input type="hidden" name="type" value="{{ registration.CardType }}" />
+        <input type="hidden" name="club" value="{{ club.slug }}" />
       </div>
 
-      <input type="hidden" name="offer" value="{{ offer.slug }}"/>
-      <input type="hidden" name="amount" value="{{ offer.amount_cents }}"/>
-      <input type="hidden" name="currency" value="{{ offer.currency }}"/>
-      {% if club %}
-      <input type="hidden" name="club" value="{{ club.pk }}"/>
-      {% endif %}
       <fieldset>
         <div class="form-group">
-          <label class="control-label" for="card-name">{{ _('Name on Card') }}</label>
-          <input type="text" class="form-control" name="card-name" id="card-name" placeholder="{{ _('Card Holder\'s Name') }}" autofocus>
-          <p class="help-block hidden">{{ _('Missing card holder\'s name') }}</p>
-        </div>
-        <div class="form-group">
           <label class="control-label" for="card-number">{{ _('Card Number') }}</label>
-          <input type="text" class="form-control" name="card-number" id="card-number" placeholder="{{ _('Debit/Credit Card Number') }}">
+          <input type="text" class="form-control" name="number" id="card-number" placeholder="{{ _('Debit/Credit Card Number') }}">
           <p class="help-block hidden">{{ _('Invalid card number') }}</p>
         </div>
         <div class="form-group">
           <label class="control-label" for="expiry-month">{{ _('Expiration Date') }}</label>
           <div class="row" id="expiry">
             <div class="col-xs-6">
-              <select class="form-control col-sm-2" name="expiry-month">
+              <select class="form-control col-sm-2" name="month">
                 {% for month in months %}
-                <option value="{{ month|date('m') }}">{{ month|date('E') }}</option>
+                <option value="{{ month }}">{{ month }}</option>
                 {% endfor %}
               </select>
             </div>
             <div class="col-xs-6">
-              <select class="form-control" name="expiry-year">
+              <select class="form-control" name="year">
                 {% for year in years %}
-                <option value="{{ year|date('Y') }}">{{ year|date('Y') }}</option>
+                <option value="{{ year - 2000 }}">{{ year }}</option>
                 {% endfor %}
               </select>
             </div>
@@ -82,11 +79,14 @@
           </p>
         </div>
         <div class="form-group text-center">
+          <a href="{{ url('payment-card', club.slug) }}" class="btn btn-warning btn-lg retry hidden" tabindex="-10">
+            {{ _('Retry') }}
+          </a>
           <a href="{{ url('features') }}" class="btn btn-default btn-lg action" tabindex="-1">
-            Annuler
+            {{ _('Cancel') }}
           </a>
           <button type="submit" class="btn btn-success btn-lg action">
-            {{ _('Pay Now') }} {{ offer.amount|floatformat(2) }} &euro;
+            {{ _('Use this credit card') }}
           </button>
           <button class="btn btn-success btn-lg waiter hidden" disabled="disabled">
             <i class="icon-loading animate-spin"></i>
@@ -96,15 +96,15 @@
       </fieldset>
       <p class="text-center text-muted">
         {{ _('Secured & processed with') }}
-        <a href="https://paymill.com" target="_blank">Paymill</a>
+        <a href="https://mangopay.com" target="_blank">MangoPay</a>
       </p>
     </form>
     <div class="alert alert-success hidden">
       <h4>{{ _('Valid payment') }}</h4>
       <p>
-        {{ _('Thanks for your subscription to RunReport !') }}
+        {{ _('Thanks for your trust in RunReport !') }}
         <br />
-        {{ _('You can enjoy immediately all the premium features') }}
+        {{ _('You can immediately add new members to your club.') }}
       </p>
       <p class="text-right">
         {% if club %}

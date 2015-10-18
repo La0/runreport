@@ -431,9 +431,19 @@ MANGOPAY_ID = None
 MANGOPAY_SECRET = None
 MANGOPAY_PROD = False
 MANGOPAY_CACHE = os.path.join(HOME, '.mangopay')
+MANGOPAY_ENTRY_FEE = 5.00 # in euros
+MANGOPAY_RETURN_URL = 'http://localhost:8000'
 
 # Archives dir
 ARCHIVES_DIR = os.path.join(HOME, 'archives')
+
+# Premium prices, per month
+PREMIUM_PRICES = {
+  'athlete' : 2.0,
+  'trainer' : 4.0,
+  'staff' : 2.0,
+  'archive' : 0.0,
+}
 
 # Import local settings, if any
 try:

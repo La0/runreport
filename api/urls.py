@@ -36,7 +36,7 @@ urlpatterns += patterns('',
   # Copy a plan
   url(r'^plans/(?P<pk>[\d]+)/copy/', views.PlanCopyView.as_view(), name='plan-copy'),
 
-  # Initiate a paymill payment
-  url(r'payment/token/', views.PaymentTokenView.as_view(), name='payment-token'),
+  # Validate Mangopay card registration
+  url(r'payment/card/', views.PaymentCardView.as_view(), name='payment-card'),
 )
 

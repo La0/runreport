@@ -1,97 +1,131 @@
-$(function(){
-  $('form#payment').on('submit', function(evt){
-    evt.preventDefault()
+// Configure Mangopay
+var mangopay_init = function(client_id, debug, registration){
+  if(debug)
+    mangoPay.cardRegistration.baseURL = "https://api.sandbox.mangopay.com";
+  else
+    mangoPay.cardRegistration.baseURL = "https://api.mangopay.com";
+  mangoPay.cardRegistration.clientId = client_id;
 
-    // Validate datas
-    var form_data = {}
-    var errors = [];
-    $.each($(this).serializeArray(), function(){
-      form_data[this.name] = this.value;
-    });
-    if(!form_data['card-name'])
-      errors.push('card-name');
-    if(!paymill.validateCardNumber(form_data['card-number']))
-      errors.push('card-number');
-    if(!paymill.validateExpiry(form_data['expiry-month'], form_data['expiry-year']))
-      errors.push('expiry');
-    if(!paymill.validateCvc(form_data['cvc']))
-      errors.push('cvc');
+  // Second registration step
+  mangoPay.cardRegistration.init({
+    cardRegistrationURL: registration.url,
+    preregistrationData: registration.data,
+    accessKey: registration.key,
+    Id: registration.id,
+  });
+};
 
-    // Hide errors, for cleanup
-    $('form#payment div.form-group').removeClass('has-error').find('p.help-block').addClass('hidden');
+// Register card using form data
+var mangopay_register_card = function(evt){
+  evt.preventDefault();
 
-    // Apply errors
-    if(errors.length > 0){
-      console.warn('Payment errors', errors);
-      $.each(errors, function(index, err){
-        var group = $('form#payment #'+err).parents('div.form-group');
-        group.addClass('has-error');
-        group.find('p.help-block').removeClass('hidden');
-      });
+  // Disable action
+  var form = $(this);
+  form.find('button.action').hide();
+  form.find('button.waiter').removeClass('hidden').show();
 
-      return false;
+  // Load form data
+  var data = {};
+  $.each(form.serializeArray(), function(i, d){
+    data[d.name] = d.value;
+  });
+
+  // Filter data
+  var cardData = {
+    cardNumber: data.number,
+    cardExpirationDate: data.month + data.year,
+    cardCvx: data.cvc,
+    cardType: data.type,
+  };
+
+  // Remove all errors
+  $('div.form-group.has-error').removeClass('has-error').children('.help-block').addClass('hidden');
+  form.find('div.alert-danger').addClass('hidden');
+
+  var onSuccess = function(resp){
+    console.info('Card registered', resp);
+
+    // Send registration data to our backend
+    var validation = {
+      'club' : data.club,
+      'id' : resp.Id,
+      'card' : resp.CardId,
+      'data' : resp.RegistrationData,
     }
+    $.ajax({
+      url : '/api/v1/payment/card/',
+      data : validation,
+      dataType : 'json',
+      method : 'POST',
 
-    // Lock waiter & actions states
-    var actions = $('form#payment .action');
-    var waiter = $('form#payment .waiter');
-    waiter.removeClass('hidden');
-    actions.addClass('hidden');
+      // Handle 3DS or display success
+      success : function(resp){
+        if(resp.redirect){
+          window.location.href = resp.redirect;
+        }else{
+          $('form#payment').hide();
+          $('div.alert-success').removeClass('hidden');
+        }
+      },
 
-    // Hide danger
-    var danger = $('#pay form div.alert-danger');
-    danger.addClass('hidden');
+      // Log errors
+      error : function(err){
+        console.error('Card validation failed', err);
+        retry('Vaidation failed, please retry.');
+      },
+    });
+  };
 
-    // Create Paymill token
-    var token_data = {
-      number:         form_data['card-number'],
-      exp_month:      form_data['expiry-month'],
-      exp_year:       form_data['expiry-year'],
-      cvc:            form_data['cvc'],
-      amount_int:     form_data['amount'],
-      currency:       form_data['currency'],
-      cardholder:     form_data['card-name'],
+  // Display retry error message
+  var retry = function(message){
+    form.find('div.alert-danger').removeClass('hidden').find('p').html(message);
+
+    // Add button to reload
+    form.find('button, a.action').hide();
+    form.find('a.retry').removeClass('hidden');
+  };
+
+  // Error handling
+  var onError = function(resp){
+    console.error('Card failed', resp);
+
+    // Filter errors
+    var msg = resp.ResultMessage;
+    var errors = [];
+    switch(msg){
+      case 'CARD_NUMBER_FORMAT_ERROR':
+        errors.push('card-number');
+        break;
+      case 'EXPIRY_DATE_FORMAT_ERROR':
+      case 'PAST_EXPIRY_DATE_ERROR':
+        errors.push('expiry');
+        break;
+      case 'CVV_FORMAT_ERROR':
+        errors.push('cvc');
+        break;
     };
 
-    paymill.createToken(token_data, function(error, result){
-      if(error){
-        // Display errors
-        console.error('Paymill errors', error);
-      }else{
-        // Send token to Backend
-        console.info('Paymill token created', error, result);
-        result['offer'] = form_data['offer'];
-        if(form_data['club'])
-          result['club'] = form_data['club'];
-        result['csrfmiddlewaretoken'] = form_data['csrfmiddlewaretoken'];
-        $.ajax({
-          type: "POST",
-          url: '/api/v1/payment/token/',
-          data: result,
-          success : function(resp){
-            console.info('Payment succeeded');
-
-            // Display success message
-            $('#pay form').hide();
-            $('#pay div.alert-success').removeClass('hidden');
-          },
-          error : function(err){
-            console.error("Payment error", err);
-
-            // Display error message in form
-            danger.removeClass('hidden');
-            var msg = err.responseJSON ? err.responseJSON.detail : err;
-            danger.find('p').html(msg);
-
-            // Re-enable submit
-            waiter.addClass('hidden');
-            actions.removeClass('hidden');
-          },
-          dataType: 'json',
-        });
-      }
+    // Display errors
+    $.each(errors, function(i, err){
+      var input = $('#'+err);
+      if(!input)
+        return;
+      var block = input.parent().addClass('has-error');
+      block.find('.help-block').removeClass('hidden');
     });
 
-    return false;
-  });
-});
+    // Generic error
+    if(resp.Status == 'ERROR')
+      return retry(msg);
+
+    // Restore action button
+    form.find('button.waiter').hide();
+    form.find('button.action').show();
+  };
+
+  // Do the actual registration !
+  mangoPay.cardRegistration.registerCard(cardData, onSuccess, onError);
+};
+
+// Register card on form submit
+$('form#payment').on('submit', mangopay_register_card);

@@ -28,6 +28,6 @@ def get_api():
   requests_dir = os.path.dirname(os.path.abspath(requests.__file__))
   api.Config.SSLVerification = os.path.join(requests_dir, 'cacert.pem')
   if not os.path.exists(api.Config.SSLVerification):
-    raise Exception('Missing SSK CA cert in %s' % api.Config.SSLVerification)
+    raise Exception('Missing SSL CA cert in %s' % api.Config.SSLVerification)
 
   return api

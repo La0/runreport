@@ -1,16 +1,11 @@
-from django.views.generic import DetailView, ListView, View
+from django.views.generic import ListView, View
 from django.utils.translation import ugettext as _
-from django.views.generic.edit import ModelFormMixin, ProcessFormView
 from django.http import Http404
+from mixins import ClubMixin
 from users.models import Athlete
 from django.db.models import Count, Max
-from mixins import ClubMixin, ClubManagerMixin
-from club.models import ClubMembership
-from club.forms import ClubMembershipForm
-from club import ROLES
-from club.tasks import mail_member_role
 from datetime import date, timedelta, MINYEAR
-from runreport.mixins import JsonResponseMixin, JSON_STATUS_ERROR, CsvResponseMixin, JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE
+from runreport.mixins import CsvResponseMixin
 
 import logging
 logger = logging.getLogger('club')
@@ -156,100 +151,6 @@ class ClubMembers(ClubMixin, ListView):
     context['today'] = today
     context['max_diff_date'] = today - timedelta(days=28)
     return context
-
-class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, ProcessFormView, DetailView):
-  template_name = 'club/role.html'
-  context_object_name = 'membership'
-  model = ClubMembership
-  form_class = ClubMembershipForm
-
-  def get_context_data(self, **kwargs):
-    context = super(ClubMemberRole, self).get_context_data(**kwargs)
-    context['membership'] = self.membership
-    context['member'] = self.member
-    context['stats'] = self.stats
-    context['roles'] = dict(ROLES)
-    return context
-
-  def get_form(self, form_class):
-    self.role_original = self.membership.role
-    # Load object before form init
-    if not hasattr(self, 'object'):
-      self.get_object()
-    return super(ClubMemberRole, self).get_form(form_class)
-
-  def form_valid(self, form):
-    if self.request.user.demo:
-      raise Exception("No edit for demo")
-
-    try:
-      membership = form.save(commit=False)
-      membership.trainers = form.cleaned_data['trainers'] # Weird :/
-
-      # Special case for deletion of prospect
-      if membership.role == 'archive' and self.role_original == 'prospect':
-
-        # Send email
-        if form.cleaned_data['send_mail']:
-          mail_member_role.delay(membership, self.role_original)
-
-        # Delete
-        membership.delete()
-
-        # Close & reload parent
-        self.json_options = [JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE, ]
-        return self.render_to_response({})
-
-      # Check club has a place available
-      if membership.role != 'archive':
-        stat = [s for s in self.stats if membership.role == s['type']][0]
-        if stat['diff'] <= 0:
-          raise Exception('No place available')
-
-      # Delete or save
-      if 'delete' in self.request.POST:
-        membership.delete()
-        self.json_options = [JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE, ]
-      else:
-        membership.save()
-
-      if self.role_original != membership.role:
-        # When losing trainer role
-        # remove all athletes
-        if self.role_original == 'trainer':
-          membership.user.trainees.clear()
-
-        # Only send mail for new roles
-        # When send_mail is valid
-        if form.cleaned_data['send_mail']:
-          mail_member_role.delay(membership, self.role_original)
-
-        # Reload page for roles updates
-        # When some trainers are specified
-        if not (membership.role == 'athlete' and membership.trainers.count() == 0):
-          self.json_options = [JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE, ]
-
-    except Exception, e:
-      logger.error('Failed to save role update for %s : %s' % (membership.user, str(e)))
-      raise Exception("Failed to save")
-
-    return self.render_to_response(self.get_context_data(**{'form' : form, 'saved': True}))
-
-  def form_invalid(self, form):
-    self.json_status = JSON_STATUS_ERROR
-    return self.render_to_response(self.get_context_data(**{'form' : form}))
-
-  def get_object(self):
-    self.stats = self.club.load_stats()
-
-    # Do not allow role change to athlete
-    # for the manager
-    if self.member == self.club.manager:
-      self.stats = [s for s in self.stats if s['type'] != 'athlete']
-
-    self.object = self.membership # needed for inherited classes
-    return self.object
-
 
 class ClubMembersExport(ClubMixin, CsvResponseMixin, View):
   '''

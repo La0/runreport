@@ -1,8 +1,10 @@
 # coding:utf-8
+from django.utils.translation import ugettext_lazy as _
+
 ROLES = (
-  ('athlete', u'Athlète'),
-  ('trainer', u'Entraîneur'),
-  ('staff', u'Staff'), # For presidents...
-  ('archive', u'Archive'),
-  ('prospect', u'Nouveau'), # For newcomers
+  ('athlete', _('Athlete')),
+  ('trainer', _('Trainer')),
+  ('staff', _('Staff')), # For presidents...
+  ('archive', _('Archive')),
+  ('prospect', _('Prospect')), # For newcomers
 )
