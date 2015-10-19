@@ -9,7 +9,6 @@ from dateutil.parser import parse
 class StravaProvider(TrackProvider, OauthProvider):
   NAME = 'strava'
   settings = ['STRAVA_ID', 'STRAVA_SECRET', ]
-
   auth_url = 'https://www.strava.com/oauth/authorize'
   deauth_url = 'https://www.strava.com/oauth/deauthorize'
   token_url = 'https://www.strava.com/oauth/token'
@@ -59,7 +58,7 @@ class StravaProvider(TrackProvider, OauthProvider):
     # Give athlete informations
     return data['athlete']
 
-  def check_tracks(self, page=0, nb_tracks=10):
+  def list_tracks(self, page=0, nb_tracks=10):
     if not self.user.strava_token:
       raise Exception('Missing Strava token for %s' % self.user.username)
 
@@ -71,8 +70,7 @@ class StravaProvider(TrackProvider, OauthProvider):
     if response.status_code != 200:
       raise Exception("No activities")
 
-    activities = response.json()
-    return self.import_activities(activities)
+    return response.json()
 
   def get_activity_id(self, activity):
     return activity['id']
@@ -97,6 +95,8 @@ class StravaProvider(TrackProvider, OauthProvider):
   def build_identity(self, activity):
     # Load details
     details = self.get_file(activity, 'details', format_json=True)
+    if not details:
+      raise Exception('Missing details')
 
     # Load or create sport
     try:

@@ -75,6 +75,11 @@ class TrackProvider:
     '''
     raise NotImplementedError('Please implement this method')
 
+  def list_tracks(self, page=0, nb_tracks=10):
+    '''
+    Retrieve tracks from provider
+    '''
+    raise NotImplementedError('Please implement this method')
 
   def get_activity_id(self, activity):
     '''
@@ -109,24 +114,31 @@ class TrackProvider:
   def store_file(self, activity, name, data):
     # Store locally a file awaiating save on a track
     activity_id = self.get_activity_id(activity)
+    logger.debug('Store file for activity %s %s - %s ' % (self.NAME, activity_id, name))
     if activity_id not in self.files:
       self.files[activity_id] = {}
     self.files[activity_id][name] = data
 
   def get_file(self, activity, name, format_json=False):
-    # Get localy stored file in memory
     activity_id = self.get_activity_id(activity)
+    logger.debug('Load file for activity %s %s - %s ' % (self.NAME, activity_id, name))
+
+    # Get localy stored file in memory
     if activity_id in self.files and name in self.files[activity_id]:
       out = self.files[activity_id][name]
       return format_json and json.loads(out) or out
 
     # Get file from disk
+    data = None
     try:
       tf = TrackFile.objects.get(track__provider_id=activity_id, name=name)
-      return tf.get_data(format_json)
+      data = tf.get_data(format_json)
+      if not data:
+        raise Exception('Missing data on TrackFile #%d' % tf.pk)
     except TrackFile.DoesNotExist:
-      pass
-    return None
+      logger.warning('Missing TrackFile for activity %s %s - %s ' % (self.NAME, activity_id, name))
+
+    return data
 
   def imported_stats(self):
     '''
@@ -135,6 +147,46 @@ class TrackProvider:
     tracks = Track.objects.filter(provider=self.NAME, session__day__week__user=self.user)
     stats = tracks.aggregate(min_date=Min('session__day__date'), max_date=Max('session__day__date'), total=Count('id'))
     return stats
+
+  def debug_tracks(self):
+    '''
+    Debug tool to list all tracks
+    and their usage
+    '''
+    # Try to login
+    try:
+      self.auth()
+    except Exception, e:
+      logger.error("Login failed for %s: %s" % (self.user, str(e)))
+      return
+
+    page = 0
+    tracks = []
+    while True:
+      print '-' * 80
+      print 'Page', page
+      tracks_page = self.list_tracks(page=page)
+      page += 1
+      if not tracks_page:
+        break
+      tracks += tracks_page
+
+    print 'List %d tracks' % len(tracks)
+    for t in tracks:
+      # Compatibility
+      self.store_file(t, 'details', json.dumps(t))
+
+      # Retrieve activity
+      activity_id = self.get_activity_id(t)
+      identity = self.build_identity(t)
+
+      # Check it's imported
+      imported = Track.objects.filter(provider=self.NAME, provider_id=activity_id)
+
+      print '%s %d - %s [%s]' % (self.NAME, activity_id, identity['date'], imported.exists() and 'OK' or 'MISSING')
+
+
+    print 'Done.'
 
   def import_user(self, full=False):
     '''
@@ -148,13 +200,16 @@ class TrackProvider:
       return
 
     # Import tracks !
-    nb = 0
+    page = 0
     months = [] # to build stats cache
     weeks = []
     while True:
       tracks = []
       try:
-        tracks = self.check_tracks(nb)
+        # Import tracks from source provider
+        tracks_raw = self.list_tracks(page)
+        tracks = self.import_activities(tracks_raw)
+        page += 1
 
         # Get the months & weeks to refresh stats
         for t in tracks:
@@ -165,10 +220,9 @@ class TrackProvider:
             months.append(m)
           if w not in weeks:
             weeks.append(m)
-          nb += 1
       except TrackSkipUpdateException, e:
         if full:
-          nb += 1
+          page += 1
           continue
         logger.info("Update not needed for %s" % (self.user,))
         break
@@ -176,7 +230,7 @@ class TrackProvider:
         logger.info("No more tracks to import for %s" % (self.user,))
       except Exception, e:
         if settings.DEBUG:
-          raise e
+          raise
         logger.error("Import failed for %s: %s" % (self.user, str(e)))
         break
 
@@ -217,7 +271,7 @@ class TrackProvider:
               updated_nb += 1
       except Exception, e:
         if settings.DEBUG:
-          raise e
+          raise
         logger.error('%s activity import failed: %s' % (self.NAME, str(e),))
 
     # When not enough source activities, it's the end
@@ -239,6 +293,7 @@ class TrackProvider:
     #  or build a new one
     activity_id = self.get_activity_id(activity)
     activity_raw = json.dumps(activity)
+    self.store_file(activity, 'details', activity_raw) # Helper for offline
     try:
       track = Track.objects.get(provider=self.NAME, provider_id=activity_id)
 

@@ -25,6 +25,12 @@ class Command(BaseCommand):
       default=False,
       help='Run a full import on user, don\'t skip any track.',
     ),
+    make_option('--list',
+      action='store_true',
+      dest='list',
+      default=False,
+      help='List all tracks on a user, from provider.',
+    ),
   )
   user = None
   provider = None
@@ -52,5 +58,10 @@ class Command(BaseCommand):
     if not self.provider.is_connected():
       raise CommandError("Provider %s is not connected for user %s" % (self.provider.NAME, self.provider.user))
 
-    # Run the import
-    self.provider.import_user(options['full'])
+    if options['list']:
+        # List tracks
+        self.provider.debug_tracks()
+
+    else:
+        # Run the import
+        self.provider.import_user(options['full'])

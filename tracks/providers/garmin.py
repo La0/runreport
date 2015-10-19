@@ -158,7 +158,7 @@ class GarminProvider(TrackProvider):
 
     return garmin_user
 
-  def check_tracks(self, page=0, nb_tracks=10):
+  def list_tracks(self, page=0, nb_tracks=10):
     # Auth using stored login/pass
     if not self.session:
       self.auth()
@@ -175,7 +175,7 @@ class GarminProvider(TrackProvider):
     if source:
       source = [a['activity'] for a in source]
 
-    return self.import_activities(source)
+    return source
 
   def is_connected(self):
     return self.user.garmin_login != None and self.user.garmin_password != None
