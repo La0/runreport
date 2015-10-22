@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, url
-from payments.views import PaymentCardView, Payment3DsView
+from payments.views import PaymentCardView, Payment3DsView, PaymentNotification
 
 urlpatterns = patterns('',
 
@@ -8,4 +8,7 @@ urlpatterns = patterns('',
 
     # 3D secure validation return
     url(r'^3ds/(?P<slug>[\w\_\-]+)/(?P<card_id>\d+)/(?P<hash>\w+)/?', Payment3DsView.as_view(), name='payment-3ds'),
+
+    # Notifications from Mangopay
+    url(r'^notification/(?P<hash>\w+)/', PaymentNotification.as_view(), name='payment-notification'),
 )

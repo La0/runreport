@@ -50,34 +50,3 @@ class PaymentSubscription(models.Model):
     Cancel the subscription through paymill
     '''
     raise Exception('Not implemented')
-
-    # Check data
-    if not self.paymill_id:
-      raise Exception('Missing paymill id')
-    if self.status not in ('active', 'created'):
-      raise Exception('Invalid status')
-
-    ctx = paymill.PaymillContext(settings.PAYMILL_SECRET)
-
-    # Cancel subscription on Paymill
-    service = ctx.get_subscription_service()
-    sub = service.paymill_object()
-    sub.id = self.paymill_id
-    service.cancel(sub)
-
-    # Refund part of transaction
-    if self.remaining_days:
-      remains = self.remaining_days / 365.0
-      remains = min(remains, 0.75) # capped
-    else:
-      remains = 0.5
-    service = ctx.get_refund_service()
-
-    for t in self.club.transactions.filter(status='closed'):
-      amount = t.amount * remains * 100
-      service.refund_transaction(t.paymill_id, amount)
-
-    # Kill the subscription
-    self.status = 'inactive'
-    self.end = timezone.now()
-    self.save()

@@ -433,6 +433,7 @@ MANGOPAY_PROD = False
 MANGOPAY_CACHE = os.path.join(HOME, '.mangopay')
 MANGOPAY_ENTRY_FEE = 5.00 # in euros
 MANGOPAY_RETURN_URL = 'http://localhost:8000'
+MANGOPAY_NOTIFICATION_URL = 'http://localhost:8000'
 
 # Archives dir
 ARCHIVES_DIR = os.path.join(HOME, 'archives')

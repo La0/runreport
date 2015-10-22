@@ -2,6 +2,7 @@ from django.conf.urls import patterns, url
 from django.shortcuts import get_object_or_404, render
 from django.contrib import admin
 from models import *
+from payments.admin import PaymentTransactionInline
 
 class ClubMembershipAdmin(admin.TabularInline):
   model = ClubMembership
@@ -36,5 +37,10 @@ admin.site.register(ClubInvite, ClubInviteAdmin)
 
 class ClubAdmin(admin.ModelAdmin):
   list_display = ('name', 'manager', '_is_premium')
-  inlines = [ClubLinkAdmin, ClubMembershipAdmin, ]
+  inlines = []
+  inlines = (
+    PaymentTransactionInline,
+    ClubMembershipAdmin,
+    ClubLinkAdmin,
+  )
 admin.site.register(Club, ClubAdmin)

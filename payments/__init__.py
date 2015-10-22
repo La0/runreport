@@ -31,3 +31,13 @@ def get_api():
     raise Exception('Missing SSL CA cert in %s' % api.Config.SSLVerification)
 
   return api
+
+def get_notification_hash(event_type):
+  '''
+  Helper to auth a notification
+  from MangoPay
+  '''
+  from django.conf import settings
+  import hashlib
+  contents = 'mangopay:%s:%s' % (event_type, settings.SECRET_KEY, )
+  return hashlib.md5(contents).hexdigest()

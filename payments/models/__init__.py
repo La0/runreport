@@ -1,3 +1,2 @@
-from .offers import PaymentSubscription
-from .events import PaymentEvent
+from .subscriptions import PaymentSubscription
 from .transaction import PaymentTransaction

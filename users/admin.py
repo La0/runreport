@@ -1,6 +1,5 @@
 from django.contrib import admin
 from models import Athlete, UserCategory
-from payments.admin import PaymentTransactionInline, PaymentEventInline
 
 class AthleteAdmin(admin.ModelAdmin):
   list_display = (
@@ -12,10 +11,6 @@ class AthleteAdmin(admin.ModelAdmin):
     'email',
     'username',
     'first_name', 'last_name',
-  )
-  inlines = (
-    PaymentTransactionInline,
-    PaymentEventInline,
   )
 admin.site.register(Athlete, AthleteAdmin)
 

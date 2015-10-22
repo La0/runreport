@@ -53,6 +53,7 @@ class PaymentCardView(views.APIView):
       # Create an entry PayIn
       # to validate the card
       return_url = reverse('payment-3ds', args=(club.slug, card_id, club.build_card_hash(card_id)))
+      return_url = '%s%s' % (settings.MANGOPAY_RETURN_URL, return_url)
       rr = RRAccount() # receiver
       payin = PayIn()
       payin.PaymentType = 'CARD'
@@ -68,7 +69,6 @@ class PaymentCardView(views.APIView):
       payin.DebitedFunds = entry_fee
       payin.Fees = no_fee
       payin.SecureMode = 'DEFAULT' # Use default (below 100 euros, no 3Ds)
-      payin.SecureModeReturnURL = '%s%s' % (settings.MANGOPAY_RETURN_URL, return_url)
       resp = api.payIns.Create(payin)
 
       if resp.Status == 'SUCCEEDED':
