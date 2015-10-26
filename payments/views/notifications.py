@@ -42,6 +42,12 @@ class PaymentNotification(View):
       # Get club
       club = Club.objects.get(mangopay_id=resp.AuthorId)
 
+      # Get (optional) subscription
+      try:
+        subscription = club.subscriptions.get(mangopay_id=resp.Id)
+      except:
+        subscription = None
+
     else:
       raise Exception('Unsupported notification type %s' % event_type)
 
@@ -55,11 +61,13 @@ class PaymentNotification(View):
     defaults = {
       'response' : json.dumps(resp_dict),
       'status': state,
+      'subscription' : subscription,
     }
     transaction, created = PaymentTransaction.objects.get_or_create(club=club, mangopay_id=resource_id, defaults=defaults)
     if not created:
       if transaction.status != state and state != 'CREATED':
         transaction.status = state
+      transaction.subscription = subscription
       transaction.response = defaults['response']
       transaction.save()
 

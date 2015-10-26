@@ -100,13 +100,44 @@
     {# Display subscriptions #}
     <div class="tab-pane" id="premium_status">
 
-      {% if club.is_premium %}
-        {% for subscription in subscriptions %}
-          {% include 'payments/_subscription.html' %}
+      {% if club.transactions.exists() %}
+      <table class="table table-bordered table-striped">
+        <tr>
+          <th>{{ _('Period') }}</th>
+          <th>{{ _('Amount') }}</th>
+          <th>{{ _('Payment date') }}</th>
+          <th>{{ _('Status') }}</th>
+        </tr>
+        {% for transaction in club.transactions.all() %}
+        <tr>
+          <td>
+            {% if transaction.subscription %}
+              {{ transaction.subscription }}
+            {% else %}
+              {{ _('Initial payment') }}
+            {% endif %}
+          </td>
+          <td>
+            {{ transaction.amount|floatformat(2) }} &euro;
+          </td>
+          <td>
+            {{ transaction.updated|date('d E Y') }}
+          </td>
+          <td>
+            {% if transaction.status == 'SUCCEEDED' %}
+            <span class="label label-success">{{ _('Validated') }}</span>
+            {% elif transaction.status == 'FAILED' %}
+            <span class="label label-danger">{{ _('Failed') }}</span>
+            {% elif transaction.status == 'CREATED' %}
+            <span class="label label-info">{{ _('Awaiting validation') }}</span>
+            {% endif %}
+          </td>
+        </tr>
         {% endfor %}
+      </table>
       {% else %}
       <p class="text-info lead">
-        {{ _('You do not have any paying subscriptions at the moment.') }}
+        {{ _('You do not have any transactions at the moment.') }}
       </p>
       {% endif %}
 
