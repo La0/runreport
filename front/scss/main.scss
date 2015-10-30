@@ -920,9 +920,21 @@ header div.demo-warning {
 .avatar img.small {
 	@extend %extend_1;
 }
-tr.member ul.trainers {
-	list-style-type: none;
-	padding: 0;
+div.trainers {
+  // In trainers form
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin-left: 10px;
+  }
+}
+ul.trainers {
+  // In members list
+  list-style-type: none;
+  padding: 0;
+  li.trainer {
+    margin-left: 3px;
+  }
 }
 td.avatar {
 	width: 60px;

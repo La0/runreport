@@ -1,2 +1,2 @@
-from .subscriptions import PaymentSubscription
+from .periods import PaymentPeriod
 from .transaction import PaymentTransaction

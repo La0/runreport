@@ -1,16 +1,9 @@
 from rest_framework import views, response, exceptions
 from django.core.exceptions import PermissionDenied
-from django.core.urlresolvers import reverse
 from django.conf import settings
 from club.models import Club
 from payments import get_api
-from payments.account import RRAccount
 from mangopaysdk.entities.cardregistration import CardRegistration
-from mangopaysdk.entities.payin import PayIn
-from mangopaysdk.tools.enums import CardType
-from mangopaysdk.types.money import Money
-from mangopaysdk.types.payinpaymentdetailscard import PayInPaymentDetailsCard
-from mangopaysdk.types.payinexecutiondetailsdirect import PayInExecutionDetailsDirect
 import logging
 
 logger = logging.getLogger('payments')
@@ -40,36 +33,9 @@ class PaymentCardView(views.APIView):
         cr_updated = api.cardRegistrations.Update(cr)
         card_id = cr_updated.CardId
 
-      # Setup entry auth fee
-      entry_fee = Money()
-      entry_fee.Amount = settings.MANGOPAY_ENTRY_FEE * 100 # in cents
-      entry_fee.Currency = 'EUR'
-
-      # No auto fee here
-      no_fee = Money()
-      no_fee.Amount = 0
-      no_fee.Currency = 'EUR'
-
-      # Create an entry PayIn
+      # Create PayIn
       # to validate the card
-      return_url = reverse('payment-3ds', args=(club.slug, card_id, club.build_card_hash(card_id)))
-      return_url = '%s%s' % (settings.MANGOPAY_RETURN_URL, return_url)
-      rr = RRAccount() # receiver
-      payin = PayIn()
-      payin.PaymentType = 'CARD'
-      payin.PaymentDetails = PayInPaymentDetailsCard()
-      payin.PaymentDetails.CardType = CardType.CB_VISA_MASTERCARD
-      payin.ExecutionDetails = PayInExecutionDetailsDirect()
-      payin.ExecutionDetails.CardId = card_id
-      payin.ExecutionDetails.SecureModeReturnURL = return_url
-      payin.AuthorId = club.mangopay_id
-      payin.CardId = card_id
-      payin.CreditedUserId = rr.Id
-      payin.CreditedWalletId = rr.wallet['Id']
-      payin.DebitedFunds = entry_fee
-      payin.Fees = no_fee
-      payin.SecureMode = 'DEFAULT' # Use default (below 100 euros, no 3Ds)
-      resp = api.payIns.Create(payin)
+      resp = club.init_payment(settings.MANGOPAY_ENTRY_FEE, card_id)
 
       if resp.Status == 'SUCCEEDED':
         # Save the card id, not the pre-auth

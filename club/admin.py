@@ -36,7 +36,7 @@ class ClubInviteAdmin(admin.ModelAdmin):
 admin.site.register(ClubInvite, ClubInviteAdmin)
 
 class ClubAdmin(admin.ModelAdmin):
-  list_display = ('name', 'manager', '_is_premium')
+  list_display = ('name', 'manager', '_has_full_access')
   inlines = []
   inlines = (
     PaymentTransactionInline,

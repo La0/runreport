@@ -1,0 +1,22 @@
+{% extends 'modal.html' %}
+{% set modal_title = _("Choose trainers for %s %s") % (member.first_name, member.last_name) %}
+
+{% set form_url = url('club-member-trainers', club.slug, member.username) %}
+
+{% block body %}
+  <div class="trainers">
+    {{form.trainers|safe}}
+  </div>
+
+  <div class="alert alert-danger modal-error" style="display: none">
+    <h4>{{ _('Error') }}</h4>
+    {{ _('An error occured while updating the athlete membership. Please retry after reloading the page.') }}
+  </div>
+
+{% endblock %}
+
+{% block footer %}
+  <button type="submit" class="btn btn-info pull-right" {% if user.demo %}disabled{% endif %}>
+    {{ _('Save') }}
+  </button>
+{% endblock %}

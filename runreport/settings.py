@@ -345,9 +345,9 @@ CELERYBEAT_SCHEDULE = {
     'task': 'users.tasks.send_related_races_mail',
     'schedule': crontab(hour=7, minute=50),
   },
-  'track-paymill-events-every-10min': {
-    'task': 'payments.tasks.payments_hook',
-    'schedule': timedelta(minutes=10),
+  'payment-status-every-morning': {
+    'task': 'payments.tasks.auto_payments',
+    'schedule': crontab(hour=9, minute=0),
   },
 }
 CELERY_ROUTES = {
@@ -427,6 +427,8 @@ CLUB_CREATION_OPEN = True
 
 # Payments integration
 PAYMENTS_ENABLED = False
+PAYMENTS_TRIAL = 45 # In days
+PAYMENTS_PERIOD = 90 # In days
 MANGOPAY_ID = None
 MANGOPAY_SECRET = None
 MANGOPAY_PROD = False

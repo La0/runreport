@@ -14,6 +14,7 @@ from payments import get_api
 from mangopaysdk.entities.userlegal import UserLegal
 from mangopaysdk.entities.wallet import Wallet
 from mangopaysdk.types.address import Address
+from datetime import timedelta
 from django_countries.fields import CountryField
 import time
 
@@ -120,27 +121,33 @@ class Club(models.Model):
     return True
 
   @property
-  def current_subscription(self):
+  def current_period(self):
     # Helper to access current subscription
     now = timezone.now()
     try:
-      return self.subscriptions.get(start__lte=now, end__gt=now)
+      return self.periods.get(start__lte=now, end__gt=now)
     except:
       return None
 
-  def _is_premium(self):
-    # helper to check if a club is premium
-    sub = self.current_subscription
-    return bool(sub and sub.mangopay_id)
+  def _has_full_access(self):
+    '''
+    A club is in full access, if:
+     * it's in free trial period
+     * it's in a paying period
+    '''
+    sub = self.current_period
+    if sub and sub.is_free:
+      return True
+    return bool(sub and (sub.status in ('active', 'paid', )))
 
   # Django disallows direct property
   # use in list displays
   # Cf https://stackoverflow.com/questions/12842095/how-to-display-a-boolean-property-in-the-django-admin
-  _is_premium.boolean = True # for admin display
+  _has_full_access.boolean = True # for admin display
 
   @cached_property
-  def is_premium(self):
-    return self._is_premium()
+  def has_full_access(self):
+    return self._has_full_access()
 
   @property
   def has_valid_card(self):
@@ -209,6 +216,105 @@ class Club(models.Model):
     contents = '3ds:%s:%d:%s' % (settings.SECRET_KEY, self.id, card_id)
     h = hashlib.md5(contents)
     return unicode(h.hexdigest()[0:8])
+
+  def save_roles(self):
+    '''
+    Save roles status in current subscription
+    Create a subscription if none active
+    And the bill is > 0
+    '''
+
+    # Only process for paying bills
+    from payments.bill import Bill
+    bill = Bill(self)
+    bill.calc()
+    if bill.total == 0:
+      return None, None
+
+    # Fetch or create period
+    period = self.current_period
+    if period is None:
+      start = timezone.now()
+      end = start + timedelta(days=settings.PAYMENTS_PERIOD)
+      period = self.periods.create(start=start, end=end)
+
+    # Get roles stats
+    period.nb_trainers = max(period.nb_trainers, bill.counts.get('trainer', 0))
+    period.nb_athletes = max(period.nb_athletes, bill.counts.get('athlete', 0))
+    period.nb_staff = max(period.nb_staff, bill.counts.get('staff', 0))
+    period.save()
+
+    return period, bill
+
+  def init_payment(self, amount, card_id=None):
+    '''
+    Create a new Mangopay PayIn
+    for specified amount in euros
+    '''
+    from django.core.urlresolvers import reverse
+    from django.conf import settings
+    from payments import get_api
+    from payments.account import RRAccount
+    from mangopaysdk.entities.payin import PayIn
+    from mangopaysdk.tools.enums import CardType
+    from mangopaysdk.types.money import Money
+    from mangopaysdk.types.payinpaymentdetailscard import PayInPaymentDetailsCard
+    from mangopaysdk.types.payinexecutiondetailsdirect import PayInExecutionDetailsDirect
+
+    if card_id is None:
+      # Use saved card
+      card_id = self.card_id
+
+    # Setup entry auth fee
+    debited = Money()
+    debited.Amount = amount * 100 # in cents
+    debited.Currency = 'EUR'
+
+    # No auto fee here
+    no_fee = Money()
+    no_fee.Amount = 0
+    no_fee.Currency = 'EUR'
+
+    # Create a payIn
+    return_url = reverse('payment-3ds', args=(self.slug, card_id, self.build_card_hash(card_id)))
+    return_url = '%s%s' % (settings.MANGOPAY_RETURN_URL, return_url)
+    rr = RRAccount() # receiver
+    payin = PayIn()
+    payin.PaymentType = 'CARD'
+    payin.PaymentDetails = PayInPaymentDetailsCard()
+    payin.PaymentDetails.CardType = CardType.CB_VISA_MASTERCARD
+    payin.ExecutionDetails = PayInExecutionDetailsDirect()
+    payin.ExecutionDetails.CardId = card_id
+    payin.ExecutionDetails.SecureModeReturnURL = return_url
+    payin.AuthorId = self.mangopay_id
+    payin.CardId = card_id
+    payin.CreditedUserId = rr.Id
+    payin.CreditedWalletId = rr.wallet['Id']
+    payin.DebitedFunds = debited
+    payin.Fees = no_fee
+    payin.SecureMode = 'DEFAULT' # Use default (below 100 euros, no 3Ds)
+
+    # Process request
+    api = get_api()
+    return api.payIns.Create(payin)
+
+  def create_free_period(self):
+    '''
+    Create the free initial subscription
+    '''
+    # Check no free periods already exist
+    if self.periods.filter(status='free').exists():
+      raise Exception('A free subscription already exists')
+
+    # Create the sub
+    now = timezone.now()
+    data = {
+      'status' : 'free',
+      'start' : now,
+      'end' : now + timedelta(days=settings.PAYMENTS_TRIAL),
+    }
+    return self.periods.create(**data)
+
 
 class ClubMembership(models.Model):
   user = models.ForeignKey(Athlete, related_name="memberships")

@@ -47,7 +47,7 @@ class ClubManage(ClubManagerMixin, UpdateView):
     context['roles'] = dict(ROLES)
     context.update(list_features())
     context['now'] = timezone.now()
-    context['subscriptions'] = self.club.subscriptions.all()
+    context['periods'] = self.club.periods.all()
 
     # Add bill
     bill = Bill(self.club)

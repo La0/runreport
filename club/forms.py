@@ -7,26 +7,30 @@ from django.forms.formsets import formset_factory
 from django.core.exceptions import ValidationError
 from club.models import ClubGroup
 from django.utils.translation import ugettext_lazy as _
-from django_countries.widgets import CountrySelectWidget
 
-class ClubMembershipForm(forms.ModelForm):
+class ClubMemberRoleForm(forms.ModelForm):
   # Add a boolean to cancel mail sending
   # When changing a role
   send_mail = forms.BooleanField(required=False, initial=True)
 
+  class Meta:
+    model = ClubMembership
+    fields = ('role', )
+    widgers = {
+      'role' : forms.HiddenInput(),
+    }
+
+class ClubMemberTrainersForm(forms.ModelForm):
   def __init__(self, *args, **kwargs):
-    super(ClubMembershipForm, self).__init__(*args, **kwargs)
+    super(ClubMemberTrainersForm, self).__init__(*args, **kwargs)
 
     # Load only trainers from instance club
     trainers = Athlete.objects.filter(memberships__club=self.instance.club, memberships__role='trainer')
     self.fields['trainers'] = UserModelChoiceField(queryset=trainers, widget=forms.CheckboxSelectMultiple(), required=False)
 
-    # Role is hidden
-    self.fields['role'].widget = forms.HiddenInput()
-
   class Meta:
     model = ClubMembership
-    fields = ('role', 'trainers', )
+    fields = ('trainers', )
 
 class UserModelChoiceField(forms.ModelMultipleChoiceField):
   def label_from_instance(self, obj):

@@ -25,6 +25,9 @@ class ClubCreate(LoginRequired, ClubCreateMixin, CreateView):
     club.manager = self.request.user
     club.save()
 
+    # Create initial free period
+    club.create_free_period()
+
     # Set manager
     self.request.user.phone = form.cleaned_data['phone']
     self.request.user.nationality = form.cleaned_data['manager_nationality']

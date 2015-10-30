@@ -52,8 +52,9 @@ class Payment3DsView(ClubManagerMixin, TemplateView):
     if self.kwargs.get('hash') != h:
       raise PermissionDenied
 
-    # Save card
-    self.club.card_id = card_id
-    self.club.save()
+    # Save card, when not set or different
+    if not self.club.card_id or card_id != self.club.card_id:
+      self.club.card_id = card_id
+      self.club.save()
 
     return out

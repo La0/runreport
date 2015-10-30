@@ -15,7 +15,7 @@ class PaymentTransaction(models.Model):
   Every payment made for a club
   '''
   club = models.ForeignKey('club.Club', related_name='transactions')
-  subscription = models.ForeignKey('payments.PaymentSubscription', related_name='transactions', null=True, blank=True)
+  period = models.ForeignKey('payments.PaymentPeriod', related_name='transactions', null=True, blank=True)
   status = models.CharField(choices=TRANSACTION_STATUS, max_length=20, default='CREATED')
   mangopay_id = models.CharField(unique=True, max_length=50)
 

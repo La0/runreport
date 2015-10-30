@@ -3,6 +3,7 @@ from club.views import *
 
 user_patterns = patterns('',
   url(r'^role/?', ClubMemberRole.as_view(), name="club-member-role"),
+  url(r'^trainers/?', ClubMemberTrainers.as_view(), name="club-member-trainers"),
   url(r'^races/?', ClubMemberRaces.as_view(), name="club-member-races"),
 )
 

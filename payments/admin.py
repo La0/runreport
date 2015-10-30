@@ -1,9 +1,9 @@
 from django.contrib import admin
-from models import PaymentSubscription, PaymentTransaction
+from models import PaymentPeriod, PaymentTransaction
 
-class PaymentSubscriptionAdmin(admin.ModelAdmin):
+class PaymentPeriodAdmin(admin.ModelAdmin):
   list_display = ('club', 'mangopay_id', 'created')
-admin.site.register(PaymentSubscription, PaymentSubscriptionAdmin)
+admin.site.register(PaymentPeriod, PaymentPeriodAdmin)
 
 class PaymentTransactionAdmin(admin.ModelAdmin):
   list_display = ('club', 'created', 'status', 'mangopay_id')

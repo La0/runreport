@@ -39,7 +39,6 @@ class Bill(object):
 
     return self.stats
 
-
   def calc_role(self, role):
     '''
     Calc cost for a role
@@ -47,17 +46,8 @@ class Bill(object):
     # Total nb of athletes
     total = self.counts.get(role, 0)
 
-    # 5 free athletes
-    # 1 free trainer
-    free = 0
-    if role == 'athlete':
-      free = 5
-    elif role == 'trainer':
-      free = 1
-
     # Paying accounts
-    paying = max(total - free, 0)
-    free_left = max(free - total, 0)
+    paying = max(total, 0)
 
     # Prices & total per role
     unit = settings.PREMIUM_PRICES.get(role, 0)
@@ -66,8 +56,6 @@ class Bill(object):
     return {
       'type' : role,
       'total' : total,
-      'free' : free,
-      'free_left' : free_left,
       'paying' : paying,
       'unit' : unit,
       'price' : price,
@@ -85,9 +73,5 @@ class Bill(object):
     stats_new = self.calc_role(new_role)
 
     diff = stats_new['unit'] - stats_old['unit']
-
-    # Any room for a free role ?
-    if stats_new['free_left'] > 0:
-      return diff, 0
 
     return diff, stats_new['unit']

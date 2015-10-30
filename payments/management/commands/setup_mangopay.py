@@ -44,6 +44,7 @@ class Command(BaseCommand):
     h = get_notification_hash(event_type)
     url = reverse('payment-notification', args=(h, ))
     url = settings.MANGOPAY_NOTIFICATION_URL + url
+    print ' >> ', url
 
     # Create notification
     hook = Hook()

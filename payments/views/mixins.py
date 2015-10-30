@@ -6,18 +6,18 @@ from club.models import Club
 class PaymentAthleteMixin(object):
   '''
   Checks the user is connected
-  Adds helper to get subscriptions
+  Adds helper to get periods
   '''
-  no_active_subscriptions = False
+  no_active_periods = False
   club = None
 
   def dispatch(self, *args, **kwars):
     if not self.request.user.is_authenticated():
       raise PermissionDenied
 
-    # Check no active subscriptions are enabled
-    subs = self.request.user.subscriptions.all()
-    if self.no_active_subscriptions and subs.filter(offer__slug='athlete').exists():
+    # Check no active periods are enabled
+    subs = self.request.user.periods.all()
+    if self.no_active_periods and subs.filter(offer__slug='athlete').exists():
       raise PermissionDenied
 
     # Load club when specified
@@ -32,4 +32,4 @@ class PaymentAthleteMixin(object):
     return context
 
   def has_active_subscription(self):
-    return self.request.user.subscriptions.filter(status='active').exists()
+    return self.request.user.periods.filter(status='active').exists()

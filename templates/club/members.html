@@ -11,17 +11,10 @@
       <h2>{{club.name}} : {{members|length()}} membres</h2>
     </div>
     <div class="col-sm-4 col-xs-12 text-right">
-      {% if club.is_premium %}
       <a href="{{ url('club-members-export', club.slug) }}" class="btn btn-info">
         <i class="icon-down-open"></i>
         {{ _('CSV Export') }}
       </a>
-      {% else %}
-      <span class="btn btn-info disabled do-tooltip" title="{{ _('This is a premium feature for clubs.') }}">
-        <i class="icon-down-open"></i>
-        {{ _('CSV Export') }}
-      </span>
-      {% endif %}
     </div>
   </div>
   <p>
@@ -110,21 +103,31 @@
                     {% endwith %}
                 </td>
                 <td>
+                  {% if member.role in ('trainer', 'athlete') %}
                   <ul class="trainers">
                     {% for trainer in member.membership.trainers.all() %}
-                      <li>
-                        <a href="{{ url('club-trainer', club.slug, trainer.username) }}">
-                          {{ trainer.first_name }}
-                        </a>
-                      </li>
-                    {% else %}
-                      <li>-</li>
+                    <li class="trainer">
+                      <i class="icon-plan-session"></i>
+                      <a href="{{ url('club-trainer', club.slug, trainer.username) }}">
+                        {{ trainer.first_name }}
+                      </a>
+                    </li>
                     {% endfor %}
+
+                    {% if request.user == club.manager or request.user.is_staff %}
+                    <li>
+                      <a href="{{ url('club-member-trainers', club.slug, member.username) }}" class="modal-action btn btn-xs btn-info btn-light">
+                        <i class="icon-plus"></i>
+                        {{ _('Add a trainer') }}
+                      </a>
+                    </li>
+                    {% endif %}
                   </ul>
+                  {% endif %}
                 </td>
                 {% endif %}
                 <td>{{ member.category.name|default('-') }}</td>
-                <td>{{ member.vma|default('-') }}</td>
+                <td>{{ member.vma or '-' }}</td>
                 <td>{{ member.sessions_count }}</td>
                 <td>
                     {% if member.max_report_date %}

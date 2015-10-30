@@ -240,8 +240,8 @@ class Athlete(AthleteBase):
     for m in self.memberships.all():
       is_manager = m.club.manager == visitor
       if visitor in m.trainers.all() or is_manager:
-        # Add archive roles for managers
-        trainers_roles += is_manager and ['archive', ] or []
+        # Add prospect & archive roles for managers
+        trainers_roles += is_manager and ['prospect', 'archive', ] or []
         if m.role in trainers_roles:
           privacy = fields # all access
           privacy += ['comments_public', 'comments_private', 'comments_week', ] # and full comments access

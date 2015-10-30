@@ -37,21 +37,40 @@
 
   <div class="tab-content">
     <div class="tab-pane active" id="users">
-      <div class="text-info">
-        <blockquote>
-          <h5><i class="icon-help-circled"></i> {{ _('Help') }}</h5>
-          <strong>{{ _('A club is free until it reaches 5 members.') }}</strong>
-          <br />
-          {{ _('Above 5 members, every member is billed to you (manager of the club).') }}
+
+      <h3>{{ _('Current period') }}</h3>
+      {% with period = club.current_period %}
+      {% if period %}
+      <p>
+        <i class="icon-calendar"></i>
+        {{ _('From') }}
+        <span class="do-tooltip" title="{{ period.start|timesince }}">{{ period.start|date('d E Y') }}</span>
+        {{ _('to') }}
+        <span class="do-tooltip" title="{{ period.end|timeuntil }}">{{ period.end|date('d E Y') }}</span>
+      </p>
+
+        {% if period.status == 'free' %}
+        <blockquote class="text-info">
+          {{ _('You are in the free trial period !') }}
         </blockquote>
-      </div>
+        {% else %}
+        <p class="text-muted">
+          Status: {{ period.status }}
+        </p>    
+        {% endif %}
+      {% else %}
+      <p class="alert alert-danger">
+        {{ _('No period found.') }}
+      </p>
+      {% endif %}
+      {% endwith %}
+
+      <h3>{{ _('Your current bill') }}</h3>
       <div class="table-responsive">
         <table class="table table-striped">
           <tr>
             <th>{{ _('Users type') }}</th>
             <th>{{ _('Total') }}</th>
-            <th>{{ _('Free') }}</th>
-            <th>{{ _('Paying') }}</th>
             <th>{{ _('Unit Cost') }}</th>
             <th>{{ _('Total') }}</th>
           </tr>
@@ -59,8 +78,6 @@
           <tr>
             <td>{{roles[stat.type]}}</td>
             <td>{{stat.total}}</td>
-            <td>{{stat.free}}</td>
-            <td>{{stat.paying}}</td>
             <td>
               {{ stat.unit|floatformat(2) }} &euro;
             </td>
@@ -78,7 +95,7 @@
           </tr>
           {% endfor %}
           <tr>
-            <td class="text-right" colspan="5">
+            <td class="text-right" colspan="3">
               <strong>{{ _('Total') }}</strong>
             </td>
             <td>
@@ -99,45 +116,82 @@
 
     {# Display subscriptions #}
     <div class="tab-pane" id="premium_status">
+      <h3>{{ _('Paying methods') }}</h3>
+      <div class="row">
+        {% if club.card_id %}
+        <div class="col-xs-12 col-sm-6 text-success">
+          {{ _('You have already registered your credit card. Thanks for your trust !') }}
+        </div>
+        <div class="col-xs-12 col-sm-6 text-right">
+          <a href="{{ url('payment-card', club.slug) }}" class="btn btn-success">
+            <i class="icon-edit"></i>
+            {{ _('Update your card') }}
+          </a>
+        </div>
+        {% else %}
+        <div class="col-xs-12 col-sm-6 text-warning">
+          {{ _('You need to register a credit card to keep running your club after the free trial ends.') }}
+        </div>
+        <div class="col-xs-12 col-sm-6 text-right">
+          <a href="{{ url('payment-card', club.slug) }}" class="btn btn-warning">
+            <i class="icon-add"></i>
+            {{ _('Register your card') }}
+          </a>
+        </div>
+        {% endif %}
+      </div>
 
-      {% if club.transactions.exists() %}
+      <h3>{{ _('Payments history') }}</h3>
+      {% if club.periods.exists() %}
       <table class="table table-bordered table-striped">
         <tr>
           <th>{{ _('Period') }}</th>
-          <th>{{ _('Amount') }}</th>
-          <th>{{ _('Payment date') }}</th>
           <th>{{ _('Status') }}</th>
+          <th>{{ _('Payment') }}</th>
         </tr>
-        {% for transaction in club.transactions.all() %}
+        {% for period in club.periods.order_by('-start') %}
         <tr>
           <td>
-            {% if transaction.subscription %}
-              {{ transaction.subscription }}
+            {{ _('From') }}
+            <span class="do-tooltip" title="{{ period.start|timesince }}">{{ period.start|date('d E Y') }}</span>
+            <br />
+            {{ _('To') }}
+            <span class="do-tooltip" title="{{ period.end|timeuntil }}">{{ period.end|date('d E Y') }}</span>
+          </td>
+          <td>
+            {% if period.status == 'free' %}
+            <span class="label label-success">{{ _('Free Trial') }}</span>
+            {% elif period.status == 'active' %}
+            <span class="label label-info">{{ _('Active') }}</span>
+            {% elif period.status == 'paid' %}
+            <span class="label label-success">{{ _('Paid') }}</span>
+            {% elif period.status == 'expired' %}
+            <span class="label label-info">{{ _('Expired') }}</span>
+            {% elif period.status == 'error' %}
+            <span class="label label-info">{{ _('Error in payments') }}</span>
             {% else %}
-              {{ _('Initial payment') }}
+            <span class="label label-default">{{ _('Unknown status') }}</span>
             {% endif %}
           </td>
           <td>
-            {{ transaction.amount|floatformat(2) }} &euro;
-          </td>
-          <td>
-            {{ transaction.updated|date('d E Y') }}
-          </td>
-          <td>
-            {% if transaction.status == 'SUCCEEDED' %}
-            <span class="label label-success">{{ _('Validated') }}</span>
-            {% elif transaction.status == 'FAILED' %}
-            <span class="label label-danger">{{ _('Failed') }}</span>
-            {% elif transaction.status == 'CREATED' %}
-            <span class="label label-info">{{ _('Awaiting validation') }}</span>
-            {% endif %}
+            {% for transaction in period.transactions.all() %}
+            <p>
+              <strong>{{ transaction.amount|floatformat(2) }} &euro;</strong>
+              <br />
+              {{ _('Paid on') }} {{ transaction.updated|date('d E Y') }}
+            </p>
+            {% else %}
+            <p class="text-muted">
+              {{ _('No payments') }}
+            </p>
+            {% endfor %}
           </td>
         </tr>
         {% endfor %}
       </table>
       {% else %}
       <p class="text-info lead">
-        {{ _('You do not have any transactions at the moment.') }}
+        {{ _('You do not have any periods at the moment.') }}
       </p>
       {% endif %}
 
