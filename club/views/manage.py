@@ -50,8 +50,11 @@ class ClubManage(ClubManagerMixin, UpdateView):
     context['periods'] = self.club.periods.all()
 
     # Add bill
-    bill = Bill(self.club)
-    bill.calc()
+    if self.club.current_period:
+      bill = self.club.current_period.bill
+    else:
+      bill = Bill(self.club)
+      bill.calc()
     context['bill'] = bill
 
     return context

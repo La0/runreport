@@ -73,6 +73,11 @@
                 </td>
                 {% if request.user == club.manager or request.user.is_staff %}
                 <td>
+                  {% if member == request.user %}
+                  <span class="label label-primary">
+                    {{ _('Manager') }}
+                  </span>
+                  {% else %}
                     {% with role = member.membership.role %}
                     {% if role == 'athlete' %}
                         <a href="{{ url('club-member-role', club.slug, member.username) }}" class="modal-action btn btn-default btn-xs">
@@ -101,6 +106,7 @@
                         </a>
                     {% endif %}
                     {% endwith %}
+                  {% endif %}
                 </td>
                 <td>
                   {% if member.role in ('trainer', 'athlete') %}

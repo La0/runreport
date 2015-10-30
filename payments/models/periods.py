@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
+from payments.bill import Bill
 import logging
 
 logger = logging.getLogger('payments')
@@ -56,13 +57,28 @@ class PaymentPeriod(models.Model):
     '''
     raise Exception('Not implemented')
 
-  def pay(self, bill):
+  @property
+  def bill(self):
+    '''
+    Configure bill with saved data on period
+    '''
+    bill = Bill()
+    bill.counts.update({
+      'athlete' : self.nb_athletes,
+      'staff' : self.nb_staff,
+      'trainer' : self.nb_trainers,
+    })
+    bill.calc()
+    return bill
+
+  def pay(self):
     '''
     Pay the subscription, automatically from task
     '''
 
     # Create payment on MangoPay
     try:
+      bill = self.bill
       logger.info('Create payment for %s (%f euros) - sub #%d' % (self.club, bill.total, self.pk))
       resp = self.club.init_payment(bill.total)
 

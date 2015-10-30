@@ -7,4 +7,5 @@ ROLES = (
   ('staff', _('Staff')), # For presidents...
   ('archive', _('Archive')),
   ('prospect', _('Prospect')), # For newcomers
+  ('delete', _('Delete')), # For real deletion, post archive
 )

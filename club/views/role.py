@@ -1,5 +1,6 @@
 from django.views.generic import DetailView
 from django.views.generic.edit import ModelFormMixin, ProcessFormView
+from django.utils.translation import ugettext_lazy as _
 from mixins import ClubManagerMixin
 from club.models import ClubMembership
 from club.forms import ClubMemberRoleForm, ClubMemberTrainersForm
@@ -38,6 +39,10 @@ class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, Proces
     # Remove current role
     if self.membership.role in roles:
       roles.pop(self.membership.role)
+
+    # Add delete role for archives
+    if self.membership.role == 'archive':
+      roles['delete'] = _('Delete')
 
     return roles
 
@@ -82,22 +87,22 @@ class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, Proces
         return self.render_to_response({})
 
       # Delete or save
-      if 'delete' in self.request.POST:
+      if membership.role == 'delete':
         membership.delete()
         self.json_options = [JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE, ]
       else:
         membership.save()
 
-      if self.role_original != membership.role:
-        # When losing trainer role
-        # remove all athletes
-        if self.role_original == 'trainer':
-          membership.user.trainees.clear()
+        if self.role_original != membership.role:
+          # When losing trainer role
+          # remove all athletes
+          if self.role_original == 'trainer':
+            membership.user.trainees.clear()
 
-        # Only send mail for new roles
-        # When send_mail is valid
-        if form.cleaned_data['send_mail']:
-          mail_member_role.delay(membership, self.role_original)
+          # Only send mail for new roles
+          # When send_mail is valid
+          if form.cleaned_data['send_mail']:
+            mail_member_role.delay(membership, self.role_original)
 
     except Exception, e:
       logger.error('Failed to save role update for %s : %s' % (membership.user, str(e)))

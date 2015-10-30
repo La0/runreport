@@ -14,9 +14,9 @@ def auto_payments():
   today = date.today()
 
   for club in Club.objects.all():
-    sub, bill = club.save_roles()
+    sub = club.save_roles()
     if sub is None:
       continue
     print club, sub.end.date(), today
     if sub.end.date() == today:
-      sub.pay(bill)
+      sub.pay()

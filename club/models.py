@@ -229,7 +229,7 @@ class Club(models.Model):
     bill = Bill(self)
     bill.calc()
     if bill.total == 0:
-      return None, None
+      return None
 
     # Fetch or create period
     period = self.current_period
@@ -244,7 +244,7 @@ class Club(models.Model):
     period.nb_staff = max(period.nb_staff, bill.counts.get('staff', 0))
     period.save()
 
-    return period, bill
+    return period
 
   def init_payment(self, amount, card_id=None):
     '''

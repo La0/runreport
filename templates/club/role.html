@@ -64,11 +64,6 @@
             {% endif %}
           </td>
           <td>
-            {% if membership.role == 'archive' %}
-            <p class="text-danger">
-              {{ _('This user is already archived, you can now delete it from your club.') }}
-            </p>
-            {% endif %}
 
             {% if role == 'archive' %}
             <p>
@@ -86,37 +81,36 @@
             <p>
               {{ _('A trainer can manage athletes, and send plans.') }}
             </p>
+            {% elif role == 'delete' %}
+            <p class="text-danger">
+              {{ _('This user is already archived, you can now delete it from your club.') }}
+            </p>
             {% endif %}
           </td>
           <td>
             {% if available %}
+
               {% if role == 'archive' %}
+                <button type="submit" name="role_local" value="archive" class="role btn btn-danger btn-sm">
+                  {% if membership.role == 'prospect' %}
+                    {{ _('Refuse this prospect') }}
+                  {% else %}
+                    {{ _('Archive this account') }}
+                  {% endif %}
+                </button>
 
-                {# Delete #}
-                {% if membership.role == 'archive' %}
-                  {{ form.role }}
-                  <button type="submit" name="delete" value="true" class="role btn btn-danger btn-sm">
-                    <i class="icon-trash"></i>
-                    {{ _('Delete') }}
-                  </button>
+              {% elif role == 'delete' %}
+                <button type="submit" name="role_local" value="delete" class="role btn btn-danger btn-sm">
+                  <i class="icon-trash"></i>
+                  {{ _('Delete') }}
+                </button>
 
-                {# Archive #}
-                {% else %}
-                  <button type="submit" name="role_local" value="archive" class="role btn btn-danger btn-sm">
-                    {% if membership.role == 'prospect' %}
-                      {{ _('Refuse this prospect') }}
-                    {% else %}
-                      {{ _('Archive this account') }}
-                    {% endif %}
-                  </button>
-                {% endif %}
-
-              {# Switch role #}
               {% else %}
               <button type="submit" name="role_local" value="{{ role }}" class="role btn btn-sm btn-success">
                 {{ _('Become') }} {{ role_name }}
               </button>
               {% endif %}
+
             {% else %}
             <a href="{{ url('payment-card', club.slug) }}" class="role btn btn-sm btn-success">
               {{ _('Add a credit card') }}
