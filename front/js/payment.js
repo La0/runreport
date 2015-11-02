@@ -129,3 +129,47 @@ var mangopay_register_card = function(evt){
 
 // Register card on form submit
 $('form#payment').on('submit', mangopay_register_card);
+
+// Price simulator
+var display_prices = function(){
+  var total = 0;
+
+  // Update yearly price
+  $('#price_simulator tr.role').each(function(){
+    var price = $(this).data('price') || 0;
+    total += price;
+    $(this).find('td.month span').text(price);
+    $(this).find('td.year span').text(price*12);
+  });
+
+  // Update total
+  $('#price_simulator tr.total td.month span').text(total);
+  $('#price_simulator tr.total td.year span').text(total*12);
+};
+var calc_prices = function(){
+
+  // Calc input price
+  var input = $(this);
+  var price = 0;
+  try {
+    price = parseInt(input.val()) * parseInt(input.attr('data-price'));
+    if(price < 0)
+      throw "negative";
+  }catch(err){
+    price = 0; // reset
+  }
+
+  // Store price on line
+  var line = input.parent().parent();
+  line.data('price', price);
+
+  // Display all prices
+  display_prices();
+};
+
+// On input, update prices
+$('#price_simulator input').on('input', calc_prices);
+
+// On load, update prices
+$('#price_simulator input').each(calc_prices);
+

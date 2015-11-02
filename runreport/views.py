@@ -1,18 +1,19 @@
 from django.views.generic import TemplateView
-from runreport.features import list_features
 from django.conf import settings
 from django.http import Http404
 import os
 
 class FeaturesView(TemplateView):
   '''
-  Display all features in a single page
+  Display all prices in a single page
   '''
   template_name = 'features.html'
 
   def get_context_data(self, *args, **kwargs):
     context = super(FeaturesView, self).get_context_data(*args, **kwargs)
-    context.update(list_features())
+
+    context['prices'] = settings.PREMIUM_PRICES
+
     return context
 
 class LegalView(TemplateView):

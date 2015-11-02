@@ -6,136 +6,97 @@
 <div class="container" id="features">
 
   <div class="row">
-    <div class="col-sm-2 col-xs-12">
-      <img class="img-circle img-responsive" src="{{ static('img/home/runner.jpg') }}" alt="{{ _('Runner') }}">
+    <div class="col-sm-2 col-xs-4">
+      <img class="img-circle img-responsive" src="{{ static('img/home/runner.jpg') }}" alt="{{ _('Athlete') }}">
     </div>
-    <div class="col-sm-10 col-xs-12">
-      <h3>{{ _('Features for runners') }}</h3>
-      <p>
-        {{ _('All the features below with the tag Premium are only available to paying members of RunReport') }}
+    <div class="col-sm-4 col-xs-8">
+      <h3>{{ _('Features for athletes') }}</h3>
+      <p class="lead">
+        {{ _('All the features for athletes are free.') }}
       </p>
       <p>
-        {{ _('A premium membership costs 14,99 euros per year, without any engagement whatsoever.') }}
+        <a href="{{ url('features-athlete') }}" class="btn btn-info">
+          <i class="icon-premium"></i>
+          {{ _('View all the athletes features') }}
+        </a>
       </p>
+    </div>
 
-      <table class="table table-hover table-bordered">
-        <thead>
-          <tr>
-            <th>{{ _('Feature') }}</th>
-            <th class="text-center">{{ _('Free account') }}</th>
-            <th class="text-center">{{ _('Premium account') }}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for feature in features.runners %}
-          <tr>
-            <td>
-              <a href="#runner_{{ loop.index }}" data-toggle="collapse">{{ feature.name }}</a>
-              {% if feature.new %}
-              <span class="pull-right label label-info">{{ _('New') }}</span>
-              {% endif %}
-            </td>
-            <td class="text-center">
-              {% if not feature.premium %}
-              <i class="icon-ok"></i>
-              {% endif %}
-            </td>
-            <td class="text-center">
-              <i class="icon-ok"></i>
-            </td>
-          </tr>
-          <tr class="collapse" id="runner_{{ loop.index }}">
-            <td colspan="3">
-              {{ feature.description }}
-            </td>
-          </tr>
-          {% endfor %}
-  
-          {# Costs #}
-          <tr class="info">
-            <td>{{ _('Yearly cost') }}</td>
-            <td class="text-center">{{ _('Free') }}</td>
-            <td class="text-center">14,99 &euro;</td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="col-sm-2 col-xs-4">
+      <img class="img-circle img-responsive" src="{{ static('img/home/trainer.jpg') }}" alt="{{ _('Trainer') }}">
+    </div>
+    <div class="col-sm-4 col-xs-8">
+      <h3>{{ _('Features for trainers') }}</h3>
+      <p class="lead">
+        {{ _('A free trial of 45 days is available for all new clubs.') }}
+      </p>
+      <p>
+        <a href="{{ url('features-trainer') }}" class="btn btn-info">
+          <i class="icon-premium"></i>
+          {{ _('View all the trainers features') }}
+        </a>
+      </p>
     </div>
   </div>
 
+  <hr />
+
   <div class="row">
-    <div class="col-sm-2 col-xs-12">
-      <img class="img-circle img-responsive" src="{{ static('img/home/trainer.jpg') }}" alt="{{ _('Trainer') }}">
-    </div>
-    <div class="col-sm-10 col-xs-12">
-      <h3>{{ _('Features for trainers & clubs') }}</h3>
+
+    <div class="col-xs-12">
+      <h3>{{ _('Pricing for trainers & clubs') }}</h3>
       <p class="lead">
-        {{ _('You can get extra features for your club, with our specific premium club status') }}
-        <br />
-        {{ _('Two paying club accounts are available, depending on the number of your athletes') }}
+        {{ _('After the free trial expires (45 days), your club uses the fees specified below:') }}
+        <ul>
+          <li>{{ prices.athlete|floatformat(2) }} &euro;/{{ _('month') }} {{ _('per athlete') }}</li>
+          <li>{{ prices.trainer|floatformat(2) }} &euro;/{{ _('month') }} {{ _('per trainer') }}</li>
+        </ul>
       </p>
 
-      <table class="table table-hover table-bordered">
-        <thead>
-          <tr>
-            <th>{{ _('Feature') }}</th>
-            <th class="text-center">{{ _('Free account') }}</th>
-            <th class="text-center">{{ _('Premium small account') }}</th>
-            <th class="text-center">{{ _('Premium big account') }}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for feature in features.trainers %}
-          <tr>
-            <td>
-              <a href="#trainer_{{ loop.index }}" data-toggle="collapse">{{ feature.name }}</a>
-              {% if feature.new %}
-              <span class="pull-right label label-info">{{ _('New') }}</span>
-              {% endif %}
-            </td>
+      <h3>{{ _('Pricing Simulator') }}</h3>
+      <table class="table table-bordered" id="price_simulator">
+        <tr>
+          <td>{{ _('Role') }}</td>
+          <td>{{ _('Proce') }}</td>
+          <td>{{ _('People in this role') }}</td>
+          <td>{{ _('Monthly price') }}</td>
+          <td>{{ _('Yearly price') }}</td>
+        </tr>
+        
+        {% for role in ('athlete', 'trainer') %}
+        <tr class="role {{ role }}">
+          <td>
+            {{ _(role|title) }}
+          </td>
+          <td>
+            {{ prices[role] }}&euro;/{{ _('month') }}
+          </td> 
+          <td>
+            <input type="number" class="form-control" value="0" data-price="{{ prices[role] }}"/>
+          </td>
+          <td class="month">
+            <span>0</span> &euro;
+          </td>
+          <td class="year">
+            <span>0</span> &euro;
+          </td>
+        </tr>
+        {% endfor %}
 
-            {% if feature.offers %}
-              {% for offer in feature.offers %}
-              <td class="text-center">
-                {{ offer }}
-              </td>
-              {% endfor %}
-            {% else %}
-            <td class="text-center">
-              {% if not feature.premium %}
-              <i class="icon-ok"></i>
-              {% endif %}
-            </td>
-            <td class="text-center">
-              <i class="icon-ok"></i>
-            </td>
-            <td class="text-center">
-              <i class="icon-ok"></i>
-            </td>
-            {% endif %}
-          </tr>
-          <tr class="collapse" id="trainer_{{ loop.index }}">
-            <td colspan="3">
-              {{ feature.description }}
-            </td>
-          </tr>
-          {% endfor %}
-          <tr class="info">
-            <td>{{ _('Yearly cost') }}</td>
-            <td class="text-center">{{ _('Free') }}</td>
-            <td class="text-center">49.90 &euro;</td>
-            <td class="text-center">89.90 &euro;</td>
-          </tr>
-        </tbody>
+        <tr class="total">
+          <td class="text-right" colspan="3">
+            {{ _('Total') }}
+          </td>
+          <td class="month">
+            <span>0</span> &euro;
+          </td>
+          <td class="year">
+            <span>0</span> &euro;
+          </td>
+        </tr>
+
       </table>
-      <p class="text-right">
-        {% if not user.is_authenticated() %}
-          <i class="icon-premium"></i>
-          {{ _('To get all those premium features :') }}
-          <a href="{{ url('login') }}">{{ _('Login') }}</a>
-          {{ _('or') }}
-          <a href="{{ url('user-create') }}">{{ _('Sign up') }}</a>
-        {% endif %}
-      </p>
+
     </div>
   </div>
 </div>
