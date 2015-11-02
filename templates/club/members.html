@@ -31,7 +31,7 @@
     {% endif %}
   </p>
 
-	{% if request.user == club.manager or request.user.is_staff %}
+	{% if user == club.manager or user.is_staff %}
 	<ul class="breadcrumb">
 		<li><a href="{{ url('club-members-name', club.slug, 'athletes', sort) }}">{{ _('My Athletes') }}</a></li>
 		<li><a href="{{ url('club-members-name', club.slug, 'all', sort) }}">{{ _('All members') }}</a></li>
@@ -53,7 +53,7 @@
 		<table class="table table-striped">
 			<tr>
 				<th colspan="2">{{ macros.sort_title('Athlète', 'name', 'club-members-name', (club.slug, type, ), sort) }}</th>
-				{% if request.user == club.manager or request.user.is_staff %}
+				{% if user == club.manager or user.is_staff %}
 				<th>{{ _('Role') }}</th>
 				<th>{{ _('Trainers') }}</th>
 				{% endif %}
@@ -71,9 +71,9 @@
                 <td>
                     {{ member.first_name|lower|title }} {{ member.last_name|lower|title }}
                 </td>
-                {% if request.user == club.manager or request.user.is_staff %}
+                {% if user == club.manager or user.is_staff %}
                 <td>
-                  {% if member == request.user %}
+                  {% if member == user %}
                   <span class="label label-primary">
                     {{ _('Manager') }}
                   </span>
@@ -109,7 +109,7 @@
                   {% endif %}
                 </td>
                 <td>
-                  {% if member.role in ('trainer', 'athlete') %}
+                  {% if member.membership.role in ('trainer', 'athlete') %}
                   <ul class="trainers">
                     {% for trainer in member.membership.trainers.all() %}
                     <li class="trainer">
@@ -119,8 +119,7 @@
                       </a>
                     </li>
                     {% endfor %}
-
-                    {% if request.user == club.manager or request.user.is_staff %}
+                    {% if club.has_full_access and (user == club.manager or user.is_staff) %}
                     <li>
                       <a href="{{ url('club-member-trainers', club.slug, member.username) }}" class="modal-action btn btn-xs btn-info btn-light">
                         <i class="icon-plus"></i>

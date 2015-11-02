@@ -58,12 +58,15 @@ class RunCalendar(MonthArchiveView):
     sessions_per_days = dict((r.date, r) for r in sessions)
     sessions_per_days = collections.OrderedDict(sorted(sessions_per_days.items()))
 
-    # Loadd all friends sessions for this month
+    # Load all friends sessions for this month
     friends = None
     if user == self.request.user:
       friends = SportSession.objects.filter(day__week__user__in=user.friends.all(), day__date__in=self.days)
       friends = friends.values('day__date').annotate(nb=Count('day__date'))
       friends = dict((f['day__date'], f['nb']) for f in friends)
+
+
+    # Check the user has full access
 
     context = {
       'today' : date.today(),

@@ -71,6 +71,18 @@
 		<tr>
 			{% for day in week %}
 			{% with session = sessions[day] %}
+      
+      {% if fog and day not in fog %}
+      <td>
+        {% with nb = session.sessions.count() %}
+        {% if nb > 0 %}
+        <p class="text-warning">
+          {{ _('%d hidden sessions: your club is not premium.') % nb }}
+        </p>
+        {% endif %}
+        {% endwith %}
+      </td>
+      {% else %}
 			<td class="day link {% if day == today %}today{% endif %}" href="{{url(pageday, *pageargs + [day.year, day.month, day.day])}}">
 
 				<p class="date">
@@ -110,6 +122,7 @@
           {% endif %}
         {% endwith %}
 			</td>
+      {% endif %}
 			{% endwith %}
 			{% endfor %}
 		</tr>
@@ -119,7 +132,9 @@
 	<div class="visible-xs row-striped">
 		{% for day_date in date_list %}
       {% with day = object_list.get(day_date, None) %}
-      {% include 'sport/calendar/_day.xs.html' %}
+        {% if not fog or day_date in fog %}
+          {% include 'sport/calendar/_day.xs.html' %}
+        {% endif %}
       {% endwith %}
 		{% endfor %}
 	</div>

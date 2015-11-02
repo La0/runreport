@@ -53,6 +53,22 @@
         <blockquote class="text-info">
           {{ _('You are in the free trial period !') }}
         </blockquote>
+        {% elif period.status == 'active' %}
+        <blockquote class="text-info">
+          {{ _('You will be billed at the end of the period.') }}
+        </blockquote>
+        {% elif period.status == 'paid' %}
+        <blockquote class="text-success">
+          {{ _('This period has been paid') }}
+        </blockquote>
+        {% elif period.status == 'expired' %}
+        <blockquote class="text-warning">
+          {{ _('This period has expired, you have to pay to get back all the features.') }}
+        </blockquote>
+        {% elif period.status == 'error' %}
+        <blockquote class="text-danger">
+          {{ _('A payment error happened on this period. You will be contacted by the administrators.') }}
+        </blockquote>
         {% else %}
         <p class="text-muted">
           Status: {{ period.status }}
@@ -65,7 +81,17 @@
       {% endif %}
       {% endwith %}
 
-      <h3>{{ _('Your current bill') }}</h3>
+      {% if club.has_full_access %}
+      <blockquote class="text-success">
+        {{ _('Trainers in your club have full access to their athletes.') }}
+      </blockquote>
+      {% else %}
+      <blockquote class="text-danger">
+        {{ _('Trainers in your club do not have full access to their athletes; you need to pay for this period.') }}
+      </blockquote>
+      {% endif %}
+
+      <h3>{{ _('Your next bill') }}</h3>
       <div class="table-responsive">
         <table class="table table-striped">
           <tr>

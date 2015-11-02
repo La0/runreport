@@ -7,16 +7,19 @@ def auto_payments():
   '''
   Automatic payments
    * save max roles
-   * auto payment on subscription end
+   * auto payment on periodscription end
   '''
   from club.models import Club
   from datetime import date
   today = date.today()
 
   for club in Club.objects.all():
-    sub = club.save_roles()
-    if sub is None:
+
+    # Calc all new roles
+    period = club.save_roles()
+    if period is None:
       continue
-    print club, sub.end.date(), today
-    if sub.end.date() == today:
-      sub.pay()
+
+    # Auto pay
+    if period.status == 'active' and period.end.date() <= today:
+      period.pay()

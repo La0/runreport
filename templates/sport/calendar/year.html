@@ -47,16 +47,22 @@
             <div class="day link" href="{{ url(pageday, *pageargs + [day_date.year, day_date.month, day_date.day]) }}">
               <span class="date">{{ day_date.day }}</span>
               {% if day %}
-                <p class="name">
-                {% for s in day.sessions.all() %}
-                  <span class="session {{ s.type }}">
-                    <i class="icon-sport-{{s.sport.slug}}"></i>
-                    {% if day.sessions.count() == 1 %}
-                      {{ s.name|default('...')|truncatechars(20) }}
-                    {% endif %}
-                  </span>
-                {% endfor %}
-                </p>
+                {% if fog and day.date not in fog %}
+                  {% if day and day.sessions.exists() %}
+                  <p class="text-warning">{{ _('Hidden') }}</p>
+                  {% endif %}
+                {% else %}
+                  <p class="name">
+                  {% for s in day.sessions.all() %}
+                    <span class="session {{ s.type }}">
+                      <i class="icon-sport-{{s.sport.slug}}"></i>
+                      {% if day.sessions.count() == 1 %}
+                        {{ s.name|default('...')|truncatechars(20) }}
+                      {% endif %}
+                    </span>
+                  {% endfor %}
+                  </p>
+                {% endif %}
               {% endif %}
             </div>
             {% endfor %}

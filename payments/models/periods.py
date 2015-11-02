@@ -6,7 +6,7 @@ import logging
 
 logger = logging.getLogger('payments')
 
-SUBSCRIPTION_STATUS = (
+PERIOD_STATUS = (
   ('free', _('Free')), # Awaiting validation
   ('active', _('Active')),
   ('paid', _('Paid')),
@@ -27,7 +27,7 @@ class PaymentPeriod(models.Model):
   nb_staff = models.IntegerField(default=0)
 
   # Status
-  status = models.CharField(choices=SUBSCRIPTION_STATUS, max_length=20, default='created')
+  status = models.CharField(choices=PERIOD_STATUS, max_length=20, default='active')
 
   # Mangopay Id transaction
   mangopay_id = models.CharField(max_length=50, unique=True, null=True, blank=True)
@@ -78,6 +78,9 @@ class PaymentPeriod(models.Model):
 
     # Create payment on MangoPay
     try:
+      if not self.club.has_valid_card:
+        raise Exception('Missing valid card')
+
       bill = self.bill
       logger.info('Create payment for %s (%f euros) - sub #%d' % (self.club, bill.total, self.pk))
       resp = self.club.init_payment(bill.total)
@@ -85,6 +88,7 @@ class PaymentPeriod(models.Model):
       if resp.Status == 'SUCCEEDED':
         # TODO: Send success mails
         # TODO: Update status
+        self.status = 'paid'
         pass
       else:
         raise Exception('Invalid response from Mangopay %s' % resp.Status)
@@ -93,5 +97,9 @@ class PaymentPeriod(models.Model):
 
       # TODO: send manual payment mail
       # TODO: Update status
+      self.status = 'error'
+
+    # Save new status
+    self.save()
 
     # TODO: Send admin email

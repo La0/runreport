@@ -23,7 +23,15 @@
 </div>
 
 <div class="col-sm-11">
-  {% if day and day.sessions.count() %}
+  {% if fog and day.date not in fog %}
+  <div class="col-xs-12">
+    {% if day.sessions.count %}
+    <h5>
+      <span class="text-warning">{{ _('Hidden sessions, your club is not premium.') }}</span>
+    </h5>
+    {% endif %}
+  </div>
+  {% elif day and day.sessions.count() %}
   {% for session in day.sessions.order_by('created') %}
   {% with has_track = (session.track and session.track.thumb) %}
   <div class="sport-session row">
