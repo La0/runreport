@@ -45,6 +45,28 @@
 
   </ol>
 
+  {% for m in memberships %}
+    {% if m.club.manager == user and not m.club.has_full_access %}
+    <div class="alert alert-warning">
+      <h4>
+        <i class="icon-premium"></i>
+        {{ _('Club %s is in limited access') % m.club.name }}
+      </h4>
+      <p class="pull-right">
+        <a href="{{ url('club-manage', m.club.slug) }}" class="btn btn-danger">
+          {{ _('Manage my club') }}
+          <i class="icon-right-open"></i>
+        </a>
+      </p>
+      <p>
+        {{ _('Your club has expired the free trial period, and is now in a limited access period.') }}
+        <br />
+        {{ _('You need to activate a credit card for this club.') }}
+      </p>
+    </div>
+    {% endif %}
+  {% endfor %}
+
   {% if prospects %}
   <div class="row">
     <div class="col-xs-12">

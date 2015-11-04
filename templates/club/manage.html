@@ -192,9 +192,9 @@
             {% elif period.status == 'paid' %}
             <span class="label label-success">{{ _('Paid') }}</span>
             {% elif period.status == 'expired' %}
-            <span class="label label-info">{{ _('Expired') }}</span>
+            <span class="label label-danger">{{ _('Expired') }}</span>
             {% elif period.status == 'error' %}
-            <span class="label label-info">{{ _('Error in payments') }}</span>
+            <span class="label label-danger">{{ _('Error in payments') }}</span>
             {% else %}
             <span class="label label-default">{{ _('Unknown status') }}</span>
             {% endif %}
