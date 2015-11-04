@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, url
-from payments.views import PaymentCardView, Payment3DsView, PaymentNotification
+from payments.views import PaymentCardView, Payment3DsView, PaymentNotification, PaymentPeriodView
 
 urlpatterns = patterns('',
 
@@ -11,4 +11,7 @@ urlpatterns = patterns('',
 
     # Notifications from Mangopay
     url(r'^notification/(?P<hash>\w+)/', PaymentNotification.as_view(), name='payment-notification'),
+
+    # Pay a specified period (error management)
+    url(r'^pay/(?P<pk>\d+)/', PaymentPeriodView.as_view(), name='payment-period'),
 )

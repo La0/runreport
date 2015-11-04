@@ -1,0 +1,46 @@
+<div class="table-responsive">
+  <table class="table table-striped">
+    <tr>
+      <th>{{ _('Users type') }}</th>
+      <th>{{ _('Total') }}</th>
+      <th>{{ _('Unit Cost') }}</th>
+      <th>{{ _('Total') }}</th>
+    </tr>
+    {% for stat in bill.stats %}
+    <tr>
+      <td>{{ _(stat.type|title) }}</td>
+      <td>{{stat.total}}</td>
+      <td>
+        {{ stat.unit|floatformat(2) }} &euro;
+      </td>
+      <td>
+        {% if stat.price == 0 %}
+        <span class="label label-success">
+          {{ _('Free') }}
+        </span>
+        {% else %}
+        <strong>
+          {{ stat.price|floatformat(2) }} &euro;
+        </strong>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <td class="text-right" colspan="3">
+        <strong>{{ _('Total') }}</strong>
+      </td>
+      <td>
+        {% if bill.total == 0 %}
+        <span class="label label-success">
+          {{ _('Free') }}
+        </span>
+        {% else %}
+        <strong>
+          {{ bill.total|floatformat(2) }} &euro;
+        </strong>
+        {% endif %}
+      </td>
+    </tr>
+  </table>
+</div>

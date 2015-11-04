@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h1>{{ _('Pay period for %s') % period.club.name }}</h1>
+  <div class="lead">
+    <i class="icon-calendar"></i>
+    {{ _('From %s to %s') % (period.start|date('d E Y'), period.end|date('d E Y')) }}
+  </div>
+
+  {% with bill = period.bill %}
+    {% include 'payments/_bill.html' %}
+  {% endwith %}
+
+  <hr />
+  <div class="actions">
+    <a href="{{ url('club-manage', period.club.slug) }}" class="btn btn-default">
+      {{ _('Cancel') }}
+    </a>
+
+    {% if period.club.has_valid_card %}
+    <form method="post" action="" style="display: inline">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-primary">
+        {{ _('Pay') }} {{ period.bill.total|floatformat(2) }} &euro;
+      </button>
+    </form>
+    {% else %}
+    <a href="{{ url('payment-card', period.club.slug) }}" class="btn btn-primary">
+      {{ _('Add a credit card') }}
+    </a>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
