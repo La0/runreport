@@ -142,6 +142,7 @@
           <th>{{ _('Period') }}</th>
           <th>{{ _('Status') }}</th>
           <th>{{ _('Payment') }}</th>
+          <th>{{ _('Actions') }}</th>
         </tr>
         {% for period in club.periods.order_by('-start') %}
         <tr>
@@ -179,6 +180,19 @@
               {{ _('No payments') }}
             </p>
             {% endfor %}
+          </td>
+          <td>
+            {% if period.status == 'paid' %}
+            <a class="btn btn-primary" href="">
+              {{ _('Download bill') }}
+            </a>
+            {% elif period.status in ('error', 'expired', ) %}
+            <a class="btn btn-danger" href="{{ url('payment-period', period.pk) }}">
+              {{ _('Pay this period') }}
+            </a>
+            {% else %}
+            <i class="text-muted">{{ _('No actions') }}</i>
+            {% endif %}
           </td>
         </tr>
         {% endfor %}

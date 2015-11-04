@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
+from django.conf import settings
+from datetime import timedelta
 from payments.bill import Bill
 import logging
 
@@ -87,16 +89,25 @@ class PaymentPeriod(models.Model):
 
       if resp.Status == 'SUCCEEDED':
         # TODO: Send success mails
-        # TODO: Update status
+
+        # Update status
         self.status = 'paid'
-        pass
+
+        # End current period
+        now = timezone.now()
+        self.end = now
+
+        # Create new current period
+        end = now + timedelta(days=settings.PAYMENTS_PERIOD)
+        PaymentPeriod.objects.create(club=self.club, start=now, end=end)
       else:
         raise Exception('Invalid response from Mangopay %s' % resp.Status)
     except Exception, e:
       logger.error('Payment failed for club %s : %s' % (self.club, e))
 
       # TODO: send manual payment mail
-      # TODO: Update status
+
+      # Update status
       self.status = 'error'
 
     # Save new status
