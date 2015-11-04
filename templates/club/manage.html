@@ -183,7 +183,7 @@
           </td>
           <td>
             {% if period.status == 'paid' %}
-            <a class="btn btn-primary" href="">
+            <a class="btn btn-primary" href="{{ url('payment-export', period.pk) }}">
               {{ _('Download bill') }}
             </a>
             {% elif period.status in ('error', 'expired', ) %}

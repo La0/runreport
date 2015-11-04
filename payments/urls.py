@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, url
-from payments.views import PaymentCardView, Payment3DsView, PaymentNotification, PaymentPeriodView
+from payments.views import PaymentCardView, Payment3DsView, PaymentNotification, PaymentPeriodView, PaymentPeriodExport
 
 urlpatterns = patterns('',
 
@@ -14,4 +14,7 @@ urlpatterns = patterns('',
 
     # Pay a specified period (error management)
     url(r'^pay/(?P<pk>\d+)/', PaymentPeriodView.as_view(), name='payment-period'),
+
+    # Download the pdf of a bill
+    url(r'^export/(?P<pk>\d+)/', PaymentPeriodExport.as_view(), name='payment-export'),
 )
