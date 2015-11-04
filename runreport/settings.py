@@ -427,7 +427,7 @@ CLUB_CREATION_OPEN = True
 
 # Payments integration
 PAYMENTS_ENABLED = False
-PAYMENTS_TRIAL = 45 # In days
+PAYMENTS_TRIAL = 90 # In days
 PAYMENTS_PERIOD = 30 # In days
 MANGOPAY_ID = None
 MANGOPAY_SECRET = None
@@ -442,9 +442,9 @@ ARCHIVES_DIR = os.path.join(HOME, 'archives')
 
 # Premium prices, per month
 PREMIUM_PRICES = {
-  'athlete' : 2.0,
-  'trainer' : 4.0,
-  'staff' : 2.0,
+  'athlete' : 1.0,
+  'trainer' : 5.0,
+  'staff' : 1.0,
   'archive' : 0.0,
 }
 
