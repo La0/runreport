@@ -25,6 +25,12 @@
         {{ _('Pay') }} {{ period.bill.total|floatformat(2) }} &euro;
       </button>
     </form>
+
+    <p class="pull-right">
+      <a href="https://mangopay.com" target="_blank">
+        <img src="{{ static('img/mangopay.png') }}" alt="Mangopay" />
+      </a>
+    </p>
     {% else %}
     <a href="{{ url('payment-card', period.club.slug) }}" class="btn btn-primary">
       {{ _('Add a credit card') }}

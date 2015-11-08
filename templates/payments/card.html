@@ -94,10 +94,6 @@
           </button>
         </div>
       </fieldset>
-      <p class="text-center text-muted">
-        {{ _('Secured & processed with') }}
-        <a href="https://mangopay.com" target="_blank">MangoPay</a>
-      </p>
     </form>
     <div class="alert alert-success hidden">
       <h4>{{ _('Valid payment') }}</h4>
@@ -115,6 +111,11 @@
       </p>
     </div>
   </div>
+  <p class="text-center text-muted">
+    <a href="https://mangopay.com" target="_blank">
+      <img src="{{ static('img/mangopay.png') }}" alt="Mangopay" />
+    </a>
+  </p>
 
 </div>
 {% endblock %}

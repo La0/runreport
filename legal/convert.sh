@@ -27,5 +27,5 @@ EOF
 }
 
 # Main
-convert mentions
+#convert mentions
 convert cgu
