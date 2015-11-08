@@ -1,0 +1,17 @@
+{% extends "mail/base.html" %}
+
+{% set title = period.status == 'paid' and _('Payment successful') or _('Payment error') %}
+
+{% block mail %}
+{{ _('Hello %s') % user.first_name }},
+
+<p>
+{% if period.status == 'paid' %}
+PAID !
+{% else %}
+ERROR !
+{% endif %}
+</p>
+
+
+{% endblock %}

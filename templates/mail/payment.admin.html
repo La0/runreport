@@ -1,0 +1,30 @@
+{% extends "mail/base.html" %}
+
+{% set title = _('Payment status') %}
+
+{% block mail %}
+{{ _('Hello Admin') }},
+
+<p>
+  {{ _('A new payment has been processed') }}
+</p>
+
+<p>
+  <strong>{{ _('Club') }} : </strong>
+  <a href="{{ base_url }}{{ url('club-manage', period.club.slug) }}">
+    {{ period.club.name }}
+  </a>
+</p>
+<p>
+  <strong>{{ _('Period') }} : </strong>
+  <a href="{{ base_url }}{{ url('payment-export', period.pk) }}">
+    #{{ period.pk }} - {{ period.status|title }}
+  </a>
+</p>
+<p>
+  <strong>{{ _('Total') }} : </strong>
+  {{ period.bill.total }} &euro;
+</p>
+
+
+{% endblock %}

@@ -4,6 +4,7 @@ from django.utils import timezone
 from django.conf import settings
 from datetime import timedelta
 from payments.bill import Bill
+from payments.tasks import notify_admin, notify_club
 import logging
 
 logger = logging.getLogger('payments')
@@ -88,8 +89,6 @@ class PaymentPeriod(models.Model):
       resp = self.club.init_payment(bill.total)
 
       if resp.Status == 'SUCCEEDED':
-        # TODO: Send success mails
-
         # Update status
         self.status = 'paid'
 
@@ -100,17 +99,23 @@ class PaymentPeriod(models.Model):
         # Create new current period
         end = now + timedelta(days=settings.PAYMENTS_PERIOD)
         PaymentPeriod.objects.create(club=self.club, start=now, end=end)
+
+        # Send success mails
+        notify_club.delay(self)
       else:
         raise Exception('Invalid response from Mangopay %s' % resp.Status)
     except Exception, e:
       logger.error('Payment failed for club %s : %s' % (self.club, e))
 
-      # TODO: send manual payment mail
-
       # Update status
       self.status = 'error'
+
+      # Send manual payment mail
+      notify_club.delay(self)
+
 
     # Save new status
     self.save()
 
-    # TODO: Send admin email
+    # Send admin email
+    notify_admin.delay(self)
