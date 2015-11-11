@@ -5,6 +5,7 @@ from club.models import Club, ClubLink
 from club.forms import ClubCreateForm, ClubLinkForm
 from club import ROLES
 from django.http import HttpResponseRedirect
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from runreport.mixins import JsonResponseMixin, JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE
 from runreport.features import list_features
@@ -48,6 +49,7 @@ class ClubManage(ClubManagerMixin, UpdateView):
     context.update(list_features())
     context['now'] = timezone.now()
     context['periods'] = self.club.periods.all()
+    context['prices'] = settings.PREMIUM_PRICES
 
     # Add bill
     if self.club.current_period:

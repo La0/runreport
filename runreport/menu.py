@@ -149,7 +149,7 @@ def add_pages(request):
     submenu['menu'].append(_p('logout', _('Logout')))
     menu.append(submenu)
   else:
-    menu.append(_p('features', _('Features'), 'icon-star', lazy=True))
+    menu.append(_p('pricing', _('Pricing'), 'icon-premium'))
     menu.append(_build_help())
     menu.append(_p('user-create', _('Create an account'), 'icon-plus'))
     menu.append(_p('login', _('Login'), 'icon-user'))

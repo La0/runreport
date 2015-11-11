@@ -54,6 +54,7 @@ $url_1: url(#{$cdn_url}/static/img/landing/runners.jpg);
 $url_2: url(#{$cdn_url}/static/img/landing/track.jpg);
 $url_runners_2: url(#{$cdn_url}/static/img/landing/runners2.jpg);
 $url_trainers: url(#{$cdn_url}/static/img/landing/track.jpg);
+$url_back: url(#{$cdn_url}/static/img/landing/back.jpg);
 
 //@extend-elements
 //original selectors
@@ -1120,6 +1121,23 @@ td.avatar {
   &.trainers {
     div.jumbotron {
       background-image: $url_trainers;
+    }
+  }
+
+  &.pricing {
+    div.jumbotron {
+      background-repeat: repeat;
+      background-image: $url_back;
+      color: white;
+    }
+
+    div.prices {
+      margin-top: 50px;
+
+      p.price {
+        font-size: 1.5em;
+        font-weight: bold;
+      }
     }
   }
 

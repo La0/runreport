@@ -203,6 +203,60 @@
       </p>
       {% endif %}
 
+      <div class="row">
+
+        <div class="col-xs-12">
+          <h3>{{ _('Pricing Simulator') }}</h3>
+          <p class="text-info">
+            <i class="icon-help-circled"></i>
+            {{ _('This simulator helps you estimate your club future bills') }}
+          </p>
+          <table class="table table-bordered" id="price_simulator">
+            <tr>
+              <td>{{ _('Role') }}</td>
+              <td>{{ _('Proce') }}</td>
+              <td>{{ _('People in this role') }}</td>
+              <td>{{ _('Monthly price') }}</td>
+              <td>{{ _('Yearly price') }}</td>
+            </tr>
+            
+            {% for role in ('athlete', 'trainer') %}
+            <tr class="role {{ role }}">
+              <td>
+                {{ _(role|title) }}
+              </td>
+              <td>
+                {{ prices[role] }}&euro;/{{ _('month') }}
+              </td> 
+              <td>
+                <input type="number" class="form-control" value="0" data-price="{{ prices[role] }}"/>
+              </td>
+              <td class="month">
+                <span>0</span> &euro;
+              </td>
+              <td class="year">
+                <span>0</span> &euro;
+              </td>
+            </tr>
+            {% endfor %}
+
+            <tr class="total">
+              <td class="text-right" colspan="3">
+                {{ _('Total') }}
+              </td>
+              <td class="month">
+                <span>0</span> &euro;
+              </td>
+              <td class="year">
+                <span>0</span> &euro;
+              </td>
+            </tr>
+
+          </table>
+
+        </div>
+      </div>
+
     </div>
 
     <div class="tab-pane" id="edit">

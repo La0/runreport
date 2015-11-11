@@ -3,14 +3,14 @@ from django.conf import settings
 from django.http import Http404
 import os
 
-class FeaturesView(TemplateView):
+class PricingView(TemplateView):
   '''
   Display all prices in a single page
   '''
-  template_name = 'features.html'
+  template_name = 'landing/pricing.html'
 
   def get_context_data(self, *args, **kwargs):
-    context = super(FeaturesView, self).get_context_data(*args, **kwargs)
+    context = super(PricingView, self).get_context_data(*args, **kwargs)
 
     context['prices'] = settings.PREMIUM_PRICES
 

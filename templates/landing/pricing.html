@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% set page_title = _('Features') %}
+
+{% block content %}
+<div id="features" class="pricing">
+  <div class="container-fluid jumbotron">
+    <h1>{{ _('RunReport is free for athletes') }}</h1>
+    <p class="lead">
+      {{ _('All the features are and will remain free for athletes, without ads.') }}
+    </p>
+  </div>
+
+  <div class="container text-center">
+    <h1>{{ _('Clubs are paying on a per-user basis') }}</h1>
+    <p class="lead text-info">
+      <i class="icon-premium"></i>
+      {{ _('A club has a free trial of 45 days, with full features enabled') }}
+    </p>
+
+    <div class="row prices">
+
+      <div class="col-sm-6 col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">{{ _('Athletes') }}</h3>
+          </div>
+          <div class="panel-body">
+            <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+              <img class="img-rounded img-responsive" src="{{ static('img/home/runner.jpg') }}" alt="{{ _('Athlete') }}">
+            </div>
+
+            <p>
+              <a href="{{ url('features-athlete') }}" class="btn btn-info btn-light">
+                <i class="icon-premium"></i>
+                {{ _('View all the athletes features') }}
+              </a>
+            </p>
+
+            <p class="price">
+              {{ prices.athlete|floatformat(2) }} &euro;/{{ _('month') }} {{ _('per athlete') }}
+            </p>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">{{ _('Trainers') }}</h3>
+          </div>
+          <div class="panel-body">
+            <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+              <img class="img-rounded img-responsive" src="{{ static('img/home/trainer.jpg') }}" alt="{{ _('Trainer') }}">
+            </div>
+
+            <p>
+              <a href="{{ url('features-trainer') }}" class="btn btn-info btn-light">
+                <i class="icon-premium"></i>
+                {{ _('View all the trainers features') }}
+              </a>
+            </p>
+
+            <p class="price">
+              {{ prices.trainer|floatformat(2) }} &euro;/{{ _('month') }} {{ _('per trainer') }}
+            </p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

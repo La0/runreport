@@ -5,7 +5,7 @@ from django.contrib.gis import admin
 from django.views.generic.base import RedirectView, TemplateView
 from club.views import ClubInviteCheck
 from messages.views import ContactView
-from runreport.views import FeaturesView, LegalView
+from runreport.views import PricingView, LegalView
 
 admin.autodiscover()
 
@@ -29,7 +29,7 @@ urlpatterns = patterns('',
   # Landing pages
   url(r'^features/athlete/?', TemplateView.as_view(template_name='landing/athlete.html'), name="features-athlete"),
   url(r'^features/trainer/?', TemplateView.as_view(template_name='landing/trainer.html'), name="features-trainer"),
-  url(r'^features/?', FeaturesView.as_view(), name="features"),
+  url(r'^pricing/?', PricingView.as_view(), name="pricing"),
   url(r'^legal/(?P<type>mentions|cgu)/?', LegalView.as_view(), name="legal"),
 
   # Contact Form
