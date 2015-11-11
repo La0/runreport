@@ -47,7 +47,7 @@
             <div class="day link" href="{{ url(pageday, *pageargs + [day_date.year, day_date.month, day_date.day]) }}">
               <span class="date">{{ day_date.day }}</span>
               {% if day %}
-                {% if fog and day.date not in fog %}
+                {% if fog and day.date >= fog %}
                   {% if day and day.sessions.exists() %}
                   <p class="text-warning">{{ _('Hidden') }}</p>
                   {% endif %}

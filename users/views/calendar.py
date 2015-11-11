@@ -1,6 +1,5 @@
 from users.views.mixins import ProfilePrivacyMixin
 from sport.views import RunCalendarYear, RunCalendar, RunCalendarDay, WeeklyReport, ExportMonth
-from datetime import date, timedelta
 from django.core.exceptions import PermissionDenied
 
 class AthleteCalendarMixin(ProfilePrivacyMixin):
@@ -17,13 +16,13 @@ class AthleteCalendarMixin(ProfilePrivacyMixin):
 
   def get_context_data(self, *args, **kwargs):
     context = super(AthleteCalendarMixin, self).get_context_data(*args, **kwargs)
-    context['fog'] = self.get_days_in_fog()
+    context['fog'] = self.get_fog_limit()
     return context
 
-  def get_days_in_fog(self):
+  def get_fog_limit(self):
     '''
-    Hide some days when a club has not
-    paid for its athletes
+    When club is not in full access
+    Days AFTER this limit are hidden
     '''
 
     # Only for trainers
@@ -31,13 +30,14 @@ class AthleteCalendarMixin(ProfilePrivacyMixin):
         return None
 
     # Only for clubs without full access
-    access = [m.club.has_full_access for m in self.member.memberships.filter(trainers=self.request.user)]
-    if True in access:
-        return None
+    memberships = self.member.memberships.filter(trainers=self.request.user)
+    for m in memberships:
+        if m.club.has_full_access:
+            continue
 
-    today = date.today()
-    days = range(-15, 7)
-    return [today + timedelta(days=d) for d in days]
+        return m.club.current_period.end.date()
+
+    return None
 
 class AthleteCalendarYear(AthleteCalendarMixin, RunCalendarYear):
   pass
@@ -54,8 +54,8 @@ class AthleteCalendarDay(AthleteCalendarMixin, RunCalendarDay):
     out = super(AthleteCalendarDay, self).get_object(*args, **kwargs)
 
     # Check current day is not in fog
-    fog = self.get_days_in_fog()
-    if fog and self.day not in fog:
+    fog = self.get_fog_limit()
+    if fog and self.day >= fog:
       raise PermissionDenied
 
     return out

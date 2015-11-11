@@ -72,9 +72,9 @@
 			{% for day in week %}
 			{% with session = sessions[day] %}
       
-      {% if fog and day not in fog %}
+      {% if fog and day >= fog %}
       <td>
-        {% with nb = session.sessions.count() %}
+        {% with nb = session and session.sessions.count() or 0 %}
         {% if nb > 0 %}
         <p class="text-warning">
           {{ _('%d hidden sessions: your club is not premium.') % nb }}
@@ -132,7 +132,7 @@
 	<div class="visible-xs row-striped">
 		{% for day_date in date_list %}
       {% with day = object_list.get(day_date, None) %}
-        {% if not fog or day_date in fog %}
+        {% if not fog or day_date < fog %}
           {% include 'sport/calendar/_day.xs.html' %}
         {% endif %}
       {% endwith %}
