@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-12 22:23+0200\n"
-"PO-Revision-Date: 2015-10-12 22:26+0100\n"
+"POT-Creation-Date: 2015-11-12 17:31+0100\n"
+"PO-Revision-Date: 2015-11-12 17:49+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -18,13 +18,31 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 1.5.4\n"
 
+msgid "Athlete"
+msgstr "Athlète"
+
+msgid "Trainer"
+msgstr "Entraîneur"
+
+msgid "Staff"
+msgstr "Staff"
+
+#| msgid "Archives"
+msgid "Archive"
+msgstr "Archive"
+
+msgid "Prospect"
+msgstr "Nouveau"
+
+msgid "Delete"
+msgstr "Supprimer"
+
 msgid "Phone"
 msgstr "Téléphone"
 
 msgid "Your country of residence"
 msgstr "Votre pays de résidence"
 
-#| msgid "Your activities"
 msgid "Your nationality"
 msgstr "Votre nationalité"
 
@@ -151,47 +169,60 @@ msgstr "Votre message"
 msgid "New contact message"
 msgstr "Nouveau message de contact"
 
-msgid "Created"
-msgstr "Crée"
+#| msgid "Unit: cm"
+msgid "Unit Price"
+msgstr "Prix unitaire"
+
+msgid "Nb. of roles"
+msgstr "Nb. de roles"
+
+msgid "Total"
+msgstr "Total"
+
+#, python-format
+#| msgid "No places created for club %s"
+msgid "Payment for club %s"
+msgstr "Paiement du club %s"
+
+#, python-format
+msgid "From %s to %s"
+msgstr "De %s à %s"
+
+msgid "Free"
+msgstr "Gratuit"
 
 msgid "Active"
 msgstr "Actif"
 
-msgid "Inactive"
-msgstr "Inactif"
+msgid "Paid"
+msgstr "Payé"
 
 msgid "Expired"
 msgstr "Expiré"
 
+msgid "Error"
+msgstr "Erreur"
+
+msgid "Created"
+msgstr "Crée"
+
 msgid "Failed"
 msgstr "Manqué"
 
-msgid "Club"
-msgstr "Club"
+msgid "Succeeded"
+msgstr "Réussi"
 
-msgid "Athlete"
-msgstr "Athlète"
+#| msgid "Payments"
+msgid "Payment successful"
+msgstr "Paiement réussi"
 
-msgid "Open"
-msgstr "Ouvert"
+#| msgid "Payment"
+msgid "Payment error"
+msgstr "Erreur de paiement"
 
-msgid "Pending"
-msgstr "En cours"
-
-msgid "Closed"
-msgstr "Fermé"
-
-msgid "Partial Refund"
-msgstr "Remboursement partiel"
-
-msgid "Refunded"
-msgstr "Remboursé"
-
-msgid "Pre-Authorize"
-msgstr "Pre-Authorisation"
-
-msgid "Chargeback"
-msgstr "Chargeback"
+#| msgid "Payment"
+msgid "New Payment"
+msgstr "Nouveau paiement"
 
 msgid "Applied"
 msgstr "A faire"
@@ -496,8 +527,8 @@ msgstr "Mon matériel"
 msgid "Logout"
 msgstr "Se déconnecter"
 
-msgid "Features"
-msgstr "Fonctionalités"
+msgid "Pricing"
+msgstr "Tarifs"
 
 msgid "Create an account"
 msgstr "Créer un compte"
@@ -622,6 +653,9 @@ msgstr "Mentions"
 msgid "All the clubs"
 msgstr "Tous les club"
 
+msgid "Club"
+msgstr "Club"
+
 msgid "Plans"
 msgstr "Plans"
 
@@ -711,7 +745,6 @@ msgstr "Attention"
 msgid "You can create and administer only one club."
 msgstr "Vous ne pouvez créer et administrer qu'un club."
 
-#| msgid "Personal Informations"
 msgid "Your personal information"
 msgstr "Informations personelles"
 
@@ -736,9 +769,6 @@ msgstr "Etes vous sûr de vouloir supprimer ce groupe de votre club  ?"
 
 msgid "Cancel"
 msgstr "Annuler"
-
-msgid "Delete"
-msgstr "Supprimer"
 
 #, python-format
 msgid "Edit group: %s"
@@ -891,55 +921,154 @@ msgstr "Préférences"
 msgid "Links"
 msgstr "Liens"
 
+#| msgid "Current week"
+msgid "Current period"
+msgstr "Période en cours"
+
+msgid "From"
+msgstr "De"
+
+#| msgid "Moto"
+msgid "to"
+msgstr "à"
+
+#| msgid "You are using the Strava profile"
+msgid "You are in the free trial period !"
+msgstr "Le club est dans la période d'essai !"
+
+msgid "You will be billed at the end of the period."
+msgstr "Vous serez facturé à la fin de la période."
+
+msgid "This period has been paid"
+msgstr "La période a été payée."
+
+msgid "This period has expired, you have to pay to get back all the features."
+msgstr ""
+"La période est terminée, vous devez payer la facture pour ré-activer votre "
+"club."
+
+msgid "Pay this period"
+msgstr "Payer cette période"
+
 msgid ""
-"You are limited in the number of accounts linked to the club, depending on "
-"the type of users"
+"A payment error happened on this period. You will be contacted by the "
+"administrators."
 msgstr ""
-"Vous êtes limités en nombre de compte liés au club, en fonction de chaque "
-"type d'utilisateur."
+"Une erreur de paiement est survenue sur cette période. Vous allez être "
+"contacté par un administrateur."
 
-msgid "To get more accounts available in your club, your club must be Premium"
+msgid "No period found."
+msgstr "Pas de période."
+
+msgid "Trainers in your club have full access to their athletes."
+msgstr "Les entraineurs dans votre club ont un accès compler à leurs athlètes."
+
+msgid ""
+"Trainers in your club do not have full access to their athletes; you need to "
+"pay for this period."
 msgstr ""
-"Pour avoir plus de comptes disponibles dans votre club, vous devez devenir "
-"un club Premium."
+"Les entraineurs dans votre club n'ont pas un accès complet à leurs athlètes; "
+"vous devez payer pour cette période."
 
-msgid "Users type"
-msgstr "Type d'utilisateurs"
+#| msgid "Your email"
+msgid "Your next bill"
+msgstr "Votre prochaine facture"
 
-msgid "Maximum"
-msgstr "Maximum"
+msgid "Paying methods"
+msgstr "Moyens de paiements"
 
-msgid "Used"
-msgstr "Utilisés"
-
-msgid "Available"
-msgstr "Disponibles"
-
-msgid "Free club"
-msgstr "Club gratuit"
-
-msgid "Free"
-msgstr "Gratuit"
-
-msgid "Forever"
-msgstr "Pour toujours"
-
-msgid "every year"
-msgstr "chaque année"
-
-msgid "Costs you"
-msgstr "Vous coûte"
-
-msgid "per month"
-msgstr "par mois"
-
-msgid "Buy RunReport premium"
-msgstr "Achetez RunReport premium"
-
-msgid "Sorry, but payments are not available at this moment. Come back later !"
+msgid "You have already registered your credit card. Thanks for your trust !"
 msgstr ""
-"Désolé, les paiements ne sont pas disponibles pour le moment. Nous vous "
-"préviendrons dès que possible !"
+"Vous avez déja enregistré votre carte de crédit. Merci pour votre confiance !"
+
+#| msgid "Repeat your password"
+msgid "Update your card"
+msgstr "Mettre à jour votre carte"
+
+msgid ""
+"You need to register a credit card to keep running your club after the free "
+"trial ends."
+msgstr ""
+"Vous devez enregistrer une carte de crédit pour garder votre club actif "
+"après l'expiration de votre période d'essai."
+
+#| msgid "Repeat your password"
+msgid "Register your card"
+msgstr "Enregistrez votre carde"
+
+#| msgid "Payments"
+msgid "Payments history"
+msgstr "Historique de paiements"
+
+msgid "Period"
+msgstr "Période"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Payment"
+msgstr "Paiement"
+
+#| msgid "ToS"
+msgid "To"
+msgstr "À"
+
+#| msgid "Free club"
+msgid "Free Trial"
+msgstr "Période d'essai"
+
+#| msgid "Error on this page"
+msgid "Error in payments"
+msgstr "Erreur de paiements"
+
+msgid "Unknown status"
+msgstr "Status inconnu"
+
+msgid "Paid on"
+msgstr "Payé le"
+
+#| msgid "Payments"
+msgid "No payments"
+msgstr "Pas de paiements"
+
+#| msgid "Download PDF"
+msgid "Download bill"
+msgstr "Télécharger facture"
+
+#| msgid "No elevation"
+msgid "No actions"
+msgstr "Pas d'actions"
+
+#| msgid "You do not have written any post yet."
+msgid "You do not have any periods at the moment."
+msgstr "Vous n'avez pas de périodes pour le moment."
+
+msgid "Pricing Simulator"
+msgstr "Simulateur de prix"
+
+msgid "This simulator helps you estimate your club future bills"
+msgstr ""
+"Ce simulateur vous aide à estimer les prochaines factures de votre club"
+
+#| msgid "Processed"
+msgid "Proce"
+msgstr "Tarif"
+
+#| msgid "To join this club"
+msgid "People in this role"
+msgstr "Membres avec ce rôle"
+
+#| msgid "Monthly stats"
+msgid "Monthly price"
+msgstr "Prix mensuel"
+
+#| msgid "Yearly cost"
+msgid "Yearly price"
+msgstr "Prix annuel"
+
+#| msgid "per month"
+msgid "month"
+msgstr "mois"
 
 msgid "Demo account"
 msgstr "Compte de Démo"
@@ -1005,12 +1134,6 @@ msgstr "Inscription d'athlètes"
 msgid "Send an email to all the club members"
 msgstr "Envoyer un email à tous les membres du club."
 
-msgid "Trainer"
-msgstr "Entraîneur"
-
-msgid "Staff"
-msgstr "Staff"
-
 msgid "Friend"
 msgstr "Ami"
 
@@ -1033,9 +1156,6 @@ msgstr "Aucun membre du club %s trouvé pour cette liste."
 msgid "CSV Export"
 msgstr "Export CSV"
 
-msgid "This is a premium feature for clubs."
-msgstr "C'est une fonctionalité premium pour les clubs."
-
 msgid "My Athletes"
 msgstr "Mes Athlètes"
 
@@ -1053,6 +1173,10 @@ msgstr "Archivé"
 
 msgid "Newcomer"
 msgstr "Nouveau"
+
+#| msgid "I'm a trainer"
+msgid "Add a trainer"
+msgstr "Ajouter un entraîneur"
 
 msgid "Profile"
 msgstr "Profil"
@@ -1090,6 +1214,10 @@ msgid "No races for your athletes"
 msgstr "Pas de courses pour vos athlètes"
 
 #, python-format
+msgid "Update role for %s %s"
+msgstr "Changer le rôle de %s %s"
+
+#, python-format
 msgid "is a %s in club"
 msgstr "est un %s dans le club"
 
@@ -1099,26 +1227,35 @@ msgstr "Membre depuis"
 msgid "Your changes have been saved."
 msgstr "Vos changements ont été sauvés."
 
-msgid "Become"
-msgstr "Devenir"
+msgid "New role"
+msgstr "Nouveau rôle"
 
-msgid "Available places"
-msgstr "Places disponibles"
+#| msgid "Costs you"
+msgid "Cost"
+msgstr "Coût"
 
-msgid "Send an automatic email to the user when updating its role."
+#| msgid "You can add friends from your club, for example."
+msgid "You can remove users from your club to lessen your costs."
 msgstr ""
-"Envoyer un mail automatique à l'utilisateur lors du changement de son rôle."
+"Vous pouvez retirer des utilisateurs de votre club pour réduire les coûts."
 
-msgid "Save"
-msgstr "Sauver"
+msgid "An athlete is the most common role for your users."
+msgstr "Un athlète est le rôle le plus courant pour vos utilisateurs."
 
-msgid "Danger zone"
-msgstr "Zone dangereuse"
+msgid "A staff member is for non-sportive members."
+msgstr "Un staff est réservé pour les membres non-sportifs. "
 
-msgid "This athlete is already archived, you can now delete it from your club."
+msgid "A trainer can manage athletes, and send plans."
 msgstr ""
-"Cet athlète est déja archivé, vous pouvez maintenant le supprimer de votre "
-"club."
+"Un entraineur peut gérer des athlètes et leur envoyer des plans "
+"d'entrainement."
+
+#| msgid ""
+#| "This athlete is already archived, you can now delete it from your club."
+msgid "This user is already archived, you can now delete it from your club."
+msgstr ""
+"Cet utilisateur est déja archivé, vous pouvez maintenant le supprimer de "
+"votre club."
 
 msgid "Refuse this prospect"
 msgstr "Refuser ce nouveau"
@@ -1126,11 +1263,36 @@ msgstr "Refuser ce nouveau"
 msgid "Archive this account"
 msgstr "Archiver ce compte"
 
+msgid "Become"
+msgstr "Devenir"
+
+#| msgid "Add a brand"
+msgid "Add a credit card"
+msgstr "Ajouter une carte de crédit"
+
+msgid "Your club is in the free trial period, so every role is free."
+msgstr "Votre club est dans la période d'essai: tous les rôles sont gratuits."
+
+msgid "At the end of this period, you will pay the indicated price above."
+msgstr ""
+"A la fin de cette période, vous devrez payer le prix indiqué ci dessous."
+
+msgid ""
+"Your club has finished the trial period and does not have a valid credit "
+"card."
+msgstr ""
+"Votre club a terminé sa période d'essai et n'a pas de carte de crédit valide."
+
+msgid "Please register a credit card, using the above links."
+msgstr ""
+"Veuillez enregistrer votre carte de crédit, en utilisant les liens ci-dessus."
+
+msgid "Send an automatic email to the user when updating its role."
+msgstr ""
+"Envoyer un mail automatique à l'utilisateur lors du changement de son rôle."
+
 msgid "Edition is disabled for the demo."
 msgstr "L'édition est désactivée pour la démo."
-
-msgid "Error"
-msgstr "Erreur"
 
 msgid ""
 "An error occured while updating the athlete membership. Please retry after "
@@ -1179,6 +1341,14 @@ msgstr "Envoyer"
 
 msgid "Example file"
 msgstr "Fichier exemple"
+
+#, python-format
+#| msgid "Conversations with %s %s"
+msgid "Choose trainers for %s %s"
+msgstr "Choisir les entraineurs de %s %s"
+
+msgid "Save"
+msgstr "Sauver"
 
 msgid "Contact form"
 msgstr "Formulaire de contact"
@@ -1308,6 +1478,23 @@ msgid "Your athlete dashboard"
 msgstr "Votre accueil pour athlète"
 
 #, python-format
+msgid "Club %s is in limited access"
+msgstr "Clud %s en accès restreint."
+
+#| msgid "Managing a club"
+msgid "Manage my club"
+msgstr "Gérer mon club"
+
+msgid ""
+"Your club has expired the free trial period, and is now in a limited access "
+"period."
+msgstr ""
+"Votre club a expiré la période d'essai, et est maintenant en accès limité."
+
+msgid "You need to activate a credit card for this club."
+msgstr "Vous devez enregistrer une carte de crédit pour ce club."
+
+#, python-format
 msgid "%d Prospects in your clubs"
 msgstr "%d Nouveaux dans votre club"
 
@@ -1358,70 +1545,6 @@ msgstr "Lieux de %s"
 #, python-format
 msgid "No places created for club %s"
 msgstr "Pas de lieux crées pour le club %s"
-
-msgid "Runner"
-msgstr "Coureur"
-
-msgid "Features for runners"
-msgstr "Fonctionalités pour les athlètes"
-
-msgid ""
-"All the features below with the tag Premium are only available to paying "
-"members of RunReport"
-msgstr ""
-"Toutes les fonctionalités ci dessus marquées \"Premium\" sont disponibles "
-"uniquement aux abonnés payant de RunReport."
-
-msgid ""
-"A premium membership costs 14,99 euros per year, without any engagement "
-"whatsoever."
-msgstr ""
-"Un abonnement payant à RunReport coute 14,99 euros par an, sans aucun "
-"engagement."
-
-msgid "Feature"
-msgstr "Fonctionalité"
-
-msgid "Free account"
-msgstr "Compte gratuit"
-
-msgid "Premium account"
-msgstr "Compte Premium"
-
-msgid "New"
-msgstr "Nouveau"
-
-msgid "Yearly cost"
-msgstr "Cout annuel"
-
-msgid "Features for trainers & clubs"
-msgstr "Fonctionalités pour entraineurs & clubs"
-
-msgid ""
-"You can get extra features for your club, with our specific premium club "
-"status"
-msgstr ""
-"Vous pouvez obtenir toutes les fonctionalités supplémentaires pour votre "
-"club en activant le status Premium pour votre club."
-
-msgid ""
-"Two paying club accounts are available, depending on the number of your "
-"athletes"
-msgstr ""
-"Deux niveaux de clubs Premium sont disponibles, en fonction du nombre de vos "
-"athlètes."
-
-msgid "Premium small account"
-msgstr "Premium pour club"
-
-msgid "Premium big account"
-msgstr "Premium pour grand club"
-
-msgid "To get all those premium features :"
-msgstr "Pour avoir toutes les fonctionalités premium"
-
-msgid "Sign up"
-msgstr "Crée un compte"
 
 #, python-format
 msgid "Delete friendship with %(first)s %(last)s"
@@ -1631,6 +1754,9 @@ msgstr "Précèdent"
 msgid "Next"
 msgstr "Suivant"
 
+msgid "Runner"
+msgstr "Coureur"
+
 msgid "I'm an athlete"
 msgstr "Je suis un athlète"
 
@@ -1656,6 +1782,45 @@ msgstr ""
 
 msgid "create, share your training plans and manage your club."
 msgstr "créez, partagez vos plans d'entrainements et gérez votre club."
+
+msgid "Features"
+msgstr "Fonctionalités"
+
+#| msgid "RunReport is your new sport partner"
+msgid "RunReport is free for athletes"
+msgstr "RunReport est gratuit pour les athlètes"
+
+msgid "All the features are and will remain free for athletes, without ads."
+msgstr ""
+"Toutes les fonctionalités sont et resteront gratuites pour les athlètes, "
+"sans publicité."
+
+msgid "Clubs are paying on a per-user basis"
+msgstr "Les clubs sont payant, avec une tarification par membre."
+
+msgid "A club has a free trial of 45 days, with full features enabled"
+msgstr ""
+"Un club a une période d'essai de 45 jours, avec toutes les fonctionalités."
+
+#| msgid "Athlete"
+msgid "Athletes"
+msgstr "Athlètes"
+
+#| msgid "View the others help pages"
+msgid "View all the athletes features"
+msgstr "Voir les fonctionalités des athlètes"
+
+#| msgid "athletes"
+msgid "per athlete"
+msgstr "par athlète"
+
+#| msgid "To get all those premium features :"
+msgid "View all the trainers features"
+msgstr "Voir les fonctionalités des entraineurs"
+
+#| msgid "Your trainer"
+msgid "per trainer"
+msgstr "par entraîneur"
 
 msgid "Features for trainers"
 msgstr "Fonctionalités pour les entraîneurs"
@@ -1691,8 +1856,9 @@ msgstr "Classez tous vos athlètes en groupes"
 msgid "Group your athletes for every race, event, speed, ..."
 msgstr "Groupez vos athlètes pour chaque course, évènement, vitesse, ..."
 
-msgid "Read more about our premium features"
-msgstr "En savoir plus sur nos fonctionalités premium"
+#| msgid "Read more about our premium features"
+msgid "Read more about our premium features & prices"
+msgstr "En savoir plus sur nos fonctionalités premium et les tarifs"
 
 msgid "View your athletes calendar"
 msgstr "Voir le calendrier de vos athlètes"
@@ -1875,6 +2041,19 @@ msgid "You can view you %d stats on RunReport and much more details"
 msgstr ""
 "Vous pouvez voir vos %d statistiques sur RunReport avec bien plus de détails"
 
+#| msgid "Payments"
+msgid "Payment status"
+msgstr "Status des paiements"
+
+#, fuzzy
+#| msgid "Hello admin !"
+msgid "Hello Admin"
+msgstr "Bonjour admin !"
+
+#| msgid "No payment transactions processed yet."
+msgid "A new payment has been processed"
+msgstr "Un nouveau paiement a eu lieu"
+
 msgid "Training plan"
 msgstr "Plan d'entraînement"
 
@@ -1936,9 +2115,6 @@ msgstr "Temps total"
 
 msgid "Total distance"
 msgstr "Distance totale"
-
-msgid "Total"
-msgstr "Total"
 
 msgid "Week's summary"
 msgstr "Bilan de la semaine"
@@ -2142,59 +2318,35 @@ msgstr "formulaire de contact"
 msgid "Private"
 msgstr "Privé"
 
-msgid "Welcome offer"
-msgstr "Offre de bienvenue"
+#| msgid "Premium offer"
+msgid "Premium 3D secure"
+msgstr "Premium 3D Secure"
 
-msgid "Premium offer"
-msgstr "Offre Premium"
+msgid "Valid payment"
+msgstr "Paiement valide"
 
-msgid "Premium small club"
-msgstr "Premium pour club"
+#| msgid "Thanks for your subscription to RunReport !"
+msgid "Thanks for your trust in RunReport !"
+msgstr "Merci pour votre confiance en RunReport !"
 
-msgid "Premium big club"
-msgstr "Premium pour grand club"
+#| msgid "You can create and administer only one club."
+msgid "You can immediately add new members to your club."
+msgstr "Vous pouvez immédiatement ajouter de nouveaux membres à votre club."
 
-msgid "Awaiting first payment"
-msgstr "Premier paiement en attente"
+msgid "Continue"
+msgstr "Continuer"
 
-msgid "Will start on"
-msgstr "Démarre le"
+msgid "Users type"
+msgstr "Type d'utilisateurs"
 
-msgid "Started on"
-msgstr "Démarré le"
-
-msgid "Will end on"
-msgstr "Finira le"
-
-msgid "Ended on"
-msgstr "Fini le"
-
-msgid "Cancel my subscription"
-msgstr "Annuler mon abonnement"
-
-msgid "Cancel premium subscription"
-msgstr "Annuler l'abonnement premium"
-
-msgid "Are you sure to delete your premium membership ?"
-msgstr "Etes vous sûr de vouloir supprimer votre abonnement premium ?"
-
-msgid "You will be refunded on your payment card account."
-msgstr "Vous serez remboursé sur votre carte de paiement."
+msgid "Unit Cost"
+msgstr "Coût unitaire"
 
 msgid "Premium Payment"
 msgstr "Paiement Premium"
 
 msgid "I want the premium features"
 msgstr "Je veux les fonctionalités Premium"
-
-msgid "Name on Card"
-msgstr "Nom sur la carte"
-
-msgid "Card Holder's Name"
-msgstr "Nom du possesseur de la carte"
-
-msgid "Missing card holder's name"
-msgstr "Le nom du possesseur de la carte est manquant"
 
 msgid "Card Number"
 msgstr "Numéro de carte"
@@ -2220,65 +2372,35 @@ msgstr "Code de sécurité"
 msgid "Invalid card cvc"
 msgstr "Code de sécurité invalide"
 
-msgid "Pay Now"
-msgstr "Payer"
+msgid "Retry"
+msgstr "Ré-essayer"
+
+#| msgid "Use this picture"
+msgid "Use this credit card"
+msgstr "Utiliser cette carte de crédit"
 
 msgid "Processing"
 msgstr "Traitement en cours"
 
-msgid "Secured & processed with"
-msgstr "Sécurisé et réalisé avec "
+msgid "Cancel premium subscription"
+msgstr "Annuler l'abonnement premium"
 
-msgid "Valid payment"
-msgstr "Paiement valide"
+msgid "Are you sure to delete your premium membership ?"
+msgstr "Etes vous sûr de vouloir supprimer votre abonnement premium ?"
 
-msgid "Thanks for your subscription to RunReport !"
-msgstr "Merci pour votre abonnement à RunReport !"
+msgid "You will be refunded on your payment card account."
+msgstr "Vous serez remboursé sur votre carte de paiement."
 
-msgid "You can enjoy immediately all the premium features"
-msgstr "Vous pouvez utiliser immédiatement toutes les fonctionalités premium"
+msgid "Cancel my subscription"
+msgstr "Annuler mon abonnement"
 
-msgid "Continue"
-msgstr "Continuer"
+#, python-format
+msgid "Pay period for %s"
+msgstr "Payer la période %s"
 
-msgid "Premium Membership"
-msgstr "Abonnement Premium"
-
-msgid "You are a premium RunReport member !"
-msgstr "Vous êtes un membre Premium de RunReport"
-
-msgid "Payments"
-msgstr "Paiements"
-
-msgid "Payment"
-msgstr "Paiement"
-
-msgid "Status"
-msgstr "Status"
-
-msgid "Processing..."
-msgstr "En cours..."
-
-msgid "Processed"
-msgstr "Validé"
-
-msgid "No payment transactions processed yet."
-msgstr "Pas de transactions validées pour le moment."
-
-msgid "During 2 months"
-msgstr "Durant 2 mois"
-
-msgid "Your welcome offer is valid for"
-msgstr "Votre offre de bienvenue est valable pour"
-
-msgid "Your welcome offer has expired."
-msgstr "Votre offre de bienvenue a expirée"
-
-msgid "No welcome subscription found. Please contact the support."
-msgstr "Aucune offre de bienvenue trouvée. Veuillez contacter le support."
-
-msgid "Yearly payment"
-msgstr "Paiement annuel"
+#| msgid "Pay Now"
+msgid "Pay"
+msgstr "Payer"
 
 #, python-format
 msgid "Remove plan %s"
@@ -2454,12 +2576,20 @@ msgstr "Cacher mes amis"
 msgid "Show friends"
 msgstr "Voir mes amis"
 
+#, python-format
+msgid "%d hidden sessions: your club is not premium."
+msgstr "%d séances cachées: votre club n'est plus premium."
+
 msgid "friends sessions"
 msgstr "séance d'amis"
 
 #, python-format
 msgid "Year %s"
 msgstr "Année %s"
+
+#| msgid "Forbidden"
+msgid "Hidden"
+msgstr "Caché"
 
 msgid "View this month"
 msgstr "Voir ce mois"
@@ -2579,6 +2709,9 @@ msgstr "Pas de note de difficulté"
 
 msgid "No sessions"
 msgstr "Pas de séances"
+
+msgid "Hidden sessions, your club is not premium."
+msgstr "Séances cachées, votre club n'est plus premium."
 
 msgid "GPS data available"
 msgstr "Données GPS"
@@ -3627,6 +3760,300 @@ msgstr "Multi Sport"
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0
+msgid "Inactive"
+msgstr "Inactif"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Open"
+msgstr "Ouvert"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Pending"
+msgstr "En cours"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Closed"
+msgstr "Fermé"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Partial Refund"
+msgstr "Remboursement partiel"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Refunded"
+msgstr "Remboursé"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Pre-Authorize"
+msgstr "Pre-Authorisation"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Chargeback"
+msgstr "Chargeback"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid ""
+"You are limited in the number of accounts linked to the club, depending on "
+"the type of users"
+msgstr ""
+"Vous êtes limités en nombre de compte liés au club, en fonction de chaque "
+"type d'utilisateur."
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "To get more accounts available in your club, your club must be Premium"
+msgstr ""
+"Pour avoir plus de comptes disponibles dans votre club, vous devez devenir "
+"un club Premium."
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Maximum"
+msgstr "Maximum"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Used"
+msgstr "Utilisés"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Available"
+msgstr "Disponibles"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Forever"
+msgstr "Pour toujours"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "every year"
+msgstr "chaque année"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Buy RunReport premium"
+msgstr "Achetez RunReport premium"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Sorry, but payments are not available at this moment. Come back later !"
+msgstr ""
+"Désolé, les paiements ne sont pas disponibles pour le moment. Nous vous "
+"préviendrons dès que possible !"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "This is a premium feature for clubs."
+msgstr "C'est une fonctionalité premium pour les clubs."
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Available places"
+msgstr "Places disponibles"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Danger zone"
+msgstr "Zone dangereuse"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Features for runners"
+msgstr "Fonctionalités pour les athlètes"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid ""
+"All the features below with the tag Premium are only available to paying "
+"members of RunReport"
+msgstr ""
+"Toutes les fonctionalités ci dessus marquées \"Premium\" sont disponibles "
+"uniquement aux abonnés payant de RunReport."
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid ""
+"A premium membership costs 14,99 euros per year, without any engagement "
+"whatsoever."
+msgstr ""
+"Un abonnement payant à RunReport coute 14,99 euros par an, sans aucun "
+"engagement."
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Feature"
+msgstr "Fonctionalité"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Free account"
+msgstr "Compte gratuit"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Premium account"
+msgstr "Compte Premium"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "New"
+msgstr "Nouveau"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Features for trainers & clubs"
+msgstr "Fonctionalités pour entraineurs & clubs"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid ""
+"You can get extra features for your club, with our specific premium club "
+"status"
+msgstr ""
+"Vous pouvez obtenir toutes les fonctionalités supplémentaires pour votre "
+"club en activant le status Premium pour votre club."
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid ""
+"Two paying club accounts are available, depending on the number of your "
+"athletes"
+msgstr ""
+"Deux niveaux de clubs Premium sont disponibles, en fonction du nombre de vos "
+"athlètes."
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Premium small account"
+msgstr "Premium pour club"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Premium big account"
+msgstr "Premium pour grand club"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Sign up"
+msgstr "Crée un compte"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Welcome offer"
+msgstr "Offre de bienvenue"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Premium small club"
+msgstr "Premium pour club"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Premium big club"
+msgstr "Premium pour grand club"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Awaiting first payment"
+msgstr "Premier paiement en attente"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Will start on"
+msgstr "Démarre le"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Started on"
+msgstr "Démarré le"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Will end on"
+msgstr "Finira le"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Ended on"
+msgstr "Fini le"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Name on Card"
+msgstr "Nom sur la carte"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Card Holder's Name"
+msgstr "Nom du possesseur de la carte"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Missing card holder's name"
+msgstr "Le nom du possesseur de la carte est manquant"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Secured & processed with"
+msgstr "Sécurisé et réalisé avec "
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "You can enjoy immediately all the premium features"
+msgstr "Vous pouvez utiliser immédiatement toutes les fonctionalités premium"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Premium Membership"
+msgstr "Abonnement Premium"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "You are a premium RunReport member !"
+msgstr "Vous êtes un membre Premium de RunReport"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Processing..."
+msgstr "En cours..."
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "During 2 months"
+msgstr "Durant 2 mois"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Your welcome offer is valid for"
+msgstr "Votre offre de bienvenue est valable pour"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Your welcome offer has expired."
+msgstr "Votre offre de bienvenue a expirée"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "No welcome subscription found. Please contact the support."
+msgstr "Aucune offre de bienvenue trouvée. Veuillez contacter le support."
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Yearly payment"
+msgstr "Paiement annuel"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
 msgid "My subscription"
 msgstr "Mon abonnement"
 
@@ -3662,11 +4089,6 @@ msgstr "Vos réglages de confidentialité actuels sont:"
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0
-msgid "athletes"
-msgstr "athlètes"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
 msgid "trainers"
 msgstr "entraîneurs"
 
@@ -3689,11 +4111,6 @@ msgstr "Description."
 #: obsolete:0
 msgid "I'm a runner"
 msgstr "Je suis un coureur"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "I'm a trainer"
-msgstr "Je suis un Entraîneur"
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-12 22:23+0200\n"
+"POT-Creation-Date: 2015-11-12 17:31+0100\n"
 "PO-Revision-Date: 2015-02-09 17:42+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
@@ -16,6 +16,24 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.4\n"
+
+msgid "Athlete"
+msgstr ""
+
+msgid "Trainer"
+msgstr ""
+
+msgid "Staff"
+msgstr ""
+
+msgid "Archive"
+msgstr ""
+
+msgid "Prospect"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
 
 msgid "Phone"
 msgstr ""
@@ -149,46 +167,54 @@ msgstr ""
 msgid "New contact message"
 msgstr ""
 
-msgid "Created"
+msgid "Unit Price"
+msgstr ""
+
+msgid "Nb. of roles"
+msgstr ""
+
+msgid "Total"
+msgstr ""
+
+#, python-format
+msgid "Payment for club %s"
+msgstr ""
+
+#, python-format
+msgid "From %s to %s"
+msgstr ""
+
+msgid "Free"
 msgstr ""
 
 msgid "Active"
 msgstr ""
 
-msgid "Inactive"
+msgid "Paid"
 msgstr ""
 
 msgid "Expired"
 msgstr ""
 
+msgid "Error"
+msgstr ""
+
+msgid "Created"
+msgstr ""
+
 msgid "Failed"
 msgstr "Missed"
 
-msgid "Club"
+msgid "Succeeded"
 msgstr ""
 
-msgid "Athlete"
+msgid "Payment successful"
 msgstr ""
 
-msgid "Open"
+msgid "Payment error"
 msgstr ""
 
-msgid "Pending"
-msgstr ""
-
-msgid "Closed"
-msgstr ""
-
-msgid "Partial Refund"
-msgstr ""
-
-msgid "Refunded"
-msgstr ""
-
-msgid "Pre-Authorize"
-msgstr ""
-
-msgid "Chargeback"
+msgid "New Payment"
 msgstr ""
 
 msgid "Applied"
@@ -472,7 +498,7 @@ msgstr "Fitness"
 msgid "Logout"
 msgstr ""
 
-msgid "Features"
+msgid "Pricing"
 msgstr ""
 
 msgid "Create an account"
@@ -598,6 +624,9 @@ msgstr ""
 msgid "All the clubs"
 msgstr ""
 
+msgid "Club"
+msgstr ""
+
 msgid "Plans"
 msgstr ""
 
@@ -700,9 +729,6 @@ msgid "Are you sure to remove this group from your club ?"
 msgstr ""
 
 msgid "Cancel"
-msgstr ""
-
-msgid "Delete"
 msgstr ""
 
 #, python-format
@@ -854,48 +880,130 @@ msgstr ""
 msgid "Links"
 msgstr ""
 
+msgid "Current period"
+msgstr ""
+
+msgid "From"
+msgstr ""
+
+#, fuzzy
+#| msgid "Moto"
+msgid "to"
+msgstr "Motorbike"
+
+msgid "You are in the free trial period !"
+msgstr ""
+
+msgid "You will be billed at the end of the period."
+msgstr ""
+
+msgid "This period has been paid"
+msgstr ""
+
+msgid "This period has expired, you have to pay to get back all the features."
+msgstr ""
+
+msgid "Pay this period"
+msgstr ""
+
 msgid ""
-"You are limited in the number of accounts linked to the club, depending on "
-"the type of users"
+"A payment error happened on this period. You will be contacted by the "
+"administrators."
 msgstr ""
 
-msgid "To get more accounts available in your club, your club must be Premium"
+msgid "No period found."
 msgstr ""
 
-msgid "Users type"
+msgid "Trainers in your club have full access to their athletes."
 msgstr ""
 
-msgid "Maximum"
+msgid ""
+"Trainers in your club do not have full access to their athletes; you need to "
+"pay for this period."
 msgstr ""
 
-msgid "Used"
+msgid "Your next bill"
 msgstr ""
 
-msgid "Available"
+msgid "Paying methods"
 msgstr ""
 
-msgid "Free club"
+msgid "You have already registered your credit card. Thanks for your trust !"
 msgstr ""
 
-msgid "Free"
+msgid "Update your card"
 msgstr ""
 
-msgid "Forever"
+msgid ""
+"You need to register a credit card to keep running your club after the free "
+"trial ends."
 msgstr ""
 
-msgid "every year"
+msgid "Register your card"
 msgstr ""
 
-msgid "Costs you"
+msgid "Payments history"
 msgstr ""
 
-msgid "per month"
+msgid "Period"
 msgstr ""
 
-msgid "Buy RunReport premium"
+msgid "Status"
 msgstr ""
 
-msgid "Sorry, but payments are not available at this moment. Come back later !"
+msgid "Payment"
+msgstr ""
+
+msgid "To"
+msgstr ""
+
+msgid "Free Trial"
+msgstr ""
+
+msgid "Error in payments"
+msgstr ""
+
+msgid "Unknown status"
+msgstr ""
+
+msgid "Paid on"
+msgstr ""
+
+#, fuzzy
+#| msgid "fitness_equipment"
+msgid "No payments"
+msgstr "Fitness"
+
+msgid "Download bill"
+msgstr ""
+
+#, fuzzy
+#| msgid "Natation"
+msgid "No actions"
+msgstr "Swimming"
+
+msgid "You do not have any periods at the moment."
+msgstr ""
+
+msgid "Pricing Simulator"
+msgstr ""
+
+msgid "This simulator helps you estimate your club future bills"
+msgstr ""
+
+msgid "Proce"
+msgstr ""
+
+msgid "People in this role"
+msgstr ""
+
+msgid "Monthly price"
+msgstr ""
+
+msgid "Yearly price"
+msgstr ""
+
+msgid "month"
 msgstr ""
 
 msgid "Demo account"
@@ -954,12 +1062,6 @@ msgstr ""
 msgid "Send an email to all the club members"
 msgstr ""
 
-msgid "Trainer"
-msgstr ""
-
-msgid "Staff"
-msgstr ""
-
 msgid "Friend"
 msgstr ""
 
@@ -982,9 +1084,6 @@ msgstr ""
 msgid "CSV Export"
 msgstr ""
 
-msgid "This is a premium feature for clubs."
-msgstr ""
-
 msgid "My Athletes"
 msgstr ""
 
@@ -1001,6 +1100,9 @@ msgid "Archived"
 msgstr ""
 
 msgid "Newcomer"
+msgstr ""
+
+msgid "Add a trainer"
 msgstr ""
 
 msgid "Profile"
@@ -1039,6 +1141,10 @@ msgid "No races for your athletes"
 msgstr ""
 
 #, python-format
+msgid "Update role for %s %s"
+msgstr ""
+
+#, python-format
 msgid "is a %s in club"
 msgstr ""
 
@@ -1048,22 +1154,25 @@ msgstr ""
 msgid "Your changes have been saved."
 msgstr ""
 
-msgid "Become"
+msgid "New role"
 msgstr ""
 
-msgid "Available places"
+msgid "Cost"
 msgstr ""
 
-msgid "Send an automatic email to the user when updating its role."
+msgid "You can remove users from your club to lessen your costs."
 msgstr ""
 
-msgid "Save"
+msgid "An athlete is the most common role for your users."
 msgstr ""
 
-msgid "Danger zone"
+msgid "A staff member is for non-sportive members."
 msgstr ""
 
-msgid "This athlete is already archived, you can now delete it from your club."
+msgid "A trainer can manage athletes, and send plans."
+msgstr ""
+
+msgid "This user is already archived, you can now delete it from your club."
 msgstr ""
 
 msgid "Refuse this prospect"
@@ -1072,10 +1181,30 @@ msgstr ""
 msgid "Archive this account"
 msgstr ""
 
-msgid "Edition is disabled for the demo."
+msgid "Become"
 msgstr ""
 
-msgid "Error"
+msgid "Add a credit card"
+msgstr ""
+
+msgid "Your club is in the free trial period, so every role is free."
+msgstr ""
+
+msgid "At the end of this period, you will pay the indicated price above."
+msgstr ""
+
+msgid ""
+"Your club has finished the trial period and does not have a valid credit "
+"card."
+msgstr ""
+
+msgid "Please register a credit card, using the above links."
+msgstr ""
+
+msgid "Send an automatic email to the user when updating its role."
+msgstr ""
+
+msgid "Edition is disabled for the demo."
 msgstr ""
 
 msgid ""
@@ -1118,6 +1247,13 @@ msgid "Send"
 msgstr ""
 
 msgid "Example file"
+msgstr ""
+
+#, python-format
+msgid "Choose trainers for %s %s"
+msgstr ""
+
+msgid "Save"
 msgstr ""
 
 msgid "Contact form"
@@ -1237,6 +1373,21 @@ msgid "Your athlete dashboard"
 msgstr ""
 
 #, python-format
+msgid "Club %s is in limited access"
+msgstr ""
+
+msgid "Manage my club"
+msgstr ""
+
+msgid ""
+"Your club has expired the free trial period, and is now in a limited access "
+"period."
+msgstr ""
+
+msgid "You need to activate a credit card for this club."
+msgstr ""
+
+#, python-format
 msgid "%d Prospects in your clubs"
 msgstr ""
 
@@ -1286,62 +1437,6 @@ msgstr ""
 
 #, python-format
 msgid "No places created for club %s"
-msgstr ""
-
-msgid "Runner"
-msgstr ""
-
-msgid "Features for runners"
-msgstr ""
-
-msgid ""
-"All the features below with the tag Premium are only available to paying "
-"members of RunReport"
-msgstr ""
-
-msgid ""
-"A premium membership costs 14,99 euros per year, without any engagement "
-"whatsoever."
-msgstr ""
-
-msgid "Feature"
-msgstr ""
-
-msgid "Free account"
-msgstr ""
-
-msgid "Premium account"
-msgstr ""
-
-msgid "New"
-msgstr ""
-
-msgid "Yearly cost"
-msgstr ""
-
-msgid "Features for trainers & clubs"
-msgstr ""
-
-msgid ""
-"You can get extra features for your club, with our specific premium club "
-"status"
-msgstr ""
-
-msgid ""
-"Two paying club accounts are available, depending on the number of your "
-"athletes"
-msgstr ""
-
-msgid "Premium small account"
-msgstr ""
-
-msgid "Premium big account"
-msgstr ""
-
-msgid "To get all those premium features :"
-msgstr ""
-
-msgid "Sign up"
 msgstr ""
 
 #, python-format
@@ -1537,6 +1632,9 @@ msgstr ""
 msgid "Next"
 msgstr ""
 
+msgid "Runner"
+msgstr ""
+
 msgid "I'm an athlete"
 msgstr ""
 
@@ -1558,6 +1656,36 @@ msgid "RunReport is the ideal tool to train, track and motivate your athletes."
 msgstr ""
 
 msgid "create, share your training plans and manage your club."
+msgstr ""
+
+msgid "Features"
+msgstr ""
+
+msgid "RunReport is free for athletes"
+msgstr ""
+
+msgid "All the features are and will remain free for athletes, without ads."
+msgstr ""
+
+msgid "Clubs are paying on a per-user basis"
+msgstr ""
+
+msgid "A club has a free trial of 45 days, with full features enabled"
+msgstr ""
+
+msgid "Athletes"
+msgstr ""
+
+msgid "View all the athletes features"
+msgstr ""
+
+msgid "per athlete"
+msgstr ""
+
+msgid "View all the trainers features"
+msgstr ""
+
+msgid "per trainer"
 msgstr ""
 
 msgid "Features for trainers"
@@ -1592,7 +1720,7 @@ msgstr ""
 msgid "Group your athletes for every race, event, speed, ..."
 msgstr ""
 
-msgid "Read more about our premium features"
+msgid "Read more about our premium features & prices"
 msgstr ""
 
 msgid "View your athletes calendar"
@@ -1759,6 +1887,15 @@ msgstr ""
 msgid "You can view you %d stats on RunReport and much more details"
 msgstr ""
 
+msgid "Payment status"
+msgstr ""
+
+msgid "Hello Admin"
+msgstr ""
+
+msgid "A new payment has been processed"
+msgstr ""
+
 msgid "Training plan"
 msgstr ""
 
@@ -1816,9 +1953,6 @@ msgid "Total time"
 msgstr ""
 
 msgid "Total distance"
-msgstr ""
-
-msgid "Total"
 msgstr ""
 
 msgid "Week's summary"
@@ -2015,58 +2149,31 @@ msgstr ""
 msgid "Private"
 msgstr ""
 
-msgid "Welcome offer"
+msgid "Premium 3D secure"
 msgstr ""
 
-msgid "Premium offer"
+msgid "Valid payment"
 msgstr ""
 
-msgid "Premium small club"
+msgid "Thanks for your trust in RunReport !"
 msgstr ""
 
-msgid "Premium big club"
+msgid "You can immediately add new members to your club."
 msgstr ""
 
-msgid "Awaiting first payment"
+msgid "Continue"
 msgstr ""
 
-msgid "Will start on"
+msgid "Users type"
 msgstr ""
 
-msgid "Started on"
-msgstr ""
-
-msgid "Will end on"
-msgstr ""
-
-msgid "Ended on"
-msgstr ""
-
-msgid "Cancel my subscription"
-msgstr ""
-
-msgid "Cancel premium subscription"
-msgstr ""
-
-msgid "Are you sure to delete your premium membership ?"
-msgstr ""
-
-msgid "You will be refunded on your payment card account."
+msgid "Unit Cost"
 msgstr ""
 
 msgid "Premium Payment"
 msgstr ""
 
 msgid "I want the premium features"
-msgstr ""
-
-msgid "Name on Card"
-msgstr ""
-
-msgid "Card Holder's Name"
-msgstr ""
-
-msgid "Missing card holder's name"
 msgstr ""
 
 msgid "Card Number"
@@ -2093,64 +2200,32 @@ msgstr ""
 msgid "Invalid card cvc"
 msgstr ""
 
-msgid "Pay Now"
+msgid "Retry"
+msgstr ""
+
+msgid "Use this credit card"
 msgstr ""
 
 msgid "Processing"
 msgstr ""
 
-msgid "Secured & processed with"
+msgid "Cancel premium subscription"
 msgstr ""
 
-msgid "Valid payment"
+msgid "Are you sure to delete your premium membership ?"
 msgstr ""
 
-msgid "Thanks for your subscription to RunReport !"
+msgid "You will be refunded on your payment card account."
 msgstr ""
 
-msgid "You can enjoy immediately all the premium features"
+msgid "Cancel my subscription"
 msgstr ""
 
-msgid "Continue"
+#, python-format
+msgid "Pay period for %s"
 msgstr ""
 
-msgid "Premium Membership"
-msgstr ""
-
-msgid "You are a premium RunReport member !"
-msgstr ""
-
-msgid "Payments"
-msgstr ""
-
-msgid "Payment"
-msgstr ""
-
-msgid "Status"
-msgstr ""
-
-msgid "Processing..."
-msgstr ""
-
-msgid "Processed"
-msgstr ""
-
-msgid "No payment transactions processed yet."
-msgstr ""
-
-msgid "During 2 months"
-msgstr ""
-
-msgid "Your welcome offer is valid for"
-msgstr ""
-
-msgid "Your welcome offer has expired."
-msgstr ""
-
-msgid "No welcome subscription found. Please contact the support."
-msgstr ""
-
-msgid "Yearly payment"
+msgid "Pay"
 msgstr ""
 
 #, python-format
@@ -2327,11 +2402,18 @@ msgstr ""
 msgid "Show friends"
 msgstr ""
 
+#, python-format
+msgid "%d hidden sessions: your club is not premium."
+msgstr ""
+
 msgid "friends sessions"
 msgstr ""
 
 #, python-format
 msgid "Year %s"
+msgstr ""
+
+msgid "Hidden"
 msgstr ""
 
 msgid "View this month"
@@ -2454,6 +2536,9 @@ msgid "No difficulty note"
 msgstr "Very Easy session"
 
 msgid "No sessions"
+msgstr ""
+
+msgid "Hidden sessions, your club is not premium."
 msgstr ""
 
 msgid "GPS data available"
