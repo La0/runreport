@@ -73,7 +73,7 @@
 			{% with session = sessions[day] %}
       
       {% if fog and day >= fog %}
-      <td>
+			<td class="link" href="{{ url('club-manage', club_fog.slug) }}">
         {% with nb = session and session.sessions.count() or 0 %}
         {% if nb > 0 %}
         <p class="text-warning">

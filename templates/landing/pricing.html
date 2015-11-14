@@ -5,20 +5,42 @@
 {% block content %}
 <div id="features" class="pricing">
   <div class="container-fluid jumbotron">
-    <h1>{{ _('RunReport is free for athletes') }}</h1>
-    <p class="lead">
-      {{ _('All the features are and will remain free for athletes, without ads.') }}
-    </p>
+    <h1>{{ _('Pricing for athletes & trainers') }}</h1>
   </div>
 
-  <div class="container text-center">
-    <h1>{{ _('Clubs are paying on a per-user basis') }}</h1>
+  <div class="container">
+
+    <h1>
+      <i class="icon-sport-running"></i>
+      {{ _('I\'m an athlete') }}
+    </h1>
+
+    <p class="lead">
+      <span class="text-info">
+        <i class="icon-premium"></i>
+        {{ _('RunReport is totally free for you !') }}
+      </span>
+      <br />
+      {{ _('You can enjoy all the features (sport logbook, GPS sync, social communication about your sport sessions, ...), and join any club you want.') }}
+    </p>
+
+
+    <hr />
+
+    <h1>
+      <i class="icon-plan-session"></i>
+      {{ _('I\'m a trainer or club manager') }}
+    </h1>
+
+    <h1></h1>
     <p class="lead text-info">
       <i class="icon-premium"></i>
+      {{ _('Clubs are paying on a per-user basis') }}
+      <br />
       {{ _('A club has a free trial of 45 days, with full features enabled') }}
     </p>
 
-    <div class="row prices">
+    <div class="row prices text-center">
 
       <div class="col-sm-6 col-xs-12">
         <div class="panel panel-default">

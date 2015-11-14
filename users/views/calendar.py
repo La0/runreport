@@ -4,6 +4,7 @@ from django.core.exceptions import PermissionDenied
 
 class AthleteCalendarMixin(ProfilePrivacyMixin):
   rights_needed = ('calendar', )
+  club_fog = None
 
   def get_links(self):
     return {
@@ -17,6 +18,7 @@ class AthleteCalendarMixin(ProfilePrivacyMixin):
   def get_context_data(self, *args, **kwargs):
     context = super(AthleteCalendarMixin, self).get_context_data(*args, **kwargs)
     context['fog'] = self.get_fog_limit()
+    context['club_fog'] = self.club_fog
     return context
 
   def get_fog_limit(self):
@@ -35,6 +37,7 @@ class AthleteCalendarMixin(ProfilePrivacyMixin):
         if m.club.has_full_access:
             continue
 
+        self.club_fog = m.club
         return m.club.current_period.end.date()
 
     return None

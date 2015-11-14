@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-11-12 17:31+0100\n"
-"PO-Revision-Date: 2015-11-12 17:49+0100\n"
+"PO-Revision-Date: 2015-11-14 12:59+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -1479,7 +1479,7 @@ msgstr "Votre accueil pour athlète"
 
 #, python-format
 msgid "Club %s is in limited access"
-msgstr "Clud %s en accès restreint."
+msgstr "Club %s en accès restreint."
 
 #| msgid "Managing a club"
 msgid "Manage my club"
