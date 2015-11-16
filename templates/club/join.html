@@ -6,9 +6,35 @@
 
 <div class="container" id="clubs">
 
-	<h2>{{ _('Join a club') }}</h2>
-	<div class="alert alert-info">
-		<h4>{{ _('Help') }}</h4>
+	<h2>
+    <i class="icon-plus"></i>
+    {{ _('Create a club') }}
+  </h2>
+	<div class="text-info lead">
+    <p class="pull-right">
+      <a href="{{ url('pricing') }}" class="btn btn-default">
+        {{ _('Pricing details') }}
+      </a>
+      <a href="{{ url('club-create') }}" class="btn btn-info">
+        <i class="icon-plus"></i>
+        {{ _('Create a club') }}
+      </a>
+    </p>
+    <p>
+      {{ _('You can create a new club if you want to manage athletes.') }}
+      <br />
+      {{ _('A club is free for 45 days, then uses a fee per member') }}
+    </p>
+	</div>
+  
+  <hr />
+
+	<h2>
+    <i class="icon-club"></i>
+    {{ _('Join a club') }}
+  </h2>
+	<div class="text-info lead">
+    <i class="icon-help-circled"></i>
 		{{ _('You can join a club clicking on "Join".') }}<br />
 		{{ _('Each request is then validated (or not) by the club\'s manager.') }}
 	</div>

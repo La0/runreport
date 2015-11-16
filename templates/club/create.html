@@ -8,13 +8,13 @@
 
   {% if user.is_authenticated() %}
 
-	<div class="alert alert-info">
-		<h4>{{ _('Warning') }}</h4>
-		{{ _('You can create and administer only one club.') }}
-	</div>
-
 	<form action="" method="POST" class="form form-horizontal">
 		{% csrf_token %}
+
+    <div class="col-sm-10 col-sm-offset-2 text-info">
+      <i class="icon-help-circled"></i>
+      {{ _('You can create and administer only one club.') }}
+    </div>
 
     <div class="slugify" data-target="#id_slug">
       {{ macros.input(form.name) }}

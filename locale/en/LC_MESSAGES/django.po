@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-12 17:31+0100\n"
+"POT-Creation-Date: 2015-11-16 21:49+0100\n"
 "PO-Revision-Date: 2015-02-09 17:42+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
@@ -700,9 +700,6 @@ msgstr ""
 msgid "Directly receive in your mailbox your athletes weekly reports."
 msgstr ""
 
-msgid "Warning"
-msgstr ""
-
 msgid "You can create and administer only one club."
 msgstr ""
 
@@ -777,6 +774,15 @@ msgstr ""
 
 #, python-format
 msgid "View group: %s"
+msgstr ""
+
+msgid "Pricing details"
+msgstr ""
+
+msgid "You can create a new club if you want to manage athletes."
+msgstr ""
+
+msgid "A club is free for 45 days, then uses a fee per member"
 msgstr ""
 
 msgid "Join a club"
@@ -1661,10 +1667,18 @@ msgstr ""
 msgid "Features"
 msgstr ""
 
-msgid "RunReport is free for athletes"
+msgid "Pricing for athletes & trainers"
 msgstr ""
 
-msgid "All the features are and will remain free for athletes, without ads."
+msgid "RunReport is totally free for you !"
+msgstr ""
+
+msgid ""
+"You can enjoy all the features (sport logbook, GPS sync, social "
+"communication about your sport sessions, ...), and join any club you want."
+msgstr ""
+
+msgid "I'm a trainer or club manager"
 msgstr ""
 
 msgid "Clubs are paying on a per-user basis"
@@ -1743,12 +1757,13 @@ msgid ""
 "your whole club."
 msgstr ""
 
-msgid "Get more athletes in your club"
+msgid "Customize your club"
 msgstr ""
 
-msgid ""
-"More than 5 athletes ? Buy a premium access for your club and unlock the "
-"potential of your club !"
+msgid "Soon"
+msgstr ""
+
+msgid "Add a logo and some text to better describe your club."
 msgstr ""
 
 msgid "Terms of service"
