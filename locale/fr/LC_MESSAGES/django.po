@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-16 21:49+0100\n"
-"PO-Revision-Date: 2015-11-16 21:53+0100\n"
+"POT-Creation-Date: 2015-11-20 16:09+0100\n"
+"PO-Revision-Date: 2015-11-20 16:11+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -51,6 +51,18 @@ msgstr "Un groupe avec ce nom existe déja."
 msgid "The CSV file has not 3 columns."
 msgstr "Le fichier CSV n'a pas 3 colonnes."
 
+msgid "Email"
+msgstr "Email"
+
+msgid "Firstname"
+msgstr "Prénom"
+
+msgid "Lastname"
+msgstr "Nom"
+
+msgid "This athlete is already invited."
+msgstr "Cet athlète est déja invité"
+
 msgid "Club name"
 msgstr "Nom du club"
 
@@ -92,15 +104,6 @@ msgstr "Nom dans l'url"
 
 msgid "Description"
 msgstr "Description"
-
-msgid "Lastname"
-msgstr "Nom"
-
-msgid "Firstname"
-msgstr "Prénom"
-
-msgid "Email"
-msgstr "Email"
 
 msgid "Role"
 msgstr "Rôle"
@@ -809,14 +812,12 @@ msgstr "Ajouter"
 msgid "View group: %s"
 msgstr "Voir groupe: %s"
 
-#| msgid "Pricing"
 msgid "Pricing details"
 msgstr "Détails des tarifs"
 
 msgid "You can create a new club if you want to manage athletes."
 msgstr "Vous pouvez créer un club si vous souhaitez gérer des athlètes."
 
-#| msgid "A club has a free trial of 45 days, with full features enabled"
 msgid "A club is free for 45 days, then uses a fee per member"
 msgstr ""
 "Un club a une période d'essai de 45 jours, puis utilise une tarification par "
@@ -924,6 +925,9 @@ msgstr "Préférences"
 
 msgid "Links"
 msgstr "Liens"
+
+msgid "Invites"
+msgstr "Invitations"
 
 msgid "Current period"
 msgstr "Période en cours"
@@ -1081,6 +1085,41 @@ msgstr "Url"
 msgid "There are no public link for your club."
 msgstr "Aucun lien public pour votre club."
 
+#| msgid "Get more athletes in your club"
+msgid "Add athletes to your club"
+msgstr "Ajoutez des athlètes dans votre club"
+
+#| msgid "You can immediately add new members to your club."
+msgid ""
+"You can easily add known athletes to your club by sending them an invite."
+msgstr ""
+"Vous pouvez ajouter facilement des athlètes connus à votre club en leur "
+"envoyant une invitation."
+
+msgid "Multiple invites (csv)"
+msgstr "Invitations multples (CSV)"
+
+#| msgid "Club invite"
+msgid "Add invite"
+msgstr "Inviter"
+
+msgid "Sent"
+msgstr "Envoyé"
+
+msgid "Used"
+msgstr "Utilisés"
+
+msgid "Not sent"
+msgstr "Non envoyé"
+
+#| msgid "Not published"
+msgid "Not used"
+msgstr "Non utilisé"
+
+#| msgid "No actions"
+msgid "No active invites"
+msgstr "Pas d'invitations actives"
+
 msgid "Subscriptions for a private club"
 msgstr "Inscriptions pour un club privé"
 
@@ -1109,12 +1148,6 @@ msgstr ""
 
 msgid "Club link"
 msgstr "Liens public"
-
-msgid "You can register athletes by sending us a CSV file"
-msgstr "Vous pouvez ajouter des athlètes en nous fournissant un fichier CSV"
-
-msgid "Subscribe athletes"
-msgstr "Inscription d'athlètes"
 
 msgid "Send an email to all the club members"
 msgstr "Envoyer un email à tous les membres du club."
@@ -1280,6 +1313,14 @@ msgstr ""
 "Une erreur s'est produite lors de la mise à jour du rôle de l'athlète. "
 "Veuillez essayer après avoir rechargé la page."
 
+#| msgid "I'm an athlete"
+msgid "Add an athlete"
+msgstr "Ajouter un athlète"
+
+#| msgid "Send to"
+msgid "Send invite"
+msgstr "Envoyer invitation "
+
 msgid "Send invites to your athletes"
 msgstr "Envoyez des invitations à vos athlètes"
 
@@ -1295,6 +1336,9 @@ msgid ""
 msgstr ""
 "Un email sera envoyé à chaque athlète dans cette liste, avec un accès direct "
 "à RunReport et votre club."
+
+msgid "Subscribe athletes"
+msgstr "Inscription d'athlètes"
 
 msgid "Fast club subscriptions"
 msgstr "Inscription d'athlètes rapide"
@@ -1763,11 +1807,9 @@ msgstr "créez, partagez vos plans d'entrainements et gérez votre club."
 msgid "Features"
 msgstr "Fonctionalités"
 
-#| msgid "Your athletes races"
 msgid "Pricing for athletes & trainers"
 msgstr "Tarifs pour athlètes & entraîneurs "
 
-#| msgid "RunReport is free for athletes"
 msgid "RunReport is totally free for you !"
 msgstr "RunReport est entièrement gratuit pour vous !"
 
@@ -1779,7 +1821,6 @@ msgstr ""
 "synchro. GPS, communication autour de vos séances sportives, ...) et pourrez "
 "rejoindre des clubs."
 
-#| msgid "In a trainer plan"
 msgid "I'm a trainer or club manager"
 msgstr "Je suis un entraîneur ou gérant de club"
 
@@ -2025,7 +2066,6 @@ msgstr ""
 msgid "Payment status"
 msgstr "Status des paiements"
 
-#| msgid "Hello admin !"
 msgid "Hello Admin"
 msgstr "Bonjour admin"
 
@@ -3732,6 +3772,11 @@ msgstr "Multi Sport"
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0
+msgid "You can register athletes by sending us a CSV file"
+msgstr "Vous pouvez ajouter des athlètes en nous fournissant un fichier CSV"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
 msgid "Warning"
 msgstr "Attention"
 
@@ -3741,11 +3786,6 @@ msgid "All the features are and will remain free for athletes, without ads."
 msgstr ""
 "Toutes les fonctionalités sont et resteront gratuites pour les athlètes, "
 "sans publicité."
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Get more athletes in your club"
-msgstr "Obtenez plus d'athlètes dans votre club"
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0
@@ -3816,11 +3856,6 @@ msgstr ""
 #: obsolete:0
 msgid "Maximum"
 msgstr "Maximum"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Used"
-msgstr "Utilisés"
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0

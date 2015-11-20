@@ -2,9 +2,10 @@ from django.views.generic import FormView
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
-from .mixins import ClubMixin
-from club.forms import CSVSubscriptionsForm, CSVAthleteFormset
+from .mixins import ClubManagerMixin
+from club.forms import CSVSubscriptionsForm, CSVAthleteFormset, ClubInviteForm
 from club.tasks import subscribe_athlete
+from runreport.mixins import JsonResponseMixin, JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE
 import tempfile
 import csv
 import os
@@ -12,7 +13,26 @@ import os
 CSV_DIR = os.path.join(settings.HOME, 'tmp')
 CSV_SUFFIX = '.subscriptions.csv'
 
-class ClubSubscriptionsUpload(ClubMixin, FormView):
+class ClubSubscriptionsAdd(JsonResponseMixin, ClubManagerMixin, FormView):
+  '''
+  Build & Send invite to an athlete
+  '''
+  template_name = 'club/subscriptions/add.html'
+  form_class = ClubInviteForm
+
+  def get_form_kwargs(self, *args, **kwargs):
+    ctx = super(ClubSubscriptionsAdd, self).get_form_kwargs(*args, **kwargs)
+    ctx['club'] = self.club
+    return ctx
+
+  def form_valid(self, form):
+    subscribe_athlete.apply(args=(self.club, form.cleaned_data['email'], form.cleaned_data['first_name'], form.cleaned_data['last_name']))
+
+    # Reload parent page
+    self.json_options = [JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE, ]
+    return self.render_to_response({})
+
+class ClubSubscriptionsUpload(ClubManagerMixin, FormView):
   template_name = 'club/subscriptions/upload.html'
   form_class = CSVSubscriptionsForm
 
@@ -38,7 +58,7 @@ class ClubSubscriptionsUpload(ClubMixin, FormView):
   def get_success_url(self):
     return reverse('club-subscriptions-editor', args=(self.club.slug, self.name, ))
 
-class ClubSubscriptionsEditor(ClubMixin, FormView):
+class ClubSubscriptionsEditor(ClubManagerMixin, FormView):
   template_name = 'club/subscriptions/editor.html'
   form_class = CSVAthleteFormset
 

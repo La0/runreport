@@ -1,0 +1,31 @@
+{% extends 'modal.html' %}
+{% set modal_title = _("Add an athlete") %}
+
+{% set form_url = url('club-subscriptions-add', club.slug) %}
+
+{% block body %}
+<div class="invite">
+  {% csrf_token %}
+
+  {% with err = form.non_field_errors() %}
+  {% if err %}
+  <div class="alert alert-danger">
+    {{ err }}
+  </div>
+  {% endif %}
+  {% endwith %}
+
+  {{ macros.input(form.email) }}
+  {{ macros.input(form.first_name) }}
+  {{ macros.input(form.last_name) }}
+</div>
+{% endblock %}
+
+{% block footer %}
+  <button class="btn" data-dismiss="modal">
+    {{ _('Cancel') }}
+  </button>
+  <button type="submit" class="btn btn-success">
+    {{ _('Send invite') }}
+  </button>
+{% endblock %}

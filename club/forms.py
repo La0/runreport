@@ -145,3 +145,21 @@ class CSVAthleteForm(forms.Form):
 
 
 CSVAthleteFormset = formset_factory(CSVAthleteForm)
+
+class ClubInviteForm(forms.Form):
+  '''
+  Invite one athlete
+  Smarter form thant the csv one above
+  Add some checks
+  '''
+  email = forms.EmailField(required=True, label=_('Email'))
+  first_name = forms.CharField(required=True, label=_('Firstname'))
+  last_name = forms.CharField(required=True, label=_('Lastname'))
+
+  def __init__(self, club, *args, **kwargs):
+      super(ClubInviteForm, self).__init__(*args, **kwargs)
+      self.club = club
+
+  def clean(self):
+      if self.club.invites.filter(recipient=self.cleaned_data['email']).exists():
+        raise forms.ValidationError(_('This athlete is already invited.'))

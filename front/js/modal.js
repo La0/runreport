@@ -100,6 +100,7 @@ $(function(){
   // in short lived page session storage
   var tab_name = 'tab:'+window.location.href;
   var tab_href = sessionStorage.getItem(tab_name);
+console.log('lol', window.location);
   if(tab_href){
     console.info("Showing tab : "+tab_href);
     $('a[href="'+tab_href+'"]').tab('show');

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-16 21:49+0100\n"
+"POT-Creation-Date: 2015-11-20 16:09+0100\n"
 "PO-Revision-Date: 2015-02-09 17:42+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
@@ -50,6 +50,18 @@ msgstr ""
 msgid "The CSV file has not 3 columns."
 msgstr ""
 
+msgid "Email"
+msgstr ""
+
+msgid "Firstname"
+msgstr ""
+
+msgid "Lastname"
+msgstr ""
+
+msgid "This athlete is already invited."
+msgstr ""
+
 msgid "Club name"
 msgstr ""
 
@@ -90,15 +102,6 @@ msgid "Name in the url"
 msgstr ""
 
 msgid "Description"
-msgstr ""
-
-msgid "Lastname"
-msgstr ""
-
-msgid "Firstname"
-msgstr ""
-
-msgid "Email"
 msgstr ""
 
 msgid "Role"
@@ -886,6 +889,9 @@ msgstr ""
 msgid "Links"
 msgstr ""
 
+msgid "Invites"
+msgstr ""
+
 msgid "Current period"
 msgstr ""
 
@@ -1034,6 +1040,36 @@ msgstr ""
 msgid "There are no public link for your club."
 msgstr ""
 
+msgid "Add athletes to your club"
+msgstr ""
+
+msgid ""
+"You can easily add known athletes to your club by sending them an invite."
+msgstr ""
+
+msgid "Multiple invites (csv)"
+msgstr ""
+
+msgid "Add invite"
+msgstr ""
+
+msgid "Sent"
+msgstr ""
+
+msgid "Used"
+msgstr ""
+
+msgid "Not sent"
+msgstr ""
+
+msgid "Not used"
+msgstr ""
+
+#, fuzzy
+#| msgid "Natation"
+msgid "No active invites"
+msgstr "Swimming"
+
 msgid "Subscriptions for a private club"
 msgstr ""
 
@@ -1057,12 +1093,6 @@ msgid "You can send this to your athletes so they can join directly"
 msgstr ""
 
 msgid "Club link"
-msgstr ""
-
-msgid "You can register athletes by sending us a CSV file"
-msgstr ""
-
-msgid "Subscribe athletes"
 msgstr ""
 
 msgid "Send an email to all the club members"
@@ -1218,6 +1248,12 @@ msgid ""
 "reloading the page."
 msgstr ""
 
+msgid "Add an athlete"
+msgstr ""
+
+msgid "Send invite"
+msgstr ""
+
 msgid "Send invites to your athletes"
 msgstr ""
 
@@ -1230,6 +1266,9 @@ msgstr ""
 msgid ""
 "An email will be sent to every athlete in this list, with a direct access to "
 "RunReport"
+msgstr ""
+
+msgid "Subscribe athletes"
 msgstr ""
 
 msgid "Fast club subscriptions"

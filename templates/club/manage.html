@@ -33,6 +33,12 @@
         {{ _('Links') }}
       </a>
     </li>
+    <li>
+      <a href="#invites" role="tab" data-toggle="tab">
+        <i class="icon-mail"></i>
+        {{ _('Invites') }}
+      </a>
+    </li>
   </ul>
 
   <div class="tab-content">
@@ -330,8 +336,71 @@
       {% endif %}
       <a href="{{ url('club-link-add', club.slug) }}" class="modal-action btn btn-info pull-right">{{ _('Add a link') }}</a>
     </div>
-  </div>
 
+
+    <div class="tab-pane" id="invites">
+      <h3>{{ _('Add athletes to your club') }}</h3>
+
+      <div class="row">
+        <div class="col-sm-6 col-xs-12">
+          <p class="text-info">
+            <i class="icon-help-circled"></i>
+            {{ _('You can easily add known athletes to your club by sending them an invite.') }}
+          </p>
+        </div>
+        <div class="col-sm-6 col-xs-12 text-right">
+          <a href="{{ url('club-subscriptions-upload', club.slug) }}" class="btn btn-light btn-success">
+            <i class="icon-club"></i>
+            {{ _('Multiple invites (csv)') }}
+          </a>
+          <a href="{{ url('club-subscriptions-add', club.slug) }}" class="btn btn-success modal-action">
+            <i class="icon-user"></i>
+            {{ _('Add invite') }}
+          </a>
+        </div>
+
+        <table class="table table-striped">
+          <tr>
+            <th>{{ _('Athlete') }}</th>
+            <th>{{ _('Email') }}</th>
+            <th>{{ _('Sent') }}</th>
+            <th>{{ _('Used') }}</th>
+          </tr>
+          {% for invite in club.invites.all() %}
+          <tr>
+            <td>
+              {{ invite.user.first_name }} {{ invite.user.last_name }}
+            </td>
+            <td>
+              {{ invite.user.email }}
+            </td>
+            <td>
+              {% if invite.sent %}
+              <span class="label label-success">{{ _('Sent') }}</span> 
+              {% else %}
+              <span class="label label-warning">{{ _('Not sent') }}</span> 
+              {% endif %}
+            </td>
+            <td>
+              {% if invite.used %}
+              <span class="label label-success">{{ _('Used') }}</span> 
+              {% else %}
+              <span class="label label-warning">{{ _('Not used') }}</span> 
+              {% endif %}
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="10" class="text-warning text-center">
+              {{ _('No active invites') }}
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+
+    </div>
+  </div>
 
 {#
   {% if club.private %}
@@ -355,10 +424,6 @@
     </p>
   </div>
 
-  <p>
-    {{ _('You can register athletes by sending us a CSV file') }} : 
-      <a href="{{ url('club-subscriptions-upload', club.slug) }}" class="btn btn-sm btn-primary">{{ _('Subscribe athletes') }}</a>
-  </p>
   {% endif %}
 #}
 </div>
