@@ -14,15 +14,9 @@
         {{ stat.unit|floatformat(2) }} &euro;
       </td>
       <td>
-        {% if stat.price == 0 %}
-        <span class="label label-success">
-          {{ _('Free') }}
-        </span>
-        {% else %}
         <strong>
           {{ stat.price|floatformat(2) }} &euro;
         </strong>
-        {% endif %}
       </td>
     </tr>
     {% endfor %}
