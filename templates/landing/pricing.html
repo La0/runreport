@@ -10,88 +10,97 @@
 
   <div class="container">
 
-    <h1>
-      <i class="icon-sport-running"></i>
-      {{ _('I\'m an athlete') }}
-    </h1>
+    <div class="row">
+      <div class="col-sm-2 col-xs-3">
+        <img class="img-rounded img-responsive" src="{{ static('img/home/runner.jpg') }}" alt="{{ _('Athlete') }}">
 
-    <p class="lead">
-      <span class="text-info">
-        <i class="icon-premium"></i>
-        {{ _('RunReport is totally free for you !') }}
-      </span>
-      <br />
-      {{ _('You can enjoy all the features (sport logbook, GPS sync, social communication about your sport sessions, ...), and join any club you want.') }}
-    </p>
-
-
-    <hr />
-
-    <h1>
-      <i class="icon-plan-session"></i>
-      {{ _('I\'m a trainer or club manager') }}
-    </h1>
-
-    <h1></h1>
-    <p class="lead text-info">
-      <i class="icon-premium"></i>
-      {{ _('Clubs are paying on a per-user basis') }}
-      <br />
-      {{ _('A club has a free trial of 45 days, with full features enabled') }}
-    </p>
-
-    <div class="row prices text-center">
-
-      <div class="col-sm-6 col-xs-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">{{ _('Athletes') }}</h3>
-          </div>
-          <div class="panel-body">
-            <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-              <img class="img-rounded img-responsive" src="{{ static('img/home/runner.jpg') }}" alt="{{ _('Athlete') }}">
-            </div>
-
-            <p>
-              <a href="{{ url('features-athlete') }}" class="btn btn-info btn-light">
-                <i class="icon-premium"></i>
-                {{ _('View all the athletes features') }}
-              </a>
-            </p>
-
-            <p class="price">
-              {{ prices.athlete|floatformat(2) }} &euro;/{{ _('month') }} {{ _('per athlete') }}
-            </p>
-
-          </div>
-        </div>
       </div>
-
-      <div class="col-sm-6 col-xs-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">{{ _('Trainers') }}</h3>
-          </div>
-          <div class="panel-body">
-            <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-              <img class="img-rounded img-responsive" src="{{ static('img/home/trainer.jpg') }}" alt="{{ _('Trainer') }}">
-            </div>
-
-            <p>
-              <a href="{{ url('features-trainer') }}" class="btn btn-info btn-light">
-                <i class="icon-premium"></i>
-                {{ _('View all the trainers features') }}
-              </a>
-            </p>
-
-            <p class="price">
-              {{ prices.trainer|floatformat(2) }} &euro;/{{ _('month') }} {{ _('per trainer') }}
-            </p>
-
-          </div>
-        </div>
+      <div class="col-sm-10 col-xs-9">
+        <h1>
+          {{ _('I\'m an athlete') }}
+        </h1>
+        <p class="lead">
+          <span class="text-info">
+            <i class="icon-premium"></i>
+            {{ _('RunReport is totally free for you !') }}
+          </span>
+          <br />
+          {{ _('You can enjoy all the features (sport logbook, GPS sync, social communication about your sport sessions, ...), and join any club you want.') }}
+        </p>
       </div>
     </div>
+  </div>
+
+  {% if user and user.is_authenticated() %}
+  <hr />
+  {% else %}
+  <div class="container-fluid">
+    <div class="row actions">
+      <div class="col-xs-12 text-center">
+        <a href="{{ url('user-create') }}" class="btn btn-primary">
+          <i class="icon-plus"></i>
+          {{ _('Create an account') }}
+        </a>
+        <a href="{{ url('login') }}" class="btn btn-primary">
+          <i class="icon-user"></i>
+          {{ _('Sign in') }}
+        </a>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-2 col-xs-3">
+        <img class="img-rounded img-responsive" src="{{ static('img/home/trainer.jpg') }}" alt="{{ _('Trainer') }}">
+
+      </div>
+      <div class="col-sm-10 col-xs-9">
+        <h1>
+          {{ _('I\'m a trainer or club manager') }}
+        </h1>
+        <p class="lead text-info">
+          <i class="icon-premium"></i>
+          {{ _('Clubs are paying on a per-user basis') }}
+          <br />
+          {{ _('A club has a free trial of 45 days, with full features enabled') }}
+        </p>
+
+        <div class="col-xs-12 col-sm-6 text-center">
+          <h4>
+            <i class="icon-sport-running"></i>
+            {{ _('For every athlete in your club') }}
+          </h4>
+          <p class="price">
+            {{ prices.athlete|floatformat(2) }} &euro;/{{ _('month') }} {{ _('per athlete') }}
+          </p>
+          <p>
+            <a href="{{ url('features-athlete') }}" class="btn btn-info btn-light">
+              <i class="icon-premium"></i>
+              {{ _('View all the athletes features') }}
+            </a>
+          </p>
+        </div>
+        <div class="col-xs-12 col-sm-6 text-center">
+          <h4>
+            <i class="icon-plan-session"></i>
+            {{ _('For every trainer in your club') }}
+          </h4>
+          <p class="price">
+            {{ prices.trainer|floatformat(2) }} &euro;/{{ _('month') }} {{ _('per trainer') }}
+          </p>
+          <p>
+            <a href="{{ url('features-trainer') }}" class="btn btn-info btn-light">
+              <i class="icon-premium"></i>
+              {{ _('View all the trainers features') }}
+            </a>
+          </p>
+        </div>
+
+      </div>
+    </div>
+
   </div>
 </div>
 {% endblock %}
