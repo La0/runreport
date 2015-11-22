@@ -74,13 +74,14 @@
       
       {% if fog and day >= fog %}
 			<td class="link" href="{{ url('club-manage', club_fog.slug) }}">
-        {% with nb = session and session.sessions.count() or 0 %}
-        {% if nb > 0 %}
-        <p class="text-warning">
-          {{ _('%d hidden sessions: your club is not premium.') % nb }}
+        {% if session %}
+        {% for s in session.sessions.all() %}
+        <p class="text-warning do-tooltip" title="{{ _('Your club is not in full access anymore') }}">
+          <i class="icon-premium"></i>
+          {{ s.name|truncatechars(25) }}
         </p>
+        {% endfor %}
         {% endif %}
-        {% endwith %}
       </td>
       {% else %}
 			<td class="day link {% if day == today %}today{% endif %}" href="{{url(pageday, *pageargs + [day.year, day.month, day.day])}}">

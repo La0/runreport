@@ -127,7 +127,7 @@ class Club(models.Model):
     try:
       return self.periods.get(start__lte=now, end__gt=now)
     except:
-      return None
+      return self.periods.last()
 
   def _has_full_access(self):
     '''
