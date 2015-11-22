@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-20 16:09+0100\n"
+"POT-Creation-Date: 2015-11-22 14:51+0100\n"
 "PO-Revision-Date: 2015-02-09 17:42+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
@@ -501,7 +501,7 @@ msgstr "Fitness"
 msgid "Logout"
 msgstr ""
 
-msgid "Pricing"
+msgid "Premium"
 msgstr ""
 
 msgid "Create an account"
@@ -785,7 +785,7 @@ msgstr ""
 msgid "You can create a new club if you want to manage athletes."
 msgstr ""
 
-msgid "A club is free for 45 days, then uses a fee per member"
+msgid "A club is free for 90 days, then uses a fee per member"
 msgstr ""
 
 msgid "Join a club"
@@ -878,9 +878,6 @@ msgid "Add a link"
 msgstr ""
 
 msgid "Users"
-msgstr ""
-
-msgid "Premium"
 msgstr ""
 
 msgid "Preferences"
@@ -1418,6 +1415,10 @@ msgid "Your athlete dashboard"
 msgstr ""
 
 #, python-format
+msgid "Add athletes to %s"
+msgstr ""
+
+#, python-format
 msgid "Club %s is in limited access"
 msgstr ""
 
@@ -1723,22 +1724,25 @@ msgstr ""
 msgid "Clubs are paying on a per-user basis"
 msgstr ""
 
-msgid "A club has a free trial of 45 days, with full features enabled"
+msgid "A club has a free trial of 90 days, with full features enabled"
 msgstr ""
 
-msgid "Athletes"
-msgstr ""
-
-msgid "View all the athletes features"
+msgid "For every athlete in your club"
 msgstr ""
 
 msgid "per athlete"
 msgstr ""
 
-msgid "View all the trainers features"
+msgid "View all the athletes features"
+msgstr ""
+
+msgid "For every trainer in your club"
 msgstr ""
 
 msgid "per trainer"
+msgstr ""
+
+msgid "View all the trainers features"
 msgstr ""
 
 msgid "Features for trainers"
@@ -2456,8 +2460,7 @@ msgstr ""
 msgid "Show friends"
 msgstr ""
 
-#, python-format
-msgid "%d hidden sessions: your club is not premium."
+msgid "Your club is not in full access anymore"
 msgstr ""
 
 msgid "friends sessions"

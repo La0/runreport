@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-20 16:09+0100\n"
-"PO-Revision-Date: 2015-11-20 16:11+0100\n"
+"POT-Creation-Date: 2015-11-22 14:51+0100\n"
+"PO-Revision-Date: 2015-11-22 14:54+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -524,8 +524,8 @@ msgstr "Mon matériel"
 msgid "Logout"
 msgstr "Se déconnecter"
 
-msgid "Pricing"
-msgstr "Tarifs"
+msgid "Premium"
+msgstr "Premium"
 
 msgid "Create an account"
 msgstr "Créer un compte"
@@ -818,9 +818,10 @@ msgstr "Détails des tarifs"
 msgid "You can create a new club if you want to manage athletes."
 msgstr "Vous pouvez créer un club si vous souhaitez gérer des athlètes."
 
-msgid "A club is free for 45 days, then uses a fee per member"
+#| msgid "A club is free for 45 days, then uses a fee per member"
+msgid "A club is free for 90 days, then uses a fee per member"
 msgstr ""
-"Un club a une période d'essai de 45 jours, puis utilise une tarification par "
+"Un club a une période d'essai de 90 jours, puis utilise une tarification par "
 "membre."
 
 msgid "Join a club"
@@ -916,9 +917,6 @@ msgstr "Ajouter un lien"
 
 msgid "Users"
 msgstr "Utilisateurs"
-
-msgid "Premium"
-msgstr "Premium"
 
 msgid "Preferences"
 msgstr "Préférences"
@@ -1085,11 +1083,9 @@ msgstr "Url"
 msgid "There are no public link for your club."
 msgstr "Aucun lien public pour votre club."
 
-#| msgid "Get more athletes in your club"
 msgid "Add athletes to your club"
 msgstr "Ajoutez des athlètes dans votre club"
 
-#| msgid "You can immediately add new members to your club."
 msgid ""
 "You can easily add known athletes to your club by sending them an invite."
 msgstr ""
@@ -1099,7 +1095,6 @@ msgstr ""
 msgid "Multiple invites (csv)"
 msgstr "Invitations multples (CSV)"
 
-#| msgid "Club invite"
 msgid "Add invite"
 msgstr "Inviter"
 
@@ -1112,11 +1107,9 @@ msgstr "Utilisés"
 msgid "Not sent"
 msgstr "Non envoyé"
 
-#| msgid "Not published"
 msgid "Not used"
 msgstr "Non utilisé"
 
-#| msgid "No actions"
 msgid "No active invites"
 msgstr "Pas d'invitations actives"
 
@@ -1313,11 +1306,9 @@ msgstr ""
 "Une erreur s'est produite lors de la mise à jour du rôle de l'athlète. "
 "Veuillez essayer après avoir rechargé la page."
 
-#| msgid "I'm an athlete"
 msgid "Add an athlete"
 msgstr "Ajouter un athlète"
 
-#| msgid "Send to"
 msgid "Send invite"
 msgstr "Envoyer invitation "
 
@@ -1498,6 +1489,11 @@ msgstr "%s Admin."
 
 msgid "Your athlete dashboard"
 msgstr "Votre accueil pour athlète"
+
+#, python-format
+#| msgid "Add athletes to your club"
+msgid "Add athletes to %s"
+msgstr "Ajoutez des athlètes dans %s"
 
 #, python-format
 msgid "Club %s is in limited access"
@@ -1827,24 +1823,30 @@ msgstr "Je suis un entraîneur ou gérant de club"
 msgid "Clubs are paying on a per-user basis"
 msgstr "Les clubs sont payant, avec une tarification par membre."
 
-msgid "A club has a free trial of 45 days, with full features enabled"
+#| msgid "A club has a free trial of 45 days, with full features enabled"
+msgid "A club has a free trial of 90 days, with full features enabled"
 msgstr ""
-"Un club a une période d'essai de 45 jours, avec toutes les fonctionalités."
+"Un club a une période d'essai de 90 jours, avec toutes les fonctionalités."
 
-msgid "Athletes"
-msgstr "Athlètes"
-
-msgid "View all the athletes features"
-msgstr "Voir les fonctionalités des athlètes"
+#| msgid "Add athletes to your club"
+msgid "For every athlete in your club"
+msgstr "Pour tous les athlètes dans votre club"
 
 msgid "per athlete"
 msgstr "par athlète"
 
-msgid "View all the trainers features"
-msgstr "Voir les fonctionalités des entraineurs"
+msgid "View all the athletes features"
+msgstr "Voir les fonctionalités des athlètes"
+
+#| msgid "Features for trainers & clubs"
+msgid "For every trainer in your club"
+msgstr "Pour tous les entraineurs dans votre club"
 
 msgid "per trainer"
 msgstr "par entraîneur"
+
+msgid "View all the trainers features"
+msgstr "Voir les fonctionalités des entraineurs"
 
 msgid "Features for trainers"
 msgstr "Fonctionalités pour les entraîneurs"
@@ -2589,9 +2591,8 @@ msgstr "Cacher mes amis"
 msgid "Show friends"
 msgstr "Voir mes amis"
 
-#, python-format
-msgid "%d hidden sessions: your club is not premium."
-msgstr "%d séances cachées: votre club n'est plus premium."
+msgid "Your club is not in full access anymore"
+msgstr "Votre club est en accés réduit actuellement."
 
 msgid "friends sessions"
 msgstr "séance d'amis"
@@ -3772,6 +3773,21 @@ msgstr "Multi Sport"
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0
+msgid "Pricing"
+msgstr "Tarifs"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Athletes"
+msgstr "Athlètes"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "%d hidden sessions: your club is not premium."
+msgstr "%d séances cachées: votre club n'est plus premium."
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
 msgid "You can register athletes by sending us a CSV file"
 msgstr "Vous pouvez ajouter des athlètes en nous fournissant un fichier CSV"
 
@@ -3941,11 +3957,6 @@ msgstr "Compte Premium"
 #: obsolete:0
 msgid "New"
 msgstr "Nouveau"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Features for trainers & clubs"
-msgstr "Fonctionalités pour entraineurs & clubs"
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0
