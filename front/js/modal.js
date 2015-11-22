@@ -100,10 +100,12 @@ $(function(){
   // in short lived page session storage
   var tab_name = 'tab:'+window.location.href;
   var tab_href = sessionStorage.getItem(tab_name);
-console.log('lol', window.location);
+  if(window.location.hash) // override by url
+    tab_href = window.location.hash;
   if(tab_href){
     console.info("Showing tab : "+tab_href);
     $('a[href="'+tab_href+'"]').tab('show');
+    sessionStorage.setItem(tab_name, tab_href);
   }
   $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
     // Save new tab
