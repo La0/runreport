@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-22 14:51+0100\n"
+"POT-Creation-Date: 2015-11-25 14:26+0100\n"
 "PO-Revision-Date: 2015-02-09 17:42+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
@@ -1721,10 +1721,9 @@ msgstr ""
 msgid "I'm a trainer or club manager"
 msgstr ""
 
-msgid "Clubs are paying on a per-user basis"
-msgstr ""
-
-msgid "A club has a free trial of 90 days, with full features enabled"
+msgid ""
+"A club has a free trial of 90 days in premium mode. It allows you to test "
+"all the feature set. Then, the premium mode is paying, on a per-user basis."
 msgstr ""
 
 msgid "For every athlete in your club"
@@ -3016,6 +3015,9 @@ msgstr ""
 
 #, python-format
 msgid "%s trainer"
+msgstr ""
+
+msgid "No trainers managing you in this club."
 msgstr ""
 
 msgid "You can change your password using"
