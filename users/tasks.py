@@ -64,3 +64,26 @@ def delete_user(user):
   '''
   user.backup()
   user.delete()
+
+@shared_task
+def update_ml_usage(user, old_email, new_email):
+  '''
+  Update Mailing list subscriptions
+  for a user on:
+   * 'all' mailing list
+   * every club mailing list
+   * every group mailing list
+  '''
+
+  # 'all'
+  mailings = ['all']
+
+  # Clubs
+  mailings += list(user.memberships.filter(club__mailing_list__isnull=False).values_list('club__mailing_list', flat=True))
+
+  # Groups
+  mailings += list(user.memberships.filter(groups__mailing_list__isnull=False).values_list('groups__mailing_list', flat=True))
+
+  for ml in mailings:
+    user.unsubscribe_mailing(ml, old_email)
+    user.subscribe_mailing(ml, new_email)

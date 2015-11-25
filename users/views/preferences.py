@@ -1,6 +1,7 @@
 from users.forms import UserForm, UserPasswordForm
 from django.views.generic.edit import UpdateView, FormView
 from users.models import Athlete
+from users.tasks import update_ml_usage
 
 class Preferences(UpdateView):
   template_name = 'users/preferences.html'
@@ -20,8 +21,6 @@ class Preferences(UpdateView):
       self.request.user.clean_avatars()
       avatar_updated = True
 
-    context = self.get_context_data(form=form)
-
     # Update user category
     user = form.save(commit=False)
     user.search_category()
@@ -31,7 +30,13 @@ class Preferences(UpdateView):
     if avatar_updated:
       user.crop_avatar()
 
-    return self.render_to_response(context)
+    # Update mailing list on email change
+    old_email = self.request.user.email
+    new_email = form.cleaned_data['email']
+    if old_email != new_email:
+      update_ml_usage.apply_async(args=(self.request.user, old_email, new_email))
+
+    return self.render_to_response(self.get_context_data(form=form))
 
 class UpdatePassword(FormView):
   template_name = 'users/password.html'

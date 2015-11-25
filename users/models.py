@@ -282,11 +282,13 @@ class Athlete(AthleteBase):
       return False
     return True
 
-  def unsubscribe_mailing(self, mailing):
+  def unsubscribe_mailing(self, mailing, email=None):
     # Unsubscribe user from a mailing list
     try:
+      if not email:
+        email = self.email
       mm = MailMan()
-      mm.unsubscribe(mailing, self.email)
+      mm.unsubscribe(mailing, email)
     except Exception, e:
       print 'Failed to unsubscribe %s from %s : %s' % (self.username, mailing, str(e))
       return False
@@ -394,6 +396,7 @@ class Athlete(AthleteBase):
       f.write(serialized)
 
     return path
+
 
 class UserCategory(models.Model):
   code = models.CharField(max_length=10)
