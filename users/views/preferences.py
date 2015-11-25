@@ -1,5 +1,4 @@
 from users.forms import UserForm, UserPasswordForm
-from club.forms import TrainersFormSet
 from django.views.generic.edit import UpdateView, FormView
 from users.models import Athlete
 
@@ -10,15 +9,6 @@ class Preferences(UpdateView):
 
   def get_object(self):
     return self.request.user
-
-  def get_context_data(self, *args, **kwargs):
-    context = super(Preferences, self).get_context_data(*args, **kwargs)
-
-    # Add form for trainers
-    data = self.request.method == 'POST' and self.request.POST or None
-    context['form_trainers'] = TrainersFormSet(data, queryset=self.request.user.memberships.filter(role__in=('athlete', )))
-
-    return context
 
   def form_valid(self, form):
     if self.request.user.demo:
@@ -40,12 +30,6 @@ class Preferences(UpdateView):
     # Crop updated avatar
     if avatar_updated:
       user.crop_avatar()
-
-    # Manually save trainers form
-    # This is really dirty.
-    form = context['form_trainers']
-    if form.is_valid():
-      form.save()
 
     return self.render_to_response(context)
 

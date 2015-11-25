@@ -67,26 +67,10 @@ class ClubCreateForm(forms.ModelForm):
       raise ValidationError("Slug already used.")
     return slug
 
-class TrainersForm(forms.ModelForm):
-  def __init__(self, *args,**kwargs):
-    super (TrainersForm, self ).__init__(*args,**kwargs) # populates the post
-
-    # Only load trainers for instance club
-    trainers = Athlete.objects.filter(memberships__club=self.instance.club, memberships__role='trainer')
-    self.fields['trainers'] = UserModelChoiceField(queryset=trainers, widget=forms.CheckboxSelectMultiple())
-
-  class Meta:
-    model = ClubMembership
-    fields = ('trainers', )
-
 class ClubLinkForm(forms.ModelForm):
   class Meta:
     model = ClubLink
     fields = ('name', 'url')
-
-# Init the formset using above form
-TrainersFormSet = modelformset_factory(ClubMembership, fields=('trainers',), form=TrainersForm, extra=0)
-
 
 class InviteAskForm(forms.ModelForm):
   class Meta:

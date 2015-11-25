@@ -185,23 +185,21 @@ $(function(){
       </div>
 
       <div class="tab-pane" id="sport">
-        {{ form_trainers.management_form|safe }}
-        {% for form in form_trainers%}
-        <div class="form-group {% if form.errors %}has-error{% endif %}">
-          <label class="col-sm-4 control-label">{{ _('%s trainer') % form.instance.club.name }}</label>
+        {% for m in user.memberships.all() %}
+        <div class="form-group">
+          <label class="col-sm-4 control-label">{{ _('%s trainer') % m.club.name }}</label>
           <div class="col-sm-8">
-            {{ form.id|safe }}
-            {% for trainer in form.trainers %}
-            <label class="checkbox-inline">
-              <input name="{{ form.trainers.html_name }}" type="checkbox" value="{{ trainer.choice_value }}" {% if trainer.is_checked() %}checked{% endif %}>
-              {{ trainer.choice_label }}
-            </label>
+            {% for trainer in m.trainers.all() %}
+            <a href="{{ url('user-public-profile', trainer.username) }}">
+              {{ trainer.first_name }} {{ trainer.last_name }}
+            </a>
+            {% else %}
+            <p class="text-warning">
+              {{ _('No trainers managing you in this club.') }}
+            </p>
             {% endfor %}
           </div>
         </div>
-        {% if form.trainers.errors %}
-        <div class="alert alert-danger">{{form.trainers.errors|safe}}</div>
-        {% endif %}
         {% endfor %}
       
         {{ macros.input(form.default_sport, None, false, 4, 8) }}
