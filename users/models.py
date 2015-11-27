@@ -16,6 +16,8 @@ from runreport.mailman import MailMan
 from friends.models import FriendRequest
 from helpers import crop_image
 from django_countries.fields import CountryField
+from users.notification import UserNotifications
+import json
 
 PRIVACY_LEVELS = (
   ('public', _('Public')),
@@ -126,6 +128,11 @@ class Athlete(AthleteBase):
 
   # Display contextual help
   display_help = models.BooleanField(_('Display contextual help'), default=True)
+
+  # Initial demo steps
+  demo_trainer_active = models.BooleanField(default=True)
+  demo_athlete_active = models.BooleanField(default=True)
+  demo_steps = models.TextField(null=True, blank=True) # json inside, should be JsonField on Django 1.9
 
   def search_category(self):
     if not self.birthday:
@@ -396,6 +403,66 @@ class Athlete(AthleteBase):
       f.write(serialized)
 
     return path
+
+  def check_demo_steps(self, mode, notify=True):
+    '''
+    Check demo steps are done
+    '''
+    # Is demo active ?
+    active_marker = 'demo_%s_active' % mode
+    active = getattr(self, active_marker)
+    if not active:
+      return None
+
+    # Load current demo steps
+    original_steps = {}
+    if self.demo_steps:
+      data = json.loads(self.demo_steps)
+      original_steps = data.get(mode, {})
+
+    steps = {}
+    if mode == 'trainer':
+      # Any invite ?
+      if self.club_set.filter(manager=self).exists():
+        steps['invite'] = self.inviter.exists()
+
+      # Any plan & applied ?
+      steps['plan'] = self.plans.exists()
+      steps['plan_applied'] = self.plans.filter(applications__isnull=False).exists()
+
+      # Any comments ?
+      steps['comment'] = self.messages_written.exists()
+
+    elif mode == 'athlete':
+      # Create a session
+      steps['session'] = self.sportweek.exists()
+
+      # Join a club
+      steps['join'] = self.memberships.exists()
+
+      # Add a friend
+      steps['friends'] = self.friends.exists()
+
+      # Add a GPS watch
+      steps['gps'] = self.garmin_login is not None or self.strava_token is not None
+
+      # Any comments ?
+      steps['comment'] = self.messages_written.exists()
+
+
+    # Save steps
+    if steps != original_steps:
+      # Detect demo completion
+      if False not in steps.values():
+        setattr(self, active_marker, False)
+        if notify:
+          un = UserNotifications(self)
+          un.add_demo_completion(mode)
+
+      self.demo_steps = json.dumps(steps)
+      self.save()
+
+    return steps
 
 
 class UserCategory(models.Model):

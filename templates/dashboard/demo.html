@@ -1,0 +1,23 @@
+<div class="list-group" id="demo">
+  {% for step in demo %}
+    {% if not step.active and step.url %}
+    <a href="{{ step.url }}" class="list-group-item">
+    {% else %}
+    <li class="list-group-item {% if step.active %}disabled{% endif %}">
+    {% endif %}
+
+      {% if step.active %}
+      <span class="pull-right text-info do-tooltip" title="{{ _('You have validated this step.') }}">
+        <i class="icon-ok"></i>
+      </span>
+      {% endif %}
+
+      {{ step.title }}
+
+    {% if not step.active and step.url %}
+    </a>
+    {% else %}
+    </li>
+    {% endif %}
+  {% endfor %}
+</div>

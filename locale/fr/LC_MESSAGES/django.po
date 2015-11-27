@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-25 14:26+0100\n"
-"PO-Revision-Date: 2015-11-25 14:30+0100\n"
+"POT-Creation-Date: 2015-11-27 17:50+0100\n"
+"PO-Revision-Date: 2015-11-27 17:55+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -334,7 +334,7 @@ msgid ""
 "Publish some race reports, training plans details, directly on your public "
 "profile. Optimised forsharing on Facebook."
 msgstr ""
-"Publier des rapports de courses, détails de plans d'entrainement directement "
+"Publier des rapports de courses, détails de plans d'entraînement directement "
 "sur votre profil. Optimisé pour le partage Facebook."
 
 msgid "Detailed weekly stats"
@@ -373,11 +373,11 @@ msgstr ""
 "depuis RunReport."
 
 msgid "Easily create training plans"
-msgstr "Créer facilement des plans d'entrainement"
+msgstr "Créer facilement des plans d'entraînement"
 
 msgid ""
 "Create training plans spanning on multiple weeks with a powerful interface"
-msgstr "Créez facilement des plans d'entrainement sur plusieurs semaines."
+msgstr "Créez facilement des plans d'entraînement sur plusieurs semaines."
 
 msgid "Send training plans to your athletes in one click"
 msgstr "Envoyez vos plans à vos athlètes en un clic"
@@ -543,7 +543,7 @@ msgid "Unsupported time format"
 msgstr "Format de temps non supporté"
 
 msgid "Content of the session (training type, race name, ...)"
-msgstr "Contenu de la séance (type d'entrainement, nom de la course, ...)"
+msgstr "Contenu de la séance (type d'entraînement, nom de la course, ...)"
 
 msgid "How did you feel about this session ?"
 msgstr ""
@@ -587,6 +587,39 @@ msgstr "Dénivelé positif"
 
 msgid "Elevation loss"
 msgstr "Dénivelé négatif"
+
+#| msgid "I'm an athlete"
+msgid "Invite an athlete"
+msgstr "Inviter un athlète"
+
+#| msgid "Create your own training plans"
+msgid "Create a training plan"
+msgstr "Créer un plan d'entraînement"
+
+#| msgid "Send your plans to your athletes"
+msgid "Send a plan to your athletes"
+msgstr "Envoyez un plans à vos athlètes"
+
+#| msgid "Be notified of your athletes sessions"
+msgid "Leave a comment to one of your athlete session"
+msgstr "Commenter une séance de vos athlètes"
+
+#| msgid "Track your sport sessions"
+msgid "Create your first sport session"
+msgstr "Créez votre première séance sportive"
+
+msgid "Join a club"
+msgstr "Rejoindre un club"
+
+msgid "Add some friends to see their sessions"
+msgstr "Ajouter des amis pour partager vos séances"
+
+msgid "Sync your GPS watch or app"
+msgstr "Synchronisez votre montre ou appli GPS"
+
+#| msgid "%d most commented sessions"
+msgid "Add a comment on a session"
+msgstr "Ajouter un commentaire à une séance"
 
 msgid "Forbidden"
 msgstr "Interdit"
@@ -822,9 +855,6 @@ msgid "A club is free for 90 days, then uses a fee per member"
 msgstr ""
 "Un club a une période d'essai de 90 jours, puis utilise une tarification par "
 "membre."
-
-msgid "Join a club"
-msgstr "Rejoindre un club"
 
 msgid "You can join a club clicking on \"Join\"."
 msgstr "Vous pouvez rejoindre un club, en cliquant sur \"Rejoindre\"."
@@ -1255,7 +1285,7 @@ msgstr "Un staff est réservé pour les membres non-sportifs. "
 msgid "A trainer can manage athletes, and send plans."
 msgstr ""
 "Un entraîneur peut gérer des athlètes et leur envoyer des plans "
-"d'entrainement."
+"d'entraînement."
 
 msgid "This user is already archived, you can now delete it from your club."
 msgstr ""
@@ -1404,11 +1434,18 @@ msgstr "Accueil pour entraîneur"
 msgid "Current week"
 msgstr "Cette semaine"
 
+msgid "Start building your RunReport !"
+msgstr "Découvrez les fonctionalités de RunReport !"
+
+msgid "Follow those steps to discover the features of RunReport !"
+msgstr ""
+"Suivez ces étapes pour découvrir les fonctionalités essentielles du site."
+
 msgid "Your future sessions"
 msgstr "Vos futures séances"
 
 msgid "These are your training sessions for the next 10 days."
-msgstr "Voici vos séances d'entrainement pour les 10 prochains jours."
+msgstr "Voici vos séances d'entraînement pour les 10 prochains jours."
 
 msgid "You don't have any future sessions."
 msgstr "Vous n'avez aucune séances sportives à venir."
@@ -1458,6 +1495,10 @@ msgstr ""
 msgid "Example of public profile"
 msgstr "Exemple de profil public"
 
+#| msgid "You have already published this week."
+msgid "You have validated this step."
+msgstr "Vous avez validé cette étape."
+
 msgid "By"
 msgstr "Par"
 
@@ -1478,20 +1519,20 @@ msgstr "Accueil Entraîneur"
 msgid "Trainer dashboard"
 msgstr "Accueil Entraîneur"
 
-#, python-format
-msgid "%s Athletes"
-msgstr "%s Athlètes"
+#| msgid "Athletes"
+msgid "All Athletes"
+msgstr "Tous les athlètes"
 
-#, python-format
-msgid "%s Admin."
-msgstr "%s Admin."
+#| msgid "Add an athlete"
+msgid "Add athletes"
+msgstr "Ajouter des athlètes"
+
+#| msgid "Manage my club"
+msgid "Manage your club"
+msgstr "Gérer votre club"
 
 msgid "Your athlete dashboard"
 msgstr "Votre accueil pour athlète"
-
-#, python-format
-msgid "Add athletes to %s"
-msgstr "Ajoutez des athlètes dans %s"
 
 #, python-format
 msgid "Club %s is in limited access"
@@ -1509,12 +1550,27 @@ msgstr ""
 msgid "You need to activate a credit card for this club."
 msgstr "Vous devez enregistrer une carte de crédit pour ce club."
 
+msgid "Start building your club !"
+msgstr "Construisez votre club !"
+
+#| msgid "You successfully changed your password."
+msgid "You successfully completed the demo !"
+msgstr "Vous avez complété les étapes initiales !"
+
 #, python-format
 msgid "%d Prospects in your clubs"
 msgstr "%d Nouveaux dans votre club"
 
-msgid "Accept or refuse"
-msgstr "Accepter ou refuser"
+#| msgid "You can immediately add new members to your club."
+msgid "Accept or refuse new members in your club."
+msgstr "Accepter ou refuser de nouveaux membres dans votre club."
+
+msgid "Click to accept or refuse this athlete"
+msgstr "Cliquez pour accepter ou refuser ce membre"
+
+#| msgid "%d Prospects in your clubs"
+msgid "No new prospects in your club."
+msgstr "Pas de nouveaux dans votre club."
 
 msgid "Your athletes sessions"
 msgstr "Les séances de vos athlètes"
@@ -1796,7 +1852,7 @@ msgstr ""
 "RunReport est l'outil idéal pour entrainer, suivre et motiver vos athlètes."
 
 msgid "create, share your training plans and manage your club."
-msgstr "créez, partagez vos plans d'entrainements et gérez votre club."
+msgstr "créez, partagez vos plans d'entraînements et gérez votre club."
 
 msgid "Features"
 msgstr "Fonctionalités"
@@ -1811,7 +1867,7 @@ msgid ""
 "You can enjoy all the features (sport logbook, GPS sync, social "
 "communication about your sport sessions, ...), and join any club you want."
 msgstr ""
-"Vous disposerez de toutes les fonctionalités (carnet d'entrainement, "
+"Vous disposerez de toutes les fonctionalités (carnet d'entraînement, "
 "synchro. GPS, communication autour de vos séances sportives, ...) et pourrez "
 "rejoindre des clubs."
 
@@ -1851,13 +1907,13 @@ msgid "View features for athletes"
 msgstr "Voir les fonctionalités pour athlètes."
 
 msgid "Create your own training plans"
-msgstr "Créer vos propres plans d'entrainement"
+msgstr "Créer vos propres plans d'entraînement"
 
 msgid ""
 "Create training plans with a powerful web interface, spanning over several "
 "weeks."
 msgstr ""
-"Créez des plans d'entrainement avec notre interface web puissante, couvrant "
+"Créez des plans d'entraînement avec notre interface web puissante, couvrant "
 "plusieurs semaines."
 
 msgid "Send your plans to your athletes"
@@ -2735,10 +2791,10 @@ msgid "No Comments"
 msgstr "Pas de commentaires"
 
 msgid "In a trainer plan"
-msgstr "Dans un plan d'entrainement"
+msgstr "Dans un plan d'entraînement"
 
 msgid "No trainer plan"
-msgstr "Pas de plan d'entrainement"
+msgstr "Pas de plan d'entraînement"
 
 msgid "Equipment used"
 msgstr "Matériel utilisé"
@@ -3175,7 +3231,6 @@ msgstr "Voir votre profil public"
 msgid "%s trainer"
 msgstr "Entraîneur du %s"
 
-#| msgid "For every trainer in your club"
 msgid "No trainers managing you in this club."
 msgstr "Aucun entraîneur ne vous gère pour ce club."
 
@@ -3490,6 +3545,16 @@ msgstr ""
 "%(first_name)s %(last_name)s a supprimé le plan %(plan_name)s de son "
 "calendrier"
 
+msgid "Congratulations, you completed the RunReport demo for athletes."
+msgstr ""
+"Félicitations, vous avez complété les étapes initiales de RunReport pour "
+"athlètes."
+
+msgid "Congratulations, you completed the RunReport demo for trainers."
+msgstr ""
+"Félicitations, vous avez complété les étapes initiales de RunReport pour "
+"entraîneurs."
+
 msgid "1 year"
 msgstr "1 an"
 
@@ -3773,8 +3838,23 @@ msgstr "Multi Sport"
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0
-msgid "Athletes"
-msgstr "Athlètes"
+msgid "%s Athletes"
+msgstr "%s Athlètes"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "%s Admin."
+msgstr "%s Admin."
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Add athletes to %s"
+msgstr "Ajoutez des athlètes dans %s"
+
+#. Obsolete translation kept alive with Viniagrette
+#: obsolete:0
+msgid "Accept or refuse"
+msgstr "Accepter ou refuser"
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0
@@ -4298,7 +4378,7 @@ msgid ""
 "You can freely create your training logbook, manage your sports sesssions, "
 "and clearly view your evolution across several month or years."
 msgstr ""
-"Vous pouvez créer gratuitement votre carnet d'entrainement, gérer vos "
+"Vous pouvez créer gratuitement votre carnet d'entraînement, gérer vos "
 "séances de sport, et visualiser clairement votre évolution au cours des mois "
 "& années."
 
@@ -4328,7 +4408,7 @@ msgid ""
 "and efficiently communicate with them."
 msgstr ""
 "Chaque entraîneur peut voir les séances de ses athlètes, créer ses plans "
-"d'entrainement, et communiquer efficacement avec eux."
+"d'entraînement, et communiquer efficacement avec eux."
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0

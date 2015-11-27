@@ -10,31 +10,48 @@
 
 {% block content %}
 <div class="container" id="dashboard">
-  <h1>{{ _('Trainer dashboard') }}</h1>
+  <h1>{{ _('Trainer dashboard') }} <span class="text-muted">&bull;</span> {{ club.name }}</h1>
+
+  {% if clubs.count() > 1 %}
+    {% for c in clubs %}
+    <ul class="nav nav-tabs">
+      <li role="presentation" class="{% if c == club %}active{% endif %}">
+        <a href="{{ url('dashboard-club', c.slug) }}">{{ c.name }}</a>
+      </li>
+    </ul>
+    {% endfor %}
+  {% endif %}
 
   <ol class="breadcrumb">
 
-    {% for m in memberships %}
-      {# Athletes list #}
-      <li>
-        <i class="icon-club text-muted"></i>
-        <a href="{{ url('club-members', m.club.slug) }}">{{ _('%s Athletes') % m.club.name }}</a>
-      </li>
+    {# Athletes list #}
+    <li>
+      <i class="icon-club text-muted"></i>
+      <a href="{{ url('club-members', club.slug) }}">{{ _('All Athletes') }}</a>
+    </li>
 
-      {# Club Admin #}
-      {% if m.club.manager == user %}
+    {% if club.manager == user %}
+      {# Add athletes #}
+      {% if club.has_full_access %}
       <li>
-        <i class="icon-edit text-muted"></i>
-        <a href="{{ url('club-manage', m.club.slug) }}">{{ _('%s Admin.') % m.club.name }}</a>
+        <i class="icon-plus text-muted"></i>
+        <a href="{{ url('club-manage', club.slug) }}#invites">
+          {{ _('Add athletes') }}
+        </a>
       </li>
       {% endif %}
 
-    {% endfor %}
+      {# Club Admin #}
+      <li>
+        <i class="icon-edit text-muted"></i>
+        <a href="{{ url('club-manage', club.slug) }}">{{ _('Manage your club') }}</a>
+      </li>
+    {% endif %}
 
     {# Plans #}
     <li>
       <i class="icon-plan-session text-muted"></i>
-      <a href="https://plans.runreport.fr">{{ _('Training plans') }}</a>
+      <a href="{{ PLANS_URL }}">{{ _('Training plans') }}</a>
     </li>
 
     {# Athlete Dashboard #}
@@ -45,57 +62,74 @@
 
   </ol>
 
-  {% for m in memberships %}
-    {% if m.club.manager == user %}
-      {% if m.club.has_full_access %}
-      <a href="{{ url('club-manage', m.club.slug) }}#invites" class="btn btn-info">
-        <i class="icon-user"></i>
-        {{ _('Add athletes to %s') % m.club.name }}
+  {% if club.manager == user and not club.has_full_access %}
+  <div class="alert alert-warning">
+    <h4>
+      <i class="icon-premium"></i>
+      {{ _('Club %s is in limited access') % m.club.name }}
+    </h4>
+    <p class="pull-right">
+      <a href="{{ url('club-manage', m.club.slug) }}" class="btn btn-danger">
+        {{ _('Manage my club') }}
+        <i class="icon-right-open"></i>
       </a>
+    </p>
+    <p>
+      {{ _('Your club has expired the free trial period, and is now in a limited access period.') }}
+      <br />
+      {{ _('You need to activate a credit card for this club.') }}
+    </p>
+  </div>
+  {% endif %}
 
-      {% else %}
-      <div class="alert alert-warning">
-        <h4>
-          <i class="icon-premium"></i>
-          {{ _('Club %s is in limited access') % m.club.name }}
-        </h4>
-        <p class="pull-right">
-          <a href="{{ url('club-manage', m.club.slug) }}" class="btn btn-danger">
-            {{ _('Manage my club') }}
-            <i class="icon-right-open"></i>
-          </a>
-        </p>
-        <p>
-          {{ _('Your club has expired the free trial period, and is now in a limited access period.') }}
-          <br />
-          {{ _('You need to activate a credit card for this club.') }}
-        </p>
-      </div>
-      {% endif %}
-    {% endif %}
-  {% endfor %}
-
-  {% if prospects %}
+  {% if demo or prospects %}
   <div class="row">
-    <div class="col-xs-12">
-      <h4>{{ _('%d Prospects in your clubs') % prospects.count() }}</h4>
-
-      {% for p in prospects %}
-      <div class="col-xs-2 col-sm-1">
-        <img class="img-rounded img-responsive" src="{{ p.user.avatar.url }}" />
-      </div>
-      <div class="col-xs-10 col-sm-3">
-        <span class="lead">{{ p.user.first_name }} {{ p.user.last_name }}</span>
-        <br />
-        <a href="{{ url('club-member-role', p.club.slug, p.user.username) }}" class="modal-action btn btn-info btn-xs">
-          <i class="icon-edit"></i>
-          {{ _('Accept or refuse') }}
-        </a>
-      </div>
-      {% endfor %}
+    <div class="col-xs-12 col-sm-6">
+      {% if demo %}
+        <h3>{{ _('Start building your club !') }}</h3>
+        <p class="text-info">
+          <i class="icon-help-circled"></i>
+          {{ _('Follow those steps to discover the features of RunReport !') }}
+        </p>
+        {% include 'dashboard/demo.html' %}
+      {% else %}
+      <span class="text-success">
+        <i class="icon-ok"></i>
+        {{ _('You successfully completed the demo !') }}
+      </span>
+      {% endif %}
     </div>
 
+    <div class="col-xs-12 col-sm-6">
+      {% if prospects %}
+        <h3>{{ _('%d Prospects in your clubs') % prospects.count() }}</h3>
+        <p class="text-info">
+          <i class="icon-help-circled"></i>
+          {{ _('Accept or refuse new members in your club.') }}
+        </p>
+
+        {% for p in prospects %}
+        <div class="list-group">
+          <a href="{{ url('club-member-role', p.club.slug, p.user.username) }}" class="modal-action list-group-item do-tooltip" title="{{ _('Click to accept or refuse this athlete') }}">
+            <p class="pull-right">
+              <i class="icon-ok text-success"></i>
+              {{ _('or') }}
+              <i class="icon-trash text-danger"></i>
+            </p >
+            {{ p.user.first_name }} {{ p.user.last_name }}
+          </a>
+        </div>
+        {% endfor %}
+      {% else %}
+      <span class="text-success">
+        <i class="icon-ok"></i>
+        {{ _('No new prospects in your club.') }}
+      </span>
+      {% endif %}
+    </div>
   </div>
+
+  <hr />
   {% endif %}
 
   <div class="row">
@@ -132,7 +166,7 @@
       {% for plan in plans %}
       <div class="plan">
         <i class="icon-plan-session"></i>
-        <a href="https://plans.runreport.fr/#/plan/{{ plan.pk }}">
+        <a href="{{ PLANS_URL }}/#/plan/{{ plan.pk }}">
           {{ plan.name }}
         </a>
         <span class="text-muted">
@@ -146,7 +180,7 @@
       </p>
       {% endfor %}
   
-      <a href="https://plans.runreport.fr" target="_blank" class="btn btn-success btn-light">
+      <a href="{{ PLANS_URL }}" target="_blank" class="btn btn-success btn-light">
         <i class="icon-plus"></i>
         {{ _('Create a new plan') }}
       </a>

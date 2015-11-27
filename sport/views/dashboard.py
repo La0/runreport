@@ -1,5 +1,8 @@
 from django.views.generic import TemplateView
 from django.core.exceptions import PermissionDenied
+from django.utils.translation import ugettext_lazy as _
+from django.core.urlresolvers import reverse
+from django.conf import settings
 from sport.stats import StatsWeek
 from sport.models import SportSession
 from sport.vma import VmaCalc
@@ -23,12 +26,26 @@ class DashBoardView(TemplateView):
       return self.render_to_response({})
 
     # Detect mode
-    self.is_trainer = request.user.is_trainer
+    trainer_memberships = request.user.memberships.filter(role='trainer')
+    self.is_trainer = trainer_memberships.exists()
     self.mode = self.kwargs.get('type', self.is_trainer and 'trainer' or 'athlete')
 
     # Check trainer mode is accessible
-    if self.mode == 'trainer' and not self.is_trainer:
-      raise PermissionDenied
+    self.clubs = None
+    self.club = None
+    if self.mode == 'trainer':
+      if not self.is_trainer:
+        raise PermissionDenied
+
+      # Load available clubs
+      clubs = trainer_memberships.values_list('club_id', flat=True)
+      self.clubs = request.user.club_set.filter(pk__in=clubs)
+
+      # Pick current club
+      if self.kwargs.get('club'):
+        self.club = self.clubs.get(slug=self.kwargs['club'])
+      else:
+        self.club = self.clubs.first()
 
     return super(DashBoardView, self).get(request, *args, **kwargs)
 
@@ -55,14 +72,18 @@ class DashBoardView(TemplateView):
       context.update(self.load_sessions())
       context.update(self.load_friends_sessions())
       context.update(self.load_vma())
+      context.update(self.load_demo(self.mode))
 
     # Load trainer data
     if self.mode == 'trainer':
       context['memberships'] = self.request.user.memberships.filter(role='trainer')
+      context['clubs'] = self.clubs
+      context['club'] = self.club
       context.update(self.load_prospects())
       context.update(self.load_trained_sessions())
       context.update(self.load_trained_races())
       context.update(self.load_plans())
+      context.update(self.load_demo(self.mode))
 
     return context
 
@@ -172,6 +193,7 @@ class DashBoardView(TemplateView):
     '''
     filters = {
       'club__manager' : self.request.user,
+      'club' : self.club,
       'role' : 'prospect',
     }
     prospects = ClubMembership.objects.filter(**filters)
@@ -265,4 +287,78 @@ class DashBoardView(TemplateView):
     plans = self.request.user.plans.order_by('-created')[0:3]
     return {
       'plans' : plans,
+    }
+
+  def load_demo(self, mode):
+    '''
+    Load demo steps
+    '''
+    active = self.request.user.check_demo_steps(mode)
+    if active is None:
+      return {}
+
+    # Build trainer demo steps
+    if mode == 'trainer':
+      if self.club.manager == self.request.user:
+        demo = [
+          {
+            'name' : 'invite',
+            'url' : reverse('club-manage', args=(self.club.slug, )) + '#invites',
+            'title' : _('Invite an athlete'),
+          },
+        ]
+      else:
+        demo = []
+      demo += [
+        {
+          'name' : 'plan',
+          'url' : settings.PLANS_URL,
+          'title' : _('Create a training plan'),
+        },
+        {
+          'name' : 'plan_applied',
+          'url' : settings.PLANS_URL,
+          'title' : _('Send a plan to your athletes'),
+        },
+        {
+          'name' : 'comment',
+          'url' : None,
+          'title' : _('Leave a comment to one of your athlete session'),
+        },
+      ]
+    elif mode == 'athlete':
+      demo = [
+        {
+          'name' : 'session',
+          'url' : reverse('report-current'),
+          'title' : _('Create your first sport session'),
+        },
+        {
+          'name' : 'join',
+          'url' : reverse('club-list'),
+          'title' : _('Join a club'),
+        },
+        {
+          'name' : 'friends',
+          'url' : reverse('friends'),
+          'title' : _('Add some friends to see their sessions'),
+        },
+        {
+          'name' : 'gps',
+          'url' : reverse('track-providers'),
+          'title' : _('Sync your GPS watch or app'),
+        },
+        {
+          'name' : 'comment',
+          'url' : None,
+          'title' : _('Add a comment on a session'),
+        },
+      ]
+
+    # Apply active steps
+    for step in demo:
+      step['active'] = active.get(step['name'], False)
+
+    return {
+      'demo' : demo,
     }

@@ -448,6 +448,9 @@ PREMIUM_PRICES = {
   'archive' : 0.0,
 }
 
+# Plans url
+PLANS_URL = 'https://plans.runreport.fr'
+
 # Import local settings, if any
 try:
   from runreport.local_settings import *

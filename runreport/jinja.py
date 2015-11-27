@@ -27,7 +27,7 @@ def environment(**options):
   })
 
   # Add constants from settings
-  keys = ['DEBUG', 'PIWIK_HOST', 'PIWIK_ID', 'FACEBOOK_ID', 'LANGUAGES', 'HELP_URL', 'PAYMENTS_ENABLED', 'VERSION', ]
+  keys = ['DEBUG', 'PIWIK_HOST', 'PIWIK_ID', 'FACEBOOK_ID', 'LANGUAGES', 'HELP_URL', 'PAYMENTS_ENABLED', 'VERSION', 'PLANS_URL', ]
   env.globals.update(dict([(k, getattr(settings, k, None)) for k in keys]))
 
   # Setup translations

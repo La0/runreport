@@ -10,6 +10,7 @@ NOTIFICATION_MAIL = 'mail'
 NOTIFICATION_FRIEND_REQUEST = 'friend_request'
 NOTIFICATION_PLAN_SESSION_APPLIED = 'plan_session_applied'
 NOTIFICATION_PLAN_APP_REMOVED = 'plan_app_removed'
+NOTIFICATION_DEMO_COMPLETE = 'demo'
 
 class UserNotifications(object):
   user = None
@@ -159,10 +160,23 @@ class UserNotifications(object):
       'last_name' : athlete.last_name,
       'plan_name' : app.plan.name,
     }
-    print context
     msg = _('%(first_name)s %(last_name)s has removed your plan %(plan_name)s from his calendar')
 
     self.add(NOTIFICATION_PLAN_SESSION_APPLIED, msg, context)
+
+  def add_demo_completion(self, mode):
+    '''
+    Notify when a trainer or athlete
+    completes a demo
+    '''
+    if mode == 'athlete':
+      msg = _('Congratulations, you completed the RunReport demo for athletes.')
+    elif mode == 'trainer':
+      msg = _('Congratulations, you completed the RunReport demo for trainers.')
+    else:
+      raise Exception('Unsupported mode')
+
+    self.add(NOTIFICATION_DEMO_COMPLETE, msg, {})
 
   def total(self):
     return cache.get(self.key_total) or 0

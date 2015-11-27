@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-25 14:26+0100\n"
+"POT-Creation-Date: 2015-11-27 17:50+0100\n"
 "PO-Revision-Date: 2015-02-09 17:42+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
@@ -568,6 +568,33 @@ msgstr ""
 msgid "Elevation loss"
 msgstr "Swimming"
 
+msgid "Invite an athlete"
+msgstr ""
+
+msgid "Create a training plan"
+msgstr ""
+
+msgid "Send a plan to your athletes"
+msgstr ""
+
+msgid "Leave a comment to one of your athlete session"
+msgstr ""
+
+msgid "Create your first sport session"
+msgstr ""
+
+msgid "Join a club"
+msgstr ""
+
+msgid "Add some friends to see their sessions"
+msgstr ""
+
+msgid "Sync your GPS watch or app"
+msgstr ""
+
+msgid "Add a comment on a session"
+msgstr ""
+
 msgid "Forbidden"
 msgstr ""
 
@@ -786,9 +813,6 @@ msgid "You can create a new club if you want to manage athletes."
 msgstr ""
 
 msgid "A club is free for 90 days, then uses a fee per member"
-msgstr ""
-
-msgid "Join a club"
 msgstr ""
 
 msgid "You can join a club clicking on \"Join\"."
@@ -1335,6 +1359,12 @@ msgstr ""
 msgid "Current week"
 msgstr ""
 
+msgid "Start building your RunReport !"
+msgstr ""
+
+msgid "Follow those steps to discover the features of RunReport !"
+msgstr ""
+
 msgid "Your future sessions"
 msgstr ""
 
@@ -1383,6 +1413,9 @@ msgstr ""
 msgid "Example of public profile"
 msgstr ""
 
+msgid "You have validated this step."
+msgstr ""
+
 msgid "By"
 msgstr ""
 
@@ -1403,19 +1436,16 @@ msgstr ""
 msgid "Trainer dashboard"
 msgstr ""
 
-#, python-format
-msgid "%s Athletes"
+msgid "All Athletes"
 msgstr ""
 
-#, python-format
-msgid "%s Admin."
+msgid "Add athletes"
+msgstr ""
+
+msgid "Manage your club"
 msgstr ""
 
 msgid "Your athlete dashboard"
-msgstr ""
-
-#, python-format
-msgid "Add athletes to %s"
 msgstr ""
 
 #, python-format
@@ -1433,11 +1463,23 @@ msgstr ""
 msgid "You need to activate a credit card for this club."
 msgstr ""
 
+msgid "Start building your club !"
+msgstr ""
+
+msgid "You successfully completed the demo !"
+msgstr ""
+
 #, python-format
 msgid "%d Prospects in your clubs"
 msgstr ""
 
-msgid "Accept or refuse"
+msgid "Accept or refuse new members in your club."
+msgstr ""
+
+msgid "Click to accept or refuse this athlete"
+msgstr ""
+
+msgid "No new prospects in your club."
 msgstr ""
 
 msgid "Your athletes sessions"
@@ -3311,6 +3353,12 @@ msgstr ""
 msgid ""
 "%(first_name)s %(last_name)s has removed your plan %(plan_name)s from his "
 "calendar"
+msgstr ""
+
+msgid "Congratulations, you completed the RunReport demo for athletes."
+msgstr ""
+
+msgid "Congratulations, you completed the RunReport demo for trainers."
 msgstr ""
 
 msgid "1 year"

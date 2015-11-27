@@ -104,7 +104,7 @@ def add_pages(request):
         # Add plans
         submenu['menu'].append(MENU_SEPARATOR)
         submenu['menu'].append({
-          'url' : 'https://plans.runreport.fr',
+          'url' : settings.PLANS_URL,
           'caption' : _('Training plans'),
           'active' : False,
           'icon': None,

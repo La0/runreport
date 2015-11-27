@@ -19,6 +19,8 @@
       <i class="icon-plan-session"></i>
       {% elif n.category == 'plan_app_removed' %}
       <i class="icon-plan-session"></i>
+      {% elif n.category == 'demo' %}
+      <i class="icon-ok"></i>
       {% endif %}
       {{ n.created|timesince() }}
     </div>

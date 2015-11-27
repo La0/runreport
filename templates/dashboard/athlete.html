@@ -54,6 +54,15 @@
   </div>
   {% endif %}
 
+  {% if demo %}
+    <h3>{{ _('Start building your RunReport !') }}</h3>
+    <p class="text-info">
+      <i class="icon-help-circled"></i>
+      {{ _('Follow those steps to discover the features of RunReport !') }}
+    </p>
+    {% include 'dashboard/demo.html' %}
+  {% endif %}
+
   <div class="row">
     <div class="col-xs-12 col-sm-6">
       <h1>{{ _('Your future sessions') }}</h1>
