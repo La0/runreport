@@ -1,6 +1,7 @@
 from django.views.generic import DetailView
 from django.views.generic.edit import ModelFormMixin, ProcessFormView
 from django.utils.translation import ugettext_lazy as _
+from django.core.urlresolvers import reverse
 from mixins import ClubManagerMixin
 from club.models import ClubMembership
 from club.forms import ClubMemberRoleForm, ClubMemberTrainersForm
@@ -113,6 +114,14 @@ class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, Proces
     except Exception, e:
       logger.error('Failed to save role update for %s : %s' % (membership.user, str(e)))
       raise
+
+    # Open trainers modal if no trainers are found
+    if membership.role == 'athlete' and not membership.trainers.exists():
+      print 'OOPS'
+      self.json_options = [JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE, ]
+      self.json_modales = [
+        reverse('club-member-trainers', args=(self.club.slug, membership.user.username, )),
+      ]
 
     return self.render_to_response(self.get_context_data(**{'form' : form, 'saved': True}))
 

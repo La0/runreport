@@ -97,6 +97,7 @@ class JsonResponseMixin(object):
   json_status = JSON_STATUS_OK # Response inner status
   json_options = []
   json_boxes = {}
+  json_modales = []
 
   def jsonify(self, data):
     # Helper to output
@@ -139,6 +140,7 @@ class JsonResponseMixin(object):
       'status' : self.json_status,
       'options' : self.json_options,
       'boxes' : self.json_boxes,
+      'modales' : self.json_modales,
     }
 
     # Add optional datas
