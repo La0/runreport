@@ -99,6 +99,12 @@ class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, Proces
           if self.role_original == 'trainer':
             membership.user.trainees.clear()
 
+          # Auto add a unique trainer to prospect
+          trainers = self.club.clubmembership_set.filter(role='trainer')
+          if self.role_original == 'prospect' and membership.role == 'athlete' \
+            and trainers.count() == 1:
+            membership.trainers.add(trainers.first().user)
+
           # Only send mail for new roles
           # When send_mail is valid
           if form.cleaned_data['send_mail']:
@@ -106,7 +112,7 @@ class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, Proces
 
     except Exception, e:
       logger.error('Failed to save role update for %s : %s' % (membership.user, str(e)))
-      raise Exception("Failed to save")
+      raise
 
     return self.render_to_response(self.get_context_data(**{'form' : form, 'saved': True}))
 
