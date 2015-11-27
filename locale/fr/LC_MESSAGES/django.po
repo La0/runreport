@@ -963,7 +963,7 @@ msgid "No period found."
 msgstr "Pas de période."
 
 msgid "Trainers in your club have full access to their athletes."
-msgstr "Les entraîneurs dans votre club ont un accès compler à leurs athlètes."
+msgstr "Les entraîneurs dans votre club ont un accès complet à leurs athlètes."
 
 msgid ""
 "Trainers in your club do not have full access to their athletes; you need to "
