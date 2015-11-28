@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-27 17:50+0100\n"
+"POT-Creation-Date: 2015-11-28 18:03+0100\n"
 "PO-Revision-Date: 2015-02-09 17:42+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
@@ -1414,6 +1414,9 @@ msgid "Example of public profile"
 msgstr ""
 
 msgid "You have validated this step."
+msgstr ""
+
+msgid "Skip this step"
 msgstr ""
 
 msgid "By"

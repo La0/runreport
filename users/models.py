@@ -404,7 +404,7 @@ class Athlete(AthleteBase):
 
     return path
 
-  def check_demo_steps(self, mode, notify=True):
+  def check_demo_steps(self, mode, notify=True, force_steps=()):
     '''
     Check demo steps are done
     '''
@@ -417,40 +417,48 @@ class Athlete(AthleteBase):
     # Load current demo steps
     original_steps = {}
     if self.demo_steps:
-      data = json.loads(self.demo_steps)
-      original_steps = data.get(mode, {})
+      original_steps = json.loads(self.demo_steps)
 
     steps = {}
+    def __add(name, value):
+      _steps = original_steps.get(mode)
+      if _steps and _steps.get(name):
+        steps[name] = True
+      else:
+        steps[name] = value
+
     if mode == 'trainer':
       # Any invite ?
       if self.club_set.filter(manager=self).exists():
-        steps['invite'] = self.inviter.exists()
+        __add('invite', self.inviter.exists())
 
       # Any plan & applied ?
-      steps['plan'] = self.plans.exists()
-      steps['plan_applied'] = self.plans.filter(applications__isnull=False).exists()
+      __add('plan', self.plans.exists())
+      __add('plan_applied', self.plans.filter(applications__isnull=False).exists())
 
       # Any comments ?
-      steps['comment'] = self.messages_written.exists()
+      __add('comment', self.messages_written.exists())
 
     elif mode == 'athlete':
       # Create a session
-      steps['session'] = self.sportweek.exists()
+      __add('session', self.sportweek.exists())
 
       # Join a club
-      steps['join'] = self.memberships.exists()
+      __add('join', self.memberships.exists())
 
       # Add a friend
-      steps['friends'] = self.friends.exists()
+      __add('friends', self.friends.exists())
 
       # Add a GPS watch
-      steps['gps'] = self.garmin_login is not None or self.strava_token is not None
+      __add('gps', self.garmin_login is not None or self.strava_token is not None)
 
       # Any comments ?
-      steps['comment'] = self.messages_written.exists()
+      __add('comment', self.messages_written.exists())
 
+    # Add forced steps
+    if force_steps:
+      steps.update(dict([(s, True) for s in force_steps]))
 
-    # Save steps
     if steps != original_steps:
       # Detect demo completion
       if False not in steps.values():
@@ -459,7 +467,9 @@ class Athlete(AthleteBase):
           un = UserNotifications(self)
           un.add_demo_completion(mode)
 
-      self.demo_steps = json.dumps(steps)
+      # Save steps
+      original_steps[mode] = steps
+      self.demo_steps = json.dumps(original_steps)
       self.save()
 
     return steps

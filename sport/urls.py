@@ -23,6 +23,7 @@ urlpatterns = patterns('',
   url(r'^/?$', DashBoardView.as_view(), name="dashboard"),
   url(r'^(?P<type>athlete|trainer)/?$', DashBoardView.as_view(), name="dashboard-type"),
   url(r'^trainer/(?P<club>[\w_\-]+)/?$', DashBoardView.as_view(), name="dashboard-club"),
+  url(r'^demo/skip/?$', DemoSkipView.as_view(), name='demo-skip'),
 
   # Week / Report
   url(r'^week/?$', WeeklyReport.as_view(), name="report-current"),

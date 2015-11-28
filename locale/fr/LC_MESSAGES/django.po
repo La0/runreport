@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-27 17:50+0100\n"
-"PO-Revision-Date: 2015-11-27 17:55+0100\n"
+"POT-Creation-Date: 2015-11-28 18:03+0100\n"
+"PO-Revision-Date: 2015-11-28 18:03+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -588,23 +588,18 @@ msgstr "Dénivelé positif"
 msgid "Elevation loss"
 msgstr "Dénivelé négatif"
 
-#| msgid "I'm an athlete"
 msgid "Invite an athlete"
 msgstr "Inviter un athlète"
 
-#| msgid "Create your own training plans"
 msgid "Create a training plan"
 msgstr "Créer un plan d'entraînement"
 
-#| msgid "Send your plans to your athletes"
 msgid "Send a plan to your athletes"
 msgstr "Envoyez un plans à vos athlètes"
 
-#| msgid "Be notified of your athletes sessions"
 msgid "Leave a comment to one of your athlete session"
 msgstr "Commenter une séance de vos athlètes"
 
-#| msgid "Track your sport sessions"
 msgid "Create your first sport session"
 msgstr "Créez votre première séance sportive"
 
@@ -617,7 +612,6 @@ msgstr "Ajouter des amis pour partager vos séances"
 msgid "Sync your GPS watch or app"
 msgstr "Synchronisez votre montre ou appli GPS"
 
-#| msgid "%d most commented sessions"
 msgid "Add a comment on a session"
 msgstr "Ajouter un commentaire à une séance"
 
@@ -1495,9 +1489,11 @@ msgstr ""
 msgid "Example of public profile"
 msgstr "Exemple de profil public"
 
-#| msgid "You have already published this week."
 msgid "You have validated this step."
 msgstr "Vous avez validé cette étape."
+
+msgid "Skip this step"
+msgstr "Passer cette étape"
 
 msgid "By"
 msgstr "Par"
@@ -1519,15 +1515,12 @@ msgstr "Accueil Entraîneur"
 msgid "Trainer dashboard"
 msgstr "Accueil Entraîneur"
 
-#| msgid "Athletes"
 msgid "All Athletes"
 msgstr "Tous les athlètes"
 
-#| msgid "Add an athlete"
 msgid "Add athletes"
 msgstr "Ajouter des athlètes"
 
-#| msgid "Manage my club"
 msgid "Manage your club"
 msgstr "Gérer votre club"
 
@@ -1553,7 +1546,6 @@ msgstr "Vous devez enregistrer une carte de crédit pour ce club."
 msgid "Start building your club !"
 msgstr "Construisez votre club !"
 
-#| msgid "You successfully changed your password."
 msgid "You successfully completed the demo !"
 msgstr "Vous avez complété les étapes initiales !"
 
@@ -1561,14 +1553,12 @@ msgstr "Vous avez complété les étapes initiales !"
 msgid "%d Prospects in your clubs"
 msgstr "%d Nouveaux dans votre club"
 
-#| msgid "You can immediately add new members to your club."
 msgid "Accept or refuse new members in your club."
 msgstr "Accepter ou refuser de nouveaux membres dans votre club."
 
 msgid "Click to accept or refuse this athlete"
 msgstr "Cliquez pour accepter ou refuser ce membre"
 
-#| msgid "%d Prospects in your clubs"
 msgid "No new prospects in your club."
 msgstr "Pas de nouveaux dans votre club."
 

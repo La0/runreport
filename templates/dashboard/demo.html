@@ -10,6 +10,11 @@
       <span class="pull-right text-info do-tooltip" title="{{ _('You have validated this step.') }}">
         <i class="icon-ok"></i>
       </span>
+      {% else %}
+      <button href="{{ url('demo-skip') }}" class="modal-action modal-post btn btn-light btn-warning btn-sm pull-right" data-post-step="{{ step.name }}" data-post-mode="{{ mode }}">
+        {{ _('Skip this step') }}
+        <i class="icon-right-open"></i>
+      </button>
       {% endif %}
 
       {{ step.title }}

@@ -1,4 +1,4 @@
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, View
 from django.core.exceptions import PermissionDenied
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
@@ -7,6 +7,7 @@ from sport.stats import StatsWeek
 from sport.models import SportSession
 from sport.vma import VmaCalc
 from club.models import ClubMembership
+from runreport.mixins import LoginRequired, JsonResponseMixin, JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML
 from helpers import date_to_day
 from datetime import timedelta, date
 from collections import OrderedDict
@@ -362,3 +363,27 @@ class DashBoardView(TemplateView):
     return {
       'demo' : demo,
     }
+
+
+
+class DemoSkipView(LoginRequired, View, JsonResponseMixin):
+  '''
+  Allow skipping some demo steps
+  Could be in an api, but not critical
+  '''
+
+  def post(self, request, *args, **kwargs):
+
+    # Check step/mode
+    step = request.POST.get('step')
+    mode = request.POST.get('mode')
+    if not step or not mode:
+      raise Exception('Missing mode or step')
+
+    # Update steps
+    request.user.check_demo_steps(mode, force_steps=(step, ))
+
+    # Reload
+    self.json_options = [JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML, ]
+
+    return self.render_to_response({})
