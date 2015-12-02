@@ -1007,9 +1007,19 @@ td.avatar {
 	min-height: 300px;
 }
 #members .member {
-	margin-bottom: 10px;
+  padding: 8px 14px;
+  border-radius: 4px 4px;
+  min-height: 50px;
+  margin-bottom: 10px;
+
+  div {
+    line-height: 1em !important;
+  }
+
+  background: #FAFAFA;
+
 	&.active {
-		background: $color_gallery_approx;
+		background: #EAEAEA;
 	}
 }
 #home {

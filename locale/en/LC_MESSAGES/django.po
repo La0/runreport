@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-28 18:03+0100\n"
+"POT-Creation-Date: 2015-12-02 10:27+0100\n"
 "PO-Revision-Date: 2015-02-09 17:42+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
@@ -800,6 +800,12 @@ msgid "Remove"
 msgstr ""
 
 msgid "Add"
+msgstr ""
+
+msgid "Trained by"
+msgstr ""
+
+msgid "No trainers"
 msgstr ""
 
 #, python-format
@@ -3069,9 +3075,6 @@ msgid "You can change your password using"
 msgstr ""
 
 msgid "this page"
-msgstr ""
-
-msgid "Trained by"
 msgstr ""
 
 #, python-format

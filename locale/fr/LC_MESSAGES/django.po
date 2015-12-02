@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-28 18:03+0100\n"
-"PO-Revision-Date: 2015-11-28 18:03+0100\n"
+"POT-Creation-Date: 2015-12-02 10:27+0100\n"
+"PO-Revision-Date: 2015-12-02 10:27+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -97,7 +97,7 @@ msgid "RunReport Invite"
 msgstr "Invitation RunReport"
 
 msgid "Group name"
-msgstr "Nom du group"
+msgstr "Nom du groupe"
 
 msgid "Name in the url"
 msgstr "Nom dans l'url"
@@ -834,6 +834,13 @@ msgstr "Retirer"
 
 msgid "Add"
 msgstr "Ajouter"
+
+msgid "Trained by"
+msgstr "Entraîné par"
+
+#| msgid "trainers"
+msgid "No trainers"
+msgstr "Pas d'entraîneurs"
 
 #, python-format
 msgid "View group: %s"
@@ -3230,9 +3237,6 @@ msgstr "Vous pouvez changer votre mot de passe en utilisant"
 msgid "this page"
 msgstr "cette page"
 
-msgid "Trained by"
-msgstr "Entraîné par"
-
 #, python-format
 msgid "%d last sessions"
 msgstr "%d dernières séance"
@@ -4195,11 +4199,6 @@ msgstr "Cette fonctionalité n'est disponible qu'avec un comptre premium."
 #: obsolete:0
 msgid "Your current privacy settings are:"
 msgstr "Vos réglages de confidentialité actuels sont:"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "trainers"
-msgstr "entraîneurs"
 
 #. Obsolete translation kept alive with Viniagrette
 #: obsolete:0

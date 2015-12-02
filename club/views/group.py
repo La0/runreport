@@ -52,13 +52,27 @@ class ClubGroupDelete(ClubGroupMixin, JsonResponseMixin, DeleteView):
 class ClubGroupMembers(ClubGroupMixin, JsonResponseMixin, ListView):
   template_name = 'club/group/members.html'
 
+  def get_memberships(self):
+    '''
+    List all memberships accessible for user:
+     * only my athletes by default (trainers)
+     * all in club for manager
+    '''
+    memberships = self.club.clubmembership_set.prefetch_related('user', 'trainers')
+    if self.request.user != self.club.manager:
+      memberships = memberships.filter(trainers=self.request.user)
+    memberships = memberships.exclude(role__in=('prospect', 'archive'))
+    memberships = memberships.order_by('user__first_name', 'user__last_name')
+    return memberships
+
   def post(self, *args, **kwargs):
     self.object_list = self.get_queryset()
     self.get_object() # load objects
 
     # Add member
     action = self.request.POST['action']
-    member = self.club.clubmembership_set.get(trainers=self.request.user, pk=self.request.POST['member'])
+    members = self.get_memberships()
+    member = members.get(pk=self.request.POST['member'])
     if action == 'add':
       self.group.members.add(member)
 
@@ -77,16 +91,11 @@ class ClubGroupMembers(ClubGroupMixin, JsonResponseMixin, ListView):
 
   def get_context_data(self, *args, **kwargs):
     context = super(ClubGroupMembers, self).get_context_data(*args, **kwargs)
-
-    # Load all memberships in club with
-    # current user as trainer
-    memberships = self.club.clubmembership_set.filter(trainers=self.request.user).prefetch_related('user')
-    memberships = memberships.exclude(role__in=('prospect', 'archive'))
-    memberships = memberships.order_by('user__first_name', 'user__last_name')
-    context['memberships'] = memberships
+    members = self.get_memberships()
+    context['memberships'] = members
 
     # Get active memberships pk
-    context['group_members'] = memberships.filter(groups=self.group).values_list('pk', flat=True)
+    context['group_members'] = members.filter(groups=self.group).values_list('pk', flat=True)
 
     return context
 
