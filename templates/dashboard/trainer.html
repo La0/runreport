@@ -13,13 +13,13 @@
   <h1>{{ _('Trainer dashboard') }} <span class="text-muted">&bull;</span> {{ club.name }}</h1>
 
   {% if clubs.count() > 1 %}
-    {% for c in clubs %}
     <ul class="nav nav-tabs">
+      {% for c in clubs %}
       <li role="presentation" class="{% if c == club %}active{% endif %}">
         <a href="{{ url('dashboard-club', c.slug) }}">{{ c.name }}</a>
       </li>
+      {% endfor %}
     </ul>
-    {% endfor %}
   {% endif %}
 
   <ol class="breadcrumb">
@@ -51,7 +51,11 @@
     {# Plans #}
     <li>
       <i class="icon-plan-session text-muted"></i>
+      {% if club.has_full_access %}
       <a href="{{ PLANS_URL }}">{{ _('Training plans') }}</a>
+      {% else %}
+      <span class="text-muted do-tooltip" title="{{ _('Only available for premium clubs.') }}">{{ _('Training plans') }}</span>
+      {% endif %}
     </li>
 
     {# Athlete Dashboard #}
@@ -66,10 +70,10 @@
   <div class="alert alert-warning">
     <h4>
       <i class="icon-premium"></i>
-      {{ _('Club %s is in limited access') % m.club.name }}
+      {{ _('Club %s is in limited access') % club.name }}
     </h4>
     <p class="pull-right">
-      <a href="{{ url('club-manage', m.club.slug) }}" class="btn btn-danger">
+      <a href="{{ url('club-manage', club.slug) }}" class="btn btn-danger">
         {{ _('Manage my club') }}
         <i class="icon-right-open"></i>
       </a>
