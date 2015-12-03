@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-02 10:27+0100\n"
+"POT-Creation-Date: 2015-12-03 14:42+0100\n"
 "PO-Revision-Date: 2015-02-09 17:42+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
@@ -491,6 +491,9 @@ msgid "My badges"
 msgstr ""
 
 msgid "My GPS services"
+msgstr ""
+
+msgid "My Google Calendar"
 msgstr ""
 
 #, fuzzy
@@ -1452,6 +1455,9 @@ msgid "Add athletes"
 msgstr ""
 
 msgid "Manage your club"
+msgstr ""
+
+msgid "Only available for premium clubs."
 msgstr ""
 
 msgid "Your athlete dashboard"

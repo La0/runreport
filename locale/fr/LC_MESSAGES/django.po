@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-02 10:27+0100\n"
-"PO-Revision-Date: 2015-12-02 10:27+0100\n"
+"POT-Creation-Date: 2015-12-03 14:42+0100\n"
+"PO-Revision-Date: 2015-12-03 14:44+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -518,6 +518,10 @@ msgstr "Mes badges"
 msgid "My GPS services"
 msgstr "Mes services GPS"
 
+#| msgid "View Google Calendar"
+msgid "My Google Calendar"
+msgstr "Mon calendrier Google"
+
 msgid "My equipment"
 msgstr "Mon matériel"
 
@@ -838,7 +842,6 @@ msgstr "Ajouter"
 msgid "Trained by"
 msgstr "Entraîné par"
 
-#| msgid "trainers"
 msgid "No trainers"
 msgstr "Pas d'entraîneurs"
 
@@ -1530,6 +1533,9 @@ msgstr "Ajouter des athlètes"
 
 msgid "Manage your club"
 msgstr "Gérer votre club"
+
+msgid "Only available for premium clubs."
+msgstr "Disponible uniquement pour les clubs premium."
 
 msgid "Your athlete dashboard"
 msgstr "Votre accueil pour athlète"
