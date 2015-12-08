@@ -228,7 +228,30 @@ div {
 	&.comment {
 		padding-left: 10px;
 		margin-left: 25px;
-		border-left: 2px solid $color_celeste_approx;
+		border-left: 4px solid #EFEFEF;
+
+    &.html {
+      img {
+        max-width: 15%;
+        float: left;
+        margin: 5px 20px 10px 5px;
+
+        // Cute !
+        -moz-box-shadow: 0px 2px 10px 2px #656565;
+        -webkit-box-shadow: 0px 2px 10px 2px #656565;
+        -o-box-shadow: 0px 2px 10px 2px #656565;
+        box-shadow: 0px 2px 10px 2px #656565;
+        filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=180, Strength=10);
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        border-radius: 5px;
+      }
+
+      h2 {
+        margin-top: 8px;
+        clear: both;
+      }
+    }
 	}
 	&.list-title {
 		font-weight: bold;

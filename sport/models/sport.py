@@ -5,6 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 import vinaigrette
 from messages.models import Conversation
 from ..tasks import sync_session_gcal
+import markdown
 
 class Sport(models.Model):
   name = models.CharField(max_length=250)
@@ -43,6 +44,7 @@ class SportSession(models.Model):
   sport = models.ForeignKey(Sport)
   name = models.CharField(max_length=255, null=True, blank=True)
   comment = models.TextField(_('session comment'), null=True, blank=True)
+  comment_html = models.TextField(null=True, blank=True) # generated from potential markdown source above
   type = models.CharField(max_length=12, default='training', choices=SESSION_TYPES)
   race_category = models.ForeignKey('RaceCategory', verbose_name=_('Race category'), null=True, blank=True)
   created = models.DateTimeField(auto_now_add=True)
@@ -79,6 +81,9 @@ class SportSession(models.Model):
     # Only allow depth 1 sports
     if self.sport.depth != 1:
       raise Exception("Invalid sport '%s', only level 1 authorized for SportSession" % self.sport)
+
+    # Try to render html version of comment
+    self.comment_html = markdown.markdown(self.comment)
 
     super(SportSession, self).save(*args, **kwargs)
 

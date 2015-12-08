@@ -112,7 +112,11 @@
 </div>
 
 <div class="row">
-  {% if session.comment%}
+  {% if session.comment_html %}
+  <div class="col-sm-12 comment html">
+    {{session.comment_html|safe}}
+  </div>
+  {% elif session.comment %}
   <div class="col-sm-12 comment">
     {{session.comment|linebreaksbr()}}
   </div>
