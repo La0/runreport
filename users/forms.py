@@ -60,21 +60,6 @@ class UserForm(forms.ModelForm):
       'birthday' : DateSelectorWidget(),
     }
 
-  def clean_email(self):
-    email = self.cleaned_data['email']
-
-    # Update mailing list subscriptions
-    if self.instance and self.instance.email != email:
-      mailings = ('all', )
-      for m in mailings:
-        try:
-          self.instance.unsubscribe_mailing(m)
-          self.instance.subscribe_mailing(m, email=email)
-        except Exception:
-          continue
-
-    return email
-
 class UserPasswordForm(forms.Form):
   password_old = forms.CharField(widget=forms.PasswordInput())
   password_new = forms.CharField(widget=forms.PasswordInput())

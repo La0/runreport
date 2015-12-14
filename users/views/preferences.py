@@ -7,8 +7,11 @@ class Preferences(UpdateView):
   template_name = 'users/preferences.html'
   form_class = UserForm
   model = Athlete
+  old_email = None
 
   def get_object(self):
+    if not self.old_email:
+      self.old_email = self.request.user.email # Save here
     return self.request.user
 
   def form_valid(self, form):
@@ -31,10 +34,9 @@ class Preferences(UpdateView):
       user.crop_avatar()
 
     # Update mailing list on email change
-    old_email = self.request.user.email
     new_email = form.cleaned_data['email']
-    if old_email != new_email:
-      update_ml_usage.apply_async(args=(self.request.user, old_email, new_email))
+    if self.old_email != new_email:
+      update_ml_usage.delay(self.request.user, self.old_email, new_email)
 
     return self.render_to_response(self.get_context_data(form=form))
 
