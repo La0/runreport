@@ -38,7 +38,7 @@ class GarminProvider(TrackProvider):
   # Data Urls
   url_activity = 'http://connect.garmin.com/proxy/activity-search-service-1.0/json/activities'
   url_laps = 'http://connect.garmin.com/proxy/activity-service-1.3/json/activity/%s'
-  url_details = 'http://connect.garmin.com/proxy/activity-service-1.3/json/activityDetails/%s'
+  url_polyline = 'https://connect.garmin.com/modern/proxy/activity-service/activity/%s/details?maxChartSize=1000&maxPolylineSize=1000'
 
   def auth(self, force_login=None, force_password=None):
     '''
@@ -199,7 +199,7 @@ class GarminProvider(TrackProvider):
     activity_id = self.get_activity_id(activity)
     urls = {
       'laps'    : self.url_laps % activity_id,
-      'details' : self.url_details % activity_id,
+      'polyline' : self.url_polyline % activity_id,
     }
     if data_type not in urls:
       raise Exception("Invalid data type %s" % data_type)
@@ -219,42 +219,26 @@ class GarminProvider(TrackProvider):
     '''
 
     # First, load details
-    details = self._load_extra_json(activity, 'details')
+    details = self._load_extra_json(activity, 'polyline')
     details = json.loads(details)
 
     # Load metrics/measurements from file
-    key = 'com.garmin.activity.details.json.ActivityDetails'
+    key = 'geoPolylineDTO'
     if key not in details:
       raise Exception("Unsupported format")
     base = details[key]
-    if 'measurements' not in base:
-      raise Exception("Missing measurements")
-    if 'metrics' not in base:
-      raise Exception("Missing metrics")
+    if 'polyline' not in base:
+      raise Exception("Missing polyline")
 
-    # Search latitude / longitude positions in measurements
-    measurements = dict([(m['key'], m['metricsIndex']) for m in base['measurements']])
-    if 'directLatitude' not in measurements or 'directLongitude' not in measurements:
-      raise Exception("Missing lat/lon measurements")
-
-    # Build linestring from metrics
-    coords = []
-    for m in base['metrics']:
-      if 'metrics' not in m:
-        continue
-      lat, lng = m['metrics'][measurements['directLatitude']], m['metrics'][measurements['directLongitude']]
-      if lat == 0.0 and lng == 0.0:
-        continue
-      coords.append((lat, lng))
-
-    return coords
+    # Build simplified polyline
+    return [(float(x.get('lat', 0)), float(x.get('lon', 0))) for x in base['polyline']]
 
   def load_files(self, activity):
     # Load laps
     self._load_extra_json(activity, 'laps')
 
     # Load details
-    self._load_extra_json(activity, 'details')
+    self._load_extra_json(activity, 'polyline')
 
   def build_identity(self, activity):
     '''
