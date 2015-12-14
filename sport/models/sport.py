@@ -83,7 +83,8 @@ class SportSession(models.Model):
       raise Exception("Invalid sport '%s', only level 1 authorized for SportSession" % self.sport)
 
     # Try to render html version of comment
-    self.comment_html = markdown.markdown(self.comment)
+    if self.comment:
+        self.comment_html = markdown.markdown(self.comment)
 
     super(SportSession, self).save(*args, **kwargs)
 
