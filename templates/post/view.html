@@ -34,7 +34,6 @@
   <meta property="fb:app_id"  content="{{ FACEBOOK_ID }}" /> 
   <meta property="og:site_name"    content="RunReport" /> 
   <meta property="og:type"    content="website" /> 
-  <meta property="og:url"     content="https://{{ base_url }}{{ url('post', post.writer.username, post.slug) }}" /> 
   <meta property="og:title"   content="{{ post.title }}" /> 
   <meta property="og:description"   content="{{ post.html|striptags|truncatechars(200) }}" /> 
   {% for m in medias %}

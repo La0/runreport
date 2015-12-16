@@ -6,6 +6,20 @@
 {% set page_title = day_date|date('l d E Y')|title() %}
 {% endif %}
 
+
+{% block meta %}
+{% if FACEBOOK_ID and member %}
+  {% set base_url = request.META.HTTP_HOST %}
+  <meta property="fb:app_id"  content="{{ FACEBOOK_ID }}" /> 
+  <meta property="og:site_name"    content="RunReport" /> 
+  <meta property="og:type"    content="website" /> 
+  <meta property="og:url"     content="https://{{ base_url }}{{ url('user-calendar-day', member.username, day_date.year, day_date.month, day_date.day) }}" /> 
+  <meta property="og:title"   content="{{ _('Sport sessions for %s %s on %s') % (member.first_name, member.last_name, day_date|date('l d E Y')) }}" /> 
+  <meta property="og:description"   content="{% for s in day.sessions.all() %}{{ s.name }}{% if not loop.last %} & {% endif %}{% endfor %}" /> 
+  <meta property="og:image" content="https://{{ base_url }}{{ member.avatar.url }}" /> 
+{% endif %}
+{% endblock %}
+
 {% block content %}
 <div class="container day">
 

@@ -136,7 +136,6 @@ def add_pages(request):
     }
     submenu['menu'].append(_p('message-inbox', _('My messages')))
     submenu['menu'].append(_p('user-preferences', _('My preferences')))
-    submenu['menu'].append(_p('posts', _('My posts')))
     submenu['menu'].append(_p('friends', _('My friends')))
     submenu['menu'].append(_p(('user-public-profile', request.user.username), _('My public profile')))
     submenu['menu'].append(_p('stats', _('My statistics'), lazy=True))

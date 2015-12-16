@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-03 14:42+0100\n"
-"PO-Revision-Date: 2015-12-03 14:44+0100\n"
+"POT-Creation-Date: 2015-12-16 14:58+0100\n"
+"PO-Revision-Date: 2015-12-16 14:59+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: French\n"
@@ -494,9 +494,6 @@ msgstr "Mes messages"
 msgid "My preferences"
 msgstr "Mes préférences"
 
-msgid "My posts"
-msgstr "Mes articles"
-
 msgid "My friends"
 msgstr "Mes amis"
 
@@ -518,7 +515,6 @@ msgstr "Mes badges"
 msgid "My GPS services"
 msgstr "Mes services GPS"
 
-#| msgid "View Google Calendar"
 msgid "My Google Calendar"
 msgstr "Mon calendrier Google"
 
@@ -2571,6 +2567,9 @@ msgstr "Editer l'article"
 msgid "Create the post"
 msgstr "Créer un article"
 
+msgid "My posts"
+msgstr "Mes articles"
+
 msgid "Add a new post"
 msgstr "Ajouter un nouvel article"
 
@@ -2667,6 +2666,10 @@ msgstr "Etes vous sûr de vouloir supprimer cette journée ?"
 
 msgid "Delete this day"
 msgstr "Supprimer cette journée"
+
+#, python-format
+msgid "Sport sessions for %s %s on %s"
+msgstr "Séance de sport de %s %s, le %s"
 
 #, python-format
 msgid "Week %s"

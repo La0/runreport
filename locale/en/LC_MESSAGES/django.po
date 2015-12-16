@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-03 14:42+0100\n"
+"POT-Creation-Date: 2015-12-16 14:58+0100\n"
 "PO-Revision-Date: 2015-02-09 17:42+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
@@ -467,9 +467,6 @@ msgid "My messages"
 msgstr ""
 
 msgid "My preferences"
-msgstr ""
-
-msgid "My posts"
 msgstr ""
 
 msgid "My friends"
@@ -2441,6 +2438,9 @@ msgstr ""
 msgid "Create the post"
 msgstr ""
 
+msgid "My posts"
+msgstr ""
+
 msgid "Add a new post"
 msgstr ""
 
@@ -2536,6 +2536,10 @@ msgid "Are you sure to delete this day ?"
 msgstr ""
 
 msgid "Delete this day"
+msgstr ""
+
+#, python-format
+msgid "Sport sessions for %s %s on %s"
 msgstr ""
 
 #, python-format
