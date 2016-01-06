@@ -297,6 +297,11 @@ class TrackProvider:
     try:
       track = Track.objects.get(provider=self.NAME, provider_id=activity_id)
 
+      # Skip update on existing tracks
+      # TEST
+      logger.info("Skip %s activity %s update" % (self.NAME, activity_id))
+      return track, False
+
       # Check the activity needs an update
       # by comparing md5
       track_file = track.get_file('raw')
