@@ -15,6 +15,7 @@ def auto_publish_reports(*args, **kwargs):
   week, year = date_to_week(today)
   reports = SportWeek.objects.filter(year=year, week=week, published=False).order_by('user__username')
   reports = reports.filter(user__auto_send=True) # Auto send must be enabled per user
+  roles = ('athlete', 'trainer', 'staff', )
   for r in reports:
 
     # Skip empty report
@@ -24,7 +25,7 @@ def auto_publish_reports(*args, **kwargs):
       continue
 
     # Publish
-    for m in r.user.memberships.all():
+    for m in r.user.memberships.filter(role__in=roles):
       r.publish(m, 'https://runreport.fr') # TODO : use a config
     print 'Published %s' % r
 
