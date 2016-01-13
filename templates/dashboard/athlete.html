@@ -18,10 +18,6 @@
   {% if not weeks_empty %}
   <div class="row">
     <div class="col-xs-12 col-sm-8">
-      <p class="pull-right">
-        {{ macros.help(user, _('You can quickly view the number of sessions per weeks, and the mileage & time.'), _('Your sport weeks')) }}
-      </p>
-      <h1>
         {{ _('Your sport weeks') }}
       </h1>
     </div>
@@ -32,6 +28,7 @@
         <i class="icon-right-open"></i>
       </a>
       {% endif %}
+      {{ macros.help(user, _('You can quickly view the number of sessions per weeks, and the mileage & time.'), _('Your sport weeks')) }}
     </div>
 
     <div class="col-xs-12" id="rings">
