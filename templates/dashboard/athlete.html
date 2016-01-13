@@ -18,6 +18,9 @@
   {% if not weeks_empty %}
   <div class="row">
     <div class="col-xs-12 col-sm-8">
+      <p class="pull-right">
+        {{ macros.help(user, _('You can quickly view the number of sessions per weeks, and the mileage & time.'), _('Your sport weeks')) }}
+      </p>
       <h1>
         {{ _('Your sport weeks') }}
       </h1>
@@ -48,9 +51,9 @@
 
     {% endfor %}
     </div>
-    <p class="pull-right">
-      {{ macros.help(user, _('You can quickly view the number of sessions per weeks, and the mileage & time.'), _('Your sport weeks')) }}
-    </p>
+    <div class="text-center">
+      {% include 'ads/home.html' %}
+    </div>
   </div>
   {% endif %}
 
@@ -61,6 +64,11 @@
       {{ _('Follow those steps to discover the features of RunReport !') }}
     </p>
     {% include 'dashboard/demo.html' %}
+    {% if weeks_empty %}
+    <div class="text-center">
+      {% include 'ads/home.html' %}
+    </div>
+    {% endif %}
   {% endif %}
 
   <div class="row">

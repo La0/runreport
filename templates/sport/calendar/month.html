@@ -147,12 +147,18 @@
 			<a href="{{url(pagemonth, *pageargs + [months.0.year, months.0.month ])}}">&laquo; {{months.0|date('E Y')}}</a>
 		</li>
 		{% endif %}
+    <li>
+    </li>
 		{% if months.2 %}
 		<li class="next">
 			<a href="{{url(pagemonth, *pageargs + [months.2.year, months.2.month ])}}">{{months.2|date('E Y')}} &raquo;</a>
 		</li>
 		{% endif %}
 	</ul>
+
+  <div class="text-center">
+    {% include 'ads/home.html' %}
+  </div>
 
 </div>
 

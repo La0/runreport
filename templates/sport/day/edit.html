@@ -131,8 +131,6 @@
   {% endif %}
   </div>
 
-
-
   {% if not member %}
     {% if report.task %}
     <div class="alert alert-info">
@@ -174,6 +172,10 @@
     {% endif %}
 
   {% endif %}
+
+  <div class="text-center">
+    {% include 'ads/home.html' %}
+  </div>
 
 </div>
 {% endblock %}
