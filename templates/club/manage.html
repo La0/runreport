@@ -9,6 +9,7 @@
 	<h2>{{ _('Manage') }} {{club.name}}</h2>
 
   <ul class="nav nav-tabs" role="tablist">
+    <!--
     <li class="active">
       <a href="#users" role="tab" data-toggle="tab">
         <i class="icon-club"></i>
@@ -21,7 +22,8 @@
         {{ _('Premium') }}
       </a>
     </li>
-    <li>
+    -->
+    <li class="active">
       <a href="#edit" role="tab" data-toggle="tab">
         <i class="icon-edit"></i>
         {{ _('Preferences') }}
@@ -44,6 +46,7 @@
   </ul>
 
   <div class="tab-content">
+    <!--
     <div class="tab-pane active" id="users">
 
       <h3>{{ _('Current period') }}</h3>
@@ -266,8 +269,9 @@
       </div>
 
     </div>
+    -->
 
-    <div class="tab-pane" id="edit">
+    <div class="tab-pane active" id="edit">
       <form action="" method="POST" class="form form-horizontal">
         {% csrf_token %}
 

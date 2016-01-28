@@ -39,7 +39,9 @@
       <thead>
         <tr>
           <th>{{ _('New role') }}</th>
+          <!--
           <th>{{ _('Cost') }}</th>
+          -->
           <th>{{ _('Description') }}</th>
           <th>{{ _('Actions') }}</th>
         </tr>
@@ -52,6 +54,7 @@
           <td>
             {{ role_name }}
           </td>
+          <!--
           <td>
             {% if cost == 0 %}
               <span class="label label-success">
@@ -63,6 +66,7 @@
               </span>
             {% endif %}
           </td>
+          -->
           <td>
 
             {% if role == 'archive' %}
@@ -123,6 +127,7 @@
       </tbody>
     </table>
 
+    <!--
     {% if club.current_period.is_free %}
     <p class="text-info">
       <i class="icon-premium"></i>
@@ -140,6 +145,7 @@
       {{ _('Please register a credit card, using the above links.') }}
     </p>
     {% endif %}
+    -->
 
     <div class="form-group">
       <label class="control-label">

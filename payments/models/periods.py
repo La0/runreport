@@ -52,6 +52,7 @@ class PaymentPeriod(models.Model):
 
   @property
   def is_free(self):
+    return True # Free mode !!
     return self.status == 'free'
 
   def cancel(self):

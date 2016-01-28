@@ -69,6 +69,7 @@ class Bill(object):
      * price difference
      * unit price
     '''
+    return 0, 0 # free !
     stats_old = self.calc_role(old_role)
     stats_new = self.calc_role(new_role)
 
