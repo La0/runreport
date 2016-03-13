@@ -13,6 +13,7 @@ class WeekPublish(JsonResponseMixin, CurrentWeekMixin, FormView):
   def get_memberships(self):
     m = self.request.user.memberships.filter(trainers__isnull=False)
     m = m.exclude(role__in=('prospect', 'archive'))
+    m = m.distinct()
     return m
 
   def get_context_data(self, *args, **kwargs):
