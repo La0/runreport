@@ -77,7 +77,7 @@ def pg(sql=None, dbname=None, command='psql'):
   db['COMMAND'] = command
   print db
 
-  cmd = 'PGPASSWORD="%(PASSWORD)s" %(COMMAND)s --username=%(USER)s --host=%(HOST)s' % db
+  cmd = 'PGPASSWORD="%(PASSWORD)s" %(COMMAND)s --username=%(USER)s --host=%(HOST)s --port=%(PORT)s' % db
   cmd += ' --dbname=%s' % (dbname or db['NAME'])
   if sql:
     cmd += ' --command="%s"' % sql
