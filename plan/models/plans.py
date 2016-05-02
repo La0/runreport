@@ -316,6 +316,7 @@ class PlanSession(models.Model):
         if psa.status == 'applied':
           psa.sport_session.name = self.name
           psa.sport_session.comment = self.comment
+          psa.sport_session.type = self.type
           psa.sport_session.distance = self.distance
           psa.sport_session.time = self.time
           psa.sport_session.save()
