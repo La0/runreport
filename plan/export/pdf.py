@@ -10,6 +10,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils import formats, translation
 from django.conf import settings
 from helpers import week_to_date
+from datetime import timedelta
 from StringIO import StringIO
 
 class PlanPdfExporter(object):
@@ -107,9 +108,23 @@ class PlanPdfExporter(object):
           dates.append(Paragraph(date_fmt, self.dateStyle))
 
         # Render sessions using html template
+        sum_distance, sum_time = 0, timedelta()
         for session in self.plan.sessions.filter(week=week_pos, day=day_pos):
-          para = Paragraph(session.name, self.sessionStyle)
+          content = '<b><font color=lightsteelblue size=9>{}</font></b> <font size=9>{}</font>'.format(session.sport, session.name)
+          para = Paragraph(content, self.sessionStyle)
           sessions.append(para)
+          sum_distance += session.distance or 0
+          sum_time += session.time or timedelta()
+
+        # Add distance & time summary for this day
+        if sum_distance or sum_time:
+          content = ' '.join([
+            sum_distance and '{} km'.format(sum_distance) or '',
+            sum_time and '{}'.format(sum_time) or '',
+          ])
+          content = '<font size=8 color=darkslateblue>Total: {}</font>'.format(content)
+          summary = Paragraph(content, self.sessionStyle)
+          sessions.append(summary)
 
         week.append(sessions or '')
 
