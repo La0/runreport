@@ -1,6 +1,6 @@
 *.pyc
 *.db*
-runreport/local_settings.py
+src/runreport/local_settings.py
 garmin_data
 tracks_data*
 mails_debug

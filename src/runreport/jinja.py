@@ -38,7 +38,7 @@ def environment(**options):
   # and setup bytecode cache
   if not settings.DEBUG:
       env.auto_reload = False
-      cache_dir = os.path.join(settings.HOME, 'templates_cached')
+      cache_dir = os.path.join(settings.ROOT, 'templates_cached')
       if not os.path.exists(cache_dir):
         os.mkdir(cache_dir)
       env.bytecode_cache = FileSystemBytecodeCache(cache_dir, 'rr.%s.cache')

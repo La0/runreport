@@ -24,7 +24,8 @@ DATABASES = {
 }
 
 import os
-HOME = os.path.realpath('.')
+SRC = os.path.realpath('.')
+ROOT = os.path.realpath('..')
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -74,11 +75,11 @@ LANGUAGES = (
 
 # Use our own locales
 LOCALE_PATHS = (
-  HOME + '/locale',
+  ROOT + '/locale',
 )
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
-MEDIA_ROOT = HOME + '/medias'
+MEDIA_ROOT = ROOT + '/medias'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -88,15 +89,15 @@ MEDIA_URL = '/medias/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = os.path.join(HOME, 'static')
+STATIC_ROOT = os.path.join(ROOT, 'static')
 
 # URL prefix for static files.
 STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-  os.path.join(HOME, 'front'),
-  os.path.join(HOME, 'bower_components'),
+  os.path.join(ROOT, 'front'),
+  os.path.join(ROOT, 'bower_components'),
 )
 
 # List of finder classes that know how to find static files in
@@ -119,7 +120,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(HOME, 'templates_admin'),
+            os.path.join(ROOT, 'templates_admin'),
         ],
         'APP_DIRS': True,
         'OPTIONS' : {
@@ -137,7 +138,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.jinja2.Jinja2',
         'DIRS': [
-            os.path.join(HOME, 'templates'),
+            os.path.join(ROOT, 'templates'),
         ],
         'APP_DIRS': False,
         'OPTIONS': {
@@ -285,11 +286,8 @@ GPG_HOME=''
 GPG_KEY=''
 GPG_PASSPHRASE=''
 
-# Garmin user data (json)
-GARMIN_DIR=os.path.join(HOME, 'garmin_data')
-
 # Tracks data
-TRACK_DATA=os.path.join(HOME, 'tracks_data')
+TRACK_DATA=os.path.join(ROOT, 'tracks_data')
 
 # Strava config
 STRAVA_ID = 0
@@ -384,7 +382,7 @@ COMPRESS_PRECOMPILERS = (
 CACHES = {
   'default': {
     'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-    'LOCATION': os.path.join(HOME, 'cache'),
+    'LOCATION': os.path.join(ROOT, 'cache'),
     'OPTIONS': {
         'MAX_ENTRIES': 1000,
     }
@@ -432,13 +430,13 @@ PAYMENTS_PERIOD = 30 # In days
 MANGOPAY_ID = None
 MANGOPAY_SECRET = None
 MANGOPAY_PROD = False
-MANGOPAY_CACHE = os.path.join(HOME, '.mangopay')
+MANGOPAY_CACHE = os.path.join(ROOT, '.mangopay')
 MANGOPAY_ENTRY_FEE = 5.00 # in euros
 MANGOPAY_RETURN_URL = 'http://localhost:8000'
 MANGOPAY_NOTIFICATION_URL = 'http://localhost:8000'
 
 # Archives dir
-ARCHIVES_DIR = os.path.join(HOME, 'archives')
+ARCHIVES_DIR = os.path.join(ROOT, 'archives')
 
 # Premium prices, per month
 PREMIUM_PRICES = {

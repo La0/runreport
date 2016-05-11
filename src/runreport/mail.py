@@ -48,7 +48,7 @@ class MailBuilder:
   def dump(self, html):
     # Dump to static file, for debug only
     h = md5('%s:%s' % (self.template, ':'.join(self.to))).hexdigest()
-    path = os.path.join(settings.HOME, 'mails_debug', h + '.html')
+    path = os.path.join(settings.ROOT, 'mails_debug', h + '.html')
     dump = open(path, 'w')
     dump.write(html.encode('utf-8'))
     print 'Dumped mail %s in %s' % (self.subject, path)

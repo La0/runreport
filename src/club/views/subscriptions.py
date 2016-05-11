@@ -10,7 +10,7 @@ import tempfile
 import csv
 import os
 
-CSV_DIR = os.path.join(settings.HOME, 'tmp')
+CSV_DIR = os.path.join(settings.ROOT, 'tmp')
 CSV_SUFFIX = '.subscriptions.csv'
 
 class ClubSubscriptionsAdd(JsonResponseMixin, ClubManagerMixin, FormView):

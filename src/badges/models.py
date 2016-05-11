@@ -116,7 +116,7 @@ class Badge(models.Model):
     '''
 
     # Files
-    img_dir = os.path.join(settings.HOME, 'badges/images')
+    img_dir = os.path.join(settings.SRC, 'badges/images')
     bg_path = os.path.join(img_dir, 'background.png')
     if not os.path.exists(bg_path):
       raise Exception('Missing background %s' % bg_path)
