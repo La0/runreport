@@ -12,6 +12,7 @@ from django.conf import settings
 from helpers import week_to_date
 from datetime import timedelta
 from StringIO import StringIO
+import os
 
 class PlanPdfExporter(object):
   '''
@@ -156,7 +157,7 @@ class PlanPdfExporter(object):
     tableFrame = Frame(inch / 2, inch / 2, 10*inch, 7*inch)
 
     # RunReport logo
-    logo = Image('./front/img/logo_ligne.png')
+    logo = Image(os.path.join(settings.ROOT, 'front/img/logo_ligne.png'))
     logo.drawHeight = 2.2*inch*logo.drawHeight / logo.drawWidth
     logo.drawWidth = 2.2*inch
 
