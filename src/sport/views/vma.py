@@ -1,7 +1,11 @@
 from django.views.generic import TemplateView
+from django.conf import settings
 import json
 from sport.vma import VmaCalc
 from sport.models import Sport
+import os
+
+VMA_PATH = os.path.join(settings.ROOT, 'glossaire_vma.json')
 
 class VmaPaces(TemplateView):
   template_name = 'sport/vma.html'
@@ -23,7 +27,7 @@ class VmaPaces(TemplateView):
     return context
 
   def get_context_glossary(self):
-    with open('glossaire_vma.json', 'r') as f:
+    with open(VMA_PATH, 'r') as f:
       glossary = json.loads(f.read())
       f.close()
     return {
@@ -34,7 +38,7 @@ class VmaGlossary(TemplateView):
   template_name = 'sport/glossary.html'
 
   def load_glossary(self):
-    with open('glossaire_vma.json', 'r') as f:
+    with open(VMA_PATH, 'r') as f:
       glossary = json.loads(f.read())
       f.close()
     return {
