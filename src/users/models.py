@@ -18,6 +18,9 @@ from helpers import crop_image
 from django_countries.fields import CountryField
 from users.notification import UserNotifications
 import json
+import logging
+
+logger = logging.getLogger('users')
 
 PRIVACY_LEVELS = (
   ('public', _('Public')),
@@ -473,6 +476,21 @@ class Athlete(AthleteBase):
       self.save()
 
     return steps
+
+  def delete(self, *args, **kwargs):
+    """
+    Unsubscribe from mailing lists
+    on delete
+    """
+    try:
+      mm = MailMan()
+      for s in mm.list_subscriptions(self.email):
+        s.unsubscribe()
+        logger.info('Unsubscribed {} from {}'.format(self, s.id))
+    except Exception, e:
+      logger.error('Failed to unsubscribe {} from mailing lists: {}'.format(self, e))
+
+    return super(Athlete, self).delete(*args, **kwargs)
 
 
 class UserCategory(models.Model):

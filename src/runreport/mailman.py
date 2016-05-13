@@ -105,3 +105,13 @@ class MailMan(object):
 
     ml = self.get_list(list_name)
     return ml.delete()
+
+  def list_subscriptions(self, email):
+    """
+    List all subscriptions for a user
+    """
+    if not self.connected:
+      raise Exception('No mailman connection')
+
+    user = self.client.get_user(email)
+    return user.subscriptions
