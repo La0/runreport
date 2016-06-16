@@ -11,7 +11,6 @@ from runreport.mixins import JsonResponseMixin, JSON_OPTION_BODY_RELOAD, JSON_OP
 from runreport.features import list_features
 from django.db.models import Max
 from django.utils import timezone
-from payments.bill import Bill
 
 
 class ClubManage(ClubManagerMixin, UpdateView):
@@ -49,16 +48,8 @@ class ClubManage(ClubManagerMixin, UpdateView):
     context.update(list_features())
     context['now'] = timezone.now()
     context['periods'] = self.club.periods.all()
+    context['current_period'] = self.club.current_period
     context['prices'] = settings.PREMIUM_PRICES
-
-    # Add bill
-    if self.club.current_period:
-      bill = self.club.current_period.bill
-    else:
-      bill = Bill(self.club)
-      bill.calc()
-    context['bill'] = bill
-
     return context
 
 class ClubLinkAdd(ClubManagerMixin, JsonResponseMixin, CreateView):

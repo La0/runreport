@@ -425,7 +425,6 @@ CLUB_CREATION_OPEN = True
 
 # Payments integration
 PAYMENTS_ENABLED = False
-PAYMENTS_TRIAL = 90 # In days
 PAYMENTS_PERIOD = 30 # In days
 MANGOPAY_ID = None
 MANGOPAY_SECRET = None

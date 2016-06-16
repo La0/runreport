@@ -122,12 +122,28 @@ class Club(models.Model):
 
   @property
   def current_period(self):
-    # Helper to access current subscription
-    now = timezone.now()
-    try:
-      return self.periods.get(start__lte=now, end__gt=now)
-    except:
-      return self.periods.last()
+      """
+      Gives current period, or create a new one
+      Always return a payment period
+      """
+      now = timezone.now()
+      try:
+          return self.periods.get(start__lte=now, end__gt=now)
+      except:
+
+          # Setup dates
+          # Use last known date when available
+          previous_period = self.periods.last()
+          start = previous_period and previous_period.end or now
+          end = start + timedelta(days=settings.PAYMENTS_PERIOD)
+
+          # Build new period
+          period = self.periods.create(start=start, end=end)
+
+          # Detect initial period level
+
+
+          return period
 
   def _has_full_access(self):
     '''
@@ -135,7 +151,6 @@ class Club(models.Model):
      * it's in free trial period
      * it's in a paying period
     '''
-    return True # Free !!
     sub = self.current_period
     if sub and sub.is_free:
       return True
@@ -218,31 +233,21 @@ class Club(models.Model):
     h = hashlib.md5(contents)
     return unicode(h.hexdigest()[0:8])
 
-  def save_roles(self):
+  def update_period(self):
     '''
-    Save roles status in current subscription
-    Create a subscription if none active
-    And the bill is > 0
+    Update roles & level for current period
     '''
-
-    # Only process for paying bills
-    from payments.bill import Bill
-    bill = Bill(self)
-    bill.calc()
-    if bill.total == 0:
-      return None
-
-    # Fetch or create period
+    # Fetch current period (or new one)
     period = self.current_period
-    if period is None:
-      start = timezone.now()
-      end = start + timedelta(days=settings.PAYMENTS_PERIOD)
-      period = self.periods.create(start=start, end=end)
 
-    # Get roles stats
-    period.nb_trainers = max(period.nb_trainers, bill.counts.get('trainer', 0))
-    period.nb_athletes = max(period.nb_athletes, bill.counts.get('athlete', 0))
-    period.nb_staff = max(period.nb_staff, bill.counts.get('staff', 0))
+    # Update roles stats
+    period.update_roles_count()
+
+    # Update payment level
+    # TODO: send a notification on level change ?
+    period.detect_level()
+
+    # Update level
     period.save()
 
     return period
@@ -298,23 +303,6 @@ class Club(models.Model):
     # Process request
     api = get_api()
     return api.payIns.Create(payin)
-
-  def create_free_period(self):
-    '''
-    Create the free initial subscription
-    '''
-    # Check no free periods already exist
-    if self.periods.filter(status='free').exists():
-      raise Exception('A free subscription already exists')
-
-    # Create the sub
-    now = timezone.now()
-    data = {
-      'status' : 'free',
-      'start' : now,
-      'end' : now + timedelta(days=settings.PAYMENTS_TRIAL),
-    }
-    return self.periods.create(**data)
 
 
 class ClubMembership(models.Model):

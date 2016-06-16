@@ -55,31 +55,6 @@ class PeriodPdfExporter(object):
       ('GRID', (0,0), (-1,-1), 0.5, colors.black),
     ]
 
-  def build_table(self):
-    '''
-    Build the bill table
-    '''
-    data = [[
-      _('Role'),
-      _('Unit Price'),
-      _('Nb. of roles'),
-      _('Total'),
-    ],]
-
-    # Add roles calc
-    bill = self.period.bill
-    for st in bill.stats:
-        data.append([
-            _(st['type']),
-            _(str(st['unit'])),
-            _(str(st['paying'])),
-            _(str(st['total'])),
-        ])
-
-    t = Table(data)
-    t.setStyle(self.tableStyle)
-
-    return t
 
   def render(self, stream=None):
     '''
@@ -122,7 +97,7 @@ class PeriodPdfExporter(object):
       title,
       period,
       Spacer(1, 0.4*inch), # make room for header
-      self.build_table(),
+      #self.build_table(),
     #  table, # the period
     ]
     pdf.build(story)

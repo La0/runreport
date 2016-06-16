@@ -15,13 +15,11 @@ def auto_payments():
 
   for club in Club.objects.all():
 
-    # Calc all new roles
-    period = club.save_roles()
-    if period is None:
-      continue
+    # Update club current period
+    period = club.update_period()
 
     # Auto pay
-    if period.status == 'active' and period.end.date() <= today:
+    if period.is_premium and period.status == 'active' and period.end.date() <= today:
       period.pay()
 
 @shared_task

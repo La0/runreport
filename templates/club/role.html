@@ -39,34 +39,17 @@
       <thead>
         <tr>
           <th>{{ _('New role') }}</th>
-          <!--
-          <th>{{ _('Cost') }}</th>
-          -->
           <th>{{ _('Description') }}</th>
           <th>{{ _('Actions') }}</th>
         </tr>
       </thead>
       <tbody>
       {% for role, role_name in roles.items() %}
-      {% with diff, cost = bill.cost_new_role(membership.role, role) %}
       {% with available = not user.demo and (club.has_full_access or cost == 0) %}
         <tr>
           <td>
             {{ role_name }}
           </td>
-          <!--
-          <td>
-            {% if cost == 0 %}
-              <span class="label label-success">
-                {{ _('Free') }}
-              </span>
-            {% else %}
-              <span class="label label-warning">
-                {{ cost|floatformat(2) }} &euro;
-              </span>
-            {% endif %}
-          </td>
-          -->
           <td>
 
             {% if role == 'archive' %}
@@ -122,30 +105,10 @@
             {% endif %}
           </td>
         {% endwith %}
-        {% endwith %}
         {% endfor %}
       </tbody>
     </table>
 
-    <!--
-    {% if club.current_period.is_free %}
-    <p class="text-info">
-      <i class="icon-premium"></i>
-      {{ _('Your club is in the free trial period, so every role is free.') }}
-      <br />
-      {{ _('At the end of this period, you will pay the indicated price above.') }}
-    </p>
-    {% endif %}
-
-    {% if not club.has_full_access %}
-    <p class="text-warning">
-      <i class="icon-premium"></i>
-      {{ _('Your club has finished the trial period and does not have a valid credit card.') }}
-      <br />
-      {{ _('Please register a credit card, using the above links.') }}
-    </p>
-    {% endif %}
-    -->
 
     <div class="form-group">
       <label class="control-label">

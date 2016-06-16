@@ -7,7 +7,6 @@ from club.models import ClubMembership
 from club.forms import ClubMemberRoleForm, ClubMemberTrainersForm
 from club import ROLES
 from club.tasks import mail_member_role
-from payments.bill import Bill
 from runreport.mixins import JsonResponseMixin, JSON_STATUS_ERROR, JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE
 
 import logging
@@ -52,11 +51,7 @@ class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, Proces
     context['membership'] = self.membership
     context['member'] = self.member
     context['roles'] = self.get_roles()
-
-    # Add bill manager for club
-    bill = Bill(self.club)
-    bill.calc()
-    context['bill'] = bill
+    context['current_period'] = self.club.current_period
     return context
 
   def get_form(self, form_class):
@@ -117,7 +112,6 @@ class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, Proces
 
     # Open trainers modal if no trainers are found
     if membership.role == 'athlete' and not membership.trainers.exists():
-      print 'OOPS'
       self.json_options = [JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE, ]
       self.json_modales = [
         reverse('club-member-trainers', args=(self.club.slug, membership.user.username, )),

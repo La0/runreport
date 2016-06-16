@@ -9,20 +9,12 @@
 	<h2>{{ _('Manage') }} {{club.name}}</h2>
 
   <ul class="nav nav-tabs" role="tablist">
-    <!--
-    <li class="active">
-      <a href="#users" role="tab" data-toggle="tab">
-        <i class="icon-club"></i>
-        {{ _('Users') }}
-      </a>
-    </li>
     <li>
-      <a href="#premium_status" role="tab" data-toggle="tab">
+      <a href="#premium" role="tab" data-toggle="tab">
         <i class="icon-premium"></i>
         {{ _('Premium') }}
       </a>
     </li>
-    -->
     <li class="active">
       <a href="#edit" role="tab" data-toggle="tab">
         <i class="icon-edit"></i>
@@ -46,81 +38,118 @@
   </ul>
 
   <div class="tab-content">
-    <!--
-    <div class="tab-pane active" id="users">
+    <div class="tab-pane active" id="premium">
 
       <h3>{{ _('Current period') }}</h3>
-      {% with period = club.current_period %}
-      {% if period %}
       <p>
         <i class="icon-calendar"></i>
         {{ _('From') }}
-        <span class="do-tooltip" title="{{ period.start|timesince }}">{{ period.start|date('d E Y') }}</span>
+        <span class="do-tooltip" title="{{ current_period.start|timesince }}">{{ current_period.start|date('d E Y') }}</span>
         {{ _('to') }}
-        <span class="do-tooltip" title="{{ period.end|timeuntil }}">{{ period.end|date('d E Y') }}</span>
+        <span class="do-tooltip" title="{{ current_period.end|timeuntil }}">{{ current_period.end|date('d E Y') }}</span>
       </p>
 
-        {% if period.status == 'free' %}
-        <blockquote class="text-info">
-          {{ _('You are in the free trial period !') }}
-        </blockquote>
-        {% elif period.status == 'active' %}
-        <blockquote class="text-info">
-          {{ _('You will be billed at the end of the period.') }}
-        </blockquote>
-        {% elif period.status == 'paid' %}
-        <blockquote class="text-success">
-          {{ _('This period has been paid') }}
-        </blockquote>
-        {% elif period.status == 'expired' %}
-        <blockquote class="text-warning">
-          {{ _('This period has expired, you have to pay to get back all the features.') }}
-          <p class="pull-right">
-            <a href="{{ url('payment-period', period.pk) }}" class="btn btn-danger">
-              <i class="icon-premium"></i>
-              {{ _('Pay this period') }}
-            </a>
-          </p>
-        </blockquote>
-        {% elif period.status == 'error' %}
-        <blockquote class="text-danger">
-          {{ _('A payment error happened on this period. You will be contacted by the administrators.') }}
-          <p class="pull-right">
-            <a href="{{ url('payment-period', period.pk) }}" class="btn btn-danger">
-              <i class="icon-premium"></i>
-              {{ _('Pay this period') }}
-            </a>
-          </p>
-        </blockquote>
-        {% else %}
-        <p class="text-muted">
-          Status: {{ period.status }}
-        </p>    
-        {% endif %}
-      {% else %}
-      <p class="alert alert-danger">
-        {{ _('No period found.') }}
-      </p>
-      {% endif %}
-      {% endwith %}
+      <div class="row">
+    
+        <div class="col-sm-3 col-xs-12">
+          <div class="level panel {% if current_period.level == 'free' %}panel-info{% else %}panel-default{% endif %}">
+            <div class="panel-heading">
+              <h4>{{ _('Free') }}</h4>
+            </div>
+            <div class="panel-body">
+              {{ _('Up to 10 athletes and 1 trainer') }}
+    
+              <p class="price">0 &euro; / {{ _('month') }}</p>
 
-      {% if club.has_full_access %}
-      <blockquote class="text-success">
-        {{ _('Trainers in your club have full access to their athletes.') }}
+              {% if current_period.level == 'free' %}
+              <p class="text-info">
+                {{ _('This is your current payment level, with %d athletes and %d trainers') % (current_period.nb_athletes, current_period.nb_trainers) }}
+              </p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3 col-xs-12">
+          <div class="level panel {% if current_period.level == 'premium_s' %}panel-info{% else %}panel-default{% endif %}">
+            <div class="panel-heading">
+              <h4>{{ _('Premium S') }}</h4>
+            </div>
+            <div class="panel-body">
+              {{ _('Up to 30 athletes and 3 trainers') }}
+    
+              <p class="price">9,90 &euro; / {{ _('month') }}</p>
+
+              {% if current_period.level == 'premium_s' %}
+              <p class="text-info">
+                {{ _('This is your current payment level, with %d athletes and %d trainers') % (current_period.nb_athletes, current_period.nb_trainers) }}
+              </p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3 col-xs-12">
+          <div class="level panel {% if current_period.level == 'premium_m' %}panel-info{% else %}panel-default{% endif %}">
+            <div class="panel-heading">
+              <h4>{{ _('Premium M') }}</h4>
+            </div>
+            <div class="panel-body">
+              {{ _('Up to 100 athletes and 10 trainers') }}
+    
+              <p class="price">19,90 &euro; / {{ _('month') }}</p>
+
+              {% if current_period.level == 'premium_m' %}
+              <p class="text-info">
+                {{ _('This is your current payment level, with %d athletes and %d trainers') % (current_period.nb_athletes, current_period.nb_trainers) }}
+              </p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3 col-xs-12">
+          <div class="level panel {% if current_period.level == 'premium_l' %}panel-info{% else %}panel-default{% endif %}">
+            <div class="panel-heading">
+              <h4>{{ _('Premium L') }}</h4>
+            </div>
+            <div class="panel-body">
+              {{ _('Up to 500 athletes and 50 trainers') }}
+    
+              <p class="price">49,90 &euro; / {{ _('month') }}</p>
+
+              {% if current_period.level == 'premium_l' %}
+              <p class="text-info">
+                {{ _('This is your current payment level, with %d athletes and %d trainers') % (current_period.nb_athletes, current_period.nb_trainers) }}
+              </p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      {% if current_period.status == 'expired' %}
+      <blockquote class="text-warning">
+        {{ _('This period has expired, you have to pay to get back all the features.') }}
+        <p class="pull-right">
+          <a href="{{ url('payment-period', current_period.pk) }}" class="btn btn-danger">
+            <i class="icon-premium"></i>
+            {{ _('Pay this period') }}
+          </a>
+        </p>
       </blockquote>
-      {% else %}
+      {% elif current_period.status == 'error' %}
       <blockquote class="text-danger">
-        {{ _('Trainers in your club do not have full access to their athletes; you need to pay for this period.') }}
+        {{ _('A payment error happened on this period. You will be contacted by the administrators.') }}
+        <p class="pull-right">
+          <a href="{{ url('payment-period', current_period.pk) }}" class="btn btn-danger">
+            <i class="icon-premium"></i>
+            {{ _('Pay this period') }}
+          </a>
+        </p>
       </blockquote>
       {% endif %}
 
-      <h3>{{ _('Your next bill') }}</h3>
-      {% include 'payments/_bill.html' %}
-
-    </div>
-
-    {# Display subscriptions #}
-    <div class="tab-pane" id="premium_status">
       <h3>{{ _('Paying methods') }}</h3>
       <div class="row">
         {% if club.card_id %}
@@ -214,64 +243,9 @@
       </p>
       {% endif %}
 
-      <div class="row">
-
-        <div class="col-xs-12">
-          <h3>{{ _('Pricing Simulator') }}</h3>
-          <p class="text-info">
-            <i class="icon-help-circled"></i>
-            {{ _('This simulator helps you estimate your club future bills') }}
-          </p>
-          <table class="table table-bordered" id="price_simulator">
-            <tr>
-              <td>{{ _('Role') }}</td>
-              <td>{{ _('Proce') }}</td>
-              <td>{{ _('People in this role') }}</td>
-              <td>{{ _('Monthly price') }}</td>
-              <td>{{ _('Yearly price') }}</td>
-            </tr>
-            
-            {% for role in ('athlete', 'trainer') %}
-            <tr class="role {{ role }}">
-              <td>
-                {{ _(role|title) }}
-              </td>
-              <td>
-                {{ prices[role] }}&euro;/{{ _('month') }}
-              </td> 
-              <td>
-                <input type="number" class="form-control" value="0" data-price="{{ prices[role] }}"/>
-              </td>
-              <td class="month">
-                <span>0</span> &euro;
-              </td>
-              <td class="year">
-                <span>0</span> &euro;
-              </td>
-            </tr>
-            {% endfor %}
-
-            <tr class="total">
-              <td class="text-right" colspan="3">
-                {{ _('Total') }}
-              </td>
-              <td class="month">
-                <span>0</span> &euro;
-              </td>
-              <td class="year">
-                <span>0</span> &euro;
-              </td>
-            </tr>
-
-          </table>
-
-        </div>
-      </div>
-
     </div>
-    -->
 
-    <div class="tab-pane active" id="edit">
+    <div class="tab-pane" id="edit">
       <form action="" method="POST" class="form form-horizontal">
         {% csrf_token %}
 
