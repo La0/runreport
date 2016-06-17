@@ -220,3 +220,29 @@
   {% endif %}
 </p>
 {%- endmacro %}
+
+
+{% macro premium_level(level, period=None) %}
+<div class="col-sm-3 col-xs-12">
+  <div class="level panel {% if period and period.level == level %}panel-info{% else %}panel-default{% endif %}">
+    <div class="panel-heading">
+      <h4>{{ _('premium.%s.name' % level) }}</h4>
+    </div>
+    <div class="panel-body">
+
+      <p>
+        {{ _('premium.%s.description' % level) }}
+      </p>
+      <p class="price">
+        {{ _('premium.%s.price' % level) }}
+      </p>
+
+      {% if period and period.level == level %}
+      <p class="text-info">
+        {{ _('This is your current payment level, with %d athletes and %d trainers') % (period.nb_athletes, period.nb_trainers) }}
+      </p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{%- endmacro %}

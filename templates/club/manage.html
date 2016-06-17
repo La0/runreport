@@ -50,81 +50,10 @@
       </p>
 
       <div class="row">
-    
-        <div class="col-sm-3 col-xs-12">
-          <div class="level panel {% if current_period.level == 'free' %}panel-info{% else %}panel-default{% endif %}">
-            <div class="panel-heading">
-              <h4>{{ _('Free') }}</h4>
-            </div>
-            <div class="panel-body">
-              {{ _('Up to 10 athletes and 1 trainer') }}
-    
-              <p class="price">0 &euro; / {{ _('month') }}</p>
-
-              {% if current_period.level == 'free' %}
-              <p class="text-info">
-                {{ _('This is your current payment level, with %d athletes and %d trainers') % (current_period.nb_athletes, current_period.nb_trainers) }}
-              </p>
-              {% endif %}
-            </div>
-          </div>
-        </div>
-
-        <div class="col-sm-3 col-xs-12">
-          <div class="level panel {% if current_period.level == 'premium_s' %}panel-info{% else %}panel-default{% endif %}">
-            <div class="panel-heading">
-              <h4>{{ _('Premium S') }}</h4>
-            </div>
-            <div class="panel-body">
-              {{ _('Up to 30 athletes and 3 trainers') }}
-    
-              <p class="price">9,90 &euro; / {{ _('month') }}</p>
-
-              {% if current_period.level == 'premium_s' %}
-              <p class="text-info">
-                {{ _('This is your current payment level, with %d athletes and %d trainers') % (current_period.nb_athletes, current_period.nb_trainers) }}
-              </p>
-              {% endif %}
-            </div>
-          </div>
-        </div>
-
-        <div class="col-sm-3 col-xs-12">
-          <div class="level panel {% if current_period.level == 'premium_m' %}panel-info{% else %}panel-default{% endif %}">
-            <div class="panel-heading">
-              <h4>{{ _('Premium M') }}</h4>
-            </div>
-            <div class="panel-body">
-              {{ _('Up to 100 athletes and 10 trainers') }}
-    
-              <p class="price">19,90 &euro; / {{ _('month') }}</p>
-
-              {% if current_period.level == 'premium_m' %}
-              <p class="text-info">
-                {{ _('This is your current payment level, with %d athletes and %d trainers') % (current_period.nb_athletes, current_period.nb_trainers) }}
-              </p>
-              {% endif %}
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-3 col-xs-12">
-          <div class="level panel {% if current_period.level == 'premium_l' %}panel-info{% else %}panel-default{% endif %}">
-            <div class="panel-heading">
-              <h4>{{ _('Premium L') }}</h4>
-            </div>
-            <div class="panel-body">
-              {{ _('Up to 500 athletes and 50 trainers') }}
-    
-              <p class="price">49,90 &euro; / {{ _('month') }}</p>
-
-              {% if current_period.level == 'premium_l' %}
-              <p class="text-info">
-                {{ _('This is your current payment level, with %d athletes and %d trainers') % (current_period.nb_athletes, current_period.nb_trainers) }}
-              </p>
-              {% endif %}
-            </div>
-          </div>
-        </div>
+        {{ macros.premium_level('free', current_period) }}
+        {{ macros.premium_level('premium_s', current_period) }}
+        {{ macros.premium_level('premium_m', current_period) }}
+        {{ macros.premium_level('premium_l', current_period) }}
       </div>
 
 

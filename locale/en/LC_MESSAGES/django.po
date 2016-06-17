@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-16 14:58+0100\n"
-"PO-Revision-Date: 2015-02-09 17:42+0100\n"
+"POT-Creation-Date: 2016-06-17 12:10+0200\n"
+"PO-Revision-Date: 2016-06-17 12:06+0100\n"
 "Last-Translator: Bastien Abadie <bastien@nextcairn.com>\n"
 "Language-Team: \n"
 "Language: English\n"
@@ -170,24 +170,12 @@ msgstr ""
 msgid "New contact message"
 msgstr ""
 
-msgid "Unit Price"
-msgstr ""
-
-msgid "Nb. of roles"
-msgstr ""
-
-msgid "Total"
-msgstr ""
-
 #, python-format
 msgid "Payment for club %s"
 msgstr ""
 
 #, python-format
 msgid "From %s to %s"
-msgstr ""
-
-msgid "Free"
 msgstr ""
 
 msgid "Active"
@@ -595,6 +583,229 @@ msgstr ""
 msgid "Add a comment on a session"
 msgstr ""
 
+msgid "Password"
+msgstr ""
+
+msgid "Repeat your password"
+msgstr ""
+
+msgid "An account already uses this email."
+msgstr ""
+
+msgid "You must be at least 13 years old to create an account."
+msgstr ""
+
+msgid "Please repeat the same password"
+msgstr ""
+
+msgid "Invalid Garmin authentification"
+msgstr ""
+
+msgid "Public"
+msgstr ""
+
+msgid "Club"
+msgstr ""
+
+msgid "Private"
+msgstr ""
+
+msgid "username"
+msgstr ""
+
+msgid "Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."
+msgstr ""
+
+msgid "Enter a valid username."
+msgstr ""
+
+msgid "first name"
+msgstr ""
+
+msgid "last name"
+msgstr ""
+
+msgid "email address"
+msgstr ""
+
+msgid "staff status"
+msgstr ""
+
+msgid "Designates whether the user can log into this admin site."
+msgstr ""
+
+msgid "active"
+msgstr ""
+
+msgid ""
+"Designates whether this user should be treated as active. Unselect this "
+"instead of deleting accounts."
+msgstr ""
+
+msgid "date joined"
+msgstr ""
+
+msgid "user"
+msgstr ""
+
+msgid "users"
+msgstr ""
+
+msgid "birthday"
+msgstr ""
+
+msgid "category"
+msgstr ""
+
+msgid "vma"
+msgstr ""
+
+msgid "Ex: 12.5 km/h"
+msgstr ""
+
+msgid "cardiac frequency"
+msgstr ""
+
+msgid "cardiac frequency at rest"
+msgstr ""
+
+msgid "height"
+msgstr ""
+
+msgid "Unit: cm"
+msgstr ""
+
+msgid "weight"
+msgstr ""
+
+msgid "Unit: kg"
+msgstr ""
+
+msgid "comment"
+msgstr ""
+
+msgid "number of sessions per week"
+msgstr ""
+
+msgid "license"
+msgstr ""
+
+msgid "default sport"
+msgstr ""
+
+msgid "auto send emails"
+msgstr "automatically send reports to your trainers at the end of weeks"
+
+msgid "Daily trainer mail"
+msgstr ""
+
+msgid "language used"
+msgstr ""
+
+msgid "garmin login"
+msgstr ""
+
+msgid "garmin password"
+msgstr ""
+
+msgid "demo user"
+msgstr ""
+
+msgid "profile picture"
+msgstr ""
+
+msgid "avatar visibility"
+msgstr ""
+
+msgid "races visibility"
+msgstr ""
+
+msgid "records visibility"
+msgstr ""
+
+msgid "stats visibility"
+msgstr ""
+
+msgid "calendar visibility"
+msgstr ""
+
+msgid "comments visibility"
+msgstr ""
+
+msgid "tracks visibility"
+msgstr ""
+
+msgid "Display contextual help"
+msgstr ""
+
+msgid "New badges"
+msgstr ""
+
+#, python-format
+msgid "%(first_name)s %(last_name)s has sent you a message"
+msgstr ""
+
+#, python-format
+msgid ""
+"%(first_name)s %(last_name)s has written a comment on your week %(week)s"
+msgstr ""
+
+#, python-format
+msgid "%(first_name)s %(last_name)s has written a comment on his week %(week)s"
+msgstr ""
+
+msgid " private"
+msgstr ""
+
+#, python-format
+msgid ""
+"%(first_name)s %(last_name)s has written a comment %(type)s on his session "
+"\"%(name)s\""
+msgstr ""
+
+#, python-format
+msgid ""
+"%(first_name)s %(last_name)s has written a comment %(type)s on your session "
+"\"%(name)s\""
+msgstr ""
+
+#, python-format
+msgid ""
+"%(first_name)s %(last_name)s has written a comment on the session \"%(name)s"
+"\" of %(first_name)s %(last_name)s"
+msgstr ""
+
+#, python-format
+msgid "%(first_name)s %(last_name)s is now your friend on RunReport"
+msgstr ""
+
+#, python-format
+msgid "%(first_name)s %(last_name)s wants to add you as a friend."
+msgstr ""
+
+#, python-format
+msgid "%(first_name)s %(last_name)s has done his training : %(session_name)s"
+msgstr ""
+
+#, python-format
+msgid "%(first_name)s %(last_name)s has missed his training : %(session_name)s"
+msgstr ""
+
+#, python-format
+msgid ""
+"%(first_name)s %(last_name)s has removed your plan %(plan_name)s from his "
+"calendar"
+msgstr ""
+
+msgid "Congratulations, you completed the RunReport demo for athletes."
+msgstr ""
+
+msgid "Congratulations, you completed the RunReport demo for trainers."
+msgstr ""
+
+msgid "New friends races"
+msgstr ""
+
 msgid "Forbidden"
 msgstr ""
 
@@ -615,7 +826,13 @@ msgid ""
 "about this issue."
 msgstr ""
 
+#, fuzzy
+#| msgid "Difficulty note 1"
 msgid "Difficulty"
+msgstr "Very Easy session"
+
+#, python-format
+msgid "This is your current payment level, with %d athletes and %d trainers"
 msgstr ""
 
 msgid "Your badges"
@@ -654,9 +871,6 @@ msgstr ""
 msgid "All the clubs"
 msgstr ""
 
-msgid "Club"
-msgstr ""
-
 msgid "Plans"
 msgstr ""
 
@@ -666,8 +880,10 @@ msgstr ""
 msgid "Manager"
 msgstr ""
 
+#, fuzzy
+#| msgid "Natation"
 msgid "Actions"
-msgstr ""
+msgstr "Swimming"
 
 msgid "No phone"
 msgstr ""
@@ -762,8 +978,10 @@ msgstr ""
 msgid "Edit group: %s"
 msgstr ""
 
+#, fuzzy
+#| msgid "fitness_equipment"
 msgid "Create a new group"
-msgstr ""
+msgstr "Fitness"
 
 msgid "Send an email to all the group members"
 msgstr ""
@@ -851,8 +1069,10 @@ msgstr ""
 msgid "or"
 msgstr ""
 
+#, fuzzy
+#| msgid "fitness_equipment"
 msgid "create an account"
-msgstr ""
+msgstr "Fitness"
 
 msgid "Join the club"
 msgstr ""
@@ -866,8 +1086,10 @@ msgstr ""
 msgid "Please try again later."
 msgstr ""
 
+#, fuzzy
+#| msgid "Natation"
 msgid "No account"
-msgstr ""
+msgstr "Swimming"
 
 msgid "You are not currently logged with an user account."
 msgstr ""
@@ -907,9 +1129,6 @@ msgstr ""
 msgid "Add a link"
 msgstr ""
 
-msgid "Users"
-msgstr ""
-
 msgid "Preferences"
 msgstr ""
 
@@ -930,15 +1149,6 @@ msgstr ""
 msgid "to"
 msgstr "Motorbike"
 
-msgid "You are in the free trial period !"
-msgstr ""
-
-msgid "You will be billed at the end of the period."
-msgstr ""
-
-msgid "This period has been paid"
-msgstr ""
-
 msgid "This period has expired, you have to pay to get back all the features."
 msgstr ""
 
@@ -948,20 +1158,6 @@ msgstr ""
 msgid ""
 "A payment error happened on this period. You will be contacted by the "
 "administrators."
-msgstr ""
-
-msgid "No period found."
-msgstr ""
-
-msgid "Trainers in your club have full access to their athletes."
-msgstr ""
-
-msgid ""
-"Trainers in your club do not have full access to their athletes; you need to "
-"pay for this period."
-msgstr ""
-
-msgid "Your next bill"
 msgstr ""
 
 msgid "Paying methods"
@@ -990,8 +1186,10 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
+#, fuzzy
+#| msgid "fitness_equipment"
 msgid "Payment"
-msgstr ""
+msgstr "Fitness"
 
 msgid "To"
 msgstr ""
@@ -999,8 +1197,10 @@ msgstr ""
 msgid "Free Trial"
 msgstr ""
 
+#, fuzzy
+#| msgid "fitness_equipment"
 msgid "Error in payments"
-msgstr ""
+msgstr "Fitness"
 
 msgid "Unknown status"
 msgstr ""
@@ -1022,27 +1222,6 @@ msgid "No actions"
 msgstr "Swimming"
 
 msgid "You do not have any periods at the moment."
-msgstr ""
-
-msgid "Pricing Simulator"
-msgstr ""
-
-msgid "This simulator helps you estimate your club future bills"
-msgstr ""
-
-msgid "Proce"
-msgstr ""
-
-msgid "People in this role"
-msgstr ""
-
-msgid "Monthly price"
-msgstr ""
-
-msgid "Yearly price"
-msgstr ""
-
-msgid "month"
 msgstr ""
 
 msgid "Demo account"
@@ -1220,9 +1399,6 @@ msgstr ""
 msgid "New role"
 msgstr ""
 
-msgid "Cost"
-msgstr ""
-
 msgid "You can remove users from your club to lessen your costs."
 msgstr ""
 
@@ -1248,20 +1424,6 @@ msgid "Become"
 msgstr ""
 
 msgid "Add a credit card"
-msgstr ""
-
-msgid "Your club is in the free trial period, so every role is free."
-msgstr ""
-
-msgid "At the end of this period, you will pay the indicated price above."
-msgstr ""
-
-msgid ""
-"Your club has finished the trial period and does not have a valid credit "
-"card."
-msgstr ""
-
-msgid "Please register a credit card, using the above links."
 msgstr ""
 
 msgid "Send an automatic email to the user when updating its role."
@@ -1509,8 +1671,10 @@ msgstr ""
 msgid "You don't have any plans for your athletes yet."
 msgstr ""
 
+#, fuzzy
+#| msgid "fitness_equipment"
 msgid "Create a new plan"
-msgstr ""
+msgstr "Fitness"
 
 msgid "Your athletes races"
 msgstr ""
@@ -1640,8 +1804,10 @@ msgstr "Fitness"
 msgid "Select one or more equipment used in your session"
 msgstr ""
 
+#, fuzzy
+#| msgid "fitness_equipment"
 msgid "Manage all your equipment"
-msgstr ""
+msgstr "Fitness"
 
 msgid "Validate"
 msgstr ""
@@ -1663,6 +1829,42 @@ msgstr ""
 
 msgid "Your week"
 msgstr ""
+
+msgid "premium.free.name"
+msgstr "Free"
+
+msgid "premium.free.description"
+msgstr "Up to 10 athletes and 1 traine"
+
+msgid "premium.free.price"
+msgstr "It's free !"
+
+msgid "premium.premium_s.name"
+msgstr "Premium S"
+
+msgid "premium.premium_s.description"
+msgstr "Up to 30 athletes and 3 trainers"
+
+msgid "premium.premium_s.price"
+msgstr "9,90 euros per month"
+
+msgid "premium.premium_m.name"
+msgstr "Premium M"
+
+msgid "premium.premium_m.description"
+msgstr "Up to 100 athletes and 10 trainers"
+
+msgid "premium.premium_m.price"
+msgstr "19,90 euros per month"
+
+msgid "premium.premium_l.name"
+msgstr "Premium L"
+
+msgid "premium.premium_l.description"
+msgstr "Up to 500 athletes and 50 trainers"
+
+msgid "premium.premium_l.price"
+msgstr "49,90 euros per month"
 
 msgid "Features for athletes"
 msgstr ""
@@ -1776,26 +1978,8 @@ msgid "I'm a trainer or club manager"
 msgstr ""
 
 msgid ""
-"A club has a free trial of 90 days in premium mode. It allows you to test "
-"all the feature set. Then, the premium mode is paying, on a per-user basis."
-msgstr ""
-
-msgid "For every athlete in your club"
-msgstr ""
-
-msgid "per athlete"
-msgstr ""
-
-msgid "View all the athletes features"
-msgstr ""
-
-msgid "For every trainer in your club"
-msgstr ""
-
-msgid "per trainer"
-msgstr ""
-
-msgid "View all the trainers features"
+"A club is free until you reach 10 athletes. Afterwards the following prices "
+"per month will apply:"
 msgstr ""
 
 msgid "Features for trainers"
@@ -1866,9 +2050,6 @@ msgid "Terms of service"
 msgstr ""
 
 msgid "Legal mentions"
-msgstr ""
-
-msgid "New badges"
 msgstr ""
 
 #, python-format
@@ -2007,6 +2188,9 @@ msgstr ""
 msgid "A new payment has been processed"
 msgstr ""
 
+msgid "Total"
+msgstr ""
+
 msgid "Training plan"
 msgstr ""
 
@@ -2034,9 +2218,6 @@ msgid "Don't forget to fill in your session report after the race"
 msgstr ""
 
 msgid "Enjoy your race !"
-msgstr ""
-
-msgid "New friends races"
 msgstr ""
 
 msgid "These are your friends races for tommorow:"
@@ -2154,14 +2335,20 @@ msgstr ""
 msgid "Edited %d times"
 msgstr ""
 
+#, fuzzy
+#| msgid "fitness_equipment"
 msgid "Add a private comment"
-msgstr ""
+msgstr "Fitness"
 
+#, fuzzy
+#| msgid "fitness_equipment"
 msgid "Add a public comment"
-msgstr ""
+msgstr "Fitness"
 
+#, fuzzy
+#| msgid "fitness_equipment"
 msgid "Add a comment"
-msgstr ""
+msgstr "Fitness"
 
 msgid "Start a public conversation"
 msgstr ""
@@ -2217,8 +2404,10 @@ msgstr ""
 msgid "Next conversations"
 msgstr ""
 
+#, fuzzy
+#| msgid "Natation"
 msgid "No conversations"
-msgstr ""
+msgstr "Swimming"
 
 msgid "You did not receive or send any message."
 msgstr ""
@@ -2257,14 +2446,13 @@ msgstr ""
 msgid "contact form"
 msgstr ""
 
-msgid "Private"
-msgstr ""
-
 msgid "Premium 3D secure"
 msgstr ""
 
+#, fuzzy
+#| msgid "fitness_equipment"
 msgid "Valid payment"
-msgstr ""
+msgstr "Fitness"
 
 msgid "Thanks for your trust in RunReport !"
 msgstr ""
@@ -2273,12 +2461,6 @@ msgid "You can immediately add new members to your club."
 msgstr ""
 
 msgid "Continue"
-msgstr ""
-
-msgid "Users type"
-msgstr ""
-
-msgid "Unit Cost"
 msgstr ""
 
 msgid "Premium Payment"
@@ -2389,8 +2571,10 @@ msgstr ""
 msgid "Edit %s"
 msgstr ""
 
+#, fuzzy
+#| msgid "fitness_equipment"
 msgid "Create a post"
-msgstr ""
+msgstr "Fitness"
 
 #, python-format
 msgid "Edit post : %s"
@@ -2441,8 +2625,10 @@ msgstr ""
 msgid "My posts"
 msgstr ""
 
+#, fuzzy
+#| msgid "fitness_equipment"
 msgid "Add a new post"
-msgstr ""
+msgstr "Fitness"
 
 msgid "Published"
 msgstr ""
@@ -2488,8 +2674,10 @@ msgstr ""
 msgid "%d sport sessions"
 msgstr ""
 
+#, fuzzy
+#| msgid "fitness_equipment"
 msgid "Comments"
-msgstr ""
+msgstr "Fitness"
 
 msgid "Loading post comments..."
 msgstr ""
@@ -2601,8 +2789,10 @@ msgstr ""
 msgid "Loading comments..."
 msgstr ""
 
+#, fuzzy
+#| msgid "fitness_equipment"
 msgid "No comments"
-msgstr ""
+msgstr "Fitness"
 
 #, python-format
 msgid "%s : Delete session"
@@ -2639,8 +2829,10 @@ msgstr ""
 msgid "No Distance"
 msgstr ""
 
+#, fuzzy
+#| msgid "Natation"
 msgid "Elevation"
-msgstr ""
+msgstr "Swimming"
 
 #, fuzzy
 #| msgid "Natation"
@@ -2652,8 +2844,10 @@ msgstr "Swimming"
 msgid "No difficulty note"
 msgstr "Very Easy session"
 
+#, fuzzy
+#| msgid "Natation"
 msgid "No sessions"
-msgstr ""
+msgstr "Swimming"
 
 msgid "Hidden sessions, your club is not premium."
 msgstr ""
@@ -2667,8 +2861,10 @@ msgstr ""
 msgid "Comments available"
 msgstr ""
 
+#, fuzzy
+#| msgid "fitness_equipment"
 msgid "No Comments"
-msgstr ""
+msgstr "Fitness"
 
 msgid "In a trainer plan"
 msgstr ""
@@ -2961,8 +3157,10 @@ msgstr ""
 msgid "Forgot password ?"
 msgstr ""
 
+#, fuzzy
+#| msgid "Natation"
 msgid "Demo accounts"
-msgstr ""
+msgstr "Swimming"
 
 msgid "You don't have any notifications."
 msgstr ""
@@ -3035,9 +3233,6 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-msgid "Password"
-msgstr ""
-
 msgid "Update"
 msgstr ""
 
@@ -3056,9 +3251,6 @@ msgid "Your current picture"
 msgstr ""
 
 msgid "Choose a privacy level for differents sections or your public profile:"
-msgstr ""
-
-msgid "Public"
 msgstr ""
 
 msgid ""
@@ -3172,504 +3364,38 @@ msgstr ""
 msgid "No future races"
 msgstr ""
 
-msgid "Repeat your password"
-msgstr ""
+#~ msgid "Vélo"
+#~ msgstr "Cycling"
 
-msgid "An account already uses this email."
-msgstr ""
+#~ msgid "Course à pied"
+#~ msgstr "Running"
 
-msgid "You must be at least 13 years old to create an account."
-msgstr ""
+#~ msgid "Randonnée"
+#~ msgstr "hiking"
 
-msgid "Please repeat the same password"
-msgstr ""
+#~ msgid "Natation"
+#~ msgstr "Swimming"
 
-msgid "Invalid Garmin authentification"
-msgstr ""
+#~ msgid "Marche"
+#~ msgstr "Walking"
 
-msgid "username"
-msgstr ""
+#~ msgid "Moto"
+#~ msgstr "Motorbike"
 
-msgid "Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."
-msgstr ""
+#~ msgid "Autre"
+#~ msgstr "Other"
 
-msgid "Enter a valid username."
-msgstr ""
+#~ msgid "Difficulty note 2"
+#~ msgstr "Easy session"
 
-msgid "first name"
-msgstr ""
+#~ msgid "Difficulty note 3"
+#~ msgstr "Normal session"
 
-msgid "last name"
-msgstr ""
+#~ msgid "Difficulty note 4"
+#~ msgstr "Hard session"
 
-msgid "email address"
-msgstr ""
+#~ msgid "Difficulty note 5"
+#~ msgstr "Very Hard session"
 
-msgid "staff status"
-msgstr ""
-
-msgid "Designates whether the user can log into this admin site."
-msgstr ""
-
-msgid "active"
-msgstr ""
-
-msgid ""
-"Designates whether this user should be treated as active. Unselect this "
-"instead of deleting accounts."
-msgstr ""
-
-msgid "date joined"
-msgstr ""
-
-msgid "user"
-msgstr ""
-
-msgid "users"
-msgstr ""
-
-msgid "birthday"
-msgstr ""
-
-msgid "category"
-msgstr ""
-
-msgid "vma"
-msgstr ""
-
-msgid "Ex: 12.5 km/h"
-msgstr ""
-
-msgid "cardiac frequency"
-msgstr ""
-
-msgid "cardiac frequency at rest"
-msgstr ""
-
-msgid "height"
-msgstr ""
-
-msgid "Unit: cm"
-msgstr ""
-
-msgid "weight"
-msgstr ""
-
-msgid "Unit: kg"
-msgstr ""
-
-msgid "comment"
-msgstr ""
-
-msgid "number of sessions per week"
-msgstr ""
-
-msgid "license"
-msgstr ""
-
-msgid "default sport"
-msgstr ""
-
-msgid "auto send emails"
-msgstr "automatically send reports to your trainers at the end of weeks"
-
-msgid "Daily trainer mail"
-msgstr ""
-
-msgid "language used"
-msgstr ""
-
-msgid "garmin login"
-msgstr ""
-
-msgid "garmin password"
-msgstr ""
-
-msgid "demo user"
-msgstr ""
-
-msgid "profile picture"
-msgstr ""
-
-msgid "avatar visibility"
-msgstr ""
-
-msgid "races visibility"
-msgstr ""
-
-msgid "records visibility"
-msgstr ""
-
-msgid "stats visibility"
-msgstr ""
-
-msgid "calendar visibility"
-msgstr ""
-
-msgid "comments visibility"
-msgstr ""
-
-msgid "tracks visibility"
-msgstr ""
-
-msgid "Display contextual help"
-msgstr ""
-
-#, python-format
-msgid "%(first_name)s %(last_name)s has sent you a message"
-msgstr ""
-
-#, python-format
-msgid ""
-"%(first_name)s %(last_name)s has written a comment on your week %(week)s"
-msgstr ""
-
-#, python-format
-msgid "%(first_name)s %(last_name)s has written a comment on his week %(week)s"
-msgstr ""
-
-msgid " private"
-msgstr ""
-
-#, python-format
-msgid ""
-"%(first_name)s %(last_name)s has written a comment %(type)s on his session "
-"\"%(name)s\""
-msgstr ""
-
-#, python-format
-msgid ""
-"%(first_name)s %(last_name)s has written a comment %(type)s on your session "
-"\"%(name)s\""
-msgstr ""
-
-#, python-format
-msgid ""
-"%(first_name)s %(last_name)s has written a comment on the session \"%(name)s"
-"\" of %(first_name)s %(last_name)s"
-msgstr ""
-
-#, python-format
-msgid "%(first_name)s %(last_name)s is now your friend on RunReport"
-msgstr ""
-
-#, python-format
-msgid "%(first_name)s %(last_name)s wants to add you as a friend."
-msgstr ""
-
-#, python-format
-msgid "%(first_name)s %(last_name)s has done his training : %(session_name)s"
-msgstr ""
-
-#, python-format
-msgid "%(first_name)s %(last_name)s has missed his training : %(session_name)s"
-msgstr ""
-
-#, python-format
-msgid ""
-"%(first_name)s %(last_name)s has removed your plan %(plan_name)s from his "
-"calendar"
-msgstr ""
-
-msgid "Congratulations, you completed the RunReport demo for athletes."
-msgstr ""
-
-msgid "Congratulations, you completed the RunReport demo for trainers."
-msgstr ""
-
-msgid "1 year"
-msgstr ""
-
-msgid "2 years"
-msgstr ""
-
-msgid "3 years"
-msgstr ""
-
-msgid "4 years"
-msgstr ""
-
-msgid "5 years"
-msgstr ""
-
-msgid "100 km"
-msgstr ""
-
-msgid "500 km"
-msgstr ""
-
-msgid "1000 km"
-msgstr ""
-
-msgid "5000 km"
-msgstr ""
-
-msgid "10000 km"
-msgstr ""
-
-msgid "Premium Athlete"
-msgstr ""
-
-msgid "Mont Blanc"
-msgstr ""
-
-msgid "Everest"
-msgstr ""
-
-msgid "Ben Nevis"
-msgstr ""
-
-msgid "Pic du Midi d'Ossau"
-msgstr ""
-
-msgid "time"
-msgstr ""
-
-msgid "distance"
-msgstr ""
-
-msgid "age"
-msgstr ""
-
-msgid "premium"
-msgstr ""
-
-msgid "trainer"
-msgstr ""
-
-msgid "denivele"
-msgstr ""
-
-msgid "Chaussure"
-msgstr ""
-
-msgid "Montre"
-msgstr ""
-
-msgid "Sac à dos"
-msgstr ""
-
-msgid "Chapeau"
-msgstr ""
-
-msgid "Maillot"
-msgstr ""
-
-msgid "Vélo"
-msgstr "Cycling"
-
-msgid "Sécurité"
-msgstr ""
-
-msgid "Any Activity Type"
-msgstr ""
-
-msgid "Uncategorized"
-msgstr ""
-
-msgid "Course à pied"
-msgstr "Running"
-
-msgid "Street Running"
-msgstr ""
-
-msgid "Track Running"
-msgstr ""
-
-msgid "Trail Running"
-msgstr ""
-
-msgid "Treadmill Running"
-msgstr ""
-
-msgid "Cyclocross"
-msgstr ""
-
-msgid "Downhill Biking"
-msgstr ""
-
-msgid "Indoor Cycling"
-msgstr ""
-
-msgid "Mountain Biking"
-msgstr ""
-
-msgid "Recumbent Cycling"
-msgstr ""
-
-msgid "Road Cycling"
-msgstr ""
-
-msgid "Track Cycling"
-msgstr ""
-
-msgid "Fitness"
-msgstr ""
-
-msgid "Elliptical"
-msgstr ""
-
-msgid "Indoor Cardio"
-msgstr ""
-
-msgid "Indoor Rowing"
-msgstr ""
-
-msgid "Stair Climbing"
-msgstr ""
-
-msgid "Strength Training"
-msgstr ""
-
-msgid "Randonnée"
-msgstr "hiking"
-
-msgid "Natation"
-msgstr "Swimming"
-
-msgid "Lap Swimming"
-msgstr ""
-
-msgid "Open Water Swimming"
-msgstr ""
-
-msgid "Marche"
-msgstr "Walking"
-
-msgid "Casual Walking"
-msgstr ""
-
-msgid "Speed Walking"
-msgstr ""
-
-msgid "Transition"
-msgstr ""
-
-msgid "Swim to Bike Transition"
-msgstr ""
-
-msgid "Bike to Run Transition"
-msgstr ""
-
-msgid "Run to Bike Transition"
-msgstr ""
-
-msgid "Moto"
-msgstr "Motorbike"
-
-msgid "Autre"
-msgstr "Other"
-
-msgid "Backcountry Skiing/Snowboarding"
-msgstr ""
-
-msgid "Boating"
-msgstr ""
-
-msgid "Ski Cross"
-msgstr ""
-
-msgid "Driving"
-msgstr ""
-
-msgid "Flying"
-msgstr ""
-
-msgid "Golf"
-msgstr ""
-
-msgid "Horseback Riding"
-msgstr ""
-
-msgid "Inline Skating"
-msgstr ""
-
-msgid "Mountaineering"
-msgstr ""
-
-msgid "Paddling"
-msgstr ""
-
-msgid "Resort Skiing/Snowboarding"
-msgstr ""
-
-msgid "Rowing"
-msgstr ""
-
-msgid "Sailing"
-msgstr ""
-
-msgid "Skate Skiing"
-msgstr ""
-
-msgid "Skating"
-msgstr ""
-
-msgid "Snowmobiling"
-msgstr ""
-
-msgid "Snowshoeing"
-msgstr ""
-
-msgid "Stand Up Paddleboarding"
-msgstr ""
-
-msgid "Whitewater Kayaking/Rafting"
-msgstr ""
-
-msgid "Wind/Kite Surfing"
-msgstr ""
-
-msgid "Ride"
-msgstr ""
-
-msgid "Run"
-msgstr ""
-
-msgid "Workout"
-msgstr ""
-
-msgid "Ski"
-msgstr ""
-
-msgid "Hike"
-msgstr ""
-
-msgid "Swim"
-msgstr ""
-
-msgid "Walk"
-msgstr ""
-
-msgid "Multi Sport"
-msgstr ""
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Difficulty note 1"
-msgstr "Very Easy session"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Difficulty note 2"
-msgstr "Easy session"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Difficulty note 3"
-msgstr "Normal session"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Difficulty note 4"
-msgstr "Hard session"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Difficulty note 5"
-msgstr "Very Hard session"
-
-#. Obsolete translation kept alive with Viniagrette
-#: obsolete:0
-msgid "Development Version"
-msgstr "Development Version"
+#~ msgid "Development Version"
+#~ msgstr "Development Version"

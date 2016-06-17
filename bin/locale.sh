@@ -14,8 +14,15 @@ git grep -h 'macros.help' templates | \
   sed 's/^\s*/{{ /g' \
   > $HELP_TPL
 
+# Add premium levels
+for level in free premium_s premium_m premium_l ; do
+  for part in name description price ; do
+    echo "{{ _('premium.${level}.${part}') }}" >> $HELP_TPL
+  done
+done
+
 # Run translation detection
-./manage.py makemessages -v 1 -l fr -l en -i "*.txt" -i "*.json" -i "*.md"  -i "celery*" -i "*.sh" -i "medias" -i "final" -i "mails_debug" --keep-obsolete --no-location
+./src/manage.py makemessages -v 1 -l fr -l en -i "*.txt" -i "*.json" -i "*.md"  -i "celery*" -i "*.sh" -i "medias" -i "final" -i "mails_debug" --no-location
 
 # Cleanup
 rm $HELP_TPL

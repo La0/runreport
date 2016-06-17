@@ -62,38 +62,14 @@
         </h1>
         <p class="lead text-info">
           <i class="icon-premium"></i>
-          {{ _('A club has a free trial of 90 days in premium mode. It allows you to test all the feature set. Then, the premium mode is paying, on a per-user basis.') }}
+          {{ _('A club is free until you reach 10 athletes. Afterwards the following prices per month will apply:') }}
         </p>
 
-        <div class="col-xs-12 col-sm-6 text-center">
-          <h4>
-            <i class="icon-sport-running"></i>
-            {{ _('For every athlete in your club') }}
-          </h4>
-          <p class="price">
-            {{ prices.athlete|floatformat(2) }} &euro;/{{ _('month') }} {{ _('per athlete') }}
-          </p>
-          <p>
-            <a href="{{ url('features-athlete') }}" class="btn btn-info btn-light">
-              <i class="icon-premium"></i>
-              {{ _('View all the athletes features') }}
-            </a>
-          </p>
-        </div>
-        <div class="col-xs-12 col-sm-6 text-center">
-          <h4>
-            <i class="icon-plan-session"></i>
-            {{ _('For every trainer in your club') }}
-          </h4>
-          <p class="price">
-            {{ prices.trainer|floatformat(2) }} &euro;/{{ _('month') }} {{ _('per trainer') }}
-          </p>
-          <p>
-            <a href="{{ url('features-trainer') }}" class="btn btn-info btn-light">
-              <i class="icon-premium"></i>
-              {{ _('View all the trainers features') }}
-            </a>
-          </p>
+        <div class="row" id="premium">
+          {{ macros.premium_level('free') }}
+          {{ macros.premium_level('premium_s') }}
+          {{ macros.premium_level('premium_m') }}
+          {{ macros.premium_level('premium_l') }}
         </div>
 
       </div>

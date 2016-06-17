@@ -200,7 +200,7 @@ INSTALLED_APPS = (
     'badges', # Badges app
     'gear', # Manage your gear
     'corsheaders', # CORS for api
-    'vinaigrette', # Model translations
+    #'vinaigrette', # Model translations
     'rest_framework', # Api provider
     'django_countries', # Countries selection
     'compressor',
