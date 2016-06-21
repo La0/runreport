@@ -245,7 +245,7 @@ class Club(models.Model):
 
     # Update payment level
     # TODO: send a notification on level change ?
-    period.detect_level()
+    period.level = period.detect_level()
 
     # Update level
     period.save()

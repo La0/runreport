@@ -33,6 +33,12 @@ LEVEL_PRICES = {
     LEVEL_PREMIUM_M : 19.90,
     LEVEL_PREMIUM_L : 49.90,
 }
+LEVEL_ROLES = { # (trainer, athletes)
+    LEVEL_FREE : (1, 10),
+    LEVEL_PREMIUM_S : (3, 30),
+    LEVEL_PREMIUM_M : (10, 100),
+    LEVEL_PREMIUM_L : (50, 500),
+}
 
 
 class PaymentPeriod(models.Model):
@@ -97,19 +103,31 @@ class PaymentPeriod(models.Model):
     '''
     Detect payment level according to user nb
     '''
-    if self.nb_trainers <= 1 and self.nb_athletes <= 10:
-        self.level = LEVEL_FREE
+    self.level = None # reset
+    for level,__ in PERIOD_LEVELS:
+        max_trainers, max_athletes = LEVEL_ROLES[level]
+        if self.nb_trainers <= max_trainers and self.nb_athletes <= max_athletes:
+            self.level = level
+            break
 
-    elif self.nb_trainers <= 3 and self.nb_athletes <= 30:
-        self.level = LEVEL_PREMIUM_S
-
-    elif self.nb_trainers <= 10 and self.nb_athletes <= 100:
-        self.level = LEVEL_PREMIUM_M
-
-    else:
+    # Fallback to max level
+    if not self.level:
         self.level = LEVEL_PREMIUM_L
 
     return self.level
+
+  def calc_remaining_roles(self):
+    """
+    Calc the nb. of remaining roles
+    until switch to the next period
+    """
+    max_trainers, max_athletes = LEVEL_ROLES[self.level]
+
+    return (
+        max_trainers - self.nb_trainers,
+        max_athletes - self.nb_athletes,
+    )
+
 
   @property
   def amount(self):

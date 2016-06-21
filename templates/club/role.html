@@ -59,6 +59,19 @@
             {% elif role == 'athlete' %}
             <p>
               {{ _('An athlete is the most common role for your users.') }}
+
+            {% if remaining_athletes >= 1 %}
+            <p class="text-info">
+              <i class="icon-premium"></i>
+              {{ _('You have %d remaining athletes in your premium level.') % remaining_athletes }}
+            </p>
+            {% else %}
+            <p class="text-danger">
+              <i class="icon-premium"></i>
+              {{ _('You don\'t have any remaining athletes in your premium level. Adding this user will automatically upgrade your premium level.') }}
+            </p>
+            {% endif %}
+
             </p>
             {% elif role == 'staff' %}
             <p>
@@ -68,6 +81,19 @@
             <p>
               {{ _('A trainer can manage athletes, and send plans.') }}
             </p>
+
+            {% if remaining_trainers >= 1 %}
+            <p class="text-info">
+              <i class="icon-premium"></i>
+              {{ _('You have %d remaining trainers in your premium level.') % remaining_trainers }}
+            </p>
+            {% else %}
+            <p class="text-danger">
+              <i class="icon-premium"></i>
+              {{ _('You don\'t have any remaining trainers in your premium level. Adding this user will automatically upgrade your premium level.') }}
+            </p>
+            {% endif %}
+
             {% elif role == 'delete' %}
             <p class="text-danger">
               {{ _('This user is already archived, you can now delete it from your club.') }}
