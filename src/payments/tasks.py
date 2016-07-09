@@ -1,6 +1,8 @@
 from __future__ import absolute_import
-
 from celery import shared_task
+
+import logging
+logger = logging.getLogger(__name__)
 
 @shared_task
 def auto_payments():
@@ -10,16 +12,17 @@ def auto_payments():
    * auto payment on periodscription end
   '''
   from club.models import Club
-  from datetime import date
-  today = date.today()
 
   for club in Club.objects.all():
 
     # Update club current period
     period = club.update_period()
+    logger.info('Updated period {}'.format(period))
+
+    continue # dry run
 
     # Auto pay
-    if period.is_premium and period.status == 'active' and period.end.date() <= today:
+    if period.need_payment():
       period.pay()
 
 @shared_task

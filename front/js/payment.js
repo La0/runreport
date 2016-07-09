@@ -21,7 +21,7 @@ var mangopay_register_card = function(evt){
 
   // Disable action
   var form = $(this);
-  form.find('button.action').hide();
+  form.find('.action').hide();
   form.find('button.waiter').removeClass('hidden').show();
 
   // Load form data
@@ -81,7 +81,7 @@ var mangopay_register_card = function(evt){
     form.find('div.alert-danger').removeClass('hidden').find('p').html(message);
 
     // Add button to reload
-    form.find('button, a.action').hide();
+    form.find('button, .action').hide();
     form.find('a.retry').removeClass('hidden');
   };
 
@@ -120,10 +120,11 @@ var mangopay_register_card = function(evt){
 
     // Restore action button
     form.find('button.waiter').hide();
-    form.find('button.action').show();
+    form.find('.action').show();
   };
 
   // Do the actual registration !
+console.log('card', cardData);
   mangoPay.cardRegistration.registerCard(cardData, onSuccess, onError);
 };
 

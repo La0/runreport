@@ -3,7 +3,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from django.conf import settings
-from datetime import timedelta
+from datetime import timedelta, date
 from payments.tasks import notify_admin, notify_club
 import logging
 
@@ -85,6 +85,29 @@ class PaymentPeriod(models.Model):
   @property
   def is_premium(self):
     return self.level in (LEVEL_PREMIUM_S, LEVEL_PREMIUM_M, LEVEL_PREMIUM_L)
+
+
+  def need_payment(self):
+      """
+      Check if this period needs a payment, NOW.
+      """
+
+      # Only premium pay. Duh.
+      if self.is_free:
+          return False
+
+      # Check it's not already paid
+      if self.status == 'paid':
+          return False
+
+      # Check state (active)
+      if self.status != 'active':
+          logger.warn('Invalid period: {}'.format(self))
+          return False
+
+      # Check date
+      today = date.today()
+      return self.end.date() <= today
 
   def update_roles_count(self):
     """

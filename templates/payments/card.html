@@ -5,12 +5,14 @@
 {% block js %}
 {% if registration %}
 <script type="text/javascript">
+$(function(){
   mangopay_init('{{ mangopay_id }}', {% if DEBUG %}true{% else %}false{% endif %}, {
     'url' : '{{ registration.CardRegistrationURL }}',
     'key' : '{{ registration.AccessKey }}',
     'id' : '{{ registration.Id }}',
     'data' : '{{ registration.PreregistrationData }}',
   });
+});
 </script>
 {% endif %}
 {% endblock %}
@@ -82,9 +84,6 @@
           <a href="{{ url('payment-card', club.slug) }}" class="btn btn-warning btn-lg retry hidden" tabindex="-10">
             {{ _('Retry') }}
           </a>
-          <a href="{{ url('pricing') }}" class="btn btn-default btn-lg action" tabindex="-1">
-            {{ _('Cancel') }}
-          </a>
           <button type="submit" class="btn btn-success btn-lg action">
             {{ _('Use this credit card') }}
           </button>
@@ -92,6 +91,9 @@
             <i class="icon-loading animate-spin"></i>
             {{ _('Processing') }}
           </button>
+          <a href="{{ url('pricing') }}" class="btn btn-default btn-lg action" tabindex="-1">
+            {{ _('Cancel') }}
+          </a>
         </div>
       </fieldset>
     </form>

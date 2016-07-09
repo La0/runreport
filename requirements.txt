@@ -34,7 +34,7 @@ kombu==3.0.26
 lockfile==0.10.2
 lxml==3.4.4
 mailmanclient==1.0.0
-mangopaysdk==1.8
+mangopaysdk==2.0
 oauthlib==0.7.2
 paramiko==1.10.1
 psutil==1.0.1

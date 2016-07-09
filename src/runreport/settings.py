@@ -261,6 +261,10 @@ LOGGING = {
           'handlers' : ['console'],
           'level': 'DEBUG',
         },
+        'payments' : {
+          'handlers' : ['console'],
+          'level': 'DEBUG',
+        },
     }
 }
 
@@ -343,10 +347,10 @@ CELERYBEAT_SCHEDULE = {
     'task': 'users.tasks.send_related_races_mail',
     'schedule': crontab(hour=7, minute=50),
   },
-#  'payment-status-every-morning': {
-#    'task': 'payments.tasks.auto_payments',
-#    'schedule': crontab(hour=9, minute=0),
-#  },
+  'payment-status-every-morning': {
+    'task': 'payments.tasks.auto_payments',
+    'schedule': crontab(hour=9, minute=0),
+  },
 }
 CELERY_ROUTES = {
   'tracks.tasks.provider_import' : {
