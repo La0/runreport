@@ -257,6 +257,10 @@ LOGGING = {
           'handlers' : ['console'],
           'level': 'DEBUG',
         },
+        'sport' : {
+          'handlers' : ['console'],
+          'level': 'DEBUG',
+        },
         'club' : {
           'handlers' : ['console'],
           'level': 'DEBUG',

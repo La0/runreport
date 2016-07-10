@@ -4,6 +4,9 @@ from requests_oauthlib import OAuth2Session
 from django.core.urlresolvers import reverse
 from sport.models import SportSession
 
+import logging
+logger = logging.getLogger(__name__)
+
 GAUTH_URL = 'https://accounts.google.com/o/oauth2/auth'
 GTOKEN_URL = 'https://accounts.google.com/o/oauth2/token'
 GREFRESH_URL = GTOKEN_URL
@@ -175,7 +178,10 @@ class GCalSync(object):
     event = resp.json()
     if not session.gcal_id:
       session.gcal_id = event['id']
-      session.save_base(raw=True) # No signals / loop
+      try:
+          session.save_base(raw=True) # No signals / loop
+      except Exception, e:
+          logger.error('Failed to save session {} with gcal: {}'.format(session.pk, e))
 
     return event
 
