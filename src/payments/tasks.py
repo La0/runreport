@@ -1,5 +1,6 @@
 from __future__ import absolute_import
 from celery import shared_task
+from django.core.mail import mail_admins
 
 import logging
 logger = logging.getLogger(__name__)
@@ -12,18 +13,31 @@ def auto_payments():
    * auto payment on periodscription end
   '''
   from club.models import Club
+  from django.db.models import Count
+  from django.conf import settings
 
-  for club in Club.objects.all():
+  report = []
+  clubs = Club.objects.annotate(nb=Count('members'))
+  clubs = clubs.order_by('-nb')
+  for club in clubs:
 
     # Update club current period
     period = club.update_period()
     logger.info('Updated period {}'.format(period))
+    report += ['Club #{} {} - {} members - '.format(club.pk, club.name, club.nb), str(period)]
 
-    continue # dry run
-
-    # Auto pay
     if period.need_payment():
-      period.pay()
+      if settings.PAYMENTS_AUTO:
+        period.pay()
+        report += [' > AUTO PAID !']
+      else:
+        report += [' > SKIPPED AUTO PAYMENT, CHECK MANUALLY.']
+    else:
+      report += [' > no payment']
+
+  # Send full report to admins
+  mail_admins('RunReport Auto payments', '\n'.join(report))
+
 
 @shared_task
 def notify_club(period):

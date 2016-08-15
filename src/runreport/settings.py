@@ -4,7 +4,7 @@ from __future__ import absolute_import
 DEBUG = True
 
 ADMINS = (
-  ('Bastien Abadie', 'bastien.abadie@gmail.com'),
+  ('Bastien Abadie', 'bastien@runreport.fr'),
 )
 
 # Used to hide admin page in urls, in Prod only
@@ -433,6 +433,7 @@ CLUB_CREATION_OPEN = True
 
 # Payments integration
 PAYMENTS_ENABLED = False
+PAYMENTS_AUTO = False
 PAYMENTS_PERIOD = 30 # In days
 MANGOPAY_ID = None
 MANGOPAY_SECRET = None
