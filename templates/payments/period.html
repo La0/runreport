@@ -8,9 +8,34 @@
     {{ _('From %s to %s') % (period.start|date('d E Y'), period.end|date('d E Y')) }}
   </div>
 
-  {% with bill = period.bill %}
-    {% include 'payments/_bill.html' %}
-  {% endwith %}
+  <div class="row">
+    <div class="col-xs-12 col-sm-9">
+
+      <h4>
+      {% if period.level == 'premium_s' %}
+        {{ _('Period of 1 month as Premium Small') }}
+      {% elif period.level == 'premium_m' %}
+        {{ _('Period of 1 month as Premium Medium') }}
+      {% elif period.level == 'premium_l' %}
+        {{ _('Period of 1 month as Premium Large') }}
+      {% endif %}
+      </h4>
+      <ul>
+        <li>
+          {{ _('With %d athletes' % period.nb_athletes) }}
+        </li>
+        <li>
+          {{ _('With %d trainers' % period.nb_trainers) }}
+        </li>
+      </ul>
+
+    </div>
+    <div class="col-xs-12 col-sm-3 text-right">
+      <strong>
+        {{ period.amount|floatformat(2) }} &euro;
+      </strong>
+    </div>
+  </div>
 
   <hr />
   <div class="actions">
@@ -22,7 +47,7 @@
     <form method="post" action="" style="display: inline">
       {% csrf_token %}
       <button type="submit" class="btn btn-primary">
-        {{ _('Pay') }} {{ period.bill.total|floatformat(2) }} &euro;
+        {{ _('Pay') }} {{ period.amount|floatformat(2) }} &euro;
       </button>
     </form>
 

@@ -127,23 +127,32 @@ class Club(models.Model):
       Always return a payment period
       """
       now = timezone.now()
+      previous_period = self.periods.last()
       try:
-          return self.periods.get(start__lte=now, end__gt=now)
+
+          if previous_period.status in ('error', 'expired'):
+              # Keep using erroneous period
+              period = previous_period
+          else:
+              # Load current time period
+              period = self.periods.get(start__lte=now, end__gt=now)
+
       except:
 
           # Setup dates
           # Use last known date when available
-          previous_period = self.periods.last()
           start = previous_period and previous_period.end or now
           end = start + timedelta(days=settings.PAYMENTS_PERIOD)
 
           # Build new period
           period = self.periods.create(start=start, end=end)
 
-          # Detect initial period level
+          # Update payment level
+          period.update_roles_count()
+          period.level = period.detect_level()
+          period.save()
 
-
-          return period
+      return period
 
   def _has_full_access(self):
     '''
@@ -151,10 +160,10 @@ class Club(models.Model):
      * it's in free trial period
      * it's in a paying period
     '''
-    sub = self.current_period
-    if sub and sub.is_free:
+    period = self.current_period
+    if period and period.is_free:
       return True
-    return bool(sub and (sub.status in ('active', 'paid', )))
+    return bool(period and (period.status in ('active', 'paid', )))
 
   # Django disallows direct property
   # use in list displays

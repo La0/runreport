@@ -1,15 +1,13 @@
 from django.utils.translation import ugettext_lazy as _
-from reportlab.platypus import Table, Paragraph, Frame, Image, PageTemplate, SimpleDocTemplate, Spacer, TableStyle
+from reportlab.platypus import Table, Paragraph, Image, SimpleDocTemplate, Spacer
 from reportlab.lib import colors
 from reportlab.lib.units import inch
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.pagesizes import letter, portrait
 from reportlab.lib.enums import TA_CENTER
 from reportlab.rl_config import defaultPageSize
-from django.template.loader import render_to_string
-from django.utils import formats, translation
+from django.utils import translation
 from django.conf import settings
-from helpers import week_to_date
 from StringIO import StringIO
 
 class PeriodPdfExporter(object):
@@ -55,6 +53,34 @@ class PeriodPdfExporter(object):
       ('GRID', (0,0), (-1,-1), 0.5, colors.black),
     ]
 
+  def build_table(self):
+    '''
+    Build the bill table
+    '''
+    data = [[
+      _('Period'),
+      _('Athletes'),
+      _('Trainers'),
+      _('Total'),
+    ],]
+
+    # Add roles calc
+    titles = {
+      'premium_s' : _('Period of 1 month as Premium Small'),
+      'premium_m' : _('Period of 1 month as Premium Medium'),
+      'premium_l' : _('Period of 1 month as Premium Large'),
+    }
+    data.append([
+        titles.get(self.period.level),
+        str(self.period.nb_athletes),
+        str(self.period.nb_trainers),
+        str(self.period.amount),
+    ])
+
+    t = Table(data)
+    t.setStyle(self.tableStyle)
+
+    return t
 
   def render(self, stream=None):
     '''
@@ -67,18 +93,8 @@ class PeriodPdfExporter(object):
     # Canvas is portrait oriented
     pdf = SimpleDocTemplate(stream, pagesize=portrait(letter))
 
-    self.lines = [
-        [1, 2],
-        [3, 4],
-    ]
-
-    # Table is in a frame
-    #table = Table(self.lines, [1.5* inch ] * 7)
-    #table.wrap(0,0) # important hacky way to span on full width
-    #tableFrame = Frame(inch / 2, inch / 2, 10*inch, 7*inch)
-
     # RunReport logo
-    logo = Image('./front/img/logo_ligne.png')
+    logo = Image('../front/img/logo_ligne.png')
     logo.drawHeight = 2.2*inch*logo.drawHeight / logo.drawWidth
     logo.drawWidth = 2.2*inch
 
@@ -89,16 +105,12 @@ class PeriodPdfExporter(object):
     period = Paragraph(period_str, self.periodStyle)
 
     # Add table elements
-    #pdf.addPageTemplates([
-    #  PageTemplate(id='table', frames=[tableFrame]),
-    #])
     story = [
       logo,
       title,
       period,
       Spacer(1, 0.4*inch), # make room for header
-      #self.build_table(),
-    #  table, # the period
+      self.build_table(), # the period
     ]
     pdf.build(story)
 

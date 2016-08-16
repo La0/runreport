@@ -182,8 +182,7 @@ class PaymentPeriod(models.Model):
         self.end = now
 
         # Create new current period
-        end = now + timedelta(days=settings.PAYMENTS_PERIOD)
-        PaymentPeriod.objects.create(club=self.club, start=now, end=end)
+        self.club.update_period()
 
         # Send success mails
         notify_club.delay(self)
@@ -197,7 +196,6 @@ class PaymentPeriod(models.Model):
 
       # Send manual payment mail
       notify_club.delay(self)
-
 
     # Save new status
     self.save()

@@ -1,11 +1,9 @@
-from django.views.generic import DetailView
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
-from payments.models import PaymentPeriod
 from payments.export import PeriodPdfExporter
+from payments.views.mixins import PaymentPeriodMixin
 
-
-class PaymentPeriodView(DetailView):
+class PaymentPeriodView(PaymentPeriodMixin):
   '''
   Process payment for a specified period
   '''
@@ -14,7 +12,7 @@ class PaymentPeriodView(DetailView):
 
   def get_queryset(self):
     # Only erroneous period for manager
-    periods = PaymentPeriod.objects.filter(club__manager=self.request.user)
+    periods = super(PaymentPeriodView, self).get_queryset()
     periods = periods.filter(status__in=('expired', 'error'))
     return periods
 
@@ -25,14 +23,14 @@ class PaymentPeriodView(DetailView):
 
     return HttpResponseRedirect(reverse('club-manage', args=(period.club.slug, )))
 
-class PaymentPeriodExport(DetailView):
+class PaymentPeriodExport(PaymentPeriodMixin):
   '''
   Export a period bill as PDF
   '''
 
   def get_queryset(self):
     # Only erroneous period for manager
-    periods = PaymentPeriod.objects.filter(club__manager=self.request.user)
+    periods = super(PaymentPeriodExport, self).get_queryset()
     periods = periods.filter(status='paid')
     return periods
 

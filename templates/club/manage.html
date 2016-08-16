@@ -138,17 +138,17 @@
             {% endif %}
           </td>
           <td>
-            {% for transaction in period.transactions.all() %}
+            {% if period.status == 'paid' %}
             <p>
-              <strong>{{ transaction.amount|floatformat(2) }} &euro;</strong>
+              <strong>{{ period.amount|floatformat(2) }} &euro;</strong>
               <br />
-              {{ _('Paid on') }} {{ transaction.updated|date('d E Y') }}
+              {{ _('Paid on') }} {{ period.end|date('d E Y') }}
             </p>
             {% else %}
             <p class="text-muted">
               {{ _('No payments') }}
             </p>
-            {% endfor %}
+            {% endif %}
           </td>
           <td>
             {% if period.status == 'paid' %}

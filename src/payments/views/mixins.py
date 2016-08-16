@@ -1,5 +1,7 @@
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404
+from django.views.generic import DetailView
+from payments.models import PaymentPeriod
 from club.models import Club
 
 
@@ -33,3 +35,17 @@ class PaymentAthleteMixin(object):
 
   def has_active_subscription(self):
     return self.request.user.periods.filter(status='active').exists()
+
+class PaymentPeriodMixin(DetailView):
+    """
+    Mixin to retrieve a specific period
+    for club managers & admins
+    """
+    def get_queryset(self):
+        # Admin has full access
+        user = self.request.user
+        if user.is_staff:
+            return PaymentPeriod.objects.all()
+
+        # Limit to managed club periods
+        return PaymentPeriod.objects.filter(club__manager=self.request.user)
