@@ -66,11 +66,17 @@ class GarminProvider(TrackProvider):
 
     # Get SSO server hostname
     # without the .garmin.com FQDN
-    res = self.session.get(self.url_hostname)
-    sso_hostname = res.json().get('host', None).rstrip('.garmin.com')
-    if not sso_hostname:
-      raise GarminAuthException('No SSO server available')
-    logger.debug('Use SSO hostname %s', sso_hostname)
+    sso_hostname = None
+    try:
+      res = self.session.get(self.url_hostname)
+      if not res.ok:
+        raise Exception('Invalid status code {}'.format(res.status_code))
+      sso_hostname = res.json().get('host', None).rstrip('.garmin.com')
+      if not sso_hostname:
+        raise GarminAuthException('No SSO server available')
+      logger.debug('Use SSO hostname %s', sso_hostname)
+    except Exception, e:
+      logger.error('Garmin SSO error, continue anyway. {}'.format(e)) # 404 happens now :/
 
     # Load login page to get login ticket
     params = {
