@@ -63,20 +63,21 @@ class GarminProvider(TrackProvider):
         raise Exception("No Garmin password available")
 
     self.session = requests.Session()
+    self.session.headers.update({
+        'User-Agent' :  'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:48.0) Gecko/20100101 Firefox/48.0',
+    })
 
     # Get SSO server hostname
     # without the .garmin.com FQDN
     sso_hostname = None
-    try:
-      res = self.session.get(self.url_hostname)
-      if not res.ok:
-        raise Exception('Invalid status code {}'.format(res.status_code))
-      sso_hostname = res.json().get('host', None).rstrip('.garmin.com')
-      if not sso_hostname:
-        raise GarminAuthException('No SSO server available')
-      logger.debug('Use SSO hostname %s', sso_hostname)
-    except Exception, e:
-      logger.error('Garmin SSO error, continue anyway. {}'.format(e)) # 404 happens now :/
+    res = self.session.get(self.url_hostname)
+    if not res.ok:
+      raise Exception('Invalid SSO first request status code {}'.format(res.status_code))
+
+    sso_hostname = res.json().get('host', None).rstrip('.garmin.com')
+    if not sso_hostname:
+      raise GarminAuthException('No SSO server available')
+    logger.debug('Use SSO hostname %s', sso_hostname)
 
     # Load login page to get login ticket
     params = {
@@ -87,11 +88,13 @@ class GarminProvider(TrackProvider):
       # Fuck this shit. Who needs mandatory urls in a request parameters !
       'consumeServiceTicket' : 'false',
       'createAccountShown' : 'true',
-      'cssUrl' : 'https://static.garmincdn.com/com.garmin.connect/ui/css/gauth-custom-v1.1-min.css',
+      'cssUrl' : 'https://static.garmincdn.com/com.garmin.connect/ui/css/gauth-custom-v1.2-min.css',
       'displayNameShown' : 'false',
       'embedWidget' : 'false',
       'gauthHost' : 'https://sso.garmin.com/sso',
       'generateExtraServiceTicket' : 'false',
+      'globalOptInChecked': 'false',
+      'globalOptInShown': 'false',
       'id' : 'gauth-widget',
       'initialFocus' : 'true',
       'locale' : 'fr',
@@ -135,15 +138,20 @@ class GarminProvider(TrackProvider):
     if res.status_code != 200:
       raise GarminAuthException('Authentification failed.')
 
+    for cookie in ('GARMIN-SSO-GUID', 'CASTGC'):
+        if cookie not in self.session.cookies:
+            raise Exception('Missing Auth cookie {}'.format(cookie))
+
     # Try to find the full post login url in response
     # From JS code source :
-    # var response_url = 'https://connect.garmin.com/post-auth/login?ticket=ST-03582405-W6gvTaVCJe0Yx93AB2yu-cas'
-    regex = 'var response_url(\s+)= \'%s\?ticket=(?P<ticket>.+)\'' % self.url_post_login
+    # var response_url = 'https:\/\/connect.garmin.com\/post-auth\/login?ticket=ST-219231-x1CgRjKmhCbFxdFYiRJ2-cas'
+    regex = 'var response_url(\s+)= \'.*?ticket=(?P<ticket>[\w\-]+)\''
     params = {}
     matches = re.search(regex, res.text)
-    if matches:
-      params['ticket'] = matches.group('ticket')
-      logger.debug('Found service ticket %s', params['ticket'])
+    if not matches:
+        raise Exception('Missing service ticket')
+    params['ticket'] = matches.group('ticket')
+    logger.debug('Found service ticket %s', params['ticket'])
 
     # Second auth step
     # Needs a service ticket from previous response
