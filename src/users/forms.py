@@ -182,5 +182,8 @@ class GarminForm(forms.ModelForm):
     except GarminAuthException, e:
       print 'Garmin Auth failed : %s' % (str(e),)
       raise ValidationError(_('Invalid Garmin authentification'))
+    except Exception, e:
+      print 'Garmin Auth failed : %s' % (str(e),)
+      raise ValidationError(_('Invalid Garmin authentification'))
 
     return self.cleaned_data
