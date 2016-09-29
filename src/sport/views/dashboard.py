@@ -213,6 +213,7 @@ class DashBoardView(TemplateView):
       'day__date__gte' : self.today - timedelta(days=7),
       'day__date__lte' : self.today,
       'day__week__user__memberships__trainers' : self.request.user,
+      'day__week__user__memberships__role__in' : ('trainer', 'athlete'),
     }
     sessions = SportSession.objects.filter(**filters)
     sessions = sessions.select_related('day', 'track')
