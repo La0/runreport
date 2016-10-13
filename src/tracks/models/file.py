@@ -54,6 +54,10 @@ class TrackFile(models.Model):
     if h != self.md5:
       raise Exception("Invalid data file %s" % path)
 
+    if data == 'The requested endpoint is retired':
+      self.delete()
+      return None
+
     if format_json:
       return json.loads(data)
 

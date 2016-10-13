@@ -119,7 +119,7 @@ class TrackProvider:
       self.files[activity_id] = {}
     self.files[activity_id][name] = data
 
-  def get_file(self, activity, name, format_json=False):
+  def get_file(self, activity, name, format_json=False, check=None):
     activity_id = self.get_activity_id(activity)
     logger.debug('Load file for activity %s %s - %s ' % (self.NAME, activity_id, name))
 
@@ -133,8 +133,17 @@ class TrackProvider:
     try:
       tf = TrackFile.objects.get(track__provider_id=activity_id, name=name)
       data = tf.get_data(format_json)
+
       if not data:
-        raise Exception('Missing data on TrackFile #%d' % tf.pk)
+        tf.delete() # cleanup
+        raise Exception('Missing data on TrackFile')
+
+      # Apply check on data
+      if check is not None:
+        if not check(data):
+          tf.delete() # cleanup
+          raise Exception('Invalid data on TrackFile')
+
     except TrackFile.DoesNotExist:
       logger.warning('Missing TrackFile for activity %s %s - %s ' % (self.NAME, activity_id, name))
 
@@ -208,7 +217,7 @@ class TrackProvider:
       try:
         # Import tracks from source provider
         tracks_raw = self.list_tracks(page)
-        tracks = self.import_activities(tracks_raw)
+        tracks = self.import_activities(tracks_raw, full)
         page += 1
 
         # Get the months & weeks to refresh stats
@@ -250,7 +259,7 @@ class TrackProvider:
       st = StatsWeek(self.user, year, week, preload=False)
       st.build()
 
-  def import_activities(self, source=None):
+  def import_activities(self, source=None, full=False):
     '''
     Generic method iterating through activities list
     and calling build_track on everey one
@@ -264,7 +273,7 @@ class TrackProvider:
       act = None
       try:
         with transaction.atomic():
-          act, updated = self.build_track(activity)
+          act, updated = self.build_track(activity, full)
           if act:
             activities.append(act)
             if updated:
@@ -284,7 +293,7 @@ class TrackProvider:
 
     return activities
 
-  def build_track(self, activity):
+  def build_track(self, activity, full=False):
     '''
     Generic track builder flow, from any activity
     Will call methods from the proxy subclass of Track
@@ -297,17 +306,18 @@ class TrackProvider:
     try:
       track = Track.objects.get(provider=self.NAME, provider_id=activity_id)
 
-      # Skip update on existing tracks
-      # TEST
-      logger.info("Skip %s activity %s update" % (self.NAME, activity_id))
-      return track, False
-
-      # Check the activity needs an update
-      # by comparing md5
-      track_file = track.get_file('raw')
-      if track_file and track_file.md5 == hashlib.md5(activity_raw).hexdigest():
-        logger.info("Existing %s activity %s did not change" % (self.NAME, activity_id))
+      if not full:
+        # Skip update on existing tracks
+        # TEST
+        logger.info("Skip %s activity %s update" % (self.NAME, activity_id))
         return track, False
+
+        # Check the activity needs an update
+        # by comparing md5
+        track_file = track.get_file('raw')
+        if track_file and track_file.md5 == hashlib.md5(activity_raw).hexdigest():
+          logger.info("Existing %s activity %s did not change" % (self.NAME, activity_id))
+          return track, False
 
       logger.info("Existing %s activity %s needs update" % (self.NAME, activity_id))
     except Track.DoesNotExist, e:

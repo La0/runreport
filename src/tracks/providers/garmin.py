@@ -1,10 +1,9 @@
 from base import TrackProvider
 import requests
+import arrow
 import gnupg
 import re
-import pytz
 import logging
-import json
 import math
 from datetime import datetime, timedelta, time
 from django.utils.timezone import utc
@@ -37,8 +36,8 @@ class GarminProvider(TrackProvider):
 
   # Data Urls
   url_activity = 'http://connect.garmin.com/proxy/activity-search-service-1.0/json/activities'
-  url_laps = 'http://connect.garmin.com/proxy/activity-service-1.3/json/activity/%s'
-  url_polyline = 'https://connect.garmin.com/modern/proxy/activity-service/activity/%s/details?maxChartSize=1000&maxPolylineSize=1000'
+  url_laps = 'https://connect.garmin.com/proxy/activity-service/activity/%s/splits'
+  url_polyline = 'https://connect.garmin.com/proxy/activity-service/activity/%s/details?maxChartSize=1000&maxPolylineSize=1000'
 
   def auth(self, force_login=None, force_password=None):
     '''
@@ -205,9 +204,15 @@ class GarminProvider(TrackProvider):
 
   def _load_extra_json(self, activity, data_type):
     # check in local cache
-    f = self.get_file(activity, data_type)
-    if f:
-      return f
+    try:
+      check = None
+      if data_type == 'laps':
+        check = lambda x : 'lapDTOs' in x
+      f = self.get_file(activity, data_type, format_json=True, check=check)
+      if f:
+        return f
+    except Exception, e:
+      logger.warning('Invalid track file: {}'.format(e))
 
     # Load external json page
     activity_id = self.get_activity_id(activity)
@@ -222,10 +227,13 @@ class GarminProvider(TrackProvider):
     if resp.encoding is None:
       resp.encoding = 'utf-8'
 
+    if resp.content == 'The requested endpoint is retired':
+      raise Exception('Deprecated Garmin endpoint')
+
     # Store file locally
     self.store_file(activity, data_type, resp.content)
 
-    return resp.content
+    return resp.json()
 
   def build_line_coords(self, activity):
     '''
@@ -234,7 +242,6 @@ class GarminProvider(TrackProvider):
 
     # First, load details
     details = self._load_extra_json(activity, 'polyline')
-    details = json.loads(details)
 
     # Load metrics/measurements from file
     key = 'geoPolylineDTO'
@@ -332,70 +339,38 @@ class GarminProvider(TrackProvider):
 
   def build_splits(self, activity):
     # Load laps
-    laps = self.get_file(activity, 'laps', format_json=True)
-    if not laps or 'activity' not in laps or 'totalLaps' not in laps['activity']:
-      return []
-    laps = laps['activity']['totalLaps']['lapSummaryList']
-
-    def _convert_speed(lap, name):
-      # Convert a speed in m/s
-      if name not in lap:
-        return 0.0
-      s = lap[name]
-      if s['uom'] == 'kph':
-        return float(s['value']) / 3.6
-      if s['uom'] == 'hmph': # hetcometer per hour
-        return float(s['value']) / 36
-      return float(s['value'])
-
-    def _convert_distance(lap, name):
-      # Convert a distance in meters
-      if name not in lap:
-        return 0.0
-      d = lap[name]
-      if d['uom'] == 'kilometer':
-        return float(d['value']) * 1000.0
-      return float(d['value'])
+    laps = self._load_extra_json(activity, 'laps')
+    laps = laps['lapDTOs']
 
     def _convert_date(lap, name):
       # Convert a timestamp to a datetime
       if name not in lap:
-        return 0.0
-      d = lap[name]
-      tz_name = d['uom'] == 'gmt' and 'Etc/GMT' or d['uom']
-      tz = pytz.timezone(tz_name)
-      return make_aware(datetime.fromtimestamp(float(d['value']) / 1000.0), tz)
+        return None
+      return arrow.get(lap[name]).datetime
 
     def _convert_point(lap, name_lat, name_lng):
       # Build a point from lat,lng
       if name_lat not in lap or name_lng not in lap:
         return None
-      return Point(float(lap[name_lat]['value']), float(lap[name_lng]['value']))
-
-    def _convert_float(lap, name):
-      # Convert to float a value
-      if name not in lap:
-        return 0.0
-      return float(lap[name]['value'])
+      return Point(float(lap[name_lat]), float(lap[name_lng]))
 
     # Build every split
     out = []
     for i, lap in enumerate(laps):
       split = TrackSplit(position=i+1)
-      split.elevation_min = _convert_float(lap, 'MinElevation')
-      split.elevation_max = _convert_float(lap, 'MaxElevation')
-      split.elevation_gain = _convert_float(lap, 'GainElevation')
-      split.elevation_loss = _convert_float(lap, 'LossElevation')
-      split.speed_max = _convert_speed(lap, 'MaxSpeed')
-      split.speed = _convert_speed(lap, 'WeightedMeanSpeed')
-      split.distance = _convert_distance(lap, 'SumDistance')
-      split.time = _convert_float(lap, 'SumDuration')
-      split.energy = _convert_float(lap, 'SumEnergy')
-      split.date_start = _convert_date(lap, 'BeginTimestamp')
-      split.date_end = _convert_date(lap, 'EndTimestamp')
-      split.position_start = _convert_point(lap, 'BeginLatitude', 'BeginLongitude')
-      split.position_end = _convert_point(lap, 'EndLatitude', 'EndLongitude')
+      split.elevation_min = lap.get('minElevation', 0.0)
+      split.elevation_max = lap.get('maxElevation', 0.0)
+      split.elevation_gain = lap.get('elevationGain', 0.0)
+      split.elevation_loss = lap.get('elevationLoss', 0.0)
+      split.speed_max = lap.get('maxSpeed', 0.0)
+      split.speed = lap.get('averageSpeed', 0.0)
+      split.distance = lap.get('distance', 0.0)
+      split.time = lap.get('duration', 0.0)
+      split.energy = lap.get('calories', 0.0)
+      split.date_start = _convert_date(lap, 'startTimeGMT')
+      split.date_end = split.date_start + timedelta(seconds=split.time)
+      split.position_start = _convert_point(lap, 'startLatitude', 'startLongitude')
+      split.position_end = None # no data :/
       out.append(split)
 
     return out
-
