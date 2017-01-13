@@ -1,8 +1,6 @@
 from base import TrackProvider
-import requests
 import arrow
 import gnupg
-import re
 import logging
 import math
 from datetime import datetime, timedelta, time
@@ -10,7 +8,7 @@ from django.utils.timezone import utc
 from django.contrib.gis.geos import Point
 from sport.models import Sport
 from tracks.models import TrackSplit
-from django.utils.timezone import make_aware
+from garmin_uploader.user import User as GarminUser
 
 logger = logging.getLogger('runreport.sport.garmin')
 
@@ -23,16 +21,6 @@ class GarminAuthException(Exception):
 class GarminProvider(TrackProvider):
   NAME = 'garmin'
   settings = ['GPG_HOME', 'GPG_PASSPHRASE', ]
-
-  # Login Urls
-  url_hostname = 'https://connect.garmin.com/gauth/hostname'
-  url_login = 'https://sso.garmin.com/sso/login'
-  url_post_login = 'https://connect.garmin.com/post-auth/login'
-  url_check_login = 'https://connect.garmin.com/user/username'
-
-  # Host header urls
-  url_host_sso = 'sso.garmin.com'
-  url_host_connect = 'connect.garmin.com'
 
   # Data Urls
   url_activity = 'http://connect.garmin.com/proxy/activity-search-service-1.0/json/activities'
@@ -61,115 +49,12 @@ class GarminProvider(TrackProvider):
       if not password:
         raise Exception("No Garmin password available")
 
-    self.session = requests.Session()
-    self.session.headers.update({
-        'User-Agent' :  'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:48.0) Gecko/20100101 Firefox/48.0',
-    })
+    user = GarminUser(login, password)
+    if not user.authenticate():
+        raise Exception('Garmin Authentication failure')
+    self.session = user.session
 
-    # Get SSO server hostname
-    # without the .garmin.com FQDN
-    sso_hostname = None
-    res = self.session.get(self.url_hostname)
-    if not res.ok:
-      raise Exception('Invalid SSO first request status code {}'.format(res.status_code))
-
-    sso_hostname = res.json().get('host', None).rstrip('.garmin.com')
-    if not sso_hostname:
-      raise GarminAuthException('No SSO server available')
-    logger.debug('Use SSO hostname %s', sso_hostname)
-
-    # Load login page to get login ticket
-    params = {
-      'clientId' : 'GarminConnect',
-      'webhost' : sso_hostname,
-
-      # Full parameters from Firebug
-      # Fuck this shit. Who needs mandatory urls in a request parameters !
-      'consumeServiceTicket' : 'false',
-      'createAccountShown' : 'true',
-      'cssUrl' : 'https://static.garmincdn.com/com.garmin.connect/ui/css/gauth-custom-v1.2-min.css',
-      'displayNameShown' : 'false',
-      'embedWidget' : 'false',
-      'gauthHost' : 'https://sso.garmin.com/sso',
-      'generateExtraServiceTicket' : 'false',
-      'globalOptInChecked': 'false',
-      'globalOptInShown': 'false',
-      'id' : 'gauth-widget',
-      'initialFocus' : 'true',
-      'locale' : 'fr',
-      'openCreateAccount' : 'false',
-      'redirectAfterAccountCreationUrl' : 'https://connect.garmin.com/post-auth/login',
-      'redirectAfterAccountLoginUrl' : 'https://connect.garmin.com/post-auth/login',
-      'rememberMeChecked' : 'false',
-      'rememberMeShown' : 'true',
-      'service' : 'https://connect.garmin.com/post-auth/login',
-      'source' : 'https://connect.garmin.com/fr-FR/signin',
-      'usernameShown' : 'false',
-    }
-    res = self.session.get(self.url_login, params=params)
-    if res.status_code != 200:
-      raise GarminAuthException('No login form')
-
-    # Get the login ticket value
-    regex = '<input\s+type="hidden"\s+name="lt"\s+value="(?P<lt>\w+)"\s+/>'
-    res = re.search(regex, res.text)
-    if not res:
-      raise GarminAuthException('No login ticket')
-    login_ticket = res.group('lt')
-    logger.debug('Found login ticket %s', login_ticket)
-
-    # Login/Password with login ticket
-    # Send through POST
-    data = {
-      # All parameters are needed
-      '_eventId' : 'submit',
-      'displayNameRequired' : 'false',
-      'embed' : 'true',
-      'lt' : login_ticket,
-      'username' : login,
-      'password' : password,
-    }
-    headers = {
-      'Host' : self.url_host_sso,
-    }
-
-    res = self.session.post(self.url_login, params=params, data=data, headers=headers)
-    if res.status_code != 200:
-      raise GarminAuthException('Authentification failed.')
-
-    for cookie in ('GARMIN-SSO-GUID', 'CASTGC'):
-        if cookie not in self.session.cookies:
-            raise Exception('Missing Auth cookie {}'.format(cookie))
-
-    # Try to find the full post login url in response
-    # From JS code source :
-    # var response_url = 'https:\/\/connect.garmin.com\/post-auth\/login?ticket=ST-219231-x1CgRjKmhCbFxdFYiRJ2-cas'
-    regex = 'var response_url(\s+)= \'.*?ticket=(?P<ticket>[\w\-]+)\''
-    params = {}
-    matches = re.search(regex, res.text)
-    if not matches:
-        raise Exception('Missing service ticket')
-    params['ticket'] = matches.group('ticket')
-    logger.debug('Found service ticket %s', params['ticket'])
-
-    # Second auth step
-    # Needs a service ticket from previous response
-    # Currently gives 3 302 redirects until a 404 :/
-    headers = {
-      'Host' : self.url_host_connect,
-    }
-    res = self.session.get(self.url_post_login, params=params, headers=headers)
-    if res.status_code != 200 and not res.history:
-      raise GarminAuthException('Second auth step failed.')
-
-    # Check login
-    res = self.session.get(self.url_check_login)
-    garmin_user = res.json()
-    if not garmin_user.get('username', None):
-      raise GarminAuthException("Login check failed.")
-    logger.info('Logged in as %s' % (garmin_user['username']))
-
-    return garmin_user
+    return user
 
   def list_tracks(self, page=0, nb_tracks=10):
     # Auth using stored login/pass
