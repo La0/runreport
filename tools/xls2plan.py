@@ -43,7 +43,12 @@ class Xls2Plan(object):
             week['days'] = self.parse_week(week, days_cols)
 
         # Dump as json on stdout
-        out = json.dumps(weeks, indent=4, sort_keys=True, cls=DateEncoder)
+        plan = {
+            'name': self.sheet.name,
+            'trainer': self.book.user_name,
+            'weeks': weeks,
+        }
+        out = json.dumps(plan, indent=4, sort_keys=True, cls=DateEncoder)
         print(out)
 
         logger.info('Done.')
