@@ -46,9 +46,14 @@ class MailBuilder:
     return mail
 
   def dump(self, html):
+    # TODO: create a debug email backend instead
+
     # Dump to static file, for debug only
     h = md5('%s:%s' % (self.template, ':'.join(self.to))).hexdigest()
     path = os.path.join(settings.ROOT, 'mails_debug', h + '.html')
+    directory = os.path.dirname(path)
+    if not os.path.isdir(directory):
+        os.makedirs(directory)
     dump = open(path, 'w')
     dump.write(html.encode('utf-8'))
     print 'Dumped mail %s in %s' % (self.subject, path)

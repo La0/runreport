@@ -317,16 +317,18 @@ FACEBOOK_ID = None
 FACEBOOK_SECRET = None
 
 # Celery broker
-BROKER_URL = 'redis://'
+CELERY_ACCEPT_CONTENT = ('json', 'pickle')
+CELERY_TASK_SERIALIZER = 'pickle' # retro compat
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 CELERY_TIMEZONE = 'Europe/Paris'
 
 # Celery Periodic tasks
 from datetime import timedelta
 from celery.schedules import crontab
-CELERY_DEFAULT_QUEUE = 'base'
-CELERY_IGNORE_RESULT = True
-CELERYBEAT_SCHEDULE = {
+CELERY_TASK_DEFAULT_QUEUE = 'base'
+CELERY_TASK_IGNORE_RESULT = True
+CELERY_BEAT_SCHEDULE = {
   'auto-send-reports-on-sunday': {
     'task': 'sport.tasks.auto_publish_reports',
     'schedule': crontab(day_of_week=0, hour=23, minute=0),
@@ -356,7 +358,7 @@ CELERYBEAT_SCHEDULE = {
     'schedule': crontab(hour=9, minute=0),
   },
 }
-CELERY_ROUTES = {
+CELERY_TASK_ROUTES = {
   'tracks.tasks.provider_import' : {
     'queue' : 'tracks',
   },
@@ -399,6 +401,9 @@ CACHES = {
 
 # Test Engine
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
+
+# Email backend
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Mailman 3.0 api
 MAILMAN_URL = None
