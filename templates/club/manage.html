@@ -10,12 +10,6 @@
 
   <ul class="nav nav-tabs" role="tablist">
     <li class="active">
-      <a href="#premium" role="tab" data-toggle="tab">
-        <i class="icon-premium"></i>
-        {{ _('Premium') }}
-      </a>
-    </li>
-    <li>
       <a href="#edit" role="tab" data-toggle="tab">
         <i class="icon-edit"></i>
         {{ _('Preferences') }}
@@ -37,143 +31,8 @@
     {% endif %}
   </ul>
 
+
   <div class="tab-content">
-    <div class="tab-pane active" id="premium">
-
-      <h3>{{ _('Current period') }}</h3>
-      <p>
-        <i class="icon-calendar"></i>
-        {{ _('From') }}
-        <span class="do-tooltip" title="{{ current_period.start|timesince }}">{{ current_period.start|date('d E Y') }}</span>
-        {{ _('to') }}
-        <span class="do-tooltip" title="{{ current_period.end|timeuntil }}">{{ current_period.end|date('d E Y') }}</span>
-      </p>
-
-      <div class="row">
-        {{ macros.premium_level('free', current_period) }}
-        {{ macros.premium_level('premium_s', current_period) }}
-        {{ macros.premium_level('premium_m', current_period) }}
-        {{ macros.premium_level('premium_l', current_period) }}
-      </div>
-
-
-      {% if current_period.status == 'expired' %}
-      <blockquote class="text-warning">
-        {{ _('This period has expired, you have to pay to get back all the features.') }}
-        <p class="pull-right">
-          <a href="{{ url('payment-period', current_period.pk) }}" class="btn btn-danger">
-            <i class="icon-premium"></i>
-            {{ _('Pay this period') }}
-          </a>
-        </p>
-      </blockquote>
-      {% elif current_period.status == 'error' %}
-      <blockquote class="text-danger">
-        {{ _('A payment error happened on this period. You will be contacted by the administrators.') }}
-        <p class="pull-right">
-          <a href="{{ url('payment-period', current_period.pk) }}" class="btn btn-danger">
-            <i class="icon-premium"></i>
-            {{ _('Pay this period') }}
-          </a>
-        </p>
-      </blockquote>
-      {% endif %}
-
-      <h3>{{ _('Paying methods') }}</h3>
-      <div class="row">
-        {% if club.card_id %}
-        <div class="col-xs-12 col-sm-6 text-success">
-          {{ _('You have already registered your credit card. Thanks for your trust !') }}
-        </div>
-        <div class="col-xs-12 col-sm-6 text-right">
-          <a href="{{ url('payment-card', club.slug) }}" class="btn btn-success">
-            <i class="icon-edit"></i>
-            {{ _('Update your card') }}
-          </a>
-        </div>
-        {% else %}
-        <div class="col-xs-12 col-sm-6 text-warning">
-          {{ _('You need to register a credit card to keep running your club after the free trial ends.') }}
-        </div>
-        <div class="col-xs-12 col-sm-6 text-right">
-          <a href="{{ url('payment-card', club.slug) }}" class="btn btn-warning">
-            <i class="icon-add"></i>
-            {{ _('Register your card') }}
-          </a>
-        </div>
-        {% endif %}
-      </div>
-
-      <h3>{{ _('Payments history') }}</h3>
-      {% if club.periods.exists() %}
-      <table class="table table-bordered table-striped">
-        <tr>
-          <th>{{ _('Period') }}</th>
-          <th>{{ _('Status') }}</th>
-          <th>{{ _('Payment') }}</th>
-          <th>{{ _('Actions') }}</th>
-        </tr>
-        {% for period in club.periods.order_by('-start') %}
-        <tr>
-          <td>
-            {{ _('From') }}
-            <span class="do-tooltip" title="{{ period.start|timesince }}">{{ period.start|date('d E Y') }}</span>
-            <br />
-            {{ _('To') }}
-            <span class="do-tooltip" title="{{ period.end|timeuntil }}">{{ period.end|date('d E Y') }}</span>
-          </td>
-          <td>
-            {% if period.status == 'free' %}
-            <span class="label label-success">{{ _('Free Trial') }}</span>
-            {% elif period.status == 'active' %}
-            <span class="label label-info">{{ _('Active') }}</span>
-            {% elif period.status == 'paid' %}
-            <span class="label label-success">{{ _('Paid') }}</span>
-            {% elif period.status == 'expired' %}
-            <span class="label label-danger">{{ _('Expired') }}</span>
-            {% elif period.status == 'error' %}
-            <span class="label label-danger">{{ _('Error in payments') }}</span>
-            {% else %}
-            <span class="label label-default">{{ _('Unknown status') }}</span>
-            {% endif %}
-          </td>
-          <td>
-            {% if period.status == 'paid' %}
-            <p>
-              <strong>{{ period.amount|floatformat(2) }} &euro;</strong>
-              <br />
-              {{ _('Paid on') }} {{ period.end|date('d E Y') }}
-            </p>
-            {% else %}
-            <p class="text-muted">
-              {{ _('No payments') }}
-            </p>
-            {% endif %}
-          </td>
-          <td>
-            {% if period.status == 'paid' %}
-            <a class="btn btn-primary" href="{{ url('payment-export', period.pk) }}">
-              {{ _('Download bill') }}
-            </a>
-            {% elif period.status in ('error', 'expired', ) %}
-            <a class="btn btn-danger" href="{{ url('payment-period', period.pk) }}">
-              {{ _('Pay this period') }}
-            </a>
-            {% else %}
-            <i class="text-muted">{{ _('No actions') }}</i>
-            {% endif %}
-          </td>
-        </tr>
-        {% endfor %}
-      </table>
-      {% else %}
-      <p class="text-info lead">
-        {{ _('You do not have any periods at the moment.') }}
-      </p>
-      {% endif %}
-
-    </div>
-
     <div class="tab-pane" id="edit">
       <form action="" method="POST" class="form form-horizontal">
         {% csrf_token %}

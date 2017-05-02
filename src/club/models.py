@@ -160,6 +160,8 @@ class Club(models.Model):
      * it's in free trial period
      * it's in a paying period
     '''
+    return True # yay eveything is free !!
+
     period = self.current_period
     if period and period.is_free:
       return True

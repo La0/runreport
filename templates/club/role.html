@@ -45,7 +45,6 @@
       </thead>
       <tbody>
       {% for role, role_name in roles.items() %}
-      {% with available = not user.demo and (club.has_full_access or cost == 0) %}
         <tr>
           <td>
             {{ role_name }}
@@ -59,19 +58,6 @@
             {% elif role == 'athlete' %}
             <p>
               {{ _('An athlete is the most common role for your users.') }}
-
-            {% if remaining_athletes >= 1 %}
-            <p class="text-info">
-              <i class="icon-premium"></i>
-              {{ _('You have %d remaining athletes in your premium level.') % remaining_athletes }}
-            </p>
-            {% else %}
-            <p class="text-danger">
-              <i class="icon-premium"></i>
-              {{ _('You don\'t have any remaining athletes in your premium level. Adding this user will automatically upgrade your premium level.') }}
-            </p>
-            {% endif %}
-
             </p>
             {% elif role == 'staff' %}
             <p>
@@ -81,19 +67,6 @@
             <p>
               {{ _('A trainer can manage athletes, and send plans.') }}
             </p>
-
-            {% if remaining_trainers >= 1 %}
-            <p class="text-info">
-              <i class="icon-premium"></i>
-              {{ _('You have %d remaining trainers in your premium level.') % remaining_trainers }}
-            </p>
-            {% else %}
-            <p class="text-danger">
-              <i class="icon-premium"></i>
-              {{ _('You don\'t have any remaining trainers in your premium level. Adding this user will automatically upgrade your premium level.') }}
-            </p>
-            {% endif %}
-
             {% elif role == 'delete' %}
             <p class="text-danger">
               {{ _('This user is already archived, you can now delete it from your club.') }}
@@ -101,36 +74,27 @@
             {% endif %}
           </td>
           <td>
-            {% if available %}
-
-              {% if role == 'archive' %}
-                <button type="submit" name="role_local" value="archive" class="role btn btn-danger btn-sm">
-                  {% if membership.role == 'prospect' %}
-                    {{ _('Refuse this prospect') }}
-                  {% else %}
-                    {{ _('Archive this account') }}
-                  {% endif %}
-                </button>
-
-              {% elif role == 'delete' %}
-                <button type="submit" name="role_local" value="delete" class="role btn btn-danger btn-sm">
-                  <i class="icon-trash"></i>
-                  {{ _('Delete') }}
-                </button>
-
-              {% else %}
-              <button type="submit" name="role_local" value="{{ role }}" class="role btn btn-sm btn-success">
-                {{ _('Become') }} {{ role_name }}
+            {% if role == 'archive' %}
+              <button type="submit" name="role_local" value="archive" class="role btn btn-danger btn-sm">
+                {% if membership.role == 'prospect' %}
+                  {{ _('Refuse this prospect') }}
+                {% else %}
+                  {{ _('Archive this account') }}
+                {% endif %}
               </button>
-              {% endif %}
+
+            {% elif role == 'delete' %}
+              <button type="submit" name="role_local" value="delete" class="role btn btn-danger btn-sm">
+                <i class="icon-trash"></i>
+                {{ _('Delete') }}
+              </button>
 
             {% else %}
-            <a href="{{ url('payment-card', club.slug) }}" class="role btn btn-sm btn-success">
-              {{ _('Add a credit card') }}
-            </a>
+            <button type="submit" name="role_local" value="{{ role }}" class="role btn btn-sm btn-success">
+              {{ _('Become') }} {{ role_name }}
+            </button>
             {% endif %}
           </td>
-        {% endwith %}
         {% endfor %}
       </tbody>
     </table>

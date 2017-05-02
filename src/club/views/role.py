@@ -53,8 +53,6 @@ class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, Proces
     context['membership'] = self.membership
     context['member'] = self.member
     context['roles'] = self.get_roles()
-    context['current_period'] = self.club.current_period
-    context['remaining_trainers'], context['remaining_athletes'] = self.club.current_period.calc_remaining_roles()
     return context
 
   def get_form(self, form_class):
@@ -112,12 +110,6 @@ class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, Proces
     except Exception, e:
       logger.error('Failed to save role update for %s : %s' % (membership.user, str(e)))
       raise
-
-    # Update level & roles on period
-    period = self.club.current_period
-    period.update_roles_count()
-    period.detect_level()
-    period.save()
 
     # Open trainers modal if no trainers are found
     if membership.role == 'athlete' and not membership.trainers.exists():
