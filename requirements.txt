@@ -19,7 +19,7 @@ django-vinaigrette==0.4.0
 djangorestframework==3.3.1
 drf-nested-routers==0.9.0
 Fabric==1.6.1
-garmin-uploader==1.0.1
+garmin-uploader==1.0.3
 geopy==1.4.0
 gunicorn==18.0
 htmllaundry==2.0
