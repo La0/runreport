@@ -1,6 +1,6 @@
 from django.views.generic import ListView, DetailView
 from runreport.mixins import JsonResponseMixin
-from mixins import ConversationMixin
+from .mixins import ConversationMixin
 
 
 class ConversationView(ConversationMixin, DetailView):

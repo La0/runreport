@@ -1,4 +1,4 @@
-from mixins import ClubMixin
+from .mixins import ClubMixin
 from django.views.generic import ListView, TemplateView
 from sport.models import SportSession
 from club.models import ClubMembership

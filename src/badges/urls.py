@@ -1,6 +1,6 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 from badges.views import *
 
-urlpatterns = patterns('',
-                       url(r'^/?$', BadgesView.as_view(), name="badges"),
-                       )
+urlpatterns = [
+    url(r'^/?$', BadgesView.as_view(), name="badges"),
+]

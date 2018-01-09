@@ -1,4 +1,4 @@
-from base import TrackProvider
+from .base import TrackProvider
 import arrow
 import gnupg
 import logging

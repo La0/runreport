@@ -1,7 +1,7 @@
 from django.views.generic import TemplateView
 from tracks.providers import get_provider
 from django.core.exceptions import PermissionDenied
-from urlparse import parse_qs
+from urllib.parse import parse_qs
 
 
 class TrackOauthRedirect(TemplateView):

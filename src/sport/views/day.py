@@ -4,7 +4,7 @@ from users.models import Athlete
 from .mixins import SportSessionForms
 from django.views.generic import DateDetailView
 from django.views.generic.edit import DeleteView
-from mixins import CalendarDay
+from .mixins import CalendarDay
 from datetime import datetime, date, timedelta
 from helpers import date_to_week, check_task
 

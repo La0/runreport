@@ -1,7 +1,7 @@
 from django.views.generic.detail import DetailView
 from page.models import Page
 from page.forms import PageForm
-from mixins import PageMixin
+from .mixins import PageMixin
 from django.views.generic.edit import ModelFormMixin, ProcessFormView
 from django.http import Http404
 

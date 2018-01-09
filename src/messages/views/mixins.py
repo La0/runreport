@@ -6,7 +6,7 @@ from sport.models import SportSession, SportWeek
 from users.models import Athlete
 from post.models import Post
 from django.core.exceptions import PermissionDenied
-from urlparse import urlparse
+from urllib.parse import urlparse
 
 
 class MessageOwned(object):

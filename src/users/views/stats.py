@@ -1,4 +1,4 @@
-from mixins import ProfilePrivacyMixin
+from .mixins import ProfilePrivacyMixin
 from sport.views import SportStats
 
 

@@ -172,8 +172,7 @@ class JsonResponseMixin(object):
             if settings.DEBUG:
                 # Raise with call stack
                 import sys
-                exc = sys.exc_info()
-                raise exc[0], exc[1], exc[2]
+                raise sys.exc_info()
 
             # Base error response
             self.json_status = JSON_STATUS_ERROR

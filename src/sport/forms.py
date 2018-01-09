@@ -1,5 +1,5 @@
 #- coding: utf-8
-from models import Sport, SportDay, SportSession, SESSION_TYPES
+from sport.models import Sport, SportDay, SportSession, SESSION_TYPES
 from datetime import date
 from django import forms
 from django.utils.translation import ugettext_lazy as _

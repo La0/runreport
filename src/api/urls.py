@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 from api import views
 #from rest_framework import routers
 from rest_framework_nested import routers
@@ -30,20 +30,20 @@ urlpatterns = plan_router.urls + sessions_router.urls + sports_router.urls + \
     clubs_router.urls + plan_applications_router.urls + plan_messages_router.urls
 
 # Add direct views
-urlpatterns += patterns('',
+urlpatterns += [
 
-                        # Connected user
-                        url(r'user/', views.AthleteDetails.as_view(), name='user'),
+    # Connected user
+    url(r'user/', views.AthleteDetails.as_view(), name='user'),
 
-                        # Publish a plan to users
-                        url(r'^plans/(?P<pk>[\d]+)/publish/',
-                            views.PlanPublishView.as_view(), name='plan-publish'),
+    # Publish a plan to users
+    url(r'^plans/(?P<pk>[\d]+)/publish/',
+        views.PlanPublishView.as_view(), name='plan-publish'),
 
-                        # Copy a plan
-                        url(r'^plans/(?P<pk>[\d]+)/copy/',
-                            views.PlanCopyView.as_view(), name='plan-copy'),
+    # Copy a plan
+    url(r'^plans/(?P<pk>[\d]+)/copy/',
+        views.PlanCopyView.as_view(), name='plan-copy'),
 
-                        # Validate Mangopay card registration
-                        url(r'payment/card/', views.PaymentCardView.as_view(),
-                            name='payment-card'),
-                        )
+    # Validate Mangopay card registration
+    url(r'payment/card/', views.PaymentCardView.as_view(),
+        name='payment-card'),
+]

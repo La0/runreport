@@ -1,5 +1,5 @@
 from django.views.generic import UpdateView
-from mixins import MessageReloadMixin, MessageOwned, MessageSessionMixin
+from .mixins import MessageReloadMixin, MessageOwned, MessageSessionMixin
 from messages.forms import MessageTextForm
 
 

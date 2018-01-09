@@ -1,6 +1,6 @@
 from django.views.generic.list import ListView
 from page.models import Page
-from mixins import PageMixin
+from .mixins import PageMixin
 
 
 class PageList(PageMixin, ListView):

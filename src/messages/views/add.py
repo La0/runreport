@@ -1,6 +1,6 @@
 from django.views.generic.edit import CreateView
 from messages.forms import MessageTextForm
-from mixins import MessageReloadMixin, MessageSessionMixin, MessageUserMixin, ConversationMixin, MessageWeekMixin, MessagePostMixin
+from .mixins import MessageReloadMixin, MessageSessionMixin, MessageUserMixin, ConversationMixin, MessageWeekMixin, MessagePostMixin
 from messages.models import Conversation, TYPE_MAIL
 
 

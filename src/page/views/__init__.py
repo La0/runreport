@@ -1,2 +1,2 @@
-from list import PageList
-from detail import PageDetail
+from .list import PageList
+from .detail import PageDetail

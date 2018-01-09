@@ -1,7 +1,7 @@
 from django.views.generic import ListView, View
 from django.utils.translation import ugettext as _
 from django.http import Http404
-from mixins import ClubMixin
+from .mixins import ClubMixin
 from users.models import Athlete
 from django.db.models import Count, Max
 from datetime import date, timedelta, MINYEAR

@@ -1,4 +1,4 @@
-from mixins import ClubManagerMixin
+from .mixins import ClubManagerMixin
 from django.core.exceptions import PermissionDenied
 from django.views.generic.edit import UpdateView, CreateView, BaseDeleteView
 from club.models import Club, ClubLink

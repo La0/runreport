@@ -85,6 +85,7 @@ class Athlete(AthleteBase):
     birthday = models.DateField(_('birthday'), null=True, blank=True)
     category = models.ForeignKey(
         'UserCategory',
+        on_delete=models.SET_NULL,
         verbose_name=_('category'),
         null=True,
         blank=True)
@@ -134,6 +135,7 @@ class Athlete(AthleteBase):
     # Sport
     default_sport = models.ForeignKey(
         'sport.Sport',
+        on_delete=models.SET_NULL,
         verbose_name=_('default sport'),
         default=3,
         limit_choices_to={

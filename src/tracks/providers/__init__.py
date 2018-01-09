@@ -1,5 +1,5 @@
-from strava import StravaProvider
-from garmin import GarminProvider
+from .strava import StravaProvider
+from .garmin import GarminProvider
 
 PROVIDERS = {
     GarminProvider.NAME: GarminProvider,

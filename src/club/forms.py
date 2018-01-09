@@ -1,11 +1,9 @@
 # encoding:utf-8
-from models import ClubMembership, Club, ClubInvite, ClubLink
 from django import forms
 from users.models import Athlete
-from django.forms.models import modelformset_factory
 from django.forms.formsets import formset_factory
 from django.core.exceptions import ValidationError
-from club.models import ClubGroup
+from club.models import ClubMembership, Club, ClubInvite, ClubLink, ClubGroup
 from django.utils.translation import ugettext_lazy as _
 
 

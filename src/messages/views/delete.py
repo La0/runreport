@@ -1,6 +1,6 @@
 from django.views.generic import DeleteView
 from messages.models import Message
-from mixins import MessageReloadMixin, MessageOwned
+from .mixins import MessageReloadMixin, MessageOwned
 
 
 class MessageDelete(MessageReloadMixin, MessageOwned, DeleteView):
