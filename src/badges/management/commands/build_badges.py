@@ -10,6 +10,6 @@ class Command(BaseCommand):
         if b.image != 'badges/default.png':
           raise Exception('Already built %s' % b.image)
         b.build_image()
-        print 'Built %s' % b.image.path
+        print('Built %s' % b.image.path)
       except Exception, e:
-        print e.message
+        print(e.message)

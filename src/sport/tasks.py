@@ -21,13 +21,13 @@ def auto_publish_reports(*args, **kwargs):
     # Skip empty report
     agg = r.days.aggregate(nb=Count('sessions'))
     if not agg['nb']:
-      print 'No active sessions for report %s' % r
+      print('No active sessions for report %s' % r)
       continue
 
     # Publish
     for m in r.user.memberships.filter(role__in=roles):
       r.publish(m, 'https://runreport.fr') # TODO : use a config
-    print 'Published %s' % r
+    print('Published %s' % r)
 
 @shared_task
 def publish_report(report, membership, uri):
@@ -76,7 +76,7 @@ def sync_gcal(user):
     try:
       gc.sync_sport_session(s)
     except Exception, e:
-      print 'Failed to create an event: %s' % (str(e), )
+      print('Failed to create an event: %s' % (str(e), ))
 
 @shared_task
 def race_mail(*args, **kwargs):

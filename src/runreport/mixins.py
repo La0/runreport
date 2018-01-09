@@ -159,7 +159,7 @@ class JsonResponseMixin(object):
     try:
       resp = super(JsonResponseMixin, self).dispatch(*args, **kwargs)
     except Exception, e:
-      print "Json Dispatch failed: %s" % str(e)
+      print("Json Dispatch failed: %s" % str(e))
       if settings.DEBUG:
         # Raise with call stack
         import sys

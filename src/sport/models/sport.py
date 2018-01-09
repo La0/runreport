@@ -97,7 +97,7 @@ class SportSession(models.Model):
       try:
         self.gear = self.day.week.user.items.filter(sports=self.sport)
       except Exception, e:
-        print 'Failed to apply default gear', e
+        print('Failed to apply default gear', e)
 
 
   def delete(self, *args, **kwargs):

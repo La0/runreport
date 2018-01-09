@@ -16,9 +16,9 @@ class Command(BaseCommand):
 
     account = RRAccount()
     if account.Id:
-      print 'Using existing account %s and wallet %s' % (account.Id, account.wallet['Id'])
+      print('Using existing account %s and wallet %s' % (account.Id, account.wallet['Id']))
     else:
-      print 'Building account ...'
+      print('Building account ...')
       account.build()
 
     notifications = (
@@ -32,7 +32,7 @@ class Command(BaseCommand):
       try:
         self.add_notification(n)
       except Exception, e:
-        print 'Notif %s failure: %s' % (n, e)
+        print('Notif %s failure: %s' % (n, e))
 
   def add_notification(self, event_type):
     '''
@@ -44,7 +44,7 @@ class Command(BaseCommand):
     h = get_notification_hash(event_type)
     url = reverse('payment-notification', args=(h, ))
     url = settings.MANGOPAY_NOTIFICATION_URL + url
-    print ' >> ', url
+    print(' >> ', url)
 
     # Create notification
     hook = Hook()
@@ -54,4 +54,4 @@ class Command(BaseCommand):
     api = get_api()
     resp = api.hooks.Create(hook)
 
-    print resp
+    print(resp)

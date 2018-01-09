@@ -14,11 +14,11 @@ class Command(BaseCommand):
     # Get report dest just before
     report_dest,_ = SportWeek.objects.get_or_create(user=report_source.user, year=self.year - 1, week=52)
 
-    print "%s >> %s" % (report_source, report_dest)
+    print("%s >> %s" % (report_source, report_dest))
 
     # Backup every session
     for sess_source in report_source.days.all():
-      print ' > %s' % sess_source.date
+      print(' > %s' % sess_source.date)
 
       # Detect conflict
       try:

@@ -38,7 +38,7 @@ class Command(BaseCommand):
       self.cleanup_links(club)
 
   def build_days(self, user, days):
-    print 'Setup demo for %s' % user
+    print('Setup demo for %s' % user)
 
     # Remove all days / week
     user.sportweek.all().delete()
@@ -81,7 +81,7 @@ class Command(BaseCommand):
       'sport' : rand_session.sport,
       'race_category' : rand_session.race_category,
     }
-    print sport_day.date, rand_session.sport
+    print(sport_day.date, rand_session.sport)
 
     # No distance, comment or time for future
     if sport_day.date < self.today.date():

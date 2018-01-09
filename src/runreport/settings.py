@@ -38,7 +38,7 @@ try:
   import locale
   locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
 except:
-  print 'Failed to set French locale'
+  print('Failed to set French locale')
 
 # Utf8 as default encoding
 # This is dirty as fuck
@@ -47,7 +47,7 @@ try:
   reload(sys)
   sys.setdefaultencoding('utf8')
 except:
-  print 'Failed to set utf8 as default encoding'
+  print('Failed to set utf8 as default encoding')
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -477,7 +477,7 @@ if DEBUG:
       'JQUERY_URL' : '',
     }
   except:
-    print "Missing debug toolbar module"
+    print("Missing debug toolbar module")
 else:
   # Add raven
   INSTALLED_APPS = INSTALLED_APPS + ('raven.contrib.django.raven_compat',)

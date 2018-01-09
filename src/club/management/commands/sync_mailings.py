@@ -17,16 +17,16 @@ class Command(BaseCommand):
     self.mm.create_list(global_ml, 'Membres RunReport', extra_settings=extra)
     for u in Athlete.objects.filter(is_active=True):
       u.subscribe_mailing(global_ml)
-      print '[%s] %s' % (global_ml, u)
+      print('[%s] %s' % (global_ml, u))
 
     # Sync all clubs
     for club in Club.objects.order_by('name'):
-      print 'Club %s' % club
+      print('Club %s' % club)
 
       # Create mailing list
       if not club.mailing_list:
         club.create_mailing_list()
-        print ' > Created mailing'
+        print(' > Created mailing')
 
       # Sync the club
       emails = club.clubmembership_set.exclude(role__in=('prospect', 'archive'))
@@ -35,12 +35,12 @@ class Command(BaseCommand):
 
       # Sync all club groups
       for g in club.groups.all():
-        print 'ClubGroup %s' % g
+        print('ClubGroup %s' % g)
 
         # Create mailing list
         if not g.mailing_list:
           g.create_mailing_list()
-          print ' > Created mailing'
+          print(' > Created mailing')
 
         # Sync the group
         emails = g.members.values_list('user__email', flat=True)
@@ -62,11 +62,11 @@ class Command(BaseCommand):
         continue
       u = Athlete.objects.get(email=m)
       u.subscribe_mailing(l.list_name)
-      print ' > Add member %s' % m
+      print(' > Add member %s' % m)
 
     # Remove useless users
     emails_ml = set([m.email.lower() for m in  l.members])
     diff = emails_ml.difference(emails_db)
     for m in diff:
       self.mm.unsubscribe(l.list_name, m)
-      print ' > Remove %s' % m
+      print(' > Remove %s' % m)

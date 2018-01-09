@@ -34,7 +34,7 @@ class Command(BaseCommand):
     # Add sessions
     nb = int(kwargs['sessions'])
     for i in range(0, nb):
-      print 'Add session %d' % i
+      print('Add session %d' % i)
 
       data = {
         'week' : random.randint(0, nb / 2),
@@ -42,7 +42,7 @@ class Command(BaseCommand):
         'name' : 'session %d' % i,
         'sport' : sport,
       }
-      print data
+      print(data)
       self.plan.sessions.create(**data)
 
     # Publish plan

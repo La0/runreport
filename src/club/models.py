@@ -108,7 +108,7 @@ class Club(models.Model):
       mm = MailMan()
       mm.create_list(name, self.name)
     except Exception, e:
-      print 'Failed to create mailing list %s : %s' % (name, str(e))
+      print('Failed to create mailing list %s : %s' % (name, str(e)))
       return False
 
     # Save reference
@@ -549,7 +549,7 @@ class ClubGroup(models.Model):
       mm = MailMan()
       mm.create_list(name, self.name)
     except Exception, e:
-      print 'Failed to create mailing list %s : %s' % (name, str(e))
+      print('Failed to create mailing list %s : %s' % (name, str(e)))
       return False
 
     # Save reference
@@ -572,7 +572,7 @@ class ClubGroup(models.Model):
       mm = MailMan()
       mm.delete_list(self.mailing_list)
     except Exception, e:
-      print 'Failed to delete mailing list %s : %s' % (self.mailing_list, str(e))
+      print('Failed to delete mailing list %s : %s' % (self.mailing_list, str(e)))
       return False
 
     # Kill reference

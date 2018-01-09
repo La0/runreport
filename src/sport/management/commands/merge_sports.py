@@ -17,7 +17,7 @@ class Command(BaseCommand):
     except Exception, e:
       raise CommandError('Invalid sport: %s' % str(e))
 
-    print 'From #%d %s to #%d %s' % (self.source.pk, self.source.name, self.dest.pk, self.dest.name)
+    print('From #%d %s to #%d %s' % (self.source.pk, self.source.name, self.dest.pk, self.dest.name))
 
     # Load sessions
     self.sessions = SportSession.objects.filter(sport=self.source).order_by('day__date')
@@ -31,7 +31,7 @@ class Command(BaseCommand):
     '''
     for s in self.sessions.filter(track__isnull=False):
       track = s.track
-      print s.day.week.user, s.id, s.name, track.id
+      print(s.day.week.user, s.id, s.name, track.id)
 
       # Available sessions
       targets = s.day.sessions.exclude(pk=s.pk).filter(sport=self.dest, track__isnull=True)
@@ -41,7 +41,7 @@ class Command(BaseCommand):
         # User must pick a target
         while not target:
           for t in targets:
-            print ' > %d %s - %s km - %s' % (t.pk, t.name, t.distance, t.time)
+            print(' > %d %s - %s km - %s' % (t.pk, t.name, t.distance, t.time))
           try:
             pk = input('pk ? ')
             target = targets.get(pk=int(pk))

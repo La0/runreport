@@ -28,17 +28,17 @@ class Command(BaseCommand):
     cal = calendar.Calendar()
 
     for user in users:
-      print user
+      print(user)
 
       # Search first active day
       first = SportDay.objects.filter(week__user=user).order_by('date').first()
       if not first:
-        print ' !! No day, no stats !!'
+        print(' !! No day, no stats !!')
         continue
 
       # Buil StatsMonth until now
       for year in range(first.date.year, today.year+1):
-        print year
+        print(year)
         for month in range(1, 13):
 
           # Skip unecessary months (no data)

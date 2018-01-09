@@ -17,15 +17,15 @@ class Command(BaseCommand):
       self.categories[cat.name.lower()] = cat
       self.categories[cat.name.replace(' ', '').lower()[0:2]] = cat
     for name,cat in self.categories.items():
-      print "%s : %s" % (name, cat.name)
-    print '-' * 40
+      print("%s : %s" % (name, cat.name))
+    print('-' * 40)
 
     races = SportDay.objects.filter(type='race', race_category=None).order_by('name')
     for r in races:
       self.ask_category(r)
 
   def ask_category(self, race):
-    print "%s le %s par %s" % (race.name, race.date, race.week.user.username)
+    print("%s le %s par %s" % (race.name, race.date, race.week.user.username))
 
     cat_name = None
     while cat_name is None:
@@ -44,5 +44,5 @@ class Command(BaseCommand):
       # Save cat
       race.race_category = cat
       race.save()
-      print '-' * 40
+      print('-' * 40)
 

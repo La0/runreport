@@ -172,15 +172,15 @@ class TrackProvider:
     page = 0
     tracks = []
     while True:
-      print '-' * 80
-      print 'Page', page
+      print('-' * 80)
+      print('Page', page)
       tracks_page = self.list_tracks(page=page)
       page += 1
       if not tracks_page:
         break
       tracks += tracks_page
 
-    print 'List %d tracks' % len(tracks)
+    print('List %d tracks' % len(tracks))
     for t in tracks:
       # Compatibility
       self.store_file(t, 'details', json.dumps(t))
@@ -192,10 +192,10 @@ class TrackProvider:
       # Check it's imported
       imported = Track.objects.filter(provider=self.NAME, provider_id=activity_id)
 
-      print '%s %d - %s [%s]' % (self.NAME, activity_id, identity['date'], imported.exists() and 'OK' or 'MISSING')
+      print('%s %d - %s [%s]' % (self.NAME, activity_id, identity['date'], imported.exists() and 'OK' or 'MISSING'))
 
 
-    print 'Done.'
+    print('Done.')
 
   def import_user(self, full=False):
     '''

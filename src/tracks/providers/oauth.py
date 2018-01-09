@@ -45,7 +45,7 @@ class OauthProvider(object):
 
     response = requests.post(self.token_url, data=args)
     if response.status_code != 200:
-      print response.text
+      print(response.text)
       raise Exception("Invalid response from %s" % self.token_url)
 
     return response

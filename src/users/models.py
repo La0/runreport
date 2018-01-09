@@ -288,7 +288,7 @@ class Athlete(AthleteBase):
       mm = MailMan()
       mm.subscribe(mailing, email, '%s %s' % (self.first_name, self.last_name))
     except Exception, e:
-      print 'Failed to subscribe %s to %s : %s' % (self.username, mailing, str(e))
+      print('Failed to subscribe %s to %s : %s' % (self.username, mailing, str(e)))
       return False
     return True
 
@@ -300,7 +300,7 @@ class Athlete(AthleteBase):
       mm = MailMan()
       mm.unsubscribe(mailing, email)
     except Exception, e:
-      print 'Failed to unsubscribe %s from %s : %s' % (self.username, mailing, str(e))
+      print('Failed to unsubscribe %s from %s : %s' % (self.username, mailing, str(e)))
       return False
     return True
 

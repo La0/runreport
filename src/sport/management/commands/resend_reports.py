@@ -11,8 +11,8 @@ class Command(BaseCommand):
     site = 'https://runreport.fr' # Should be a setting now that sites are gone
     reports = SportWeek.objects.filter(year=year, week=week, published=True).order_by('user__username')
     for report in reports:
-      print report
+      print(report)
       for member in report.user.memberships.all():
-        print ' > %s' % member.club
+        print(' > %s' % member.club)
         report.published = False
         report.publish(member, site)

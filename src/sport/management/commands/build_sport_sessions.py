@@ -16,7 +16,7 @@ class Command(BaseCommand):
     days = SportDay.objects.all().order_by('date')
     sport = Sport.objects.get(slug='running')
     for i, day in enumerate(days):
-      print '%d/%d %s %s' % (i, days.count(), day.date, day.week.user.username)
+      print('%d/%d %s %s' % (i, days.count(), day.date, day.week.user.username))
 
       if day.sessions.count() >= 1:
         # Keep user input on best session
@@ -24,7 +24,7 @@ class Command(BaseCommand):
       else:
         # Init session with running
         SportSession.objects.create(day=day, sport=sport, time=day.time, distance=day.distance, name=day.name, comment=day.comment, type=day.type, race_category=day.race_category)
-        print ' > Create running SportSession'
+        print(' > Create running SportSession')
 
   def match_sessions(self, day):
     '''
@@ -38,11 +38,11 @@ class Command(BaseCommand):
     best_session = None
 
     # Debug
-    #print '-' * 80
-    #print 'Day #%d "%s" %s %s' % (day.pk, day.name, day.time, day.distance)
+    #print('-' * 80)
+    #print('Day #%d "%s" %s %s' % (day.pk, day.name, day.time, day.distance))
 
     for session in day.sessions.all():
-    #  print 'Session #%d "%s" %s %s %s' % (session.pk, session.name, session.sport, session.time, session.distance)
+    #  print('Session #%d "%s" %s %s %s' % (session.pk, session.name, session.sport, session.time, session.distance))
       
       # Search for closest session
       dist = 0.0
@@ -54,7 +54,7 @@ class Command(BaseCommand):
         best_session = session
         min_dist = dist
 
-    print ' >> Best Session is #%d' % (best_session.pk)
+    print(' >> Best Session is #%d' % (best_session.pk))
 
     # Apply changes
     modified = False
@@ -65,5 +65,5 @@ class Command(BaseCommand):
         modified = True
     if modified:
       best_session.save()
-    print ' > Update existing running SportSession'
+    print(' > Update existing running SportSession')
 

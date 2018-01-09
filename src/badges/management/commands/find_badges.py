@@ -25,6 +25,6 @@ class Command(BaseCommand):
       raise CommandError('No users found.')
 
     for user in users:
-      print 'User %s' % user
+      print('User %s' % user)
       user.find_badges(not options['dry-run'])
 

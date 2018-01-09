@@ -13,6 +13,6 @@ class Command(BaseCommand):
       raise CommandError('No doubles found !')
 
     for d in doubles:
-      print d['session_id']
+      print(d['session_id'])
 
       Track.objects.filter(session_id=d['session_id']).last().delete()

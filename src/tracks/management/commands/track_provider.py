@@ -45,7 +45,7 @@ class Command(BaseCommand):
     # Load user
     try:
       self.user = Athlete.objects.get(username=options['username'])
-      print 'User #%d %s %s' % (self.user.id, self.user.first_name, self.user.last_name)
+      print('User #%d %s %s' % (self.user.id, self.user.first_name, self.user.last_name))
     except Exception, e:
       raise CommandError("Invalid user %s : %s" % (options['username'], str(e)))
 

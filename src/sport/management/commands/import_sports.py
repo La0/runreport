@@ -33,7 +33,7 @@ class Command(BaseCommand):
         'parent' : parent,
       }
       s, created = Sport.objects.get_or_create(slug=sport['key'], defaults=defaults)
-      print '%s %s at depth %d' % (created and 'Created' or 'Skipped', s.slug, s.depth)
+      print('%s %s at depth %d' % (created and 'Created' or 'Skipped', s.slug, s.depth))
 
   def recursive_depth(self, parent):
     for s in self.sports:

@@ -117,7 +117,7 @@ class Conversation(models.Model):
     Notify all recipients, without writer
     '''
     for r in self.get_recipients(exclude=message.writer):
-      print ' >> Notify %s' % r.username
+      print(' >> Notify %s' % r.username)
 
       # Direct notification
       un = UserNotifications(r)

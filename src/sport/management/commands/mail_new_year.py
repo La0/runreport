@@ -16,7 +16,7 @@ class Command(BaseCommand):
       self.build_mail(year, athlete)
 
   def build_mail(self, year, user):
-    print 'Building mail for %d - %s' % (year, user)
+    print('Building mail for %d - %s' % (year, user))
 
     # Sum stats
     stats = {}

@@ -52,7 +52,7 @@ class PublicProfile(ProfilePrivacyMixin, DetailView, SportStatsMixin, AthleteRac
     commented_sessions = commented_sessions.exclude(comments_public__isnull=True)
     commented_sessions = commented_sessions.annotate(nb_comments=Count('comments_public__messages')).order_by('-nb_comments')[:nb]
     for c in commented_sessions:
-      print c, c.nb_comments
+      print(c, c.nb_comments)
 
     return {
       'today' : today,

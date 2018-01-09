@@ -55,9 +55,9 @@ class Command(BaseCommand):
     try:
       invite = ClubInvite.objects.create(**data)
     except IntegrityError:
-      print 'Duplicate invitation for %s' % recipient
+      print('Duplicate invitation for %s' % recipient)
       return
-    print "Created invite %s for %s" % (invite.slug, recipient)
+    print("Created invite %s for %s" % (invite.slug, recipient))
 
     # Send it !
     invite.send()

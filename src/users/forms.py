@@ -27,7 +27,7 @@ class DateSelectorWidget(forms.widgets.MultiWidget):
         super(DateSelectorWidget, self).__init__(_widgets, attrs)
 
     def decompress(self, value):
-        print value
+        print(value)
         if value:
             return [value.day, value.month, value.year]
         return [None, None, None]
@@ -180,10 +180,10 @@ class GarminForm(forms.ModelForm):
       provider = GarminProvider(self.user)
       provider.auth(force_login=self.cleaned_data['garmin_login'], force_password=self.clear_password)
     except GarminAuthException, e:
-      print 'Garmin Auth failed : %s' % (str(e),)
+      print('Garmin Auth failed : %s' % (str(e),))
       raise ValidationError(_('Invalid Garmin authentification'))
     except Exception, e:
-      print 'Garmin Auth failed : %s' % (str(e),)
+      print('Garmin Auth failed : %s' % (str(e),))
       raise ValidationError(_('Invalid Garmin authentification'))
 
     return self.cleaned_data

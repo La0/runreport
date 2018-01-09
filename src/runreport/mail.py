@@ -56,4 +56,4 @@ class MailBuilder:
         os.makedirs(directory)
     dump = open(path, 'w')
     dump.write(html.encode('utf-8'))
-    print 'Dumped mail %s in %s' % (self.subject, path)
+    print('Dumped mail %s in %s' % (self.subject, path))

@@ -17,4 +17,4 @@ class Command(BaseCommand):
     password_hash = make_password(password)
     athletes = Athlete.objects.all()
     athletes.update(password=password_hash)
-    print 'Resetted %s accounts with password %s' % (athletes.count(), password)
+    print('Resetted %s accounts with password %s' % (athletes.count(), password))
