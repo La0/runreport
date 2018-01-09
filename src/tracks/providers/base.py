@@ -11,442 +11,483 @@ from helpers import date_to_week
 
 logger = logging.getLogger('runreport.sport.garmin')
 
+
 class TrackSkipUpdateException(Exception):
-  '''
-  Used when an update for an user is not realy needed
-  '''
-  pass
+    '''
+    Used when an update for an user is not realy needed
+    '''
+    pass
+
 
 class TrackEndImportException(Exception):
-  '''
-  Used when there are no more tracks to import
-  '''
-  pass
+    '''
+    Used when there are no more tracks to import
+    '''
+    pass
 
 
 class TrackProvider:
-  NAME = '' # used in urls slugs
-  settings = [] # Names of settings needed
-  user = None # User owning the tracks
-  files = {} # local cache of download files
+    NAME = ''  # used in urls slugs
+    settings = []  # Names of settings needed
+    user = None  # User owning the tracks
+    files = {}  # local cache of download files
 
-  def __init__(self, user):
-    self.user = user
+    def __init__(self, user):
+        self.user = user
 
-    # Check and copy app settings
-    for s in self.settings:
-      if not hasattr(settings, s):
-        raise Exception("Missing setting %s" % s)
-      setattr(self, s, getattr(settings, s))
+        # Check and copy app settings
+        for s in self.settings:
+            if not hasattr(settings, s):
+                raise Exception("Missing setting %s" % s)
+            setattr(self, s, getattr(settings, s))
 
-  @property
-  def lock_name(self):
-    # Build unique lock name
-    return 'track:lock:%s:%d' % (self.NAME, self.user.pk)
+    @property
+    def lock_name(self):
+        # Build unique lock name
+        return 'track:lock:%s:%d' % (self.NAME, self.user.pk)
 
-  def lock(self, ttl=31200):
-    '''
-    Mark provider locked for this user
-    in cache
-    By default, locks for 6 hours
-    '''
-    cache.set(self.lock_name, True, ttl)
+    def lock(self, ttl=31200):
+        '''
+        Mark provider locked for this user
+        in cache
+        By default, locks for 6 hours
+        '''
+        cache.set(self.lock_name, True, ttl)
 
-  def unlock(self):
-    '''
-    Remove lock
-    '''
-    cache.delete(self.lock_name)
+    def unlock(self):
+        '''
+        Remove lock
+        '''
+        cache.delete(self.lock_name)
 
-  @property
-  def is_locked(self):
-    return cache.get(self.lock_name) is not None
+    @property
+    def is_locked(self):
+        return cache.get(self.lock_name) is not None
 
-  # Abtract methods to implement
-  def is_connected(self):
-    '''
-    True if the current user is connected to the provider
-    '''
-    raise NotImplementedError('Please implement this method')
+    # Abtract methods to implement
+    def is_connected(self):
+        '''
+        True if the current user is connected to the provider
+        '''
+        raise NotImplementedError('Please implement this method')
 
-  def disconnect(self):
-    '''
-    Disconnect current user from this provider
-    '''
-    raise NotImplementedError('Please implement this method')
+    def disconnect(self):
+        '''
+        Disconnect current user from this provider
+        '''
+        raise NotImplementedError('Please implement this method')
 
-  def list_tracks(self, page=0, nb_tracks=10):
-    '''
-    Retrieve tracks from provider
-    '''
-    raise NotImplementedError('Please implement this method')
+    def list_tracks(self, page=0, nb_tracks=10):
+        '''
+        Retrieve tracks from provider
+        '''
+        raise NotImplementedError('Please implement this method')
 
-  def get_activity_id(self, activity):
-    '''
-    Just give the id from an activity
-    '''
-    raise NotImplementedError('Please implement this method')
+    def get_activity_id(self, activity):
+        '''
+        Just give the id from an activity
+        '''
+        raise NotImplementedError('Please implement this method')
 
-  def load_files(self, activity):
-    '''
-    Load additional files to attach to the track
-    '''
-    raise NotImplementedError('Please implement this method')
+    def load_files(self, activity):
+        '''
+        Load additional files to attach to the track
+        '''
+        raise NotImplementedError('Please implement this method')
 
-  def build_line_coords(self, activity):
-    '''
-    Build a list of the future map coords
-    '''
-    raise NotImplementedError('Please implement this method')
+    def build_line_coords(self, activity):
+        '''
+        Build a list of the future map coords
+        '''
+        raise NotImplementedError('Please implement this method')
 
-  def build_identity(self, activity):
-    '''
-    Build identity of an activity to macth session
-    '''
-    raise NotImplementedError('Please implement this method')
+    def build_identity(self, activity):
+        '''
+        Build identity of an activity to macth session
+        '''
+        raise NotImplementedError('Please implement this method')
 
-  def build_splits(self, activity):
-    '''
-    Build stats for an activity
-    '''
-    raise NotImplementedError('Please implement this method')
+    def build_splits(self, activity):
+        '''
+        Build stats for an activity
+        '''
+        raise NotImplementedError('Please implement this method')
 
-  def store_file(self, activity, name, data):
-    # Store locally a file awaiating save on a track
-    activity_id = self.get_activity_id(activity)
-    logger.debug('Store file for activity %s %s - %s ' % (self.NAME, activity_id, name))
-    if activity_id not in self.files:
-      self.files[activity_id] = {}
-    self.files[activity_id][name] = data
+    def store_file(self, activity, name, data):
+        # Store locally a file awaiating save on a track
+        activity_id = self.get_activity_id(activity)
+        logger.debug(
+            'Store file for activity %s %s - %s ' %
+            (self.NAME, activity_id, name))
+        if activity_id not in self.files:
+            self.files[activity_id] = {}
+        self.files[activity_id][name] = data
 
-  def get_file(self, activity, name, format_json=False, check=None):
-    activity_id = self.get_activity_id(activity)
-    logger.debug('Load file for activity %s %s - %s ' % (self.NAME, activity_id, name))
+    def get_file(self, activity, name, format_json=False, check=None):
+        activity_id = self.get_activity_id(activity)
+        logger.debug(
+            'Load file for activity %s %s - %s ' %
+            (self.NAME, activity_id, name))
 
-    # Get localy stored file in memory
-    if activity_id in self.files and name in self.files[activity_id]:
-      out = self.files[activity_id][name]
-      return format_json and json.loads(out) or out
+        # Get localy stored file in memory
+        if activity_id in self.files and name in self.files[activity_id]:
+            out = self.files[activity_id][name]
+            return format_json and json.loads(out) or out
 
-    # Get file from disk
-    data = None
-    try:
-      tf = TrackFile.objects.get(track__provider_id=activity_id, name=name)
-      data = tf.get_data(format_json)
+        # Get file from disk
+        data = None
+        try:
+            tf = TrackFile.objects.get(
+                track__provider_id=activity_id, name=name)
+            data = tf.get_data(format_json)
 
-      if not data:
-        tf.delete() # cleanup
-        raise Exception('Missing data on TrackFile')
+            if not data:
+                tf.delete()  # cleanup
+                raise Exception('Missing data on TrackFile')
 
-      # Apply check on data
-      if check is not None:
-        if not check(data):
-          tf.delete() # cleanup
-          raise Exception('Invalid data on TrackFile')
+            # Apply check on data
+            if check is not None:
+                if not check(data):
+                    tf.delete()  # cleanup
+                    raise Exception('Invalid data on TrackFile')
 
-    except TrackFile.DoesNotExist:
-      logger.warning('Missing TrackFile for activity %s %s - %s ' % (self.NAME, activity_id, name))
+        except TrackFile.DoesNotExist:
+            logger.warning(
+                'Missing TrackFile for activity %s %s - %s ' %
+                (self.NAME, activity_id, name))
 
-    return data
+        return data
 
-  def imported_stats(self):
-    '''
-    Gives simple stats about imported tracks
-    '''
-    tracks = Track.objects.filter(provider=self.NAME, session__day__week__user=self.user)
-    stats = tracks.aggregate(min_date=Min('session__day__date'), max_date=Max('session__day__date'), total=Count('id'))
-    return stats
+    def imported_stats(self):
+        '''
+        Gives simple stats about imported tracks
+        '''
+        tracks = Track.objects.filter(
+            provider=self.NAME,
+            session__day__week__user=self.user)
+        stats = tracks.aggregate(
+            min_date=Min('session__day__date'),
+            max_date=Max('session__day__date'),
+            total=Count('id'))
+        return stats
 
-  def debug_tracks(self):
-    '''
-    Debug tool to list all tracks
-    and their usage
-    '''
-    # Try to login
-    try:
-      self.auth()
-    except Exception as e:
-      logger.error("Login failed for %s: %s" % (self.user, str(e)))
-      return
+    def debug_tracks(self):
+        '''
+        Debug tool to list all tracks
+        and their usage
+        '''
+        # Try to login
+        try:
+            self.auth()
+        except Exception as e:
+            logger.error("Login failed for %s: %s" % (self.user, str(e)))
+            return
 
-    page = 0
-    tracks = []
-    while True:
-      print('-' * 80)
-      print('Page', page)
-      tracks_page = self.list_tracks(page=page)
-      page += 1
-      if not tracks_page:
-        break
-      tracks += tracks_page
+        page = 0
+        tracks = []
+        while True:
+            print('-' * 80)
+            print('Page', page)
+            tracks_page = self.list_tracks(page=page)
+            page += 1
+            if not tracks_page:
+                break
+            tracks += tracks_page
 
-    print('List %d tracks' % len(tracks))
-    for t in tracks:
-      # Compatibility
-      self.store_file(t, 'details', json.dumps(t))
-
-      # Retrieve activity
-      activity_id = self.get_activity_id(t)
-      identity = self.build_identity(t)
-
-      # Check it's imported
-      imported = Track.objects.filter(provider=self.NAME, provider_id=activity_id)
-
-      print('%s %d - %s [%s]' % (self.NAME, activity_id, identity['date'], imported.exists() and 'OK' or 'MISSING'))
-
-
-    print('Done.')
-
-  def import_user(self, full=False):
-    '''
-    Do the import for an user
-    '''
-    # Try to login
-    try:
-      self.auth()
-    except Exception as e:
-      logger.error("Login failed for %s: %s" % (self.user, str(e)))
-      return
-
-    # Import tracks !
-    page = 0
-    months = [] # to build stats cache
-    weeks = []
-    while True:
-      tracks = []
-      try:
-        # Import tracks from source provider
-        tracks_raw = self.list_tracks(page)
-        tracks = self.import_activities(tracks_raw, full)
-        page += 1
-
-        # Get the months & weeks to refresh stats
+        print('List %d tracks' % len(tracks))
         for t in tracks:
-          date = t.session.day.date
-          m = (date.year, date.month)
-          w = date_to_week(date)
-          if m not in months:
-            months.append(m)
-          if w not in weeks:
-            weeks.append(m)
-      except TrackSkipUpdateException as e:
-        if full:
-          page += 1
-          continue
-        logger.info("Update not needed for %s" % (self.user,))
-        break
-      except TrackEndImportException as e:
-        logger.info("No more tracks to import for %s" % (self.user,))
-      except Exception as e:
-        if settings.DEBUG:
-          raise
-        logger.error("Import failed for %s: %s" % (self.user, str(e)))
-        break
+            # Compatibility
+            self.store_file(t, 'details', json.dumps(t))
 
-      # End of loop ?
-      if not len(tracks):
-        break
+            # Retrieve activity
+            activity_id = self.get_activity_id(t)
+            identity = self.build_identity(t)
 
-    # Refresh months stats cache
-    for year,month in months:
-      logger.info("Refresh month stats %d/%d for %s" % (month, year, self.user))
-      st = StatsMonth(self.user, year, month, preload=False)
-      st.build()
+            # Check it's imported
+            imported = Track.objects.filter(
+                provider=self.NAME, provider_id=activity_id)
 
-    # Refresh weeks stats cache
-    for year,week in weeks:
-      logger.info("Refresh week stats %d/%d for %s" % (week, year, self.user))
-      st = StatsWeek(self.user, year, week, preload=False)
-      st.build()
+            print(
+                '%s %d - %s [%s]' %
+                (self.NAME,
+                 activity_id,
+                 identity['date'],
+                    imported.exists() and 'OK' or 'MISSING'))
 
-  def import_activities(self, source=None, full=False):
-    '''
-    Generic method iterating through activities list
-    and calling build_track on everey one
-    '''
-    if not source:
-      raise TrackEndImportException()
+        print('Done.')
 
-    activities = []
-    updated_nb = 0
-    for activity in source:
-      act = None
-      try:
-        with transaction.atomic():
-          act, updated = self.build_track(activity, full)
-          if act:
-            activities.append(act)
-            if updated:
-              updated_nb += 1
-      except Exception as e:
-        if settings.DEBUG:
-          raise
-        logger.error('%s activity import failed: %s' % (self.NAME, str(e),))
+    def import_user(self, full=False):
+        '''
+        Do the import for an user
+        '''
+        # Try to login
+        try:
+            self.auth()
+        except Exception as e:
+            logger.error("Login failed for %s: %s" % (self.user, str(e)))
+            return
 
-    # When not enough source activities, it's the end
-    if len(source) < 10:
-      raise TrackEndImportException()
+        # Import tracks !
+        page = 0
+        months = []  # to build stats cache
+        weeks = []
+        while True:
+            tracks = []
+            try:
+                # Import tracks from source provider
+                tracks_raw = self.list_tracks(page)
+                tracks = self.import_activities(tracks_raw, full)
+                page += 1
 
-    # When no update has been made, stop import
-    if updated_nb == 0:
-      raise TrackSkipUpdateException()
+                # Get the months & weeks to refresh stats
+                for t in tracks:
+                    date = t.session.day.date
+                    m = (date.year, date.month)
+                    w = date_to_week(date)
+                    if m not in months:
+                        months.append(m)
+                    if w not in weeks:
+                        weeks.append(m)
+            except TrackSkipUpdateException as e:
+                if full:
+                    page += 1
+                    continue
+                logger.info("Update not needed for %s" % (self.user,))
+                break
+            except TrackEndImportException as e:
+                logger.info("No more tracks to import for %s" % (self.user,))
+            except Exception as e:
+                if settings.DEBUG:
+                    raise
+                logger.error("Import failed for %s: %s" % (self.user, str(e)))
+                break
 
-    return activities
+            # End of loop ?
+            if not len(tracks):
+                break
 
-  def build_track(self, activity, full=False):
-    '''
-    Generic track builder flow, from any activity
-    Will call methods from the proxy subclass of Track
-    '''
-    # Load existing activity
-    #  or build a new one
-    activity_id = self.get_activity_id(activity)
-    activity_raw = json.dumps(activity)
-    self.store_file(activity, 'details', activity_raw) # Helper for offline
-    try:
-      track = Track.objects.get(provider=self.NAME, provider_id=activity_id)
+        # Refresh months stats cache
+        for year, month in months:
+            logger.info(
+                "Refresh month stats %d/%d for %s" %
+                (month, year, self.user))
+            st = StatsMonth(self.user, year, month, preload=False)
+            st.build()
 
-      if not full:
-        # Skip update on existing tracks
-        # TEST
-        logger.info("Skip %s activity %s update" % (self.NAME, activity_id))
-        return track, False
+        # Refresh weeks stats cache
+        for year, week in weeks:
+            logger.info(
+                "Refresh week stats %d/%d for %s" %
+                (week, year, self.user))
+            st = StatsWeek(self.user, year, week, preload=False)
+            st.build()
 
-        # Check the activity needs an update
-        # by comparing md5
-        track_file = track.get_file('raw')
-        if track_file and track_file.md5 == hashlib.md5(activity_raw).hexdigest():
-          logger.info("Existing %s activity %s did not change" % (self.NAME, activity_id))
-          return track, False
+    def import_activities(self, source=None, full=False):
+        '''
+        Generic method iterating through activities list
+        and calling build_track on everey one
+        '''
+        if not source:
+            raise TrackEndImportException()
 
-      logger.info("Existing %s activity %s needs update" % (self.NAME, activity_id))
-    except Track.DoesNotExist, e:
-      track = Track(provider=self.NAME, provider_id=activity_id)
-      logger.info("Created %s activity %s" % (self.NAME, activity_id))
-    except Exception as e:
-      logger.error("Failed to import %s activity %s : %s" % (self.NAME, activity_id, str(e)))
-      return None, None
+        activities = []
+        updated_nb = 0
+        for activity in source:
+            act = None
+            try:
+                with transaction.atomic():
+                    act, updated = self.build_track(activity, full)
+                    if act:
+                        activities.append(act)
+                        if updated:
+                            updated_nb += 1
+            except Exception as e:
+                if settings.DEBUG:
+                    raise
+                logger.error(
+                    '%s activity import failed: %s' %
+                    (self.NAME, str(e),))
 
-    # Build optional simplified polyline
-    if not track.simple:
-      try:
-        coords = self.build_line_coords(activity)
-        track.simplify(coords)
-      except Exception as e:
-        logger.warn('No polyline: %s' % (str(e), ))
+        # When not enough source activities, it's the end
+        if len(source) < 10:
+            raise TrackEndImportException()
 
-    identity = self.build_identity(activity)
-    if not hasattr(track, 'session'):
-      # Attach to a session
-      track.attach_session(self.user, identity)
+        # When no update has been made, stop import
+        if updated_nb == 0:
+            raise TrackSkipUpdateException()
 
-    elif identity['name'] and not track.session.name:
-      # Update title
-      track.session.name = identity['name']
-      track.session.save()
+        return activities
 
+    def build_track(self, activity, full=False):
+        '''
+        Generic track builder flow, from any activity
+        Will call methods from the proxy subclass of Track
+        '''
+        # Load existing activity
+        #  or build a new one
+        activity_id = self.get_activity_id(activity)
+        activity_raw = json.dumps(activity)
+        self.store_file(
+            activity,
+            'details',
+            activity_raw)  # Helper for offline
+        try:
+            track = Track.objects.get(
+                provider=self.NAME, provider_id=activity_id)
 
-    # Save full track
-    track.save()
-    logger.info("Saved %s track #%d"% (self.NAME, track.pk))
+            if not full:
+                # Skip update on existing tracks
+                # TEST
+                logger.info(
+                    "Skip %s activity %s update" %
+                    (self.NAME, activity_id))
+                return track, False
 
-    # Store raw activity
-    self.store_file(activity, 'raw', activity_raw)
+                # Check the activity needs an update
+                # by comparing md5
+                track_file = track.get_file('raw')
+                if track_file and track_file.md5 == hashlib.md5(
+                        activity_raw).hexdigest():
+                    logger.info(
+                        "Existing %s activity %s did not change" %
+                        (self.NAME, activity_id))
+                    return track, False
 
-    # Save files when we are sure to have a PK
-    self.load_files(activity)
-    for name, data in self.files[activity_id].items():
-      track.add_file(name, data)
-      logger.info("%s track #%d added file %s"% (self.NAME, track.pk, name))
+            logger.info(
+                "Existing %s activity %s needs update" %
+                (self.NAME, activity_id))
+        except Track.DoesNotExist as e:
+            track = Track(provider=self.NAME, provider_id=activity_id)
+            logger.info("Created %s activity %s" % (self.NAME, activity_id))
+        except Exception as e:
+            logger.error(
+                "Failed to import %s activity %s : %s" %
+                (self.NAME, activity_id, str(e)))
+            return None, None
 
-    # Finally, attach splits
-    self.attach_splits(track, activity)
+        # Build optional simplified polyline
+        if not track.simple:
+            try:
+                coords = self.build_line_coords(activity)
+                track.simplify(coords)
+            except Exception as e:
+                logger.warn('No polyline: %s' % (str(e), ))
 
-    # Build image (needs pk)
-    try:
-      track.build_image()
-      track.build_thumb()
-      track.save()
-    except Exception as e:
-      logger.warn('No image: %s' % (str(e), ))
+        identity = self.build_identity(activity)
+        if not hasattr(track, 'session'):
+            # Attach to a session
+            track.attach_session(self.user, identity)
 
-    return track, True
+        elif identity['name'] and not track.session.name:
+            # Update title
+            track.session.name = identity['name']
+            track.session.save()
 
-  def attach_splits(self, track, activity):
-    '''
-    Build & attach the splits outside
-    of main track build
-    '''
-    splits = self.build_splits(activity)
-    self.build_total(track, splits)
+        # Save full track
+        track.save()
+        logger.info("Saved %s track #%d" % (self.NAME, track.pk))
 
+        # Store raw activity
+        self.store_file(activity, 'raw', activity_raw)
 
-  def build_total(self, track, splits):
-    '''
-    Build a total TrackSplit from a list of splits
-    '''
-    total = TrackSplit(position=0)
-    total.track_id = track.pk
-    total.distance = 0
-    total.time = 0
+        # Save files when we are sure to have a PK
+        self.load_files(activity)
+        for name, data in self.files[activity_id].items():
+            track.add_file(name, data)
+            logger.info(
+                "%s track #%d added file %s" %
+                (self.NAME, track.pk, name))
 
-    # List all current splits per positions
-    positions = dict([(s['position'], s['pk']) for s in track.splits.values('pk', 'position')])
-    positions_updated = []
+        # Finally, attach splits
+        self.attach_splits(track, activity)
 
-    for s in splits:
+        # Build image (needs pk)
+        try:
+            track.build_image()
+            track.build_thumb()
+            track.save()
+        except Exception as e:
+            logger.warn('No image: %s' % (str(e), ))
 
-      # Update totals
-      total.distance += s.distance
-      total.time += s.time
-      s.distance_total = total.distance
-      s.time_total = total.time
+        return track, True
 
-      # Update existing split ?
-      if s.position in positions:
-        s.id = positions[s.position]
-      positions_updated.append(s.position)
+    def attach_splits(self, track, activity):
+        '''
+        Build & attach the splits outside
+        of main track build
+        '''
+        splits = self.build_splits(activity)
+        self.build_total(track, splits)
 
-      s.track_id = track.pk
-      s.save()
-      logger.debug("%s track #%d added split %d"% (self.NAME, s.track_id, s.position))
+    def build_total(self, track, splits):
+        '''
+        Build a total TrackSplit from a list of splits
+        '''
+        total = TrackSplit(position=0)
+        total.track_id = track.pk
+        total.distance = 0
+        total.time = 0
 
-    # Save main split
-    nb = len(splits)
-    total.distance_total = total.distance
-    total.time_total = total.time
-    if nb > 0:
-      total.speed = sum([s.speed for s in splits]) / nb
-      total.speed_max = min([s.speed_max for s in splits])
-      total.elevation_min = min([s.elevation_min for s in splits])
-      total.elevation_max = max([s.elevation_max for s in splits])
-      total.elevation_gain = sum([s.elevation_gain for s in splits])
-      total.elevation_loss = sum([s.elevation_loss for s in splits])
-      total.energy = sum([s.energy for s in splits])
+        # List all current splits per positions
+        positions = dict([(s['position'], s['pk'])
+                          for s in track.splits.values('pk', 'position')])
+        positions_updated = []
 
-    if nb >= 2:
-      start = splits[0]
-      total.date_start = start.date_start
-      total.position_start = start.position_start
+        for s in splits:
 
-      end = splits[nb - 1]
-      total.date_end = end.date_end
-      total.position_end = end.position_end
+            # Update totals
+            total.distance += s.distance
+            total.time += s.time
+            s.distance_total = total.distance
+            s.time_total = total.time
 
-    # Update total split ?
-    total_pk = positions.get(0)
-    if total_pk:
-      total.pk = total_pk
-    positions_updated.append(0)
+            # Update existing split ?
+            if s.position in positions:
+                s.id = positions[s.position]
+            positions_updated.append(s.position)
 
-    total.save()
-    track.split_total = total
-    track.save()
+            s.track_id = track.pk
+            s.save()
+            logger.debug(
+                "%s track #%d added split %d" %
+                (self.NAME, s.track_id, s.position))
 
-    # Cleanup useless splits
-    diff = set(positions.keys()).difference(positions_updated)
-    if positions and diff:
-        logger.debug('Cleanup splits on positions %s' % diff)
-        track.splits.filter(position__in=diff).delete()
+        # Save main split
+        nb = len(splits)
+        total.distance_total = total.distance
+        total.time_total = total.time
+        if nb > 0:
+            total.speed = sum([s.speed for s in splits]) / nb
+            total.speed_max = min([s.speed_max for s in splits])
+            total.elevation_min = min([s.elevation_min for s in splits])
+            total.elevation_max = max([s.elevation_max for s in splits])
+            total.elevation_gain = sum([s.elevation_gain for s in splits])
+            total.elevation_loss = sum([s.elevation_loss for s in splits])
+            total.energy = sum([s.energy for s in splits])
 
-    return total
+        if nb >= 2:
+            start = splits[0]
+            total.date_start = start.date_start
+            total.position_start = start.position_start
+
+            end = splits[nb - 1]
+            total.date_end = end.date_end
+            total.position_end = end.position_end
+
+        # Update total split ?
+        total_pk = positions.get(0)
+        if total_pk:
+            total.pk = total_pk
+        positions_updated.append(0)
+
+        total.save()
+        track.split_total = total
+        track.save()
+
+        # Cleanup useless splits
+        diff = set(positions.keys()).difference(positions_updated)
+        if positions and diff:
+            logger.debug('Cleanup splits on positions %s' % diff)
+            track.splits.filter(position__in=diff).delete()
+
+        return total

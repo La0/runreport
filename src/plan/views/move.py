@@ -16,18 +16,21 @@ class MovePlanSession(JsonResponseMixin, View):
 
         # Fetch User plan session
         try:
-          psa = PlanSessionApplied.objects.get(pk=self.request.POST['psa'], application__user=self.request.user)
+            psa = PlanSessionApplied.objects.get(
+                pk=self.request.POST['psa'],
+                application__user=self.request.user)
         except Exception:
-          raise Http404('Invalid plan session')
+            raise Http404('Invalid plan session')
 
         # Check date
         try:
-          dt = int(self.request.POST['date'])
-          date = datetime.fromtimestamp(dt).date()
+            dt = int(self.request.POST['date'])
+            date = datetime.fromtimestamp(dt).date()
         except Exception:
-          raise Http404('Invalid date')
+            raise Http404('Invalid date')
 
         # Move the plan session only
         psa.move(date)
 
-        return HttpResponseRedirect(reverse('report-day', args=(date.year, date.month, date.day)))
+        return HttpResponseRedirect(
+            reverse('report-day', args=(date.year, date.month, date.day)))

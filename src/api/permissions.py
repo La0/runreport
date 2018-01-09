@@ -1,5 +1,6 @@
 from rest_framework.permissions import BasePermission
 
+
 class ClubPremiumPermission(BasePermission):
     message = 'not_premium'
 

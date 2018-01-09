@@ -4,7 +4,7 @@ from __future__ import absolute_import
 DEBUG = True
 
 ADMINS = (
-  ('Bastien Abadie', 'bastien@runreport.fr'),
+    ('Bastien Abadie', 'bastien@runreport.fr'),
 )
 
 # Used to hide admin page in urls, in Prod only
@@ -35,19 +35,19 @@ TIME_ZONE = 'Europe/Paris'
 
 # French locale
 try:
-  import locale
-  locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
-except:
-  print('Failed to set French locale')
+    import locale
+    locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
+except BaseException:
+    print('Failed to set French locale')
 
 # Utf8 as default encoding
 # This is dirty as fuck
 try:
-  import sys
-  reload(sys)
-  sys.setdefaultencoding('utf8')
-except:
-  print('Failed to set utf8 as default encoding')
+    import sys
+    reload(sys)
+    sys.setdefaultencoding('utf8')
+except BaseException:
+    print('Failed to set utf8 as default encoding')
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -69,13 +69,13 @@ USE_TZ = True
 # Available languages for translations
 from django.utils.translation import ugettext_lazy as _
 LANGUAGES = (
-  ('fr', _('French')),
-  ('en', _('English')),
+    ('fr', _('French')),
+    ('en', _('English')),
 )
 
 # Use our own locales
 LOCALE_PATHS = (
-  ROOT + '/locale',
+    ROOT + '/locale',
 )
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
@@ -96,8 +96,8 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-  os.path.join(ROOT, 'front'),
-  os.path.join(ROOT, 'bower_components'),
+    os.path.join(ROOT, 'front'),
+    os.path.join(ROOT, 'bower_components'),
 )
 
 # List of finder classes that know how to find static files in
@@ -123,7 +123,7 @@ TEMPLATES = [
             os.path.join(ROOT, 'templates_admin'),
         ],
         'APP_DIRS': True,
-        'OPTIONS' : {
+        'OPTIONS': {
             'context_processors': [
                 'django.contrib.auth.context_processors.auth',
                 'django.template.context_processors.i18n',
@@ -142,8 +142,8 @@ TEMPLATES = [
         ],
         'APP_DIRS': False,
         'OPTIONS': {
-            'environment' : 'runreport.jinja.environment',
-            'extensions' : [
+            'environment': 'runreport.jinja.environment',
+            'extensions': [
                 'jinja2.ext.i18n',
                 'jinja2.ext.with_',
                 'jinja2.ext.autoescape',
@@ -195,24 +195,24 @@ INSTALLED_APPS = (
     'friends',
     'events',
     'post',
-    'api', # Api code
-    'payments', # Payments app
-    'badges', # Badges app
-    'gear', # Manage your gear
-    'corsheaders', # CORS for api
+    'api',  # Api code
+    'payments',  # Payments app
+    'badges',  # Badges app
+    'gear',  # Manage your gear
+    'corsheaders',  # CORS for api
     #'vinaigrette', # Model translations
-    'rest_framework', # Api provider
-    'django_countries', # Countries selection
+    'rest_framework',  # Api provider
+    'django_countries',  # Countries selection
     'compressor',
 )
 
 # For auto login on user create
 AUTHENTICATION_BACKENDS = (
-  'users.backends.EmailAuthBackend',
-  'django.contrib.auth.backends.ModelBackend',
+    'users.backends.EmailAuthBackend',
+    'django.contrib.auth.backends.ModelBackend',
 )
 
-AUTH_USER_MODEL='users.Athlete'
+AUTH_USER_MODEL = 'users.Athlete'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -241,7 +241,7 @@ LOGGING = {
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
         },
-        'console':{
+        'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
             'formatter': 'simple'
@@ -253,28 +253,28 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
-        'runreport.sport.garmin' : {
-          'handlers' : ['console'],
-          'level': 'DEBUG',
+        'runreport.sport.garmin': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
         },
-        'sport' : {
-          'handlers' : ['console'],
-          'level': 'DEBUG',
+        'sport': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
         },
-        'club' : {
-          'handlers' : ['console'],
-          'level': 'DEBUG',
+        'club': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
         },
-        'payments' : {
-          'handlers' : ['console'],
-          'level': 'DEBUG',
+        'payments': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
         },
     }
 }
 
 # Sessions settings
 SESSION_COOKIE_NAME = 'runreport'
-SESSION_COOKIE_AGE = 7776000 # 3 months in seconds
+SESSION_COOKIE_AGE = 7776000  # 3 months in seconds
 
 # Csrf cookie settings
 CSRF_COOKIE_NAME = 'runreport.dev.csrf'
@@ -287,15 +287,15 @@ LOGOUT_REDIRECT_URL = '/'
 
 # Date & Hour of Auto send
 REPORT_SEND_DAY = 0
-REPORT_SEND_TIME = (20,00)
+REPORT_SEND_TIME = (20, 00)
 
 # Gnu GPG settings
-GPG_HOME=''
-GPG_KEY=''
-GPG_PASSPHRASE=''
+GPG_HOME = ''
+GPG_KEY = ''
+GPG_PASSPHRASE = ''
 
 # Tracks data
-TRACK_DATA=os.path.join(ROOT, 'tracks_data')
+TRACK_DATA = os.path.join(ROOT, 'tracks_data')
 
 # Strava config
 STRAVA_ID = 0
@@ -318,7 +318,7 @@ FACEBOOK_SECRET = None
 
 # Celery broker
 CELERY_ACCEPT_CONTENT = ('json', 'pickle')
-CELERY_TASK_SERIALIZER = 'pickle' # retro compat
+CELERY_TASK_SERIALIZER = 'pickle'  # retro compat
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 CELERY_TIMEZONE = 'Europe/Paris'
@@ -329,74 +329,74 @@ from celery.schedules import crontab
 CELERY_TASK_DEFAULT_QUEUE = 'base'
 CELERY_TASK_IGNORE_RESULT = True
 CELERY_BEAT_SCHEDULE = {
-  'auto-send-reports-on-sunday': {
-    'task': 'sport.tasks.auto_publish_reports',
-    'schedule': crontab(day_of_week=0, hour=23, minute=0),
-  },
-  'tracks-import-10-min': {
-    'task': 'tracks.tasks.tracks_import',
-    'schedule': timedelta(minutes=30),
-  },
-  'send-race-mail-every-day-at-9': {
-    'task': 'sport.tasks.race_mail',
-    'schedule': crontab(hour=9, minute=10),
-  },
-  'build-demos-every-day-at-1am': {
-    'task': 'users.tasks.build_demos',
-    'schedule': crontab(hour=1, minute=0),
-  },
-  'send-sessions-report-every-morning': {
-    'task': 'plan.tasks.athletes_daily_sessions',
-    'schedule': crontab(hour=7, minute=30),
-  },
-  'send-related-races-every-morning': {
-    'task': 'users.tasks.send_related_races_mail',
-    'schedule': crontab(hour=7, minute=50),
-  },
-  'payment-status-every-morning': {
-    'task': 'payments.tasks.auto_payments',
-    'schedule': crontab(hour=9, minute=0),
-  },
+    'auto-send-reports-on-sunday': {
+        'task': 'sport.tasks.auto_publish_reports',
+        'schedule': crontab(day_of_week=0, hour=23, minute=0),
+    },
+    'tracks-import-10-min': {
+        'task': 'tracks.tasks.tracks_import',
+        'schedule': timedelta(minutes=30),
+    },
+    'send-race-mail-every-day-at-9': {
+        'task': 'sport.tasks.race_mail',
+        'schedule': crontab(hour=9, minute=10),
+    },
+    'build-demos-every-day-at-1am': {
+        'task': 'users.tasks.build_demos',
+        'schedule': crontab(hour=1, minute=0),
+    },
+    'send-sessions-report-every-morning': {
+        'task': 'plan.tasks.athletes_daily_sessions',
+        'schedule': crontab(hour=7, minute=30),
+    },
+    'send-related-races-every-morning': {
+        'task': 'users.tasks.send_related_races_mail',
+        'schedule': crontab(hour=7, minute=50),
+    },
+    'payment-status-every-morning': {
+        'task': 'payments.tasks.auto_payments',
+        'schedule': crontab(hour=9, minute=0),
+    },
 }
 CELERY_TASK_ROUTES = {
-  'tracks.tasks.provider_import' : {
-    'queue' : 'tracks',
-  },
+    'tracks.tasks.provider_import': {
+        'queue': 'tracks',
+    },
 }
 
 # Retry celery failed tasks
 CELERY_TASK_PUBLISH_RETRY = True
 CELERY_TASK_PUBLISH_RETRY_POLICY = {
-  'max_retries': 5,
-  'interval_start': 0.1,
-  'interval_step': 0.2,
-  'interval_max': 0.5,
+    'max_retries': 5,
+    'interval_start': 0.1,
+    'interval_step': 0.2,
+    'interval_max': 0.5,
 }
 
 # Js/Css Compressor
 COMPRESS_ROOT = STATIC_ROOT
 COMPRESS_URL = STATIC_URL
-COMPRESS_OUTPUT_DIR = '/min' # must be a relative dir to
+COMPRESS_OUTPUT_DIR = '/min'  # must be a relative dir to
 COMPRESS_CSS_FILTERS = [
-  'compressor.filters.css_default.CssAbsoluteFilter', # default: absolute url()
-  'compressor.filters.cssmin.CSSMinFilter', # css minifier
+    'compressor.filters.css_default.CssAbsoluteFilter',  # default: absolute url()
+    'compressor.filters.cssmin.CSSMinFilter',  # css minifier
 ]
 COMPRESS_JS_FILTERS = [
-  'compressor.filters.jsmin.JSMinFilter',
+    'compressor.filters.jsmin.JSMinFilter',
 ]
 COMPRESS_PRECOMPILERS = (
-  ('text/x-scss', 'sass --scss {infile} {outfile}'),
+    ('text/x-scss', 'sass --scss {infile} {outfile}'),
 )
 
 # Dev cache in files
 CACHES = {
-  'default': {
-    'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-    'LOCATION': os.path.join(ROOT, 'cache'),
-    'OPTIONS': {
-        'MAX_ENTRIES': 1000,
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': os.path.join(ROOT, 'cache'),
+        'OPTIONS': {
+            'MAX_ENTRIES': 1000,
+        }
     }
-  }
 }
 
 # Test Engine
@@ -416,20 +416,20 @@ HELP_URL = 'https://help.runreport.fr'
 
 # API Settings
 REST_FRAMEWORK = {
-  'DEFAULT_AUTHENTICATION_CLASSES': (
-    # Only auth using existing session
-    'rest_framework.authentication.SessionAuthentication',
-  ),
-  'DEFAULT_PERMISSION_CLASSES' : (
-    # Only authenticated users access the api
-    'rest_framework.permissions.IsAuthenticated',
-  ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        # Only auth using existing session
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        # Only authenticated users access the api
+        'rest_framework.permissions.IsAuthenticated',
+    ),
 }
 
 # Allow cors api server
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_WHITELIST = (
-  'localhost:8100',
+    'localhost:8100',
 )
 
 # Club creation is allowed directly
@@ -439,12 +439,12 @@ CLUB_CREATION_OPEN = True
 # Payments integration
 PAYMENTS_ENABLED = False
 PAYMENTS_AUTO = False
-PAYMENTS_PERIOD = 30 # In days
+PAYMENTS_PERIOD = 30  # In days
 MANGOPAY_ID = None
 MANGOPAY_SECRET = None
 MANGOPAY_PROD = False
 MANGOPAY_CACHE = os.path.join(ROOT, '.mangopay')
-MANGOPAY_ENTRY_FEE = 5.00 # in euros
+MANGOPAY_ENTRY_FEE = 5.00  # in euros
 MANGOPAY_RETURN_URL = 'http://localhost:8000'
 MANGOPAY_NOTIFICATION_URL = 'http://localhost:8000'
 
@@ -453,10 +453,10 @@ ARCHIVES_DIR = os.path.join(ROOT, 'archives')
 
 # Premium prices, per month
 PREMIUM_PRICES = {
-  'athlete' : 1.0,
-  'trainer' : 5.0,
-  'staff' : 1.0,
-  'archive' : 0.0,
+    'athlete': 1.0,
+    'trainer': 5.0,
+    'staff': 1.0,
+    'archive': 0.0,
 }
 
 # Plans url
@@ -464,45 +464,46 @@ PLANS_URL = 'https://plans.runreport.fr'
 
 # Import local settings, if any
 try:
-  from runreport.local_settings import *
+    from runreport.local_settings import *
 except ImportError as e:
-  pass
+    pass
 
 # Apps in prod or dev
 if DEBUG:
-  try:
-    import debug_toolbar
-    INSTALLED_APPS = INSTALLED_APPS + ('debug_toolbar',)
-    DEBUG_TOOLBAR_CONFIG = {
-      'JQUERY_URL' : '',
-    }
-  except:
-    print("Missing debug toolbar module")
+    try:
+        import debug_toolbar
+        INSTALLED_APPS = INSTALLED_APPS + ('debug_toolbar',)
+        DEBUG_TOOLBAR_CONFIG = {
+            'JQUERY_URL': '',
+        }
+    except BaseException:
+        print("Missing debug toolbar module")
 else:
-  # Add raven
-  INSTALLED_APPS = INSTALLED_APPS + ('raven.contrib.django.raven_compat',)
+    # Add raven
+    INSTALLED_APPS = INSTALLED_APPS + ('raven.contrib.django.raven_compat',)
 
-  # Disable admin interface
-  REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = ('rest_framework.renderers.JSONRenderer', )
+    # Disable admin interface
+    REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = (
+        'rest_framework.renderers.JSONRenderer', )
 
-  # Secure csrf
-  CSRF_COOKIE_SECURE = True
+    # Secure csrf
+    CSRF_COOKIE_SECURE = True
 
 
 # Setup offline compression
 # through COMPRESS env variable
 if os.getenv('COMPRESS'):
-  def COMPRESS_JINJA2_GET_ENVIRONMENT():
-    from django.template import engines
-    return engines['jinja2'].env
+    def COMPRESS_JINJA2_GET_ENVIRONMENT():
+        from django.template import engines
+        return engines['jinja2'].env
 
-  COMPRESS_ENABLED = True
-  COMPRESS_OFFLINE = True
+    COMPRESS_ENABLED = True
+    COMPRESS_OFFLINE = True
 
-  # Use prod cdn settings
-  STATIC_URL = '%s/static/' % CDN_URL
-  MEDIA_URL = '%s/medias/' % CDN_URL
-  COMPRESS_URL = '%s/static/' % CDN_URL
+    # Use prod cdn settings
+    STATIC_URL = '%s/static/' % CDN_URL
+    MEDIA_URL = '%s/medias/' % CDN_URL
+    COMPRESS_URL = '%s/static/' % CDN_URL
 
 # Define Version
 VERSION = '1.0'

@@ -10,54 +10,56 @@ logger = logging.getLogger('payments')
 
 
 class PaymentCardView(views.APIView):
-  '''
-  Finish card registration from a MangoPay transaction
-  '''
-  def post(self, request, *args, **kwargs):
-    if not request.user.is_authenticated():
-      raise PermissionDenied
+    '''
+    Finish card registration from a MangoPay transaction
+    '''
 
-    try:
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated():
+            raise PermissionDenied
 
-      # Load club
-      club_slug = request.POST.get('club')
-      club = Club.objects.get(slug=club_slug, manager=request.user)
+        try:
 
-      # Complete Card registration
-      api = get_api()
-      card_id = request.POST.get('card')
-      if not card_id:
-        cr = CardRegistration()
-        cr.Id = request.POST.get('id')
-        cr.RegistrationData = request.POST.get('data')
-        cr_updated = api.cardRegistrations.Update(cr)
-        card_id = cr_updated.CardId
+            # Load club
+            club_slug = request.POST.get('club')
+            club = Club.objects.get(slug=club_slug, manager=request.user)
 
-      # Create PayIn
-      # to validate the card
-      resp = club.init_payment(settings.MANGOPAY_ENTRY_FEE, card_id)
+            # Complete Card registration
+            api = get_api()
+            card_id = request.POST.get('card')
+            if not card_id:
+                cr = CardRegistration()
+                cr.Id = request.POST.get('id')
+                cr.RegistrationData = request.POST.get('data')
+                cr_updated = api.cardRegistrations.Update(cr)
+                card_id = cr_updated.CardId
 
-      if resp.Status == 'SUCCEEDED':
-        # Save the card id, not the pre-auth
-        club.card_id = card_id
-        club.save()
+            # Create PayIn
+            # to validate the card
+            resp = club.init_payment(settings.MANGOPAY_ENTRY_FEE, card_id)
 
-        out = {'card_saved' : True}
+            if resp.Status == 'SUCCEEDED':
+                # Save the card id, not the pre-auth
+                club.card_id = card_id
+                club.save()
 
-      elif resp.Status == 'CREATED':
-        # Redirect user
-        out = {'redirect' : resp.ExecutionDetails.SecureModeRedirectURL, }
+                out = {'card_saved': True}
 
-      elif resp.Status == 'FAILED':
-        # Raise error
-        raise Exception(resp.ResultMessage)
+            elif resp.Status == 'CREATED':
+                # Redirect user
+                out = {'redirect': resp.ExecutionDetails.SecureModeRedirectURL, }
 
-    except Exception as e:
-      logger.error('Card registration error for %s: %s' % (request.user, e))
-      raise # TRASHME
+            elif resp.Status == 'FAILED':
+                # Raise error
+                raise Exception(resp.ResultMessage)
 
-      # Handle paymill errors
-      raise exceptions.APIException(e)
+        except Exception as e:
+            logger.error('Card registration error for %s: %s' %
+                         (request.user, e))
+            raise  # TRASHME
 
-    # Return dummy status
-    return response.Response(out)
+            # Handle paymill errors
+            raise exceptions.APIException(e)
+
+        # Return dummy status
+        return response.Response(out)

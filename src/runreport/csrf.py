@@ -36,10 +36,11 @@ class SubDomainCSRFMiddleware(CsrfViewMiddleware):
         # Wait until request.META["CSRF_COOKIE"] has been manipulated before
         # bailing out, so that get_token still works
         # RunReport mod: No csrf_exempt needed (fails on DRF)
-        #if getattr(callback, 'csrf_exempt', False):
+        # if getattr(callback, 'csrf_exempt', False):
         #    return None
 
-        # Assume that anything not defined as 'safe' by RFC2616 needs protection
+        # Assume that anything not defined as 'safe' by RFC2616 needs
+        # protection
         if request.method not in ('GET', 'HEAD', 'OPTIONS', 'TRACE'):
             if getattr(request, '_dont_enforce_csrf_checks', False):
                 # Mechanism to turn off CSRF checks for test suite.
@@ -96,7 +97,8 @@ class SubDomainCSRFMiddleware(CsrfViewMiddleware):
             request_csrf_token = ""
             if request.method == "POST":
                 try:
-                    request_csrf_token = request.POST.get('csrfmiddlewaretoken', '')
+                    request_csrf_token = request.POST.get(
+                        'csrfmiddlewaretoken', '')
                 except IOError:
                     # Handle a broken connection before we've completed reading
                     # the POST data. process_view shouldn't raise any
@@ -114,4 +116,3 @@ class SubDomainCSRFMiddleware(CsrfViewMiddleware):
                 return self._reject(request, REASON_BAD_TOKEN)
 
         return self._accept(request)
-

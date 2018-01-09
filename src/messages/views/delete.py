@@ -2,14 +2,15 @@ from django.views.generic import DeleteView
 from messages.models import Message
 from mixins import MessageReloadMixin, MessageOwned
 
+
 class MessageDelete(MessageReloadMixin, MessageOwned, DeleteView):
-  model = Message
-  template_name = 'messages/delete.html'
+    model = Message
+    template_name = 'messages/delete.html'
 
-  def delete(self, *args, **kwargs):
-    # Delete message
-    message = self.get_object()
-    conversation = message.conversation
-    message.delete()
+    def delete(self, *args, **kwargs):
+        # Delete message
+        message = self.get_object()
+        conversation = message.conversation
+        message.delete()
 
-    return self.reload(conversation)
+        return self.reload(conversation)

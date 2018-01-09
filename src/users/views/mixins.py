@@ -4,72 +4,85 @@ from users.models import Athlete, PRIVACY_LEVELS
 from django.core.exceptions import PermissionDenied
 from club import ROLES
 
+
 class UserInviteMixin(object):
-  invite = None
+    invite = None
 
-  def dispatch(self, *args, **kwargs):
-    self.check_invite() # Load invite first
-    out = super(UserInviteMixin, self).dispatch(*args, **kwargs)
-    return out
+    def dispatch(self, *args, **kwargs):
+        self.check_invite()  # Load invite first
+        out = super(UserInviteMixin, self).dispatch(*args, **kwargs)
+        return out
 
-  def get_context_data(self, *args, **kwargs):
-    context = super(UserInviteMixin, self).get_context_data(*args, **kwargs)
+    def get_context_data(self, *args, **kwargs):
+        context = super(
+            UserInviteMixin,
+            self).get_context_data(
+            *
+            args,
+            **kwargs)
 
-    # Add invite if any
-    if self.invite:
-      context['invite'] = self.invite
+        # Add invite if any
+        if self.invite:
+            context['invite'] = self.invite
 
-    return context
+        return context
 
-  def check_invite(self):
-    # Load a potential invite from session
-    try:
-      self.invite = ClubInvite.objects.get(slug=self.request.session['invite'])
-    except :
-      return False
-    return True
+    def check_invite(self):
+        # Load a potential invite from session
+        try:
+            self.invite = ClubInvite.objects.get(
+                slug=self.request.session['invite'])
+        except BaseException:
+            return False
+        return True
 
 
 class ProfilePrivacyMixin(object):
-  '''
-  Check the user has any right to view a public profile
-  Loads available rights according to context
-  '''
-  member = None
-  privacy = [] # Rights available to visitor
-  rights_needed = () # Needed rights to access the page
-
-  def get_member(self):
     '''
-    Load the requested athlete
-    Check privacy rights
+    Check the user has any right to view a public profile
+    Loads available rights according to context
     '''
-    self.member = get_object_or_404(Athlete, username=self.kwargs['username'])
+    member = None
+    privacy = []  # Rights available to visitor
+    rights_needed = ()  # Needed rights to access the page
 
-    # Load privacy rights
-    self.privacy = self.member.get_privacy_rights(self.request.user)
+    def get_member(self):
+        '''
+        Load the requested athlete
+        Check privacy rights
+        '''
+        self.member = get_object_or_404(
+            Athlete, username=self.kwargs['username'])
 
-    # Check basic access
-    for right in self.rights_needed:
-      if right not in self.privacy:
-        raise PermissionDenied
+        # Load privacy rights
+        self.privacy = self.member.get_privacy_rights(self.request.user)
 
-    return self.member
+        # Check basic access
+        for right in self.rights_needed:
+            if right not in self.privacy:
+                raise PermissionDenied
 
-  def get_user(self):
-    # Alias on get_member for sport mixins
-    return self.member or self.get_member()
+        return self.member
 
-  def dispatch(self, *args, **kwargs):
-    # Check you have the rights
-    self.get_member()
+    def get_user(self):
+        # Alias on get_member for sport mixins
+        return self.member or self.get_member()
 
-    return super(ProfilePrivacyMixin, self).dispatch(*args, **kwargs)
+    def dispatch(self, *args, **kwargs):
+        # Check you have the rights
+        self.get_member()
 
-  def get_context_data(self, *args, **kwargs):
-    context = super(ProfilePrivacyMixin, self).get_context_data(*args, **kwargs)
-    context['member'] = self.member
-    context['privacy'] = self.privacy
-    context['levels'] = dict(PRIVACY_LEVELS)
-    context['roles'] = dict(ROLES)
-    return context
+        return super(ProfilePrivacyMixin, self).dispatch(*args, **kwargs)
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(
+            ProfilePrivacyMixin,
+            self).get_context_data(
+            *
+            args,
+            **kwargs)
+        context['member'] = self.member
+        context['privacy'] = self.privacy
+        context['levels'] = dict(PRIVACY_LEVELS)
+        context['roles'] = dict(ROLES)
+        return context

@@ -10,16 +10,21 @@ class Command(BaseCommand):
     """
     Import a plan from a standard json format
     """
+
     def add_arguments(self, parser):
         parser.add_argument('path', type=open, help='Plan path')
-        parser.add_argument('--user', type=str, action='append', help='Usernames to use the plan')
+        parser.add_argument(
+            '--user',
+            type=str,
+            action='append',
+            help='Usernames to use the plan')
 
     def handle(self, *args, **options):
 
         # Load as json
         try:
             data = json.load(options['path'])
-        except:
+        except BaseException:
             raise CommandError('Not a json file')
 
         assert isinstance(data, dict)
@@ -36,7 +41,8 @@ class Command(BaseCommand):
 
         # Build a new plan
         plan = Plan(name=data['name'], creator=trainer)
-        plan.start = min([arrow.get(w['start']) for w in data['weeks']]).datetime
+        plan.start = min([arrow.get(w['start'])
+                          for w in data['weeks']]).datetime
         plan.save()
         print('New plan #{} {}'.format(plan.pk, plan))
 
