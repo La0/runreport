@@ -11,5 +11,5 @@ class Command(BaseCommand):
           raise Exception('Already built %s' % b.image)
         b.build_image()
         print('Built %s' % b.image.path)
-      except Exception, e:
+      except Exception as e:
         print(e.message)

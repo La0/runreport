@@ -75,7 +75,7 @@ def sync_gcal(user):
   for s in sessions:
     try:
       gc.sync_sport_session(s)
-    except Exception, e:
+    except Exception as e:
       print('Failed to create an event: %s' % (str(e), ))
 
 @shared_task

@@ -31,7 +31,7 @@ class Command(BaseCommand):
     for n in notifications:
       try:
         self.add_notification(n)
-      except Exception, e:
+      except Exception as e:
         print('Notif %s failure: %s' % (n, e))
 
   def add_notification(self, event_type):

@@ -96,7 +96,7 @@ class SportSession(models.Model):
     if created and not self.gear.exists():
       try:
         self.gear = self.day.week.user.items.filter(sports=self.sport)
-      except Exception, e:
+      except Exception as e:
         print('Failed to apply default gear', e)
 
 

@@ -179,10 +179,10 @@ class GarminForm(forms.ModelForm):
     try:
       provider = GarminProvider(self.user)
       provider.auth(force_login=self.cleaned_data['garmin_login'], force_password=self.clear_password)
-    except GarminAuthException, e:
+    except GarminAuthException as e:
       print('Garmin Auth failed : %s' % (str(e),))
       raise ValidationError(_('Invalid Garmin authentification'))
-    except Exception, e:
+    except Exception as e:
       print('Garmin Auth failed : %s' % (str(e),))
       raise ValidationError(_('Invalid Garmin authentification'))
 

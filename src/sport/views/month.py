@@ -47,7 +47,7 @@ class RunCalendar(MonthArchiveView):
     start_date = datetime.strptime('%s %s 1' % (year, month), '%Y %m %d')
     try:
       self.load_calendar(year, month)
-    except Exception, e:
+    except Exception as e:
       raise Http404(str(e))
 
     # Load all sessions for this month

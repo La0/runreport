@@ -37,7 +37,7 @@ class TrackOauthRedirect(TemplateView):
     response = None
     try:
       response = provider.get_token(args['code'][0])
-    except Exception, e:
+    except Exception as e:
       error = e
 
     return {

@@ -287,7 +287,7 @@ class Athlete(AthleteBase):
       email = email.lower()
       mm = MailMan()
       mm.subscribe(mailing, email, '%s %s' % (self.first_name, self.last_name))
-    except Exception, e:
+    except Exception as e:
       print('Failed to subscribe %s to %s : %s' % (self.username, mailing, str(e)))
       return False
     return True
@@ -299,7 +299,7 @@ class Athlete(AthleteBase):
         email = self.email
       mm = MailMan()
       mm.unsubscribe(mailing, email)
-    except Exception, e:
+    except Exception as e:
       print('Failed to unsubscribe %s from %s : %s' % (self.username, mailing, str(e)))
       return False
     return True
@@ -487,7 +487,7 @@ class Athlete(AthleteBase):
       for s in mm.list_subscriptions(self.email):
         s.unsubscribe()
         logger.info('Unsubscribed {} from {}'.format(self, s.id))
-    except Exception, e:
+    except Exception as e:
       logger.error('Failed to unsubscribe {} from mailing lists: {}'.format(self, e))
 
     return super(Athlete, self).delete(*args, **kwargs)

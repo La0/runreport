@@ -18,7 +18,7 @@ class SportStatsMixin(object):
     # Get user from club or current
     try:
       user = self.member
-    except AttributeError, e:
+    except AttributeError as e:
       user = self.request.user
 
     # List available years

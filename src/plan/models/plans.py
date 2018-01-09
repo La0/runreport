@@ -126,7 +126,7 @@ class Plan(models.Model):
         try:
           s.apply(pa)
           nb_applied += 1
-        except Exception, e:
+        except Exception as e:
           logger.warning('Failed to apply plan session #%d : %s' % (s.pk, e))
 
       # Send an email to each user
@@ -143,7 +143,7 @@ class Plan(models.Model):
       for s in self.sessions.order_by(*order):
         try:
           s.apply(app)
-        except Exception, e:
+        except Exception as e:
           logger.warning('Failed to apply plan session #%d : %s' % (s.pk, e))
 
   def notify_athlete(self, user, pdf):

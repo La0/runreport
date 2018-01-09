@@ -72,7 +72,7 @@ class ClubJoin(JsonResponseMixin, TemplateView, ):
     # Send notification to manager
     try:
       member.mail_club()
-    except Exception, e:
+    except Exception as e:
       print('Notification failed : %s' % (str(e), ))
       # Don't keep membership when no mail is sent
       member.delete()

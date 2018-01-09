@@ -13,7 +13,7 @@ class PostUploadView(PostWriterMixin, JsonResponseMixin, DetailView):
       self.handle_upload()
       message = 'ok'
       status = 200
-    except Exception, e:
+    except Exception as e:
       message = 'Fail. %s' % (str(e), )
       status = 500
     return HttpResponse(message, status=status)

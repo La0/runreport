@@ -24,7 +24,7 @@ class Command(BaseCommand):
       try:
         sess_dest = report_dest.days.get(date=sess_source.date)
         sess_dest.delete()
-      except Exception, e:
+      except Exception as e:
         pass # Go on...
 
       sess_source.week = report_dest

@@ -165,7 +165,7 @@ class TrackProvider:
     # Try to login
     try:
       self.auth()
-    except Exception, e:
+    except Exception as e:
       logger.error("Login failed for %s: %s" % (self.user, str(e)))
       return
 
@@ -204,7 +204,7 @@ class TrackProvider:
     # Try to login
     try:
       self.auth()
-    except Exception, e:
+    except Exception as e:
       logger.error("Login failed for %s: %s" % (self.user, str(e)))
       return
 
@@ -229,15 +229,15 @@ class TrackProvider:
             months.append(m)
           if w not in weeks:
             weeks.append(m)
-      except TrackSkipUpdateException, e:
+      except TrackSkipUpdateException as e:
         if full:
           page += 1
           continue
         logger.info("Update not needed for %s" % (self.user,))
         break
-      except TrackEndImportException, e:
+      except TrackEndImportException as e:
         logger.info("No more tracks to import for %s" % (self.user,))
-      except Exception, e:
+      except Exception as e:
         if settings.DEBUG:
           raise
         logger.error("Import failed for %s: %s" % (self.user, str(e)))
@@ -278,7 +278,7 @@ class TrackProvider:
             activities.append(act)
             if updated:
               updated_nb += 1
-      except Exception, e:
+      except Exception as e:
         if settings.DEBUG:
           raise
         logger.error('%s activity import failed: %s' % (self.NAME, str(e),))
@@ -323,7 +323,7 @@ class TrackProvider:
     except Track.DoesNotExist, e:
       track = Track(provider=self.NAME, provider_id=activity_id)
       logger.info("Created %s activity %s" % (self.NAME, activity_id))
-    except Exception, e:
+    except Exception as e:
       logger.error("Failed to import %s activity %s : %s" % (self.NAME, activity_id, str(e)))
       return None, None
 
@@ -332,7 +332,7 @@ class TrackProvider:
       try:
         coords = self.build_line_coords(activity)
         track.simplify(coords)
-      except Exception, e:
+      except Exception as e:
         logger.warn('No polyline: %s' % (str(e), ))
 
     identity = self.build_identity(activity)
@@ -367,7 +367,7 @@ class TrackProvider:
       track.build_image()
       track.build_thumb()
       track.save()
-    except Exception, e:
+    except Exception as e:
       logger.warn('No image: %s' % (str(e), ))
 
     return track, True

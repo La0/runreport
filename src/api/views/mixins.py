@@ -11,7 +11,7 @@ class PlanMixin:
       # Load plan
       pk = self.kwargs.get('plan_pk', self.kwargs.get('pk'))
       self.plan = self.request.user.plans.get(pk=pk)
-    except Exception, e:
+    except Exception as e:
       print(e.message)
       raise PermissionDenied
 
@@ -31,7 +31,7 @@ class PlanSessionMixin(PlanMixin):
       # Load plan session
       pk = self.kwargs['session_pk']
       self.session = self.plan.sessions.get(pk=pk)
-    except Exception, e:
+    except Exception as e:
       print(e.message)
       raise PermissionDenied
 

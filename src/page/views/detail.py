@@ -25,7 +25,7 @@ class PageDetail(PageMixin, ModelFormMixin, ProcessFormView, DetailView):
       filters['published'] = True
     try:
       self.object = Page.objects.get(**filters)
-    except Exception, e:
+    except Exception as e:
       if not self.edit:
         raise Http404('No page found')
 

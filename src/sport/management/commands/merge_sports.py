@@ -14,7 +14,7 @@ class Command(BaseCommand):
     try:
       self.source = Sport.objects.get(slug=source_slug)
       self.dest = Sport.objects.get(slug=dest_slug)
-    except Exception, e:
+    except Exception as e:
       raise CommandError('Invalid sport: %s' % str(e))
 
     print('From #%d %s to #%d %s' % (self.source.pk, self.source.name, self.dest.pk, self.dest.name))

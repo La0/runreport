@@ -188,7 +188,7 @@ class PaymentPeriod(models.Model):
         notify_club.delay(self)
       else:
         raise Exception('Invalid response from Mangopay %s' % resp.Status)
-    except Exception, e:
+    except Exception as e:
       logger.error('Payment failed for club %s : %s' % (self.club, e))
 
       # Update status

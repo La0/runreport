@@ -96,7 +96,7 @@ class GarminProvider(TrackProvider):
       f = self.get_file(activity, data_type, format_json=True, check=check)
       if f:
         return f
-    except Exception, e:
+    except Exception as e:
       logger.warning('Invalid track file: {}'.format(e))
 
     # Load external json page

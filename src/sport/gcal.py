@@ -180,7 +180,7 @@ class GCalSync(object):
       session.gcal_id = event['id']
       try:
           session.save_base(raw=True) # No signals / loop
-      except Exception, e:
+      except Exception as e:
           logger.error('Failed to save session {} with gcal: {}'.format(session.pk, e))
 
     return event

@@ -30,7 +30,7 @@ class Command(BaseCommand):
       self.sender = Athlete.objects.get(username=options['sender'])
       if not self.sender.is_superuser:
         raise Exception('Not a super user')
-    except Exception, e:
+    except Exception as e:
       raise CommandError('Invalid sender : %s' % str(e))
 
     # Load unique recipient

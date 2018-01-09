@@ -40,7 +40,7 @@ def send_related_races_mail():
     try:
       mail = mb.build(context)
       mail.send()
-    except Exception, e:
+    except Exception as e:
       print('Mail for races failed: %s' % str(e))
 
 @shared_task

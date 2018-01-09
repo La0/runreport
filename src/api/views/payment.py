@@ -52,7 +52,7 @@ class PaymentCardView(views.APIView):
         # Raise error
         raise Exception(resp.ResultMessage)
 
-    except Exception, e:
+    except Exception as e:
       logger.error('Card registration error for %s: %s' % (request.user, e))
       raise # TRASHME
 

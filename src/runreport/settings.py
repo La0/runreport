@@ -465,7 +465,7 @@ PLANS_URL = 'https://plans.runreport.fr'
 # Import local settings, if any
 try:
   from runreport.local_settings import *
-except ImportError, e:
+except ImportError as e:
   pass
 
 # Apps in prod or dev

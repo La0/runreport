@@ -107,7 +107,7 @@ class ClubMemberRole(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, Proces
           if form.cleaned_data['send_mail']:
             mail_member_role.delay(membership, self.role_original)
 
-    except Exception, e:
+    except Exception as e:
       logger.error('Failed to save role update for %s : %s' % (membership.user, str(e)))
       raise
 
@@ -155,7 +155,7 @@ class ClubMemberTrainers(JsonResponseMixin, ClubManagerMixin, ModelFormMixin, Pr
       if not (membership.role == 'athlete' and membership.trainers.count() == 0):
         self.json_options = [JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE, ]
 
-    except Exception, e:
+    except Exception as e:
       logger.error('Failed to save role update for %s : %s' % (membership.user, str(e)))
       raise Exception("Failed to save")
 
