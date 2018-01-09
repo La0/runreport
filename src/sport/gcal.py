@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.contrib.sites.models import Site
 from requests_oauthlib import OAuth2Session
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from sport.models import SportSession
 
 import logging

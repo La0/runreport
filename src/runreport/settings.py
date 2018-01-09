@@ -34,20 +34,8 @@ ROOT = os.path.realpath('..')
 TIME_ZONE = 'Europe/Paris'
 
 # French locale
-try:
-    import locale
-    locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
-except BaseException:
-    print('Failed to set French locale')
-
-# Utf8 as default encoding
-# This is dirty as fuck
-try:
-    import sys
-    reload(sys)
-    sys.setdefaultencoding('utf8')
-except BaseException:
-    print('Failed to set utf8 as default encoding')
+import locale
+locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import GearCategory, GearBrand, GearItem
+from gear.models import GearCategory, GearBrand, GearItem
 
 
 class GearCategoryAdmin(admin.ModelAdmin):

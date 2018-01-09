@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import *
+from plan.models import *
 
 
 class PlanSessionAdmin(admin.TabularInline):

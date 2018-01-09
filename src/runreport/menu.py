@@ -1,5 +1,5 @@
 # coding=utf-8
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from users.notification import UserNotifications
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings

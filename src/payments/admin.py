@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import PaymentPeriod, PaymentTransaction
+from payments.models import PaymentPeriod, PaymentTransaction
 
 
 class PaymentPeriodAdmin(admin.ModelAdmin):

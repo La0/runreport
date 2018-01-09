@@ -1,7 +1,7 @@
 from django.views.generic import TemplateView, View
 from django.core.exceptions import PermissionDenied
 from django.utils.translation import ugettext_lazy as _
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.conf import settings
 from sport.stats import StatsWeek
 from sport.models import SportSession

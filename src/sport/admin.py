@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import *
+from sport.models import *
 
 
 class SportDayAdmin(admin.TabularInline):

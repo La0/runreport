@@ -1,6 +1,6 @@
 from post.models import Post, PostMedia
 from post.forms import PostForm
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 
 class PostWriterMixin(object):

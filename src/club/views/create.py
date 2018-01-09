@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from club.models import Club, ClubMembership
 from club.forms import ClubCreateForm
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from mixins import ClubCreateMixin
 from runreport.mixins import LoginRequired
 

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import Athlete, UserCategory
+from users.models import Athlete, UserCategory
 
 
 class AthleteAdmin(admin.ModelAdmin):

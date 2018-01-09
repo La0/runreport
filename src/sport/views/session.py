@@ -3,7 +3,7 @@ from django.views.generic import DateDetailView
 from sport.forms import SportSessionForm
 from runreport.mixins import JsonResponseMixin, JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML
 from mixins import CalendarSession
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from datetime import datetime
 
 

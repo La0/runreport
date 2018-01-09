@@ -1,6 +1,6 @@
 # coding:utf-8
 from django.core.cache import cache
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from datetime import datetime
 import uuid

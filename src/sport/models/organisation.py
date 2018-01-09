@@ -13,7 +13,7 @@ from sport.stats import StatsMonth, StatsWeek
 from .sport import SportSession
 from collections import OrderedDict
 from messages.models import Conversation, TYPE_COMMENTS_WEEK
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib.sites.models import Site
 
 

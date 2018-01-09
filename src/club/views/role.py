@@ -1,7 +1,7 @@
 from django.views.generic import DetailView
 from django.views.generic.edit import ModelFormMixin, ProcessFormView
 from django.utils.translation import ugettext_lazy as _
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from mixins import ClubManagerMixin
 from club.models import ClubMembership
 from club.forms import ClubMemberRoleForm, ClubMemberTrainersForm

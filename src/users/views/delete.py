@@ -1,6 +1,6 @@
 from django.contrib.auth import logout
 from django.views.generic import DeleteView
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.http import HttpResponseRedirect
 from users.tasks import delete_user
 

@@ -1,6 +1,6 @@
 from django.views.generic import View
 from django.views.generic.edit import FormView
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponseRedirect
 from runreport.settings import LOGIN_REDIRECT_URL, LOGOUT_REDIRECT_URL

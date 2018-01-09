@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import *
+from page.models import *
 
 
 class PageAdmin(admin.ModelAdmin):

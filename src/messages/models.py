@@ -1,7 +1,7 @@
 from django.db import models
 from users.models import Athlete
 from users.notification import UserNotifications
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from messages.tasks import notify_message
 
 TYPE_MAIL = 'mail'

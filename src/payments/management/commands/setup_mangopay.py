@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.conf import settings
 from payments.account import RRAccount
 from payments import get_api, get_notification_hash

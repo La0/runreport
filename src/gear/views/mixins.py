@@ -1,4 +1,4 @@
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from runreport.mixins import LoginRequired
 from gear.forms import GearItemForm
 

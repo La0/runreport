@@ -1,7 +1,7 @@
 import requests
 import urllib
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib.sites.models import Site
 from random import randint
 import base64

@@ -6,7 +6,7 @@ from club.forms import ClubCreateForm, ClubLinkForm
 from club import ROLES
 from django.http import HttpResponseRedirect
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from runreport.mixins import JsonResponseMixin, JSON_OPTION_BODY_RELOAD, JSON_OPTION_NO_HTML, JSON_OPTION_CLOSE
 from runreport.features import list_features
 from django.db.models import Max

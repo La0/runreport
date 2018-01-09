@@ -1,3 +1,3 @@
-from base import Track
+from .base import Track
 from .file import TrackFile
-from split import TrackSplit
+from .split import TrackSplit

@@ -3,7 +3,7 @@ from club.forms import InviteAskForm
 from users.models import Athlete
 from django.views.generic import DetailView, RedirectView
 from django.http import Http404, HttpResponseRedirect
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.views.generic.edit import CreateView
 from django.conf import settings
 

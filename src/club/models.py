@@ -285,7 +285,7 @@ class Club(models.Model):
         Create a new Mangopay PayIn
         for specified amount in euros
         '''
-        from django.core.urlresolvers import reverse
+        from django.urls import reverse
         from django.conf import settings
         from payments import get_api
         from payments.account import RRAccount

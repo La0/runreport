@@ -1,4 +1,4 @@
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from club.views.mixins import ClubMixin
 from events.models import Place
 from events.forms import PlaceForm

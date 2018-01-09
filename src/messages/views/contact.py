@@ -1,5 +1,5 @@
 from django.views.generic import FormView
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from messages.forms import ContactForm
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _

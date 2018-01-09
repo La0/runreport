@@ -11,7 +11,7 @@ from django.utils import formats, translation
 from django.conf import settings
 from helpers import week_to_date
 from datetime import timedelta
-from StringIO import StringIO
+from io import StringIO
 import os
 
 

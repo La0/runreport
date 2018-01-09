@@ -4,7 +4,7 @@ from users.forms import SignUpForm
 from users.tasks import subscribe_mailing
 from django.contrib.auth import login as auth_login, authenticate
 from django.http import HttpResponseRedirect, Http404
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from .mixins import UserInviteMixin
 from datetime import datetime
 

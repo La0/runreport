@@ -1,7 +1,7 @@
 from django.views.generic.edit import UpdateView
 from users.forms import GarminForm
 from users.models import Athlete
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.http import HttpResponseRedirect
 
 
