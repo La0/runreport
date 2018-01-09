@@ -6,12 +6,12 @@ from friends.tasks import notify_friend_request
 class FriendRequest(models.Model):
     sender = models.ForeignKey(
         'users.Athlete',
-        on_delete=models.SET_NULL,
+        on_delete=models.CASCADE,
         related_name='requests_sent'
     )
     recipient = models.ForeignKey(
         'users.Athlete',
-        on_delete=models.SET_NULL,
+        on_delete=models.CASCADE,
         related_name='requests_received')
 
     created = models.DateTimeField(auto_now_add=True)

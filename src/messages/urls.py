@@ -54,7 +54,7 @@ urlpatterns = [
     url(r'^page/(?P<page>\d+)/?$',
         login_required(MessageInbox.as_view()),
         name="message-inbox-page"),
-    url(r'^/?$',
+    url(r'^$',
         login_required(MessageInbox.as_view()),
         name="message-inbox"),
 ]

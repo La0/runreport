@@ -138,6 +138,7 @@ class Athlete(AthleteBase):
         on_delete=models.SET_NULL,
         verbose_name=_('default sport'),
         default=3,
+        null=True, # for delete
         limit_choices_to={
             'depth': 1,
         })  # default to running

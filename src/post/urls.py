@@ -24,7 +24,7 @@ urlpatterns = [
         name="post-media-delete"),
 
     # List user's personal posts
-    url(r'^/?$',
+    url(r'^$',
         login_required(PostListView.as_view()),
         name="posts"),
 ]

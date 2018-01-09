@@ -10,7 +10,7 @@ from runreport.views import LegalView
 admin.autodiscover()
 
 urlpatterns = [
-    url(r'^/?', include('sport.urls')),
+    url(r'^', include('sport.urls')),
     url(r'^user/', include('users.urls')),
     url(r'^club/', include('club.urls')),
     url(r'^plan/', include('plan.urls')),
@@ -52,10 +52,9 @@ urlpatterns = [
 # Direct admin and static medias
 dev_urls = [
     url(r'^admin/', include(admin.site.urls)),
-    (r'^medias/(?P<path>.*)$',
-     'django.views.static.serve',
-     {'document_root': settings.MEDIA_ROOT}),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]
+dev_urls += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+dev_urls += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
 # Hide a little admin

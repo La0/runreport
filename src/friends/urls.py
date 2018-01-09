@@ -15,7 +15,7 @@ urlpatterns = [
         login_required(FriendRequestChoice.as_view()), name="friend-request"),
 
     # Friends home
-    url(r'^/?$',
+    url(r'^$',
         login_required(FriendsHome.as_view()),
         name="friends"),
 ]

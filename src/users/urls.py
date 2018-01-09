@@ -42,7 +42,7 @@ user_patterns = [
         UserBadgesView.as_view(),
         name='badges-user'),
 
-    url(r'^/?', PublicProfile.as_view(),
+    url(r'^', PublicProfile.as_view(),
         name="user-public-profile"),
 ]
 

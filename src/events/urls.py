@@ -5,7 +5,7 @@ from events.views import *
 urlpatterns = [
 
     # List club places
-    url(r'^/?$', PlaceList.as_view(), name="places"),
+    url(r'^$', PlaceList.as_view(), name="places"),
 
     # Create a club place
     url(r'^new/?$', PlaceCreate.as_view(), name="place-create"),

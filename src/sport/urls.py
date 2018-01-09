@@ -5,30 +5,30 @@ from sport.views import *
 day_patterns = [
 
     # Modal View
-    url(r'^/?$',
+    url(r'^$',
         login_required(RunCalendarDay.as_view()),
         name="report-day"),
 
     # Delete
-    url(r'^/delete/?$',
+    url(r'^delete/?$',
         login_required(RunCalendarDayDelete.as_view()),
         name="report-day-delete"),
 
     # Session management
-    url(r'^/session/add$',
+    url(r'^session/add$',
         login_required(SportSessionView.as_view()),
         name="sport-session-add"),
-    url(r'^/session/(?P<session>\d+)/edit$',
+    url(r'^session/(?P<session>\d+)/edit$',
         login_required(SportSessionView.as_view()),
         name="sport-session-edit"),
-    url(r'^/session/(?P<session>\d+)/delete$',
+    url(r'^session/(?P<session>\d+)/delete$',
         login_required(SportSessionDelete.as_view()),
         name="sport-session-delete"),
 ]
 
 urlpatterns = [
     # Dashboard
-    url(r'^/?$', DashBoardView.as_view(), name="dashboard"),
+    url(r'^$', DashBoardView.as_view(), name="dashboard"),
     url(r'^(?P<type>athlete|trainer)/?$',
         DashBoardView.as_view(),
         name="dashboard-type"),
