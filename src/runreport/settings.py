@@ -39,7 +39,7 @@ locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'fr'
+LANGUAGE_CODE = 'fr-fr'
 
 SITE_ID = 1
 
@@ -102,7 +102,6 @@ STATICFILES_FINDERS = (
 SECRET_KEY = 'nq!g^hyy-_l!*apn3302^5(jwt$t-&amp;!fo4my*^u3j!zj7=if%r'
 
 
-# Setup Templates engine with Jinja2
 TEMPLATES = [
     # Django templates for apps
     {
@@ -196,12 +195,26 @@ INSTALLED_APPS = (
 )
 
 # For auto login on user create
-AUTHENTICATION_BACKENDS = (
-    'users.backends.EmailAuthBackend',
-    'django.contrib.auth.backends.ModelBackend',
-)
-
 AUTH_USER_MODEL = 'users.Athlete'
+
+# Password validation
+# https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
+
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]
+
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
