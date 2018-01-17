@@ -1,12 +1,15 @@
 from django.core.management.base import BaseCommand, CommandError
-from runreport.settings import SRC
+from django.conf import settings
 from sport.models import Sport
 import os
 import json
 
 
 class Command(BaseCommand):
-    path = os.path.join(SRC, '/sport/management/data/sports.json')
+    path = os.path.join(
+        settings.BASE_DIR,
+        'sport/management/data/sports.json'
+    )
     sports = []
 
     def handle(self, *args, **options):

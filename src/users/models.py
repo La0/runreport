@@ -9,7 +9,6 @@ from django.core import validators
 from django.utils import timezone
 from django.core.validators import MinValueValidator
 from django.conf import settings
-from hashlib import md5
 from datetime import datetime
 from avatar_generator import Avatar
 from runreport.mailman import MailMan
@@ -19,6 +18,7 @@ from django_countries.fields import CountryField
 from users.notification import UserNotifications
 import json
 import logging
+import hashlib
 
 logger = logging.getLogger('users')
 
@@ -254,12 +254,13 @@ class Athlete(AthleteBase):
         # Build an avatar file path for a user
         # using his username, and a secret hash
         # unique per upload
-        h = md5(
-            '%s:%s:%d' %
-            (settings.SECRET_KEY,
-             datetime.now(),
-             self.pk)).hexdigest()
-        return 'avatars/%s.%s.png' % (self.username, h[0:8])
+        payload = '{}:{}:{}'.format(
+            settings.SECRET_KEY,
+            datetime.now(),
+            self.pk,
+        )
+        h = hashlib.md5(payload.encode('utf-8')).hexdigest()
+        return 'avatars/{}.{}.png'.format(self.username, h[0:8])
 
     def build_avatar(self, size=400):
         path = self.build_avatar_path()
@@ -267,7 +268,7 @@ class Athlete(AthleteBase):
 
         # Build a random default avatar
         avatar_data = Avatar.generate(size, self.first_name)
-        with open(full_path, 'w+') as fd:
+        with open(full_path, 'wb') as fd:
             fd.write(avatar_data)
 
         # Save the new path, but don't save

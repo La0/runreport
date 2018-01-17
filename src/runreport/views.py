@@ -13,7 +13,7 @@ class LegalView(TemplateView):
         # Load html
         type = self.kwargs['type']
         context['type'] = type
-        path = os.path.join(settings.SRC, 'legal/%s.html' % type)
+        path = os.path.join(settings.BASE_DIR, 'legal/%s.html' % type)
         if not os.path.exists(path):
             raise Http404('Legal page not found %s' % type)
         with open(path, 'r') as f:

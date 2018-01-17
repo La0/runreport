@@ -14,12 +14,7 @@ class UserInviteMixin(object):
         return out
 
     def get_context_data(self, *args, **kwargs):
-        context = super(
-            UserInviteMixin,
-            self).get_context_data(
-            *
-            args,
-            **kwargs)
+        context = super(UserInviteMixin, self).get_context_data(*args, **kwargs)
 
         # Add invite if any
         if self.invite:

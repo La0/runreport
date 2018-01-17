@@ -3,7 +3,7 @@ from django.views.generic.edit import FormView
 from django.urls import reverse
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponseRedirect
-from runreport.settings import LOGIN_REDIRECT_URL, LOGOUT_REDIRECT_URL
+from django.conf import settings
 from django.contrib.auth import login as auth_login, logout as auth_logout
 from .mixins import UserInviteMixin
 
@@ -30,7 +30,7 @@ class LoginUser(UserInviteMixin, FormView):
             next_url = reverse('club-create')
         else:
             # Classic redirection, precedence to ?next=
-            next_url = self.request.GET.get('next', LOGIN_REDIRECT_URL)
+            next_url = self.request.GET.get('next', settings.LOGIN_REDIRECT_URL)
 
         return HttpResponseRedirect(next_url)
 
@@ -38,4 +38,4 @@ class LoginUser(UserInviteMixin, FormView):
 class LogoutUser(View):
     def get(self, request, *args, **kwargs):
         auth_logout(request)
-        return HttpResponseRedirect(LOGOUT_REDIRECT_URL)
+        return HttpResponseRedirect(settings.LOGOUT_REDIRECT_URL)

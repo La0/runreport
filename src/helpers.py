@@ -2,24 +2,25 @@ from celery.result import AsyncResult
 from datetime import datetime, timedelta
 import math
 from PIL import Image
+import re
+import unicodedata
 
 
 def nameize(s, max=40):
-    import re
-    import unicodedata
+    assert isinstance(s, str)
 
     # Remove all accents
     try:
         s = unicode(s, 'ISO-8859-1')
     except BaseException:
         pass
-    s = unicodedata.normalize('NFKD', s).encode('ASCII', 'ignore')
+    s = unicodedata.normalize('NFKD', s)
 
     # Remove all non allowed chars
-    s = re.sub('[^a-z0-9 ]', '', s.strip().lower(),)
+    s = re.sub('[^a-z0-9 ]', '', s.strip().lower())
 
     # Remove multiple spaces
-    s = re.sub('[ ]+', ' ', s.strip().lower(),)
+    s = re.sub('[ ]+', ' ', s.strip().lower())
 
     # Limit words to match chars length
     words = s.split(' ')

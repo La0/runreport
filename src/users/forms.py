@@ -1,7 +1,7 @@
 from django import forms
 from users.models import Athlete
 from django.core.exceptions import ValidationError
-from runreport.settings import GPG_HOME, GPG_KEY
+from django.conf import settings
 from helpers import nameize
 import gnupg
 from tracks.providers.garmin import GarminProvider, GarminAuthException
@@ -210,8 +210,8 @@ class GarminForm(forms.ModelForm):
 
         # Encrypt password
         self.clear_password = self.cleaned_data['garmin_password']
-        gpg = gnupg.GPG(gnupghome=GPG_HOME)
-        password = str(gpg.encrypt(self.clear_password, GPG_KEY))
+        gpg = gnupg.GPG(gnupghome=settings.GPG_HOME)
+        password = str(gpg.encrypt(self.clear_password, settings.GPG_KEY))
         if not password:
             raise ValidationError("Failed to encrypt password")
 
