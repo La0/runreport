@@ -17,7 +17,7 @@ class GearModerated(models.Model):
         abstract = True
         ordering = ('name', )
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -79,7 +79,7 @@ class GearItem(models.Model):
     class Meta:
         ordering = ('user', 'category', 'brand', 'created')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def calc_stats(self):

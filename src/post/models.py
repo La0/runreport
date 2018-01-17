@@ -52,7 +52,7 @@ class Post(models.Model):
     class Meta:
         unique_together = (('writer', 'slug'), )
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     def add_comment(self, message, writer):

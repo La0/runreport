@@ -20,7 +20,7 @@ class Sport(models.Model):
         db_table = 'sport_list'
         app_label = 'sport'
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def get_parent(self):

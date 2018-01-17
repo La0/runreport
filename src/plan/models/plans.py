@@ -23,7 +23,7 @@ class Plan(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return u'Plan: "%s" from %s' % (self.name, self.creator.username)
 
     def __init__(self, *args, **kwargs):

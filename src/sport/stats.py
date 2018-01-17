@@ -37,7 +37,7 @@ class StatsCached(object):
         if self.data and name in self.data:
             return self.data[name]
 
-    def __unicode__(self):
+    def __str__(self):
         return u'%s : %s %s to %s' % (
             self.user.username, self.prefix, self.start, self.end)
 

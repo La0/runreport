@@ -15,7 +15,7 @@ class BadgeCategory(models.Model):
     '''
     name = models.CharField(max_length=250, unique=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def get_user_value(self, user):
@@ -101,7 +101,7 @@ class Badge(models.Model):
         through='badges.BadgeUser',
         related_name='badges')
 
-    def __unicode__(self):
+    def __str__(self):
         return u'%s : %s #%d' % (self.category.name, self.name, self.position)
 
     class Meta:

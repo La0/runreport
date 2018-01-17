@@ -36,7 +36,7 @@ class SportWeek(models.Model):
         db_table = 'sport_week'
         app_label = 'sport'
 
-    def __unicode__(self):
+    def __str__(self):
         # Nice display name, used in templates too
         st, end = self.get_date_start(), self.get_date_end()
         if st.month == end.month:
@@ -315,5 +315,5 @@ class RaceCategory(models.Model):
         db_table = 'sport_race_category'
         app_label = 'sport'
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name

@@ -59,7 +59,7 @@ class Club(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def get_private_hash(self):
@@ -458,7 +458,7 @@ class ClubInvite(models.Model):
     class Meta:
         unique_together = (('recipient', 'type'),)
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s - %s' % (self.recipient, self.slug)
 
     def save(self, *args, **kwargs):
@@ -555,7 +555,7 @@ class ClubGroup(models.Model):
     class Meta:
         unique_together = (('club', 'slug'), )
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s : %s' % (self.club.name, self.name)
 
     def get_members(self):

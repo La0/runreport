@@ -626,5 +626,5 @@ class UserCategory(models.Model):
     min_year = models.IntegerField()
     max_year = models.IntegerField()
 
-    def __unicode__(self):
+    def __str__(self):
         return u'%s %s ' % (self.code, self.name)

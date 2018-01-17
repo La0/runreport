@@ -76,7 +76,7 @@ class PaymentPeriod(models.Model):
     start = models.DateTimeField()
     end = models.DateTimeField()
 
-    def __unicode__(self):
+    def __str__(self):
         return u'{} from {} to {} : {}'.format(
             self.club.name, self.start.date(), self.end.date(), self.level)
 
