@@ -155,12 +155,12 @@ class ClubMemberTrainers(JsonResponseMixin, ClubManagerMixin,
     model = ClubMembership
     form_class = ClubMemberTrainersForm
 
-    def get_form(self, form_class):
+    def get_form(self):
         self.role_original = self.membership.role
         # Load object before form init
         if not hasattr(self, 'object'):
             self.get_object()
-        return super(ClubMemberTrainers, self).get_form(form_class)
+        return super(ClubMemberTrainers, self).get_form()
 
     def form_valid(self, form):
         if self.request.user.demo:

@@ -55,8 +55,8 @@ class ClubMixin(object):
         self.check(request, *args, **kwargs)
         return super(ClubMixin, self).dispatch(request, *args, **kwargs)
 
-    def get_context_data(self, **kwargs):
-        context = super(ClubMixin, self).get_context_data(**kwargs)
+    def get_context_data(self, *args, **kwargs):
+        context = super(ClubMixin, self).get_context_data()
         context['club'] = self.club
         context['member'] = self.member
         context['role'] = self.role

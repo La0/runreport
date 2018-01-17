@@ -100,7 +100,7 @@ urlpatterns = [
         name="club-admin-list"),
 
     # With an existing club
-    url(r'^(?P<slug>[\w\_\-]+)', include(club_patterns)),
+    url(r'^(?P<slug>[\w\_\-]+)/', include(club_patterns)),
 
     # Landing page
     url(r'^', ClubInviteAsk.as_view(), name="club-landing"),

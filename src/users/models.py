@@ -341,7 +341,7 @@ class Athlete(AthleteBase):
         Load privacy rights for a visitor toward this user
         '''
         privacy = []
-        fields = self.local_privacy.keys()
+        fields = list(self.local_privacy.keys())
 
         # Super user views everything
         if visitor.is_superuser:
@@ -362,9 +362,15 @@ class Athlete(AthleteBase):
                     'prospect', 'archive', ] or []
                 if m.role in trainers_roles:
                     privacy = fields  # all access
-                    privacy += ['comments_public', 'comments_private',
-                                'comments_week', ]  # and full comments access
-                    privacy += ['trainer', ]  # and has trainer right
+                    privacy += [
+                        # and full comments access
+                        'comments_public',
+                        'comments_private',
+                        'comments_week',
+
+                        # and has trainer right
+                        'trainer',
+                    ]
                     return privacy
 
         # When visitor is a friend, he has almost full access
