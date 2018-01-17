@@ -48,7 +48,9 @@ class SportSessionForm(forms.ModelForm):
         }
 
     def __init__(self, default_sport=None, day_date=None, *args, **kwargs):
-        self.day_date = day_date
+        self.date = day_date
+        assert self.date is not None, \
+            'Missing day date'
         super(SportSessionForm, self).__init__(*args, **kwargs)
 
         # Load only sports of depth 1 for this form
@@ -72,7 +74,7 @@ class SportSessionForm(forms.ModelForm):
                 raise forms.ValidationError(
                     _('You must select a status for your training plan.'))
             today = date.today()
-            if today >= self.day_date and status == 'applied':
+            if today >= self.date and status == 'applied':
                 raise forms.ValidationError(
                     _('You must validate your training plan (select Done or Missed).'))
 
@@ -96,7 +98,7 @@ class SportSessionForm(forms.ModelForm):
 
         if (
             data['type'] == 'training' or
-            (data['type'] == 'race' and self.day_date <= date.today())
+            (data['type'] == 'race' and self.date <= date.today())
         ) \
                 and data.get('plan_status') != 'failed' \
                 and 'distance' in data and data['distance'] is None \
@@ -108,7 +110,7 @@ class SportSessionForm(forms.ModelForm):
         # For past sessions
         # Not on rest
         # Not on missed plan session
-        if self.day_date <= date.today() and not data.get(
+        if self.date <= date.today() and not data.get(
                 'note') and data['type'] != 'rest' and data.get('plan_status') in ('', 'applied', 'done', ):
             raise forms.ValidationError(
                 _('You must specify a difficulty note.'))

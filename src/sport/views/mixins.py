@@ -5,6 +5,7 @@ from helpers import week_to_date, date_to_day, date_to_week
 from sport.models import SportWeek, SportDay, SportSession, SESSION_TYPES, RaceCategory
 from sport.forms import SportSessionForm
 from django.db.models import Sum, Count
+import datetime
 
 
 class CurrentWeekMixin(LoginRequired):
@@ -192,20 +193,26 @@ class CalendarDay(object):
     def get_object(self):
 
         # Load day, report and eventual session
-        self.day = date(int(self.get_year()), int(
-            self.get_month()), int(self.get_day()))
-        week, year = date_to_week(self.day)
+        self.date = date(
+            int(self.get_year()),
+            int(self.get_month()),
+            int(self.get_day()),
+        )
+        week, year = date_to_week(self.date)
         self.week, created = SportWeek.objects.get_or_create(
-            user=self.get_user(), year=year, week=week)
+            user=self.get_user(),
+            year=year,
+            week=week,
+        )
         try:
-            self.object = SportDay.objects.get(week=self.week, date=self.day)
+            self.object = SportDay.objects.get(week=self.week, date=self.date)
         except BaseException:
-            self.object = SportDay(week=self.week, date=self.day)
+            self.object = SportDay(week=self.week, date=self.date)
         return self.object
 
     def get_context_data(self, **kwargs):
         context = super(CalendarDay, self).get_context_data(**kwargs)
-        context['day_date'] = self.day
+        context['day_date'] = self.date
         context['report'] = self.week
         context['session_types'] = SESSION_TYPES
         context['day'] = self.object
@@ -267,6 +274,7 @@ class SportSessionForms(object):
         '''
         Build SportSessionForm instances for a day
         '''
+        assert isinstance(date, datetime.date)
         if self.get_user() != self.request.user:
             return []
 
@@ -278,13 +286,14 @@ class SportSessionForms(object):
             sessions = day.sessions.all().order_by('created')
             sessions = sessions.prefetch_related(
                 'sport', 'track', 'plan_session', 'plan_session__plan_session__plan')
-            return [SportSessionForm(
-                default_sport, date, post_data, instance=s) for s in sessions]
+            return [
+                SportSessionForm(default_sport, date, post_data, instance=s)
+                for s in sessions
+            ]
 
         # At least one empty form
         instance = SportSession(sport=default_sport)
-        return [SportSessionForm(
-            default_sport, date, post_data, instance=instance)]
+        return [SportSessionForm(default_sport, date, post_data, instance=instance)]
 
 
 class AthleteRaces(object):

@@ -57,7 +57,7 @@ urlpatterns = [
         name="report-month"),
 
     # Day
-    url(r'^calendar/(?P<year>\d{4})/(?P<month>\d{1,2})/(?P<day>\d{1,2})',
+    url(r'^calendar/(?P<year>\d{4})/(?P<month>\d{1,2})/(?P<day>\d{1,2})/',
         include(day_patterns)),
 
     # Calendar year

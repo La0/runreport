@@ -18,20 +18,15 @@ class SportSessionView(CalendarSession, JsonResponseMixin,
             'instance': self.session,
             'default_sport': self.request.user.default_sport,
             'data': self.request.method == 'POST' and self.request.POST or None,
-            'day_date': self.day,
+            'day_date': self.date,
         }
 
     def get_context_data(self, extra=None, *args, **kwargs):
-        context = super(
-            SportSessionView,
-            self).get_context_data(
-            *
-            args,
-            **kwargs)
+        context = super(SportSessionView, self).get_context_data()
         context['now'] = datetime.now()
 
         # Url for edit or add ?
-        args = [self.day.year, self.day.month, self.day.day]
+        args = [self.date.year, self.date.month, self.date.day]
         base = 'sport-session-add'
         if self.session.pk:
             args += [self.session.pk, ]

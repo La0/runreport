@@ -15,7 +15,7 @@ class RunCalendarDay(SportSessionForms, CalendarDay, DateDetailView):
     def get_context_data(self, *args, **kwargs):
         context = super(RunCalendarDay, self).get_context_data(*args, **kwargs)
         context['now'] = datetime.now()
-        context['forms'] = self.get_sessions_forms(self.day, self.object)
+        context['forms'] = self.get_sessions_forms(self.date, self.object)
 
         # Previous week sunday
         week = self.object.week
@@ -39,7 +39,7 @@ class RunCalendarDay(SportSessionForms, CalendarDay, DateDetailView):
         user = self.get_user()
         if user == self.request.user:
             friends = SportSession.objects.filter(
-                day__date=self.day, day__week__user__in=user.friends.all())
+                day__date=self.date, day__week__user__in=user.friends.all())
             friends = friends.prefetch_related(
                 'day', 'day__week', 'sport', 'day__week__user', 'track')
             friends = friends.order_by('day__week__user__first_name')
