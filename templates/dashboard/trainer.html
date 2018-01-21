@@ -32,14 +32,12 @@
 
     {% if club.manager == user %}
       {# Add athletes #}
-      {% if club.has_full_access %}
       <li>
         <i class="icon-plus text-muted"></i>
         <a href="{{ url('club-manage', club.slug) }}#invites">
           {{ _('Add athletes') }}
         </a>
       </li>
-      {% endif %}
 
       {# Club Admin #}
       <li>
@@ -51,11 +49,7 @@
     {# Plans #}
     <li>
       <i class="icon-plan-session text-muted"></i>
-      {% if club.has_full_access %}
       <a href="{{ PLANS_URL }}">{{ _('Training plans') }}</a>
-      {% else %}
-      <span class="text-muted do-tooltip" title="{{ _('Only available for premium clubs.') }}">{{ _('Training plans') }}</span>
-      {% endif %}
     </li>
 
     {# Athlete Dashboard #}
@@ -65,26 +59,6 @@
     </li>
 
   </ol>
-
-  {% if club.manager == user and not club.has_full_access %}
-  <div class="alert alert-warning">
-    <h4>
-      <i class="icon-premium"></i>
-      {{ _('Club %s is in limited access') % club.name }}
-    </h4>
-    <p class="pull-right">
-      <a href="{{ url('club-manage', club.slug) }}" class="btn btn-danger">
-        {{ _('Manage my club') }}
-        <i class="icon-right-open"></i>
-      </a>
-    </p>
-    <p>
-      {{ _('Your club has expired the free trial period, and is now in a limited access period.') }}
-      <br />
-      {{ _('You need to activate a credit card for this club.') }}
-    </p>
-  </div>
-  {% endif %}
 
   {% if demo or prospects %}
   <div class="row">

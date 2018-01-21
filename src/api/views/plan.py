@@ -1,7 +1,6 @@
 from __future__ import absolute_import
 from django.db.models import Max
 from api.serializers import PlanSerializer, PlanSessionSerializer, PlanAppliedSerializer, MessageSerializer
-from api.permissions import ClubPremiumPermission
 from rest_framework import viewsets, views, response
 from django.core.exceptions import PermissionDenied
 from users.models import Athlete
@@ -12,7 +11,6 @@ from messages.models import Conversation, TYPE_PLAN_SESSION
 
 class PlanViewSet(viewsets.ModelViewSet):
     serializer_class = PlanSerializer
-    permission_classes = (ClubPremiumPermission, )
 
     def get_queryset(self):
         plans = self.request.user.plans.all()
@@ -24,7 +22,6 @@ class PlanViewSet(viewsets.ModelViewSet):
 
 class PlanSessionViewSet(viewsets.ModelViewSet):
     serializer_class = PlanSessionSerializer
-    permission_classes = (ClubPremiumPermission, )
 
     def get_plan(self):
         return self.request.user.plans.get(pk=self.kwargs['plan_pk'])
@@ -37,7 +34,6 @@ class PlanPublishView(PlanMixin, views.APIView):
     '''
     Publish a plan to a list of users
     '''
-    permission_classes = (ClubPremiumPermission, )
 
     def post(self, request, *args, **kwargs):
         self.load_plan()
@@ -61,7 +57,6 @@ class PlanCopyView(PlanMixin, views.APIView):
     '''
     Copy a plan
     '''
-    permission_classes = (ClubPremiumPermission, )
 
     def post(self, request, *args, **kwargs):
         self.load_plan()
@@ -76,7 +71,6 @@ class PlanAppliedViewSet(PlanMixin, viewsets.ModelViewSet):
     Delete a plan application
     '''
     serializer_class = PlanAppliedSerializer
-    permission_classes = (ClubPremiumPermission, )
 
     def get_queryset(self):
         self.load_plan()
@@ -88,7 +82,6 @@ class PlanMessagesViewSet(PlanSessionMixin, viewsets.ModelViewSet):
     Manages messages in a plan (future private comments)
     '''
     serializer_class = MessageSerializer
-    permission_classes = (ClubPremiumPermission, )
 
     def get_queryset(self):
         self.load_session()

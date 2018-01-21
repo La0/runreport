@@ -11,9 +11,6 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.utils.functional import cached_property
 from payments import get_api
-from mangopaysdk.entities.userlegal import UserLegal
-from mangopaysdk.entities.wallet import Wallet
-from mangopaysdk.types.address import Address
 from datetime import timedelta
 from django_countries.fields import CountryField
 import time
@@ -39,11 +36,6 @@ class Club(models.Model):
     zipcode = models.CharField(_('Zip code'), max_length=10)
     city = models.CharField(_('City'), max_length=250)
     country = CountryField(default='FR', verbose_name=_('Country'))
-
-    # Payment
-    mangopay_id = models.CharField(max_length=50, null=True, blank=True)
-    wallet_id = models.CharField(max_length=50, null=True, blank=True)
-    card_id = models.CharField(max_length=50, null=True, blank=True)
 
     # Demo dummy club ?
     demo = models.BooleanField(default=False)
@@ -169,98 +161,6 @@ class Club(models.Model):
 
         return period
 
-    def _has_full_access(self):
-        '''
-        A club is in full access, if:
-         * it's in free trial period
-         * it's in a paying period
-        '''
-        return True  # yay eveything is free !!
-
-        period = self.current_period
-        if period and period.is_free:
-            return True
-        return bool(period and (period.status in ('active', 'paid', )))
-
-    # Django disallows direct property
-    # use in list displays
-    # Cf
-    # https://stackoverflow.com/questions/12842095/how-to-display-a-boolean-property-in-the-django-admin
-    _has_full_access.boolean = True  # for admin display
-
-    @cached_property
-    def has_full_access(self):
-        return self._has_full_access()
-
-    @property
-    def has_valid_card(self):
-        '''
-        Club can pay for its premium actions ?
-        # TODO: regularly check card validity
-        '''
-        return self.mangopay_id is not None and self.card_id is not None
-
-    def sync_mangopay(self):
-        '''
-        Create user & wallet on mangopay
-        '''
-
-        if self.mangopay_id and self.wallet_id:
-            raise Exception('Mangopay account & wallet exist')
-
-        # Sync Mangopay account
-        if not self.mangopay_id:
-            # Build address
-            address = Address()
-            address.AddressLine1 = self.address
-            address.City = self.city
-            address.Country = self.country.code
-            address.PostalCode = self.zipcode
-
-            # Build legal user
-            rr_user = UserLegal()
-            rr_user.Name = self.name
-            rr_user.LegalPersonType = 'ORGANIZATION'  # Support ORGANIZATION ?
-            rr_user.LegalRepresentativeFirstName = self.manager.first_name
-            rr_user.LegalRepresentativeLastName = self.manager.last_name
-            rr_user.LegalRepresentativeAddress = address
-            rr_user.LegalRepresentativeEmail = self.manager.email
-            bday = self.manager.birthday
-            rr_user.LegalRepresentativeBirthday = int(time.mktime(
-                (bday.year, bday.month, bday.day, 0, 0, 0, -1, -1, -1)))
-            rr_user.LegalRepresentativeNationality = self.manager.nationality.code
-            rr_user.LegalRepresentativeCountryOfResidence = self.manager.country.code
-            rr_user.Email = self.manager.email
-
-            # Finally create the user
-            api = get_api()
-            u = api.users.Create(rr_user)
-            self.mangopay_id = u.Id
-
-        # Sync Mangopay wallet
-        if not self.wallet_id:
-            wallet = Wallet()
-            wallet.Owners = [self.mangopay_id, ]
-            wallet.Description = 'Club %s wallet' % (self.name, )
-            wallet.Currency = 'EUR'  # always in euros
-
-            # Create the wallet
-            api = get_api()
-            w = api.wallets.Create(wallet)
-            self.wallet_id = w.Id
-
-        # Save changes
-        self.save()
-
-    def build_card_hash(self, card_id):
-        '''
-        Build a secure hash for 3DS transactions
-        '''
-        import hashlib
-        contents = '3ds:%s:%d:%s' % (settings.SECRET_KEY, self.id, card_id)
-        h = hashlib.md5(contents)
-        return unicode(h.hexdigest()[0:8])
-
     def update_period(self):
         '''
         Update roles & level for current period
@@ -279,63 +179,6 @@ class Club(models.Model):
         period.save()
 
         return period
-
-    def init_payment(self, amount, card_id=None):
-        '''
-        Create a new Mangopay PayIn
-        for specified amount in euros
-        '''
-        from django.urls import reverse
-        from django.conf import settings
-        from payments import get_api
-        from payments.account import RRAccount
-        from mangopaysdk.entities.payin import PayIn
-        from mangopaysdk.tools.enums import CardType
-        from mangopaysdk.types.money import Money
-        from mangopaysdk.types.payinpaymentdetailscard import PayInPaymentDetailsCard
-        from mangopaysdk.types.payinexecutiondetailsdirect import PayInExecutionDetailsDirect
-
-        if card_id is None:
-            # Use saved card
-            card_id = self.card_id
-
-        # Setup entry auth fee
-        debited = Money()
-        debited.Amount = amount * 100  # in cents
-        debited.Currency = 'EUR'
-
-        # No auto fee here
-        no_fee = Money()
-        no_fee.Amount = 0
-        no_fee.Currency = 'EUR'
-
-        # Create a payIn
-        return_url = reverse(
-            'payment-3ds',
-            args=(
-                self.slug,
-                card_id,
-                self.build_card_hash(card_id)))
-        return_url = '%s%s' % (settings.MANGOPAY_RETURN_URL, return_url)
-        rr = RRAccount()  # receiver
-        payin = PayIn()
-        payin.PaymentType = 'CARD'
-        payin.PaymentDetails = PayInPaymentDetailsCard()
-        payin.PaymentDetails.CardType = CardType.CB_VISA_MASTERCARD
-        payin.ExecutionDetails = PayInExecutionDetailsDirect()
-        payin.ExecutionDetails.CardId = card_id
-        payin.ExecutionDetails.SecureModeReturnURL = return_url
-        payin.AuthorId = self.mangopay_id
-        payin.CardId = card_id
-        payin.CreditedUserId = rr.Id
-        payin.CreditedWalletId = rr.wallet['Id']
-        payin.DebitedFunds = debited
-        payin.Fees = no_fee
-        payin.SecureMode = 'DEFAULT'  # Use default (below 100 euros, no 3Ds)
-
-        # Process request
-        api = get_api()
-        return api.payIns.Create(payin)
 
 
 class ClubMembership(models.Model):

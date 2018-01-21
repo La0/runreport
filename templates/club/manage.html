@@ -21,14 +21,12 @@
         {{ _('Links') }}
       </a>
     </li>
-    {% if club.has_full_access %}
     <li>
       <a href="#invites" role="tab" data-toggle="tab">
         <i class="icon-mail"></i>
         {{ _('Invites') }}
       </a>
     </li>
-    {% endif %}
   </ul>
 
 
@@ -106,7 +104,6 @@
     </div>
 
 
-    {% if club.has_full_access %}
     <div class="tab-pane" id="invites">
       <h3>{{ _('Add athletes to your club') }}</h3>
 
@@ -167,7 +164,6 @@
           {% endfor %}
         </table>
       </div>
-      {% endif %}
 
     </div>
   </div>

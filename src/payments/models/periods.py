@@ -174,11 +174,8 @@ class PaymentPeriod(models.Model):
         '''
         Pay the subscription, automatically from task
         '''
-
         # Create payment on MangoPay
         try:
-            if not self.club.has_valid_card:
-                raise Exception('Missing valid card')
 
             logger.info(
                 'Create payment for %s (%f euros) - sub #%d' %

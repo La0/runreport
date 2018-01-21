@@ -18,9 +18,9 @@ urlpatterns = patterns('',
                            name='payment-notification'),
 
                        # Pay a specified period (error management)
-                       url(r'^pay/(?P<pk>\d+)/',
-                           PaymentPeriodView.as_view(),
-                           name='payment-period'),
+                       #url(r'^pay/(?P<pk>\d+)/',
+                       #    PaymentPeriodView.as_view(),
+                       #    name='payment-period'),
 
                        # Download the pdf of a bill
                        url(r'^export/(?P<pk>\d+)/',

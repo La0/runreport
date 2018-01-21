@@ -12,7 +12,7 @@ class ClubLinkAdmin(admin.TabularInline):
 
 
 class ClubAdmin(admin.ModelAdmin):
-    list_display = ('name', 'manager', '_has_full_access')
+    list_display = ('name', 'manager')
     inlines = []
     inlines = (
         PaymentTransactionInline,

@@ -119,7 +119,7 @@
                       </a>
                     </li>
                     {% endfor %}
-                    {% if club.has_full_access and (user == club.manager or user.is_staff) %}
+                    {% if (user == club.manager or user.is_staff) %}
                     <li>
                       <a href="{{ url('club-member-trainers', club.slug, member.username) }}" class="modal-action btn btn-xs btn-info btn-light">
                         <i class="icon-plus"></i>
