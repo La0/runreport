@@ -1,3 +1,3 @@
-from .edit import PostCreateView, PostEditView, PostListView, PostSessionsView
-from .medias import PostUploadView, PostMediaDeleteView
+from .edit import PostListView, PostSessionsView
+from .medias import PostMediaDeleteView
 from .view import PostView

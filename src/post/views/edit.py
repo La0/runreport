@@ -1,6 +1,6 @@
-from django.views.generic import UpdateView, CreateView, ListView, DetailView
+from django.views.generic import ListView, DetailView
 from .mixins import PostWriterMixin
-from runreport.mixins import JsonResponseMixin, JSON_OPTION_ONLY_AJAX
+from runreport.mixins import JsonResponseMixin
 from sport.models import SportSession
 from post.forms import YearMonthForm
 from datetime import date
@@ -9,14 +9,6 @@ from datetime import date
 class PostListView(PostWriterMixin, ListView):
     context_object_name = 'posts'
     template_name = 'post/list.html'
-
-
-class PostCreateView(PostWriterMixin, JsonResponseMixin, CreateView):
-    json_options = [JSON_OPTION_ONLY_AJAX, ]
-
-
-class PostEditView(PostWriterMixin, JsonResponseMixin, UpdateView):
-    json_options = [JSON_OPTION_ONLY_AJAX, ]
 
 
 class PostSessionsView(PostWriterMixin, JsonResponseMixin, DetailView):
