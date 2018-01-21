@@ -110,7 +110,7 @@
         <h4>{{ _('Images') }}</h4>
         {% for m in medias %}
         <p class="col-sm-4 col-xs-6">
-          <a href="{{ m.parent.url }}" data-lightbox="post" data-title="{{ m.fullname }}">
+          <a href="{{ m.parent.url }}" target="_blank" data-title="{{ m.fullname }}">
             <img src="{{ m.url }}" class="img-responsive" />
           </a>
         </p>
