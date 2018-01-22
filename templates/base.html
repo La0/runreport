@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
-<head prefix="og: http://ogp.me/ns#">
+<html lang="fr
 	<meta charset="utf-8">
 	<title>{% if DEBUG %}[Dev] {% endif %}{% if page_title %}{{ page_title }} - RunReport.fr{% else %}RunReport.fr{% endif %}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,8 +8,6 @@
   <meta http-equiv="X-UA-Compatible" content="IE=9">
   {% block meta %}{% endblock %}
 
-  {% compress css %}
-	<link type="text/css" href="{{ static('bootswatch-dist/css/bootstrap.css') }}" rel="stylesheet">
 	<link type="text/css" href="{{ static('bootstrap-modal/css/bootstrap-modal-bs3patch.css') }}" rel="stylesheet">
 	<link type="text/css" href="{{ static('bootstrap-modal/css/bootstrap-modal.css') }}" rel="stylesheet">
 	<link type="text/css" href="{{ static('leaflet/dist/leaflet.css') }}" rel="stylesheet">
@@ -18,8 +15,8 @@
 	<link type="text/css" href="{{ static('quill/dist/quill.base.css') }}" rel="stylesheet">
 	<link type="text/css" href="{{ static('css/runreport-embedded.css') }}" rel="stylesheet">
 	<link type="text/css" href="{{ static('css/animation.css') }}" rel="stylesheet">
-	<link type="text/x-scss" href="{{ static('scss/main.scss') }}" rel="stylesheet">
-  {% endcompress %}
+
+  {{ render_bundle('main', 'css') }}
 </head>
 <body class="{% if user.demo %}demo{% endif %}">
 	<header class="navbar navbar-default navbar-fixed-top">
@@ -121,8 +118,6 @@
 		</div>
 	</footer>
 
-  {% compress js %}
-	<script type="text/javascript" src="{{ static('jquery/dist/jquery.js') }}"></script>
 	<script type="text/javascript" src="{{ static('bootswatch-dist/js/bootstrap.js') }}"></script>
 	<script type="text/javascript" src="{{ static('bootstrap-modal/js/bootstrap-modalmanager.js') }}"></script>
 	<script type="text/javascript" src="{{ static('bootstrap-modal/js/bootstrap-modal.js') }}"></script>
@@ -133,16 +128,9 @@
   <script type="text/javascript" src="{{ static('flot/jquery.flot.stack.js') }}" ></script>
 	<script type="text/javascript" src="{{ static('js/config.js') }}" ></script>
 	<script type="text/javascript" src="{{ static('raphael/raphael.js') }}" ></script>
-	<script type="text/javascript" src="{{ static('js/csrf.js') }}" ></script>
-	<script type="text/javascript" src="{{ static('js/modal.js') }}" ></script>
-	<script type="text/javascript" src="{{ static('js/tracks.js') }}" ></script>
-  <script type="text/javascript" src="{{ static('js/stats.js') }}" ></script>
-	<script type="text/javascript" src="{{ static('js/dashboard.js') }}" ></script>
-  <script type="text/javascript" src="{{ static('js/rating.js') }}"></script>
-  <script type="text/javascript" src="{{ static('js/gear.js') }}"></script>
-  {% endcompress %}
 	{% block js %}{% endblock %}
-  {# Compress fails with this file :/ #}
 
+
+  {{ render_bundle('main', 'js') }}
 </body>
 </html>

@@ -86,18 +86,14 @@ STATIC_URL = '/static/'
 # Additional locations of static files
 STATICFILES_DIRS = (
     os.path.join(ROOT, 'front'),
-    os.path.join(ROOT, 'bower_components'),
 )
 
-# List of finder classes that know how to find static files in
-# various locations.
-STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-
-    # Compressor media finder
-    'compressor.finders.CompressorFinder',
-)
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'bundles/',
+        'STATS_FILE': os.path.join(ROOT, 'front/webpack-stats.json'),
+    }
+}
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'nq!g^hyy-_l!*apn3302^5(jwt$t-&amp;!fo4my*^u3j!zj7=if%r'
@@ -139,7 +135,7 @@ TEMPLATES = [
                 'django_jinja.builtins.extensions.UrlsExtension',
                 'django_jinja.builtins.extensions.StaticFilesExtension',
                 'django_jinja.builtins.extensions.DjangoFiltersExtension',
-                'compressor.contrib.jinja2ext.CompressorExtension',
+                'webpack_loader.contrib.jinja2ext.WebpackExtension',
             ],
         },
     },
@@ -184,6 +180,7 @@ INSTALLED_APPS = (
     'friends',
     'events',
     'post',
+    'webpack_loader',
     'api',  # Api code
     'payments',  # Payments app
     'badges',  # Badges app
@@ -192,7 +189,6 @@ INSTALLED_APPS = (
     #'vinaigrette', # Model translations
     'rest_framework',  # Api provider
     'django_countries',  # Countries selection
-    'compressor',
 )
 
 # For auto login on user create
@@ -376,20 +372,6 @@ CELERY_TASK_PUBLISH_RETRY_POLICY = {
     'interval_max': 0.5,
 }
 
-# Js/Css Compressor
-COMPRESS_ROOT = STATIC_ROOT
-COMPRESS_URL = STATIC_URL
-COMPRESS_OUTPUT_DIR = '/min'  # must be a relative dir to
-COMPRESS_CSS_FILTERS = [
-    'compressor.filters.css_default.CssAbsoluteFilter',  # default: absolute url()
-    'compressor.filters.cssmin.CSSMinFilter',  # css minifier
-]
-COMPRESS_JS_FILTERS = [
-    'compressor.filters.jsmin.JSMinFilter',
-]
-COMPRESS_PRECOMPILERS = (
-    ('text/x-scss', 'sass --scss {infile} {outfile}'),
-)
 
 # Dev cache in files
 CACHES = {
@@ -492,21 +474,6 @@ else:
     # Secure csrf
     CSRF_COOKIE_SECURE = True
 
-
-# Setup offline compression
-# through COMPRESS env variable
-if os.getenv('COMPRESS'):
-    def COMPRESS_JINJA2_GET_ENVIRONMENT():
-        from django.template import engines
-        return engines['jinja2'].env
-
-    COMPRESS_ENABLED = True
-    COMPRESS_OFFLINE = True
-
-    # Use prod cdn settings
-    STATIC_URL = '%s/static/' % CDN_URL
-    MEDIA_URL = '%s/medias/' % CDN_URL
-    COMPRESS_URL = '%s/static/' % CDN_URL
 
 # Define Version
 VERSION = '1.0'

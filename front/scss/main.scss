@@ -1,3 +1,8 @@
+// Build bootstrap
+@import '../node_modules/bootswatch/dist/flatly/_variables.scss';
+@import '../node_modules/bootstrap/scss/bootstrap';
+@import '../node_modules/bootswatch/dist/flatly/_bootswatch.scss';
+
 //colors
 $black_60: rgba(0, 0, 0, 0.6);
 $web_orange: orange;

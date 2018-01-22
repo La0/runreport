@@ -20,3 +20,6 @@ current_prod.tar
 front/scss/local_settings.scss
 archives
 .mangopay
+front/bundles/
+front/node_modules/
+front/webpack-stats.json
