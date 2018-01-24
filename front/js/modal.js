@@ -1,4 +1,6 @@
 var $ = require('jquery');
+var jQuery = require('jquery');
+require('bootstrap-datepicker');
 
 module.exports = function(){
   // Load a box, yks style !

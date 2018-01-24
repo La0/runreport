@@ -20,13 +20,12 @@ var stats = require('js/stats.js');
 var dashboard = require('js/dashboard.js');
 var rating = require('js/rating.js');
 var gear = require('js/gear.js');
-require('js/config.js');
 
 // Boot jquery
 $(function(){
 	console.info('Booting jQuery...');
 	csrf();
-	//modal(); // disabled for now
+	modal();
 	tracks();
 	//stats(); // not a function
 	//dashboard(); // not a function

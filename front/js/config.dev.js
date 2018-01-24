@@ -1,3 +1,3 @@
-var rr_config = {
+module.exports = {
   csrf_cookie : 'runreport.dev.csrf',
 };
