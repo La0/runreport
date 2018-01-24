@@ -1,16 +1,11 @@
-nav {
-  .navbar-brand {
-    padding: 0 0 0 5px;
-    img {
-      max-height: 60px;
-      width: 100%;
-      &.line {
-        min-width: 309px;
-      }
-      &.block {
-        min-width: 70px;
-      }
-    }
+nav.navbar {
+  padding: 0;
+  height: $navbar_height;
+  a.logo {
+    margin: 0;
+    width: 100px;
+    height: $navbar_height * 0.95;
+    background: url(../img/logo_bloc.svg) no-repeat center center transparent;
   }
   li {
     &.debug a {
@@ -21,9 +16,7 @@ nav {
       padding-right: 2px;
     }
   }
-  .navbar-fixed-top:hover .navbar-brand i::before {
-    animation: logoAnim 2s ease;
-  }
+
 	&.nav li.notifications {
 		a {
 			padding-right: 0;

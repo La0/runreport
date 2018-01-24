@@ -42,6 +42,10 @@ $color_mercury_approx: #e7e7e7;
 $color_athens_gray_approx: #ecf0f1;
 $color_tapa_approx: #777;
 
+// sizes
+$navbar_height: 60px;
+$footer_height: 30px;
+
 
 //fonts
 $font_0: Lato;
@@ -64,7 +68,7 @@ $url_back: url(#{$cdn_url}/static/img/landing/back.png);
 //@extend-elements
 //original selectors
 //img.avatar.small, .avatar img.small
-%extend_1 {
+%square_image {
 	width: 60px;
 	height: 60px;
 	vertical-align: middle;
@@ -74,22 +78,15 @@ $url_back: url(#{$cdn_url}/static/img/landing/back.png);
 @import "scss/navbar.scss";
 @import "scss/footer.scss";
 
-/*
+// General layout
 html {
-	height: 100%;
+  position: relative;
+  min-height: 100%;
 }
 body {
-	font-family: $font_0, $font_1, $font_2, $font_3, $font_4;
-	min-height: 100%;
-	//Instead of the line below you could use @includebox-sizing($bs)
-	box-sizing: padding-box;
-	padding: 75px 0 31px;
-	position: relative;
-	&.demo {
-		padding-top: 100px;
-	}
+  margin-bottom: $footer_height;
 }
-*/
+
 h1 {
 	font-weight: 700;
 }
@@ -112,26 +109,6 @@ ul {
 	&.nopill {
 		list-style-type: none;
 		padding-left: 5px;
-	}
-}
-@-webkit-keyframes logoAnim {
-	from {
-		//Instead of the line below you could use @includetransform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
-		transform: rotateY(0deg);
-	}
-	to {
-		//Instead of the line below you could use @includetransform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
-		transform: rotateY(360deg);
-	}
-}
-@keyframes logoAnim {
-	from {
-		//Instead of the line below you could use @includetransform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
-		transform: rotateY(0deg);
-	}
-	to {
-		//Instead of the line below you could use @includetransform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
-		transform: rotateY(360deg);
 	}
 }
 div {
@@ -573,7 +550,7 @@ img {
 	}
 	&.avatar {
 		&.small {
-			@extend %extend_1;
+			@extend %square_image;
 		}
 		&.tiny {
 			width: 40px;
@@ -903,7 +880,7 @@ header div.demo-warning {
 	list-style-type: none;
 }
 .avatar img.small {
-	@extend %extend_1;
+	@extend %square_image;
 }
 div.trainers {
   // In trainers form
