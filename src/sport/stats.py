@@ -1,9 +1,9 @@
 from django.core.cache import cache
-from django.db.models import Count, Sum
+from django.db.models import Count, Sum, Min
 from django.utils.functional import cached_property
 import sport
 from calendar import monthrange
-from datetime import date
+from datetime import timedelta, date
 from helpers import week_to_date
 import math
 
@@ -149,3 +149,117 @@ class StatsMonth(StatsCached):
         # End Date
         _, last_day = monthrange(self.year, self.month)
         return date(self.year, self.month, last_day)
+
+
+class SportStats(object):
+    """
+    Simple stats user/sport/session calculator
+    """
+
+    def __init__(self, user, year=None, use_all_sessions=False):
+        '''
+        Setup date boundaries for dataset
+        By default, last 12 months
+        '''
+        self.user = user
+        self.date = date.today()
+
+        # List available years
+        limits = sport.models.SportDay.objects.filter(week__user=self.user).aggregate(min=Min('date'))
+        self.years = limits['min'] and \
+            reversed(range(limits['min'].year, self.date.year + 1)) or \
+            (self.date.year + 1,)
+
+        year_delta = timedelta(days=365)
+        if year is not None:
+            # Full Year
+            year = int(year)
+            start = date(year=year, month=1, day=1)
+            end = start + year_delta
+            self.date_range = 'year'
+            if year not in self.years or year <= 1900:  # strftime does not support below 1900
+                raise Exception('Invalid year {}'.format(year))
+
+        elif use_all_sessions is True:
+            # All the months !
+            end = self.date
+            start = limits['min'] or date(year=self.date.year, month=1, day=1)
+            self.date_range = 'all'
+
+        else:
+            # Default: last 12 months
+            end = self.date
+            start = end - year_delta
+            self.date_range = 'last'
+
+        # Load the StatsMonths
+        d = start
+        self.months = []
+        sports = []
+        while d < end:
+            stat = StatsMonth(self.user, d.year, d.month)
+            if stat.sports:
+                sports += stat.sports.keys()
+            self.months.append(stat)
+
+            # Switch to next month
+            _, nb_days = monthrange(d.year, d.month)
+            d += timedelta(days=nb_days - d.day + 1)
+
+        # Unique sports
+        self.sports = sport.models.Sport.objects.filter(pk__in=set(sports))
+
+    def get_sports(self):
+        """
+        List all the sport usage on the period
+        """
+        def _get_nb(month, sport):
+            if not month.sports or sport.pk not in month.sports:
+                return 0
+            return month.sports[sport.pk]['nb'] or 0
+
+        return [
+            {
+                'label': sport.name,
+                'data' : [
+                    (
+                        month.timestamp * 1000,
+                        _get_nb(month, sport),
+                    )
+                    for month in self.months
+                ]
+            }
+            for sport in self.sports
+        ]
+
+    def get_distances(self):
+        """
+        List all distances on the period
+        """
+        return [
+            [
+                (
+                    month.timestamp * 1000,
+                    month.distance or 0,
+                )
+            ]
+            for month in self.months
+        ]
+
+    def get_hours(self):
+        """
+        List all total hours on the period
+        """
+        return [
+            [
+                (
+                    month.timestamp * 1000,
+                    month.hours or 0,
+                )
+            ]
+            for month in self.months
+        ]
+#
+#  // Build months urls
+#  var urls = [{% for m in months %}'{{ url(url_month, *url_args + [m.year, m.month])}}',{% endfor %}];
+#

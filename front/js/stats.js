@@ -1,4 +1,6 @@
 var $ = require('jquery');
+var jQuery = require('jquery');
+require('jquery-flot');
 
 var months = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Décembre'];
 var months_short = ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil", "Aout", "Sep", "Oct", "Nov", "Déc"];
@@ -87,3 +89,8 @@ function plot_sports(sports){
   });
 
 }
+
+module.exports = {
+  plot_sports: plot_sports,
+  plot_hours_distances: plot_hours_distances,
+};

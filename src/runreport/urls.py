@@ -47,6 +47,7 @@ urlpatterns = [
 
     # API
     url(r'^api/v1/', include('api.urls', namespace='api')),
+    url(r'^api/v2/', include('api.urls_v2', namespace='api-v2')),
 ]
 
 # Direct admin and static medias

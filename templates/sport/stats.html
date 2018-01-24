@@ -2,32 +2,6 @@
 
 {% set page_title = _('Stats') %}
 
-{% block js %}
-<script type="text/javascript">
-$(function(){
-
-  // Setup data sets
-  var distances = [{% for m in months %}[{{m.timestamp*1000}}, {{m.distance or '0'}}],{% endfor %}];
-  var hours     = [{% for m in months %}[{{m.timestamp*1000}}, {{m.hours or '0'}}],{% endfor %}];
-  var sports    = [
-    {% for sport in sports %}
-    {
-      label : '{{sport.name}}',
-      data : [{% for m in months %}[{{m.timestamp*1000}}, {% if m.sports[sport.pk] %}{{m.sports[sport.pk]['nb'] or 0}}{% else %}0{% endif %}],{% endfor %}],
-    },
-    {% endfor %}  
-  ];
-
-  // Build months urls
-  var urls = [{% for m in months %}'{{ url(url_month, *url_args + [m.year, m.month])}}',{% endfor %}];
-
-  // Plot charts
-  plot_hours_distances(hours, distances, urls);
-  plot_sports(sports);
-});
-</script>
-{% endblock %}
-
 {% block content %}
 <div class="container">
   {% if date_range == 'year' %}
@@ -66,7 +40,7 @@ $(function(){
     <div class="tooltip"></div>
 
     <h3>{{ _('Sessions by sports') }}</h3>
-    <div class="sports"></div>
+    <Stats-Sports :user="'{{ user.username }}'"></Stats-Sports>
   </div>
   
 </div>

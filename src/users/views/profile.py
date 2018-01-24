@@ -3,15 +3,13 @@ from django.urls import reverse
 from django.db.models import Count, Max, Q
 from users.views.mixins import ProfilePrivacyMixin
 from sport.views.mixins import AthleteRaces
-from sport.views.stats import SportStatsMixin
 from sport.models import SportSession
 from datetime import date
 import operator
 from functools import reduce
 
 
-class PublicProfile(ProfilePrivacyMixin, DetailView,
-                    SportStatsMixin, AthleteRaces):
+class PublicProfile(ProfilePrivacyMixin, DetailView, AthleteRaces):
     template_name = 'users/profile/index.html'
     context_object_name = 'member'
 
