@@ -5,7 +5,9 @@ require('scss/main.scss');
 require('css/runreport-embedded.css');
 require('css/animation.css');
 
-// TODO: add bootstrap datepicker
+// Bootstrap deps
+require('bootstrap/dist/js/bootstrap.js');
+
 
 // Load JS deps
 var $ = require('jquery');
