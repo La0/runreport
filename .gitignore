@@ -23,3 +23,4 @@ archives
 front/bundles/
 front/node_modules/
 front/webpack-stats.json
+front/dist

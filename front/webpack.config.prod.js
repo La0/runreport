@@ -8,7 +8,7 @@ var WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 // Output generated files in dist
 config.output = {
   path: path.resolve('./dist/'),
-  filename: "inks-[hash].js",
+  filename: "runreport-[hash].js",
 };
 
 // Output stats in dist
@@ -17,7 +17,7 @@ config.plugins = [
     filename: './dist/webpack-stats.json',
   }),
   new ExtractTextPlugin({
-    filename: "inks-[hash].css",
+    filename: "runreport-[hash].css",
     allChunks: false,
   }),
   new WebpackCleanupPlugin({
