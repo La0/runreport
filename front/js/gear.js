@@ -1,4 +1,6 @@
-$(function(){
+var $ = require('jquery');
+
+module.exports = function(){
 
   $('#gear .moderated span.btn').on('click', function(evt){
     var btn = $(this);
@@ -16,4 +18,4 @@ $(function(){
     other.find(':input').val('').focus();
   });
 
-});
+};

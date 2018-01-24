@@ -1,3 +1,6 @@
+var $ = require('jquery');
+var Raphael = require('raphael');
+
 var RING_MAX_SIZE = 400;
 
 // Colors

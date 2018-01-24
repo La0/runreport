@@ -1,3 +1,5 @@
+var $ = require('jquery');
+
 var MAX_STARS = 5;
 
 // List all the css class for stars
@@ -66,9 +68,11 @@ var save_rating = function(){
   block.addClass('locked');
 };
 
-// Handle hover
-$(document.body).on('mouseover', 'div.rating .star', init_ratings);
-$(document.body).on('mouseleave', 'div.rating div.stars', clear_ratings);
+module.exports = function(){
+  // Handle hover
+  $(document.body).on('mouseover', 'div.rating .star', init_ratings);
+  $(document.body).on('mouseleave', 'div.rating div.stars', clear_ratings);
 
-// Handle click to update note
-$(document.body).on('click', 'div.rating .star', save_rating);
+  // Handle click to update note
+  $(document.body).on('click', 'div.rating .star', save_rating);
+}

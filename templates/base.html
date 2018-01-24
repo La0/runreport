@@ -8,14 +8,6 @@
   <meta http-equiv="X-UA-Compatible" content="IE=9">
   {% block meta %}{% endblock %}
 
-	<link type="text/css" href="{{ static('bootstrap-modal/css/bootstrap-modal-bs3patch.css') }}" rel="stylesheet">
-	<link type="text/css" href="{{ static('bootstrap-modal/css/bootstrap-modal.css') }}" rel="stylesheet">
-	<link type="text/css" href="{{ static('leaflet/dist/leaflet.css') }}" rel="stylesheet">
-	<link type="text/css" href="{{ static('bootstrap-datepicker/css/datepicker3.css') }}" rel="stylesheet">
-	<link type="text/css" href="{{ static('quill/dist/quill.base.css') }}" rel="stylesheet">
-	<link type="text/css" href="{{ static('css/runreport-embedded.css') }}" rel="stylesheet">
-	<link type="text/css" href="{{ static('css/animation.css') }}" rel="stylesheet">
-
   {{ render_bundle('main', 'css') }}
 </head>
 <body class="{% if user.demo %}demo{% endif %}">
@@ -118,19 +110,7 @@
 		</div>
 	</footer>
 
-	<script type="text/javascript" src="{{ static('bootswatch-dist/js/bootstrap.js') }}"></script>
-	<script type="text/javascript" src="{{ static('bootstrap-modal/js/bootstrap-modalmanager.js') }}"></script>
-	<script type="text/javascript" src="{{ static('bootstrap-modal/js/bootstrap-modal.js') }}"></script>
-	<script type="text/javascript" src="{{ static('leaflet/dist/leaflet.js') }}"></script>
-	<script type="text/javascript" src="{{ static('bootstrap-datepicker/js/bootstrap-datepicker.js') }}"></script>
-  <script type="text/javascript" src="{{ static('flot/jquery.flot.js') }}" ></script>
-  <script type="text/javascript" src="{{ static('flot/jquery.flot.time.js') }}" ></script>
-  <script type="text/javascript" src="{{ static('flot/jquery.flot.stack.js') }}" ></script>
-	<script type="text/javascript" src="{{ static('js/config.js') }}" ></script>
-	<script type="text/javascript" src="{{ static('raphael/raphael.js') }}" ></script>
 	{% block js %}{% endblock %}
-
-
   {{ render_bundle('main', 'js') }}
 </body>
 </html>

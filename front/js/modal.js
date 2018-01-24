@@ -1,5 +1,6 @@
+var $ = require('jquery');
 
-$(function(){
+module.exports = function(){
   // Load a box, yks style !
   $('.box').each(function(i, box){
     load_inline_box(box);
@@ -155,7 +156,7 @@ $(function(){
     var msg = $('<span>').text(btn.attr('data-lock'));
     btn.html('').append(icon).append(msg).addClass('disabled');
   });
-});
+};
 
 // Helper to add submit button data
 // in serialization
@@ -301,6 +302,22 @@ function load_box(url, method, data, output){
       }
     }
   });
+
+  // Move a plan session to another date
+  $('.plan-session-move').datepicker({
+    language : 'fr',
+    todayHighlight : true,
+    weekStart : 1,
+  }).on('changeDate', function(evt){
+    if(!evt.date)
+      return;
+    var btn = $(evt.target);
+    var data = {
+      psa : btn.attr('data-psa'),
+      date : Math.floor(evt.date.getTime() / 1000),
+    };
+    load_box(btn.attr('data-href'), 'POST', data);
+  });
 }
 
 // Load an inline box : yks style
@@ -386,19 +403,3 @@ function slugify(event){
 	str = str.replace(/\s/g, '_');
   $(target).val(str);
 }
-
-// Move a plan session to another date
-$('.plan-session-move').datepicker({
-  language : 'fr',
-  todayHighlight : true,
-  weekStart : 1,
-}).on('changeDate', function(evt){
-  if(!evt.date)
-    return;
-  var btn = $(evt.target);
-  var data = {
-    psa : btn.attr('data-psa'),
-    date : Math.floor(evt.date.getTime() / 1000),
-  };
-  load_box(btn.attr('data-href'), 'POST', data);
-});

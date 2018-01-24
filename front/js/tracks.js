@@ -1,7 +1,10 @@
-$(function(){
+var $ = require('jquery');
+var L = require('leaflet');
+
+module.exports = function(){
   $('div.track_map').each(show_track_map);
   $('div.point_map').each(show_point_map);
-});
+};
 
 
 // Simply build an OSM empty map

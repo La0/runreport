@@ -1,4 +1,7 @@
-$(document).ajaxSend(function(event, xhr, settings) {
+var $ = require('jquery');
+
+module.exports = function(){
+  $(document).ajaxSend(function(event, xhr, settings) {
     function getCookie(name) {
         var cookieValue = null;
         if (document.cookie && document.cookie != '') {
@@ -33,4 +36,5 @@ $(document).ajaxSend(function(event, xhr, settings) {
     if (!safeMethod(settings.type) && sameOrigin(settings.url)) {
         xhr.setRequestHeader("X-CSRFToken", getCookie(rr_config.csrf_cookie));
     }
-});
+  });
+}
