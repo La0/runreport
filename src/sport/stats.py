@@ -222,10 +222,7 @@ class SportStats(object):
             {
                 'label': sport.name,
                 'data' : [
-                    (
-                        month.timestamp * 1000,
-                        _get_nb(month, sport),
-                    )
+                    _get_nb(month, sport)
                     for month in self.months
                 ]
             }
@@ -237,12 +234,7 @@ class SportStats(object):
         List all distances on the period
         """
         return [
-            [
-                (
-                    month.timestamp * 1000,
-                    month.distance or 0,
-                )
-            ]
+            month.distance or 0
             for month in self.months
         ]
 
@@ -251,14 +243,22 @@ class SportStats(object):
         List all total hours on the period
         """
         return [
-            [
-                (
-                    month.timestamp * 1000,
-                    month.hours or 0,
-                )
-            ]
+            month.hours or 0
             for month in self.months
         ]
+
+    def get_periods(self):
+        """
+        List all periods used to calculate these stats
+        """
+        return [
+            {
+                "name": "XXX",
+                "timestamp": month.timestamp,
+            }
+            for month in self.months
+        ]
+
 #
 #  // Build months urls
 #  var urls = [{% for m in months %}'{{ url(url_month, *url_args + [m.year, m.month])}}',{% endfor %}];

@@ -80,6 +80,9 @@ module.exports = {
       path.join(__dirname, "node_modules"),
       path.join(__dirname),
     ],
-    extensions: ['.js', '.vue', '.css', '.json']
+    extensions: ['.js', '.vue', '.css', '.json'],
+    alias: {
+      'vue': 'vue/dist/vue.esm.js', // Use lighter runtime
+    },
   },
 }

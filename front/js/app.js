@@ -12,7 +12,7 @@ require('bootstrap/dist/js/bootstrap.js');
 var $ = require('jquery');
 
 // Load Vue deps
-var Vue = require('vue/dist/vue.js');
+const Vue = require('vue').default;
 
 // Load our old scripts
 var csrf = require('js/csrf.js');
@@ -39,11 +39,11 @@ var axios = require('axios');
 axios.defaults.baseURL = '/api/v2';
 axios.defaults.headers.common['X-CSRFTOKEN'] = document.querySelector('#csrf').getAttribute('content');
 
-
 // Run modern vue js app
 var app = new Vue({
   el : '#main',
+  store: require('./store.js'),
   components : {
-    StatsSports : require('vue/Stats/Sports.vue'),
+    Stats : require('app/Stats/Main.vue').default,
   },
 });
