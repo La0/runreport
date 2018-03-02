@@ -34,14 +34,7 @@
     {% endif %}
   </ul>
 
-  <div id="stats">
-    <h3>{{ _('Hours & distances') }}</h3>
-    <div class="hours_distances"></div>
-    <div class="tooltip"></div>
-
-    <h3>{{ _('Sessions by sports') }}</h3>
-    <Stats :user="'{{ user.username }}'"></Stats>
-  </div>
+	<Stats user="{{ user.username }}"></Stats>
   
 </div>
 {% endblock %}

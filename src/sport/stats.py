@@ -252,10 +252,7 @@ class SportStats(object):
         List all periods used to calculate these stats
         """
         return [
-            {
-                "name": "XXX",
-                "timestamp": month.timestamp,
-            }
+            month.timestamp
             for month in self.months
         ]
 

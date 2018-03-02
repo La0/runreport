@@ -9,14 +9,20 @@ module.exports = {
       maintainAspectRatio: false,
       scales: {
         xAxes: [{
-          stacked: true,
+          label: "plop"
         }],
-        yAxes: [{
-          stacked: true
-        }],
+        yAxes: [
+          {
+            label: "Y1",
+          },
+          {
+            label: "Y2",
+          },
+        ],
       },
     };
-    var datasets = this.stats.sports;
+    var datasets = [];
+    datasets[0] = this.
     var labels = _.map(this.stats.periods, function(period){
       // TODO: use store locale
       var d = new Date(period * 1000);
