@@ -22,7 +22,6 @@ module.exports = {
       },
     };
     var datasets = [];
-    datasets[0] = this.
     var labels = _.map(this.stats.periods, function(period){
       // TODO: use store locale
       var d = new Date(period * 1000);
