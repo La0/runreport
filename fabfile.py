@@ -1,5 +1,7 @@
 from fabric.api import local, env, get, prefix
 from fabric.operations import prompt
+import sys
+sys.path += ['./src', ]
 from runreport.settings import FABRIC_HOSTS, DATABASES
 import os
 env.hosts = FABRIC_HOSTS
@@ -20,15 +22,15 @@ def syncdb():
 
   if not os.path.exists(local_dump):
     # Download
-    prod_dump = '~/backups/current/db.tar.gpg'
-    get(prod_dump, local_encrypted)
+    prod_dump = '~/backups/current/db.tar'
+    get(prod_dump, local_dump)
 
     # Decrypt
-    decrypt = 'gpg --decrypt %s > %s' % (local_encrypted, local_dump)
-    local(decrypt)
+    #decrypt = 'gpg --decrypt %s > %s' % (local_encrypted, local_dump)
+    #local(decrypt)
 
     # Cleanup
-    os.remove(local_encrypted)
+    #os.remove(local_encrypted)
 
   # Re create db
   createdb()
@@ -75,7 +77,6 @@ def pg(sql=None, dbname=None, command='psql'):
   if suffix not in ('postgis',):
     raise Exception('Only PostGis is supported')
   db['COMMAND'] = command
-  print db
 
   cmd = 'PGPASSWORD="%(PASSWORD)s" %(COMMAND)s --username=%(USER)s --host=%(HOST)s --port=%(PORT)s' % db
   cmd += ' --dbname=%s' % (dbname or db['NAME'])
