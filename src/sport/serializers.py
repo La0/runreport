@@ -1,4 +1,11 @@
 from rest_framework import serializers
+from sport.models import Sport
+
+
+class SportSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Sport
+        fields = ('id', 'depth', 'parent', 'name', 'slug')
 
 
 class StatsSerializer(serializers.Serializer):

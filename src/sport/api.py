@@ -1,7 +1,8 @@
-from rest_framework.generics import RetrieveAPIView
+from rest_framework.generics import RetrieveAPIView, ListAPIView
 from users.models import Athlete
 from django.shortcuts import get_object_or_404
-from sport.serializers import StatsSerializer
+from sport.models import Sport
+from sport.serializers import StatsSerializer, SportSerializer
 from sport.stats import SportStats
 
 
@@ -21,6 +22,14 @@ class UserAPIMixin(object):
     def get_object(self):
         # Default object is asked user
         return self.get_user()
+
+
+class SportList(ListAPIView):
+    """
+    List all available sports
+    """
+    serializer_class = SportSerializer
+    queryset = Sport.objects.filter(depth__gte=1).order_by('depth', 'name')
 
 
 class StatsView(UserAPIMixin, RetrieveAPIView):
