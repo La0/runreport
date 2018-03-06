@@ -60,7 +60,8 @@ def week_to_date(year, week, day=1):
     From any year+week to a given day in its week
     Default to monday
     '''
-    return datetime.strptime('%d %d %d' % (year, week, day), '%Y %W %w').date()
+    payload = '{} {} {}'.format(year, week, day)
+    return datetime.strptime(payload, '%Y %W %w').date()
 
 
 def check_task(model):
@@ -89,7 +90,6 @@ def seconds_humanize(t, short=False):
     Format total seconds as HH:MM:SS
     Never display days (1 day 1h = 25h)
     '''
-    out = ''
     if t is None:
         return '-'
     try:

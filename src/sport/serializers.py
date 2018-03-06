@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from sport.models import Sport
+from sport.models import Sport, SportDay, SportWeek, SportSession
 
 
 class SportSerializer(serializers.ModelSerializer):
@@ -33,3 +33,49 @@ class StatsSerializer(serializers.Serializer):
 
     def get_hours(self, stats):
         return stats.get_hours()
+
+
+class SportSessionSerializer(serializers.ModelSerializer):
+    sport = SportSerializer()
+
+    class Meta:
+        model = SportSession
+        fields = (
+            'id',
+            'name',
+            'type',
+            'race_category',
+            'comment',
+            'distance',
+            'time',
+            'sport',
+            'note',
+            'elevation_gain',
+            'elevation_loss',
+            'created',
+            'updated',
+        )
+
+class SportDaySerializer(serializers.ModelSerializer):
+    sessions = SportSessionSerializer(many=True)
+
+    class Meta:
+        model = SportDay
+        fields = (
+            'id',
+            'date',
+            'sessions',
+        )
+
+class SportWeekSerializer(serializers.ModelSerializer):
+    days = SportDaySerializer(many=True)
+
+    class Meta:
+        model = SportWeek
+        fields = (
+            'id',
+            'published',
+            'created',
+            'updated',
+            'days',
+        )
