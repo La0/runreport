@@ -46,7 +46,6 @@ class CalendarMonth(UserAPIMixin, MonthMixin, ListAPIView):
     """
     Loads all days+sessions in a month
     """
-    # TODO: should use a lighter serializer
     serializer_class = SportDaySerializer
 
     def get_queryset(self):

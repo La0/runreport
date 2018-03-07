@@ -36,6 +36,9 @@ class StatsSerializer(serializers.Serializer):
 
 
 class SportSessionSerializer(serializers.ModelSerializer):
+    '''
+    Full serializer for a sport session
+    '''
     sport = SportSerializer()
 
     class Meta:
@@ -56,8 +59,26 @@ class SportSessionSerializer(serializers.ModelSerializer):
             'updated',
         )
 
+class SportSessionLightSerializer(serializers.ModelSerializer):
+    '''
+    Light serializer for a sport session
+    Used by calendars
+    '''
+    sport = serializers.SlugRelatedField('slug', read_only=True)
+
+    class Meta:
+        model = SportSession
+        fields = (
+            'id',
+            'name',
+            'type',
+            'sport',
+            'note',
+        )
+
 class SportDaySerializer(serializers.ModelSerializer):
-    sessions = SportSessionSerializer(many=True)
+    # Only showcases light infos on calendar
+    sessions = SportSessionLightSerializer(many=True)
 
     class Meta:
         model = SportDay
