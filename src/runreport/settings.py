@@ -64,7 +64,7 @@ LANGUAGES = (
 
 # Use our own locales
 LOCALE_PATHS = (
-    os.path.join(ROOT, '/locale'),
+    os.path.join(ROOT, 'locale'),
 )
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
