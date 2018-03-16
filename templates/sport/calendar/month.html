@@ -6,7 +6,7 @@
 
 <div class="container" id="calendar">
 
-	<div class="row">
+  <div class="row justify-content-between">
     {% if member %}
     <div class="col-sm-1 col-xs-2">
       <img class="img-responsive img-rounded" alt="Avatar" src="{{ member.avatar.url }}" />
@@ -16,57 +16,71 @@
       <h4>{{months.1|date('E Y')}}</h4>
     </div>
     {% else %}
-    <div class="col-sm-6 col-xs-12">
+    <div class="col-sm-4 col-xs-12">
       <h3>{{months.1|date('E Y')}}</h3>
     </div>
     {% endif %}
 
-		<div class="col-sm-6 col-xs-12 text-right buttons">
-			<a class="btn btn-primary btn-light" href="{{url(pageyear, *pageargs + [months.1.year ])}}"><i class="icon-list-alt"></i> {{ _('Year\'s calendar') }}</a>
-			{% if member %}
-			<a class="btn btn-success btn-light" href="{{ url('athlete-stats-year', member.username, months.1.year) }}"><i class="icon-plus"></i> {{ _('Stats') }}</a>
+    <div class="col-sm">
+      <ul class="nav justify-content-end">
+        <li class="nav-item">
+          <a class="nav-link" href="{{url(pageyear, *pageargs + [months.1.year ])}}"><i class="icon-list-alt"></i> {{ _('Year\'s calendar') }}</a>
+        </li>
 
-      <a href="{{ url('user-public-profile', member.username) }}" class="btn btn-primary btn-light">
-        <i class="icon-user"></i> {{ _('View his profile') }}
-      </a>
-
-        {% if user.is_authenticated() and user.is_trainer_of(member) %}
-        <a class="btn btn-info btn-light" href="{{ url('export-month-user', member.username, months.1.year, months.1.month) }}"><i class="icon-down-open"></i> {{ _('CSV Export') }}</a>
+        {% if member %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url('athlete-stats-year', member.username, months.1.year) }}"><i class="icon-plus"></i> {{ _('Stats') }}</a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ url('user-public-profile', member.username) }}" class="nav-links">
+              <i class="icon-user"></i> {{ _('View his profile') }}
+            </a>
+          </li>
+          {% if user.is_authenticated() and user.is_trainer_of(member) %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url('export-month-user', member.username, months.1.year, months.1.month) }}"><i class="icon-down-open"></i> {{ _('CSV Export') }}</a>
+          </li>
+          {% endif %}
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url('stats-year', months.1.year) }}"><i class="icon-plus"></i> {{ _('Stats') }}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url('export-month', months.1.year, months.1.month) }}"><i class="icon-down-open"></i> {{ _('CSV Export') }}</a>
+          </li>
         {% endif %}
-
-      {% else %}
-			<a class="btn btn-success btn-light" href="{{ url('stats-year', months.1.year) }}"><i class="icon-plus"></i> {{ _('Stats') }}</a>
-			<a class="btn btn-info btn-light" href="{{ url('export-month', months.1.year, months.1.month) }}"><i class="icon-down-open"></i> {{ _('CSV Export') }}</a>
-			{% endif %}
+      </ul>
     </div>
+  </div>
 
-    {% if not member %}
-		<div class="hidden-xs col-sm-6 col-sm-offset-6 col-xs-12 text-right buttons">
-      <div id="toggle-friends">
-        <button class="btn btn-sm btn-primary btn-light">
-          <i class="icon-club"></i>
-          {{ _('Hide friends') }}
-        </button>
-        <button class="btn btn-sm btn-primary btn-light" style="display: none">
-          <i class="icon-club"></i>
-          {{ _('Show friends') }}
-        </button>
-      </div>
-		</div>
-    {% endif %}
-	
-	</div>
+  {% if not member %}
+  <div class="row justify-content-end my-2 px-3">
+    <div id="toggle-friends">
+      <button class="btn btn-sm btn-primary btn-outline">
+        <i class="icon-club"></i>
+        {{ _('Hide friends') }}
+      </button>
+      <button class="btn btn-sm btn-primary btn-outline" style="display: none">
+        <i class="icon-club"></i>
+        {{ _('Show friends') }}
+      </button>
+    </div>
+  </div>
+  {% endif %}
 
 	<table class="table table-bordered table-condensed calendar hidden-xs">
-		<tr>
-			<th>{{ _('Monday') }}</th>
-			<th>{{ _('Tuesday') }}</th>
-			<th>{{ _('Wednesday') }}</th>
-			<th>{{ _('Thursday') }}</th>
-			<th>{{ _('Friday') }}</th>
-			<th>{{ _('Saturday') }}</th>
-			<th>{{ _('Sunday') }}</th>
-		</tr>
+    <thead>
+      <tr>
+        <th>{{ _('Monday') }}</th>
+        <th>{{ _('Tuesday') }}</th>
+        <th>{{ _('Wednesday') }}</th>
+        <th>{{ _('Thursday') }}</th>
+        <th>{{ _('Friday') }}</th>
+        <th>{{ _('Saturday') }}</th>
+        <th>{{ _('Sunday') }}</th>
+      </tr>
+    </thead>
+    <tbody>
 		{% for week in weeks %}
 		<tr>
 			{% for day in week %}
@@ -115,6 +129,7 @@
 			{% endfor %}
 		</tr>
 		{% endfor %}
+    </tbody>
 	</table>
 
 	<div class="visible-xs row-striped">
@@ -125,21 +140,22 @@
 		{% endfor %}
 	</div>
 
-
-	<ul class="pager">
-		{% if months.0 %}
-		<li class="previous">
-			<a href="{{url(pagemonth, *pageargs + [months.0.year, months.0.month ])}}">&laquo; {{months.0|date('E Y')}}</a>
-		</li>
-		{% endif %}
-    <li>
-    </li>
-		{% if months.2 %}
-		<li class="next">
-			<a href="{{url(pagemonth, *pageargs + [months.2.year, months.2.month ])}}">{{months.2|date('E Y')}} &raquo;</a>
-		</li>
-		{% endif %}
-	</ul>
+  <nav>
+    <ul class="pagination justify-content-center">
+      {% if months.0 %}
+      <li class="page-item">
+        <a class="page-link" href="{{url(pagemonth, *pageargs + [months.0.year, months.0.month ])}}">&laquo; {{months.0|date('E Y')}}</a>
+      </li>
+      {% endif %}
+      <li>
+      </li>
+      {% if months.2 %}
+      <li class="page-item">
+        <a class="page-link" href="{{url(pagemonth, *pageargs + [months.2.year, months.2.month ])}}">{{months.2|date('E Y')}} &raquo;</a>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
 
   <div class="text-center">
     {% include 'ads/home.html' %}
