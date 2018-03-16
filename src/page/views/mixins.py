@@ -4,8 +4,6 @@ from django.http import Http404
 
 class PageMixin(object):
     def dispatch(self, request, *args, **kwargs):
-        # Only an admin can edit
-        self.edit = request.user.is_superuser
 
         # Load type
         if 'type' not in kwargs:
@@ -18,6 +16,5 @@ class PageMixin(object):
 
     def get_context_data(self, **kwargs):
         context = super(PageMixin, self).get_context_data(**kwargs)
-        context['edit'] = self.edit
         context['type'] = self.type
         return context
