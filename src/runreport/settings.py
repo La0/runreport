@@ -1,5 +1,11 @@
 # Django settings for runreport project.
 from __future__ import absolute_import
+from django.utils.translation import ugettext_lazy as _
+from datetime import timedelta
+from celery.schedules import crontab
+import sys
+import os
+import locale
 
 DEBUG = True
 
@@ -23,7 +29,6 @@ DATABASES = {
     }
 }
 
-import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ROOT = os.path.realpath(os.path.join(BASE_DIR, '..'))
 
@@ -35,7 +40,6 @@ ROOT = os.path.realpath(os.path.join(BASE_DIR, '..'))
 TIME_ZONE = 'Europe/Paris'
 
 # French locale
-import locale
 locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
 
 # Language code for this installation. All choices can be found here:
@@ -56,7 +60,6 @@ USE_L10N = True
 USE_TZ = True
 
 # Available languages for translations
-from django.utils.translation import ugettext_lazy as _
 LANGUAGES = (
     ('fr', _('French')),
     ('en', _('English')),
@@ -323,8 +326,6 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 CELERY_TIMEZONE = 'Europe/Paris'
 
 # Celery Periodic tasks
-from datetime import timedelta
-from celery.schedules import crontab
 CELERY_TASK_DEFAULT_QUEUE = 'base'
 CELERY_TASK_IGNORE_RESULT = True
 CELERY_BEAT_SCHEDULE = {
@@ -409,6 +410,8 @@ REST_FRAMEWORK = {
         # Only authenticated users access the api
         'rest_framework.permissions.IsAuthenticated',
     ),
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+    'EXCEPTION_HANDLER': 'api.exceptions.runreport_exception_handler',
 }
 
 # Allow cors api server
@@ -455,14 +458,21 @@ except ImportError as e:
 
 # Apps in prod or dev
 if DEBUG:
-    try:
-        import debug_toolbar
-        INSTALLED_APPS = INSTALLED_APPS + ('debug_toolbar',)
-        DEBUG_TOOLBAR_CONFIG = {
-            'JQUERY_URL': '',
+    if len(sys.argv) > 1 and sys.argv[1] == 'test':
+        # Dirty hack to remove migrations for all apps
+        MIGRATION_MODULES = {
+            app.replace('django.contrib.', '') : None
+            for app in INSTALLED_APPS
         }
-    except BaseException:
-        print("Missing debug toolbar module")
+    else:
+        try:
+            import debug_toolbar
+            INSTALLED_APPS = INSTALLED_APPS + ('debug_toolbar',)
+            DEBUG_TOOLBAR_CONFIG = {
+                'JQUERY_URL': '',
+            }
+        except BaseException:
+            print("Missing debug toolbar module")
 else:
     # Add raven
     INSTALLED_APPS = INSTALLED_APPS + ('raven.contrib.django.raven_compat',)

@@ -130,27 +130,6 @@ class SportSessionForm(forms.ModelForm):
         return self.cleaned_data
 
 
-class SportDayAddForm(forms.Form):
-    '''
-    Form to create manually a new empty session
-    '''
-    date = forms.DateField()
-    type = forms.ChoiceField(required=False, choices=SESSION_TYPES)
-
-    def __init__(self, user, *args, **kwargs):
-        self.user = user
-        super(SportDayAddForm, self).__init__(*args, **kwargs)
-
-    def clean_date(self):
-
-        # Check date is free
-        if SportDay.objects.filter(
-                week__user=self.user, date=self.cleaned_data['date']):
-            raise forms.ValidationError('Une séance existe déjà à cette date.')
-
-        return self.cleaned_data['date']
-
-
 class SportWeekPublish(forms.Form):
     '''
     Add a comment while publising a week

@@ -8,7 +8,7 @@ from reportlab.lib.enums import TA_CENTER
 from reportlab.rl_config import defaultPageSize
 from django.utils import translation
 from django.conf import settings
-from StringIO import StringIO
+from io import StringIO
 
 
 class PeriodPdfExporter(object):

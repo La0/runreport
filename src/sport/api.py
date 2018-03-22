@@ -1,10 +1,44 @@
-from rest_framework.generics import RetrieveAPIView, ListAPIView
+from rest_framework.generics import RetrieveAPIView, ListAPIView, RetrieveUpdateDestroyAPIView, CreateAPIView
 from api.mixins import UserAPIMixin, DayMixin, WeekMixin, MonthMixin, YearMixin
 from django.shortcuts import get_object_or_404
-from sport.models import Sport, SportDay, SportWeek
-from sport.serializers import StatsSerializer, SportSerializer, SportDaySerializer, SportWeekSerializer
+from sport.models import Sport, SportDay, SportWeek, SportSession
+from sport.serializers import StatsSerializer, SportSerializer, SportDaySerializer, SportWeekSerializer, SportSessionSerializer
 from sport.stats import SportStats
+from helpers import date_to_week
 
+
+class SessionManage(RetrieveUpdateDestroyAPIView):
+    """
+    Fully manage a sport session
+    """
+    serializer_class = SportSessionSerializer
+
+    def get_queryset(self):
+        # TODO: support access rights
+        return SportSession.objects.filter(
+            day__week__user=self.request.user,
+        )
+
+
+class SessionCreate(CreateAPIView):
+    """
+    Fully manage a sport session
+    """
+    serializer_class = SportSessionSerializer
+
+    def perform_create(self, serializer):
+        """
+        Create needed hierarchy for session when needed
+        """
+
+        # Get date to create hierarchy
+        date = serializer.validated_data['day']['date']
+        w, year = date_to_week(date)
+        week, _ = SportWeek.objects.get_or_create(year=year, week=w, user=self.request.user)
+        day, _ = SportDay.objects.get_or_create(week=week, date=date)
+
+        # Create new session on this day
+        serializer.save(day=day)
 
 
 class SportList(ListAPIView):
@@ -28,6 +62,7 @@ class CalendarDay(UserAPIMixin, DayMixin, RetrieveAPIView):
             date=self.start.date(),
         )
 
+
 class CalendarWeek(UserAPIMixin, WeekMixin, RetrieveAPIView):
     """
     Loads a specific week & attached days + sessions
@@ -41,6 +76,7 @@ class CalendarWeek(UserAPIMixin, WeekMixin, RetrieveAPIView):
             year=self.year,
             week=self.week,
         )
+
 
 class CalendarMonth(UserAPIMixin, MonthMixin, ListAPIView):
     """

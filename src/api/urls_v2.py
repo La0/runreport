@@ -1,5 +1,5 @@
 from django.conf.urls import url, include
-from sport.api import StatsView, SportList, CalendarYear, CalendarMonth, CalendarWeek, CalendarDay
+from sport.api import StatsView, SportList, CalendarYear, CalendarMonth, CalendarWeek, CalendarDay, SessionManage, SessionCreate
 
 user_urls = [
 
@@ -13,6 +13,11 @@ user_urls = [
     url(r'^stats/$', StatsView.as_view(), name='stats'),
 ]
 
+session_urls = [
+    url(r'^(?P<pk>\d+)/$', SessionManage.as_view(), name='session'),
+    url(r'^$', SessionCreate.as_view(), name='session-create'),
+]
+
 urlpatterns = [
 
     # Configuration
@@ -20,4 +25,7 @@ urlpatterns = [
 
     # Endpoints per user
     url(r'^user/(?P<username>[\w\_\-]+)/', include(user_urls)),
+
+    # Sessions
+    url(r'^session/', include(session_urls)),
 ]
