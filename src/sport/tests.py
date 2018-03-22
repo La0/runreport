@@ -47,7 +47,7 @@ class SportTests(APITestCase):
         })
         resp = self.client.post(url, data)
         self.assertEqual(resp.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertIn('name', resp.json()['errors'])
+        self.assertIn('name', resp.json()['global'])
 
         # Missing distance & time
         data.update({
@@ -55,7 +55,7 @@ class SportTests(APITestCase):
         })
         resp = self.client.post(url, data)
         self.assertEqual(resp.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertIn('distance_time', resp.json()['errors'])
+        self.assertIn('distance_time', resp.json()['global'])
 
         # Missing note
         data.update({
@@ -63,7 +63,7 @@ class SportTests(APITestCase):
         })
         resp = self.client.post(url, data)
         self.assertEqual(resp.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertIn('note', resp.json()['errors'])
+        self.assertIn('note', resp.json()['global'])
 
         # Created session
         data.update({
@@ -72,3 +72,74 @@ class SportTests(APITestCase):
         resp = self.client.post(url, data)
         self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
         self.assertEqual(SportSession.objects.count(), 1)
+
+
+    def test_update_session(self):
+        '''
+        Update a session
+        '''
+        # Create a new session
+        self.assertEqual(SportSession.objects.count(), 0)
+        self.client.force_authenticate(user=self.user)
+        resp = self.client.post(
+            reverse('api-v2:session-create'),
+            {
+                'sport': 'running',
+                'type': 'training',
+                'date': '2020-12-31',
+                'name': 'Run boy run',
+                'distance': '1000',
+                'note': 2,
+            }
+        )
+        self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
+        session_id = resp.json()['id']
+        self.assertEqual(SportSession.objects.count(), 1)
+        session = SportSession.objects.get(pk=session_id)
+        self.assertIsNone(session.comment)
+        self.assertEqual(session.note, 2)
+
+        # Update session
+        session_data = resp.json()
+        session_data.update({
+            'comment': 'Oooh that was nice',
+            'note': 5,
+        })
+        resp = self.client.put(
+            reverse('api-v2:session', args=(session_id, )),
+            session_data,
+        )
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        session = SportSession.objects.get(pk=session_id)
+        self.assertIsNotNone(session.comment)
+        self.assertEqual(session.comment, 'Oooh that was nice')
+        self.assertEqual(session.note, 5)
+
+    def test_delete_session(self):
+        '''
+        Delete a session
+        '''
+        # Create a new session
+        self.assertEqual(SportSession.objects.count(), 0)
+        self.client.force_authenticate(user=self.user)
+        resp = self.client.post(
+            reverse('api-v2:session-create'),
+            {
+                'sport': 'cycling',
+                'type': 'training',
+                'date': '2000-12-31',
+                'name': 'Run boy run',
+                'distance': '12',
+                'comment': 'Long comment... blah',
+                'note': 5,
+            }
+        )
+        self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(SportSession.objects.count(), 1)
+
+        # Delete session
+        session_id = resp.json()['id']
+        url = reverse('api-v2:session', args=(session_id, ))
+        resp = self.client.delete(url)
+        self.assertEqual(resp.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(SportSession.objects.count(), 0)

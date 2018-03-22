@@ -76,6 +76,9 @@ class ContextTemplate(Template):
 
             # Add menu
             context.update(add_pages(request))
+        else:
+            # Exception Fallback
+            context['user'] = None
 
         return super(ContextTemplate, self).render(context, *args, **kwargs)
 

@@ -13,13 +13,16 @@ def runreport_exception_handler(exc, context):
 
             # Rename non_field_errors
             if 'non_field_errors' in details:
-                details['errors'] = {
-                    err['code']: err['message']
-                    for err in details['non_field_errors']
-                }
+                details['global'] = details['non_field_errors']
                 del details['non_field_errors']
 
-            response.data = details
-
+            # Simplify exception structure
+            response.data = {
+                name: {
+                    err['code']: err['message']
+                    for err in errors
+                }
+                for name, errors in details.items()
+            }
 
     return response

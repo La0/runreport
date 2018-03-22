@@ -19,6 +19,12 @@ class SessionManage(RetrieveUpdateDestroyAPIView):
             day__week__user=self.request.user,
         )
 
+    def perform_update(self, serializer):
+        """
+        Do not allow updating day
+        """
+        serializer.save(day=serializer.instance.day)
+
 
 class SessionCreate(CreateAPIView):
     """

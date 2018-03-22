@@ -50,13 +50,12 @@ class SportSessionSerializer(serializers.ModelSerializer):
     sport = serializers.SlugRelatedField('slug', queryset=Sport.objects.filter(depth__gt=0))
     date = serializers.DateField(source='day.date')
     type = serializers.CharField(required=True)
-    track = TrackSerializer(required=False)
+    track = TrackSerializer(required=False, read_only=True)
 
     class Meta:
         model = SportSession
         fields = (
             'id',
-            'day',
             'date',
             'name',
             'type',
@@ -80,6 +79,14 @@ class SportSessionSerializer(serializers.ModelSerializer):
             'comments_private',
             'track',
         )
+
+    #def validate_date(self, date):
+    #    if self.instance:
+    #        if self.instance.day and self.instance.day.date != date:
+    #            raise serializers.ValidationError('Cannot change session date', code='date')
+    #        return None
+
+    #    return date
 
     def validate(self, data):
 
