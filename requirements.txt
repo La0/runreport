@@ -29,7 +29,7 @@ ijson==2.2
 Jinja2==2.7.3
 kombu==4.0.2
 lockfile==0.10.2
-lxml==3.4.4
+lxml==4.6.3
 mailmanclient==1.0.0
 mangopaysdk==2.0
 Markdown==2.3.1
